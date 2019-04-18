@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js css-menubar" lang="en">
-  <head>
+  <head>    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href={{{url('global/css/bootstrap.min.css')}}}>
     <link rel="stylesheet" href={{{url('global/css/bootstrap-extend.min.css')}}}>
     <link rel="stylesheet" href={{{url('/assets/css/site.min.css')}}}>
-    
+             
     <!-- Plugins -->
     <link rel="stylesheet" href={{{url('global/vendor/animsition/animsition.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/asscrollable/asScrollable.css')}}}>

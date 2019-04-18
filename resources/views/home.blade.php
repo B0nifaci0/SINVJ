@@ -4,7 +4,7 @@ ALTA TIENDAS
 @endsection
 
 @section('nav')
-
+     
 @endsection
 @section('menu')
 
