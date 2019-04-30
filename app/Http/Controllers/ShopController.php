@@ -27,9 +27,9 @@ class ShopController extends Controller
      */
     public function create()
     {
-        $states = State::all();
+        //$states = State::all();
 
-        return view('shop/add', compact('states'));
+        return view('Shop/add');
     }
 
     /**
