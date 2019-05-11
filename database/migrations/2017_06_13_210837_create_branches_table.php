@@ -1,12 +1,10 @@
 <?php
 
-use App\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-
-class CreateUsersTable extends Migration
+class CreateBranchesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,18 +13,19 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('branches', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('username');
-            $table->string('email')->unique();
-            $table->string('password');
             $table->string('name');
-            $table->boolean('type_user');
-            $table->string('suscription_type')->default(User::FREE);
+            $table->string('address');
+            $table->string('latitude');
+            $table->string('longitude');
+            $table->string('phone_number');
+            $table->string('state');
+            //asignamos la llave forane
             $table->integer('shop_id')->unsigned();
+            //funcion para crear la llave foranea//onDelete sirve para boorrar los articulos del usuario que se elimine en forma de4 cascada
             $table->foreign('shop_id')->references('id')->on('shops');
             $table->softDeletes();
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -38,6 +37,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('branches');
     }
 }
