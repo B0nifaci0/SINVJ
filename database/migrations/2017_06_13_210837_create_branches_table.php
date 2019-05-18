@@ -24,7 +24,7 @@ class CreateBranchesTable extends Migration
             //asignamos la llave forane
             $table->integer('shop_id')->unsigned();
             //funcion para crear la llave foranea//onDelete sirve para boorrar los articulos del usuario que se elimine en forma de4 cascada
-            $table->foreign('shop_id')->references('id')->on('shops');
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

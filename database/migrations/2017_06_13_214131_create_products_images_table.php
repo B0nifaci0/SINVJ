@@ -18,7 +18,7 @@ class CreateProductsImagesTable extends Migration
             $table->string('name');
             $table->date('date_upload');
             $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

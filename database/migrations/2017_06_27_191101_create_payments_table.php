@@ -22,7 +22,7 @@ class CreatePaymentsTable extends Migration
             $table->integer('reference_number');
             $table->string('card_reference');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

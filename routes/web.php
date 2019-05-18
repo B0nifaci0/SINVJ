@@ -31,6 +31,9 @@ Route::resource('productos', 'ProductController');
 //Tiendas
 Route::resource('tiendas', 'ShopController');
 
+//Lineas
+Route::resource('lineas', 'LineController');
+
 //Usuarios
 Route::resource('usuarios', 'UserController');
 
@@ -64,3 +67,11 @@ Route::get('productosdesucursal/{id}', 'ProductsBranchController@index');
 Route::get('imagenes/{path}',function($path){
   return response()->file(storage_path($path));
 })->where('path','.+')->name('images');
+
+Route::get('lineas/{id}/destroy', [
+    'uses' => 'LineController@destroy',
+    'as' => 'lineas.destroy'
+
+]);
+
+

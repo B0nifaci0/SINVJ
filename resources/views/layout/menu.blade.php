@@ -45,6 +45,15 @@
                 </a>
             </li>
           </ul>
+            <ul class="site-menu-sub">
+
+          <li class="site-menu-item">
+                <a class="animsition-link" href="/usuarios">
+                  <span class="site-menu-title">Usuarios</span>
+                </a>
+            </li>
+          </ul>
+
         </li>
       </ul>
     </div>

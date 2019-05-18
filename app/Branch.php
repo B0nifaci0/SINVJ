@@ -2,14 +2,15 @@
 
 namespace App;
 
+use App\Shop;
+use App\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Branch extends Model
 {
     use SoftDeletes;
-
-    const FREE = '0';
-    const PREMIUM = '1';
 
     protected $fillable = [
         'name',
@@ -30,5 +31,6 @@ class Branch extends Model
     {
         return $this->hasMany(Product::class);
     }
+
 
 }

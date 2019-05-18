@@ -598,10 +598,23 @@
                 </ul>
               </li>
               <li class="site-menu-item active">
-                <a class="animsition-link" href="index.html">
+                <a class="animsition-link" href="/productos">
                         <i class="site-menu-icon md-view-product" aria-hidden="true"></i>
                         <span class="site-menu-title">Productos</span>
                     </a>
+     
+                    <li class="site-menu-item active">
+                <a class="animsition-link" href="/categorias">
+                        <i class="site-menu-icon md-view-product" aria-hidden="true"></i>
+                        <span class="site-menu-title">Categorias</span>
+                    </a>
+
+                    <li class="site-menu-item active">
+                <a class="animsition-link" href="/lineas">
+                        <i class="site-menu-icon md-view-product" aria-hidden="true"></i>
+                        <span class="site-menu-title">Lineas</span>
+                    </a>
+
               </li>
               <li class="site-menu-item has-sub">
                 <a href="javascript:void(0)">

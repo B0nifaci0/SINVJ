@@ -22,7 +22,7 @@ class CreatePromotionsTable extends Migration
             $table->date('start_date');
             $table->date('expirition_date');
             $table->integer('shop_id')->unsigned();
-            $table->foreign('shop_id')->references('id')->on('shops');
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

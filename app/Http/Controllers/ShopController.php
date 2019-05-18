@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Shop;
 use App\State;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class ShopController extends Controller
      */
     public function index()
     {
-      return view('Shop/index');
+      $shops = Shop::where('user_id', Auth::user()->id)->get();
+      return view('shop/index ', ['shops' => $shops]);
     }
 
     /**
@@ -27,9 +29,9 @@ class ShopController extends Controller
      */
     public function create()
     {
-        //$states = State::all();
+        $states = State::all();
 
-        return view('Shop/add');
+        return view('shop/add', compact('states'));
     }
 
     /**

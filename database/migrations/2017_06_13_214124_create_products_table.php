@@ -24,13 +24,13 @@ class CreateProductsTable extends Migration
             $table->string('nationality');
 
             $table->integer('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
 
-            
-            
+            $table->integer('shop_id')->unsigned();
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
 
             $table->integer('branch_id')->unsigned();
-            $table->foreign('branch_id')->references('id')->on('branches');
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
 
 
             $table->softDeletes();

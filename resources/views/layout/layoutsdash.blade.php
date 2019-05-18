@@ -357,7 +357,12 @@
                 <a class="animsition-link" href="/categorias">
                   <span class="site-menu-title">Categorias</span>
                 </a>
-           
+                
+                <li class="site-menu-item">
+                <a class="animsition-link" href="/lineas">
+                  <span class="site-menu-title">Lineas</span>
+                </a>
+
             <li class="site-menu-item">
               <a class="animsition-link" href="/realizarpago">
                 <span class="site-menu-title">Pagos</span>

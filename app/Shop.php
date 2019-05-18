@@ -2,7 +2,10 @@
 
 namespace App;
 
+use App\Branch;
+use App\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shop extends Model
 {
@@ -30,4 +33,5 @@ class Shop extends Model
     {
       return $this->hasMany(Product::class);
     }
+
 }
