@@ -26,22 +26,8 @@ LISTA DE  LINEA
 				<strong>{{ session('mesage-delete') }}</strong>
 			</div>
 		@endif    
-    <div class="panel panel-info panel-bordered" data-plugin="appear" data-animate="fade">
-      <header class="panel-heading">
-        <div class="panel-actions">
-          <a href="/lineas/create">
-            <button class="btn-raised btn btn-primary btn-floating btn-sm" data-toggle="tooltip" data-original-title="Agregar">
-            <i class="icon md-plus" aria-hidden="true"></i>
-            </button>
-          </a>
-        </div>
-        <h3 class="panel-title">Lista de Lineas</h3>
-      </header>
-  <!-- Panel Filtering -->
-  <div class="row">
-  <div class="page-content">
-      <div class="col-md-15 container-fluid">
-      <table class="table table-bordered table-hover toggle-circle" id="exampleFootableFiltering">
+ 
+      <!--<table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
         <thead>
           <tr>
@@ -71,17 +57,13 @@ LISTA DE  LINEA
             <td>{{ $line->name }}</td>
             <td>
 
-                   
-                  
-                  
-                     
                     <a href="/lineas/{{$line->id}}/edit"<button type="button" class="btn btn-xs btn-icon btn-info edit"><i class="icon md-edit" aria-hidden="true"></i></button></a>
 
                     <a href="{{ route('lineas.destroy',$line->id)}}"<button type="button" onclick="return confirm('¿Seguro que deseas eliminar este registro?')"
                     class="btn btn-xs btn-icon btn-danger delete"><i class="icon md-delete" aria-hidden="true"></i></button></a>
                   
                         <!--<form class="" action="{{route('lineas.destroy',['id' => $line->id])}}" method="post">
-                      {{csrf_field()}}-->
+                      {{csrf_field()}}
                       {{method_field('DELETE')}}
                     <button class="btn btn-xs btn-icon btn-danger delete" alt="{{$line->id}}" role="button">
                         <i class="icon md-delete" aria-hidden="true"></i>
@@ -102,9 +84,70 @@ LISTA DE  LINEA
             </td>
           </tr>
         </tfoot>
-      </table>
-    </div>
+      </table>-->
+
+
+        <div class="page-content">
+        <!-- Panel Basic -->
+        <div class="panel">
+        <div class="container">
+		     <div class="row">
+			  <div class="col-md-12 col-md-offset-2">
+      <button type="button" class="btn btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+          <i class="icon md-plus" aria-hidden="true"></i></button>
+						<a href="#">
+			</div>
+		</div>
 	</div>
+          <header class="panel-heading">
+            <div class="panel-actions"></div>
+            <h3 class="panel-title">Lineas</h3>
+          </header>
+          <div class="panel-body">
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+              <thead>
+                <tr>
+                  <th>Clave</th>
+                  <th>Nombre</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tfoot>
+              <tr>
+                  <th>Clave</th>
+                  <th>Nombre</th>
+                  <th>Opciones</th>
+                </tr>
+              </tfoot>
+              <tbody>
+        @foreach ($lines as $line)
+          <tr id = "row{{ $line->id }}">
+            <td>{{ $line->id}}</td>
+            <td>{{ $line->name }}</td>
+            <td>
+
+                  
+                  
+                     <a href="/lineas/{{$line->id}}/edit"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
+
+                     <a href="{{ route('lineas.destroy',$line->id)}}"<button type="button" onclick="return confirm('¿Seguro que deseas eliminar este registro?')"
+                    class="btn btn-icon btn-danger waves-effect waves-light waves-round" ><i class="icon md-delete" aria-hidden="true"></i></button></a>
+                        
+                    </button>
+                  </div>
+              </div>    
+            </form>
+            </td>
+          </tr>
+            @endforeach
+        </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- End Panel Basic -->
+</div>
+
+
 
 @endsection
 

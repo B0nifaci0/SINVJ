@@ -26,7 +26,7 @@ LISTA DE  CATEGORIA
 				<strong>{{ session('mesage-delete') }}</strong>
 			</div>
 		@endif    
-    <div class="panel panel-info panel-bordered" data-plugin="appear" data-animate="fade">
+    <!--<div class="panel panel-info panel-bordered" data-plugin="appear" data-animate="fade">
       <header class="panel-heading">
         <div class="panel-actions">
           <a href="/categorias/create">
@@ -37,7 +37,7 @@ LISTA DE  CATEGORIA
         </div>
         <h3 class="panel-title">Lista de Categorias</h3>
       </header>
-  <!-- Panel Filtering -->
+  <!-- Panel Filtering 
   <div class="row">
   <div class="page-content">
       <div class="col-md-12 container-fluid">
@@ -81,7 +81,7 @@ LISTA DE  CATEGORIA
                   
                          <!--<form class="" action="{{route('categorias.destroy',['id' => $category->id])}}" method="post">
                       {{csrf_field()}}
-                      {{method_field('DELETE')}}-->
+                      {{method_field('DELETE')}}-
                     <button class="btn btn-xs btn-icon btn-danger delete" alt="{{$category->id}}" role="button">
                         <i class="icon md-delete" aria-hidden="true"></i>
                     </button>
@@ -103,7 +103,68 @@ LISTA DE  CATEGORIA
         </tfoot>
       </table>
     </div>
+	</div>-->
+  <div class="page-content">
+        <!-- Panel Basic -->
+        <div class="panel">
+        <div class="container">
+		     <div class="row">
+			  <div class="col-md-12 col-md-offset-2">
+      <button type="button" class="btn btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+          <i class="icon md-plus" aria-hidden="true"></i></button>
+						<a href="#">
+			</div>
+		</div>
 	</div>
+          <header class="panel-heading">
+            <div class="panel-actions"></div>
+            <h3 class="panel-title">Categorias</h3>
+          </header>
+          <div class="panel-body">
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+              <thead>
+                <tr>
+                  <th>Clave</th>
+                  <th>Nombre</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tfoot>
+              <tr>
+                  <th>Clave</th>
+                  <th>Nombre</th>
+                  <th>Opciones</th>
+                </tr>
+              </tfoot>
+              <tbody>
+        @foreach ($categories as $category)
+          <tr id = "row{{ $category->id }}">
+            <td>{{ $category->id}}</td>
+            <td>{{ $category->name }}</td>
+            <td>
+
+                  
+                  
+                     <a href="/categorias/{{$category->id}}/edit"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
+
+                     <a href="{{ route('categorias.destroy',$category->id)}}"<button type="button" onclick="return confirm('¿Seguro que deseas eliminar este registro?')"
+                    class="btn btn-icon btn-danger waves-effect waves-light waves-round" ><i class="icon md-delete" aria-hidden="true"></i></button></a>
+                        
+                    </button>
+                  </div>
+              </div>    
+            </form>
+            </td>
+          </tr>
+            @endforeach
+        </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- End Panel Basic -->
+</div>
+
+
 
 @endsection
 
