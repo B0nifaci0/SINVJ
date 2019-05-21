@@ -526,119 +526,43 @@
         <div>
           <div>
             <ul class="site-menu" data-plugin="menu">
-              <li class="site-menu-item active">
-                <a class="animsition-link" href="index.html">
-                        <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
-                        <span class="site-menu-title">Dashboard</span>
-                    </a>
-              </li>
-              <li class="site-menu-item has-sub">
-                <a href="javascript:void(0)">
-                        <i class="site-menu-icon md-view-compact" aria-hidden="true"></i>
-                        <span class="site-menu-title">Layouts</span>
-                                <span class="site-menu-arrow"></span>
-                    </a>
-                <ul class="site-menu-sub">
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/menubar-fold.html">
-                      <span class="site-menu-title">Menubar Fold</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/menubar-disable-hover.html">
-                      <span class="site-menu-title">Menubar Disable Hover</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/menubar-open.html">
-                      <span class="site-menu-title">Menubar Open</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/menubar-push.html">
-                      <span class="site-menu-title">Menubar Push</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/grids.html">
-                      <span class="site-menu-title">Grid Scaffolding</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/layout-grid.html">
-                      <span class="site-menu-title">Layout Grid</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/headers.html">
-                      <span class="site-menu-title">Different Headers</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/panel-transition.html">
-                      <span class="site-menu-title">Panel Transition</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/boxed.html">
-                      <span class="site-menu-title">Boxed Layout</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/two-columns.html">
-                      <span class="site-menu-title">Two Columns</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/bordered-header.html">
-                      <span class="site-menu-title">Bordered Header</span>
-                    </a>
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/menubar-flipped.html">
-                      <span class="site-menu-title">Menubar Flipped</span>
-                    </a> 
-                  </li>
-                  <li class="site-menu-item">
-                    <a class="animsition-link" href="layouts/menubar-native-scrolling.html">
-                      <span class="site-menu-title">Menubar Native Scrolling</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="site-menu-item active">
-                <a class="animsition-link" href="/productos">
-                        <i class="site-menu-icon md-view-product" aria-hidden="true"></i>
-                        <span class="site-menu-title">Productos</span>
-                    </a>
-     
-                    <li class="site-menu-item active">
-                <a class="animsition-link" href="/categorias">
-                        <i class="site-menu-icon md-view-product" aria-hidden="true"></i>
-                        <span class="site-menu-title">Categorias</span>
-                    </a>
-
-                    <li class="site-menu-item active">
-                <a class="animsition-link" href="/lineas">
-                        <i class="site-menu-icon md-view-product" aria-hidden="true"></i>
-                        <span class="site-menu-title">Lineas</span>
-                    </a>
-
-              </li>
-              <li class="site-menu-item has-sub">
-                <a href="javascript:void(0)">
-                  <i class="site-menu-icon md-store" aria-hidden="true"></i>
-                        <span class="site-menu-title">Tienda</span>
-                         <span class="site-menu-arrow"></span>
-                </a>
-                <ul class="site-menu-sub">
+                <li class="site-menu-item active">
+                  <a class="animsition-link" href="index.html">
+                    <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
+                    <span class="site-menu-title">Inicio</span>
+                  </a>
+                </li>
+                <li class="site-menu-item has-sub">
+                  <a href="javascript:void(0)">
+                    <i class="site-menu-icon md-store" aria-hidden="true"></i>
+                      <span class="site-menu-title">Tienda</span>
+                    <span class="site-menu-arrow"></span>
+                  </a>
+                  <ul class="site-menu-sub">
                     <li class="site-menu-item">
-                      <a class="animsition-link" href="/tiendas">
-                        <span class="site-menu-title">Sucursal 1</span>
+                        <a class="animsition-link" href="/productos">
+                          <span class="site-menu-title">Productos</span>
                       </a>
+                    </li>
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/categorias">
+                          <span class="site-menu-title">Categorias</span>
+                      </a>
+                    </li>
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/lineas">
+                          <span class="site-menu-title">Lineas</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="/usuarios">
+                      <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
+                      <span class="site-menu-title">Usuarios</span>
+                    </a>
                   </li>
-                </ul>   
-              </li>    
+              </ul>
             </div>
           </div>
         </div>
@@ -647,18 +571,19 @@
 
 <section>
   @yield('content')
-
 </section>
-  <!-- Core  -->
-<section>
-  @yield('js')
-     <!-- Footer -->
+<!-- Footer -->
+  <section>
+    @yield('footer')
     <footer class="site-footer">
-      <div class="site-footer-legal">© 2018 <a href="http://themeforest.net/item/remark-responsive-bootstrap-admin-template/11989202">Remark</a></div>
+      <div class="site-footer-legal">© 2019 <a href="http://themeforest.net/item/remark-responsive-bootstrap-admin-template/11989202"></a></div>
       <div class="site-footer-right">
-        Crafted with <i class="red-600 icon md-favorite"></i> by <a href="https://themeforest.net/user/creation-studio">Creation Studio</a>
+        Creado  <i class="red-600 icon md-pineapple"></i> por <a href="https://themeforest.net/user/creation-studio">Digital-Pineapple</a>
       </div>
     </footer>
+  </section>
+<section>
+  @yield('js')
     <!-- Core  -->
     <script src={{{url('global/vendor/babel-external-helpers/babel-external-helpers.js')}}}></script>
     <script src={{{url('global/vendor/jquery/jquery.js')}}}></script>

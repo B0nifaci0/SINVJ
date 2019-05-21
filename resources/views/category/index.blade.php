@@ -10,117 +10,36 @@ LISTA DE  CATEGORIA
 
 @endsection
 @section('content')
+<div class="page">
   <div class="panel-body">
 	@if (session('mesage'))	
 	<div class="alert alert-success">
 				<strong>{{ session('mesage') }}</strong>
-			</div>
+	</div>
 		@endif
 			@if (session('mesage-update'))	
 	<div class="alert alert-warning">
 				<strong>{{ session('mesage-update') }}</strong>
-			</div>
+	</div>
 		@endif
 			@if (session('mesage-delete'))	
 	<div class="alert alert-danger">
 				<strong>{{ session('mesage-delete') }}</strong>
-			</div>
+	</div>
 		@endif    
-    <!--<div class="panel panel-info panel-bordered" data-plugin="appear" data-animate="fade">
-      <header class="panel-heading">
-        <div class="panel-actions">
-          <a href="/categorias/create">
-            <button class="btn-raised btn btn-primary btn-floating btn-sm" data-toggle="tooltip" data-original-title="Agregar">
-            <i class="icon md-plus" aria-hidden="true"></i>
-            </button>
-          </a>
-        </div>
-        <h3 class="panel-title">Lista de Categorias</h3>
-      </header>
-  <!-- Panel Filtering 
-  <div class="row">
-  <div class="page-content">
-      <div class="col-md-12 container-fluid">
-      <table class="table table-bordered table-hover toggle-circle" id="exampleFootableFiltering">
-
-      
-        <thead>
-        <thead>
-          <tr>
-            <th data-toggle="true">Clave</th>
-            <th data-hide="phone, tablet">Nombre</th>
-            <th data-hide="phone, tablet">Opciones</th>
-          </tr>
-        </thead>
-        <div class="form-inline padding-bottom-15">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <select id="filteringStatus" class="form-control" style="visibility:hidden">
-                  <option value="">Todos</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-sm-6 text-right">
-              <div class="form-group">
-            </div>
-          </div>
-        </div>
-        <tbody>
-        @foreach ($categories as $category)
-          <tr id = "row{{ $category->id }}">
-            <td>{{ $category->id}}</td>
-            <td>{{ $category->name }}</td>
-            <td>
-
-                  
-                  
-                     <a href="/categorias/{{$category->id}}/edit"<button type="button" class="btn btn-xs btn-icon btn-info edit"><i class="icon md-edit" aria-hidden="true"></i></button></a>
-
-                  
-                  
-                         <!--<form class="" action="{{route('categorias.destroy',['id' => $category->id])}}" method="post">
-                      {{csrf_field()}}
-                      {{method_field('DELETE')}}-
-                    <button class="btn btn-xs btn-icon btn-danger delete" alt="{{$category->id}}" role="button">
-                        <i class="icon md-delete" aria-hidden="true"></i>
-                    </button>
-                  </div>
-              </div>    
-            </form>
-            </td>
-          </tr>
-            @endforeach
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="7">
-              <div class="text-right">
-                <ul class="pagination"></ul>
-              </div>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-	</div>-->
   <div class="page-content">
         <!-- Panel Basic -->
-        <div class="panel">
-        <div class="container">
-		     <div class="row">
-			  <div class="col-md-12 col-md-offset-2">
-      <button type="button" class="btn btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
-          <i class="icon md-plus" aria-hidden="true"></i></button>
-						<a href="#">
-			</div>
-		</div>
-	</div>
-          <header class="panel-heading">
-            <div class="panel-actions"></div>
-            <h3 class="panel-title">Categorias</h3>
-          </header>
-          <div class="panel-body">
+    <div class="panel">
+      <header class="panel-heading">
+        <div class="panel-actions">
+          <div class="col-md-14 col-md-offset-2">
+            <button onclick="window.location.href='/categorias/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+             <i class="icon md-plus" aria-hidden="true"></i></button>
+          </div>
+        </div>
+        <h3 class="panel-title">Categorias</h3>
+      </header>
+      <div class="panel-body">
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
@@ -137,35 +56,27 @@ LISTA DE  CATEGORIA
                 </tr>
               </tfoot>
               <tbody>
-        @foreach ($categories as $category)
-          <tr id = "row{{ $category->id }}">
-            <td>{{ $category->id}}</td>
-            <td>{{ $category->name }}</td>
-            <td>
-
-                  
-                  
-                     <a href="/categorias/{{$category->id}}/edit"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
-
-                     <a href="{{ route('categorias.destroy',$category->id)}}"<button type="button" onclick="return confirm('¿Seguro que deseas eliminar este registro?')"
-                    class="btn btn-icon btn-danger waves-effect waves-light waves-round" ><i class="icon md-delete" aria-hidden="true"></i></button></a>
-                        
-                    </button>
-                  </div>
-              </div>    
-            </form>
-            </td>
-          </tr>
-            @endforeach
-        </tbody>
+                  @foreach ($categories as $category)
+                  <tr id = "row{{ $category->id }}">
+                    <td>{{ $category->id}}</td>
+                    <td>{{ $category->name }}</td>
+                    <td>    
+                      <a href="/categorias/{{$category->id}}/edit"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
+                      <a href="{{ route('categorias.destroy',$category->id)}}"<button type="button" onclick="return confirm('¿Seguro que deseas eliminar este registro?')"class="btn btn-icon btn-danger waves-effect waves-light waves-round" ><i class="icon md-delete" aria-hidden="true"></i></button></a>      
+                    </td>
+                  </tr>
+                  @endforeach
+              </tbody>
             </table>
           </div>
         </div>
-        <!-- End Panel Basic -->
-</div>
+      </div>
+    </div>
+  </div>
+  <!-- End Panel Basic -->
+@endsection
 
-
-
+@section('footer')
 @endsection
 
 @section('delcategory')
