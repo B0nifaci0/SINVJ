@@ -24,6 +24,5 @@ class Line extends Model
          */
         protected $fillable = [
             'name',
-            'shop_id'
         ];
 }

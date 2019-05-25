@@ -34,6 +34,9 @@ Route::resource('tiendas', 'ShopController');
 //Lineas
 Route::resource('lineas', 'LineController');
 
+//Ventas
+Route::resource('ventas', 'SaleController');
+
 //Usuarios
 Route::resource('usuarios', 'UserController');
 
@@ -74,4 +77,8 @@ Route::get('lineas/{id}/destroy', [
 
 ]);
 
+Route::get('productos/{id}/destroy', [
+  'uses' => 'ProductController@destroy',
+  'as' => 'productos.destroy'
 
+  ]);

@@ -1,6 +1,6 @@
 @extends('layout.layoutdas')
 @section('title')
-LISTA DE  CATEGORIA
+LISTA DE  VENTAS
 @endsection
 
 @section('nav')
@@ -33,11 +33,11 @@ LISTA DE  CATEGORIA
       <header class="panel-heading">
         <div class="panel-actions">
           <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/categorias/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+            <button onclick="window.location.href='/ventas/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
         </div>
-        <h3 class="panel-title">Categorias</h3>
+        <h3 class="panel-title">Ventas</h3>
       </header>
       <div class="panel-body">
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
@@ -56,18 +56,13 @@ LISTA DE  CATEGORIA
                 </tr>
               </tfoot>
               <tbody>
-                  @foreach ($categories as $category)
-                  <tr id = "row{{ $category->id }}">
-                    <td>{{ $category->id}}</td>
-                    <td>{{ $category->name }}</td>
+                  @foreach ($sales as $sale)
+                  <tr id = "row{{ $sale->id }}">
+                    <td>{{ $sale->id}}</td>
+                    <td>{{ $sale->date }}</td>
                     <td>    
-                      <a href="/categorias/{{$category->id}}/edit"<button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round">
-                      <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      
-                      <button type="button" alt="{{ $category->id }}" 
-                      class="btn btn-icon btn-danger waves-effect waves-light waves-round delete" >
-                      <i class="icon md-delete" aria-hidden="true"></i></button>      
+                      <a href="/ventas/{{$sale->id}}/edit"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
+                      <a href="{{ route('ventas.destroy',$sale->id)}}"<button type="button" onclick="return confirm('¿Seguro que deseas eliminar este registro?')"class="btn btn-icon btn-danger waves-effect waves-light waves-round" ><i class="icon md-delete" aria-hidden="true"></i></button></a>      
                     </td>
                   </tr>
                   @endforeach
@@ -84,16 +79,16 @@ LISTA DE  CATEGORIA
 @section('footer')
 @endsection
 
-@section('delete-scripts')
+@section('delsale')
 <script type="text/javascript">
-/*$(".delete").click(function() {
+$(".delete").click(function() {
    var id = $(this).attr("alt");
    alertify.confirm("¿Seguro que desea eliminar este registro?",
      function (e) {
      if (e) {
        $.ajax({
          method: 'DELETE',
-         url: '/categorias/' + id,
+         url: '/ventas/' + id,
          success: function(){
            $("#row" + id).remove();
            alertify.success("Se ha <strong>desactivado</strong> el registro" + id);
@@ -104,34 +99,6 @@ LISTA DE  CATEGORIA
        });
      }
   });
-});*/
-console.log("a")
-$(document).ready(function() {
-  console.log("b")
-  $(".delete").click(function() {
-    var id = $(this).attr("alt");
-    console.log(id);
-
-    Swal.fire({
-      title: 'Confirmación',
-      text: "¿Seguro que desea eliminar este registro?",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire(
-          'Eliminado',
-          'El registro ha sido eliminado.',
-          'success'
-        )
-      }
-    })
-
-  });
 });
-
 </script>
 @endsection

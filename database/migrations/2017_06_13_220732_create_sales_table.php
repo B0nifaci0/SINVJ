@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLinesTable extends Migration
+class CreateSalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateLinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('lines', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->date('date');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateLinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lines');
+        Schema::dropIfExists('sales');
     }
 }

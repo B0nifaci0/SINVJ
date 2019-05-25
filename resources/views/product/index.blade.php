@@ -27,52 +27,46 @@ LISTAPRODUCTO
 				<strong>{{ session('mesage-delete') }}</strong>
 			</div>
 		@endif
-		<div class="panel panel-info panel-bordered" data-plugin="appear" data-animate="fade">
+		<div class="page-content">
+        <!-- Panel Basic -->
+    <div class="panel">
       <header class="panel-heading">
         <div class="panel-actions">
-          <a href="/productos/create">
-            <button class="btn-raised btn btn-primary btn-floating btn-sm" data-toggle="tooltip" data-original-title="Agregar">
-            <i class="icon md-plus" aria-hidden="true"></i>
-            </button>
-          </a>
+          <div class="col-md-14 col-md-offset-2">
+            <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+             <i class="icon md-plus" aria-hidden="true"></i></button>
+          </div>
         </div>
-        <h3 class="panel-title">Lista de Productos</h3>
+        <h3 class="panel-title">Productos</h3>
       </header>
-  <!-- Panel Filtering -->
-  <div class="row">
-  	<div class="page-content">
-		 <div class="col-md-12 container-fluid">
-		 <table class="table table-bordered table-hover toggle-circle" id="exampleFootableFiltering">
-				<thead>
-					<tr>
-						<th data-toggle="true">clave</th>
-						<th data-hide="phone, tablet">Nombre</th>
-						<th data-hide="phone, tablet">Pureza</th>
-						<th data-hide="phone, tablet">Peso</th>
-						<th data-hide="phone, tablet">Precio</th>
-						<th data-hide="phone, tablet">Imagen</th>
-            <th data-hide="phone, tablet">Activación-Admin </th>
-						<th data-hide="phone, tablet">Opciones</th>
-					</tr>
-				</thead>
-				<div class="form-inline padding-bottom-15">
-					<div class="row">
-						<div class="col-sm-6">
-							<div class="form-group">
-								<select id="filteringStatus" class="form-control" style="visibility:hidden">
-									<option value="">Todos</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-sm-6 text-right">
-							<div class="form-group">
-								<input id="filteringSearch" type="text" placeholder="Busqueda" class="form-control"
-									autocomplete="off">
-							</div>
-						</div>
-					</div>
-				</div>
-				<tbody>
+      <div class="panel-body">
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+              <thead>
+					
+
+						<tr>
+						      <th>Nombre</th>
+                   <th>Pureza</th>
+                   <th>Peso</th>
+                   <th>Precio</th>
+                   <th>Imagen</th>
+                   <th>Activación-Admin </th>
+                   <th>Opciones</th>
+                </tr>
+              </thead>
+              <tfoot>
+              <tr>
+							     <th>Nombre</th>
+                   <th>Pureza</th>
+                   <th>Peso</th>
+                   <th>Precio</th>
+                   <th>Imagen</th>
+                   <th>Activación-Admin </th>
+                   <th>Opciones</th>
+                </tr>
+              </tfoot>
+              <tbody>
+			<!--	{{ csrf_field() }}
 				@foreach ($products as $i => $product)
 					<tr id="row{{$product->id}}">
 						<td class="">{{ $product->id }}</td>
@@ -105,7 +99,7 @@ LISTAPRODUCTO
                       <!-- <form class="" action="{{route('productos.destroy',['id' => $product->id])}}" method="post">
                       {{csrf_field()}}
                       {{method_field('DELETE')}}
-											</form>-->
+											</form>
 										<button class="btn btn-xs btn-icon btn-danger delete" alt="<?= $product->id ?>" role="button"  id="confirmacion">
 												<i class="icon md-delete" aria-hidden="true"></i>
 										</button>
@@ -114,22 +108,51 @@ LISTAPRODUCTO
 								</div>
 							</td>
 					</tr>
-				@endforeach
-				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="8">
-							<div class="text-right">
-								<ul class="pagination"></ul>
-							</div>
+				@endforeach-->
+
+				@foreach ($products as $product)
+                  <tr id = "row{{ $product->id }}">
+									<td>{{ $product->name }}</td>
+						       <td>{{ $product->purity }}</td>
+						       <td>{{ $product->weigth }}</td>
+						       <td>{{ $product->price }}</td>
+						       <td> 
+							@php
+              $image = route('images',"app/public/upload/products/$product->image")
+							@endphp
+							<img width="100px" height="100px" src="{{ $image }}">
 						</td>
-					</tr>
-				</tfoot>
-			</table>
-		</div>
-	</div>
-</div>
-	</div>
+						<td>
+              @if($product->deleted_at != null)
+               <span class="label label-danger">Desactivado</span>
+
+             @else
+
+               <span class="label label-primary">Activado</span>
+            </td>
+              @endif
+						<td>
+										  
+                      <a href="/productos/{{$product->id}}/edit"<button type="button" 
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round">
+                      <i class="icon md-edit" aria-hidden="true"></i></button></a>
+                      
+                      <a href="{{ route('productos.destroy',$product->id)}}"<button type="button" 
+                      onclick="return confirm('¿Seguro que deseas eliminar este registro?')"
+                      class="btn btn-icon btn-danger waves-effect waves-light waves-round" >
+                      <i class="icon md-delete" aria-hidden="true"></i></button></a>      
+                    </td>
+                  </tr>
+                  @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Panel Basic -->
+
 @endsection
 
 <section>

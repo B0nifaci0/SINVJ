@@ -45,6 +45,10 @@
     <link rel="stylesheet" href={{{url('global/fonts/brand-icons/brand-icons.min.css')}}}>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
     
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <script src="sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="sweetalert2.min.css">
+
     <!--[if lt IE 9]>
     <script src={{{url('global/vendor/html5shiv/html5shiv.min.js')}}}></script>
     <![endif]-->
@@ -554,6 +558,13 @@
                           <span class="site-menu-title">Lineas</span>
                       </a>
                     </li>
+
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/ventas">
+                          <span class="site-menu-title">Ventas</span>
+                      </a>
+                    </li>
+
                   </ul>
                 </li>
                 <li class="site-menu-item">
@@ -654,5 +665,8 @@
     <script src={{{url('global/js/Plugin/datatables.js')}}}></script>
     <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
+    
+    @section('delete-scripts')
+    @show
 </body>
 </html>

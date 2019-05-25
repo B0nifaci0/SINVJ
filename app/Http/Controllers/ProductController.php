@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
 
+  public function __construct(){
+    $this->middleware('auth');
+  }
     
     public function index()
     {
-        $user = Auth::user();
-        $products = Product::withTrashed()
-                      ->where('shop_id', $user->shop->id)
-                      ->get();
-        return view('product/index', ['products' => $products]);
+      $products = Product::all();
+    return view('product/index', compact('products'));
     }
 
     /**
@@ -129,22 +129,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-          //Storage::delete("public/upload/products/{$product->image}");
-          $product->delete();
-         //return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
-    }
-
-    public function soft($id){
-      $products = Product::withTrashed()
-                ->where('id', $id)
-                ->get();
-              $product = $products[0];
-              $product->deleted_at = NULL;
-              $product->save();
-      //return $products;
-      //return redirect('/sucursales/{{{$branches->id}}}/producto')->with('mesage', 'El Producto  se ha activado exitosamente!');
-
+      Product::destroy($id);
+      return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
     }
 
     public function paypalItem(){
