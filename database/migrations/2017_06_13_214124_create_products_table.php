@@ -17,17 +17,11 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
+            $table->string('purity');
             $table->string('weigth');
             $table->string('price');
             $table->string('image');
             $table->string('nationality');
-            
-            $table->integer('status_id')->unsigned();
-            $table->foreign('status_id')->references('id')->on('status');
-
-            $table->integer('purity_id')->unsigned();
-            $table->foreign('purity_id')->references('id')->on('purities');
-
 
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
@@ -41,6 +35,7 @@ class CreateProductsTable extends Migration
 
             $table->softDeletes();
             $table->timestamps();
+
         });
     }
 
@@ -51,6 +46,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('product_images');
     }
 }

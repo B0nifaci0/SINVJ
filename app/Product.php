@@ -4,24 +4,23 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Branch;
+
 
 class Product extends Model
 {
-    //
     use SoftDeletes;
 
     protected $fillable = [
     	'name',
     	'description',
     	'weigth',
+    	'purity',
     	'price',
     	'image',
     	'nationality',
     	'category_id',
-        'shop_id',
-        'status_id',
-        'purity_id',
-        'category_id',
+    	'shop_id',
     	'branch_id'
     ];
 

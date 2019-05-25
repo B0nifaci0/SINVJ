@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Branch extends Model
 {
-    //
-
     use SoftDeletes;
 
     protected $fillable = [
@@ -34,5 +32,5 @@ class Branch extends Model
         return $this->hasMany(Product::class);
     }
 
-    
+
 }

@@ -7,12 +7,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class Category extends Authenticatable
 {
-    //
-    use Notifiable;
 
-    use SoftDeletes;
     // Tipos de suscripcion
     const shop_id = '';
 
@@ -20,7 +17,9 @@ class Category extends Model
     public  function scopeLast($query){
       return $query->orderBy("id");
     }
+    use Notifiable;
 
+   use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *

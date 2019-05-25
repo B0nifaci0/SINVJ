@@ -8,7 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
-{
+{ 
+
   // Tipos de usuario
   const SELLER = '1';
   const BUYER = '0';
@@ -32,7 +33,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+<<<<<<< HEAD
        'name','email','password', 'type_user', 'shop_id', 'deleted_at'
+=======
+       'name','email','password','deleted_at',
+>>>>>>> 9dae60bb5eb3499c15204c03f02fa027679fe342
     ];
 
     /**
