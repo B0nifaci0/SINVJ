@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Shop;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,7 +32,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-       'name','email','password', 'type_user', 'deleted_at'
+       'name','email','password', 'type_user', 'shop_id', 'deleted_at'
     ];
 
     /**
@@ -45,6 +46,6 @@ class User extends Authenticatable
 
     public function shop()
     {
-      return $this->hasOne(Shop::class);
+      return $this->belongsTo(Shop::class);
     }
 }

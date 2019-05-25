@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\User;
 use App\Branch;
 use App\Product;
 use Illuminate\Database\Eloquent\Model;
@@ -27,5 +28,10 @@ class Shop extends Model
     public function products()
     {
       return $this->hasMany(Product::class);
+    }
+
+    public function users()
+    {
+      return $this->hasMany(User::class);
     }
 }

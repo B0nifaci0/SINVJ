@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Shop;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
@@ -80,5 +81,11 @@ class BranchController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function test() {
+        $data = Shop::with('users')->where('id', 1)->get();
+
+        return response()->json($data);
     }
 }

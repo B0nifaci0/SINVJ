@@ -8,7 +8,6 @@ LISTA TIENDAS
 @endsection
 
 @section('content')
-
 <div class="page-content">
         <!-- Panel Basic -->
         <div class="panel">
@@ -428,7 +427,7 @@ LISTA TIENDAS
           </div>
         </div>
         <!-- End Panel Basic -->
-
+</div>
 @endsection
 
 
