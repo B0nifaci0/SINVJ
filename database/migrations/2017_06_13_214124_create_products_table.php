@@ -17,20 +17,25 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->string('purity');
             $table->string('weigth');
+            $table->string('observations');
             $table->string('price');
             $table->string('image');
-            $table->string('nationality');
 
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+
+            $table->integer('line_id')->unsigned();
+            $table->foreign('line_id')->references('id')->on('lines')->onDelete('cascade');
 
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
 
             $table->integer('branch_id')->unsigned();
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
+
+            $table->integer('status_id')->unsigned();
+            $table->foreign('status_id')->references('id')->on('statuss')->onDelete('cascade');
 
 
             $table->softDeletes();

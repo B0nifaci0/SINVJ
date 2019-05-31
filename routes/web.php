@@ -11,8 +11,9 @@
 |
 */
 
+
 Route::get('/', function () {
-    return view('auth/login');
+  return view('auth/login');
 });
 
 Auth::routes();
@@ -21,18 +22,26 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('tiendas','ShopController');
 
 
+Route::resource('tiendas','ShopController');
 
-//categorias
-Route::resource('categorias', 'CategoryController');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('test', 'BranchController@test');
 
-//Productos
-Route::resource('productos', 'ProductController');
 
-//Tiendas
-Route::resource('tiendas', 'ShopController');
+  //Productos
+  Route::resource('productos', 'ProductController');
+
+  //Tiendas
+  Route::resource('tiendas', 'ShopController');
+
+  
+});
 
 //Lineas
 Route::resource('lineas', 'LineController');
+//categorias
+Route::resource('categorias', 'CategoryController');
+
 
 //Ventas
 Route::resource('ventas', 'SaleController');
@@ -80,5 +89,10 @@ Route::get('lineas/{id}/destroy', [
 Route::get('productos/{id}/destroy', [
   'uses' => 'ProductController@destroy',
   'as' => 'productos.destroy'
+]);
 
-  ]);
+Route::get('categorias/{id}/destroy', [
+  'uses' => 'CategoryController@destroy',
+  'as' => 'categorias.destroy'
+]);
+

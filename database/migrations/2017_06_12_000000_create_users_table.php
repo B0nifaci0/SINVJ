@@ -20,7 +20,10 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->boolean('type_user');
             $table->string('suscription_type')->default(User::FREE);
+            $table->integer('shop_id')->unsigned();
+            $table->foreign('shop_id')->references('id')->on('shops');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

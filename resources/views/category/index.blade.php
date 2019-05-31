@@ -65,9 +65,14 @@ LISTA DE  CATEGORIA
                       class="btn btn-icon btn-info waves-effect waves-light waves-round">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
                       
-                      <button type="button" alt="{{ $category->id }}" 
+                      <!--<button type="button" alt="{{ $category->id }}" 
                       class="btn btn-icon btn-danger waves-effect waves-light waves-round delete" >
-                      <i class="icon md-delete" aria-hidden="true"></i></button>      
+                      <i class="icon md-delete" aria-hidden="true"></i></button> -->
+
+                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                       alt="{{$category->id}}" role="button">
+                        <i class="icon md-delete" aria-hidden="true"></i>
+                    </button>     
                     </td>
                   </tr>
                   @endforeach
@@ -119,14 +124,28 @@ $(document).ready(function() {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
       if (result.value) {
-        Swal.fire(
-          'Eliminado',
-          'El registro ha sido eliminado.',
-          'success'
-        )
+        $.ajax({
+          url:  '/categorias/' + id,
+          method: 'DELETE',
+          success: function () {
+            $("#row" + id).remove();
+            Swal.fire(
+              'Eliminado',
+              'El registro ha sido eliminado.'+ id,
+              'success'
+            )
+          }, 
+          error: function () {
+            Swal.fire(
+              'Eliminado',
+              'El registro no ha sido eliminado.'+ id,
+              'error'
+            )
+          }
+        })
       }
     })
 

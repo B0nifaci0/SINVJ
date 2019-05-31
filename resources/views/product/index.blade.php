@@ -117,11 +117,7 @@ LISTAPRODUCTO
 						       <td>{{ $product->weigth }}</td>
 						       <td>{{ $product->price }}</td>
 						       <td> 
-							@php
-              $image = route('images',"app/public/upload/products/$product->image")
-							@endphp
-							<img width="100px" height="100px" src="{{ $image }}">
-						</td>
+							@php 
 						<td>
               @if($product->deleted_at != null)
                <span class="label label-danger">Desactivado</span>

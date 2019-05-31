@@ -14,6 +14,7 @@ class User extends Authenticatable
   const SELLER = '1';
   const BUYER = '0';
   const ADMIN = '3';
+  const APP_ADMIN = '3';
 
 
   // Tipos de suscripcion
@@ -33,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-       'name','email','password','deleted_at',
+       'name','email','type_user' ,'suscription_type','password','deleted_at',
     ];
 
     /**
@@ -47,6 +48,6 @@ class User extends Authenticatable
 
     public function shop()
     {
-      return $this->hasOne(Shop::class);
+      return $this->belongsTo(Shop::class);
     }
 }

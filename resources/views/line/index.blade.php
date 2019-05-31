@@ -64,10 +64,16 @@ LISTA DE  LINEA
                       class="btn btn-icon btn-info waves-effect waves-light waves-round">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
                       
-                      <a href="{{ route('lineas.destroy',$line->id)}}"<button type="button" 
+                      <!--<a href="{{ route('lineas.destroy',$line->id)}}"<button type="button" 
                       onclick="return confirm('¿Seguro que deseas eliminar este registro?')"
                       class="btn btn-icon btn-danger waves-effect waves-light waves-round" >
-                      <i class="icon md-delete" aria-hidden="true"></i></button></a>      
+                      <i class="icon md-delete" aria-hidden="true"></i></button></a>-->   
+
+                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                       alt="{{$line->id}}" role="button">
+                        <i class="icon md-delete" aria-hidden="true"></i>
+                    </button> 
+
                     </td>
                   </tr>
                   @endforeach
@@ -85,26 +91,49 @@ LISTA DE  LINEA
 
 @endsection
 
-@section('delline')
+@section('del-scripts')
 <script type="text/javascript">
-$(".delete").click(function() {
-   var id = $(this).attr("alt");
-   alertify.confirm("¿Seguro que desea eliminar este registro?",
-     function (e) {
-     if (e) {
-       $.ajax({
-         method: 'DELETE',
-         url: '/lineas/' + id,
-         success: function(){
-           $("#row" + id).remove();
-           alertify.success("Se ha <strong>desactivado</strong> el registro" + id);
-         },
-         error: function(){
-           alertify.error("<strong>Ha ocurrido un error en la eliminación</strong>");
-         }
-       });
-     }
+console.log("a")
+$(document).ready(function() {
+  console.log("b")
+  $(".delete").click(function() {
+    var id = $(this).attr("alt");
+    console.log(id);
+
+    Swal.fire({
+      title: 'Confirmación',
+      text: "¿Seguro que desea eliminar este registro?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borralo!'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          url:  'lineas' + id,
+          method: 'DELETE',
+          success: function () {
+            $("#row" + id).remove();
+            Swal.fire(
+              'Eliminado',
+              'El registro ha sido eliminado.'+ id,
+              'success'
+            )
+          }, 
+          error: function () {
+            Swal.fire(
+              'Eliminado',
+              'El registro no ha sido eliminado.'+ id,
+              'error'
+            )
+          }
+        })
+      }
+    })
+
   });
 });
+
 </script>
 @endsection

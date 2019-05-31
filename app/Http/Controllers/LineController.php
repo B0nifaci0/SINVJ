@@ -38,6 +38,7 @@ class LineController extends Controller
     public function store(LineRequest $request)
     {
         $line = new Line($request->all());
+        $line->shop_id = Auth::user()->shop->id;
         $line->save();
 
     return redirect('/lineas')->with('mesage', 'la linea se ha agregado exitosamente!');

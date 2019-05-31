@@ -17,7 +17,7 @@ class Category extends Authenticatable
 
    use SoftDeletes;
     /**
-     * The attributes that are mass assignable.
+     * The attributes that  are mass assignable.
      *
      * @var array
      */
