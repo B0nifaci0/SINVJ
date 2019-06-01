@@ -51,7 +51,7 @@
             <button type="submit" class="btn btn-primary btn-block">Iniciar</button>
           </form>
 
-          <p>No tienes Cuenta? <a href={{{url('register')}}}>Registrarse</a></p>
+          <p>No tienes Cuenta? <a href={{{url('usuario')}}}>Registrarse</a></p>
 
           <footer class="page-copyright">
             <p>WEBSITE BY Digital-PineApple</p>

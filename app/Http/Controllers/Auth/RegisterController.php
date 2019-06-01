@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Shop;
+use App\Municipality;
+use App\State;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -28,8 +31,15 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
-
+    public function index(){
+        $states = State::all();
+        $municipalities = Municipality:: all();   
+        
+        return view('auth/register', compact('municipalities','states'));
+         
+    }
+        protected $redirectTo = '/home';
+        
     /**
      * Create a new controller instance.
      *
@@ -63,10 +73,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        
+        $shop= Shop::create([
+            'name' => $data['name_shop'],
+            'municipality_id' => $data['municipality_id'],
+            'state_id' => $data['state_id'],
+
+        ]);
+        \App\User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => bcrypt($data['password']),
+            'type_user' => $data['type_user'],
+            'shop_id' => $shop->id,
+            'municipality_id' =>$shop->municipality_id,
+            'state_id' =>$shop->state_id,
         ]);
     }
 }

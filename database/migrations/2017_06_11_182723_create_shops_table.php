@@ -16,11 +16,11 @@ class CreateShopsTable extends Migration
         Schema::create('shops', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('image');
-            $table->string('description');
+            $table->string('image')->default('NULL');
+            $table->string('description')->default('NULL');
             //asignamos la llave forane
-            $table->string('email');
-            $table->string('phone_number');
+            $table->string('email')->default('NULL');
+            $table->string('phone_number')->default('NULL');
             $table->integer('municipality_id')->unsigned();
             $table->foreign('municipality_id')->references('id')->on('municipalities');
             $table->integer('state_id')->unsigned();

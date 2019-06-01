@@ -21,6 +21,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
     ];
 });
+<<<<<<< Updated upstream:database/factories/ModelFactory.php
 $factory->define(App\State::class, function (Faker\Generator $faker) {
     return [ 
         'name' => $faker->name,
@@ -33,3 +34,6 @@ $factory->define(App\Municipality::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
     ];
 });
+=======
+
+>>>>>>> Stashed changes:database/factories/UserFactory.php

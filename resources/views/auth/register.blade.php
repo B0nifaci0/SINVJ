@@ -54,6 +54,36 @@
               <input id="password-confirm" type="password" class="form-control empty" id="inputPasswordCheck" name="password_confirmation" required>
               <label class="floating-label" for="inputPasswordCheck">{{ __('Confirmar Contraseña') }}</label>
             </div>
+            <div class="form-group form-material floating" data-plugin="formMaterial">
+              <input type="text" class="form-control empty{{ $errors->has('name_shop') ? ' is-invalid' : '' }}" id="name_shop" name="name_shop" value="{{ old('name_shop') }}" required autofocus>
+              <label class="floating-label" for="inputName">{{ __('Tienda') }}</label>
+              @if ($errors->has('name_shop'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('name_shop') }}</strong>
+                </span>
+            @endif
+            </div>
+            <div>
+              <input type="hidden" name='type_user' value='0'> 
+            </div>
+            <div class="col-md-12  visible-md visible-lg">
+                <label class="floating-label" for="inputState">{{ __('Estado') }}</label>
+                <select id="state" class="form-control round municipios" name="state_id" >
+                <option value="*">Seleccione Estado</option>
+                @foreach ($states as $state)
+                    <option value="<?= $state->id ?>"><?= $state->name ?></option>
+                @endforeach
+                </select>
+            </div>
+            <div class="col-md-12  visible-md visible-lg">
+              <label class="floating-label" for="inputMunicipality">{{ __('Municipio') }}</label>
+              <select id="municipality" class="form-control round municipios" name="municipality_id" >
+              <option value="*">Seleccione Municipio</option>
+                @foreach ($municipalities as $municipality)
+                  <option value="<?= $municipality->id ?>"><?= $municipality->name ?></option>
+                @endforeach
+              </select>
+            </div> 
             <div class="form-group clearfix">
               <div class="checkbox-custom checkbox-inline checkbox-primary float-left">
                 <input type="checkbox" id="inputCheckbox" name="term">

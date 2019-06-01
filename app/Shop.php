@@ -20,6 +20,7 @@ class Shop extends Model
         'schedules',
         'user_id',
         'municipality_id',
+        'state_id',
         'description'
     ];
 

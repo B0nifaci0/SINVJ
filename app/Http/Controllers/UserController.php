@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class UserController extends Controller
       //Sirve para la paginacion
       //$users=User::latest()->simplePaginate(1);
       //return $users;
-      return view('users/index', ['users' => $users]);
+      return view('User/index', ['users' => $users]);
     }
 
     /**
@@ -31,8 +32,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('users/add');
+    {   $shops=Shop::all();
+        return view('User/add', compact('shops'));
     }
 
     /**
