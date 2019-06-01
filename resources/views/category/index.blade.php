@@ -116,7 +116,6 @@ $(document).ready(function() {
   $(".delete").click(function() {
     var id = $(this).attr("alt");
     console.log(id);
-
     Swal.fire({
       title: 'Confirmación',
       text: "¿Seguro que desea eliminar este registro?",
@@ -128,13 +127,16 @@ $(document).ready(function() {
     }).then((result) => {
       if (result.value) {
         $.ajax({
+           headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
           url:  '/categorias/' + id,
           method: 'DELETE',
           success: function () {
             $("#row" + id).remove();
             Swal.fire(
               'Eliminado',
-              'El registro ha sido eliminado.'+ id,
+              'El registro ha sido eliminado.',
               'success'
             )
           }, 
