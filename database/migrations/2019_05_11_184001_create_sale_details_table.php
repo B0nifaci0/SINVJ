@@ -19,6 +19,7 @@ class CreateSaleDetailsTable extends Migration
             $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->integer('final_price'); 
             $table->timestamps();
         });
     }
