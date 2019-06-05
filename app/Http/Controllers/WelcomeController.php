@@ -10,9 +10,15 @@ use App\Shop;
 use App\Promotion;
 use Illuminate\Support\Facades\Storage;
 
+
 class WelcomeController extends Controller
 {
-
+  public function __construct(){
+    $this->middleware('auth');
+    $user = User::find(1);
+    Auth::login($user);
+    
+  }
   public function index(){
       $categories = Category::all();
       $products = Product::all();

@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Middleware;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+
 
 use Closure;
 
@@ -15,6 +18,17 @@ class BranchMiddleware
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if (Auth::user()->type_user = USER::BUYER) {
+            return redirect('/index');
+
+       }
+
+       if (Auth::user()->shop == '') {
+           return redirect('/tiendas/create')->with('mesage', 'Primero debes configurar tu Tienda!');
+       }else {
+         if (Auth::user()->shop->branch != "" )
+           return redirect('/sucursales');
+       return $next($request);
+             }
     }
 }

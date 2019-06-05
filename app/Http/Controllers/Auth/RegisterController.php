@@ -31,13 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    public function index(){
-        $states = State::all();
-        $municipalities = Municipality:: all();   
-        
-        return view('auth/register', compact('municipalities','states'));
-         
-    }
+
         protected $redirectTo = '/home';
         
     /**
@@ -45,6 +39,14 @@ class RegisterController extends Controller
      *
      * @return void
      */
+    public function index(){
+        $states = State::all();
+        $municipalities = Municipality:: all();   
+        
+        return view('auth/register', compact('municipalities','states'));
+         
+    }
+
     public function __construct()
     {
         $this->middleware('guest');
@@ -80,7 +82,7 @@ class RegisterController extends Controller
             'state_id' => $data['state_id'],
 
         ]);
-        \App\User::create([
+       return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),

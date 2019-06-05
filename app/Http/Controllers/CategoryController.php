@@ -40,7 +40,7 @@ class CategoryController extends Controller
     public function store(StoreBlogPost $request)
     {
         $category = new Category($request->all());
-        //$category->shop_id = Auth::user()->shop->id;
+        $category->shop_id = Auth::user()->shop->id;
         $category->save();
 
     return redirect('/categorias')->with('mesage', 'la categoria se ha agregado exitosamente!');
@@ -96,6 +96,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
       Category::destroy($id);
-  // return redirect('/categorias')->with('mesage-delete', 'La categoria  se ha eliminado exitosamente!');
+      // return redirect('/categorias')->with('mesage-delete', 'La categoria  se ha eliminado exitosamente!');
     }
 }

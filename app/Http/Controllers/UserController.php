@@ -44,8 +44,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create($request->all());
-        $user->save();
+      \App\User::create([
+        'name' => $request['name'],
+        'email' => $request['email'],
+        'password' => bcrypt($request['password']),
+        'type_user' => $request['type_user'],
+        'shop_id' => $request['shop_id'],
+    ]);
 
 
           return redirect('/usuarios')->with('mesage', 'El usuario  se ha agregado exitosamente!');

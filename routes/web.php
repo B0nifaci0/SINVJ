@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::get('logout', 'Auth\LoginController@logout');
 
 Auth::routes();
+
 Route::resource('usuario', 'Auth\RegisterController');
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -43,6 +44,9 @@ Route::group(['middleware' => ['auth']], function () {
 Route::resource('lineas', 'LineController');
 //categorias
 Route::resource('categorias', 'CategoryController');
+
+//Status
+Route::resource('status', 'StatusController');
 
 
 //Ventas
@@ -97,4 +101,12 @@ Route::get('categorias/{id}/destroy', [
   'uses' => 'CategoryController@destroy',
   'as' => 'categorias.destroy'
 ]);
+
+
+Route::resource('municipios', 'MunicipalityController');
+
+Route::resource('estados', 'StateController');
+
+// Definicion de recusrsos anidados
+Route::resource('estados.municipios', 'StateMunicipalityController');
 

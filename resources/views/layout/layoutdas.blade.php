@@ -696,7 +696,7 @@
         <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
         <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
   </body>
-=======
+
     <script src={{{url('global/js/Plugin/matchheight.js')}}}></script>
     <script src={{{url('global/js/Plugin/jvectormap.js')}}}></script>
     <script src={{{url('global/js/Plugin/peity.js')}}}></script>

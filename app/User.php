@@ -13,7 +13,6 @@ class User extends Authenticatable
   // Tipos de usuario
   const SELLER = '1';
   const BUYER = '0';
-  const ADMIN = '3';
   const APP_ADMIN = '3';
 
 

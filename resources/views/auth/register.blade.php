@@ -22,7 +22,7 @@
           <p>Ingresa Los Siguientes Datos Para Completar Tu Registro.</p>
 
           <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
-            @csrf            
+            {{ csrf_field() }}             
             <div class="form-group form-material floating" data-plugin="formMaterial">
               <input type="text" class="form-control empty{{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" value="{{ old('name') }}" required autofocus>
               <label class="floating-label" for="inputName">{{ __('Nombre') }}</label>
@@ -66,27 +66,23 @@
             <div>
               <input type="hidden" name='type_user' value='0'> 
             </div>
-            <div class="col-md-12  visible-md visible-lg">
+            <div class="col-md-12  col-md-offset-1 visible-md visible-lg">
                 <label class="floating-label" for="inputState">{{ __('Estado') }}</label>
-                <select id="state" class="form-control round municipios" name="state_id" >
+                <select id="estados_1" class="form-control round estados" name="state_id" alt="1" >
                 <option value="*">Seleccione Estado</option>
                 @foreach ($states as $state)
                     <option value="<?= $state->id ?>"><?= $state->name ?></option>
                 @endforeach
                 </select>
             </div>
-            <div class="col-md-12  visible-md visible-lg">
+            <div class="col-md-12 col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputMunicipality">{{ __('Municipio') }}</label>
-              <select id="municipality" class="form-control round municipios" name="municipality_id" >
-              <option value="*">Seleccione Municipio</option>
-                @foreach ($municipalities as $municipality)
-                  <option value="<?= $municipality->id ?>"><?= $municipality->name ?></option>
-                @endforeach
-              </select>
-            </div> 
+              <select id="municipios_1" name="municipality_id" class="form-control"></select>
+            </div>
+            <br>
             <div class="form-group clearfix">
               <div class="checkbox-custom checkbox-inline checkbox-primary float-left">
-                <input type="checkbox" id="inputCheckbox" name="term">
+                <input type="checkbox" id="inputCheckbox" name="term" required>
                 <label for="inputCheckbox"></label>
               </div>
               <p class="ml-35">Al hacer clic en Registrarse, usted acepta nuestros <a href="#"> Términos.</a>.</p>
@@ -115,6 +111,8 @@
 
       </div>
     </div>
+
+
     <!-- End Page -->
 <!--<div class="container">
     <div class="row justify-content-center">

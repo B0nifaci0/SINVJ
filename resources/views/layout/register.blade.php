@@ -108,5 +108,26 @@
         });
       })(document, window, jQuery);
     </script>
+        <script type="text/javascript">
+
+          $(".estados").change(function(){
+            var selector =  $(this).attr("alt");
+            var id_estado = $(this).val();
+            var url = '/estados/' + id_estado + '/municipios';
+            $.get(url, function(json){
+              $('#municipios_' + selector).empty();
+              //alert('#municipios_' + selector);
+                  $.each(json,function(i, municipio){
+                    $('#municipios_' + selector).append('<option value = '+ municipio.id +'>' + municipio.name +'</option>')
+                  });
+            });
+          });
+          $(".municipios").change(function(){
+                var id_municipio = $(this).val();
+                var selector = $(this).attr("alt");
+                $("#id_municipio_" + selector).val(id_municipio);
+              });
+      
+        </script>
   </body>
 </html>
