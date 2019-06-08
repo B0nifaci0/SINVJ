@@ -108,12 +108,6 @@ class ProductController extends Controller
       }
 
          $product->name = $request->name;
-         $product->description = $request->description;
-         $product->purity = $request->purity;
-         $product->weigth = $request->weigth;
-         $product->price = $request->price;
-         $product->nationality = $request->nationality;
-         $product->category_id = $request->category_id;
          $product->save();
 
       //return $request->all();

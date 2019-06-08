@@ -40,21 +40,6 @@ class ProductValidate extends FormRequest
         return[
             'name.required' =>'El nombre del producto  es requerido',
             'name.string' => 'Solo se admiten caracteres alfabeticos',
-            'description.required' =>'La descripción  del producto  es requerida',
-            'description.alpha' => 'Solo se admiten caracteres alfabeticos',
-            'purity.required' =>'El kilataje del producto  es requerido',
-            'purity.string' => 'Solo se admiten caracteres alfabeticos',
-             'purity.max' => 'Solo se admiten menos de 6 caracteres ejemplo 14kt',
-            'weigth.required' =>'El peso del producto  es requerido',
-            'weigth.numeric' => 'Solo se admiten caracteres numericos',
-            'price.required' =>'El precio del producto  es requerido',
-            'price.numeric' => 'Solo se adminen caracteres alfabeticos',
-            'image.required' =>'La imagen  del producto  es requerida',
-            'category_id.required' =>'La categoria del producto  es requerida',
-            //'branch_id.required' =>' La sucursal del producto  es requerida',
-
-
-
 
         ];
     }
