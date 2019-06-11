@@ -31,8 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('test', 'BranchController@test');
 
 
-  //Productos
-  Route::resource('productos', 'ProductController');
+  
 
   //Tiendas
   Route::resource('tiendas', 'ShopController');
@@ -51,6 +50,11 @@ Route::resource('status', 'StatusController');
 
 //Ventas
 Route::resource('ventas', 'SaleController');
+
+//Pagos
+Route::resource('pagos', 'PaymentsController');
+//Productos
+Route::resource('productos', 'ProductController');
 
 //Usuarios
 Route::resource('usuarios', 'UserController');

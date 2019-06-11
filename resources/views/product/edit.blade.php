@@ -30,38 +30,37 @@ MODIFICACIÓ PRODUCTO
         {{ method_field('PUT') }}
         <div class="form-group col-md-6">
           <label>Nombre</label>
-          <input type="text" class="form-control" name="name"  value="{{$product->name}}">
+          <input type="text" class="form-control" name="name"  value="{{$product->name}}" required>
         </div>
         <div class="form-group col-md-6">
           <label>Descripcion</label>
           <input type="text" class="form-control" name="description"  value="{{$product->description}}">
         </div>
         <div class="form-group col-md-6">
-          <label>Pureza</label>
-          <input type="text" class="form-control" name="purity"  value="{{$product->purity}}">
-        </div>
-        <div class="form-group col-md-6">
           <label>Peso</label>
           <input type="text" class="form-control" name="weigth"  value="{{$product->weigth}}">
+        </div>
+
+        <div class="form-group col-md-6">
+          <label>Observaciónes</label>
+          <input type="text" class="form-control" name="observations"  value="{{$product->observations}}">
         </div>
         <div class="form-group col-md-6">
           <label>Precio</label>
           <input type="text" class="form-control" name="price"  value="{{$product->price}}">
-        </div>
-        <div class="form-group col-md-6">
-          <label>Nacionalidad</label>
-          <input type="text" class="form-control" name="nationality"  value="{{$product->nationality}}">
         </div>
 
         <div class="form-group col-md-6">
           <label>Imagen:</label><br>
           <label for="file" class="btn btn-info">Seleccionar imagen</label>
           <input id="file" class="hidden" type="file" name="image" required>
-          <div id="preview-box" class="hidden">
-            <img id="preview" alt="Tu imagen" width="200px" height="200px" /><br>
-            <br> <strong id="image_name"></strong><br>
-          </div>
+          <div class="form-group col-md-6">
+							@php
+              $image = route('images',"app/public/upload/products/$product->image")
+							@endphp
+							<img width="100px" height="100px" src="{{ $image }}">
         </div>
+
         <div class="form-group col-md-6">
           <label>Categoria</label>
           <select id="categories" name="category_id" class="form-control">
@@ -71,6 +70,46 @@ MODIFICACIÓ PRODUCTO
                 @endforeach
           </select>
         </div>
+        <div class="form-group col-md-6">
+          <label>Lineas</label>
+          <select id="lines" name="line_id" class="form-control">
+                      @foreach($lines as $line)
+            <option value="">Seleccione uno</option>
+              <option value="{{$product->line_id}}">{{$line->name}}</option>
+                @endforeach
+          </select>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label>Tienda</label>
+          <select id="shop" name="shop_id" class="form-control">
+                      @foreach($shops as $shop)
+            <option value="">Seleccione uno</option>
+              <option value="{{$product->shop_id}}">{{$shop->name}}</option>
+                @endforeach
+          </select>
+        </div>
+ 
+        <div class="form-group col-md-6">
+          <label>Sucursal</label>
+          <select id="brach" name="branch_id" class="form-control">
+                      @foreach($branches as $branch)
+            <option value="">Seleccione uno</option>
+              <option value="{{$product->branch_id}}">{{$branch->name}}</option>
+                @endforeach
+          </select>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label>Status</label>
+          <select id="status" name="status_id" class="form-control">
+                      @foreach($statuses as $status)
+            <option value="">Seleccione uno</option>
+              <option value="{{$product->status_id}}">{{$status->name}}</option>
+                @endforeach
+          </select>
+        </div>
+
         <div class="form-group col-md-12">
           <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
         </div>
@@ -78,6 +117,7 @@ MODIFICACIÓ PRODUCTO
     </div>
   </div>
 </div>
+
 <script type="text/javascript">
 $(document).ready(function(){
   alert('hola mundo si entro');

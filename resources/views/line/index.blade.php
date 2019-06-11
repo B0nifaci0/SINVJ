@@ -44,6 +44,7 @@ LISTA DE  LINEA
                 <tr>
                   <th>Clave</th>
                   <th>Nombre</th>
+                  <th>Precio</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
@@ -51,6 +52,7 @@ LISTA DE  LINEA
               <tr>
                   <th>Clave</th>
                   <th>Nombre</th>
+                  <th>Precio</th>
                   <th>Opciones</th>
                 </tr>
               </tfoot>
@@ -59,20 +61,17 @@ LISTA DE  LINEA
                   <tr id = "row{{ $line->id }}">
                     <td>{{ $line->id}}</td>
                     <td>{{ $line->name }}</td>
+                    <td>{{ $line->price }}</td>
                     <td>    
-                      <a href="/lineas/{{$line->id}}/edit"<button type="button" 
+                    <a href="/lineas/{{$line->id}}/edit"<button type="button" 
                       class="btn btn-icon btn-info waves-effect waves-light waves-round">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      
-                      <!--<a href="{{ route('lineas.destroy',$line->id)}}"<button type="button" 
-                      onclick="return confirm('¿Seguro que deseas eliminar este registro?')"
-                      class="btn btn-icon btn-danger waves-effect waves-light waves-round" >
-                      <i class="icon md-delete" aria-hidden="true"></i></button></a>-->   
+                  
 
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
                        alt="{{$line->id}}" role="button">
                         <i class="icon md-delete" aria-hidden="true"></i>
-                    </button> 
+                    </button>
 
                     </td>
                   </tr>
@@ -91,7 +90,7 @@ LISTA DE  LINEA
 
 @endsection
 
-@section('del-scripts')
+@section('delete-lineas')
 <script type="text/javascript">
 console.log("a")
 $(document).ready(function() {
@@ -99,7 +98,6 @@ $(document).ready(function() {
   $(".delete").click(function() {
     var id = $(this).attr("alt");
     console.log(id);
-
     Swal.fire({
       title: 'Confirmación',
       text: "¿Seguro que desea eliminar este registro?",
@@ -111,13 +109,16 @@ $(document).ready(function() {
     }).then((result) => {
       if (result.value) {
         $.ajax({
-          url:  'lineas' + id,
+           headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          url:  '/lineas/' + id,
           method: 'DELETE',
           success: function () {
             $("#row" + id).remove();
             Swal.fire(
               'Eliminado',
-              'El registro ha sido eliminado.'+ id,
+              'El registro ha sido eliminado.',
               'success'
             )
           }, 

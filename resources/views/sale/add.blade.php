@@ -34,10 +34,20 @@ ALTA VENTA
       <form class="" action="/ventas" method="post">
       {{ csrf_field() }}    
         <div class="form-group col-md-6">
-          <label>Nombre Venta:</label>
+          <label>Fecha de la veta:</label>
           <input type="text" class="form-control" value="{{old('date')}}" name="date">
-
+        
+          <label>Folio_ota</label>
+          <input type="text" class="form-control" value="{{old('folio_nota')}}" name="folio_nota" required>
           
+          <div class="form-group col-md-6">
+          <label>Producto</label>
+          <select  name="product_id" class="form-control">
+            @foreach($products as $product)            
+              <option value="{{ $product->id }}" required>{{ $product->name }}</option>
+            @endforeach
+          </select>
+        </div>
 
         </div>
         <div class="form-group col-md-12">

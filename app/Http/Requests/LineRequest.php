@@ -25,6 +25,7 @@ class LineRequest extends FormRequest
     {
          return [
           'name' => 'required|alpha|max:200',
+          'price' => 'required|numeric',
         ];
     }
 
@@ -33,6 +34,8 @@ class LineRequest extends FormRequest
         return[
             'name.required' =>'El nombre de la Linea  es requerido',
             'name.alpha' => 'Solo se admiten caracteres alfabeticos en nombre ',
+            'price.required' =>'El precio  es requerido',
+            'price.numeric' => 'Solo se adminen caracteres alfabeticos',
         ];
     }
 }

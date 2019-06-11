@@ -19,13 +19,7 @@ class PaymentsController extends Controller
      */
      public function index()
        {
-        $subscription = new Subscription();
-
-        $paypal = new PayPal($subscription);
-
-        $payment = $paypal->generate();
-
-        return redirect($payment->getApprovalLink());
+        return view('payments/index');
        }
 
     /**
@@ -35,7 +29,6 @@ class PaymentsController extends Controller
      */
     public function create()
     {
-           return view('pagos/pagos');
         //
     }
 
@@ -47,17 +40,7 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        $subscription = new Subscription();
-        $paypal = new PayPal($subscription);
-        $response = $paypal->execute($request->paymentId, $request->PayerID);
-        if ($response->state =="approved") {
-          $details = Payment::createFromPaypalResponse($response, Auth::user()->id);
-          return redirect('/realizarpago')->with('mesage', 'El pago se ha realizado exitosamente!');
-
-          //dd($response);
-        }else{
-          return redirect('/realizarpago')->with('mesage-error', 'Ocurrio un error en el pago!');
-        }
+        //
     }
 
     /**

@@ -29,7 +29,12 @@ EDITAR LINEA
         {{ method_field('PUT') }}
         <div class="form-group col-md-6">
           <label>Nombre Linea:</label>
-          <input type="text" class="form-control" value="{{$line->name}}" name="name">
+          <input type="text" class="form-control" value="{{$line->name}}" name="name" required>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label>Precio:</label>
+          <input type="text" class="form-control" value="{{$line->price}}" name="price" required>
         </div>
         <div class="form-group col-md-12">
           <button type="submit" name="button" class="btn btn-primary">Guardar</button>

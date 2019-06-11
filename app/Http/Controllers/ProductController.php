@@ -6,6 +6,9 @@ use App\State;
 use App\Product;
 use App\Category;
 use App\Shop;
+use App\Line;
+use App\Branch;
+use App\Status;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,13 +20,20 @@ class ProductController extends Controller
 
   public function __construct(){
     $this->middleware('auth');
+    $this->middleware('shop');
+    $this->middleware('ProductBranchMiddleware');
+    $this->middleware('BranchMiddleware');
     
   }
     
     public function index()
     {
       $products = Product::all();
-    return view('product/index', compact('products'));
+      $user = Auth::user();
+        $categories = Category::all();
+        $lines = Line::all();
+        $statuses = Status::all();
+    return view('product/index', compact('user','products', 'categories','lines','statuses'));
     }
 
     /**
@@ -35,8 +45,11 @@ class ProductController extends Controller
     {
         $user = Auth::user();
         $categories = Category::all();
+        $lines = Line::all();
+        $shops = Shop::all();
+        $statuses = Status::all();
         //echo "$user";
-        return view('product/add', compact('user', 'categories'));
+        return view('product/add', compact('user', 'categories','lines','shops','statuses'));
     }
 
     /**
@@ -53,7 +66,6 @@ class ProductController extends Controller
 
          $product = new Product($request->all());
          $product->image = $filename;
-         $product->deleted_at = date('Y-m-d');
          $product->save();
         return redirect('/productos')->with('mesage', 'El producto se ha agregado exitosamente!');
       }
@@ -81,8 +93,11 @@ class ProductController extends Controller
     {
       $product = Product::find($id);
       $categorys = Category::all();
-
-      return view('product/edit', compact('product', 'categorys'));
+      $lines = Line::all();
+      $shops = Shop::all();
+      $branches = Branch::all();
+      $statuses = Status::all();
+      return view('product/edit', compact('product', 'categorys','lines','shops','branches','statuses'));
     }
 
     /**
@@ -108,6 +123,10 @@ class ProductController extends Controller
       }
 
          $product->name = $request->name;
+         $product->description = $request->description;
+         $product->weigth = $request->weigth;
+         $product->observations = $request->observations;
+         $product->price = $request->price;
          $product->save();
 
       //return $request->all();
@@ -125,14 +144,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
       Product::destroy($id);
-      return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
-    }
-
-    public function paypalItem(){
-      return \PaypalPayment::item()->setName($product->name)
-                                ->setDescription($product->description)
-                                ->setCurrency('USD')
-                                ->setQuantity(1)
-                                ->setPrice($this->pricing);
-    }
+     // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
+   
+}
 }

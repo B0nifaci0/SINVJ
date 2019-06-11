@@ -65,7 +65,7 @@ ALTA USUARIOS
                           </select>
                         </div>        
                     <div class="col-md-12 form-group">
-                      <button type="submit" name="button" class="btn btn-info">Guardar</button>
+                      <button type="submit" name="button"  class="btn btn-info">Guardar</button>
                     </div>
                 </div>
             </div>

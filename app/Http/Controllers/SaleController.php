@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sale;
+use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaleRequest;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,8 @@ class SaleController extends Controller
      */
     public function create()
     {
-        return view('sale/add');
+      $products = Product::all();
+        return view('sale/add', compact('products'));
     }
 
     /**
@@ -40,6 +42,8 @@ class SaleController extends Controller
     public function store(SaleRequest $request)
     {
         $sale = new Sale($request->all());
+        $sale->user_id = Auth::user();
+        $sale->branch_id = Auth::branch();
         $sale->save();
 
     return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
@@ -66,8 +70,9 @@ class SaleController extends Controller
     public function edit($id)
     {
       $sale = Sale::findOrFail($id);
+      $products = Product::all();
       //return $sale;
-      return view('sale/edit', compact('sale'));
+      return view('sale/edit', compact('sale','products'));
        }
 
 

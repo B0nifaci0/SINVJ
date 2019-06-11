@@ -24,6 +24,7 @@ class Sale extends Model
      */
     protected $fillable = [
         'date',
-        'shop_id'
+        'folio_nota',
+        
     ];
 }

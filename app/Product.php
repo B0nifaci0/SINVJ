@@ -14,14 +14,15 @@ class Product extends Model
     protected $fillable = [
     	'name',
     	'description',
-    	'weigth',
-    	'purity',
+      'weigth',
+      'observations',
     	'price',
     	'image',
-    	'nationality',
-    	'category_id',
-    	'shop_id',
-    	'branch_id'
+      'category_id',
+      'line_id',
+      'shop_id',
+      'branch_id',
+      'status_id'
     ];
 
     public function branch()
@@ -33,4 +34,8 @@ class Product extends Model
     {
       return $this->belongsTo(Shop::class);
     }
+
+    public function category(){
+      return $this->belongsTo(Category::class);
+ }
 }

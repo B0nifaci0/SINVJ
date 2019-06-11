@@ -25,32 +25,29 @@ ALTA PRODUCTO
         </div>
     @endif
       <h2>Nuevo producto</h2>
-      
       <form class="" action="/productos" method="POST" enctype="multipart/form-data">
+      {{ csrf_field() }} 
         <div class="form-group col-md-6">
           <label>Nombre</label>
-          <input type="text" class="form-control" name="name"  value="{{old('name')}}">
+          <input type="text" class="form-control" name="name"  value="{{old('name')}}" required>
         </div>
         <div class="form-group col-md-6">
           <label>Descripcion</label>
-          <input type="text" class="form-control" name="description"  value="{{old('description')}}">
-        </div>
-        <div class="form-group col-md-6">
-          <label>Pureza</label>
-          <input type="text" class="form-control" name="purity"  value="{{old('purity')}}">
+          <input type="text" class="form-control" name="description"  value="{{old('description')}}" required>
         </div>
         <div class="form-group col-md-6">
           <label>Peso</label>
-          <input type="text" class="form-control" name="weigth"  value="{{old('weigth')}}">
+          <input type="text" class="form-control" name="weigth"  value="{{old('weigth')}}" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Observaciones</label>
+          <input type="text" class="form-control" name="observations"  value="{{old('observations')}}" required>
         </div>
         <div class="form-group col-md-6">
           <label>Precio</label>
-          <input type="text" class="form-control" name="price"  value="{{old('price')}}">
+          <input type="text" class="form-control" name="price"  value="{{old('price')}}" required>
         </div>
-        <div class="form-group col-md-6">
-          <label>Nacionalidad</label>
-          <input type="text" class="form-control" name="nationality"  value="{{old('nationality')}}">
-        </div>
+      
         <!--<div class="form-group col-md-6">
           <label>size:</label>
           <input type="text" class="form-control" name="size"  value="{{old('size')}}" required>
@@ -79,6 +76,15 @@ ALTA PRODUCTO
         </div>
 
         <div class="form-group col-md-6">
+          <label>Linea</label>
+          <select  name="line_id" class="form-control">
+            @foreach($lines as $line)            
+              <option value="{{ $line->id }}" required>{{ $line->name }}</option>
+            @endforeach
+          </select>
+        </div>
+
+        <div class="form-group col-md-6">
          <input type="text" name="shop_id" value="{{ $user->shop->id }}" class="hidden">
         </div>
 
@@ -95,6 +101,15 @@ ALTA PRODUCTO
            </select>
         </div>
 
+        <div class="form-group col-md-6">
+          <label>Status</label>
+          <select  name="status_id" class="form-control">
+            @foreach($statuses as $status)            
+              <option value="{{ $status->id }}" required>{{ $status->name }}</option>
+            @endforeach
+          </select>
+        </div>
+
 
         <div class="form-group col-md-12">
           <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
@@ -103,7 +118,7 @@ ALTA PRODUCTO
     </div>
   </div>
 </div>
-@endsection
+
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -141,3 +156,4 @@ $(document).ready(function(){
 
 });
 </script>
+@endsection

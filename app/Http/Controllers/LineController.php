@@ -79,6 +79,7 @@ class LineController extends Controller
     {
         $line = Line::findOrFail($id);
         $line->name = $request->name;
+        $line->price = $request->price;
         $line->save();
         return redirect('/lineas')->with('mesage-update', 'La Linea se ha modificado exitosamente!');
     }
@@ -92,6 +93,6 @@ class LineController extends Controller
     public function destroy($id)
     {
         Line::destroy($id);
-   return redirect('/lineas')->with('mesage-delete', 'La Linea  se ha eliminado exitosamente!');
+   //return redirect('/lineas')->with('mesage-delete', 'La Linea  se ha eliminado exitosamente!');
     }
 }

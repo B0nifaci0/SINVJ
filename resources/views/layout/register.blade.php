@@ -33,6 +33,11 @@
     <link rel="stylesheet" href={{{url('global/fonts/brand-icons/brand-icons.min.css')}}}>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
     
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <script src="sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="sweetalert2.min.css">
+
+    
     <!--[if lt IE 9]>
     <script src="../../../global/vendor/html5shiv/html5shiv.min.js"></script>
     <![endif]-->
@@ -129,5 +134,24 @@
               });
       
         </script>
+
+
+<script type="text/javascript">
+console.log("a")
+$(document).ready(function() {
+  console.log("b")
+  $(".registro").click(function() {
+    var id = $(this).attr("alt");
+    console.log(id);
+    Swal.fire("Registro Exitoso", "Ahora debes loguearte", "success")
+      
+
+  });
+});
+
+</script>
+
+
+
   </body>
 </html>

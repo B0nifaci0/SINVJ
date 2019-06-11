@@ -41,138 +41,128 @@ LISTAPRODUCTO
       </header>
       <div class="panel-body">
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-              <thead>
-					
+            <thead>
+            {{ csrf_field() }}
 
-						<tr>
-						      <th>Nombre</th>
-                   <th>Pureza</th>
-                   <th>Peso</th>
-                   <th>Precio</th>
-                   <th>Imagen</th>
-                   <th>Activación-Admin </th>
-                   <th>Opciones</th>
-                </tr>
-              </thead>
-              <tfoot>
-              <tr>
-							     <th>Nombre</th>
-                   <th>Pureza</th>
-                   <th>Peso</th>
-                   <th>Precio</th>
-                   <th>Imagen</th>
-                   <th>Activación-Admin </th>
-                   <th>Opciones</th>
-                </tr>
-              </tfoot>
-              <tbody>
-			<!--	{{ csrf_field() }}
-				@foreach ($products as $i => $product)
-					<tr id="row{{$product->id}}">
-						<td class="">{{ $product->id }}</td>
-						<td>{{ $product->name }}</td>
-						<td>{{ $product->purity }}</td>
-						<td>{{ $product->weigth }}</td>
-						<td>{{ $product->price }}</td>
-						<td>
+          <tr>  <th>Clave</th>
+                <th>Nombre</th>
+                 <th>Descripción</th>
+                 <th>Peso</th>
+                 <th>Observaciónes</th>
+                 <th>Imagen</th>
+                 <th>Categoría</th>
+                 <th>Linea</th>
+                 <th>Sucursal</th>
+                 <th>Status</th>
+                 <th>Opciones</th>
+              </tr>
+            </thead>
+            <tfoot>
+            <tr>
+            <th>Clave</th>
+            <th>Nombre</th>
+                 <th>Descripción</th>
+                 <th>Peso</th>
+                 <th>Observaciónes</th>
+                 <th>Imagen</th>
+                 <th>Categoría</th>
+                 <th>Linea</th>
+                 <th>Sucursal</th>
+                 <th>Status</th>
+                 <th>Opciones</th>
+              </tr>
+            </tfoot>
+            <tbody>
+
+      @foreach ($products as $i => $product)
+        <tr id="row{{$product->id}}">
+                 <td>{{ $product->id }}</td> 
+                <td>{{ $product->name }}</td>
+                 <td>{{ $product->description }}</td>
+                 <td>{{ $product->weigth }}</td>
+                 <td>{{ $product->observations }}</td>
+                 
+                  <td>
 							@php
               $image = route('images',"app/public/upload/products/$product->image")
 							@endphp
 							<img width="100px" height="100px" src="{{ $image }}">
 						</td>
-						<td>
-              @if($product->deleted_at != null)
-               <span class="label label-danger">Desactivado</span>
-
-             @else
-
-               <span class="label label-primary">Activado</span>
-            </td>
-              @endif
-             <td>
-						  <a href="/productos/{{$product->id}}"<button type="button" class="btn btn-xs btn-icon btn-default"><i class="icon md-search" aria-hidden="true"></i></button></a>
-              @if($product->deleted_at != null)
-										<a href="/productos/{{$product->id}}/edit" <button type="button" disabled="disabled" class="btn btn-xs btn-icon btn-info edit"><i class="icon md-edit" aria-hidden="true" ></i></button></a>
-                    @else
-                    <a href="/productos/{{$product->id}}/edit"<button type="button" class="btn btn-xs btn-icon btn-info edit"><i class="icon md-edit" aria-hidden="true"></i></button></a>
-                    @endif
-                      <!-- <form class="" action="{{route('productos.destroy',['id' => $product->id])}}" method="post">
-                      {{csrf_field()}}
-                      {{method_field('DELETE')}}
-											</form>
-										<button class="btn btn-xs btn-icon btn-danger delete" alt="<?= $product->id ?>" role="button"  id="confirmacion">
-												<i class="icon md-delete" aria-hidden="true"></i>
-										</button>
-
-
-								</div>
-							</td>
-					</tr>
-				@endforeach-->
-
-				@foreach ($products as $product)
-                  <tr id = "row{{ $product->id }}">
-									<td>{{ $product->name }}</td>
-						       <td>{{ $product->purity }}</td>
-						       <td>{{ $product->weigth }}</td>
-						       <td>{{ $product->price }}</td>
-						       <td> 
-							@php 
-						<td>
-              @if($product->deleted_at != null)
-               <span class="label label-danger">Desactivado</span>
-
-             @else
-
-               <span class="label label-primary">Activado</span>
-            </td>
-              @endif
-						<td>
-										  
+                 <td>{{ $product->category_id }}</td>
+                 <td>{{ $product->line_id }}</td>
+                 <td>{{ $product->branch_id }}</td>
+                 <td>{{ $product->status_id }}</td>
+                 <td>    
+                
                       <a href="/productos/{{$product->id}}/edit"<button type="button" 
                       class="btn btn-icon btn-info waves-effect waves-light waves-round">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      
-                      <a href="{{ route('productos.destroy',$product->id)}}"<button type="button" 
-                      onclick="return confirm('¿Seguro que deseas eliminar este registro?')"
-                      class="btn btn-icon btn-danger waves-effect waves-light waves-round" >
-                      <i class="icon md-delete" aria-hidden="true"></i></button></a>      
-                    </td>
-                  </tr>
-                  @endforeach
-              </tbody>
-            </table>
-          </div>
+                  
+
+                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                       alt="{{$product->id}}" role="button">
+                        <i class="icon md-delete" aria-hidden="true"></i>
+                    </button>    
+                  </td>
+                </tr>
+                @endforeach
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
-  <!-- End Panel Basic -->
+</div>
+<!-- End Panel Basic -->
 
 @endsection
 
-<section>
-@section('delproduct')
+
+@section('delete-productos')
 <script type="text/javascript">
-$(".delete").click(function() {
-   var id = $(this).attr("alt");
-	 alert(id);
-   alertify.confirm("¿Seguro que desea eliminar este registro?",
-     function (e) {
-     if (e) {
-       $.ajax({
-         method: 'DELETE',
-         url: '/productos/' + id,
-         success: function(){
-           $("#row" + id).remove();
-           alertify.success("Se ha <strong>eliminado</strong> el registro" + id);
-         },
-         error: function(){
-           alertify.error("<strong>Ha ocurrido un error en la eliminación</strong>");
-         }
-       });
-     }
+console.log("a")
+$(document).ready(function() {
+  console.log("b")
+  $(".delete").click(function() {
+    var id = $(this).attr("alt");
+    console.log(id);
+    Swal.fire({
+      title: 'Confirmación',
+      text: "¿Seguro que desea eliminar este registro?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borralo!'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+           headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          url:  '/productos/' + id,
+          method: 'DELETE',
+          success: function () {
+            $("#row" + id).remove();
+            Swal.fire(
+              'Eliminado',
+              'El registro ha sido eliminado.',
+              'success'
+            )
+          }, 
+          error: function () {
+            Swal.fire(
+              'Eliminado',
+              'El registro no ha sido eliminado.'+ id,
+              'error'
+            )
+          }
+        })
+      }
+    })
+
   });
 });
+
 </script>
 @endsection

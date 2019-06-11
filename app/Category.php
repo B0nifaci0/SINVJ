@@ -30,4 +30,8 @@ class Category extends Authenticatable
         'shop_id'
     ];
 
+    public function product(){
+      return $this->hasMany(Product::class);
+ }
+
 }

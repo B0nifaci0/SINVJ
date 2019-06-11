@@ -16,10 +16,11 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
-            $table->date('folio_nota');
+            $table->integer('folio_nota');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('sucursal_id')->unsigned();
+            $table->integer('branch_id')->unsigned();
+            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

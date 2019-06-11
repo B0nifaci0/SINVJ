@@ -61,18 +61,18 @@ LISTA DE  CATEGORIA
                     <td>{{ $category->id}}</td>
                     <td>{{ $category->name }}</td>
                     <td>    
-                      <a href="/categorias/{{$category->id}}/edit"<button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round">
-                      <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      
-                      <!--<button type="button" alt="{{ $category->id }}" 
-                      class="btn btn-icon btn-danger waves-effect waves-light waves-round delete" >
-                      <i class="icon md-delete" aria-hidden="true"></i></button> -->
+                    <button class="btn btn-icon btn-info waves-effect waves-light waves-round edit"
+                      alt="{{$category->id}}" role="button">
+                      <i class="icon md-edit" aria-hidden="true"></i>
+                      </button>
+                  
 
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
                        alt="{{$category->id}}" role="button">
                         <i class="icon md-delete" aria-hidden="true"></i>
-                    </button>     
+                    </button> 
+                   
+
                     </td>
                   </tr>
                   @endforeach
@@ -89,27 +89,29 @@ LISTA DE  CATEGORIA
 @section('footer')
 @endsection
 
-@section('delete-scripts')
+@section('edit-categorias')
 <script type="text/javascript">
-/*$(".delete").click(function() {
-   var id = $(this).attr("alt");
-   alertify.confirm("¿Seguro que desea eliminar este registro?",
-     function (e) {
-     if (e) {
-       $.ajax({
-         method: 'DELETE',
-         url: '/categorias/' + id,
-         success: function(){
-           $("#row" + id).remove();
-           alertify.success("Se ha <strong>desactivado</strong> el registro" + id);
-         },
-         error: function(){
-           alertify.error("<strong>Ha ocurrido un error en la eliminación</strong>");
-         }
-       });
-     }
-  });
-});*/
+$(document).ready(function() { 
+  $(".edit").click(function() {
+    var id = $(this).attr("alt");
+    Swal.fire({
+      title: 'Confirmación',
+      text: "¿Seguro que desea editar este registro?",
+      type: 'info',
+      showCancelButton: true,
+      confirmButtonColor: "#357ebd",
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Editar!'
+    }),function() {
+          window.location = '/lineas' + id + '/edit';
+          },1000);
+        });
+      });
+</script>
+@endsection
+
+@section('delete-categorias')
+<script type="text/javascript">
 console.log("a")
 $(document).ready(function() {
   console.log("b")
@@ -121,8 +123,8 @@ $(document).ready(function() {
       text: "¿Seguro que desea eliminar este registro?",
       type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#d33' ,
+      cancelButtonColor: '#3085d6',
       confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
       if (result.value) {
@@ -156,3 +158,6 @@ $(document).ready(function() {
 
 </script>
 @endsection
+
+
+

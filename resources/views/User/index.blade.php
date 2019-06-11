@@ -67,11 +67,16 @@ LISTA DE  USUARIOS
                         <td>{{$user->shop_id }}</td>
                         <td>{{$user->type_user }}</td>
                         <td>    
-                      <a href="#"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      <a href="#"<button type="button" onclick="return confirm('¿Seguro que deseas eliminar este registro?')"class="btn btn-icon btn-danger waves-effect waves-light waves-round" ><i class="icon md-delete" aria-hidden="true"></i></button></a>
-                      <!--<a href="/usuarios/{{$user->id}}/edit"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
-                          <a href="{{ route('usuarios.destroy',$user->id)}}"<button type="button" onclick="return confirm('¿Seguro que deseas eliminar este registro?')"class="btn btn-icon btn-danger waves-effect waves-light waves-round" ><i class="icon md-delete" aria-hidden="true"></i></button></a>
-                      -->      
+
+                        <a href="/usuarios/{{$user->id}}/edit"<button type="button" 
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round">
+                      <i class="icon md-edit" aria-hidden="true"></i></button></a>
+                  
+
+                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                       alt="{{$user->id}}" role="button">
+                        <i class="icon md-delete" aria-hidden="true"></i>
+
                     </td>
                   </tr>
                   @endforeach
@@ -83,4 +88,53 @@ LISTA DE  USUARIOS
     </div>
   </div>
   <!-- End Panel Basic -->
+@endsection
+
+@section('delete-usuarios')
+<script type="text/javascript">
+console.log("a")
+$(document).ready(function() {
+  console.log("b")
+  $(".delete").click(function() {
+    var id = $(this).attr("alt");
+    console.log(id);
+    Swal.fire({
+      title: 'Confirmación',
+      text: "¿Seguro que desea eliminar este registro?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borralo!'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+           headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          url:  '/usuarios/' + id,
+          method: 'DELETE',
+          success: function () {
+            $("#row" + id).remove();
+            Swal.fire(
+              'Eliminado',
+              'El registro ha sido eliminado.',
+              'success'
+            )
+          }, 
+          error: function () {
+            Swal.fire(
+              'Eliminado',
+              'El registro no ha sido eliminado.'+ id,
+              'error'
+            )
+          }
+        })
+      }
+    })
+
+  });
+});
+
+</script>
 @endsection

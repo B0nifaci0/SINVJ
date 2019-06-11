@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="description" content="bootstrap material admin template">
     <meta name="author" content="">
-<meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <title>Dashboard | Remark Material Admin Template</title>
     
@@ -46,6 +45,8 @@
     <link rel="stylesheet" href={{{url('global/fonts/material-design/material-design.min.css')}}}>
     <link rel="stylesheet" href={{{url('global/fonts/brand-icons/brand-icons.min.css')}}}>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+
+    
     
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <script src="sweetalert2.min.js"></script>
@@ -577,6 +578,12 @@
                       </a>
                     </li>
 
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/pagos">
+                          <span class="site-menu-title">Pagos</span>
+                      </a>
+                    </li>
+
                   </ul>
                 </li>
                 <li class="site-menu-item">
@@ -707,10 +714,23 @@
     <script src={{{url('global/js/Plugin/datatables.js')}}}></script>
     <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
-    
-    @section('delete-scripts')
+    @section('edit-categorias')
     @show
-    @section('del-scripts')
+    @section('delete-categorias')
+    @show
+    @section('delete-lineas')
+    @show
+    @section('delete-ventas')
+    @show
+    @section('delete-productos')
+    @show
+    @section('delete-usuarios')
+    @show
+    @section('prueba-categorias')
+    @show
+    @section('confirm-categorias')
+    @show
+    @section('edit-categorias')
     @show
 </body>
 </html>

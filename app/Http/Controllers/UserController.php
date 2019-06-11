@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-      $users=User::withTrashed()->get();
+      $users=User::get();
       //Sirve para la paginacion
       //$users=User::latest()->simplePaginate(1);
       //return $users;
