@@ -82,7 +82,7 @@
             <br>
             <div class="form-group clearfix">
               <div class="checkbox-custom checkbox-inline checkbox-primary float-left">
-                <input type="checkbox" id="inputCheckbox" name="term" value='1' required>
+                <input type="checkbox" id="inputCheckbox" name="terms_conditions" value='1' required>
                 <label for="inputCheckbox"></label>
               </div>
               <p class="ml-35">Al hacer clic en Registrarse, usted acepta nuestros <a href="#"> Términos.</a>.</p>

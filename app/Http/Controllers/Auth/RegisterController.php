@@ -88,6 +88,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'type_user' => $data['type_user'],
             'shop_id' => $shop->id,
+            'terms_conditions' =>$data['terms_conditions'],
             'municipality_id' =>$shop->municipality_id,
             'state_id' =>$shop->state_id,
         ]);
