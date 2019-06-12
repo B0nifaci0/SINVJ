@@ -33,7 +33,10 @@ LISTA DE  USUARIOS
       <header class="panel-heading">
         <div class="panel-actions">
           <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/usuarios/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+            <button onclick="window.location.href='/usuarios/create'" 
+            type="button" class=" btn btn-sm small btn-floating  toggler-left 
+             btn-info waves-effect waves-light waves-round float-right"
+              data-toggle="tooltip" data-original-title="Editar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
         </div>
@@ -68,14 +71,17 @@ LISTA DE  USUARIOS
                         <td>{{$user->type_user }}</td>
                         <td>    
 
-                        <a href="/usuarios/{{$user->id}}/edit"<button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round">
+                        <button type="button" 
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round edit"
+                      alt="{{$user->id}}" role="button" data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
                   
 
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                       alt="{{$user->id}}" role="button">
+                       alt="{{$user->id}}" role="button"
+                       data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
+                    </button>
 
                     </td>
                   </tr>
@@ -88,6 +94,33 @@ LISTA DE  USUARIOS
     </div>
   </div>
   <!-- End Panel Basic -->
+@endsection
+
+@section('editar-usuarios')
+<script type="text/javascript">
+$(document).ready(function(){
+  setTimeout(function () {  
+    $(".edit").click(function() {
+    var id = $(this).attr("alt");
+      swal.fire({
+        title: 'Confirmación',
+        text: "¿Seguro que desea editar este registro?",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: "#357ebd",
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Editar!'
+      }).then(
+      function(result){
+        console.log('entra');
+        if(result.value){
+          console.log('entraalif');
+              window.location.href = '/usuarios/' + id + '/edit';
+            }
+      }); 
+    });},1000); 
+  });
+</script>
 @endsection
 
 @section('delete-usuarios')

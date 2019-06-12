@@ -40,19 +40,18 @@ PAGOS
                         <div class="pricing-title">Free</div>
                         <div class="pricing-price">
                           <span class="pricing-currency">$</span>
-                          <span class="pricing-amount">40</span>
-                          <span class="pricing-period">/ mo</span>
+                          <span class="pricing-amount">0</span>
                         </div>
                       </div>
                       <ul class="pricing-features">
                         <li>
-                          <strong>2 </strong> Cuentas de usuario</li>
+                          <strong>2 </strong> Cuentas de usuario <i class="icon fa-user"aria-hidden="true" ></i></li>
                         <li>
-                          <strong>1 </strong> Tienda</li>
+                          <strong>1 </strong> Tienda <i class="site-menu-icon md-store" aria-hidden="true"></i></li>
                         <li>
-                          <strong>1 </strong> Sucursal</li>
+                          <strong>1 </strong> Sucursal <i class="icon fa-map-marker"aria-hidden="true" ></i></li>
                         <li>
-                          <strong>1  </strong> Reporte</li>
+                          <strong>1  </strong> Reporte <i class="icon fa-file-text"aria-hidden="true" ></i> </li>
                       </ul>
                       <div class="pricing-footer">
                         <a class="btn btn-primary" role="button" href="#"><i class="icon md-long-arrow-right font-size-16 mr-15" aria-hidden="true"></i>Add to card</a>
@@ -65,19 +64,19 @@ PAGOS
                         <div class="pricing-title bg-blue-600">Premium</div>
                         <div class="pricing-price">
                           <span class="pricing-currency blue-600">$</span>
-                          <span class="pricing-amount blue-600">50</span>
-                          <span class="pricing-period">/ mo</span>
+                          <span class="pricing-amount blue-600">1500</span>
                         </div>
                       </div>
                       <ul class="pricing-features">
+                      <li>
+                          <strong>5</strong> Usuarios <i class="icon fa-users"aria-hidden="true"></i></li>
                         <li>
-                          <strong>2</strong> Tiendas</li>
+                          <strong>2</strong> Tiendas <i class="site-menu-icon md-store" aria-hidden="true"></i></li>
+                        
                         <li>
-                          <strong>5</strong> Usuarios</li>
+                          <strong>2</strong> Sucursales <i class="icon fa-map-marker" aria-hidden="true"></i></li>
                         <li>
-                          <strong>2</strong> Sucursales</li>
-                        <li>
-                          <strong>5</strong> Reportes</li>
+                          <strong>5</strong> Reportes <i class="icon fa-file-text" aria-hidden="true"></i></li>
                       </ul>
                       <div class="pricing-footer">
                         <a class="btn btn-primary" role="button" href="#"><i class="icon md-long-arrow-right font-size-16 mr-15" aria-hidden="true"></i>Add to card</a>
@@ -90,21 +89,24 @@ PAGOS
                         <div class="pricing-title">Pro</div>
                         <div class="pricing-price">
                           <span class="pricing-currency">$</span>
-                          <span class="pricing-amount">60</span>
-                          <span class="pricing-period">/ mo</span>
+                          <span class="pricing-amount">1800</span>
                         </div>
                       </div>
                       <ul class="pricing-features">
+                      <li>
+                          <strong>Usuarios</strong> Ilimitados <i class="icon fa-users" ></i></li>
                         <li>
-                          <strong>Tiendas</strong> Ilimitado</li>
+                          <strong>Tiendas</strong> Ilimitadas <i class="site-menu-icon md-store" aria-hidden="true"></i></li>
                         <li>
-                          <strong>Sucursales</strong> Ilimitado</li>
+                          <strong>Sucursales</strong> Ilimitadas <i class="icon fa-map-marker" aria-hidden="true"aria-hidden="true" ></i></li>
+                        
                         <li>
-                          <strong>Usuarios</strong> Ilimitado</li>
-                        <li>
-                          <strong>Reportes</strong> Ilimitado</li>
+                          <strong>Reportes</strong> Ilimitados <i class="icon fa-file-text" aria-hidden="true"></i></li>
                           <li>
-                          <strong>Soporte</strong> Por Telefono y Correo</li>
+                          <strong>Soporte</strong> Por Telefono <i class="icon fa-phone" aria-hidden="true" ></i> y Correo 
+                
+                  <i class="icon fa-envelope" aria-hidden="true"></i>
+                            </li>
                       </ul>
                       <div class="pricing-footer">
                         <a class="btn btn-primary" role="button" href="#"><i class="icon md-long-arrow-right font-size-16 mr-15" aria-hidden="true"></i>Add to card</a>

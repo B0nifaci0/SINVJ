@@ -135,21 +135,45 @@
       
         </script>
 
+<!--
+<script type="text/javascript">
+$(document).ready(function(){
+  setTimeout(function () {  
+    $(".registro").click(function() {
+    var id = $(this).attr("alt");
+      Swal.fire("Registro Exitoso", "Ahora debes loguearte", "success").then(
+      function(result){
+        console.log('entra');
+        if(result.value){
+          console.log('entraalif');
+              window.location.href = '/login/';
+            }
+      }); 
+    });},1000); 
+  });
+</script>-->
+
 
 <script type="text/javascript">
-console.log("a")
-$(document).ready(function() {
-  console.log("b")
-  $(".registro").click(function() {
+$(document).ready(function(){
+  setTimeout(function () {  
+    $(".registro").click(function() {
     var id = $(this).attr("alt");
-    console.log(id);
     Swal.fire("Registro Exitoso", "Ahora debes loguearte", "success")
-      
-
+    .then(
+      function(result){
+        console.log('entra');
+        if(result.value){
+          console.log('entraalif');
+              window.location.href = '/login/';
+            }
+      }); 
+    });},1000); 
   });
-});
-
 </script>
+
+
+
 
 
 

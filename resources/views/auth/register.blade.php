@@ -124,7 +124,7 @@ $(document).ready(function() {
   $(".registro").click(function() {
     var id = $(this).attr("alt");
     console.log(id);
-    Swal.fire("Registro ", "Ahora debes loguearte", "success")
+    Swal.fire("Regi ", "Ahora debes loguearte", "success")
       
 
   });

@@ -45,7 +45,7 @@
     <link rel="stylesheet" href={{{url('global/fonts/material-design/material-design.min.css')}}}>
     <link rel="stylesheet" href={{{url('global/fonts/brand-icons/brand-icons.min.css')}}}>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
-
+    <link rel="stylesheet" href={{{url('global/fonts/font-awesome/font-awesome.css')}}}>
     
     
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
@@ -558,28 +558,33 @@
                   <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/productos">
+                        <i class="site-menu-icon md-shopping-basket" aria-hidden="true"></i>
                           <span class="site-menu-title">Productos</span>
                       </a>
                     </li>
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/categorias">
+                        <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
                           <span class="site-menu-title">Categorias</span>
                       </a>
                     </li>
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/lineas">
+                        <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
                           <span class="site-menu-title">Lineas</span>
                       </a>
                     </li>
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/ventas">
+                        <i class="site-menu-icon md-shopping-cart" aria-hidden="true"></i>
                           <span class="site-menu-title">Ventas</span>
                       </a>
                     </li>
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/pagos">
+                        <i class="site-menu-icon md-money" aria-hidden="true"></i>
                           <span class="site-menu-title">Pagos</span>
                       </a>
                     </li>
@@ -718,19 +723,20 @@
     @show
     @section('delete-categorias')
     @show
+    @section('edit-lineas')
+    @show
     @section('delete-lineas')
     @show
     @section('delete-ventas')
     @show
     @section('delete-productos')
     @show
-    @section('delete-usuarios')
+    @section('editar-usuarios')
     @show
-    @section('prueba-categorias')
+    @section('delete-usuarios')
     @show
     @section('confirm-categorias')
     @show
-    @section('edit-categorias')
-    @show
+    
 </body>
 </html>

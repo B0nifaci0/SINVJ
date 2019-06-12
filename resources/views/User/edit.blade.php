@@ -10,6 +10,7 @@ EDITAR USUARIO
 
 @endsection
 @section('content')
+<div class="page">
 <div class="page-content">
   <div class="panel">
     <div class="panel-body">

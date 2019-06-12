@@ -32,7 +32,10 @@ LISTA DE  LINEA
       <header class="panel-heading">
         <div class="panel-actions">
           <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/lineas/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+            <button onclick="window.location.href='/lineas/create'" type="button" 
+            class=" btn btn-sm small btn-floating  toggler-left 
+             btn-info waves-effect waves-light waves-round float-right"
+             data-toggle="tooltip" data-original-title="Agregar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
         </div>
@@ -63,13 +66,15 @@ LISTA DE  LINEA
                     <td>{{ $line->name }}</td>
                     <td>{{ $line->price }}</td>
                     <td>    
-                    <a href="/lineas/{{$line->id}}/edit"<button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round">
+                    <button type="button" 
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round edit"
+                      alt="{{$line->id}}" role="button" data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
                   
 
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                       alt="{{$line->id}}" role="button">
+                       alt="{{$line->id}}" role="button"
+                       data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
                     </button>
 
@@ -90,6 +95,34 @@ LISTA DE  LINEA
 
 @endsection
 
+@section('edit-lineas')
+<script type="text/javascript">
+$(document).ready(function(){
+  setTimeout(function () {  
+    $(".edit").click(function() {
+    var id = $(this).attr("alt");
+      swal.fire({
+        title: 'Confirmación',
+        text: "¿Seguro que desea editar este registro?",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: "#357ebd",
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Editar!'
+      }).then(
+      function(result){
+        console.log('entra');
+        if(result.value){
+          console.log('entraalif');
+              window.location.href = '/lineas/' + id + '/edit';
+            }
+      }); 
+    });},1000); 
+  });
+</script>
+@endsection
+
+
 @section('delete-lineas')
 <script type="text/javascript">
 console.log("a")
@@ -103,8 +136,8 @@ $(document).ready(function() {
       text: "¿Seguro que desea eliminar este registro?",
       type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#d33' ,
+      cancelButtonColor: '#3085d6',
       confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
       if (result.value) {

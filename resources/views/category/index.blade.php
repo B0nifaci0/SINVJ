@@ -10,7 +10,6 @@ LISTA DE  CATEGORIA
 
 @endsection
 @section('content')
-<div class="page">
   <div class="panel-body">
 	@if (session('mesage'))	
 	<div class="alert alert-success">
@@ -27,17 +26,20 @@ LISTA DE  CATEGORIA
 				<strong>{{ session('mesage-delete') }}</strong>
 	</div>
 		@endif    
-  <div class="page-content">
+    <div class="page-content">
         <!-- Panel Basic -->
     <div class="panel">
       <header class="panel-heading">
         <div class="panel-actions">
           <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/categorias/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+            <button onclick="window.location.href='/categorias/create'" type="button"
+             class=" btn btn-sm small btn-floating  toggler-left 
+              btn-info waves-effect waves-light waves-round float-right "
+               data-toggle="tooltip" data-original-title="Agregar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
         </div>
-        <h3 class="panel-title">Categorias</h3>
+        <h3 class="panel-title">Categorías</h3>
       </header>
       <div class="panel-body">
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
@@ -62,13 +64,13 @@ LISTA DE  CATEGORIA
                     <td>{{ $category->name }}</td>
                     <td>    
                     <button class="btn btn-icon btn-info waves-effect waves-light waves-round edit"
-                      alt="{{$category->id}}" role="button">
+                      alt="{{$category->id}}" role="button" data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i>
                       </button>
-                  
+                      
 
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                       alt="{{$category->id}}" role="button">
+                       alt="{{$category->id}}" role="button"  data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
                     </button> 
                    
@@ -76,37 +78,43 @@ LISTA DE  CATEGORIA
                     </td>
                   </tr>
                   @endforeach
-              </tbody>
+                </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- End Panel Basic -->
+        <!-- End Panel Basic -->
+</div>
+
 @endsection
 
-@section('footer')
-@endsection
 
 @section('edit-categorias')
 <script type="text/javascript">
-$(document).ready(function() { 
-  $(".edit").click(function() {
+$(document).ready(function(){
+  setTimeout(function () {  
+    $(".edit").click(function() {
     var id = $(this).attr("alt");
-    Swal.fire({
-      title: 'Confirmación',
-      text: "¿Seguro que desea editar este registro?",
-      type: 'info',
-      showCancelButton: true,
-      confirmButtonColor: "#357ebd",
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Editar!'
-    }),function() {
-          window.location = '/lineas' + id + '/edit';
-          },1000);
-        });
-      });
+      swal.fire({
+        title: 'Confirmación',
+        text: "¿Seguro que desea editar este registro?",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: "#357ebd",
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Editar!'
+      }).then(
+      function(result){
+        console.log('entra');
+        if(result.value){
+          console.log('entraalif');
+              window.location.href = '/categorias/' + id + '/edit';
+            }
+      }); 
+    });},1000); 
+  });
 </script>
 @endsection
 

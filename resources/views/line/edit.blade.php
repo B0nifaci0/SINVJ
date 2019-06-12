@@ -27,20 +27,23 @@ EDITAR LINEA
       <form action="{{ route('lineas.update', ['id' => $line->id]) }}" method="POST">
         {{ csrf_field() }}
         {{ method_field('PUT') }}
-        <div class="form-group col-md-6">
-          <label>Nombre Linea:</label>
-          <input type="text" class="form-control" value="{{$line->name}}" name="name" required>
-        </div>
+        <div class="row">
+        <div class="form-group form-material col-md-6">
+               <label class="form-control-label" for="inputBasicLastName"> Nombre Linea:</label>
+               <input type="text" class="form-control"value="{{$line->name}}" name="name"> 
+               </div> 
+      <div class="form-group form-material col-md-6">
+               <label class="form-control-label" for="inputBasicLastName">Precio:</label>
+               <input type="text" class="form-control"value="{{$line->price}}" name="price"> 
+      </div>
 
-        <div class="form-group col-md-6">
-          <label>Precio:</label>
-          <input type="text" class="form-control" value="{{$line->price}}" name="price" required>
-        </div>
+
         <div class="form-group col-md-12">
           <button type="submit" name="button" class="btn btn-primary">Guardar</button>
         </div>
       </form>
     </div>
   </div>
+</div>
 </div>
 @endsection
