@@ -4,7 +4,6 @@ LISTA DE  CATEGORIA
 @endsection
 
 @section('nav')
-
 @endsection
 @section('menu')
 
@@ -71,8 +70,6 @@ LISTA DE  CATEGORIA
                        alt="{{$category->id}}" role="button">
                         <i class="icon md-delete" aria-hidden="true"></i>
                     </button> 
-                   
-
                     </td>
                   </tr>
                   @endforeach
@@ -86,30 +83,32 @@ LISTA DE  CATEGORIA
   <!-- End Panel Basic -->
 @endsection
 
-@section('footer')
-@endsection
-
-@section('edit-categorias')
+@section('confirm-edit-categorias')
 <script type="text/javascript">
-$(document).ready(function() { 
-  $(".edit").click(function() {
+$(document).ready(function(){
+  setTimeout(function () {  
+    $(".edit").click(function() {
     var id = $(this).attr("alt");
-    Swal.fire({
-      title: 'Confirmación',
-      text: "¿Seguro que desea editar este registro?",
-      type: 'info',
-      showCancelButton: true,
-      confirmButtonColor: "#357ebd",
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Editar!'
-    }),function() {
-          window.location = '/lineas' + id + '/edit';
-          },1000);
-        });
-      });
+      swal.fire({
+        title: 'Confirmación',
+        text: "¿Seguro que desea editar este registro?",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: "#357ebd",
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Editar!'
+      }).then(
+      function(result){
+        console.log('entra');
+        if(result.value){
+          console.log('entraalif');
+              window.location.href = '/categorias/' + id + '/edit';
+            }
+      }); 
+    });},1000); 
+  });
 </script>
 @endsection
-
 @section('delete-categorias')
 <script type="text/javascript">
 console.log("a")
