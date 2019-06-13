@@ -63,13 +63,15 @@ LISTA DE  CATEGORIA
                     <td>{{ $category->name }}</td>
                     <td>    
                     <button class="btn btn-icon btn-info waves-effect waves-light waves-round edit"
-                      alt="{{$category->id}}" role="button" data-toggle="tooltip" data-original-title="Editar">
+                      alt="{{$category->id}}" role="button" data-toggle="tooltip"
+                       data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i>
                       </button>
                       
 
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                       alt="{{$category->id}}" role="button"  data-toggle="tooltip" data-original-title="Borrar">
+                       alt="{{$category->id}}" role="button" 
+                        data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
                     </button> 
                     </td>
@@ -114,6 +116,7 @@ $(document).ready(function(){
   });
 </script>
 @endsection
+
 @section('delete-categorias')
 <script type="text/javascript">
 console.log("a")

@@ -718,7 +718,7 @@
     <script src={{{url('global/js/Plugin/datatables.js')}}}></script>
     <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
-    @section('confirm-edit-categorias')
+    @section('edit-categorias')
     @show
     @section('delete-categorias')
     @show
