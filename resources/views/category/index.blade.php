@@ -4,7 +4,6 @@ LISTA DE  CATEGORIA
 @endsection
 
 @section('nav')
-
 @endsection
 @section('menu')
 
@@ -73,8 +72,6 @@ LISTA DE  CATEGORIA
                        alt="{{$category->id}}" role="button"  data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
                     </button> 
-                   
-
                     </td>
                   </tr>
                   @endforeach
@@ -117,7 +114,6 @@ $(document).ready(function(){
   });
 </script>
 @endsection
-
 @section('delete-categorias')
 <script type="text/javascript">
 console.log("a")

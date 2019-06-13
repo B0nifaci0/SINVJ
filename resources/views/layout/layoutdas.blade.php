@@ -49,8 +49,7 @@
     
     
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <script src="sweetalert2.min.js"></script>
-  <link rel="stylesheet" href="sweetalert2.min.css">
+
 
     <!--DATA TABLES CSS-->
     <link rel="stylesheet" href={{{url('global/vendor/datatables.net-bs4/dataTables.bootstrap4.css')}}}>
@@ -672,7 +671,7 @@
     <!-- Config -->
     <script src={{{url('global/js/config/colors.js')}}}></script>
     <script src={{{url('assets/js/config/tour.js')}}}></script>
-    <script>Config.set({{{url('assets')}}}, {{{url('assets')}}});</script>
+    <!--<script>Config.set({{{url('assets')}}},{{{url('assets')}}});</script>-->
     
     <!-- Page -->
     <script src={{{url('assets/js/Site.js')}}}></script>
@@ -719,7 +718,7 @@
     <script src={{{url('global/js/Plugin/datatables.js')}}}></script>
     <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
-    @section('edit-categorias')
+    @section('confirm-edit-categorias')
     @show
     @section('delete-categorias')
     @show
