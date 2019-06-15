@@ -561,6 +561,14 @@
                           <span class="site-menu-title">Productos</span>
                       </a>
                     </li>
+
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/sucursales">
+                        <i class="site-menu-icon md-shopping-cart" aria-hidden="true"></i>
+                          <span class="site-menu-title">Sucursales</span>
+                      </a>
+                    </li>
+
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/categorias">
                         <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
@@ -578,6 +586,13 @@
                         <a class="animsition-link" href="/ventas">
                         <i class="site-menu-icon md-shopping-cart" aria-hidden="true"></i>
                           <span class="site-menu-title">Ventas</span>
+                      </a>
+                    </li>
+
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/status">
+                        <i class="site-menu-icon md-shopping-cart" aria-hidden="true"></i>
+                          <span class="site-menu-title">Estatus</span>
                       </a>
                     </li>
 

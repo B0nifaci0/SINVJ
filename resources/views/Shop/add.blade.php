@@ -28,7 +28,7 @@ ALTA TIENDAS
                 </ul>
               </div>
             @endif
-            <h2 class="panel-title">Informacion de la tienda</h2>
+            <h2 class="panel-title">Informacion de la Tienda</h2>
                   <div class="row">
                         <div class="form-group form-material col-md-6">
                             <label class="form-control-label" for="inputBasicFirstName">Nombre: </label>
@@ -56,8 +56,8 @@ ALTA TIENDAS
                             <div class="example-wrap">
                               <label>Ingresa Imagen de tu Tienda.</label>
                               <input type="file" name="image" data-plugin="dropify"  required>
-                          </div>
-                    </div>
+                        </div>
+                  </div>
                     <div class="col-md-12 form-group">
                       <button id="ok" type="submit" class="btn btn-info">Guardar</button>
                     </div>

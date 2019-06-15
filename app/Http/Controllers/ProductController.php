@@ -28,12 +28,12 @@ class ProductController extends Controller
     
     public function index()
     {
-      $products = Product::all();
-      $user = Auth::user();
+        $products = Product::all();
+        $user = Auth::user();
         $categories = Category::all();
         $lines = Line::all();
         $statuses = Status::all();
-    return view('product/index', compact('user','products', 'categories','lines','statuses'));
+        return view('product/index', compact('user','products', 'categories','lines','statuses'));
     }
 
     /**
