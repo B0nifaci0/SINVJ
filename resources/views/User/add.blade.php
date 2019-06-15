@@ -24,7 +24,7 @@ ALTA USUARIOS
               <div class="alert alert-danger" role="alert">
                 <ul>
                   @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li>{{ $error }}</li> 
                   @endforeach
                 </ul>
               </div>
@@ -47,7 +47,7 @@ ALTA USUARIOS
                             <label class="form-control-label" for="inputBasicFirstName">Confirmar Contraseña: </label>
                             <input type="password" name="password_confirm" class="form-control">
                         </div>
-                        <div class="form-group form-material col-md-6">
+                        <div class="col-md-offset-1 visible-md visible-lg col-md-6">
                           <label class="form-control-label" for="inputShop">Seleccione una Tienda</label>
                           <select id="shops" class="form-control round tiendas" name="shop_id" >
                           <option value="*">Seleccione Tienda</option>
@@ -56,14 +56,17 @@ ALTA USUARIOS
                             @endforeach
                           </select>
                         </div> 
-                        <div class="form-group form-material col-md-6">
+                        <div class="col-md-offset-1 visible-md visible-lg col-md-6">
                           <label class="form-control-label" for="inputTypeUser">Tipo de Usuario: </label>
                           <select id="type_user" class="form-control round type_user" name="type_user" >
                             <option value="*">Seleccione Tipo de Usuario</option>
                             <option value="1" name='type_user'>Sub-Administrador</option>
                             <option value="2" name='type_usyer'>Colaborador</option>
                           </select>
-                        </div>        
+                        </div>
+                        <div>
+                          <input type="hidden" name="terms_conditions" value="1">
+                          </div>       
                     <div class="col-md-12 form-group">
                       <button type="submit" name="button"  class="btn btn-info">Guardar</button>
                     </div>

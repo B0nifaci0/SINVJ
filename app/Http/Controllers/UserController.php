@@ -50,6 +50,7 @@ class UserController extends Controller
         'password' => bcrypt($request['password']),
         'type_user' => $request['type_user'],
         'shop_id' => $request['shop_id'],
+        'terms_conditions' => $request['terms_conditions'],
     ]);
 
 
