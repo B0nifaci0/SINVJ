@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use Alert;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBlogPost;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,10 @@ class CategoryController extends Controller
         $category->shop_id = Auth::user()->shop->id;
         $category->save();
 
-    return redirect('/categorias')->with('mesage', 'la categoria se ha agregado exitosamente!');
+
+
+        return redirect('/categorias')->with('mesage', 'la linea se ha agregado exitosamente!');
+   
     }
 
     /**

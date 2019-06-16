@@ -71,9 +71,9 @@ LISTA DE  USUARIOS
                         <td>{{$user->type_user }}</td>
                         <td>    
 
-                        <button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round edit"
-                      alt="{{$user->id}}" role="button" data-toggle="tooltip" data-original-title="Editar">
+                        <a href="/usuarios/{{$user->id}}/edit"<button type="button" 
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                      data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
                   
 

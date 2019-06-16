@@ -718,11 +718,8 @@
     <script src={{{url('global/js/Plugin/datatables.js')}}}></script>
     <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
-    @section('edit-categorias')
-    @show
+    
     @section('delete-categorias')
-    @show
-    @section('edit-lineas')
     @show
     @section('delete-lineas')
     @show
@@ -730,11 +727,7 @@
     @show
     @section('delete-productos')
     @show
-    @section('editar-usuarios')
-    @show
     @section('delete-usuarios')
-    @show
-    @section('confirm-categorias')
     @show
     
 </body>

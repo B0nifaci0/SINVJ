@@ -66,10 +66,10 @@ LISTA DE  LINEA
                     <td>{{ $line->name }}</td>
                     <td>{{ $line->price }}</td>
                     <td>    
-                    <button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round edit"
-                      alt="{{$line->id}}" role="button" data-toggle="tooltip" data-original-title="Editar">
+                    <a href="/lineas/{{$line->id}}/edit"<button type="button" 
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
+                         
                   
 
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
@@ -94,7 +94,7 @@ LISTA DE  LINEA
 
 
 @endsection
-
+<!--
 @section('edit-lineas')
 <script type="text/javascript">
 $(document).ready(function(){
@@ -120,7 +120,7 @@ $(document).ready(function(){
     });},1000); 
   });
 </script>
-@endsection
+@endsection-->
 
 
 @section('delete-lineas')

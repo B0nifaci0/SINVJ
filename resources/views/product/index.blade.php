@@ -33,7 +33,10 @@ LISTAPRODUCTO
       <header class="panel-heading">
         <div class="panel-actions">
           <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+            <button onclick="window.location.href='/productos/create'" 
+            type="button" class=" btn btn-sm small btn-floating 
+             toggler-left  btn-info waves-effect waves-light waves-round float-right"
+             data-toggle="tooltip" data-original-title="Agregar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
         </div>
@@ -88,21 +91,23 @@ LISTAPRODUCTO
 							@endphp
 							<img width="100px" height="100px" src="{{ $image }}">
 						</td>
-                 <td>{{ $product->category_id }}</td>
-                 <td>{{ $product->line_id }}</td>
-                 <td>{{ $product->branch_id }}</td>
-                 <td>{{ $product->status_id }}</td>
+                 <td>{{ $product->category->name }}</td>
+                 <td>{{ $product->line->name }}</td>
+                 <td>{{ $product->branch->name }}</td>
+                 <td>{{ $product->status->name }}</td>
                  <td>    
                 
-                      <a href="/productos/{{$product->id}}/edit"<button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round">
+                 <a href="/productos/{{$product->id}}/edit"<button type="button" 
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                      data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                  
+                      
 
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                       alt="{{$product->id}}" role="button">
+                       alt="{{$product->id}}" role="button" 
+                        data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
-                    </button>    
+                    </button>   
                   </td>
                 </tr>
                 @endforeach
@@ -116,7 +121,33 @@ LISTAPRODUCTO
 <!-- End Panel Basic -->
 
 @endsection
-
+<!--
+@section('edit-categorias')
+<script type="text/javascript">
+$(document).ready(function(){
+  setTimeout(function () {  
+    $(".edit").click(function() {
+    var id = $(this).attr("alt");
+      swal.fire({
+        title: 'Confirmación',
+        text: "¿Seguro que desea editar este registro?",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: "#357ebd",
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Editar!'
+      }).then(
+      function(result){
+        console.log('entra');
+        if(result.value){
+          console.log('entraalif');
+              window.location.href = '/productos/' + id + '/edit';
+            }
+      }); 
+    });},1000); 
+  });
+</script>
+@endsection-->
 
 @section('delete-productos')
 <script type="text/javascript">

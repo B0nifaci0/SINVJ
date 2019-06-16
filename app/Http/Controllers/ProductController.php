@@ -28,9 +28,10 @@ class ProductController extends Controller
     
     public function index()
     {
-      $products = Product::all();
+      $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
+      ///$categories = Category::with('category')->get();
       $user = Auth::user();
-        $categories = Category::all();
+        //return $products;
         $lines = Line::all();
         $statuses = Status::all();
     return view('product/index', compact('user','products', 'categories','lines','statuses'));
@@ -67,7 +68,7 @@ class ProductController extends Controller
          $product = new Product($request->all());
          $product->image = $filename;
          $product->save();
-        return redirect('/productos')->with('mesage', 'El producto se ha agregado exitosamente!');
+        return redirect('/productos')->with('success', true);
       }
     }
 

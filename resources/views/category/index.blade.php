@@ -61,12 +61,14 @@ LISTA DE  CATEGORIA
                   <tr id = "row{{ $category->id }}">
                     <td>{{ $category->id}}</td>
                     <td>{{ $category->name }}</td>
-                    <td>    
-                    <button class="btn btn-icon btn-info waves-effect waves-light waves-round edit"
-                      alt="{{$category->id}}" role="button" data-toggle="tooltip"
-                       data-original-title="Editar">
-                      <i class="icon md-edit" aria-hidden="true"></i>
-                      </button>
+                    <td> 
+
+                    <a href="/categorias/{{$category->id}}/edit"<button type="button" 
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                      data-toggle="tooltip" data-original-title="Editar">
+                      <i class="icon md-edit" aria-hidden="true"></i></button></a>  
+                     
+                      
                       
 
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
@@ -90,32 +92,6 @@ LISTA DE  CATEGORIA
 @endsection
 
 
-@section('edit-categorias')
-<script type="text/javascript">
-$(document).ready(function(){
-  setTimeout(function () {  
-    $(".edit").click(function() {
-    var id = $(this).attr("alt");
-      swal.fire({
-        title: 'Confirmación',
-        text: "¿Seguro que desea editar este registro?",
-        type: 'info',
-        showCancelButton: true,
-        confirmButtonColor: "#357ebd",
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Editar!'
-      }).then(
-      function(result){
-        console.log('entra');
-        if(result.value){
-          console.log('entraalif');
-              window.location.href = '/categorias/' + id + '/edit';
-            }
-      }); 
-    });},1000); 
-  });
-</script>
-@endsection
 
 @section('delete-categorias')
 <script type="text/javascript">
