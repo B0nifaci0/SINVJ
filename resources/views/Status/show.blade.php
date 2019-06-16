@@ -1,6 +1,6 @@
 @extends('layout.layoutdas')
 @section('title')
-SUCURSAl
+ESTATUS
 @endsection
 
 @section('nav')
@@ -14,13 +14,13 @@ SUCURSAl
   <div class="panel panel-info panel-bordered" data-plugin="appear" data-animate="fade">
     <header class="panel-heading">
       <div class="panel-actions">
-        <a href="/lineas/{{$line->id}}/edit">
+        <a href="/status/{{$status->id}}/edit">
           <button class="btn-raised btn btn-primary btn-floating btn-sm" data-toggle="tooltip" data-original-title="Editar">
             <i class="icon md-edit" aria-hidden="true"></i>
           </button>
         </a>
       </div>
-      <h3 class="panel-title">Promoción</h3>
+      <h3 class="panel-title">Estatus</h3>
     </header>
       <div class="table-responsive container-fluid">
 				<div class="panel-body">
@@ -28,7 +28,8 @@ SUCURSAl
 						<tbody>
 								<tr>
 									<td> <strong>Nombre</strong></td>
-									<td>{{$line->name}}</td>
+                                    <td>{{$status->name}}</td>
+                                    <td>{{$status->shop_id}}</td>
 								</tr>
 						
 						</tbody>

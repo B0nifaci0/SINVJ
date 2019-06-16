@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 
+
 class UserController extends Controller
 {
     /**
@@ -20,9 +21,6 @@ class UserController extends Controller
     public function index()
     {
       $users=User::get();
-      //Sirve para la paginacion
-      //$users=User::latest()->simplePaginate(1);
-      //return $users;
       return view('User/index', ['users' => $users]);
     }
 
@@ -50,6 +48,7 @@ class UserController extends Controller
         'password' => bcrypt($request['password']),
         'type_user' => $request['type_user'],
         'shop_id' => $request['shop_id'],
+        'terms_conditions' => $request['terms_conditions'],
     ]);
 
 
@@ -71,7 +70,7 @@ class UserController extends Controller
       return redirect('/usuarios');
     }
       //return $users;
-      return view('users/show',  compact('users','branches'));
+      return view('User/show',  compact('users','branches'));
     }
 
     /**
@@ -83,8 +82,11 @@ class UserController extends Controller
     public function edit($id)
     {
       $users = User::findOrFail($id);
-      return $users;
-      return view('users/edit', compact('users'));
+      $shops=Shop::all();
+
+      //return $users;
+      return view('User/edit', compact('users','shops'));
+      
     }
 
     /**
@@ -97,23 +99,21 @@ class UserController extends Controller
     public function update(Request $request,$id)
     {
       $users = User::findOrFail($id);
-        $users->username = $request->username;
+        $users->name = $request->name;
         $users->email = $request->email;
-        $users->password = $request->password;
+        $users->password = bcrypt($request->password);
+
         $users->save();
 
-        if ($user = false) {
-            return view('users/edit', compact('users'));
+        if ($users = false) {
+           return view('User/edit', compact('users'));
 
         }else{
           $users=User::all();
 
-            return view('users/index', ['users' => $users])->with('mesage-update', 'El usuario se ha modificado exitosamente!');
+            return redirect('/usuarios')->with('mesage-update', 'El usuario se ha modificado exitosamente!');
 
         }
-
-
-
     }
 
     /**

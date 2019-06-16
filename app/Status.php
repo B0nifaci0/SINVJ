@@ -23,6 +23,7 @@ class Status extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'shop_id',
     ];
-
+    protected $table = 'statuss';
 }

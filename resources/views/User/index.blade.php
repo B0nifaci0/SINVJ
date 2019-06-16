@@ -36,7 +36,7 @@ LISTA DE  USUARIOS
             <button onclick="window.location.href='/usuarios/create'" 
             type="button" class=" btn btn-sm small btn-floating  toggler-left 
              btn-info waves-effect waves-light waves-round float-right"
-              data-toggle="tooltip" data-original-title="Editar">
+              data-toggle="tooltip" data-original-title="Agregar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
         </div>
@@ -80,8 +80,8 @@ LISTA DE  USUARIOS
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
                        alt="{{$user->id}}" role="button"
                        data-toggle="tooltip" data-original-title="Borrar">
-                        <i class="icon md-delete" aria-hidden="true"></i>
-                    </button>
+                      <i class="icon md-delete" aria-hidden="true"></i>
+                      </button>
 
                     </td>
                   </tr>

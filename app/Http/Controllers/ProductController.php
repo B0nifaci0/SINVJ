@@ -34,7 +34,7 @@ class ProductController extends Controller
         //return $products;
         $lines = Line::all();
         $statuses = Status::all();
-    return view('product/index', compact('user','products', 'categories','lines','statuses'));
+        return view('product/index', compact('user','products', 'categories','lines','statuses'));
     }
 
     /**

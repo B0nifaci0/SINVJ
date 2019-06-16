@@ -1,7 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
-
+use App\User;
+use App\Status as estatus;
+use App\Shop;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class StatusController extends Controller
@@ -13,7 +16,8 @@ class StatusController extends Controller
      */
     public function index()
     {
-        return view('Status/index');
+        $sta = estatus:: all();
+        return view('Status/index',compact('sta'));
     }
 
     /**
@@ -23,7 +27,8 @@ class StatusController extends Controller
      */
     public function create()
     {
-        //
+        $shops = Shop::all();
+        return view ('Status/add', compact('shops'));
     }
 
     /**
@@ -34,7 +39,12 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $status = new estatus($request->all());
+        $status->shop_id = Auth::user()->shop->id;
+        $status->save(); 
+
+        //return($line);
+        return redirect('/status')->with('mesage', 'El estatus se ha agregado exitosamente!');
     }
 
     /**
@@ -45,7 +55,7 @@ class StatusController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('status.show', ['status' => Status::findOrFail($id)]);
     }
 
     /**
@@ -56,7 +66,8 @@ class StatusController extends Controller
      */
     public function edit($id)
     {
-        //
+        $status = Status::findOrFail($id);
+        return view('Status/edit', compact('status'));
     }
 
     /**
@@ -68,7 +79,11 @@ class StatusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $status = Status::findOrFail($id);
+        $status->name = $request->name;
+        $status->save();
+        return redirect('/status')->with('mesage-update', 'El status se ha modificado exitosamente!');
+
     }
 
     /**
@@ -79,6 +94,6 @@ class StatusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Status::destroy($id);
     }
 }

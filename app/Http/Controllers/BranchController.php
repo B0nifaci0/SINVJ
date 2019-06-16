@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Branch;
+use App\Shop;
 use Illuminate\Http\Request;
-use App\Http\Requests\BranchValidate;
+//use App\Http\Requests\BranchValidate;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -34,7 +35,8 @@ class BranchController extends Controller
      */
     public function create()
     {
-        return view('Branches/add');
+      $shops = Shop::all();
+      return view('Branches/add', compact('shops'));
     }
 
     /**
@@ -43,7 +45,7 @@ class BranchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BranchValidate $request)
+    public function store(Request $request)
     {
       //return $request->all();
         $branch = new Branch($request->all());
