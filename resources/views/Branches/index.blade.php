@@ -43,6 +43,7 @@ LISTA DE  SUCURSALES
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
+                  <th>Id</th>
                   <th>Name</th>
                   <th>Tienda</th>
                   <th>Opciones</th>
@@ -50,6 +51,7 @@ LISTA DE  SUCURSALES
               </thead>
               <tfoot>
               <tr>
+                  <th>Id</th>
                   <th>Name</th>
                   <th>Tienda</th>
                   <th>Opciones</th>
@@ -58,12 +60,20 @@ LISTA DE  SUCURSALES
               <tbody>
                   @foreach ($branches as $branch)
                   <tr id = "row{{$branch->id}}">
+                        <td>{{$branch->id}}</td>
                         <td>{{$branch->name }}</td>
                         <td>{{$branch->shop->name }}</td> 
                         <td>    
-                      <a href="#"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      <a href="#"<button type="button" onclick="return confirm('¿Seguro que deseas eliminar este registro?')"class="btn btn-icon btn-danger waves-effect waves-light waves-round" ><i class="icon md-delete" aria-hidden="true"></i></button></a>    
-                    </td>
+                            <a href="/sucursales/{{$branch->id}}/edit"<button type="button" 
+                              class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                              data-toggle="tooltip" data-original-title="Editar">
+                              <i class="icon md-edit" aria-hidden="true"></i></button></a>
+                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                      alt="{{$branch->id}}" role="button"
+                      data-toggle="tooltip" data-original-title="Borrar">
+                       <i class="icon md-delete" aria-hidden="true"></i>
+                   </button>                     
+                        </td>
                   </tr>
                   @endforeach
               </tbody>
@@ -74,4 +84,52 @@ LISTA DE  SUCURSALES
     </div>
   </div>
   <!-- End Panel Basic -->
+@endsection
+@section('delete-sucursales')
+<script type="text/javascript">
+console.log("a")
+$(document).ready(function() {
+  console.log("b")
+  $(".delete").click(function() {
+    var id = $(this).attr("alt");
+    console.log(id);
+    Swal.fire({
+      title: 'Confirmación',
+      text: "¿Seguro que desea eliminar este registro?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33' ,
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Si, Borralo!'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+           headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          url:  '/sucursales/' + id,
+          method: 'DELETE',
+          success: function () {
+            $("#row" + id).remove();
+            Swal.fire(
+              'Eliminado',
+              'El registro ha sido eliminado.',
+              'success'
+            )
+          }, 
+          error: function () {
+            Swal.fire(
+              'Eliminado',
+              'El registro no ha sido eliminado.'+ id,
+              'error'
+            )
+          }
+        })
+      }
+    })
+
+  });
+});
+
+</script>
 @endsection

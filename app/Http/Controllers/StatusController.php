@@ -55,7 +55,7 @@ class StatusController extends Controller
      */
     public function show($id)
     {
-        return view('status.show', ['status' => Status::findOrFail($id)]);
+        return view('status.show', ['status' => estatus::findOrFail($id)]);
     }
 
     /**
@@ -66,7 +66,7 @@ class StatusController extends Controller
      */
     public function edit($id)
     {
-        $status = Status::findOrFail($id);
+        $status = estatus::findOrFail($id);
         return view('Status/edit', compact('status'));
     }
 
@@ -79,10 +79,10 @@ class StatusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $status = Status::findOrFail($id);
+        $status = estatus::findOrFail($id);
         $status->name = $request->name;
         $status->save();
-        return redirect('/status')->with('mesage-update', 'El status se ha modificado exitosamente!');
+        return redirect('/status')->with('mesage-update', 'El estatus se ha modificado exitosamente!');
 
     }
 
@@ -94,6 +94,6 @@ class StatusController extends Controller
      */
     public function destroy($id)
     {
-        Status::destroy($id);
+        estatus::destroy($id);
     }
 }

@@ -564,7 +564,7 @@
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/sucursales">
-                        <i class="site-menu-icon md-backup" aria-hidden="true"></i>
+                        <i class="site-menu-icon md-shopping-basket" aria-hidden="true"></i>
                           <span class="site-menu-title">Sucursales</span>
                       </a>
                     </li>
@@ -744,6 +744,9 @@
     @show
     @section('delete-usuarios')
     @show
-    
+    @section('delete-status')
+    @show
+    @section('delete-sucursales')
+    @show
 </body>
 </html>
