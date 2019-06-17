@@ -48,7 +48,7 @@ LISTA DE  USUARIOS
                 <tr>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Shop_id</th>
+                  <th>Tienda</th>
                   <th>Type User</th>
                   <th>Opciones</th>
                 </tr>
@@ -57,7 +57,7 @@ LISTA DE  USUARIOS
               <tr>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Shop_id</th>
+                  <th>Tienda</th>
                   <th>Type User</th>
                   <th>Opciones</th>
                 </tr>
@@ -67,7 +67,7 @@ LISTA DE  USUARIOS
                   <tr id = "row{{$user->id}}">
                         <td>{{$user->name }}</td>
                         <td>{{$user->email }}</td>
-                        <td>{{$user->shop_id }}</td>
+                        <td>{{$user->shop->name }}</td>
                         <td>{{$user->type_user }}</td>
                         <td>    
 

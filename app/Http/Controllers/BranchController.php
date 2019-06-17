@@ -24,7 +24,7 @@ class BranchController extends Controller
      */
     public function index()
     {
-      $branches= Auth::user()->shop->branches;
+        $branches= Auth::user()->shop->branches;
         return view('Branches/index', ['branches' => $branches]);
     }
 

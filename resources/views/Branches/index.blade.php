@@ -44,14 +44,14 @@ LISTA DE  SUCURSALES
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Shop_id</th>
+                  <th>Tienda</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
               <tfoot>
               <tr>
                   <th>Name</th>
-                  <th>Shop_id</th>
+                  <th>Tienda</th>
                   <th>Opciones</th>
                 </tr>
               </tfoot>
@@ -59,7 +59,7 @@ LISTA DE  SUCURSALES
                   @foreach ($branches as $branch)
                   <tr id = "row{{$branch->id}}">
                         <td>{{$branch->name }}</td>
-                        <td>{{$branch->shop_id }}</td> 
+                        <td>{{$branch->shop->name }}</td> 
                         <td>    
                       <a href="#"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
                       <a href="#"<button type="button" onclick="return confirm('¿Seguro que deseas eliminar este registro?')"class="btn btn-icon btn-danger waves-effect waves-light waves-round" ><i class="icon md-delete" aria-hidden="true"></i></button></a>    

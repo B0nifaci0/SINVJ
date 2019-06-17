@@ -45,7 +45,7 @@ VERIFICACION DE ESTATUS
                 <tr>
                   <th>Id</th>
                   <th>Name</th>
-                  <th>Shop_id</th>
+                  <th>Tienda</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
@@ -53,7 +53,7 @@ VERIFICACION DE ESTATUS
                 <tr>
                      <th>Id</th>
                         <th>Name</th>
-                        <th>shop_id</th>
+                        <th>Tienda</th>
                         <th>Opciones</th>
                 </tr> 
               </tfoot>
@@ -62,7 +62,7 @@ VERIFICACION DE ESTATUS
                     <tr id = "row{{$tsd->id}}">
                         <td>{{$tsd->id}}</td>
                           <td>{{$tsd->name}}</td>
-                          <td>{{$tsd->shop_id}}</td>
+                          <td>{{$tsd->shop->name}}</td>
                           <td>    
                         <a href="#"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
                         <a href="#"<button type="button" onclick="return confirm('¿Seguro que deseas eliminar este registro?')"class="btn btn-icon btn-danger waves-effect waves-light waves-round" ><i class="icon md-delete" aria-hidden="true"></i></button></a>
