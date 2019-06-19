@@ -24,7 +24,7 @@ class BranchController extends Controller
      */
     public function index()
     {
-      $branches= Auth::user()->shop->branches;
+        $branches= Auth::user()->shop->branches;
         return view('Branches/index', ['branches' => $branches]);
     }
 
@@ -97,10 +97,6 @@ class BranchController extends Controller
             $branch = Branch::findOrFail($id);
             //return $request->longitude;
             $branch->name =$request->name;
-            $branch->address =$request->address;
-            $branch->latitude =$request->latitude;
-            $branch->longitude =$request->longitude;
-            $branch->phone_number =$request->phone_number;
             $branch->shop_id = Auth::user()->shop->id;
             $branch->save();
 

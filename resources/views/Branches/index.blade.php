@@ -43,24 +43,28 @@ LISTA DE  SUCURSALES
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
+                  <th>Id</th>
                   <th>Name</th>
-                  <th>Shop_id</th>
+                  <th>Tienda</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
               <tfoot>
               <tr>
+                  <th>Id</th>
                   <th>Name</th>
-                  <th>Shop_id</th>
+                  <th>Tienda</th>
                   <th>Opciones</th>
                 </tr>
               </tfoot>
               <tbody>
                   @foreach ($branches as $branch)
                   <tr id = "row{{$branch->id}}">
+                        <td>{{$branch->id}}</td>
                         <td>{{$branch->name }}</td>
-                        <td>{{$branch->shop_id }}</td> 
+                        <td>{{$branch->shop->name }}</td> 
                         <td>    
+<<<<<<< HEAD
                       <a href="#"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
                       
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
@@ -70,6 +74,18 @@ LISTA DE  SUCURSALES
                     </button>    
                     
                     </td>
+=======
+                            <a href="/sucursales/{{$branch->id}}/edit"<button type="button" 
+                              class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                              data-toggle="tooltip" data-original-title="Editar">
+                              <i class="icon md-edit" aria-hidden="true"></i></button></a>
+                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                      alt="{{$branch->id}}" role="button"
+                      data-toggle="tooltip" data-original-title="Borrar">
+                       <i class="icon md-delete" aria-hidden="true"></i>
+                   </button>                     
+                        </td>
+>>>>>>> fe7f98d670cd5d32f41d205712a72a4d0ee4a32c
                   </tr>
                   @endforeach
               </tbody>
@@ -81,9 +97,12 @@ LISTA DE  SUCURSALES
   </div>
   <!-- End Panel Basic -->
 @endsection
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> fe7f98d670cd5d32f41d205712a72a4d0ee4a32c
 @section('delete-sucursales')
 <script type="text/javascript">
 console.log("a")

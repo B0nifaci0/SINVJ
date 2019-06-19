@@ -26,4 +26,8 @@ class Status extends Authenticatable
         'shop_id',
     ];
     protected $table = 'statuss';
+
+    public function shop(){
+      return $this->belongsTo(Shop::class);
+    }
 }

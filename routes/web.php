@@ -32,9 +32,8 @@ Route::group(['middleware' => ['auth']], function () {
 
 
   
-
-  //Tiendas
-  Route::resource('tiendas', 'ShopController');
+//Tiendas
+Route::resource('tiendas', 'ShopController');
 
   
 });
@@ -106,6 +105,17 @@ Route::get('categorias/{id}/destroy', [
   'as' => 'categorias.destroy'
 ]);
 
+Route::get('status/{id}/destroy', [
+  'uses' => 'StatusController@destroy',
+  'as' => 'status.destroy'
+
+]);
+
+Route::get('sucursales/{id}/destroy', [
+  'uses' => 'BranchController@destroy',
+  'as' => 'branch.destroy'
+
+]);
 
 Route::resource('municipios', 'MunicipalityController');
 

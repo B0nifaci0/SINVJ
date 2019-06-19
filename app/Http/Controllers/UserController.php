@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-      $users=User::get();
+      $users=User::with('shop')->get();
       return view('User/index', ['users' => $users]);
     }
 
@@ -82,6 +82,7 @@ class UserController extends Controller
     public function edit($id)
     {
       $users = User::findOrFail($id);
+      //$user = Auth::user()->shop->branches;
       $shops=Shop::all();
 
       //return $users;

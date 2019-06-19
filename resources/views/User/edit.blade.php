@@ -60,7 +60,8 @@ EDITAR USUARIO
                           <option value="1" name='type_user'>Sub-Administrador</option>
                           <option value="2" name='type_usyer'>Colaborador</option>
                   </select>
-              </div></div>  
+              </div>
+          </div>  
         <div class="form-group col-md-12">
           <button type="submit" name="button" class="btn btn-primary">Guardar</button>
         </div>
