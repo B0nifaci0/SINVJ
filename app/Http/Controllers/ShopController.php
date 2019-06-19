@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ShopController extends Controller
 {
+  public function __construct()
+    {
+        $this->middleware('Authentication');
+    }
   /**
    * Display a listing of the resource.
    *

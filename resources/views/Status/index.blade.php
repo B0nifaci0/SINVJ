@@ -32,9 +32,9 @@ VERIFICACION DE ESTATUS
       <header class="panel-heading">
         <div class="panel-actions">
           <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/status/create'" class=" btn btn-sm small btn-floating  toggler-left 
-            btn-info waves-effect waves-light waves-round float-right"
-            data-toggle="tooltip" data-original-title="Agregar">
+            <button onclick="window.location.href='/status/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left 
+            btn-info waves-effect waves-light waves-round float-right "
+             data-toggle="tooltip" data-original-title="Agregar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
         </div>
@@ -57,7 +57,7 @@ VERIFICACION DE ESTATUS
                         <th>Tienda</th>
                         <th>Opciones</th>
                 </tr> 
-              </tfoot>
+              </tfoot>  
               <tbody>
                     @foreach ($sta as $tsd)
                     <tr id = "row{{$tsd->id}}">
@@ -65,16 +65,16 @@ VERIFICACION DE ESTATUS
                           <td>{{$tsd->name}}</td>
                           <td>{{$tsd->shop->name}}</td>
                           <td>    
-                        <a href="/status/{{$tsd->id}}/edit"<button type="button" 
+                              <a href="/status/{{$tsd->id}}/edit"<button type="button" 
                                 class="btn btn-icon btn-info waves-effect waves-light waves-round"
                                 data-toggle="tooltip" data-original-title="Editar">
                                 <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                        alt="{{$tsd->id}}" role="button"
-                        data-toggle="tooltip" data-original-title="Borrar">
-                         <i class="icon md-delete" aria-hidden="true"></i>
-                     </button> 
-                      </td>
+                                <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                                 alt="{{$tsd->id}}" role="button"
+                                 data-toggle="tooltip" data-original-title="Borrar">
+                                  <i class="icon md-delete" aria-hidden="true"></i>
+                              </button>                    
+                          </td>
                     </tr>
                     @endforeach
               </tbody>

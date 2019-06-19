@@ -9,7 +9,11 @@ use App\Http\Requests\SaleRequest;
 use Illuminate\Support\Facades\Auth;
 
 class SaleController extends Controller
-{
+{ 
+    public function __construct()
+      {
+          $this->middleware('Authentication');
+      }
     /**
      * Display a listing of the resource.
      *

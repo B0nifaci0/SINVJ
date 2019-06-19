@@ -11,14 +11,18 @@ class User extends Authenticatable
 { 
 
   // Tipos de usuario
-  const SELLER = '1';
-  const BUYER = '0';
-  const APP_ADMIN = '3';
+  //AA = application administrator
+  const AA= '0';
+  // SA = sub administrator
+  const SA = '1';
+  // CO = collaborator
+  const CO = '2';
 
 
   // Tipos de suscripcion
   const FREE = '0';
   const PREMIUM = '1';
+  const PRO = '2';
 
 
   public  function scopeLast($query){
