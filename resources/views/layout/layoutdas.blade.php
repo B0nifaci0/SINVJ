@@ -554,17 +554,17 @@
                       <span class="site-menu-title">Tienda</span>
                     <span class="site-menu-arrow"></span>
                   </a>
-                  <ul class="site-menu-sub">
-                    <li class="site-menu-item">
+                  
+                  <li class="site-menu-item">
                         <a class="animsition-link" href="/productos">
-                        <i class="site-menu-icon md-shopping-basket" aria-hidden="true"></i>
+                        <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
                           <span class="site-menu-title">Productos</span>
-                      </a>
+                          </a>
                     </li>
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/sucursales">
-                        <i class="site-menu-icon md-shopping-cart" aria-hidden="true"></i>
+                        <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
                           <span class="site-menu-title">Sucursales</span>
                       </a>
                     </li>
@@ -584,14 +584,14 @@
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/ventas">
-                        <i class="site-menu-icon md-shopping-cart" aria-hidden="true"></i>
+                        <i class="site-menu-icon fa-line-chart" aria-hidden="true"></i>
                           <span class="site-menu-title">Ventas</span>
                       </a>
                     </li>
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/status">
-                        <i class="site-menu-icon md-shopping-cart" aria-hidden="true"></i>
+                        <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
                           <span class="site-menu-title">Estatus</span>
                       </a>
                     </li>
@@ -744,6 +744,9 @@
     @show
     @section('delete-usuarios')
     @show
-    
+    @section('delete-sucursales')
+    @show
+    @section('listado-productos')
+    @show
 </body>
 </html>

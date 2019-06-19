@@ -27,4 +27,9 @@ class Sale extends Model
         'folio_nota',
         
     ];
+
+    public function product(){
+      return $this->belongsTo(Product::class);
+ }
 }
+

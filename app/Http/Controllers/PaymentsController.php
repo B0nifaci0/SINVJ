@@ -29,7 +29,7 @@ class PaymentsController extends Controller
      */
     public function create()
     {
-        //
+        $payment = Payment::with('product')->get();
     }
 
     /**

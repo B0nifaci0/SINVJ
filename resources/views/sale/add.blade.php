@@ -31,30 +31,68 @@ ALTA VENTA
     @endif
       <center><h3>Registrate Venta</h3></center>
 
-      <form class="" action="/ventas" method="post">
+
       {{ csrf_field() }}    
-        <div class="form-group col-md-6">
-          <label>Fecha de la veta:</label>
-          <input type="text" class="form-control" value="{{old('date')}}" name="date">
         
-          <label>Folio_ota</label>
-          <input type="text" class="form-control" value="{{old('folio_nota')}}" name="folio_nota" required>
-          
           <div class="form-group col-md-6">
-          <label>Producto</label>
-          <select  name="product_id" class="form-control">
+          <label>Producto:</label><br/>
+          <select class="form-control" name="product_id" id="select">
             @foreach($products as $product)            
-              <option value="{{ $product->id }}" required>{{ $product->name }}</option>
+              <option value="{{ $product->name }}" required>{{ $product->name }}</option>
             @endforeach
-          </select>
+          </select><br/><br/>
+        <button class="btn btn-primary" onclick="addRow();">Agregar</button><br/><br/>
         </div>
 
-        </div>
-        <div class="form-group col-md-12">
-          <button type="submit" name="button" class="btn btn-primary">Guardar</button>
-        </div>
+
+        <div class="panel-body">
+        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+        <thead>
+            <tr>
+                <th>Producto</th>
+            </tr>
+            </thead>
+              <tfoot>
+              <tr>
+                <th>Producto</th>
+            </tr>
+              </tfoot>
+              <tr>
+                <th>Anillo</th>
+            </tr>
+        </table>
+        
       </form>
     </div>
-  </div>
-</div>
+@endsection
+
+@section('listado-productos')
+
+<script>
+
+function addRow()
+            {
+                // get input values
+                var product_id = document.getElementById('select').value;
+                
+                  
+                  // get the html table
+                  // 0 = the first table
+                  var table = document.getElementsByTagName('table')[0];
+                  
+                  // add new empty row to the table
+                  // 0 = in the top 
+                  // table.rows.length = the end
+                  // table.rows.length/2+1 = the center
+                  var newRow = table.insertRow(table.rows.length/2+1);
+                  
+                  // add cells to the row
+                  var cel1 = newRow.insertCell(0);
+                  
+                  // add values to the cells
+                  cel1.innerHTML = product_id;
+            }
+    
+  
+</script>
 @endsection

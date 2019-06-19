@@ -123,9 +123,4 @@ class BranchController extends Controller
         // return redirect('/sucursales')->with('mesage', 'La sucursal  se ha eliminado exitosamente!');
     }
 
-    public function test() {
-        $data = Shop::with('users')->where('id', 1)->get();
-
-        return response()->json($data);
-    }
 }
