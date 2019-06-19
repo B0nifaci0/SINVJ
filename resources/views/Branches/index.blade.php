@@ -64,17 +64,6 @@ LISTA DE  SUCURSALES
                         <td>{{$branch->name }}</td>
                         <td>{{$branch->shop->name }}</td> 
                         <td>    
-<<<<<<< HEAD
-                      <a href="#"<button type="button" class="btn btn-icon btn-info waves-effect waves-light waves-round"><i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      
-                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                       alt="{{$branch->id}}" role="button" 
-                        data-toggle="tooltip" data-original-title="Borrar">
-                        <i class="icon md-delete" aria-hidden="true"></i>
-                    </button>    
-                    
-                    </td>
-=======
                             <a href="/sucursales/{{$branch->id}}/edit"<button type="button" 
                               class="btn btn-icon btn-info waves-effect waves-light waves-round"
                               data-toggle="tooltip" data-original-title="Editar">
@@ -85,7 +74,6 @@ LISTA DE  SUCURSALES
                        <i class="icon md-delete" aria-hidden="true"></i>
                    </button>                     
                         </td>
->>>>>>> fe7f98d670cd5d32f41d205712a72a4d0ee4a32c
                   </tr>
                   @endforeach
               </tbody>
@@ -97,12 +85,6 @@ LISTA DE  SUCURSALES
   </div>
   <!-- End Panel Basic -->
 @endsection
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> fe7f98d670cd5d32f41d205712a72a4d0ee4a32c
 @section('delete-sucursales')
 <script type="text/javascript">
 console.log("a")

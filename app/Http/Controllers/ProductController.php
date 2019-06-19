@@ -19,7 +19,7 @@ class ProductController extends Controller
 {
 
   public function __construct(){
-    $this->middleware('auth');
+    $this->middleware('Authentication');
     $this->middleware('shop');
     $this->middleware('ProductBranchMiddleware');
     $this->middleware('BranchMiddleware');

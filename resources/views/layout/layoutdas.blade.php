@@ -564,11 +564,7 @@
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/sucursales">
-<<<<<<< HEAD
-                        <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
-=======
                         <i class="site-menu-icon md-shopping-basket" aria-hidden="true"></i>
->>>>>>> fe7f98d670cd5d32f41d205712a72a4d0ee4a32c
                           <span class="site-menu-title">Sucursales</span>
                       </a>
                     </li>
@@ -748,15 +744,9 @@
     @show
     @section('delete-usuarios')
     @show
-<<<<<<< HEAD
-    @section('delete-sucursales')
-    @show
-    @section('listado-productos')
-=======
     @section('delete-status')
     @show
     @section('delete-sucursales')
->>>>>>> fe7f98d670cd5d32f41d205712a72a4d0ee4a32c
     @show
 </body>
 </html>

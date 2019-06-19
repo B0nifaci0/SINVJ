@@ -18,7 +18,7 @@ class BranchMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->type_user = USER::BUYER) {
+        if (Auth::user()->type_user = USER::AA) {
             return redirect('/index');
 
        }

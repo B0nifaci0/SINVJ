@@ -17,7 +17,7 @@ class Shop
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->type_user = User::BUYER) {
+        if (Auth::user()->type_user = User::AA) {
              return redirect('/index');
 
         }

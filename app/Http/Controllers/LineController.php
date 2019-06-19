@@ -6,8 +6,13 @@ use App\Line;
 use Illuminate\Http\Request;
 use App\Http\Requests\LineRequest;
 use Illuminate\Support\Facades\Auth;
+
 class LineController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('Authentication');
+    }
     /**
      * Display a listing of the resource.
      *

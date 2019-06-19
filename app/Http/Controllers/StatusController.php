@@ -8,7 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class StatusController extends Controller
-{
+{   
+    public function __construct()
+    {
+        $this->middleware('Authentication');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +20,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $sta = estatus:: all();
+        $sta = estatus::with('shop')->get();
         return view('Status/index',compact('sta'));
     }
 
