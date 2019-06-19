@@ -10,7 +10,6 @@ VERIFICACION DE ESTATUS
 
 @endsection
 @section('content')
-<div class="page">
   <div class="panel-body">
 	@if (session('mesage'))	
 	<div class="alert alert-success">
@@ -84,7 +83,7 @@ VERIFICACION DE ESTATUS
         </div>
       </div>
     </div>
-  </div>
+  
   <!-- End Panel Basic -->
 @endsection
 

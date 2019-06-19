@@ -57,35 +57,35 @@ ALTA PRODUCTO
                 <input type="file" name="image" id="image" class="hidden" required>
               </div>
 
-            <div class="form-group form-material col-md-6">
+           <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
               <label>Categoria</label>
-              <select  name="category_id" class="form-control">
+              <select  name="category_id" class="form-control round">
                 @foreach($categories as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
                 @endforeach
               </select>
             </div>
     
-            <div class="form-group form-material col-md-6">
+            <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
               <label>Linea</label>
-              <select  name="line_id" class="form-control">
+              <select  name="line_id" class="form-control round">
                 @foreach($lines as $line)            
                   <option value="{{ $line->id }}" required>{{ $line->name }}</option>
                 @endforeach
               </select>
             </div>
-            <div class="form-group form-material col-md-6">
+           <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
                 <label>Tienda</label>
-                <select  name="shop_id" class="form-control">
+                <select  name="shop_id" class="form-control round">
                   @foreach($shops as $shop)            
                     <option value="{{ $shop->id }}" required>{{ $shop->name }}</option>
                   @endforeach
                 </select>
               </div>
     
-             <div class="form-group form-material col-md-6">
+            <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
                <label>Sucursal</label>
-               <select name="branch_id" class="form-control">
+               <select name="branch_id" class="form-control round">
                @php  
                   $branches = $user->shop->branches;
               
@@ -96,16 +96,17 @@ ALTA PRODUCTO
                </select>
             </div>
     
-            <div class="form-group form-material col-md-6">
+           <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
               <label>Status</label>
-              <select  name="status_id" class="form-control">
+              <select  name="status_id" class="form-control round">
                 @foreach($statuses as $status)            
                   <option value="{{ $status->id }}" required>{{ $status->name }}</option>
                 @endforeach
               </select>
             </div>
-    
+    <br>
       </div>
+      <br>
         <div class="form-group col-md-12">
           <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
         </div>

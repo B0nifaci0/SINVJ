@@ -554,7 +554,7 @@
                       <span class="site-menu-title">Tienda</span>
                     <span class="site-menu-arrow"></span>
                   </a>
-                  
+                  <ul class="site-menu-sub">
                   <li class="site-menu-item">
                         <a class="animsition-link" href="/productos">
                         <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
@@ -564,11 +564,7 @@
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/sucursales">
-<<<<<<< HEAD
                         <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
-=======
-                        <i class="site-menu-icon md-shopping-basket" aria-hidden="true"></i>
->>>>>>> fe7f98d670cd5d32f41d205712a72a4d0ee4a32c
                           <span class="site-menu-title">Sucursales</span>
                       </a>
                     </li>
@@ -609,13 +605,14 @@
 
                   </ul>
                 </li>
-                <li class="site-menu-item">
+                <li class="site-menu-item ">
                     <a class="animsition-link" href="/usuarios">
                       <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
                       <span class="site-menu-title">Usuarios</span>
                     </a>
                   </li>
               </ul>
+              
             </div>
           </div>
         </div>
@@ -748,8 +745,11 @@
     @show
     @section('delete-usuarios')
     @show
-<<<<<<< HEAD
+    @section('delete-status')
+    @show
     @section('delete-sucursales')
+    @show
+    @section('listado-productos')
     @show
 </body>
 </html>

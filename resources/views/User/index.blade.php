@@ -10,7 +10,6 @@ LISTA DE  USUARIOS
 
 @endsection
 @section('content')
-<div class="page">
   <div class="panel-body">
 	@if (session('mesage'))	
 	<div class="alert alert-success">
@@ -92,7 +91,6 @@ LISTA DE  USUARIOS
         </div>
       </div>
     </div>
-  </div>
   <!-- End Panel Basic -->
 @endsection
 

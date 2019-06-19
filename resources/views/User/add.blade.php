@@ -66,9 +66,11 @@ ALTA USUARIOS
                         </div>
                         <div>
                           <input type="hidden" name="terms_conditions" value="1">
-                          </div>       
-                    <div class="col-md-12 form-group">
-                      <button type="submit" name="button"  class="btn btn-info">Guardar</button>
+                          </div>   
+                          </div> 
+                          <br>
+                          <div class="form-group col-md-12">
+                      <button type="submit" name="button"  class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </div>

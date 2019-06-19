@@ -29,7 +29,7 @@ class ProductController extends Controller
     public function index()
     {
       $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
-      ///$categories = Category::with('category')->get();
+      $categories = Category::all();
       $user = Auth::user();
         //return $products;
         $lines = Line::all();

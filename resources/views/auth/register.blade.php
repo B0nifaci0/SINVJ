@@ -77,7 +77,7 @@
             </div>
             <div class="col-md-12 col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputMunicipality">{{ __('Municipio') }}</label>
-              <select id="municipios_1" name="municipality_id" class="form-control"></select>
+              <select id="municipios_1" name="municipality_id" class="form-control round"></select>
             </div>
             <br>
             <div class="form-group clearfix">

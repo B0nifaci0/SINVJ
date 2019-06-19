@@ -29,7 +29,7 @@ ALTA LíNEAS
           </ul>
         </div>
     @endif
-      <center><h3>Registrate Linea</h3></center>
+      <center><h3>Registrar Linea</h3></center>
 
       <form class="" action="/lineas" method="post">
       {{ csrf_field() }} 
@@ -41,7 +41,7 @@ ALTA LíNEAS
 
       <div class="form-group form-material col-md-6">
                <label class="form-control-label" for="inputBasicLastName">Precio:</label>
-               <input type="text" class="form-control" name="price" value="{{old('price')}}" required="required" placeholder="Precio: 1200" />
+               <input type="text" class="form-control" name="price" value="{{old('price')}}" required="required" placeholder="$1200" />
       </div> 
   
         <div class="form-group col-md-12">

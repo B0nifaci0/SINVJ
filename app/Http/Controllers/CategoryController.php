@@ -46,7 +46,7 @@ class CategoryController extends Controller
 
 
 
-        return redirect('/categorias')->with('mesage', 'la linea se ha agregado exitosamente!');
+        return redirect('/categorias')->with('mesage', 'la categoria se ha agregado exitosamente!');
    
     }
 

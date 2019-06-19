@@ -64,7 +64,7 @@ LISTA DE  LINEA
                   <tr id = "row{{ $line->id }}">
                     <td>{{ $line->id}}</td>
                     <td>{{ $line->name }}</td>
-                    <td>{{ $line->price }}</td>
+                    <td>$ {{ $line->price }}</td>
                     <td>    
                     <a href="/lineas/{{$line->id}}/edit"<button type="button" 
                       class="btn btn-icon btn-info waves-effect waves-light waves-round">
