@@ -23,8 +23,15 @@ class ProductBranchMiddleware
  
        }
  
-       if (Auth::user()->shop->branch != '') {
-           return redirect('/productos');
+       if (!Auth::user()->shop->branches) {
+           
+        return redirect('/index');
+
+       }
+    if (!Auth::user()->product->category) {
+           
+        return redirect('/index');
+
        }
         return $next($request);
     }

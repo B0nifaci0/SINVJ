@@ -40,6 +40,7 @@ LISTA DE  LINEA
           </div>
         </div>
         <h3 class="panel-title">Lineas</h3>
+          <a href="lineaspdf">aqui descarga</a>
       </header>
       <div class="panel-body">
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">

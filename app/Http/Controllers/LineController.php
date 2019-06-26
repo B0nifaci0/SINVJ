@@ -6,7 +6,7 @@ use App\Line;
 use Illuminate\Http\Request;
 use App\Http\Requests\LineRequest;
 use Illuminate\Support\Facades\Auth;
-
+use PDF;
 class LineController extends Controller
 {
     public function __construct()
@@ -14,7 +14,7 @@ class LineController extends Controller
         $this->middleware('Authentication');
     }
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. 
      *
      * @return \Illuminate\Http\Response
      */
@@ -99,5 +99,11 @@ class LineController extends Controller
     {
         Line::destroy($id);
    //return redirect('/lineas')->with('mesage-delete', 'La Linea  se ha eliminado exitosamente!');
+    }
+// Funcion para gener pdf!!
+    public function exportPdf(){ 
+        $lines = Line::all();
+        $pdf  = PDF::loadView('line.pdf', compact('lines'));
+        return $pdf->download('line.pdf');
     }
 }
