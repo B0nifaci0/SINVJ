@@ -67,7 +67,8 @@ LISTA DE  LINEA
                     <td>$ {{ $line->price }}</td>
                     <td>    
                     <a href="/lineas/{{$line->id}}/edit"<button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round">
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                              data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
                        alt="{{$line->id}}" role="button"

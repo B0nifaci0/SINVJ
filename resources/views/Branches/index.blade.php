@@ -32,7 +32,9 @@ LISTA DE  SUCURSALES
       <header class="panel-heading">
         <div class="panel-actions">
           <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/sucursales/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+            <button onclick="window.location.href='/sucursales/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left 
+            btn-info waves-effect waves-light waves-round float-right "
+             data-toggle="tooltip" data-original-title="Agregar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
         </div>
