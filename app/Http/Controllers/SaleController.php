@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Sale;
 use App\Product;
+use App\Line;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\SaleRequest;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +36,8 @@ class SaleController extends Controller
     public function create()
     {
       $products = Product::all();
-        return view('sale/add', compact('products'));
+      $lines = Line::all();
+        return view('sale/add', compact('products','lines'));
     }
 
     /**
@@ -105,5 +108,11 @@ class SaleController extends Controller
     {
       //Sale::destroy($id);
   // return redirect('/ventas')->with('mesage-delete', 'La venta  se ha eliminado exitosamente!');
+    }
+
+
+    public function oneProduct($id){
+
+
     }
 }

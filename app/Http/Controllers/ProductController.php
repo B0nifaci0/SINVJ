@@ -49,7 +49,6 @@ class ProductController extends Controller
         $lines = Line::all();
         $shops = Shop::all();
         $statuses = Status::all();
-        //echo "$user";
         return view('product/add', compact('user', 'categories','lines','shops','statuses'));
     }
 
@@ -81,7 +80,6 @@ class ProductController extends Controller
     public function show($id)
     {
     return view('product.show', ['product' => Product::findOrFail($id)]);
-
     }
 
     /**
