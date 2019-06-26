@@ -36,30 +36,36 @@ ALTA VENTA
         
           <div class="form-group col-md-6">
           <label>Producto:</label><br/>
-          <select class="form-control" name="product_id" id="select">
+          <select  name="id" class="form-control" >
             @foreach($products as $product)            
-              <option value="{{ $product->name }}" required>{{ $product->name }}</option>
+              <option value="{{ $product->id}}" required>{{ $product->id }}</option>
             @endforeach
-          </select><br/><br/>
-        <button class="btn btn-primary" onclick="addRow();">Agregar</button><br/><br/>
+          </select><br/>
+          
+          <input type="hidden" name="name" value="{{ $product->name}}"> 
+          <input type="hidden" name="weigth" value="{{ $product->weigth}}">
+          <input type="hidden" name="category" value="{{ $product->category->name}}">
+          <input type="hidden" name="line" value="{{ $product->line->name}}">
+          <input type="hidden" name="branch" value="{{ $product->branch->name}}">
+          <input type="hidden" name="status" value="{{ $product->status->name}}">
+
+        <button type="button" class="btn btn-primary" id="btn-add">Agregar</button><br/><br/>
         </div>
-
-
         <div class="panel-body">
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+        <table class="table table-hover dataTable table-striped w-full">
         <thead>
-            <tr>
-                <th>Producto</th>
-            </tr>
+        <tr>
+            <th>Clave</th>
+            <th>Nombre</th>
+                 <th>Peso</th>
+                 <th>Categoría</th>
+                 <th>Linea</th>
+                 <th>Sucursal</th>
+                 <th>Status</th>
+              </tr>
             </thead>
-              <tfoot>
-              <tr>
-                <th>Producto</th>
-            </tr>
-              </tfoot>
-              <tr>
-                <th>Anillo</th>
-            </tr>
+              <tbody>
+            </tbody>
         </table>
         
       </form>
@@ -70,29 +76,22 @@ ALTA VENTA
 
 <script>
 
-function addRow()
-            {
-                // get input values
-                var product_id = document.getElementById('select').value;
-                
-                  
-                  // get the html table
-                  // 0 = the first table
-                  var table = document.getElementsByTagName('table')[0];
-                  
-                  // add new empty row to the table
-                  // 0 = in the top 
-                  // table.rows.length = the end
-                  // table.rows.length/2+1 = the center
-                  var newRow = table.insertRow(table.rows.length/2+1);
-                  
-                  // add cells to the row
-                  var cel1 = newRow.insertCell(0);
-                  
-                  // add values to the cells
-                  cel1.innerHTML = product_id;
-            }
-    
-  
+$(function(){
+ $('#btn-add').click(function(){
+   var _id = $('select[name="id"]').val();
+   var _name = $('input[name="name"]').val();
+   var _weigth = $('input[name="weigth"]').val();
+   var _category = $('input[name="category"]').val();
+   var _line = $('input[name="line"]').val();
+   var _branch = $('input[name="branch"]').val();
+   var _status = $('input[name="status"]').val();
+   
+var _tr = '<tr><td>'+ _id +'</td> <td>'+ _name +'</td><td>'+ _weigth +'</td> <td>'+ _category +'</td> <td>'+ _line +'</td> <td>'+ _branch +'</td> <td>'+ _status +'</td> </tr>';
+
+$('tbody').append(_tr);
+});  
+});
+
+
 </script>
 @endsection

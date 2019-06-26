@@ -46,7 +46,7 @@ class ProductController extends Controller
     {
         $user = Auth::user();
         $categories = Category::all();
-        $lines = Line::all();
+        $lines = Line::find($id);
         $shops = Shop::all();
         $statuses = Status::all();
         //echo "$user";
@@ -81,7 +81,6 @@ class ProductController extends Controller
     public function show($id)
     {
     return view('product.show', ['product' => Product::findOrFail($id)]);
-
     }
 
     /**

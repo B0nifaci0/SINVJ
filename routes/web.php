@@ -124,3 +124,5 @@ Route::resource('estados', 'StateController');
 // Definicion de recusrsos anidados
 Route::resource('estados.municipios', 'StateMunicipalityController');
 
+
+
