@@ -46,10 +46,9 @@ class ProductController extends Controller
     {
         $user = Auth::user();
         $categories = Category::all();
-        $lines = Line::find($id);
+        $lines = Line::all();
         $shops = Shop::all();
         $statuses = Status::all();
-        //echo "$user";
         return view('product/add', compact('user', 'categories','lines','shops','statuses'));
     }
 
