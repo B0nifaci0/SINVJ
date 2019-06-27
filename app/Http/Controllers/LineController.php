@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LineRequest;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use Maatwebsite\Excel\Facades\Excel;
+
+use  App\Exports\LinesExport;
+
+
 class LineController extends Controller
 {
     public function __construct()
@@ -105,5 +110,10 @@ class LineController extends Controller
         $lines = Line::all();
         $pdf  = PDF::loadView('line.pdf', compact('lines'));
         return $pdf->download('line.pdf');
+    }
+
+    // Funcion para gener excel!!
+    public function exportExcel(){ 
+     return Excel::download( new LinesExport, 'line.xlsx');
     }
 }

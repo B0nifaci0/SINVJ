@@ -43,6 +43,8 @@ Route::resource('lineas', 'LineController');
 
 Route::get('lineaspdf', 'LineController@exportPdf');
 
+Route::get('lineasexc', 'LineController@exportExcel');
+
 //categorias
 Route::resource('categorias', 'CategoryController');
 
