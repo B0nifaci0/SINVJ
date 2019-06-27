@@ -108,6 +108,11 @@ LISTAPRODUCTO
                         data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
                     </button>   
+
+                    <a href="productospdf">
+          <button  name="button" class="btn btn-danger">PDF</button>
+          </a>
+        
                   </td>
                 </tr>
                 @endforeach

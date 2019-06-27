@@ -57,6 +57,7 @@ Route::resource('ventas', 'SaleController');
 Route::resource('pagos', 'PaymentsController');
 //Productos
 Route::resource('productos', 'ProductController');
+Route::get('productospdf', 'ProductController@exportPdf');
 
 //Usuarios
 Route::resource('usuarios', 'UserController');

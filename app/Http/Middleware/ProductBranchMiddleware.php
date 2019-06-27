@@ -28,11 +28,7 @@ class ProductBranchMiddleware
         return redirect('/index');
 
        }
-    if (!Auth::user()->product->category) {
-           
-        return redirect('/index');
-
-       }
+    
         return $next($request);
     }
 }

@@ -10,6 +10,7 @@ use App\Line;
 use App\Branch;
 use App\Status;
 use App\User;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
@@ -146,4 +147,10 @@ class ProductController extends Controller
      // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
    
 }
+public function exportPdf(){ 
+  $products = Product::all();
+  $pdf  = PDF::loadView('product.pdf', compact('products'));
+  return $pdf->download('product.pdf');
+}
+
 }
