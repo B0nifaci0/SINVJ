@@ -72,8 +72,6 @@ Route::resource('usuariosexcel','UserExcelController');
 
 //Usuarios Activo
 Route::get('/usuarios/activo/{id}', 'UserController@soft');
-//Sucursal Productos
-Route::get('/sucursalproductos/{id}', 'BranchProductsController@index');
 
 //Sucursales Producto
 Route::resource('sucursales.producto', 'BranchProductsController');
@@ -121,6 +119,8 @@ Route::resource('municipios', 'MunicipalityController');
 
 Route::resource('estados', 'StateController');
 
-// Definicion de recusrsos anidados
+// Definicion de recursos anidados
 Route::resource('estados.municipios', 'StateMunicipalityController');
+
+Route::resource('principal', 'PrincipalController');
 

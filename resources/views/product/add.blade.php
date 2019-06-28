@@ -117,7 +117,6 @@ ALTA PRODUCTO
 
 <script type="text/javascript">
 $(document).ready(function(){
-
   $("#categories").change(function(){
     if ($(this).val() == "" || $("#file").val() == "") {
       $("#submit").prop("disabled", true);

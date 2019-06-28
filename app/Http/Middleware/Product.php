@@ -6,7 +6,7 @@ use Closure;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class Shop
+class Product
 {
     /**
      * Handle an incoming request.
@@ -17,15 +17,13 @@ class Shop
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->type_user = User::AA) {
-             return redirect('/index');
-
-        }
-
-        if (Auth::user()->shop == '') {
-            return redirect('/tiendas/create')->with('mesage', 'Primero debes configurar tu tienda!');
-        }
+        if (Auth::user()->type_user = USER::AA) {
+            return redirect('/index');
+ 
+       }
+       if (Auth::user()->shop->branch == ''){
+           return redirect('/sucursales/create')->with('mesage', 'Primero debes configurar tu sucursal!');
+       }
         return $next($request);
     }
-}
- 
+} 
