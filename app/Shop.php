@@ -34,4 +34,16 @@ class Shop extends Model
       return $this->hasMany(Product::class);
     }
 
+    public function categories()
+    {
+      return $this->hasMany(Category::class);
+    }
+    public function lines()
+    {
+      return $this->hasMany(Line::class);
+    }
+    public function statuss()
+    {
+      return $this->hasMany(Status::class);
+    }
 }

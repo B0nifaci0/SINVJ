@@ -27,7 +27,7 @@ ALTA PRODUCTO
     @endif
       <h2 align="center">Nuevo Producto</h2>
       <br>  
-      <form class="" action="/productos" method="POST" enctype="multipart/form-data">
+      <form id="multiplicar" class="" action="/productos" method="POST" enctype="multipart/form-data">
       {{ csrf_field() }} 
       <div class='row'>
           <div class="form-group form-material col-md-6">
@@ -40,34 +40,28 @@ ALTA PRODUCTO
             </div>
 
             <div class="col-md-3">
-            <form id="multiplicar">
 <label  class="control-label">Linea</label>
-   <select id="primary"   name="line_id"  class="form-control">
-   @foreach($lines as $line)            
-                  <option value="color"   required>{{ $line->name }}</option>
-                @endforeach
-                <option value="country">Country</option>
+   <select id="line_id"   name="line_id"  class="form-control">
+    @foreach($lines as $line)            
+      <option value="{{ $line->id }}" required>{{ $line->name }}</option>
+    @endforeach
    </select> 
    </div>      
    <div class="col-md-3">
    <label  class="control-label">Precio de la linea</label>
-   <select id="secondary"  onChange="multiplicar();"  name="line_id"  class="form-control ">
-   
-   </select>
+   <input type="text" name="" id="line_price" readonly>
 </div>
     
 <div class="form-group form-material col-md-3">
            <label>Peso</label>
-           <input type="text" id="multiplicador" value=0 onChange="multiplicar();" class="form-control" > 
+           <input type="text" id="multiplicador" value="0" class="form-control" name="weigth" > 
            </div>
 		   
 
         <div class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
-          <input type="text"readonly="readonly" class="form-control" id="resultado" placeholder="$1200" >
-          </div>
-        </form>
-        
+          <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
+        </div>        
             
             <div class="form-group form-material col-md-6">
               <label>Observaciones</label>
@@ -79,7 +73,7 @@ ALTA PRODUCTO
                 <label>Selecciona imagen del producto</label>
                 <br>
                 <label for="image" class="btn btn-primary">Explorar</label>
-                <input type="file" name="image" id="image" class="hidden" required>
+                <input type="file" name="image" id="image" class="hidden">
               </div>
 
            <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
@@ -133,6 +127,7 @@ ALTA PRODUCTO
   </div>
 </div>
 
+@section('disabled-submit')
 <script type="text/javascript">
 $(document).ready(function(){
   $("#categories").change(function(){
@@ -176,6 +171,21 @@ $(document).ready(function(){
 @section('precio-linea')
 <script type="text/javascript">
 
+var lines = {!! $lines !!};
+
+$('#line_id').change(function() {
+  var id = $(this).val();
+  var line = lines.filter(l => l.id == id)[0];
+  $('#line_price').val(line.price);
+});
+
+$('#multiplicador').keyup(function() {
+  var total = $('#line_price').val() * $(this).val();
+  $('#total').val(total);
+})
+
+/*
+
 var options = {
 		color : ["{{ $line->price }}"],
 		country : ["Spain","Germany","France"]
@@ -192,6 +202,7 @@ $(function(){
 	$('#primary').change(fillSecondary);
 	fillSecondary();
 });
+*/
 </script>
 @endsection
 

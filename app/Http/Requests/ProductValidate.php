@@ -29,7 +29,6 @@ class ProductValidate extends FormRequest
             'weigth' => 'required|numeric|max:200',
             'observations' => 'required|string|max:350',
             'price' => 'required|numeric',
-            'image' => 'required',
             'category_id' => 'required',
             'line_id' => 'required',
             'shop_id' => 'required',

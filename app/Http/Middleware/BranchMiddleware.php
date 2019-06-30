@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use branches;
 
 
 use Closure;
@@ -18,17 +19,15 @@ class BranchMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->type_user = USER::AA) {
-            return redirect('/index');
-
+        
+       if (Auth::user()->type_user = User::AA) {
+        return redirect('/');
+        }
+ 
+       if (Auth::user()->shop->branches->count() == 0 ){
+           return redirect('/sucursales/create')->with('mesage', 'Primero debes configurar tu Tienda!');
        }
+    return $next($request);
 
-       if (Auth::user()->shop == '') {
-           return redirect('/tiendas/create')->with('mesage', 'Primero debes configurar tu Tienda!');
-       }else {
-         if (Auth::user()->shop->branch != "" )
-           return redirect('/sucursales');
-       return $next($request);
-             }
     }
 }
