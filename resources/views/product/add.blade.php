@@ -12,6 +12,7 @@ ALTA PRODUCTO
 @endsection
 @section('content')
 
+
 <div class="page-content">
   <div class="panel">
     <div class="panel-body">
@@ -37,18 +38,42 @@ ALTA PRODUCTO
               <label>Descripcion</label>
               <input type="text" class="form-control" name="description"  value="{{old('description')}}" required>
             </div>
-            <div class="form-group form-material col-md-6">
-              <label>Peso</label>
-              <input type="text" class="form-control" name="weigth"  value="{{old('weigth')}}" required>
-            </div>
+
+            <div class="col-md-3">
+            <form id="multiplicar">
+<label  class="control-label">Linea</label>
+   <select id="primary"   name="line_id"  class="form-control">
+   @foreach($lines as $line)            
+                  <option value="color"   required>{{ $line->name }}</option>
+                @endforeach
+                <option value="country">Country</option>
+   </select> 
+   </div>      
+   <div class="col-md-3">
+   <label  class="control-label">Precio de la linea</label>
+   <select id="secondary"  onChange="multiplicar();"  name="line_id"  class="form-control ">
+   
+   </select>
+</div>
+    
+<div class="form-group form-material col-md-3">
+           <label>Peso</label>
+           <input type="text" id="multiplicador" value=0 onChange="multiplicar();" class="form-control" > 
+           </div>
+		   
+
+        <div class="form-group form-material col-md-3">
+              <label>Precio del Producto</label>
+          <input type="text"readonly="readonly" class="form-control" id="resultado" placeholder="$1200" >
+          </div>
+        </form>
+        
+            
             <div class="form-group form-material col-md-6">
               <label>Observaciones</label>
               <input type="text" class="form-control" name="observations"  value="{{old('observations')}}" required>
             </div>
-            <div class="form-group form-material col-md-6">
-              <label>Precio</label>
-              <input type="text" class="form-control" name="price"  value="{{old('price')}}" required>
-            </div>
+            
     
               <div class="form-group form-material col-md-6">
                 <label>Selecciona imagen del producto</label>
@@ -66,14 +91,7 @@ ALTA PRODUCTO
               </select>
             </div>
     
-            <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
-              <label>Linea</label>
-              <select  name="line_id" class="form-control round">
-                @foreach($lines as $line)            
-                  <option value="{{ $line->id }}" required>{{ $line->name }}</option>
-                @endforeach
-              </select>
-            </div>
+            
            <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
                 <label>Tienda</label>
                 <select  name="shop_id" class="form-control round">
@@ -150,5 +168,41 @@ $(document).ready(function(){
   }
 
 });
+</script>
+
+@endsection
+
+
+@section('precio-linea')
+<script type="text/javascript">
+
+var options = {
+		color : ["{{ $line->price }}"],
+		country : ["Spain","Germany","France"]
+}
+
+$(function(){
+	var fillSecondary = function(){
+		var selected = $('#primary').val();
+		$('#secondary').empty();
+		options[selected].forEach(function(element,index){
+			$('#secondary').append('<option value="'+element+'">'+element+'</option>');
+		});
+	}
+	$('#primary').change(fillSecondary);
+	fillSecondary();
+});
+</script>
+@endsection
+
+
+@section('calcular-precio')
+<script type="text/javascript">
+function multiplicar(){
+  m1 = document.getElementById("secondary").value;
+  m2 = document.getElementById("multiplicador").value;
+  r = m1*m2;
+  document.getElementById("resultado").value = r;
+}
 </script>
 @endsection

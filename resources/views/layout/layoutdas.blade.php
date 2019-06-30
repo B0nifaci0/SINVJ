@@ -752,5 +752,9 @@
     @show
     @section('listado-productos')
     @show
+    @section('calcular-precio')
+    @show
+    @section('precio-linea')
+    @show
 </body>
 </html>

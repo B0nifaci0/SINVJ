@@ -40,6 +40,9 @@ Route::resource('tiendas', 'ShopController');
 
 //Lineas
 Route::resource('lineas', 'LineController');
+
+Route::get('lineaspdf', 'LineController@exportPdf');
+
 //categorias
 Route::resource('categorias', 'CategoryController');
 
@@ -54,6 +57,7 @@ Route::resource('ventas', 'SaleController');
 Route::resource('pagos', 'PaymentsController');
 //Productos
 Route::resource('productos', 'ProductController');
+Route::get('productospdf', 'ProductController@exportPdf');
 
 //Usuarios
 Route::resource('usuarios', 'UserController');

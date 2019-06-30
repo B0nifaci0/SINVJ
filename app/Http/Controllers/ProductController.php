@@ -10,6 +10,7 @@ use App\Line;
 use App\Branch;
 use App\Status;
 use App\User;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
@@ -49,7 +50,6 @@ class ProductController extends Controller
         $lines = Line::all();
         $shops = Shop::all();
         $statuses = Status::all();
-        //echo "$user";
         return view('product/add', compact('user', 'categories','lines','shops','statuses'));
     }
 
@@ -81,7 +81,6 @@ class ProductController extends Controller
     public function show($id)
     {
     return view('product.show', ['product' => Product::findOrFail($id)]);
-
     }
 
     /**
@@ -148,4 +147,10 @@ class ProductController extends Controller
      // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
    
 }
+public function exportPdf(){ 
+  $products = Product::all();
+  $pdf  = PDF::loadView('product.pdf', compact('products'));
+  return $pdf->download('product.pdf');
+}
+
 }
