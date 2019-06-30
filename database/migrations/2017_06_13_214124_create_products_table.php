@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('weigth');
             $table->string('observations');
             $table->string('price');
-            $table->string('image');
+            $table->string('image')->default('default.jpg'); 
 
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

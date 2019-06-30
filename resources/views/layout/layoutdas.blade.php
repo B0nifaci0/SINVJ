@@ -17,6 +17,7 @@
     <link rel="stylesheet" href={{{url('global/css/bootstrap.min.css')}}}>
     <link rel="stylesheet" href={{{url('global/css/bootstrap-extend.min.css')}}}>
     <link rel="stylesheet" href={{{url('/assets/css/site.min.css')}}}>
+
              
     <!-- Plugins -->
     <link rel="stylesheet" href={{{url('global/vendor/animsition/animsition.css')}}}>
@@ -543,7 +544,7 @@
           <div>
             <ul class="site-menu" data-plugin="menu">
                 <li class="site-menu-item active">
-                  <a class="animsition-link" href="index.html">
+                  <a class="animsition-link" href="/principal">
                     <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
                     <span class="site-menu-title">Inicio</span>
                   </a>
@@ -773,6 +774,7 @@
     @section('precio-linea')
     @show
     @section('date-time')
+    @section('disabled-submit')
     @show
 </body>
 </html>

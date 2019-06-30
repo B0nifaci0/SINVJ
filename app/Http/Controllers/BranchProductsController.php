@@ -11,9 +11,8 @@ class BranchProductsController extends Controller
 
       $branches= Branch::find($id);
       $products = Product::withTrashed()->where('branch_id','=',$id)->get();
-
-      return view('panel-structure', compact('branches','id','products'));
+      return view('Branches/branchproduct', compact('branches','id','products')); 
   }
-
+ 
 
 }

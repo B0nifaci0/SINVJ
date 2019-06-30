@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Http\Middleware;
+
+use Closure;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-
-use Closure;
-
-class ProductBranchMiddleware
+class Product
 {
     /**
      * Handle an incoming request.
@@ -22,13 +21,9 @@ class ProductBranchMiddleware
             return redirect('/index');
  
        }
- 
-       if (Auth::user()->shop->branches->count() == 0) {
-    
-        return redirect('/sucursale/create');
-
+       if (Auth::user()->shop->branch == ''){
+           return redirect('/sucursales/create')->with('mesage', 'Primero debes configurar tu sucursal!');
        }
-    
         return $next($request);
     }
-}
+} 
