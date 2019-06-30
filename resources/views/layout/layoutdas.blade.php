@@ -595,11 +595,19 @@
                           <span class="site-menu-title">Estatus</span>
                       </a>
                     </li>
+                    
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/pagos">
                         <i class="site-menu-icon md-money" aria-hidden="true"></i>
                           <span class="site-menu-title">Pagos</span>
+                      </a>
+                    </li>
+
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/traspasos">
+                        <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
+                          <span class="site-menu-title">Traspasos</span>
                       </a>
                     </li>
 
@@ -612,6 +620,7 @@
                     </a>
                   </li>
               </ul>
+
               
             </div>
           </div>
@@ -734,7 +743,15 @@
     <script src={{{url('global/js/Plugin/datatables.js')}}}></script>
     <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
+
     
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+
+  
+
+
+
     @section('delete-categorias')
     @show
     @section('delete-lineas')
@@ -754,6 +771,8 @@
     @section('calcular-precio')
     @show
     @section('precio-linea')
+    @show
+    @section('date-time')
     @show
 </body>
 </html>

@@ -484,6 +484,7 @@ class ComposerStaticInitbb94c36b47432fae10328d05d2fa97cd
         'App\\State' => __DIR__ . '/../..' . '/app/State.php',
         'App\\Status' => __DIR__ . '/../..' . '/app/Status.php',
         'App\\Subscription' => __DIR__ . '/../..' . '/app/Subscription.php',
+        'App\\TransferProduct' => __DIR__ . '/../..' . '/app/TransferProduct.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'Barryvdh\\DomPDF\\Facade' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/Facade.php',
         'Barryvdh\\DomPDF\\PDF' => __DIR__ . '/..' . '/barryvdh/laravel-dompdf/src/PDF.php',
