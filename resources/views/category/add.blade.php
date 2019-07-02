@@ -36,7 +36,7 @@ ALTA CATEGORIA
       <div class="row">
       <div class="form-group form-material col-md-6">
                             <label class="form-control-label" for="inputBasicLastName"> Nombre Categoria:</label>
-                            <input type="text" class="form-control" name="name" value="{{old('name')}}" required="required" placeholder="Nombre de Categoria: Ej Anillo" />
+                            <input type="text" class="form-control" name="name" value="{{old('name')}}" required="required" placeholder="Anillo" />
                         </div> 
         <div class="form-group col-md-12">
           <button type="submit" name="button" class="btn btn-primary">Guardar</button>
