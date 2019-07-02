@@ -50,7 +50,7 @@ LISTAPRODUCTO
                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                 </div>
                 <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='Productos'" 
+                  <button onclick="window.location.href='#'" 
                   type="button" class=" btn btn-sm small btn-floating 
                    toggler-left  btn-success waves-effect waves-light waves-round float-right"
                    data-toggle="tooltip" data-original-title="Generar reporte Excel">
