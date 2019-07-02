@@ -38,7 +38,7 @@ ALTA VENTA
           <label>Producto:</label><br/>
           <select id="current_product"  name="id" class="form-control" >
             @foreach($products as $product)            
-              <option value="{{ $product->id}}" required>{{ $product->id }}</option>
+              <option value="{{ $product->id}}" required>{{ $product->name }}</option>
             @endforeach
           </select><br/>
           
@@ -57,6 +57,8 @@ ALTA VENTA
                  <th>Linea</th>
                  <th>Sucursal</th>
                  <th>Status</th>
+                 <th>Precio</th>
+                 <th>Total</th>
               </tr>
             </thead>
               <tbody>
@@ -94,7 +96,7 @@ $(function(){
 
 
 
-  var _tr = '<tr><td>'+ product.id +'</td> <td>'+ product.name +'</td><td>'+ product.weigth +'</td> <td>'+ product.category +'</td> <td>'+ product.line +'</td> <td>'+ product.branch +'</td> <td>'+ product.status +'</td> </tr>';
+  var _tr = '<tr><td>'+ product.id +'</td> <td>'+ product.name +'</td><td>'+ product.weigth +'</td> <td>'+ product.category_id +'</td> <td>'+ product.line_id +'</td> <td>'+ product.branch_id +'</td> <td>'+ product.status_id +'</td> <td>$'+ product.price +'</td><td></td></tr>';
 
   $('tbody').append(_tr);
 });  

@@ -592,7 +592,7 @@
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/status">
-                        <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
+                        <i class="site-menu-icon fa-check-square-o" aria-hidden="true"></i>
                           <span class="site-menu-title">Estatus</span>
                       </a>
                     </li>
@@ -775,6 +775,8 @@
     @show
     @section('date-time')
     @section('disabled-submit')
+    @show
+    @section('colaborador-sucursal')
     @show
 </body>
 </html>
