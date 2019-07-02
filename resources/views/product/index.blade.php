@@ -13,19 +13,28 @@ LISTAPRODUCTO
   <div class="panel-body">
 
 	@if (session('mesage'))
-	<div class="alert alert-success">
-				<strong>{{ session('mesage') }}</strong>
-			</div>
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage') }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+	</div>
 		@endif
-			@if (session('mesage-update'))
-	<div class="alert alert-warning">
-				<strong>{{ session('mesage-update') }}</strong>
-			</div>
+    @if (session('mesage-update'))	
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage-update') }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+	</div>
 		@endif
-			@if (session('mesage-delete'))
-	<div class="alert alert-danger">
-				<strong>{{ session('mesage-delete') }}</strong>
-			</div>
+			@if (session('mesage-delete'))	
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage-delete') }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+	</div>
 		@endif
 		<div class="page-content">
         <!-- Panel Basic -->
