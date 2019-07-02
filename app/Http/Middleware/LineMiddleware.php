@@ -21,7 +21,7 @@ class LineMiddleware
             return redirect('/index');
        }
  
-       if (!Auth::user()->shop->lines){
+       if (Auth::user()->shop->lines->count() == 0){
            return redirect('/lineas/create')->with('mesage', 'Primero debes configurar tu linea!');
        }else{
            //return ('Primero debes configurar tu linea!');
