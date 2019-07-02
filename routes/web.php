@@ -59,6 +59,7 @@ Route::resource('pagos', 'PaymentsController');
 Route::resource('productos', 'ProductController');
 Route::get('productospdf', 'ProductController@exportPdf');
 
+
 //Usuarios
 Route::resource('usuarios', 'UserController');
 
@@ -105,6 +106,8 @@ Route::resource('estados', 'StateController');
 
 // Definicion de recursos anidados
 Route::resource('estados.municipios', 'StateMunicipalityController');
+Route::resource('sucursales.usuarios', 'BranchUserController');
+
 
 Route::resource('principal', 'PrincipalController');
 

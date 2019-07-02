@@ -14,9 +14,10 @@ class TranferProductsController extends Controller
 {
     public function index()
        {
-        $branches = Auth::user()->shop->branches;
-        $users = User::with('type_user != 0');
+        $users = Auth::user()->shop->branch;
+        $users = User::all();
         $products = Product::all();
+        $branches = Branch::all();
         return view('transfer/index', compact('branches','users','products'));
        }
 }
