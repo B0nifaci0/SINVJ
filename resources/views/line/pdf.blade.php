@@ -14,17 +14,8 @@
                   <th>Clave</th>
                   <th>Nombre</th>
                   <th>Precio</th>
-                  <th>Opciones</th>
                 </tr>
               </thead>
-              <tfoot>
-              <tr>
-                  <th>Clave</th>
-                  <th>Nombre</th>
-                  <th>Precio</th>
-                  <th>Opciones</th>
-                </tr>
-              </tfoot>
               <tbody>
                   @foreach ($lines as $line)
                   <tr id = "row{{ $line->id }}">

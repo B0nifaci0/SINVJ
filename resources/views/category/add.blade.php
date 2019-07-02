@@ -29,7 +29,7 @@ ALTA CATEGORIA
           </ul>
         </div>
     @endif
-      <center><h3>Registrate Categoria</h3></center>
+      <center><h3>Registrar Categoria</h3></center>
 
       <form class="" action="/categorias" method="post">
       {{ csrf_field() }}   

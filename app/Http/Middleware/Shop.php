@@ -28,3 +28,4 @@ class Shop
         return $next($request);
     }
 }
+ 

@@ -10,6 +10,7 @@ use App\Line;
 use App\Branch;
 use App\Status;
 use App\User;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
@@ -21,9 +22,10 @@ class ProductController extends Controller
   public function __construct(){
     $this->middleware('Authentication');
     $this->middleware('shop');
-    $this->middleware('ProductBranchMiddleware');
     $this->middleware('BranchMiddleware');
-    
+    $this->middleware('CategoryMiddleware');
+    $this->middleware('LineMiddleware');
+    $this->middleware('StatusMiddleware');
   }
     
     public function index()
@@ -61,7 +63,7 @@ class ProductController extends Controller
     public function store(ProductValidate $request)
     {
       if ($request->hasFile('image')){
-        $filename = $request->image->getCLientOriginalName();
+         $filename = $request->image->getCLientOriginalName();
          $request->image->storeAs('public/upload/products',$filename);
 
          $product = new Product($request->all());
@@ -146,4 +148,10 @@ class ProductController extends Controller
      // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
    
 }
+public function exportPdf(){ 
+  $products = Product::all();
+  $pdf  = PDF::loadView('product.pdf', compact('products'));
+  return $pdf->download('product.pdf');
+}
+
 }

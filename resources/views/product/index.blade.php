@@ -33,6 +33,9 @@ LISTAPRODUCTO
       <header class="panel-heading">
         <div class="panel-actions">
           <div class="col-md-14 col-md-offset-2">
+        <a href="productospdf">
+          <button  name="button" class="btn btn-danger">PDF</button>
+          </a>
             <button onclick="window.location.href='/productos/create'" 
             type="button" class=" btn btn-sm small btn-floating 
              toggler-left  btn-info waves-effect waves-light waves-round float-right"
@@ -108,6 +111,7 @@ LISTAPRODUCTO
                         data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
                     </button>   
+
                   </td>
                 </tr>
                 @endforeach

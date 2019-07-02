@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Http\Middleware;
+use Auth;
 use App\User;
-use Illuminate\Support\Facades\Auth;
-
 
 use Closure;
 
-class ProductBranchMiddleware
+class StatusMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,17 +17,16 @@ class ProductBranchMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->type_user = USER::AA) {
+        if (Auth::user()->type_user = User::AA) {
             return redirect('/index');
- 
        }
  
-       if (Auth::user()->shop->branches->count() == 0) {
-    
-        return redirect('/sucursale/create');
-
+       if (Auth::user()->shop->statuss->count() == 0){
+           return redirect('/status/create')->with('mesage', 'Primero debes configurar un Estatus!');
+       }else{
+           //return ('Primero debes configurar tu linea!');
+           redirect('/productos/create');
        }
-    
         return $next($request);
     }
 }

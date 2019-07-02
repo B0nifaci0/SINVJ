@@ -36,18 +36,13 @@ ALTA VENTA
         
           <div class="form-group col-md-6">
           <label>Producto:</label><br/>
-          <select  name="id" class="form-control" >
+          <select id="current_product"  name="id" class="form-control" >
             @foreach($products as $product)            
-              <option value="{{ $product->id}}" required>{{ $product->id }}</option>
+              <option value="{{ $product->id}}" required>{{ $product->name }}</option>
             @endforeach
           </select><br/>
           
-          <input type="hidden" name="name" value="{{ $product->name}}"> 
-          <input type="hidden" name="weigth" value="{{ $product->weigth}}">
-          <input type="hidden" name="category" value="{{ $product->category->name}}">
-          <input type="hidden" name="line" value="{{ $product->line->name}}">
-          <input type="hidden" name="branch" value="{{ $product->branch->name}}">
-          <input type="hidden" name="status" value="{{ $product->status->name}}">
+
 
         <button type="button" class="btn btn-primary" id="btn-add">Agregar</button><br/><br/>
         </div>
@@ -62,6 +57,8 @@ ALTA VENTA
                  <th>Linea</th>
                  <th>Sucursal</th>
                  <th>Status</th>
+                 <th>Precio</th>
+                 <th>Total</th>
               </tr>
             </thead>
               <tbody>
@@ -76,8 +73,18 @@ ALTA VENTA
 
 <script>
 
+var products = {!! $products !!};
+
+
+
 $(function(){
  $('#btn-add').click(function(){
+
+  var productId = $('#current_product').val();
+  console.log(productId);
+  var product = products.filter(p => p.id == productId)[0];
+  console.log(product);
+  /*
    var _id = $('select[name="id"]').val();
    var _name = $('input[name="name"]').val();
    var _weigth = $('input[name="weigth"]').val();
@@ -85,10 +92,13 @@ $(function(){
    var _line = $('input[name="line"]').val();
    var _branch = $('input[name="branch"]').val();
    var _status = $('input[name="status"]').val();
-   
-var _tr = '<tr><td>'+ _id +'</td> <td>'+ _name +'</td><td>'+ _weigth +'</td> <td>'+ _category +'</td> <td>'+ _line +'</td> <td>'+ _branch +'</td> <td>'+ _status +'</td> </tr>';
+   */
 
-$('tbody').append(_tr);
+
+
+  var _tr = '<tr><td>'+ product.id +'</td> <td>'+ product.name +'</td><td>'+ product.weigth +'</td> <td>'+ product.category_id +'</td> <td>'+ product.line_id +'</td> <td>'+ product.branch_id +'</td> <td>'+ product.status_id +'</td> <td>$'+ product.price +'</td><td></td></tr>';
+
+  $('tbody').append(_tr);
 });  
 });
 

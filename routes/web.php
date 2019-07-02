@@ -59,12 +59,17 @@ Route::resource('ventas', 'SaleController');
 Route::resource('pagos', 'PaymentsController');
 //Productos
 Route::resource('productos', 'ProductController');
+Route::get('productospdf', 'ProductController@exportPdf');
+
 
 //Usuarios
 Route::resource('usuarios', 'UserController');
 
 //Sucursales
 Route::resource('sucursales', 'BranchController');
+
+//Traspasos
+Route::resource('traspasos', 'TranferProductsController');
 
 //Excel
 Route::resource('excel','ExcelController');
@@ -75,10 +80,11 @@ Route::get('productossucursalreporte/{id}','BranchProductsExcelController@index'
 //Usuarios Excel
 Route::resource('usuariosexcel','UserExcelController');
 
+//Reporte
+Route::get('homepdf', 'HomeController@exportPdf');
+
 //Usuarios Activo
 Route::get('/usuarios/activo/{id}', 'UserController@soft');
-//Sucursal Productos
-Route::get('/sucursalproductos/{id}', 'BranchProductsController@index');
 
 //Sucursales Producto
 Route::resource('sucursales.producto', 'BranchProductsController');
@@ -94,40 +100,16 @@ Route::get('imagenes/{path}',function($path){
   return response()->file(storage_path($path));
 })->where('path','.+')->name('images');
 
-Route::get('lineas/{id}/destroy', [
-    'uses' => 'LineController@destroy',
-    'as' => 'lineas.destroy'
-
-]);
-
-Route::get('productos/{id}/destroy', [
-  'uses' => 'ProductController@destroy',
-  'as' => 'productos.destroy'
-]);
-
-Route::get('categorias/{id}/destroy', [
-  'uses' => 'CategoryController@destroy',
-  'as' => 'categorias.destroy'
-]);
-
-Route::get('status/{id}/destroy', [
-  'uses' => 'StatusController@destroy',
-  'as' => 'status.destroy'
-
-]);
-
-Route::get('sucursales/{id}/destroy', [
-  'uses' => 'BranchController@destroy',
-  'as' => 'branch.destroy'
-
-]);
-
+//Municipios
 Route::resource('municipios', 'MunicipalityController');
 
+//Estados
 Route::resource('estados', 'StateController');
 
-// Definicion de recusrsos anidados
+// Definicion de recursos anidados
 Route::resource('estados.municipios', 'StateMunicipalityController');
+Route::resource('sucursales.usuarios', 'BranchUserController');
 
 
+Route::resource('principal', 'PrincipalController');
 
