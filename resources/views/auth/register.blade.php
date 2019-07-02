@@ -82,12 +82,12 @@
             <br>
             <div class="form-group clearfix">
               <div class="checkbox-custom checkbox-inline checkbox-primary float-left">
-                <input type="checkbox" id="inputCheckbox" name="terms_conditions" value='1' required>
+                <input type="checkbox" id="aceptotc" name="terms_conditions" value='1' required>
                 <label for="inputCheckbox"></label>
               </div>
               <p class="ml-35">Al hacer clic en Registrarse, usted acepta nuestros <a href="#"> Términos.</a>.</p>
             </div>
-            <button type="submit" alt="{{ __('Registrarse->id') }}" class="btn btn-primary btn-block registro" alt="reg">
+            <button id="register" type="submit" alt="{{ __('Registrarse->id') }}" class="btn btn-primary btn-block registro" alt="reg">
             {{ __('Registrarse') }}</button>
 
                    
@@ -116,21 +116,19 @@
 
 
 @endsection
-@section('confirmacion-usuarios')
-<script type="text/javascript">
-console.log("a")
-$(document).ready(function() {
-  console.log("b")
-  $(".registro").click(function() {
-    var id = $(this).attr("alt");
-    console.log(id);
-    Swal.fire("Regi ", "Ahora debes loguearte", "success")
-      
 
+@section('disabled-submit')
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#estados_1").change(function(){
+    if ($(this).val() == "" {
+      $("#register").prop("disabled", true);
+    }else{
+      $("#register").prop("disabled", false);
+    }
   });
 });
+  </script>
+@endsection 
 
-
-</script>
-@endsection
 
