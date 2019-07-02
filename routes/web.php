@@ -65,6 +65,9 @@ Route::resource('usuarios', 'UserController');
 //Sucursales
 Route::resource('sucursales', 'BranchController');
 
+//Traspasos
+Route::resource('traspasos', 'TranferProductsController');
+
 //Excel
 Route::resource('excel','ExcelController');
 
@@ -73,6 +76,9 @@ Route::get('productossucursalreporte/{id}','BranchProductsExcelController@index'
 
 //Usuarios Excel
 Route::resource('usuariosexcel','UserExcelController');
+
+//Reporte
+Route::get('homepdf', 'HomeController@exportPdf');
 
 //Usuarios Activo
 Route::get('/usuarios/activo/{id}', 'UserController@soft');
@@ -91,36 +97,10 @@ Route::get('imagenes/{path}',function($path){
   return response()->file(storage_path($path));
 })->where('path','.+')->name('images');
 
-Route::get('lineas/{id}/destroy', [
-    'uses' => 'LineController@destroy',
-    'as' => 'lineas.destroy'
-
-]);
-
-Route::get('productos/{id}/destroy', [
-  'uses' => 'ProductController@destroy',
-  'as' => 'productos.destroy'
-]);
-
-Route::get('categorias/{id}/destroy', [
-  'uses' => 'CategoryController@destroy',
-  'as' => 'categorias.destroy'
-]);
-
-Route::get('status/{id}/destroy', [
-  'uses' => 'StatusController@destroy',
-  'as' => 'status.destroy'
-
-]);
-
-Route::get('sucursales/{id}/destroy', [
-  'uses' => 'BranchController@destroy',
-  'as' => 'branch.destroy'
-
-]);
-
+//Municipios
 Route::resource('municipios', 'MunicipalityController');
 
+//Estados
 Route::resource('estados', 'StateController');
 
 // Definicion de recursos anidados

@@ -87,6 +87,7 @@ return array(
     'App\\State' => $baseDir . '/app/State.php',
     'App\\Status' => $baseDir . '/app/Status.php',
     'App\\Subscription' => $baseDir . '/app/Subscription.php',
+    'App\\TransferProduct' => $baseDir . '/app/TransferProduct.php',
     'App\\User' => $baseDir . '/app/User.php',
     'Barryvdh\\DomPDF\\Facade' => $vendorDir . '/barryvdh/laravel-dompdf/src/Facade.php',
     'Barryvdh\\DomPDF\\PDF' => $vendorDir . '/barryvdh/laravel-dompdf/src/PDF.php',
