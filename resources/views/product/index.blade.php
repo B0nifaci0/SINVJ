@@ -32,15 +32,21 @@ LISTAPRODUCTO
     <div class="panel">
       <header class="panel-heading">
         <div class="panel-actions">
-          <div class="col-md-14 col-md-offset-2">
-        <a href="productospdf">
-          <button  name="button" class="btn btn-danger">PDF</button>
-          </a>
-            <button onclick="window.location.href='/productos/create'" 
-            type="button" class=" btn btn-sm small btn-floating 
-             toggler-left  btn-info waves-effect waves-light waves-round float-right"
-             data-toggle="tooltip" data-original-title="Agregar">
-             <i class="icon md-plus" aria-hidden="true"></i></button>
+          <div class="row">
+                <div class="col-md-6 col-md-offset-2">
+                  <button onclick="window.location.href='productospdf'" 
+                  type="button" class=" btn btn-sm small btn-floating 
+                   toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                   data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                   <i class="icon md-assignment-o" aria-hidden="true"></i></button>
+                </div>
+                <div class="col-md-6 col-md-offset-2">
+                  <button onclick="window.location.href='/productos/create'" 
+                  type="button" class=" btn btn-sm small btn-floating 
+                   toggler-left  btn-info waves-effect waves-light waves-round float-right"
+                   data-toggle="tooltip" data-original-title="Agregar">
+                   <i class="icon md-plus" aria-hidden="true"></i></button>
+                </div>
           </div>
         </div>
         <h3 class="panel-title">Productos</h3>
@@ -111,7 +117,6 @@ LISTAPRODUCTO
                         data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
                     </button>   
-
                   </td>
                 </tr>
                 @endforeach
