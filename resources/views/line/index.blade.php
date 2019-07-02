@@ -12,19 +12,28 @@ LISTA DE  LINEA
 @section('content')
   <div class="panel-body">
 	@if (session('mesage'))	
-	<div class="alert alert-success">
-				<strong>{{ session('mesage') }}</strong>
-			</div>
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage') }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+	</div>
 		@endif
-			@if (session('mesage-update'))	
-	<div class="alert alert-warning">
-				<strong>{{ session('mesage-update') }}</strong>
-			</div>
+    @if (session('mesage-update'))	
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage-update') }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+	</div>
 		@endif
 			@if (session('mesage-delete'))	
-	<div class="alert alert-danger">
-				<strong>{{ session('mesage-delete') }}</strong>
-			</div>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage-delete') }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+	</div>
 		@endif    
       <div class="page-content">
         <!-- Panel Basic -->
@@ -49,9 +58,6 @@ LISTA DE  LINEA
         </div>
         </div>
         <h3 class="panel-title">Lineas</h3>
-          <a href="lineaspdf">aqui descarga pdf</a>
-
-                    <a href="lineasexc">aqui descarga exc</a>
 
       </header>
       <div class="panel-body">
