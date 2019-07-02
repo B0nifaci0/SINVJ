@@ -31,13 +31,22 @@ LISTA DE  LINEA
     <div class="panel">
       <header class="panel-heading">
         <div class="panel-actions">
-          <div class="col-md-14 col-md-offset-2">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-2">
+                <button onclick="window.location.href='lineaspdf'" 
+                type="button" class=" btn btn-sm small btn-floating 
+                toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+          </div>
+          <div class="col-md-6 col-md-offset-2">
             <button onclick="window.location.href='/lineas/create'" type="button" 
             class=" btn btn-sm small btn-floating  toggler-left 
              btn-info waves-effect waves-light waves-round float-right"
              data-toggle="tooltip" data-original-title="Agregar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
+        </div>
         </div>
         <h3 class="panel-title">Lineas</h3>
         
@@ -77,12 +86,6 @@ LISTA DE  LINEA
                        data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
                     </button>
-                    
-        <a href="lineaspdf">
-          <button  name="button" class="btn btn-danger">PDF</button>
-          </a>
-        
-
                     </td>
                   </tr>
                   @endforeach
