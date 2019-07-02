@@ -62,20 +62,25 @@ LISTA DE  USUARIOS
                 </tr>
               </tfoot>
               <tbody>
-                  @foreach ($users as $user)
+                  @foreach($users as $user)
                   <tr id = "row{{$user->id}}">
                         <td>{{$user->name }}</td>
                         <td>{{$user->email }}</td>
                         <td>{{$user->shop->name }}</td>
-                        <td>{{$user->type_user }}</td>
+                        @if( $user->type_user == 0 )
+                            <td>Administracion</td>
+                        @endif
+                        @if($user->type_user  == 1)
+                            <td>Sub-Administracion</td>
+                        @endif
+                        @if($user->type_user == 2)
+                          <td>colaborador</td>
+                        @endif
                         <td>    
-
                         <a href="/usuarios/{{$user->id}}/edit"<button type="button" 
                       class="btn btn-icon btn-info waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                  
-
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
                        alt="{{$user->id}}" role="button"
                        data-toggle="tooltip" data-original-title="Borrar">
