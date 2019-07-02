@@ -33,10 +33,10 @@ class ProductController extends Controller
       $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
       $categories = Category::all();
       $user = Auth::user();
-        //return $products;
-        $lines = Line::all();
-        $statuses = Status::all();
-        return view('product/index', compact('user','products', 'categories','lines','statuses'));
+        //return $user ;
+      $lines = Line::all();
+      $statuses = Status::all();
+      return view('product/index', compact('user','products', 'categories','lines','statuses'));
     }
 
     /**
@@ -49,7 +49,8 @@ class ProductController extends Controller
         $user = Auth::user();
         $categories = Category::all();
         $lines = Line::all();
-        $shops = Shop::all();
+        $shops = Auth::user()->shop()->get();
+        //return $shops;
         $statuses = Status::all();
         return view('product/add', compact('user', 'categories','lines','shops','statuses'));
     }

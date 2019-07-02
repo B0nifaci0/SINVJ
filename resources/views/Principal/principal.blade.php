@@ -23,12 +23,12 @@ Panel Principal
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-account grey-600 font-size-24 vertical-align-bottom mr-5"></i>                    User
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>  14 kl Nacional                  
               </div>
-              <span class="float-right grey-700 font-size-30">1,253</span>
+              <span class="float-right grey-700 font-size-30">60 gr</span>
             </div>
             <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% From this yesterday
+              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
             </div>
             <div class="ct-chart h-50"></div>
           </div>
@@ -41,12 +41,12 @@ Panel Principal
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-flash grey-600 font-size-24 vertical-align-bottom mr-5"></i>                    VISITS
+                <i class="icon md-pizza grey-600 font-size-24 vertical-align-bottom mr-5"></i>              10 kl Italiano
               </div>
-              <span class="float-right grey-700 font-size-30">2,425</span>
+              <span class="float-right grey-700 font-size-30">30 gr</span>
             </div>
             <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  34.2% From this week
+              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  10% Ventas
             </div>
             <div class="ct-chart h-50"></div>
           </div>
@@ -59,12 +59,12 @@ Panel Principal
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-chart grey-600 font-size-24 vertical-align-bottom mr-5"></i>                    Total Clicks
+                <i class="icon md-notifications-active grey-600 font-size-24 vertical-align-bottom mr-5"></i>                    18 kl Frances
               </div>
-              <span class="float-right grey-700 font-size-30">1,864</span>
+              <span class="float-right grey-700 font-size-30">100 gr</span>
             </div>
             <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-down red-500 font-size-16"></i>                  15% From this yesterday
+              <i class="icon md-long-arrow-down red-500 font-size-16"></i>                  5% Ventas
             </div>
             <div class="ct-chart h-50"></div>
           </div>
@@ -77,12 +77,12 @@ Panel Principal
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-view-list grey-600 font-size-24 vertical-align-bottom mr-5"></i>                    Items
+                <i class="icon md-label grey-600 font-size-24 vertical-align-bottom mr-5"></i>                    Productos
               </div>
-              <span class="float-right grey-700 font-size-30">845</span>
+              <span class="float-right grey-700 font-size-30">500</span>
             </div>
             <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  18.4% From this yesterday
+              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  $30,000 en Productos
             </div>
             <div class="ct-chart h-50"></div>
           </div>

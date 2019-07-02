@@ -1,4 +1,3 @@
-
 @extends('layout.layoutdas')
 @section('title')
 ALTA PRODUCTO
@@ -85,22 +84,21 @@ ALTA PRODUCTO
               </select>
             </div>
     
-            
-           <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
-                <label>Tienda</label>
-                <select  name="shop_id" class="form-control round">
-                  @foreach($shops as $shop)            
-                    <option value="{{ $shop->id }}" required>{{ $shop->name }}</option>
+            <div class="col-md-offset-1 visible-md visible-lg col-md-6">
+                <label class="form-control-label" for="inputShop">Seleccione una Tienda</label>
+                <select id="shops" class="form-control round tiendas" name="shop_id" >
+                <option value="*">Seleccione Tienda</option>
+                  @foreach ($shops as $shop)
+                    <option value="<?= $shop->id ?>"><?= $shop->name ?></option>
                   @endforeach
                 </select>
-              </div>
+              </div>  
     
             <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
                <label>Sucursal</label>
                <select name="branch_id" class="form-control round">
                @php  
                   $branches = $user->shop->branches;
-              
                @endphp
                  @foreach($branches as $branch)
                   <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
@@ -182,27 +180,7 @@ $('#line_id').change(function() {
 $('#multiplicador').keyup(function() {
   var total = $('#line_price').val() * $(this).val();
   $('#total').val(total);
-})
-
-/*
-
-var options = {
-		color : ["{{ $line->price }}"],
-		country : ["Spain","Germany","France"]
-}
-
-$(function(){
-	var fillSecondary = function(){
-		var selected = $('#primary').val();
-		$('#secondary').empty();
-		options[selected].forEach(function(element,index){
-			$('#secondary').append('<option value="'+element+'">'+element+'</option>');
-		});
-	}
-	$('#primary').change(fillSecondary);
-	fillSecondary();
 });
-*/
 </script>
 @endsection
 

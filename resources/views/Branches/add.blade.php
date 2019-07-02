@@ -33,12 +33,12 @@ ALTA SUCURSALES
                   <div class="row">
                         <div class="form-group form-material col-md-6">
                             <label class="form-control-label" for="inputBasicFirstName">Nombre: </label>
-                            <input type="text" class="form-control" name="name"  required="required" placeholder="Spider-man" />
+                            <input type="text" class="form-control" name="name"  required="required" placeholder="Joyeria AB" />
                         </div>
                           </select>
                         </div> 
                     <div class="col-md-12 form-group">
-                      <button type="submit" name="button" class="btn btn-info">Guardar</button>
+                      <button type="submit" name="button" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </div>

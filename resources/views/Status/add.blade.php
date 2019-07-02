@@ -36,7 +36,7 @@ ALTA ESTATUS
                             <input type="text" class="form-control" name="name" required="required" placeholder="Stock" />
                         </div> 
                     <div class="col-md-12 form-group">
-                      <button type="submit" name="button" class="btn btn-info">Guardar</button>
+                      <button type="submit" name="button" class="btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </div>

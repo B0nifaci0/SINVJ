@@ -65,10 +65,6 @@ LISTA DE  SUCURSALES
                         <td>{{$branch->name }}</td>
                         <td>{{$branch->shop->name }}</td> 
                         <td>    
-                          <a href="#" type="button" 
-                          class="btn btn-icon btn-info waves-effect waves-light waves-round"
-                          data-toggle="tooltip" data-original-title="Informacion">
-                          <i class="icon icon md-eye" aria-hidden="true"></i></button></a>
                           <a href="/sucursales/{{$branch->id}}/edit"<button type="button" 
                           class="btn btn-icon btn-primary waves-effect waves-light waves-round"
                           data-toggle="tooltip" data-original-title="Editar">

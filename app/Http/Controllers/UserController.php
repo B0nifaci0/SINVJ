@@ -34,7 +34,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   $shops=Shop::all();
+    {   $shops=Auth::user()->shop()->get();
         return view('User/add', compact('shops'));
     }
 
