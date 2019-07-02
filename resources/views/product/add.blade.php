@@ -17,7 +17,7 @@ ALTA PRODUCTO
     <div class="panel-body">
      @if($errors->count() > 0)
         <div class="alert alert-danger" role="alert">
-          <ul>
+          <ul> 
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
@@ -39,21 +39,21 @@ ALTA PRODUCTO
             </div>
 
             <div class="col-md-3">
-<label  class="control-label">Linea</label>
-   <select id="line_id"   name="line_id"  class="form-control">
-    @foreach($lines as $line)            
-      <option value="{{ $line->id }}" required>{{ $line->name }}</option>
-    @endforeach
-   </select> 
-   </div>      
-   <div class="col-md-3">
-   <label  class="control-label">Precio de la linea</label>
-   <input type="text" name="" id="line_price" readonly>
-</div>
+        <label  class="control-label">Seleccione Linea</label>
+          <select id="line_id"   name="line_id"  class="form-control round">
+            @foreach($lines as $line)            
+              <option value="{{ $line->id }}" required>{{ $line->name }}</option>
+            @endforeach
+          </select> 
+          </div>      
+          <div class="col-md-3 form-material">
+          <label  class="control-label">Precio de la linea</label>
+          <input type="text" name="" id="line_price" class="form-control" readonly>
+        </div>
     
-<div class="form-group form-material col-md-3">
+        <div class="form-group form-material col-md-3">
            <label>Peso</label>
-           <input type="text" id="multiplicador" value="0" class="form-control" name="weigth" > 
+           <input type="text" id="multiplicador"  class="form-control" name="weigth" > 
            </div>
 		   
 
@@ -76,7 +76,7 @@ ALTA PRODUCTO
               </div>
 
            <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
-              <label>Categoria</label>
+              <label>Seleccione Categoria </label>
               <select  name="category_id" class="form-control round">
                 @foreach($categories as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
@@ -95,7 +95,7 @@ ALTA PRODUCTO
               </div>  
     
             <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
-               <label>Sucursal</label>
+               <label>Seleccione Sucursal</label>
                <select name="branch_id" class="form-control round">
                @php  
                   $branches = $user->shop->branches;
@@ -107,7 +107,7 @@ ALTA PRODUCTO
             </div>
     
            <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
-              <label>Status</label>
+              <label>Seleccione Status</label>
               <select  name="status_id" class="form-control round">
                 @foreach($statuses as $status)            
                   <option value="{{ $status->id }}" required>{{ $status->name }}</option>
@@ -124,6 +124,7 @@ ALTA PRODUCTO
     </div>
   </div>
 </div>
+@endsection
 
 @section('disabled-submit')
 <script type="text/javascript">

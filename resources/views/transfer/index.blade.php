@@ -90,6 +90,12 @@ Traspasos
                  @endforeach
                </select>
             </div>
+            <br>
+      </div>
+      <br>
+            <div class="form-group col-md-12">
+          <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
+        </div>
 
             @endsection
         
