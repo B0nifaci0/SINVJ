@@ -48,13 +48,18 @@ ALTA USUARIOS
                             <input type="password" name="password_confirm" class="form-control">
                         </div>
                         <div class="col-md-offset-1 visible-md visible-lg col-md-6">
-                          <label class="form-control-label" for="inputShop">Seleccione una Tienda</label>
+                          @foreach ($shops as $shop)
+                            <label class="form-control-label" for="inputBasicFirstName">Tienda : </label>
+                        <input type="text" name="{{$shop->id}}" class="form-control" value="{{$shop->name}}">
+                          @endforeach
+
+                          <!--<label class="form-control-label" for="inputShop">Seleccione una Tienda</label>
                           <select id="shops" class="form-control round tiendas" name="shop_id" >
                           <option value="*">Seleccione Tienda</option>
                             @foreach ($shops as $shop)
                               <option value="<?= $shop->id ?>"><?= $shop->name ?></option>
                             @endforeach
-                          </select>
+                          </select>-->
                         </div> 
                         <div class="col-md-offset-1 visible-md visible-lg col-md-6">
                           <label class="form-control-label" for="inputTypeUser">Tipo de Usuario: </label>
