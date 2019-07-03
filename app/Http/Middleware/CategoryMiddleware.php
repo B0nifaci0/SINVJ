@@ -25,7 +25,7 @@ class CategoryMiddleware
        }
  
        if (Auth::user()->shop->categories->count() == 0){
-           return redirect('/categorias/create')->with('mesage', 'Primero debes configurar tu categoria!');
+           return redirect('/categorias/create')->with('mesage', 'Primero debes configurar una categoria!');
        }else{
            //return ('Primero debes configurar tu categoria!');
            redirect('/productos/create');

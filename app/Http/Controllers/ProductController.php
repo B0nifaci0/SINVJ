@@ -46,6 +46,8 @@ class ProductController extends Controller
      */
     public function create()
     {
+      /*$category = Auth::user()->shop->id;
+      return $category;*/
         $user = Auth::user();
         $categories = Category::all();
         $lines = Line::all();
