@@ -10,9 +10,6 @@ Panel Principal
 
 @endsection
 @section('content')
-<h1 align="center">Prueba de Panel principal</h1>
-<h2 align="center">!!! En Mantenimiento  !!!</h2>
-
 <!-- Page -->
 <div class="page">
   <div class="page-content container-fluid">

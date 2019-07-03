@@ -633,7 +633,7 @@
   @yield('content')
 </section>
 <!-- Footer -->
-  <section>
+  <!--<section>
     @yield('footer')
     <footer class="site-footer">
       <div class="site-footer-legal">© 2019 <a href="http://themeforest.net/item/remark-responsive-bootstrap-admin-template/11989202"></a></div>
@@ -642,7 +642,7 @@
       </div>
     </footer>
   </section>
-<section>
+<section>-->
   @yield('js')
     <!-- Core  -->
     <script src={{{url('global/vendor/babel-external-helpers/babel-external-helpers.js')}}}></script>
