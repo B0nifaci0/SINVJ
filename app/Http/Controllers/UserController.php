@@ -24,8 +24,17 @@ class UserController extends Controller
      */
     public function index()
     {
-      $users=User::with('shop')->get();
-      return view('User/index', ['users' => $users]);
+      //Consulta para obetener el usuario y la sucursal que tiene cada uno  $users=User::with('shop')->get();
+      //Consulta para obtener los usuarios con referencia de la tienda a la que pertenecen
+      $users = Auth::user()->shop->users;
+      //Consulta para obtener las sucursales con referencia de la tienda a la que pertenecen
+      $branches=Auth::user()->shop->branches;
+      //Comprobacion de datos
+      //return $branches;
+      //Comprobacion de datos
+      //return $users;
+
+      return view('User/index', compact('users','branches')); 
     }
 
     /**
@@ -34,8 +43,14 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   $shops=Auth::user()->shop()->get();
-        return view('User/add', compact('shops'));
+    {   
+        // Consulta para obtener la tienda de acuerdo al usuario
+        $shops=Auth::user()->shop()->get();
+        //return $shops;
+        // Consulta para obtener la sucursal de acuerdo a la tienda del usuario
+        $branches=Auth::user()->shop->branches;
+        //return $branches;
+        return view('User/add', compact('shops','branches'));
     }
 
     /**
@@ -46,6 +61,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+      //$shops=Auth::user()->shop()->get();
       \App\User::create([
         'name' => $request['name'],
         'email' => $request['email'],
@@ -53,9 +69,11 @@ class UserController extends Controller
         'type_user' => $request['type_user'],
         'shop_id' => $request['shop_id'],
         'terms_conditions' => $request['terms_conditions'],
+        'salary' => $request['salary'],
+        'branch_id' => $request['branch_id'],
     ]);
 
-
+          
           return redirect('/usuarios')->with('mesage', 'El usuario  se ha agregado exitosamente!');
 
     }

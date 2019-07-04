@@ -20,7 +20,9 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $sta = estatus::with('shop')->get();
+        //$sta = estatus::with('shop')->get();
+        $sta = Auth::user()->shop->statuss;
+        //return $sta;
         return view('Status/index',compact('sta'));
     }
 

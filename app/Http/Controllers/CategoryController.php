@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use categories;
 use Alert;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBlogPost;
@@ -19,9 +20,15 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-      $categories = Category::all();
-    return view('category/index', compact('categories'));
+    {  // Codigo para determinar el tipo de usuario y la tienda a la que pertenece
+        /*$users = Auth::user();
+        return $users;
+        $shop = Auth::user()->shop;
+        return $shop; */   
+        $categories = Auth::user()->shop->categories;
+        //Lista el array de datos de categorias almacenados en la variable $categories
+        //return $categories;
+        return view('category/index', compact('categories'));
     }
 
 

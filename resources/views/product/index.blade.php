@@ -1,6 +1,6 @@
 @extends('layout.layoutdas')
 @section('title')
-LISTAPRODUCTO
+LISTA PRODUCTO
 @endsection
 
 @section('nav')

@@ -25,7 +25,7 @@ class BranchMiddleware
         }
  
        if (Auth::user()->shop->branches->count() == 0 ){
-           return redirect('/sucursales/create')->with('mesage', 'Primero debes configurar tu Tienda!');
+           return redirect('/sucursales/create')->with('mesage', 'Primero debes configurar tu Sucursal!');
        }
     return $next($request);
 

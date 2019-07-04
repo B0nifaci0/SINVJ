@@ -25,7 +25,9 @@ class LineController extends Controller
      */
     public function index()
     {
-        $lines = Line::all();
+        //Muestra los las lineas que pertenecen a esa tienda midiante la variable $lines
+        $lines = Auth::user()->shop->lines;
+        //return $lines;
       return view('line/index', compact('lines'));
       }
 
