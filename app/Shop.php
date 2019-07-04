@@ -46,4 +46,8 @@ class Shop extends Model
     {
       return $this->hasMany(Status::class);
     }
+    public function users()
+    {
+      return $this->hasMany(User::class);
+    }
 }

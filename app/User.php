@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Shop;
+use App\Branch;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -37,7 +38,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-       'name','email','type_user' ,'suscription_type','password','deleted_at','shop_id','terms_conditions',
+       'name','email','type_user' ,'suscription_type','password','deleted_at','shop_id','terms_conditions','branch_id','salary',
     ];
 
     /**
@@ -53,4 +54,10 @@ class User extends Authenticatable
     {
       return $this->belongsTo(Shop::class);
     }
+
+    public function branch()
+    {
+      return $this->belongsTo(Branch::class);
+    }
+
 }

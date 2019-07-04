@@ -66,6 +66,18 @@
             <div>
               <input type="hidden" name='type_user' value='0'> 
             </div>
+            <div class="form-group form-material floating" data-plugin="formMaterial">
+                <input type="text" class="form-control empty{{ $errors->has('name_branch') ? ' is-invalid' : '' }}" id="name_branch" name="name_branch" value="{{ old('name_branch') }}" required autofocus>
+                <label class="floating-label" for="inputName">{{ __('Sucursal') }}</label>
+                @if ($errors->has('name_branch'))
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $errors->first('name_branch') }}</strong>
+                  </span>
+              @endif
+              </div>
+              <div>
+                  <input type="hidden" name='salary' value='NULL'> 
+                </div>
             <div class="col-md-12  col-md-offset-1 visible-md visible-lg">
                 <label class="floating-label" for="inputState">{{ __('Estado') }}</label>
                 <select id="estados_1" class="form-control round estados" name="state_id" alt="1" >

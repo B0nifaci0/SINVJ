@@ -54,19 +54,21 @@ LISTA DE  USUARIOS
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th>Nombre</th>
                   <th>Email</th>
-                  <th>Tienda</th>
-                  <th>Type User</th>
+                 <!-- <th>Tienda</th> -->
+                  <th>Tipo de Usuario</th>
+                  <th>Sucursal</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
               <tfoot>
               <tr>
-                  <th>Name</th>
+                  <th>Nombre</th>
                   <th>Email</th>
-                  <th>Tienda</th>
-                  <th>Type User</th>
+                  <!-- <th>Tienda</th> -->
+                  <th>Tipo de Usuario</th>
+                  <th>Sucursal</th>
                   <th>Opciones</th>
                 </tr>
               </tfoot>
@@ -75,7 +77,8 @@ LISTA DE  USUARIOS
                   <tr id = "row{{$user->id}}">
                         <td>{{$user->name }}</td>
                         <td>{{$user->email }}</td>
-                        <td>{{$user->shop->name }}</td>
+                        <!-- Definir si la tienda se tiene que mostrar o se puede omitir
+                          <td>{{$user->shop->name }}</td> -->
                         @if( $user->type_user == 0 )
                             <td>Administracion</td>
                         @endif
@@ -83,8 +86,9 @@ LISTA DE  USUARIOS
                             <td>Sub-Administracion</td>
                         @endif
                         @if($user->type_user == 2)
-                          <td>colaborador</td>
+                          <td>Colaborador</td>
                         @endif
+                        <td>{{$user->branch->name }}</td>
                         <td>    
                         <a href="/usuarios/{{$user->id}}/edit"<button type="button" 
                       class="btn btn-icon btn-info waves-effect waves-light waves-round"
