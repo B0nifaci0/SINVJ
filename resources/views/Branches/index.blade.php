@@ -53,26 +53,26 @@ LISTA DE  SUCURSALES
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-                  <th>Id</th>
-                  <th>Name</th>
-                  <th>Tienda</th>
+                 <!-- <th>Id</th> -->
+                  <th>Nombre</th>
+                 <!-- <th>Tienda</th> -->
                   <th>Opciones</th>
                 </tr>
               </thead>
               <tfoot>
               <tr>
-                  <th>Id</th>
-                  <th>Name</th>
-                  <th>Tienda</th>
+                  <!-- <th>Id</th> -->
+                  <th>Nombre</th>
+                  <!-- <th>Tienda</th> -->
                   <th>Opciones</th>
                 </tr>
               </tfoot>
               <tbody>
                   @foreach ($branches as $branch)
                   <tr id = "row{{$branch->id}}">
-                        <td>{{$branch->id}}</td>
+                         <!-- <td>{{$branch->id}}</td>  -->
                         <td>{{$branch->name }}</td>
-                        <td>{{$branch->shop->name }}</td> 
+                         <!-- <td>{{$branch->shop->name }}</td> -->
                         <td>    
                           <a href="/sucursales/{{$branch->id}}/edit"<button type="button" 
                           class="btn btn-icon btn-primary waves-effect waves-light waves-round"

@@ -6,6 +6,7 @@ use App\User;
 use App\Shop;
 use App\Municipality;
 use App\State;
+use App\Branch;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -80,7 +81,10 @@ class RegisterController extends Controller
             'name' => $data['name_shop'],
             'municipality_id' => $data['municipality_id'],
             'state_id' => $data['state_id'],
-
+        ]);
+        $branch = Branch::create([
+            'name' => $data['name_branch'],
+            'shop_id' => $shop->id,
         ]);
        return User::create([
             'name' => $data['name'],
@@ -91,6 +95,7 @@ class RegisterController extends Controller
             'terms_conditions' =>$data['terms_conditions'],
             'municipality_id' =>$shop->municipality_id,
             'state_id' =>$shop->state_id,
+            'branch_id' => $branch->id,
         ]);
     }
 }
