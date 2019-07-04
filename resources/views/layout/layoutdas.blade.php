@@ -50,6 +50,7 @@
     
     
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
 
 
     <!--DATA TABLES CSS-->
@@ -777,6 +778,8 @@
     @section('disabled-submit')
     @show
     @section('colaborador-sucursal')
+    @show
+    @section('barcode-product')
     @show
 </body>
 </html>

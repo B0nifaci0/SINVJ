@@ -82,6 +82,7 @@ LISTAPRODUCTO
                  <th>Linea</th>
                  <th>Sucursal</th>
                  <th>Status</th>
+                 <th>c.Barras</th>
                  <th>Opciones</th>
               </tr>
             </thead>
@@ -97,6 +98,7 @@ LISTAPRODUCTO
                  <th>Linea</th>
                  <th>Sucursal</th>
                  <th>Status</th>
+                <th>c.Barras</th>
                  <th>Opciones</th>
               </tr>
             </tfoot>
@@ -120,6 +122,13 @@ LISTAPRODUCTO
                  <td>{{ $product->line->name }}</td>
                  <td>{{ $product->branch->name }}</td>
                  <td>{{ $product->status->name }}</td>
+                 <td><svg  class="barcode" ;
+                  jsbarcode-format="CODE128" 
+                  jsbarcode-value="{{ $product->id}}.{{$product->line->name }}{{ $product->branch->name }}" 
+                  jsbarcode-textmargin="0"
+                  jsbarcode-fontoptions="bold">
+                    </svg>
+                    </td>
                  <td>    
                 
                  <a href="/productos/{{$product->id}}/edit"<button type="button" 
@@ -143,36 +152,16 @@ LISTAPRODUCTO
     </div>
   </div>
 </div>
+
 <!-- End Panel Basic -->
 
 @endsection
-<!--
-@section('edit-categorias')
+
+@section('barcode-product')
 <script type="text/javascript">
-$(document).ready(function(){
-  setTimeout(function () {  
-    $(".edit").click(function() {
-    var id = $(this).attr("alt");
-      swal.fire({
-        title: 'Confirmación',
-        text: "¿Seguro que desea editar este registro?",
-        type: 'info',
-        showCancelButton: true,
-        confirmButtonColor: "#357ebd",
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Editar!'
-      }).then(
-      function(result){
-        console.log('entra');
-        if(result.value){
-          console.log('entraalif');
-              window.location.href = '/productos/' + id + '/edit';
-            }
-      }); 
-    });},1000); 
-  });
+JsBarcode(".barcode").init();
 </script>
-@endsection-->
+@endsection
 
 @section('delete-productos')
 <script type="text/javascript">
