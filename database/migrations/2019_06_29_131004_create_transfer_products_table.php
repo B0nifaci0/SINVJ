@@ -26,7 +26,8 @@ class CreateTransferProductsTable extends Migration
             $table->date('created_at');
             $table->integer('destination_user_id')->unsigned();
             $table->foreign('destination_user_id')->references('id')->on('users');
-            
+            $table->softDeletes();
+
         });
     }
 

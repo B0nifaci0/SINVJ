@@ -106,7 +106,7 @@ LISTA PRODUCTO
 
       @foreach ($products as $i => $product)
         <tr id="row{{$product->id}}">
-                 <td>{{ $product->id }}</td> 
+                 <td>{{ $product->clave }}</td> 
                 <td>{{ $product->name }}</td>
                  <td>{{ $product->description }}</td>
                  <td>{{ $product->weigth }}</td>

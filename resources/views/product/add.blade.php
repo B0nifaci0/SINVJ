@@ -29,6 +29,10 @@ ALTA PRODUCTO
       <form id="multiplicar" class="" action="/productos" method="POST" enctype="multipart/form-data">
       {{ csrf_field() }} 
       <div class='row'>
+            <div class="form-group form-material col-md-6">
+              <label>Clave</label>
+              <input type="text" class="form-control" name="clave"  value="{{old('clave')}}" required>
+            </div>
           <div class="form-group form-material col-md-6">
               <label>Nombre</label>
               <input type="text" class="form-control" name="name"  value="{{old('name')}}" required>
@@ -37,7 +41,6 @@ ALTA PRODUCTO
               <label>Descripcion</label>
               <input type="text" class="form-control" name="description"  value="{{old('description')}}" required>
             </div>
-
             <div class="col-md-3">
         <label  class="control-label">Seleccione Linea</label>
           <select id="line_id"   name="line_id"  class="form-control round">
