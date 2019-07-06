@@ -112,7 +112,6 @@ Route::resource('estados', 'StateController');
 // Definicion de recursos anidados
 Route::resource('estados.municipios', 'StateMunicipalityController');
 
-
 Route::resource('sucursales.usuarios', 'BranchUserController');
 
 

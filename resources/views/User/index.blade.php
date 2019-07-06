@@ -59,6 +59,7 @@ LISTA DE  USUARIOS
                  <!-- <th>Tienda</th> -->
                   <th>Tipo de Usuario</th>
                   <th>Sucursal</th>
+                  <th>Salario</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
@@ -69,6 +70,7 @@ LISTA DE  USUARIOS
                   <!-- <th>Tienda</th> -->
                   <th>Tipo de Usuario</th>
                   <th>Sucursal</th>
+                  <th>Salario</th>
                   <th>Opciones</th>
                 </tr>
               </tfoot>
@@ -88,7 +90,9 @@ LISTA DE  USUARIOS
                         @if($user->type_user == 2)
                           <td>Colaborador</td>
                         @endif
-                        <td>{{$user->branch->name }}</td>
+                        <td>fghj</td>
+                        <td>${{$user->salary }}</td>
+
                         <td>    
                         <a href="/usuarios/{{$user->id}}/edit"<button type="button" 
                       class="btn btn-icon btn-info waves-effect waves-light waves-round"

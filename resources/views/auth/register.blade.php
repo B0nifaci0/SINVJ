@@ -66,7 +66,7 @@
             <div>
               <input type="hidden" name='type_user' value='0'> 
             </div>
-            <div class="form-group form-material floating" data-plugin="formMaterial">
+            <!--<div class="form-group form-material floating" data-plugin="formMaterial">
                 <input type="text" class="form-control empty{{ $errors->has('name_branch') ? ' is-invalid' : '' }}" id="name_branch" name="name_branch" value="{{ old('name_branch') }}" required autofocus>
                 <label class="floating-label" for="inputName">{{ __('Sucursal') }}</label>
                 @if ($errors->has('name_branch'))
@@ -74,7 +74,7 @@
                       <strong>{{ $errors->first('name_branch') }}</strong>
                   </span>
               @endif
-              </div>
+              </div>-->
               <div>
                   <input type="hidden" name='salary' value='NULL'> 
                 </div>

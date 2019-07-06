@@ -52,6 +52,10 @@
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
     <link rel="stylesheet" href={{{url('global/fonts/font-awesome/font-awesome.css')}}}>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    
+    
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
 
 
     <!--DATA TABLES CSS-->
@@ -790,6 +794,7 @@
     @section('agregar-cliente')
     @show
     @section('filter')
+    @section('barcode-product')
     @show
 </body>
 </html>

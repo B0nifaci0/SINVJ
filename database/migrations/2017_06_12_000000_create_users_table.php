@@ -23,10 +23,10 @@ class CreateUsersTable extends Migration
             $table->boolean('type_user');
             $table->string('suscription_type')->default(User::FREE);
             $table->string('terms_conditions');
-            $table->string('salary')->default('NULL');
+            $table->string('salary')->default(0);
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops');
-            $table->integer('branch_id')->unsigned();
+            $table->integer('branch_id')->unsigned()->default(0);
             $table->foreign('branch_id')->references('id')->on('branches');
             $table->softDeletes();
             $table->rememberToken();
