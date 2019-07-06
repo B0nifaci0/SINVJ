@@ -26,7 +26,7 @@ ALTA PRODUCTO
     @endif
       <h2 align="center">Nuevo Traspaso</h2>
       <br>  
-      <form class="" action="/traspasos" method="POST" enctype="multipart/form-data">
+    <form class="" action="/traspasos" method="POST">
       {{ csrf_field() }} 
       <div class='row'>
                <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
@@ -73,7 +73,10 @@ ALTA PRODUCTO
              <br>
             <div class="form-group col-md-12">
           <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
-       </div>
+        </form>
+    </div>
+  </div>
+</div>
 @endsection
         
 @section('branch-user')

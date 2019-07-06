@@ -10,7 +10,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class TransferProduct extends Model
 {
-    
+        use SoftDeletes;
+
         protected $fillable = [
           'user_id',
           'last_branch_id',

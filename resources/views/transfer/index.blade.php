@@ -102,7 +102,7 @@ TRASFERENCIAS
                           <td>{{ $transfer->product->category->name }}</td>
                           <td>{{ $transfer->product->line->name }}</td>
                           <td>{{$transfer->last_branch_id}}</td>
-                          <td>{{$transfer->user_id}}</td>
+                          <td>{{$transfer->user->name}}</td>
                           <td>{{$transfer->new_branch_id}}</td>
                           <td>{{$transfer->destination_user_id}}</td>
                           <td>{{$transfer->created_at}}</td>
@@ -117,7 +117,7 @@ TRASFERENCIAS
 							
 							</div>
                           
-                    </tr>
+                    </tr>  
                     @endforeach
               </tbody>
             </table>
