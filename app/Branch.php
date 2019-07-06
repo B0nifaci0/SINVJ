@@ -4,6 +4,7 @@ namespace App;
 
 use App\Shop;
 use App\Product;
+use App\TranferProducts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -27,10 +28,15 @@ class Branch extends Model
     	return $this->belongsTo(Shop::class);
     }
 
-    public function products()
+    public function trans()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(TranferProducts::class);
     }
+
+    public function users(){
+        return $this->hasMany(User::class);
+      }
+     
 
 
 }
