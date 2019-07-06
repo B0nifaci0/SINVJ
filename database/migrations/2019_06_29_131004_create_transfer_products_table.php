@@ -23,11 +23,11 @@ class CreateTransferProductsTable extends Migration
             $table->foreign('new_branch_id')->references('id')->on('branches');
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
-            $table->date('created_at');
             $table->integer('destination_user_id')->unsigned();
             $table->foreign('destination_user_id')->references('id')->on('users');
+            $table->boolean('status_product');
             $table->softDeletes();
-
+            $table->timestamps();
         });
     }
 

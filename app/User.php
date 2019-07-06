@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use App\TranferProducts;
 use App\Shop;
 use App\Branch;
 use Illuminate\Notifications\Notifiable;
@@ -58,6 +58,11 @@ class User extends Authenticatable
     public function branch()
     {
       return $this->belongsTo(Branch::class);
+    }
+
+    public function trans()
+    {
+      return $this->hasMany(TranferProducts::class);
     }
 
 }

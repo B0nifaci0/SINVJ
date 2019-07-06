@@ -118,4 +118,10 @@ class BranchController extends Controller
         // return redirect('/sucursales')->with('mesage', 'La sucursal  se ha eliminado exitosamente!');
     }
 
+    public function users($id)
+    {
+    	///echo "dfsd";
+    	$users = User::where('branch_id', $id);
+    	return $users;
+    }
 }

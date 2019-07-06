@@ -112,7 +112,7 @@ ALTA PRODUCTO
            <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
               <label>Seleccione Status</label>
               <select  name="status_id" class="form-control round">
-                @foreach($statuses as $status)            
+                @foreach($statuses as $status)             
                   <option value="{{ $status->id }}" required>{{ $status->name }}</option>
                 @endforeach
               </select>
