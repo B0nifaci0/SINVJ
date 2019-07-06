@@ -16,6 +16,8 @@ class UserController extends Controller
   public function __construct()
     {
         $this->middleware('Authentication');
+        $this->middleware('BranchMiddleware');
+
     }
     /**
      * Display a listing of the resource.
@@ -27,10 +29,15 @@ class UserController extends Controller
       //Consulta para obetener el usuario y la sucursal que tiene cada uno  $users=User::with('shop')->get();
       //Consulta para obtener los usuarios con referencia de la tienda a la que pertenecen
       $users = Auth::user()->shop->users;
+      //$users = User::with('shop')->with('branch')->get(); Consulta que se utiliza para poder acceder a los campos de cada modelo 
       //Consulta para obtener las sucursales con referencia de la tienda a la que pertenecen
       $branches=Auth::user()->shop->branches;
+      //$branches=User::with('shop')->with('branch')->get();
       //Comprobacion de datos
       //return $branches;
+      //if($branches == ''){
+        //return redirect('/sucursales')->with('mesage', 'Primero Agregar una sucursal!');
+     // }
       //Comprobacion de datos
       //return $users;
 
@@ -105,10 +112,11 @@ class UserController extends Controller
     {
       $users = User::findOrFail($id);
       //$user = Auth::user()->shop->branches;
-      $shops=Shop::all();
+      $shops=Auth::user()->shop()->get();
+      $branches=Auth::user()->shop->branches;
 
       //return $users;
-      return view('User/edit', compact('users','shops'));
+      return view('User/edit', compact('users','shops','branches'));
       
     }
 
@@ -125,6 +133,9 @@ class UserController extends Controller
         $users->name = $request->name;
         $users->email = $request->email;
         $users->password = bcrypt($request->password);
+        $users->branch_id = $request->branch_id;
+        $users->type_user =$request->type_user;
+        $users->salary =$request->salary;
 
         $users->save();
 
