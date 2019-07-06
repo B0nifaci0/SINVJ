@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use App\TransferProduct;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Branch;
@@ -45,5 +45,10 @@ class Product extends Model
     public function status()
     {
       return $this->belongsTo(Status::class);
+    }
+
+    public function tranfer()
+    {
+      return $this->belongsTo(TransferProduct::class);
     }
 }

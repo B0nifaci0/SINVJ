@@ -51,6 +51,9 @@ Route::resource('categorias', 'CategoryController');
 //Status
 Route::resource('status', 'StatusController');
 
+//Taspasos
+Route::resource('traspasos', 'TranferProductsController');
+Route::get('traspasospdf', 'TranferProductsController@exportPdf');
 
 //Ventas
 Route::resource('ventas', 'SaleController');
@@ -108,6 +111,8 @@ Route::resource('estados', 'StateController');
 
 // Definicion de recursos anidados
 Route::resource('estados.municipios', 'StateMunicipalityController');
+
+
 Route::resource('sucursales.usuarios', 'BranchUserController');
 
 

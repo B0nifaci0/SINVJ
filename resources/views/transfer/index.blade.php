@@ -1,6 +1,6 @@
 @extends('layout.layoutdas')
 @section('title')
-Traspasos
+TRASFERENCIAS
 @endsection
 
 @section('nav')
@@ -12,108 +12,151 @@ Traspasos
 @section('content')
   <div class="panel-body">
 	@if (session('mesage'))	
-	<div class="alert alert-success">
-				<strong>{{ session('mesage') }}</strong>
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage') }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 	</div>
 		@endif
-			@if (session('mesage-update'))	
-	<div class="alert alert-warning">
-				<strong>{{ session('mesage-update') }}</strong>
+    @if (session('mesage-update'))	
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage-update') }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 	</div>
 		@endif
 			@if (session('mesage-delete'))	
-	<div class="alert alert-danger">
-				<strong>{{ session('mesage-delete') }}</strong>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage-delete') }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 	</div>
 		@endif    
-    <div class="page-content">
-  <div class="panel">
-    <div class="panel-body">
-     @if($errors->count() > 0)
-        <div class="alert alert-danger" role="alert">
-          <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-          </ul>
+  <div class="page-content">
+        <!-- Panel Basic -->
+    <div class="panel">
+      <header class="panel-heading">
+        <div class="panel-actions">
+        <div class="row">
+        <div class="col-md-6 col-md-offset-2">
+                  <button onclick="window.location.href='traspasospdf'" 
+                  type="button" class=" btn btn-sm small btn-floating 
+                   toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                   data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                </div>
+          <div class="col-md-6 col-md-offset-2">
+            <button onclick="window.location.href='/traspasos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left 
+            btn-info waves-effect waves-light waves-round float-right "
+             data-toggle="tooltip" data-original-title="Agregar">
+             <i class="icon md-plus" aria-hidden="true"></i></button>
+          </div>
         </div>
-    @endif
-      <h2 align="center">Traspasos </h2>
-      <br>  
-      <form class="" action="/transpasos" method="POST" enctype="multipart/form-data">
-      {{ csrf_field() }} 
-      <div class='row'>
-               <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
-                  <label>Producto</label>
-                  <select name="product_id" class="form-control" data-plugin="select2" data-placeholder="Seleccione Producto"
-                      data-allow-clear="true">
-                      <option></option>
-                      <optgroup label="Productos">
-                      @foreach($products as $product)
-                     <option value="{{ $product->id }}" required>{{$product->id}}-{{ $product->name }}</option>
-                     @endforeach
-                      </optgroup>
-                   </select>
-               </div>
-               <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
-                  <label>Sucursal</label>
-                  <select name="branch_id" class="form-control ">
-                    @foreach($branches as $branch)
-                     <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
+        </div>
+        <h3 class="panel-title">Traspasos</h3>
+      </header>
+      <div class="panel-body">
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+              <thead>
+                <tr>
+                 <th>Clave</th>
+                 <th>Clave Del Producto</th>
+                 <th>Producto</th>
+                 <th>Peso</th>
+                 <th>Categoría</th>
+                 <th>Linea</th>
+                 <th>Sucursal</th>
+                 <th>Quien lo mando</th>
+                 <th>Destino</th>
+                 <th>Quien recibio</th>
+                 <th>Fecha</th>
+                 <th>Estaus Del Producto</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                 <th>Clave</th>
+                 <th>Clave Del Producto</th>
+                 <th>Producto</th>
+                 <th>Peso</th>
+                 <th>Categoría</th>
+                 <th>Linea</th>
+                 <th>Sucursal</th>
+                 <th>Quien lo mando</th>
+                 <th>Destino</th>
+                 <th>Quien recibio</th>
+                 <th>Fecha</th>
+                 <th>Estaus Del Producto</th>
+                </tr> 
+              </tfoot>  
+              <tbody>
+              @foreach ($trans as $transfer)
+                    <tr id = "row{{$transfer->id}}">
+                          <td>{{ $transfer->id }}</td> 
+                          <td>{{ $transfer->product->id }}</td> 
+                          <td>{{ $transfer->product->name }}</td>
+                          <td>{{ $transfer->product->weigth }}</td>
+                          <td>{{ $transfer->product->category->name }}</td>
+                          <td>{{ $transfer->product->line->name }}</td>
+                          <td>{{$transfer->last_branch_id}}</td>
+                          <td>{{$transfer->user_id}}</td>
+                          <td>{{$transfer->new_branch_id}}</td>
+                          <td>{{$transfer->destination_user_id}}</td>
+                          <td>{{$transfer->created_at}}</td>
+                          <td>
+                 @if($transfer->status_product != 0)
+                  <span class="badge badge-primary">Entregado</span>
+                @else
+                  <span class="badge badge-success">Recibido</span>
+                @endif
+                </td>
+								
+							
+							</div>
+                          
+                    </tr>
                     @endforeach
-                  </select>
-               </div>
-              <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
-                 <label>Colaborador</label>
-                 <select name="user_id" class="form-control ">
-                   @foreach($users as $user)
-                    <option value="{{ $user->id }}" required>{{ $user->name }}</option>
-                   @endforeach
-                 </select>
-              </div>
-              <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
-                 <label>Destino</label>
-                   <select name="branch_id" class="form-control ">
-                      @foreach($branches as $branch)
-                       <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
-                      @endforeach
-                   </select>
-               </div>
-
-               <div class="col-md-3">
-                 <label  class="control-label">Seleccione Sucursal</label>
-                  <select id="branch_id"   name="branch_id"  class="form-control ">
-                    @foreach($branches as $branch)            
-                      <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
-                    @endforeach
-                  </select> 
-               </div> 
-               <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
-                 <label>Colaborador</label>
-                 <select name="" id="user_id" class="form-control ">
-                   @foreach($users as $user)
-                   <option value="{{ $user->id }}" required>{{ $user->name }}</option>
-                   @endforeach
-                 </select>
-               </div>
-                <br>
-              </div>
-             <br>
-            <div class="form-group col-md-12">
-          <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
-       </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  <!-- End Panel Basic -->
 @endsection
-        
-@section('branch-user')
-<script type="text/javascript">
 
-var branches = {!! $branches !!};
-
-$('#branch_id').change(function() {
-  var id = $(this).val();
-  var branch = branches.filter(l => l.id == id)[0];
-  $('#user_id').val(user.id);
+@section('filter')
+<script>
+$(document).ready(function(){
+  $('#filteringStatus').change(function(){
+    //alert($(this).val())
+    if($(this).val()==''){
+        $('.active').each(function(){
+            $(this).removeClass('hidden')
+        });
+        $('.disable').each(function(){
+            $(this).removeClass('hidden')
+        });
+    }else if($(this).val()=='activo'){
+        $('.active').each(function(){
+            $(this).removeClass('hidden')
+        });
+        $('.disable').each(function(){
+            $(this).addClass('hidden')
+        });
+    }else{
+        $('.disable').each(function(){
+            $(this).removeClass('hidden')
+        });
+        $('.active').each(function(){
+            $(this).addClass('hidden')
+        });
+    }
+  });
 });
-
 </script>
 @endsection

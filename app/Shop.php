@@ -50,4 +50,9 @@ class Shop extends Model
     {
       return $this->hasMany(User::class);
     }
+
+    public function trans()
+    {
+      return $this->hasMany(TrasnferProduct::class);
+    }
 }

@@ -19,6 +19,8 @@
     <link rel="stylesheet" href={{{url('/assets/css/site.min.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/select2/select2.css')}}}>
 
+
+
              
     <!-- Plugins -->
     <link rel="stylesheet" href={{{url('global/vendor/animsition/animsition.css')}}}>
@@ -749,6 +751,8 @@
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
 
     
+
+    
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
@@ -782,6 +786,10 @@
     @section('colaborador-sucursal')
     @show
     @section('branch-user')
+    @show
+    @section('agregar-cliente')
+    @show
+    @section('filter')
     @show
 </body>
 </html>
