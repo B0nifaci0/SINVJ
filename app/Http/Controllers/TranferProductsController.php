@@ -1,17 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\TransferProduct;
 use App\Product;
 use App\Branch;
 use App\User;
-use App\TransferProduct;
 use App\State;
 use App\Category;
 use App\Line;
 use PDF;
 use DB;
 use Auth;
-use Illuminate\Http\Request;
+
+
 use Illuminate\Support\Facades\Storage;
 
 
@@ -36,11 +39,11 @@ class TranferProductsController extends Controller
         return view('transfer/add', compact('branches','users','products'));
        }
 
-       public function store()
+       public function store(Request $request)
        {
-           $transfer_products = new TransferProduct;
-           $transfer_products->save();
-   
+           $transfer_product = new TransferProduct($request->all());
+           //return $transfer_product;
+           $transfer_product->save();
            return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
 }
 
