@@ -46,13 +46,15 @@ class ProductController extends Controller
      */
     public function create()
     {
-      /*$category = Auth::user()->shop->id;
-      return $category;*/
+        $category = Auth::user()->shop->id;
+        //return $category;
         $user = Auth::user();
-        $categories = Category::all();
+        #$categories = Category::all();
         $lines = Line::all();
         $shops = Auth::user()->shop()->get();
-        //return $shops;
+        //return $shops;  
+        $categories = Shop::find($category)->categories()->get();
+        //return $shops;  
         $statuses = Status::all();
         return view('product/add', compact('user', 'categories','lines','shops','statuses'));
     }
