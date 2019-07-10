@@ -93,7 +93,7 @@ TRASFERENCIAS
                 </tr> 
               </tfoot>  
               <tbody>
-              @foreach ($trans as $transfer)
+              @foreach  ($trans as $transfer)
                     <tr id = "row{{$transfer->id}}">
                           <td>{{ $transfer->id }}</td> 
                           <td>{{ $transfer->product->id }}</td> 
@@ -101,10 +101,10 @@ TRASFERENCIAS
                           <td>{{ $transfer->product->weigth }}</td>
                           <td>{{ $transfer->product->category->name }}</td>
                           <td>{{ $transfer->product->line->name }}</td>
-                          <td>{{$transfer->last_branch_id}}</td>
+                          <td>{{$transfer->lastBranch->name}}</td>
                           <td>{{$transfer->user->name}}</td>
-                          <td>{{$transfer->new_branch_id}}</td>
-                          <td>{{$transfer->destination_user_id}}</td>
+                          <td>{{$transfer->newBranch->name}}</td>
+                          <td>{{$transfer->destinationUser->name}}</td>
                           <td>{{$transfer->created_at}}</td>
                           <td>
                  @if($transfer->status_product != 0)

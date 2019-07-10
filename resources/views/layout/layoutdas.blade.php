@@ -18,6 +18,7 @@
     <link rel="stylesheet" href={{{url('global/css/bootstrap-extend.min.css')}}}>
     <link rel="stylesheet" href={{{url('/assets/css/site.min.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/select2/select2.css')}}}>
+    <link rel="stylesheet" href={{{url('global/vendor/editable-table/editable-table.css')}}}>
 
 
 
@@ -34,6 +35,8 @@
     <link rel="stylesheet" href={{{url('global/vendor/jvectormap/jquery-jvectormap.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}}>
     <link rel="stylesheet" href={{{url('assets/examples/css/dashboard/v1.css')}}}>
+    <link rel="stylesheet" href={{{url('assets/examples/css/uikit/modals.css')}}}>
+    
 
     <!--datatables -->
     <link rel="stylesheet" href={{{url('global/vendor/datatables.net-fixedheader-bs4/dataTables.fixedheader.bootstrap4.css')}}}>
@@ -673,6 +676,7 @@
     <script src={{{url('global/vendor/matchheight/jquery.matchHeight-min.js')}}}></script>
     <script src={{{url('global/vendor/peity/jquery.peity.min.js')}}}></script>
     <script src={{{url('global/vendor/select2/select2.full.min.js')}}}></script>
+    <script src={{{url('global/vendor/editable-table/mindmup-editabletable.js')}}}></script>
     
         
     <!-- datatables -->
@@ -716,8 +720,9 @@
     <script src={{{url('global/js/Plugin/jvectormap.js')}}}></script>
     <script src={{{url('global/js/Plugin/peity.js')}}}></script>
     <script src={{{url('global/js/Plugin/select2.js')}}}></script>
-    
-        <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
+    <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
+    <script src={{{url('global/js/Plugin/editable-table.js')}}}></script>
+    <script src={{{url('assets/examples/js/tables/editable.js')}}}></script>
 
     <!--DATA TABLES-->
     <script src={{{url('global/vendor/datatables.net/jquery.dataTables.js')}}}></script>
@@ -795,6 +800,8 @@
     @show
     @section('filter')
     @section('barcode-product')
+    @show
+    @section('example')
     @show
 </body>
 </html>

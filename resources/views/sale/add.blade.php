@@ -32,16 +32,15 @@ ALTA VENTA
   <center><h3>Registrate Venta</h3></center>
   {{ csrf_field() }}    
   <div class="row">
-        <div class="form-group form-material col-md-6">
-            <label class="form-control-label" for="inputBasicFirstName">Nombre: </label>
-            <div class="input-group">
-              <input type="text" class="form-control" name="name" required="required" placeholder="Fernando Bonifacio" />
-              <span class="input-group-btn">
-               <button type="button" class="btn btn-primary" id="edit-item" data-item-id="1"><span class="icon fa-user"></span></button>
-              </span> 
+        <div class="form-group form-material col-md-3">
+            <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente: </label>
+              <input type="text" class="form-control" name="name" required="required" placeholder="Fernando Bonifacio"required /> 
             </div> 
-        </div>
-         <div class="form-group form-material col-md-5">
+            <div class="form-group form-material col-md-3">
+               <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
+               <input type="text" class="form-control" name="telephone" value="{{old('telephone')}}" required="required" placeholder="7225674569" />
+      </div> 
+         <div class="form-group form-material col-md-3">
              <label>Producto</label>
            <select id="current_product" name="id" class="form-control" data-plugin="select2" 
                  data-placeholder="Seleccione Producto" data-allow-clear="true">
@@ -55,7 +54,7 @@ ALTA VENTA
          </div>
           <div class="col-md-1 form-group">
           <br>
-            <button type="button" class="btn btn-primary" id="btn-add">Agregar</button>
+            <button type="button" class="btn btn-primary" id="btn-add">+</button>
           </div> 
     </div>  
       <div class="panel-body">
@@ -70,82 +69,151 @@ ALTA VENTA
                  <th>Sucursal</th>
                  <th>Status</th>
                  <th>Precio</th>
-                 <th>Total</th>
               </tr>
             </thead>
             <tbody>
             </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="6"></td>
+                <th>
+                    <strong>Total</strong>
+                  </th>
+                <td><strong id="total"></strong></td>
+              </tr>
+            </tfoot>
           </table>
           <br>
-          <div class="col-md-12 form-group">
-<button type="button" class="btn btn-success" data-toggle="modal" data-target=".docs-example-modal-lg">$ Forma de Pago</button><br/><br/>
+<div class="col-md-12 form-group">
+
+<button class="btn btn-success"  data-target="#exampleTabs" data-toggle="modal"
+                      type="button">$ Tipo de Pago</button>
 </div>
 </div>
-<div class="modal fade docs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="attachment-body-content">
-        <form id="edit-form" class="form-horizontal" method="POST" action="">
-          <div class="card text-dark bg-light mb-0">
-            <div class="card-header">
-              <h4 class="m-0">Tipo de Pago</h4>
-            </div>
-            <div class="card-body">
-              <!-- name -->
-              <div class="form-group">
-                <label class="col-form-label" for="modal-input-name">Credito</label>
-                <input type="radio" name="modal-input-name" class="form-control" id="modal-input-name" required autofocus>
+
+
+              <div class="col-xl-4 col-lg-6">
+                <!-- Example Tab In Modal -->
+                <div class="example-wrap">
+                  <div class="example">
+                    <!-- Modal -->
+                    <div class="modal fade modal-success" id="exampleTabs" aria-hidden="true" aria-labelledby="exampleModalTabs"
+                      role="dialog" tabindex="-1">
+                      <div class="modal-dialog modal-simple">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="exampleModalTabs">Tipo de Pago</h4>
+                          </div>
+
+                          <ul class="nav nav-tabs nav-tabs-line" role="tablist">
+                            <li class="nav-item " role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleLine1"
+                                aria-controls="exampleLine1" role="tab">Contado</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleLine2"
+                                aria-controls="exampleLine2 " role="tab">Apartado</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleLine3"
+                                aria-controls="exampleLine3" role="tab">Pago con Tarjeta</a></li>
+                            
+                          </ul>
+
+                          <div class="modal-body">
+                            <div class="tab-content">
+                              <div class="tab-pane active" id="exampleLine1" role="tabpanel">
+                              <div class="row">
+                               <div class="form-group form-material col-md-3">
+                                        <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
+                                          <input type="text" class="form-control" name="name" id="resta" required="required" placeholder="$"required /> 
+                                        </div> 
+                                        <div class="form-group form-material col-md-3">
+                                          <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
+                                          <input type="text" class="form-control" name="" id="totalpay" required="required" readonly="readonly"/>
+                                  </div> 
+                                  <div class="form-group form-material col-md-3">
+                                          <label class="form-control-label" for="inputBasicLastName">Tu Cambio es:</label>
+                                          <input type="text" class="form-control" name="" id="cambio" required="required" />
+                                  </div>
+                                  </div>
+                                <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
+                              </div>
+                              <div class="tab-pane" id="exampleLine2" role="tabpanel"> 
+                              <div class="row">
+                               <div class="form-group form-material col-md-3">
+                                        <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
+                                          <input type="text" class="form-control" name="name" id="apartado" required="required" placeholder="$"required /> 
+                                        </div> 
+                                        <div class="form-group form-material col-md-3">
+                                        <label class="form-control-label" for="inputBasicFirstName">Restan</label>
+                                          <input type="text" class="form-control" name="name" id="falta" required="required" placeholder="$"required /> 
+                                        </div> 
+                                        <div class="form-group form-material col-md-3">
+                                          <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
+                                          <input type="text" class="form-control" id="totalpayment"  required="required" readonly="readonly" />
+                                  </div> 
+                                  </div>
+                                <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
+                              </div>
+                              <div class="tab-pane" id="exampleLine3" role="tabpanel">
+                              <div class="radio-custom radio-success">
+                              <h2>Pago</h2>
+                                        <input type="radio" id="inputRadiosChecked" name="inputRadios" checked="">
+                                        <label for="inputRadiosChecked">Tarjeta de Credito  <span class="icon fa-cc-mastercard"></span></label>
+                                      </div>
+                                      <div class="radio-custom radio-success">
+                                        <input type="radio" id="inputRadiosChecked" name="inputRadios" checked="">
+                                        <label for="inputRadiosChecked">Tarjeta de Debito  <span class="icon fa-cc-visa"></span></label>
+                                      </div>
+                                      <div class="radio-custom radio-success">
+                                        <input type="radio" id="inputRadiosChecked" name="inputRadios" checked="">
+                                        <label for="inputRadiosChecked">PayPal   <span class="icon fa-paypal"></span></label>
+                                      </div>
+                                  <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                      <label for="cc-name">Nombre de la Tarjeta</label>
+                                      <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                                      <small class="text-muted">Nombre completo como se muestra en la tarjeta de vencimiento</small>
+                                      <div class="invalid-feedback">
+                                        Name on card is required
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                      <label for="cc-number">Numero de la Tarjeta</label>
+                                      <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                                      <div class="invalid-feedback">
+                                        El numero de la tarjeta es requerido
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                      <label for="cc-expiration">Expiracion</label>
+                                      <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                                      <div class="invalid-feedback">
+                                        Expiration date required
+                                      </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                      <label for="cc-expiration">CVV</label>
+                                      <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                                      <div class="invalid-feedback">
+                                        Security code required
+                                      </div>
+                                    </div>
+                                  </div>
+                                <hr class="mb-4">
+                                <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Modal -->
+                  </div>
+                </div>
+                <!-- End Example Tab In Modal -->
               </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="attachment-body-content">
-        <form id="edit-form" class="form-horizontal" method="POST" action="">
-          <div class="card text-dark bg-light mb-0">
-            <div class="card-header">
-              <h4 class="m-0">Crear Cliente</h4>
-            </div>
-            <div class="card-body">
-              <!-- name -->
-              <div class="form-group">
-                <label class="col-form-label" for="modal-input-name">Nombre del Cliente</label>
-                <input type="text" name="modal-input-name" class="form-control" id="modal-input-name" required autofocus>
-              </div>
-              <!-- /name -->
-              <!-- CellPhone -->
-              <div class="form-group">
-                <label class="col-form-label" for="modal-input-cellphone">Telefono</label>
-                <input type="text" name="modal-input-cellphone" class="form-control" id="modal-input-cellphone" required autofocus>
-              </div>
-              <!-- /CellPhone -->
-              <!-- description -->
-              <div class="form-group">
-                <label class="col-form-label" for="modal-input-description">Email</label>
-                <input type="text" name="modal-input-description" class="form-control" id="modal-input-description" required>
-              </div>
-              <!-- /description -->
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
 @endsection
 
 @section('listado-productos')
@@ -153,6 +221,7 @@ ALTA VENTA
 <script>
 
 var products = {!! $products !!};
+var total = 0;
 
 
 
@@ -163,22 +232,30 @@ $(function(){
   console.log(productId);
   var product = products.filter(p => p.id == productId)[0];
   console.log(product);
-  /*
-   var _id = $('select[name="id"]').val();
-   var _name = $('input[name="name"]').val();
-   var _weigth = $('input[name="weigth"]').val();
-   var _category = $('input[name="category"]').val();
-   var _line = $('input[name="line"]').val();
-   var _branch = $('input[name="branch"]').val();
-   var _status = $('input[name="status"]').val();
-   */
+  var _tr = '<tr><td>'+ product.id +'</td> <td>'+ product.name +'</td><td>'+ product.weigth +'</td> <td>'+ product.category.name +'</td> <td>'+ product.line.name +'</td> <td>'+ product.branch.name +'</td> <td>'+ product.status.name +'</td> <td>$'+ product.price +'</td><td></td></tr>';
 
-
-
-  var _tr = '<tr><td>'+ product.id +'</td> <td>'+ product.name +'</td><td>'+ product.weigth +'</td> <td>'+ product.category_id +'</td> <td>'+ product.line_id +'</td> <td>'+ product.branch_id +'</td> <td>'+ product.status_id +'</td> <td>$'+ product.price +'</td><td></td></tr>';
 
   $('tbody').append(_tr);
+  total += Number(product.price);
+  $("#total").html("$" + total);
+
+  $('#totalpay').val(total);
+  $('#totalpayment').val(total);
+
+});
+  $('#resta').keyup(function() {
+  var cambio = $('#totalpay').val() - $(this).val();
+  $('#cambio').val(cambio);
+  console.log(cambio);
+  
+  
 });  
+$('#apartado').keyup(function() {
+  var falta = $('#totalpayment').val() -$(this).val();
+  $('#falta').val(falta);
+  
+  
+}); 
 });
 
 
@@ -187,43 +264,11 @@ $(function(){
 
 
 @section('agregar-cliente')
-<script>
-$(document).ready(function() {
-  /**
-   * for showing edit item popup
-   */
 
-  $(document).on('click', "#edit-item", function() {
-    $(this).addClass('edit-item-trigger-clicked'); //useful for identifying which trigger was clicked and consequently grab data from the correct row and not the wrong one.
+<style>
+.modal-open .select2-container {
+    z-index: 1000 !important;
+}
+</style>
 
-    var options = {
-      'backdrop': 'static'
-    };
-    $('#edit-modal').modal(options)
-  })
-
-  // on modal show
-  $('#edit-modal').on('show.bs.modal', function() {
-    var el = $(".edit-item-trigger-clicked"); // See how its usefull right here? 
-    var row = el.closest(".data-row");
-
-    // get the data
-    var name = row.children(".name").text();
-    var cellphone = row.children(".cellphone").text();
-    var description = row.children(".description").text();
-
-    // fill the data in the input fields
-    $("#modal-input-name").val(name);
-    $("#modal-input-cellphone").val(cellphone);
-    $("#modal-input-description").val(description);
-
-  })
-
-  // on modal hide
-  $('#edit-modal').on('hide.bs.modal', function() {
-    $('.edit-item-trigger-clicked').removeClass('edit-item-trigger-clicked')
-    $("#edit-form").trigger("reset");
-  })
-})
-</script>
 @endsection
