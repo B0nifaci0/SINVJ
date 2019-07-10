@@ -57,7 +57,7 @@ ALTA PRODUCTO
 
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
                 <label class="floating-label" for="inputBranch">{{ __('Destino') }}</label>
-                <select id="sucursales_1" class="form-control  sucursales1" name="new_branch_id" alt="1" >
+                <select id="sucursales_1" class="form-control  sucursales1" name="branch_id" alt="1" >
                 <option value="*">Seleccione Sucursal</option>
                 @foreach ($branches as $branch)
                     <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
@@ -66,7 +66,7 @@ ALTA PRODUCTO
             </div>
             <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputUser">{{ __('Colaborador') }}</label>
-              <select id="usuario_1" name="destination_user_id" class="form-control "></select>
+              <select id="usuario_1" name="user_id" class="form-control "></select>
             </div>
                 <br>
               </div>
