@@ -23,11 +23,11 @@ class TranferProductsController extends Controller
 {
     public function index()
        {
-        $trans = TransferProduct::with('user')->with('branch')->get();
-         //return response()->json($trans);
-        $users=User::all();
-        $branches=Branch::all();
-        return view('transfer/index', compact('branches','users','trans'));
+        $trans = TransferProduct::with('user')
+          ->with('lastBranch')
+          ->with('newBranch')
+          ->get();
+        return view('transfer/index', compact('trans'));
        
        }
 

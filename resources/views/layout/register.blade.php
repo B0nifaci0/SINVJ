@@ -132,31 +132,5 @@ $(".municipios").change(function(){
       $("#id_municipio_" + selector).val(id_municipio);
     });
 </script>
-
-
-
-<script type="text/javascript">
-$(document).ready(function(){
-  setTimeout(function () {  
-    $(".registro").click(function() {
-    var id = $(this).attr("alt");
-    Swal.fire("Registro Exitoso", "Ahora debes loguearte", "success")
-    .then(
-      function(result){
-        console.log('entra');
-        if(result.value){
-          console.log('entraalif');
-              window.location.href = '/login/';
-            }
-      }); 
-    });},1000); 
-  });
-</script>
-
-
-
-
-
-
   </body>
 </html>

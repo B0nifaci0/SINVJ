@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('salary')->default(0);
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops');
-            $table->integer('branch_id')->unsigned()->default(0);
+            $table->integer('branch_id')->unsigned()->nullable();
             $table->foreign('branch_id')->references('id')->on('branches');
             $table->softDeletes();
             $table->rememberToken();

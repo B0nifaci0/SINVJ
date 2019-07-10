@@ -120,3 +120,9 @@ PAGOS
             @endsection
         
 
+@section('example')
+<script>
+</script>
+<style>
+</style>
+@endsection
