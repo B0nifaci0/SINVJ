@@ -87,7 +87,7 @@ ALTA USUARIOS
                         </div>
                         <div class="form-group form-material col-md-6">
                             <label class="form-control-label" for="inputBasicFirstName">Salario : </label>
-                            <input type="text" name="salary" class="form-control">
+                            <input type="text" name="salary" class="form-control" placeholder="$ 1000">
                             </div>
                         <div>
                           <input type="hidden" name="terms_conditions" value="1">

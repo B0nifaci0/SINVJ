@@ -48,12 +48,27 @@ EDITAR USUARIOS
                           <label>Confirmar contraseña:</label>
                           <input type="password" class="form-control" value="" name="password_confirm" required>
                         </div>
+                        <!--
                         <div class="col-md-6  visible-md visible-lg">
                             <label>Tienda</label>
                             <select id="shops" class="form-control round tiendas" name="shop_id" required >
                             <option value="*">Seleccione Tienda</option>
                               @foreach ($shops as $shop)
                                 <option value="<?= $shop->id ?>"><?= $shop->name ?></option>
+                              @endforeach
+                            </select>
+                        </div> -->
+                        <div>
+                            @foreach ($shops as $shop)
+                            <input type="hidden" name="shop_id" value="{{$shop->id}}">
+                            @endforeach 
+                        </div> 
+                        <div class="col-md-offset-1 visible-md visible-lg col-md-6">
+                            <label class="form-control-label" for="inputBranch">Seleccione una Sucursal</label>
+                            <select id="branches" class="form-control round sucursales" name="branch_id" >
+                            <option value=" ">Seleccione Sucursal</option>
+                              @foreach ($branches as $branch)
+                                <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
                               @endforeach
                             </select>
                         </div> 
@@ -64,7 +79,12 @@ EDITAR USUARIOS
                                     <option value="1" name='type_user'>Sub-Administrador</option>
                                     <option value="2" name='type_usyer'>Colaborador</option>
                             </select>
-                        </div>  
+                        </div> 
+                        <div class="form-group form-material col-md-6">
+                            <label class="form-control-label" for="inputBasicFirstName">Salario : </label>
+                            <input type="text" name="salary" class="form-control"  value="{{$users->salary}}" placeholder="$ 1000">
+                            </div>
+                        <div> 
                           </div> 
                           <br>
                           <div class="form-group col-md-12">

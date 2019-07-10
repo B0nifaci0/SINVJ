@@ -90,8 +90,13 @@ LISTA DE  USUARIOS
                         @if($user->type_user == 2)
                           <td>Colaborador</td>
                         @endif
-                        <td>fghj</td>
-                        <td>${{$user->salary }}</td>
+                        @if($user->branch_id == 0)
+                        <td>Sin sucursal es Administrador</td>
+                        @endif
+                        @if($user->branch_id != 0)
+                        <td>{{$user->branch->name}}</td>
+                        @endif
+                        <td>$ {{$user->salary }}</td>
 
                         <td>    
                         <a href="/usuarios/{{$user->id}}/edit"<button type="button" 
