@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStoreExpensesTable extends Migration
+class CreateExpensesImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateStoreExpensesTable extends Migration
      */
     public function up()
     {
-        Schema::create('store_expenses', function (Blueprint $table) {
+        Schema::create('expenses_images', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('descripcion');
-            $table->string('image');
-            $table->integer('price');
-            $table->integer('shop_id')->unsigned();
-            $table->foreign('shop_id')->references('id')->on('shops');
+            $table->date('date_upload');
+            $table->integer('store_expenses_id')->unsigned();
+            $table->foreign('store_expenses_id')->references('id')->on('store_expenses')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
+
         });
     }
 
@@ -33,6 +32,6 @@ class CreateStoreExpensesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_expenses');
+        Schema::dropIfExists('expenses_images');
     }
 }

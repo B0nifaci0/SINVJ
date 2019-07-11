@@ -71,6 +71,10 @@ ALTA PRODUCTO
                 <br>
               </div>
              <br>
+             
+          <div>
+              <input type="hidden" name="status_product" value="0">
+          </div>   
             <div class="form-group col-md-12">
           <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
         </form>

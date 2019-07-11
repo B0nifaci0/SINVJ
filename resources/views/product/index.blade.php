@@ -100,7 +100,7 @@ LISTA PRODUCTO
                  <th>Status</th>
                 <th>c.Barras</th>
                  <th>Opciones</th>
-              </tr>
+              </tr> 
             </tfoot>
             <tbody>
 

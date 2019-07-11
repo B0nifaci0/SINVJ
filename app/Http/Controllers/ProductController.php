@@ -25,18 +25,34 @@ class ProductController extends Controller
     $this->middleware('BranchMiddleware');
     $this->middleware('CategoryMiddleware');
     $this->middleware('LineMiddleware');
-    $this->middleware('StatusMiddleware');
+    $this->middleware('StatusMiddleware'); 
   }
     
     public function index()
     {
-      $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
+     /* $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
       $categories = Category::all();
       $user = Auth::user();
         //return $user ;
       $lines = Line::all();
       $statuses = Status::all();
-      return view('product/index', compact('user','products', 'categories','lines','statuses'));
+      return view('product/index', compact('user','products', 'categories','lines','statuses')); */
+        $product = Auth::user()->shop->id;
+        $products = Shop::find($product)->products()->get();
+        //return $products;
+        $user = Auth::user(); 
+        //$categories = Category::all();
+        $shops = Auth::user()->shop()->get();
+        //return $shops;
+        $category = Auth::user()->shop->id;  
+        $categories = Shop::find($category)->categories()->get();
+        $line = Auth::user()->shop->id; 
+        $lines = Shop::find($line)->lines()->get();
+        //return $lines;  
+        $status = Auth::user()->shop->id;
+        $statuses = Shop::find($status)->statuss()->get();
+
+        return view('product/index', compact('user', 'categories','lines','shops','statuses','products'));
     }
 
     /**
@@ -49,13 +65,14 @@ class ProductController extends Controller
         $category = Auth::user()->shop->id;
         //return $category;
         $user = Auth::user();
-        #$categories = Category::all();
-        $lines = Line::all();
+        $line = Auth::user()->shop->id; 
         $shops = Auth::user()->shop()->get();
         //return $shops;  
         $categories = Shop::find($category)->categories()->get();
-        //return $shops;  
-        $statuses = Status::all();
+        $lines = Shop::find($line)->lines()->get();
+        //return $lines;  
+        $status = Auth::user()->shop->id;
+        $statuses = Shop::find($status)->statuss()->get();
         return view('product/add', compact('user', 'categories','lines','shops','statuses'));
     }
 
@@ -96,12 +113,29 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-      $product = Product::find($id);
+      /*$product = Product::find($id);
       $categorys = Category::all();
       $lines = Line::all();
       $shops = Shop::all();
       $branches = Branch::all();
-      $statuses = Status::all();
+      $statuses = Status::all();*/
+        $category = Auth::user()->shop->id;
+        //return $category;
+        $user = Auth::user();
+        #$categories = Category::all();
+        $line = Auth::user()->shop->id; 
+        $shops = Auth::user()->shop()->get();
+        //return $shops;  
+        $categorys = Shop::find($category)->categories()->get();
+        $lines = Shop::find($line)->lines()->get();
+        $branch = Auth::user()->shop->id; 
+        $branches = Shop::find($branch)->branches()->get();
+        //return $lines;  
+        $status = Auth::user()->shop->id;
+        $statuses = Shop::find($status)->statuss()->get();
+        $product = Product::find($id);
+        //return $product;
+        
       return view('product/edit', compact('product', 'categorys','lines','shops','branches','statuses'));
     }
 
