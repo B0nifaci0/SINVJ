@@ -244,7 +244,8 @@ $(function(){
 
 });
   $('#resta').keyup(function() {
-  var cambio = $('#totalpay').val() - $(this).val();
+  var cambio =   $(this).val() - $('#totalpay').val();
+
   $('#cambio').val(cambio);
   console.log(cambio);
   
