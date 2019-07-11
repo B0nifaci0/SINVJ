@@ -84,14 +84,14 @@ class ProductController extends Controller
      */
     public function store(ProductValidate $request)
     {
+      $product = new Product($request->all());
       if ($request->hasFile('image')){
          $filename = $request->image->getCLientOriginalName();
          $request->image->storeAs('public/upload/products',$filename);
-         $product = new Product($request->all());
          $product->image = $filename;
-         $product->save();
-        return redirect('/productos')->with('success', true);
       }
+      $product->save();
+      return redirect('/productos')->with('success', true);
     }
 
     /**

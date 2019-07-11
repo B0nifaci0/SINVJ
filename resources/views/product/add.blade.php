@@ -138,6 +138,9 @@ ALTA PRODUCTO
 @section('disabled-submit')
 <script type="text/javascript">
 $(document).ready(function(){
+
+ 
+  
   $("#categories").change(function(){
     if ($(this).val() == "" || $("#file").val() == "") {
       $("#submit").prop("disabled", true);
@@ -180,6 +183,8 @@ $(document).ready(function(){
 <script type="text/javascript">
 
 var lines = {!! $lines !!};
+
+$('#line_price').val(lines[0].price);
 
 $('#line_id').change(function() {
   var id = $(this).val();

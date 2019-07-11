@@ -18,6 +18,7 @@
     <link rel="stylesheet" href={{{url('global/css/bootstrap-extend.min.css')}}}>
     <link rel="stylesheet" href={{{url('/assets/css/site.min.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/select2/select2.css')}}}>
+    <link rel="stylesheet" href={{{url('global/vendor/editable-table/editable-table.css')}}}>
 
 
 
@@ -819,6 +820,8 @@
     @show
     @section('filter')
     @section('barcode-product')
+    @show
+    @section('example')
     @show
 </body>
 </html>

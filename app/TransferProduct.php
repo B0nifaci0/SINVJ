@@ -29,9 +29,20 @@ class TransferProduct extends Model
     {
       return $this->belongsTo(User::class);
     }
-    public function branch()
+
+    public function destinationUser()
     {
-      return $this->belongsTo(Branch::class);
+      return $this->belongsTo(User::class,'destination_user_id');
+    }
+
+    public function lastBranch()
+    {
+      return $this->belongsTo(Branch::class, 'last_branch_id');
+    }
+
+    public function newBranch()
+    {
+      return $this->belongsTo(Branch::class, 'new_branch_id');
     }
 
     public function shop()

@@ -35,9 +35,13 @@ class SaleController extends Controller
      */
     public function create()
     {
-      $products = Product::all();
-      $lines = Line::all();
-        return view('sale/add', compact('products','lines'));
+      $products = Product::with('line')
+        ->with('branch')
+        ->with('category')
+        ->with('status')
+        ->get();
+      //return $products;
+        return view('sale/add', compact('products'));
     }
 
     /**
