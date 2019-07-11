@@ -34,6 +34,8 @@
     <link rel="stylesheet" href={{{url('global/vendor/jvectormap/jquery-jvectormap.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}}>
     <link rel="stylesheet" href={{{url('assets/examples/css/dashboard/v1.css')}}}>
+    <link rel="stylesheet" href={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.css')}}}>
+    <link rel="stylesheet" href={{{url('global/vendor/dropify/dropify.css')}}}>
 
     <!--datatables -->
     <link rel="stylesheet" href={{{url('global/vendor/datatables.net-fixedheader-bs4/dataTables.fixedheader.bootstrap4.css')}}}>
@@ -618,6 +620,13 @@
                       </a>
                     </li>
 
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/gastos">
+                        <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                          <span class="site-menu-title">Gastos</span>
+                      </a>
+                    </li>
+
                   </ul>
                 </li>
                 <li class="site-menu-item ">
@@ -639,7 +648,7 @@
   @yield('content')
 </section>
 <!-- Footer -->
-  <!--<section>
+  <section>
     @yield('footer')
     <footer class="site-footer">
       <div class="site-footer-legal">© 2019 <a href="http://themeforest.net/item/remark-responsive-bootstrap-admin-template/11989202"></a></div>
@@ -648,7 +657,7 @@
       </div>
     </footer>
   </section>
-<section>-->
+<section>
   @yield('js')
     <!-- Core  -->
     <script src={{{url('global/vendor/babel-external-helpers/babel-external-helpers.js')}}}></script>
@@ -673,6 +682,18 @@
     <script src={{{url('global/vendor/matchheight/jquery.matchHeight-min.js')}}}></script>
     <script src={{{url('global/vendor/peity/jquery.peity.min.js')}}}></script>
     <script src={{{url('global/vendor/select2/select2.full.min.js')}}}></script>
+    <script src={{{url('global/vendor/jquery-ui/jquery-ui.js')}}}></script>
+        <script src={{{url('global/vendor/blueimp-tmpl/tmpl.js')}}}></script>
+        <script src={{{url('global/vendor/blueimp-canvas-to-blob/canvas-to-blob.js')}}}></script>
+        <script src={{{url('global/vendor/blueimp-load-image/load-image.all.min.js')}}}></script>
+        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.js')}}}></script>
+        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-process.js')}}}></script>
+        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-image.js')}}}></script>
+        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-audio.js')}}}></script>
+        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-video.js')}}}></script>
+        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-validate.js')}}}></script>
+        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-ui.js')}}}></script>
+        <script src={{{url('global/vendor/dropify/dropify.min.js')}}}></script>
     
         
     <!-- datatables -->
@@ -716,8 +737,9 @@
     <script src={{{url('global/js/Plugin/jvectormap.js')}}}></script>
     <script src={{{url('global/js/Plugin/peity.js')}}}></script>
     <script src={{{url('global/js/Plugin/select2.js')}}}></script>
-    
-        <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
+    <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
+    <script src={{{url('global/js/Plugin/dropify.js')}}}></script>
+    <script src={{{url('assets/examples/js/forms/uploads.js')}}}></script>
 
     <!--DATA TABLES-->
     <script src={{{url('global/vendor/datatables.net/jquery.dataTables.js')}}}></script>
@@ -777,6 +799,8 @@
     @section('delete-status')
     @show
     @section('delete-sucursales')
+    @show
+    @section('delete-gastos')
     @show
     @section('listado-productos')
     @show
