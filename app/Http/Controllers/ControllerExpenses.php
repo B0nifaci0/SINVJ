@@ -26,7 +26,7 @@ class ControllerExpenses extends Controller
         $expenses = Shop::find($expense)->expenses()->get();
         //return $expenses;
         $shops = Auth::user()->shop()->get();
-        return view('storeExpenses/index', compact('expenses','shop'));
+        return view('storeExpenses/index', compact('expenses','shops'));
     }
 
     /**
