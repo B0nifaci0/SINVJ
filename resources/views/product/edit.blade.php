@@ -11,6 +11,7 @@ MODIFICACIÓ PRODUCTO
 
 @endsection
 @section('content')
+
 <div class="page-content">
   <div class="panel">
     <div class="panel-body">
@@ -40,102 +41,65 @@ MODIFICACIÓ PRODUCTO
               <label>Descripcion</label>
               <input type="text" class="form-control"value="{{$product->description}}" name="description">
             </div>
-            <!-- <div class="form-group form-material col-md-6">
-              <label>Peso</label>
-              <input type="text" class="form-control"value="{{$product->weigth}}" name="weigth">
-            </div> -->
-            <div class="form-group form-material col-md-6">
-              <label>Observaciones</label>
-              <input type="text" class="form-control"value="{{$product->observations}}" name="observations">
-            </div>
-            <!-- <div class="form-group form-material col-md-6">
-              <label>Precio</label>
-              <input type="text" class="form-control"value="{{$product->price}}" name="price">
-            </div> -->
-    
-              <!-- <div class="form-group form-material col-md-6">
-                <label>Selecciona imagen del producto</label>
-                <br>
-                <label for="image" class="btn btn-primary">Explorar</label>
-                <input type="file" name="image" id="image" class="hidden" required>
-              </div> -->
-              <div class="col-xl-6 col-md-6">
-                  <!-- Example Default Value -->
-                  <label  class="control-label">Seleccione Imagen</label>
-                  <div class="example-wrap">
-                    <div class="example">
-                      <input type="file" id="image" data-plugin="dropify" data-default-file="../../../global/photos/placeholder.png"
-                      />
-                    </div>
-                  </div>
-                  <!-- End Example Default Value -->
-                </div>
-
-              <div class="col-md-3">
-                  <label  class="control-label">Seleccione Linea</label>
-                    <select id="line_id"   name="line_id"  class="form-control round">
-                      @foreach($lines as $line)            
-                        <option value="{{ $line->id }}" required>{{ $line->name }}</option>
-                      @endforeach
-                    </select> 
-                    </div>      
-                    <div class="col-md-3 form-material">
-                    <label  class="control-label">Precio de la linea</label>
-                    <input type="text" name="" id="line_price" class="form-control" readonly>
-                  </div>
-              
-                  <div class="form-group form-material col-md-3">
-                     <label>Peso</label>
-                     <input type="text" id="multiplicador"  class="form-control" name="weigth" value="{{$product->weigth}}" > 
-                     </div>
-                 
-          
-                  <div class="form-group form-material col-md-3">
-                        <label>Precio del Producto</label>
-                    <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
-                  </div>   
-
-            <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
-              <label>Categoria</label>
-              <select  name="category_id" class="form-control round">
-                @foreach($categorys as $category)            
-                  <option value="{{ $category->id }}" required>{{ $category->name }}</option>
-                @endforeach
-              </select>
-            </div>
-    
-            <!-- <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
-              <label>Linea</label>
-              <select  name="line_id" class="form-control round">
+            <div class="col-md-3">
+              <label  class="control-label">Seleccione Linea</label>                
+              <select id="line_id"   name="line_id"  class="form-control round">
                 @foreach($lines as $line)            
                   <option value="{{ $line->id }}" required>{{ $line->name }}</option>
                 @endforeach
-              </select>
-            </div> -->
-
-              <div>
-                  @foreach ($shops as $shop)
-                  <input type="hidden" name="shop_id" value="{{$shop->id}}">
-                  @endforeach 
-              </div> 
-    
-              <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
-               <label >Sucursal</label>
-               <select name="branch_id" class="form-control round">
-                 @foreach($branches as $branch)
-                  <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
-                 @endforeach
-               </select>
+              </select> 
+            </div>      
+            <div class="col-md-3 form-material">
+              <label  class="control-label">Precio de la linea</label>
+                <input type="text" name="" id="line_price" class="form-control" readonly>
             </div>
-    
-           <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
+            <div class="form-group form-material col-md-3">
+              <label>Peso</label>
+              <input type="text" id="multiplicador"  class="form-control" name="weigth" value="{{$product->weigth}}" > 
+            </div>
+            <div class="form-group form-material col-md-3">
+              <label>Precio del Producto</label>
+                <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
+            </div>   
+            <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
+              <label>Categoria</label>
+                <select  name="category_id" class="form-control round">
+                  @foreach($categorys as $category)            
+                    <option value="{{ $category->id }}" required>{{ $category->name }}</option>
+                  @endforeach
+                </select>
+            </div>
+            <div>
+                @foreach ($shops as $shop)
+                  <input type="hidden" name="shop_id" value="{{$shop->id}}">
+                @endforeach 
+            </div> 
+            <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
+               <label >Sucursal</label>
+                <select name="branch_id" class="form-control round">
+                  @foreach($branches as $branch)
+                    <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
+                  @endforeach
+                </select>
+            </div>
+            <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
               <label >Status</label>
               <select  name="status_id" class="form-control round">
                 @foreach($statuses as $status)            
-                  <option value="{{ $status->id }}" required>{{ $status->name }}</option>
+                  <option value="{{ $status->id }}" required>{{ $status->name }}</option>>
                 @endforeach
-              </select>
-          </div>
+              </select> 
+            </div>
+            <div class="form-group form-material col-md-6">
+              <label>Observaciones</label>
+              <input type="text" class="form-control"value="{{$product->observations}}" name="observations">
+            </div>  
+            <div class="form-group form-material col-md-6">
+              <label>Selecciona imagen del producto</label>
+              <br>
+              <label for="image" class="btn btn-primary">Explorar</label>
+              <input type="file" name="image" id="image" class="hidden" required>
+            </div> 
           <br>
           <div>
             <br>

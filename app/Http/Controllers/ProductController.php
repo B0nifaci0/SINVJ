@@ -182,10 +182,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-      Product::destroy($id);
-     // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
-   
-}
+        Product::destroy($id);
+    }
+    
 public function exportPdf(){ 
   $products = Product::all();
   $pdf  = PDF::loadView('product.pdf', compact('products'));

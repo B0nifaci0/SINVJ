@@ -135,10 +135,9 @@ LISTA PRODUCTO
                       class="btn btn-icon btn-info waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      
 
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                       alt="{{$product->id}}" role="button" 
+                       alt="{{ $product->id }}" role="button" 
                         data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
                     </button>   
@@ -176,8 +175,8 @@ $(document).ready(function() {
       text: "¿Seguro que desea eliminar este registro?",
       type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#d33' ,
+      cancelButtonColor: '#3085d6',
       confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
       if (result.value) {
@@ -185,7 +184,7 @@ $(document).ready(function() {
            headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
-          url:  '/productos/' + id,
+          url:  '/sucursales/' + id,
           method: 'DELETE',
           success: function () {
             $("#row" + id).remove();
