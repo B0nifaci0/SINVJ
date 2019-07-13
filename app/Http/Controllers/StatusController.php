@@ -6,6 +6,7 @@ use App\Shop;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Http\Requests\StatusRequest;
 
 class StatusController extends Controller
 {   
@@ -43,7 +44,7 @@ class StatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StatusRequest $request)
     {
         $status = new estatus($request->all());
         $status->shop_id = Auth::user()->shop->id;
@@ -83,7 +84,7 @@ class StatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StatusRequest $request, $id)
     {
         $status = estatus::findOrFail($id);
         $status->name = $request->name;

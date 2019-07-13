@@ -6,7 +6,7 @@ use App\Category;
 use categories;
 use Alert;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreBlogPost;
+use App\Http\Requests\CategoriesRequest;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
@@ -48,7 +48,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBlogPost $request)
+    public function store(CategoriesRequest $request)
     {
         $category = new Category($request->all());
         $category->shop_id = Auth::user()->shop->id;
@@ -93,7 +93,7 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreBlogPost $request, $id)
+    public function update(CategoriesRequest $request, $id)
     {
       $category = Category::findOrFail($id);
         $category->name = $request->name;

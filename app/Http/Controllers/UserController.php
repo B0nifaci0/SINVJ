@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Shop;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,7 +67,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
       //$shops=Auth::user()->shop()->get();
       \App\User::create([
@@ -127,7 +128,7 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(UserRequest $request,$id)
     {
       $users = User::findOrFail($id);
         $users->name = $request->name;

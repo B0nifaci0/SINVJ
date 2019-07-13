@@ -24,10 +24,10 @@ class ProductValidate extends FormRequest
     public function rules()
     {
         return [
-          'name' => 'required|string',
-          'description' => 'required|string|max:350',
+            'name' => 'required|string|max:15',
+            'description' => 'required|string|max:15',
             'weigth' => 'required|numeric|max:200',
-            'observations' => 'required|string|max:350',
+            'observations' => 'required|string|max:15',
             'price' => 'required|numeric',
             'category_id' => 'required',
             'line_id' => 'required',
@@ -41,11 +41,11 @@ class ProductValidate extends FormRequest
         return[
             'name.required' =>'El nombre del producto  es requerido',
             'name.string' => 'Solo se admiten caracteres alfabeticos',
-            'description.required' =>'La descripción  del producto  es requerida',
+            'description.required' =>'La descripción  del producto  es requerida y solo con 15 caracteres',
             'description.alpha' => 'Solo se admiten caracteres alfabeticos',
             'weigth.required' =>'El peso del producto  es requerido',
             'weigth.numeric' => 'Solo se admiten caracteres numericos',
-            'observations.required' =>'La descripción  del producto  es requerida',
+            'observations.required' =>'La descripción  del producto  es requerida y solo con 15 caracteres ',
             'observations.alpha' => 'Solo se admiten caracteres alfabeticos',
             'price.required' =>'El precio del producto  es requerido',
             'price.numeric' => 'Solo se adminen caracteres alfabeticos',

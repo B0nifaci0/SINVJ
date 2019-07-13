@@ -15,8 +15,8 @@ class CreateStoreExpensesTable extends Migration
     {
         Schema::create('store_expenses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('descripcion');
+            $table->string('name', 15)->unique();
+            $table->string('descripcion', 15);
             $table->string('image');
             $table->integer('price');
             $table->integer('shop_id')->unsigned();
