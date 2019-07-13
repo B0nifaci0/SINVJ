@@ -49,6 +49,10 @@ class Product extends Model
     {
       return $this->belongsTo(Status::class);
     }
+    public function sales()
+    {
+      return $this->belongsTo(Sale::class);
+    }
 
     public function tranfer()
     {

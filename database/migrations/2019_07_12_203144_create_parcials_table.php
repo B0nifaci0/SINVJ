@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSalesTable extends Migration
+class CreateParcialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateSalesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales', function (Blueprint $table) {
+        Schema::create('parcials', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('customer_name');
-            $table->string('telephone');
-            $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->string('price'); 
-            $table->softDeletes();
+            $table->integer('sale_id')->unsigned();
+            $table->foreign('sale_id')->references('id')->on('sales');
+            $table->string('parcial_pay'); 
+            $table->string('total_pay'); 
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateSalesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sales');
+        Schema::dropIfExists('parcials');
     }
 }

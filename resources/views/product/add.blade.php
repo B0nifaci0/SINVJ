@@ -108,7 +108,6 @@ ALTA PRODUCTO
                  @endforeach
                </select>
             </div>
-    
            <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
               <label>Seleccione Status</label>
               <select  name="status_id" class="form-control round">

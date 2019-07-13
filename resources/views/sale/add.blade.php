@@ -29,191 +29,166 @@ ALTA VENTA
           </ul>
         </div>
    @endif
-  <center><h3>Registrate Venta</h3></center>
-  {{ csrf_field() }}    
+<form autocomplete="off" method="POST" action="/ventas" enctype="multipart/form-data">
+    <center><h3>Registrate Venta</h3></center>
+    {{ csrf_field() }}    
   <div class="row">
-        <div class="form-group form-material col-md-3">
-            <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente: </label>
-              <input type="text" class="form-control" name="name" required="required" placeholder="Fernando Bonifacio"required /> 
-            </div> 
-            <div class="form-group form-material col-md-3">
-               <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-               <input type="text" class="form-control" name="telephone" value="{{old('telephone')}}" required="required" placeholder="7225674569" />
+    <div class="form-group form-material col-md-3">
+      <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente: </label>
+        <input type="text" class="form-control" name="customer_name" required="required" placeholder="Fernando Bonifacio"required /> 
       </div> 
-         <div class="form-group form-material col-md-3">
-             <label>Producto</label>
-           <select id="current_product" name="id" class="form-control" data-plugin="select2" 
-                 data-placeholder="Seleccione Producto" data-allow-clear="true">
-                 <option></option>
-               <optgroup label="Productos">
-                 @foreach($products as $product)
-                 <option value="{{ $product->id }}" required>{{$product->id}}-{{$product->name}}</option>
-                  @endforeach
-               </optgroup>
-           </select>
-         </div>
-          <div class="col-md-1 form-group">
-          <br>
-            <button type="button" class="btn btn-primary" id="btn-add">+</button>
-          </div> 
+      <div class="form-group form-material col-md-3">
+          <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
+          <input type="text" class="form-control" name="telephone" value="{{old('telephone')}}" required="required" placeholder="7225674569" />
+    </div> 
+    <div class="form-group form-material col-md-3">
+        <label>Producto</label>
+      <select id="current_product" name="product_id" class="form-control" data-plugin="select2" 
+            data-placeholder="Seleccione Producto" data-allow-clear="true">
+            <option></option>
+          <optgroup label="Productos">
+            @foreach($products as $product)
+            <option value="{{ $product->id }}" required>{{$product->id}}-{{$product->name}}</option>
+            @endforeach
+          </optgroup>
+      </select>
+    </div>
+    <div class="col-md-1 form-group">
+      <br>
+      <button type="button" class="btn btn-primary" id="btn-add">+</button>
+    </div> 
+    <div class="col-md-1 form-group">
+      <br>
+      <button type="button" class="btn btn-danger" id="delet">-</button>
+    </div> 
     </div>  
-      <div class="panel-body">
-           <table class="table table-hover dataTable table-striped w-full">
-             <thead>
-               <tr>
-                 <th>Clave</th>
-                 <th>Nombre</th>
-                 <th>Peso</th>
-                 <th>Categoría</th>
-                 <th>Linea</th>
-                 <th>Sucursal</th>
-                 <th>Status</th>
-                 <th>Precio</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="6"></td>
-                <th>
-                    <strong>Total</strong>
-                  </th>
-                <td><strong id="total"></strong></td>
-              </tr>
-            </tfoot>
-          </table>
-          <br>
-<div class="col-md-12 form-group">
-
-<button class="btn btn-success"  data-target="#exampleTabs" data-toggle="modal"
-                      type="button">$ Tipo de Pago</button>
-</div>
-</div>
-
-
-              <div class="col-xl-4 col-lg-6">
-                <!-- Example Tab In Modal -->
-                <div class="example-wrap">
-                  <div class="example">
-                    <!-- Modal -->
-                    <div class="modal fade modal-success" id="exampleTabs" aria-hidden="true" aria-labelledby="exampleModalTabs"
-                      role="dialog" tabindex="-1">
-                      <div class="modal-dialog modal-simple">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                            <h4 class="modal-title" id="exampleModalTabs">Tipo de Pago</h4>
-                          </div>
-
-                          <ul class="nav nav-tabs nav-tabs-line" role="tablist">
-                            <li class="nav-item " role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleLine1"
-                                aria-controls="exampleLine1" role="tab">Contado</a></li>
-                            <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleLine2"
-                                aria-controls="exampleLine2 " role="tab">Apartado</a></li>
-                            <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleLine3"
-                                aria-controls="exampleLine3" role="tab">Pago con Tarjeta</a></li>
-                            
-                          </ul>
-
-                          <div class="modal-body">
-                            <div class="tab-content">
-                              <div class="tab-pane active" id="exampleLine1" role="tabpanel">
-                              <div class="row">
-                               <div class="form-group form-material col-md-3">
-                                        <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
-                                          <input type="text" class="form-control" name="name" id="resta" required="required" placeholder="$"required /> 
-                                        </div> 
-                                        <div class="form-group form-material col-md-3">
-                                          <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
-                                          <input type="text" class="form-control" name="" id="totalpay" required="required" readonly="readonly"/>
-                                  </div> 
-                                  <div class="form-group form-material col-md-3">
-                                          <label class="form-control-label" for="inputBasicLastName">Tu Cambio es:</label>
-                                          <input type="text" class="form-control" name="" id="cambio" required="required" />
-                                  </div>
-                                  </div>
-                                <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
-                              </div>
-                              <div class="tab-pane" id="exampleLine2" role="tabpanel"> 
-                              <div class="row">
-                               <div class="form-group form-material col-md-3">
-                                        <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
-                                          <input type="text" class="form-control" name="name" id="apartado" required="required" placeholder="$"required /> 
-                                        </div> 
-                                        <div class="form-group form-material col-md-3">
-                                        <label class="form-control-label" for="inputBasicFirstName">Restan</label>
-                                          <input type="text" class="form-control" name="name" id="falta" required="required" placeholder="$"required /> 
-                                        </div> 
-                                        <div class="form-group form-material col-md-3">
-                                          <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
-                                          <input type="text" class="form-control" id="totalpayment"  required="required" readonly="readonly" />
-                                  </div> 
-                                  </div>
-                                <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
-                              </div>
-                              <div class="tab-pane" id="exampleLine3" role="tabpanel">
-                              <div class="radio-custom radio-success">
-                              <h2>Pago</h2>
-                                        <input type="radio" id="inputRadiosChecked" name="inputRadios" checked="">
-                                        <label for="inputRadiosChecked">Tarjeta de Credito  <span class="icon fa-cc-mastercard"></span></label>
-                                      </div>
-                                      <div class="radio-custom radio-success">
-                                        <input type="radio" id="inputRadiosChecked" name="inputRadios" checked="">
-                                        <label for="inputRadiosChecked">Tarjeta de Debito  <span class="icon fa-cc-visa"></span></label>
-                                      </div>
-                                      <div class="radio-custom radio-success">
-                                        <input type="radio" id="inputRadiosChecked" name="inputRadios" checked="">
-                                        <label for="inputRadiosChecked">PayPal   <span class="icon fa-paypal"></span></label>
-                                      </div>
-                                  <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                      <label for="cc-name">Nombre de la Tarjeta</label>
-                                      <input type="text" class="form-control" id="cc-name" placeholder="" required="">
-                                      <small class="text-muted">Nombre completo como se muestra en la tarjeta de vencimiento</small>
-                                      <div class="invalid-feedback">
-                                        Name on card is required
-                                      </div>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                      <label for="cc-number">Numero de la Tarjeta</label>
-                                      <input type="text" class="form-control" id="cc-number" placeholder="" required="">
-                                      <div class="invalid-feedback">
-                                        El numero de la tarjeta es requerido
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="col-md-3 mb-3">
-                                      <label for="cc-expiration">Expiracion</label>
-                                      <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
-                                      <div class="invalid-feedback">
-                                        Expiration date required
-                                      </div>
-                                    </div>
-                                    <div class="col-md-3 mb-3">
-                                      <label for="cc-expiration">CVV</label>
-                                      <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
-                                      <div class="invalid-feedback">
-                                        Security code required
-                                      </div>
-                                    </div>
-                                  </div>
-                                <hr class="mb-4">
-                                <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+    <div class="panel-body">
+      <table class="table table-hover dataTable table-striped w-full" id="tabla">
+          <thead>
+            <tr>
+              <th>Clave</th>
+              <th>Nombre</th>
+              <th>Peso</th>
+              <th>Categoría</th>
+              <th>Linea</th>
+              <th>Sucursal</th>
+              <th>Status</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6"></td>
+              <th>
+                <strong>Total</strong>
+              </th>
+            <td><strong id="total"></strong><input type="hidden" class="form-control" name="price" id="pagar"/> </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-2 form-group">
+        <button class="btn btn-success"  data-target="#exampleTabs" data-toggle="modal"type="button">$ Tipo de Pago</button>
+      </div>
+      <div class="form-group col-md-1">
+        <button  id="submit" type="submit" name="" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="col-xl-4 col-lg-6">
+  <!-- Example Tab In Modal -->
+  <div class="example-wrap">
+    <div class="example">
+      <!-- Modal -->
+      <div class="modal fade modal-success" id="exampleTabs" aria-hidden="true" aria-labelledby="exampleModalTabs"
+        role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-simple">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+              <h4 class="modal-title" id="exampleModalTabs">Tipo de Pago</h4>
+            </div>
+              <ul class="nav nav-tabs nav-tabs-line" role="tablist">
+                <li class="nav-item " role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleLine1"
+                    aria-controls="exampleLine1" role="tab">Contado</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleLine2"
+                    aria-controls="exampleLine2 " role="tab">Apartado</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleLine3"
+                    aria-controls="exampleLine3" role="tab">Pago con Tarjeta</a></li>
+              </ul>
+            <div class="modal-body">
+              <div class="tab-content">
+                <div class="tab-pane active" id="exampleLine1" role="tabpanel">
+                  <div class="row">
+                      <div class="form-group form-material col-md-3">
+                        <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
+                          <input type="text" class="form-control" name="" id="resta" required="required" placeholder="$"required /> 
+                      </div> 
+                      <div class="form-group form-material col-md-3">
+                        <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
+                        <input type="text" class="form-control" name="price" id="totalpay" required="required" readonly="readonly"/>
+                      </div> 
+                      <div class="form-group form-material col-md-3">
+                              <label class="form-control-label" for="inputBasicLastName">Tu Cambio es:</label>
+                              <input type="text" class="form-control" name="" id="cambio" required="required" />
                       </div>
-                    </div>
-                    <!-- End Modal -->
                   </div>
+                  <button id="submit" type="submit" name="continuar" data-dismiss="modal" class="btn btn-success btn-lg btn-block" aria-label="Close" >Continuar</button>
                 </div>
-                <!-- End Example Tab In Modal -->
+                <div class="tab-pane" id="exampleLine2" role="tabpanel"> 
+                  <div class="row">
+                    <div class="form-group form-material col-md-3">
+                      <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
+                      <input type="text" class="form-control" name="" id="apartado" required="required" placeholder="$"required /> 
+                    </div> 
+                    <div class="form-group form-material col-md-3">
+                      <label class="form-control-label" for="inputBasicFirstName">Restan</label>
+                      <input type="text" class="form-control" name="" id="falta" required="required" placeholder="$"required /> 
+                    </div> 
+                    <div class="form-group form-material col-md-3">
+                      <label class="form-control-label">Total a Pagar:</label>
+                      <input type="text" class="form-control" id="totalpayment"  required="required" readonly="readonly" />
+                    </div> 
+                  </div>
+                  <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
+                </div>
+                <div class="tab-pane" id="exampleLine3" role="tabpanel">
+                  <div class="row">
+                    <div class="form-group form-material col-md-3">
+                      <label class="form-control-label">Recibo:</label>
+                      <input type="text" class="form-control" id=""  required="required"/>
+                    </div> 
+                    <div class="form-group form-material col-md-3">
+                      <label class="form-control-label">Total a Pagar:</label>
+                      <input type="text" class="form-control" id="pagotarjeta"  required="required" readonly="readonly" />
+                    </div> 
+                    <div class="form-group form-material col-md-6">
+                      <label>Selecciona Ticket de la venta</label>
+                      <br>
+                      <label for="image" class="btn btn-success">Explorar</label>
+                      <input type="file" name="image" id="image" class="hidden">
+                    </div>
+                  </div>
+                  <hr class="mb-4">
+                  <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
+                </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Modal -->
+    </div>
+  </div>
+  <!-- End Example Tab In Modal -->
+</div>       
 @endsection
 
 @section('listado-productos')
@@ -240,20 +215,37 @@ $(function(){
   $("#total").html("$" + total);
 
   $('#totalpay').val(total);
+  $('#pagar').val(total);
+  $('#pagotarjeta').val(total);
   $('#totalpayment').val(total);
+  $('#vari').val(cambio);
+  $('#tabl').val(_tr);
+
+
+  
+  $("#delet").click(function(){
+    $('tabl').remove(_tr);
+        });
 
 });
   $('#resta').keyup(function() {
-  var cambio = $('#totalpay').val() - $(this).val();
+  var cambio =  $(this).val() - $('#totalpay').val();
   $('#cambio').val(cambio);
   console.log(cambio);
   
   
 });  
+
 $('#apartado').keyup(function() {
   var falta = $('#totalpayment').val() -$(this).val();
   $('#falta').val(falta);
   
+}); 
+$('#continuar').click(function(e) {
+ e.preventDefault();
+ if('El dinero recibido ddebe ser mayor al total a pagar'){
+   $('#form').submit();
+ }
   
 }); 
 });
