@@ -23,15 +23,11 @@ class SaleRequest extends FormRequest
      */
     public function rules()
     {
-         return [
-          'date' => 'required',
-        ];
+        //
     }
 
 
       public function messages(){
-        return[
-            'date.required' =>'El dato de la Venta  es requerido',
-        ];
+        //
     }
 }

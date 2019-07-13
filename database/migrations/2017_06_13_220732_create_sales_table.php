@@ -19,8 +19,7 @@ class CreateSalesTable extends Migration
             $table->string('telephone')->unique();
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
-            $table->string('price');
-            $table->integer('final_price'); 
+            $table->string('price'); 
             $table->softDeletes();
             $table->timestamps();
         });

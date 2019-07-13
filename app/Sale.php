@@ -1,20 +1,12 @@
 <?php
 
 namespace App;
-
+use App\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sale extends Model
 {
-
-    // Tipos de suscripcion
-    const shop_id = '';
-
-
-    public  function scopeLast($query){
-      return $query->orderBy("id");
-    }
-    
 
    
     /**
@@ -23,9 +15,10 @@ class Sale extends Model
      * @var array
      */
     protected $fillable = [
-        'date',
-        'folio_nota',
-        
+        'customer_name',
+        'telephone',
+        'product_id',
+        'price'
     ];
 
     public function product(){
@@ -33,6 +26,9 @@ class Sale extends Model
  }
  public function line(){
   return $this->belongsTo(Line::class);
+}
+public function parcial(){
+  return $this->hasMany(Parcial::class);
 }
 }
 
