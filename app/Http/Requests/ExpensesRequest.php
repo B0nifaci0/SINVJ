@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LineRequest extends FormRequest
+class ExpensesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,19 +23,16 @@ class LineRequest extends FormRequest
      */
     public function rules()
     {
-         return [
+        return [
             'name' => 'required|string|max:15',
-            'price' => 'required|numeric',
+            'descripcion' => 'required|string|max:15',
         ];
     }
-
-
-      public function messages(){
+    public function messages(){
         return[
             'name.required' => 'El nombre es requerido y con solo 15 caracteres',
-            'price.required' => 'El precio es requerido',
-            
+            'descripcion.required' => 'La descripcion es requerida y con solo 15 caracteres', 
+ 
         ];
     }
 }
-

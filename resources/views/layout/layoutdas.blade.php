@@ -823,5 +823,7 @@
     @show
     @section('example')
     @show
+    @section('traspaso')
+    @show
 </body>
 </html>

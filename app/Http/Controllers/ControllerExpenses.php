@@ -6,6 +6,7 @@ use App\Shop;
 use App\store_expenses as Expenses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ExpensesRequest;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -48,7 +49,7 @@ class ControllerExpenses extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ExpensesRequest $request)
     {
          if ($request->hasFile('image')){
             $filename = $request->image->getCLientOriginalName();
@@ -96,7 +97,7 @@ class ControllerExpenses extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ExpensesRequest $request, $id)
     {
         $expense = Expenses::findOrFail($id);
 

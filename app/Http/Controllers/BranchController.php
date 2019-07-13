@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Branch;
 use App\Shop;
 use Illuminate\Http\Request;
+use App\Http\Requests\BranchRequest;
 //use App\Http\Requests\BranchValidate;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,7 +45,7 @@ class BranchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BranchRequest $request)
     {
       //return $request->all();
         $branch = new Branch($request->all());
@@ -91,7 +92,7 @@ class BranchController extends Controller
      * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BranchRequest $request, $id)
     {
             $branch = Branch::findOrFail($id);
             //return $request->longitude;
