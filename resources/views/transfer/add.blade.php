@@ -24,14 +24,13 @@ ALTA PRODUCTO
           </ul>
         </div>
     @endif
-      <h2 align="center">Nuevo Traspaso</h2>
-      <br>  
+      <center><h3>Nuevo Traspaso</h3></center>
     <form class="" action="/traspasos" method="POST">
       {{ csrf_field() }} 
       <div class='row'>
-               <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
+               <div class="form-group form-material  col-md-3  col-md-offset-1 visible-md visible-lg">
                   <label>Producto</label>
-                  <select name="product_id" class="form-control" data-plugin="select2" data-placeholder="Seleccione Producto"
+                  <select name="product_id" class="form-control " data-plugin="select2" data-placeholder="Seleccione Producto"
                       data-allow-clear="true">
                       <option></option>
                       <optgroup label="Productos">
@@ -41,25 +40,28 @@ ALTA PRODUCTO
                       </optgroup>
                    </select>
                </div>
-            <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
-                <label class="floating-label" for="inputBranch">{{ __('Sucursal') }}</label>
-                <select id="sucursales_1" class="form-control sucursales" name="new_branch_id" alt="1" >
-                <option value="*">Seleccione Sucursal</option>
-                @foreach ($branches as $branch)
-                    <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
-                @endforeach
-                </select>
-            </div>
-            <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
-              <label class="floating-label" for="inputUser">{{ __('Colaborador') }}</label>
-              <select id="usuarios_1" name="destination_user_id" class="form-control "></select>
-            </div>
-
-          <div>
+                <div class="form-group  col-md-3  col-md-offset-1 visible-md visible-lg">
+                  <label>Sucursal Destino</label>
+                  <select id="sucursales_1" class="form-control sucursales" name="new_branch_id" alt="1" >
+                    <option value="*">Seleccione Sucursal</option>
+                    @foreach ($branches as $branch)
+                        <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group  col-md-3 col-md-offset-1 visible-md visible-lg">
+                  <label>Recibe</label>
+                  <select id="usuarios_1" name="destination_user_id" class="form-control ">
+                    <option value="">Selecciona Colaborador</option>
+                  </select>
+                </div>
+          <div class="col-md-3">
               <input type="hidden" name="status_product" value="0">
-          </div>   
-            <div class="form-group col-md-12">
+          </div> 
+        </div>   
+        <div class="form-group col-md-12">
           <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
+        </div>
         </form>
     </div>
   </div>

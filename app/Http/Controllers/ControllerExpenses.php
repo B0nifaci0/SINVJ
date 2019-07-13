@@ -57,8 +57,8 @@ class ControllerExpenses extends Controller
             $expense = new Expenses($request->all());
             $expense->image = $filename;
             $expense->save();
-            return $expense;
-           //return redirect('/gastos')->with('success', true);
+            //return $expense;
+        return redirect('/gastos')->with('success', true);
          } 
     
     }

@@ -40,7 +40,7 @@ class TranferProductsController extends Controller
         
         //return $transs;
         $branches=Branch::all();
-        return view('transfer/index', compact('branches','users','trans'));
+        return view('transfer/index', compact('branches','user','trans'));
         
        }
 

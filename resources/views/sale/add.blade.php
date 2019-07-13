@@ -57,10 +57,6 @@ ALTA VENTA
       <br>
       <button type="button" class="btn btn-primary" id="btn-add">+</button>
     </div> 
-    <div class="col-md-1 form-group">
-      <br>
-      <button type="button" class="btn btn-danger" id="delet">-</button>
-    </div> 
     </div>  
     <div class="panel-body">
       <table class="table table-hover dataTable table-striped w-full" id="tabla">
@@ -74,6 +70,9 @@ ALTA VENTA
               <th>Sucursal</th>
               <th>Status</th>
               <th>Precio</th>
+              <th>Precio</th>
+              <th>Eliminar</th>
+
             </tr>
           </thead>
         <tbody>
@@ -207,12 +206,12 @@ $(function(){
   console.log(productId);
   var product = products.filter(p => p.id == productId)[0];
   console.log(product);
-  var _tr = '<tr><td>'+ product.id +'</td> <td>'+ product.name +'</td><td>'+ product.weigth +'</td> <td>'+ product.category.name +'</td> <td>'+ product.line.name +'</td> <td>'+ product.branch.name +'</td> <td>'+ product.status.name +'</td> <td>$'+ product.price +'</td><td></td></tr>';
+  var _tr = '<tr id="removetr' +product.id+'" alt="product.id"><td>'+ product.id +'</td> <td>'+ product.name +'</td><td>'+ product.weigth +'</td> <td>'+ product.category.name +'</td> <td>'+ product.line.name +'</td> <td>'+ product.branch.name +'</td> <td>'+ product.status.name +'</td> <td>$'+ product.price +'</td><td>0</td><td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger" id="deletr">-</button></div></td></tr>';
 
 
-  $('tbody').append(_tr);
+  $('tbody').append(_tr); 
   total += Number(product.price);
-  $("#total").html("$" + total);
+  $("#total").html("$" + total); 
 
   $('#totalpay').val(total);
   $('#pagar').val(total);
@@ -223,8 +222,10 @@ $(function(){
 
 
   
-  $("#delet").click(function(){
-    $('tabl').remove(_tr);
+  $('#deletr').click(function(){
+    $("#removetr").remove();
+      total -= Number(product.price);
+      $("#total").html("$" - total);
         });
 
 });
