@@ -40,13 +40,15 @@ class SaleController extends Controller
      */
     public function create()
     {
+      $branchId = Auth::user()->branch->id;
+      $productsBranch = Product::where('branch_id',$branchId)->get();
       $products = Product::with('line')
         ->with('branch')
         ->with('category')
         ->with('status')
         ->get();
       //return $products;
-        return view('sale/add', compact('products'));
+        return view('sale/add', compact('products','productsBranch'));
     }
 
     /**
