@@ -47,7 +47,7 @@ ALTA VENTA
             data-placeholder="Seleccione Producto" data-allow-clear="true">
             <option></option>
           <optgroup label="Productos">
-            @foreach($products as $product)
+            @foreach($productsBranch as $product)
             <option value="{{ $product->id }}" required>{{$product->id}}-{{$product->name}}</option>
             @endforeach
           </optgroup>

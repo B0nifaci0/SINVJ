@@ -180,16 +180,29 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-      Product::destroy($id);
-     // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
-   
-}
-public function exportPdf(){ 
-  $products = Product::all();
-  $pdf  = PDF::loadView('product.pdf', compact('products'));
-  return $pdf->download('product.pdf');
-}
+        public function destroy($id)
+        {
+          Product::destroy($id);
+        // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
+      
+        }
+    public function exportPdf(){ 
+        $product = Auth::user()->shop->id;
+        $products = Shop::find($product)->products()->get();
+        //return $products;
+        $user = Auth::user(); 
+        //$categories = Category::all();
+        $shops = Auth::user()->shop()->get();
+        //return $shops;
+        $category = Auth::user()->shop->id;  
+        $categories = Shop::find($category)->categories()->get();
+        $line = Auth::user()->shop->id; 
+        $lines = Shop::find($line)->lines()->get();
+        //return $lines;  
+        $status = Auth::user()->shop->id;
+        $statuses = Shop::find($status)->statuss()->get();
+      $pdf  = PDF::loadView('product.pdf', compact('user', 'categories','lines','shops','statuses','products'));
+      return $pdf->download('product.pdf');
+    }
 
 }
