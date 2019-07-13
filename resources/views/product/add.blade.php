@@ -111,6 +111,51 @@ ALTA PRODUCTO
                 <label>Selecciona imagen del producto</label>
                 <br>
                 <label for="image" class="btn btn-primary">Explorar</label>
+                <input type="file" name="image" id="image" class="hidden">
+              </div>
+
+           <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
+              <label>Seleccione Categoria </label>
+              <select  name="category_id" class="form-control round">
+                @foreach($categories as $category)            
+                  <option value="{{ $category->id }}" required>{{ $category->name }}</option>
+                @endforeach
+              </select>
+            </div>
+    
+            <div class="col-md-offset-1 visible-md visible-lg col-md-6">
+                <label class="form-control-label" for="inputShop">Seleccione una Tienda</label>
+                <select id="shops" class="form-control round tiendas" name="shop_id" >
+                <option value="*">Seleccione Tienda</option>
+                  @foreach ($shops as $shop)
+                    <option value="<?= $shop->id ?>"><?= $shop->name ?></option>
+                  @endforeach
+                </select>
+              </div>  
+    
+            <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
+               <label>Seleccione Sucursal</label>
+               <select name="branch_id" class="form-control round">
+               @php  
+                  $branches = $user->shop->branches;
+               @endphp
+                 @foreach($branches as $branch)
+                  <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
+                 @endforeach
+               </select>
+            </div>
+           <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
+              <label>Seleccione Status</label>
+              <select  name="status_id" class="form-control round">
+                @foreach($statuses as $status)             
+                  <option value="{{ $status->id }}" required>{{ $status->name }}</option>
+                @endforeach
+              </select>
+            </div>
+    <br>
+      </div>
+      <br>
+        <div class="form-group col-md-12">
                 <input type="file" name="image" id="image" class="hidden" data-default-file="../../../global/photos/placeholder.png">
               </div> 
               <!--

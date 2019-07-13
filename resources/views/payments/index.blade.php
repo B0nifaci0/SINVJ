@@ -117,12 +117,37 @@ PAGOS
                   </div>
                 </div>
               </div>
+
+              <form action="">
+       <label> Agregar item </label>
+       <input type="text" id="item" />
+       <input type="button" id="agregar_item" value="Agregar item" />
+    </form>
+    <ul id="lista">
+    </ul>
             @endsection
         
 
 @section('example')
-<script>
-</script>
+<script type="text/javascript">
+       function agregarItem(){
+          var valor_item = $("#item").val();
+          $("#item").val('');
+          $("#lista").append('<li> ' + valor_item + ' <a class="eliminar_item" href="javascript:void();"> Eliminar </a> </li>');
+       }
+       function escuchaEliminarItem(){
+          $("#lista").delegate('.eliminar_item', 'click', function(){
+             var padre = $(this).parent();
+             padre.remove();
+          });
+       }
+       $(document).ready(function(){
+          $("#agregar_item").click(function(){
+             agregarItem();
+          });
+          escuchaEliminarItem();
+       });
+    </script>
 <style>
 </style>
 @endsection

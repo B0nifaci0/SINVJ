@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Sale;
 use App\Product;
 use App\Line;
-
+use PDF;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaleRequest;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +24,12 @@ class SaleController extends Controller
     public function index()
     {
       $sales = Sale::all();
-    return view('sale/index', compact('sales'));
+      $products = Product::with('line')
+        ->with('branch')
+        ->with('category')
+        ->with('status')
+        ->get();
+    return view('sale/index', compact('sales','products'));
     }
 
 
@@ -50,11 +55,9 @@ class SaleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SaleRequest $request)
+    public function store(Request $request)
     {
         $sale = new Sale($request->all());
-        $sale->user_id = Auth::user();
-        $sale->branch_id = Auth::branch();
         $sale->save();
 
     return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
@@ -102,21 +105,24 @@ class SaleController extends Controller
         return redirect('/ventas')->with('mesage-update', 'La venta se ha modificado exitosamente!');
     }
 
+
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Sale  $sale
+     * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-      //Sale::destroy($id);
-  // return redirect('/ventas')->with('mesage-delete', 'La venta  se ha eliminado exitosamente!');
-    }
+      Product::destroy($id);
+     // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
+   
+}
+public function exportPdf(){ 
+  $sales = Sale::all();
+  $pdf  = PDF::loadView('sale.PDFVenta', compact('sales'));
+  return $pdf->download('venta.pdf');
+}
 
-
-    public function oneProduct($id){
-
-
-    }
 }
