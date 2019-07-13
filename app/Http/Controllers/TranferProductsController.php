@@ -22,7 +22,11 @@ class TranferProductsController extends Controller
 {
     public function index()
        {
-        $trans = TransferProduct::with('user')->with('branch')->get();
+         $user = Auth::user();
+        $trans = TransferProduct::with('user')
+          ->with('newBranch')
+          ->where('new_branch_id', $user->branch_id)
+          ->get();
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
         //$statuses = Shop::find($status)->statuss()->get();
@@ -42,20 +46,31 @@ class TranferProductsController extends Controller
 
        public function create()
        {
-        $users = User::all();
-        $products = Product::all();
-        $branches = Branch::all();
+        $user = Auth::user();
+        $users = User::where('id', '!=', $user->id)->get();
+        $products = Product::where('branch_id', $user->branch_id)->get();
+        $branches = Branch::where('id', '!=', $user->branch_id)->get();
         return view('transfer/add', compact('branches','users','products'));
        }
 
        public function store(Request $request)
        {
-           $transfer_product = new TransferProduct($request->all());
-           //return $transfer_product;
-           $transfer_product->save();
+          $user = Auth::user();
+          $data = $request->all();
+          $data['last_branch_id']  = $user->branch_id;
+          $data['user_id'] = $user->id;
+
+           $transfer_product = TransferProduct::create($data);
            return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
-}
- 
+    }
+
+  public function answerTransferRequest(Request $request) {
+    $transfer = TransferProduct::find($request->transfer_id);
+    $transfer->status_product = $request->answer;
+    $transfer->save();
+    return redirect('/traspasos');
+  }
+
 public function exportPdf(){ 
     $trans = TransferProduct::all();
     $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));

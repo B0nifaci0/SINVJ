@@ -18,7 +18,7 @@ class ProductBranchMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->type_user = USER::AA) {
+        if (Auth::user()->type_user == USER::AA) {
             return redirect('/index');
  
        }

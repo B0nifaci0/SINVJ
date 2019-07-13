@@ -678,7 +678,7 @@
     <script src={{{url('global/vendor/slidepanel/jquery-slidePanel.js')}}}></script>
     <script src={{{url('global/vendor/chartist/chartist.min.js')}}}></script>
     <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
-    <script src={{{url('global/vendor/jvectormap/jquery-jvectormap.min.js')}}}></script>
+    <!--<script src={{{url('global/vendor/jvectormap/jquery-jvectormap.min.js')}}}></script>-->
     <script src={{{url('global/vendor/jvectormap/maps/jquery-jvectormap-world-mill-en.js')}}}></script>
     <script src={{{url('global/vendor/matchheight/jquery.matchHeight-min.js')}}}></script>
     <script src={{{url('global/vendor/peity/jquery.peity.min.js')}}}></script>

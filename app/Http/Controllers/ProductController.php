@@ -37,8 +37,14 @@ class ProductController extends Controller
       $lines = Line::all();
       $statuses = Status::all();
       return view('product/index', compact('user','products', 'categories','lines','statuses')); */
-        $product = Auth::user()->shop->id;
-        $products = Shop::find($product)->products()->get();
+        
+        $user = Auth::user();
+        $shop_id = $user->shop->id;
+        if($user->type_user == User::CO) {
+          $products = Product::where('branch_id', $user->branch_id)->get();
+        } else {
+          $products = Shop::find($shop_id)->products()->get();
+        }
         //return $products;
         $user = Auth::user(); 
         //$categories = Category::all();

@@ -59,10 +59,9 @@ TRASFERENCIAS
         <h3 class="panel-title">Traspasos</h3>
       </header>
       <div class="panel-body">
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table class="table table-hover dataTable table-striped w-full">
               <thead>
                 <tr>
-                 <th>Clave</th>
                  <th>Clave Del Producto</th>
                  <th>Producto</th>
                  <th>Peso</th>
@@ -73,12 +72,12 @@ TRASFERENCIAS
                  <th>Destino</th>
                  <th>Quien recibio</th>
                  <th>Fecha</th>
-                 <th>Estatus Del Producto</th>
+                 <th>Status</th>
+                 <th>Opciones</th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
-                 <th>Clave</th>
                  <th>Clave Del Producto</th>
                  <th>Producto</th>
                  <th>Peso</th>
@@ -89,32 +88,29 @@ TRASFERENCIAS
                  <th>Destino</th>
                  <th>Quien recibio</th>
                  <th>Fecha</th>
-                 <th>Estatus Del Producto</th>
+                 <th>Status</th>
+                 <th>Opciones</th>
                 </tr> 
               </tfoot>  
               <tbody>
               @foreach  ($trans as $transfer)
                     <tr id = "row{{$transfer->id}}">
-                          <td>{{ $transfer->id }}</td> 
-                          <td>{{ $transfer->product->id }}</td> 
-                          <td>{{ $transfer->product->name }}</td>
-                          <td>{{ $transfer->product->weigth }}</td>
-                          <td>{{ $transfer->product->category->name }}</td>
-                          <td>{{ $transfer->product->line->name }}</td>
-                          <td>{{$transfer->lastBranch->name}}</td>
-                          <td>{{$transfer->user->name}}</td>
-                          <td>{{$transfer->newBranch->name}}</td>
-                          <td>{{$transfer->destinationUser->name}}</td>
-                          <td>{{$transfer->created_at}}</td>
-                          <td>
-                              @if($transfer->status_product == null)
-                              <span class="badge badge-secondary">Desactivado</span>
-                          
-                              @else
-                          
-                              <span class="badge badge-secondary">Activado</span>
-                            </td>
-                              @endif
+                      <td>{{ $transfer->id }}</td> 
+                      <td>{{ $transfer->product->id }}</td> 
+                      <td>{{ $transfer->product->name }}</td>
+                      <td>{{ $transfer->product->weigth }}</td>
+                      <td>{{ $transfer->product->category->name }}</td>
+                      <td>{{ $transfer->product->line->name }}</td>
+                      <td>{{$transfer->lastBranch->name}}</td>
+                      <td>{{$transfer->user->name}}</td>
+                      <td>{{$transfer->newBranch->name}}</td>
+                      <td>{{$transfer->destinationUser->name}}</td>
+                      <td>{{$transfer->created_at}}</td>
+                      <td>{{ $transfer->status_product }}</td>
+                      <td>
+                         <button class="btn btn-primary accept" alt="{{ $transfer->id }}">Aceptar</button>
+                         <button class="btn btn-warning cancel" alt="{{ $transfer->id }}">Rechazar</button>
+                      </td>
                     </tr>  
                     @endforeach
               </tbody>
@@ -123,12 +119,43 @@ TRASFERENCIAS
         </div>
       </div>
     </div>
+
+<form method="post" action="/traspasos/respuesta" id="form" class="d-none">
+{{ csrf_field() }} 
+
+  <input type="text" name="transfer_id" id="transfer_id">
+  <input type="text" name="answer" id="answer">
+</form>
   
   <!-- End Panel Basic -->
 @endsection
 
+@section('traspaso')
+<script>
+$(document).ready(function(){
+
+  console.log("entra");
+  $('.accept').click(function() {
+    var id = $(this).attr('alt');
+    $('#transfer_id').val(id);
+    $('#answer').val(1);
+    $('#form').submit();
+  })
+
+  $('.cancel').click(function() {
+    var id = $(this).attr('alt');
+      $('#transfer_id').val(id);
+      $('#answer').val(0);
+      $('#form').submit();
+  })
+});
+
+</script>
+@endsection
+
 @section('filter')
 <script>
+/*
 $(document).ready(function(){
   $('#filteringStatus').change(function(){
     //alert($(this).val())
@@ -156,6 +183,7 @@ $(document).ready(function(){
     }
   });
 });
+*/
 </script>
 @endsection
 

@@ -1,26 +1,19 @@
 <?php
 
-use App\State;
-use App\Municipality;
 use Illuminate\Database\Seeder;
-
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed the application's database.
      *
      * @return void
      */
     public function run()
     {
-        $this->call(StateTableSeeder::class);
-
-        $this->command->info('State table seeded!');
-
-        $this->call(MunicipalityTableSeeder::class);
-
-        $this->command->info('Municipality table seeded!');
+        $this->call([
+            StatesTableSeeder::class,
+            MunicipalitiesTableSeeder::class,
+        ]);
     }
 }
-

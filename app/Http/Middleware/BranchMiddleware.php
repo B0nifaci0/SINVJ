@@ -20,7 +20,7 @@ class BranchMiddleware
     public function handle($request, Closure $next)
     {
         
-       if (Auth::user()->type_user = User::AA) {
+       if (Auth::user()->type_user == User::AA) {
         return redirect('/');
         }
  

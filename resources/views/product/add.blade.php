@@ -132,7 +132,7 @@ ALTA PRODUCTO
                   @endforeach
                 </select>
               </div>  
-    
+            
             <div class="col-md-6  col-md-offset-1 visible-md visible-lg">
                <label>Seleccione Sucursal</label>
                <select name="branch_id" class="form-control round">
