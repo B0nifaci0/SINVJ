@@ -17,9 +17,9 @@ class LineMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->type_user == User::AA) {
+        /* if (Auth::user()->type_user == User::AA) {
             return redirect('/index');
-       }
+       }*/
  
        if (Auth::user()->shop->lines->count() == 0){
            return redirect('/lineas/create')->with('mesage', 'Primero debes configurar tu linea!');

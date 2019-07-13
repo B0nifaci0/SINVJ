@@ -17,10 +17,10 @@ class Shop
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->type_user == User::AA) {
+        /* if (Auth::user()->type_user == User::AA) {
              return redirect('/index');
 
-        }
+        }*/
 
         if (Auth::user()->shop == '') {
             return redirect('/tiendas/create')->with('mesage', 'Primero debes configurar tu tienda!');

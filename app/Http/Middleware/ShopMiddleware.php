@@ -16,11 +16,11 @@ class ShopMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $user = Auth::user();
+        /*$user = Auth::user();
         if($user && $user->type == User::ADMIN) {
             return $next($request);
         }
 
-        return redirect('/');
+        return redirect('/'); */
     }
 }

@@ -20,9 +20,9 @@ class BranchMiddleware
     public function handle($request, Closure $next)
     {
         
-       if (Auth::user()->type_user == User::AA) {
+       /* if (Auth::user()->type_user == User::AA) {
         return redirect('/');
-        }
+        }*/
  
        if (Auth::user()->shop->branches->count() == 0 ){
            return redirect('/sucursales/create')->with('mesage', 'Primero debes configurar tu Sucursal!');

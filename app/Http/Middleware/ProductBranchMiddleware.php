@@ -18,10 +18,10 @@ class ProductBranchMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->type_user == USER::AA) {
-            return redirect('/index');
+        /*if (Auth::user()->type_user == USER::AA) {
+            return redirect('/principal');
  
-       }
+       } */
  
        if (Auth::user()->shop->branches->count() == 0) {
     

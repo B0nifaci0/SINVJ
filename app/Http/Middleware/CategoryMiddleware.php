@@ -20,9 +20,9 @@ class CategoryMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->type_user == User::AA) {
+        /* if (Auth::user()->type_user == User::AA) {
             return redirect('/index');
-       }
+       }**/
  
        if (Auth::user()->shop->categories->count() == 0){
            return redirect('/categorias/create')->with('mesage', 'Primero debes configurar una categoria!');
