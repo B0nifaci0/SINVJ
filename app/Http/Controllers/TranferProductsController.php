@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Shop;
 use App\TransferProduct;
 use App\Product;
 use App\Branch;
@@ -13,8 +14,6 @@ use App\Line;
 use PDF;
 use DB;
 use Auth;
-
-
 use Illuminate\Support\Facades\Storage;
 
 
@@ -23,12 +22,22 @@ class TranferProductsController extends Controller
 {
     public function index()
        {
-        $trans = TransferProduct::with('user')
-          ->with('lastBranch')
-          ->with('newBranch')
-          ->get();
-        return view('transfer/index', compact('trans'));
-       
+        $trans = TransferProduct::with('user')->with('branch')->get();
+         //return response()->json($trans);
+         //$status = Auth::user()->shop->id;
+        //$statuses = Shop::find($status)->statuss()->get();
+        /*$users=Auth::user()->shop->id;
+        $trans = Shop::find('users')->trans();
+        return $trans;
+        if($trans == 0){
+          return redirect('/traspasos/create');
+        }else{
+        }*/
+        
+        //return $transs;
+        $branches=Branch::all();
+        return view('transfer/index', compact('branches','users','trans'));
+        
        }
 
        public function create()
@@ -46,7 +55,7 @@ class TranferProductsController extends Controller
            $transfer_product->save();
            return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
 }
-
+ 
 public function exportPdf(){ 
     $trans = TransferProduct::all();
     $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));

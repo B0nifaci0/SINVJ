@@ -73,7 +73,7 @@ TRASFERENCIAS
                  <th>Destino</th>
                  <th>Quien recibio</th>
                  <th>Fecha</th>
-                 <th>Estaus Del Producto</th>
+                 <th>Estatus Del Producto</th>
                 </tr>
               </thead>
               <tfoot>
@@ -89,7 +89,7 @@ TRASFERENCIAS
                  <th>Destino</th>
                  <th>Quien recibio</th>
                  <th>Fecha</th>
-                 <th>Estaus Del Producto</th>
+                 <th>Estatus Del Producto</th>
                 </tr> 
               </tfoot>  
               <tbody>
@@ -107,16 +107,14 @@ TRASFERENCIAS
                           <td>{{$transfer->destinationUser->name}}</td>
                           <td>{{$transfer->created_at}}</td>
                           <td>
-                 @if($transfer->status_product != 0)
-                  <span class="badge badge-primary">Entregado</span>
-                @else
-                  <span class="badge badge-success">Recibido</span>
-                @endif
-                </td>
-								
-							
-							</div>
+                              @if($transfer->status_product == null)
+                              <span class="badge badge-secondary">Desactivado</span>
                           
+                              @else
+                          
+                              <span class="badge badge-secondary">Activado</span>
+                            </td>
+                              @endif
                     </tr>  
                     @endforeach
               </tbody>
@@ -160,3 +158,4 @@ $(document).ready(function(){
 });
 </script>
 @endsection
+

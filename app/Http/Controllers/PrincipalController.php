@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Shop;
+use App\User;
+use App\Branch;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 
@@ -13,8 +17,17 @@ class PrincipalController extends Controller
      */
     public function index()
     {
-        return view ('Principal/principal');
+         $branch = Auth::user()->shop->id;
+         $user = Auth::user();
+         $branch = Shop::find($branch)->branches()->get();
+        return view ('Principal/principal',compact('branch','user'));
     }
+
+
+    /**
+     * Funciones para el reporte de nomina
+     */
+
 
     /**
      * Show the form for creating a new resource.

@@ -85,6 +85,88 @@ Panel Principal
           </div>
         </div>
         <!-- End Widget Linearea Four -->
+        </div>
       </div>
+    </div>
+<!-- Inicia Reporte De Momina -->
+        <div class=" col-12"> 
+          <div class="panel panel-bordered">
+            <div class="panel-heading">
+              <h3 class="bg-info panel-title text-center text-white">Repoerte De Nomina Por Sucursal</h3>
+            </div>
+            <div class="panel-body row col-12">
+              <div class="row col-12">
+                  <div class="col-3">
+                    <label>Seleccione Sucursal</label>
+                      <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
+                        <option value="*">Seleccione Sucursal</option>
+                      @php  
+                        $branches = $user->shop->branches;
+                      @endphp
+                        @foreach($branches as $branch)
+                        <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
+                        @endforeach
+                      </select>
+                  </div>
+                  <div class="col-3">
+                        <label class="floating-label" for="inputUser">{{ __('Colaborador') }}</label>
+                        <select id="usuarios_1" name="user_id" class="round form-control "></select>
+                  </div>
+                  <div class="input-group col-3">
+                    <div class="row container"><label>De la Fecha:</label></div>
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="icon md-calendar" aria-hidden="true"></i>
+                        </span>
+                      </div>
+                      <input type="text" class="form-control round" data-plugin="datepicker">
+                    </div>
+                  <div class="input-group col-3">
+                      <div class="row container"><label>Hasta la Fecha:</label></div>
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="icon md-calendar" aria-hidden="true"></i>
+                        </span>
+                      </div>
+                      <input type="text" class="form-control round" data-plugin="datepicker" data-multidate="true">
+                    </div>
+                </div>
+              </div>
+                  <div class="form-group col-3">
+                      <button id="ok" type="submit"  data-toggle="button" class="btn btn-primary">Generar Reporte</button>
+                  </div>
+            </div>
+        </div>
+<!-- Termina Reporte De Nomina -->
+  </div>
 
+@endsection
+
+        
+@section('branch-user')
+<script type="text/javascript">
+
+$(".sucursales").change(function(){
+  var selector =  $(this).attr("alt");
+  var id_sucursal = $(this).val();
+  var url = '/sucursales/' + id_sucursal + '/usuarios';
+  $.get(url, function(json){
+    $('#usuarios_' + selector).empty();
+    //alert('#municipios_' + selector);
+        $.each(json,function(i, user){
+          $('#usuarios_' + selector).append('<option value = '+ user.id +'>' + user.name +'</option>')
+        });
+  });
+});
+$(".usuarios").change(function(){
+      var id_user = $(this).val();
+      var selector = $(this).attr("alt");
+      $("#id_user_" + selector).val(id_user);
+    });
+$(".usuarios").change(function(){
+      var id_user = $(this).val();
+      var selector = $(this).attr("alt");
+      $("#id_user_" + selector).val(id_user);
+    });
+</script>
 @endsection

@@ -39,7 +39,7 @@ ALTA TIENDAS
                             <input type="text" class="form-control" name="web_site" value="{{old('web_site')}}" required="required" placeholder="www.ejemplo.com" />
                         </div>
                         <div class="form-group form-material col-md-6">
-                            <label class="form-control-label" for="inputBasicFirstName">Coreo Electronico: </label>
+                            <label class="form-control-label" for="inputBasicFirstName">Correo Electronico: </label>
                             <input type="text" name="email" class="form-control" value="{{old('email')}}">
                         </div>
                         <div class="form-group form-material col-md-6">

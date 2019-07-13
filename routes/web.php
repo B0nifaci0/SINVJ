@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
 
   
 //Tiendas
-Route::resource('tiendas', 'ShopController');
+//Route::resource('tiendas', 'ShopController');
 
   
 });
@@ -118,4 +118,7 @@ Route::resource('sucursales.usuarios', 'BranchUserController');
 
 
 Route::resource('principal', 'PrincipalController');
+
+Route::resource('gastos' , 'ControllerExpenses');
+
 
