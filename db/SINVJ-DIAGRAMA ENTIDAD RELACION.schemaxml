@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">sinvj</database>
+</source>
+<canvas zoom="90">
+<tables>
+<table name="binnacle" view="colnames">
+<left>723</left>
+<top>203</top>
+<width>102</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `binnacle` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `branch_id` int(10) unsigned NOT NULL,
+  `product_id` int(10) unsigned NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `binnacle_user_id_foreign` (`user_id`),
+  KEY `binnacle_branch_id_foreign` (`branch_id`),
+  KEY `binnacle_product_id_foreign` (`product_id`),
+  CONSTRAINT `binnacle_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `binnacle_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `binnacle_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="branches" view="colnames">
+<left>570</left>
+<top>298</top>
+<width>90</width>
+<height>88</height>
+<sql_create_table>CREATE TABLE `branches` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
+  `shop_id` int(10) unsigned NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `branches_shop_id_foreign` (`shop_id`),
+  CONSTRAINT `branches_shop_id_foreign` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="categories" view="colnames">
+<left>1</left>
+<top>12</top>
+<width>90</width>
+<height>90</height>
+<sql_create_table>CREATE TABLE `categories` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `shop_id` int(10) unsigned NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `categories_shop_id_foreign` (`shop_id`),
+  CONSTRAINT `categories_shop_id_foreign` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="lines" view="colnames">
+<left>7</left>
+<top>115</top>
+<width>90</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `lines` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `shop_id` int(10) unsigned NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `lines_shop_id_foreign` (`shop_id`),
+  CONSTRAINT `lines_shop_id_foreign` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="municipalities" view="colnames">
+<left>20</left>
+<top>483</top>
+<width>90</width>
+<height>102</height>
+<sql_create_table>CREATE TABLE `municipalities` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state_id` int(10) unsigned NOT NULL,
+  `number` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `municipalities_state_id_foreign` (`state_id`),
+  CONSTRAINT `municipalities_state_id_foreign` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2458 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="payments" view="colnames">
+<left>1142</left>
+<top>401</top>
+<width>135</width>
+<height>156</height>
+<sql_create_table>CREATE TABLE `payments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `next_payment_date` datetime NOT NULL,
+  `payment_method` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reference_number` int(11) NOT NULL,
+  `card_reference` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `payments_user_id_foreign` (`user_id`),
+  CONSTRAINT `payments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="products" view="colnames">
+<left>437</left>
+<top>8</top>
+<width>100</width>
+<height>266</height>
+<sql_create_table>CREATE TABLE `products` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `clave` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `weigth` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `observations` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'default.jpg',
+  `category_id` int(10) unsigned NOT NULL,
+  `line_id` int(10) unsigned NOT NULL,
+  `shop_id` int(10) unsigned NOT NULL,
+  `branch_id` int(10) unsigned NOT NULL,
+  `status_id` int(10) unsigned NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `products_category_id_foreign` (`category_id`),
+  KEY `products_line_id_foreign` (`line_id`),
+  KEY `products_shop_id_foreign` (`shop_id`),
+  KEY `products_branch_id_foreign` (`branch_id`),
+  KEY `products_status_id_foreign` (`status_id`),
+  CONSTRAINT `products_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `products_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `products_line_id_foreign` FOREIGN KEY (`line_id`) REFERENCES `lines` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `products_shop_id_foreign` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `products_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuss` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="sale_details" view="colnames">
+<left>735</left>
+<top>0</top>
+<width>91</width>
+<height>99</height>
+<sql_create_table>CREATE TABLE `sale_details` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sale_id` int(10) unsigned NOT NULL,
+  `product_id` int(10) unsigned NOT NULL,
+  `final_price` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sale_details_sale_id_foreign` (`sale_id`),
+  KEY `sale_details_product_id_foreign` (`product_id`),
+  CONSTRAINT `sale_details_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `sale_details_sale_id_foreign` FOREIGN KEY (`sale_id`) REFERENCES `sales` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="sales" view="colnames">
+<left>903</left>
+<top>66</top>
+<width>117</width>
+<height>117</height>
+<sql_create_table>CREATE TABLE `sales` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telephone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_id` int(10) unsigned NOT NULL,
+  `price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sales_product_id_foreign` (`product_id`),
+  CONSTRAINT `sales_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="shops" view="colnames">
+<left>262</left>
+<top>313</top>
+<width>108</width>
+<height>162</height>
+<sql_create_table>CREATE TABLE `shops` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
+  `phone_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
+  `municipality_id` int(10) unsigned NOT NULL,
+  `state_id` int(10) unsigned NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `shops_municipality_id_foreign` (`municipality_id`),
+  KEY `shops_state_id_foreign` (`state_id`),
+  CONSTRAINT `shops_municipality_id_foreign` FOREIGN KEY (`municipality_id`) REFERENCES `municipalities` (`id`),
+  CONSTRAINT `shops_state_id_foreign` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="states" view="colnames">
+<left>165</left>
+<top>567</top>
+<width>90</width>
+<height>83</height>
+<sql_create_table>CREATE TABLE `states` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abbrev` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="statuss" view="colnames">
+<left>9</left>
+<top>233</top>
+<width>91</width>
+<height>72</height>
+<sql_create_table>CREATE TABLE `statuss` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `shop_id` int(10) unsigned NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `statuss_shop_id_foreign` (`shop_id`),
+  CONSTRAINT `statuss_shop_id_foreign` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="store_expenses" view="colnames">
+<left>6</left>
+<top>325</top>
+<width>108</width>
+<height>130</height>
+<sql_create_table>CREATE TABLE `store_expenses` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `img_reference` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` int(11) NOT NULL,
+  `shop_id` int(10) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `store_expenses_shop_id_foreign` (`shop_id`),
+  CONSTRAINT `store_expenses_shop_id_foreign` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="transfer_products" view="colnames">
+<left>1075</left>
+<top>213</top>
+<width>146</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `transfer_products` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `last_branch_id` int(10) unsigned NOT NULL,
+  `new_branch_id` int(10) unsigned NOT NULL,
+  `product_id` int(10) unsigned NOT NULL,
+  `destination_user_id` int(10) unsigned NOT NULL,
+  `status_product` tinyint(1) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `transfer_products_user_id_foreign` (`user_id`),
+  KEY `transfer_products_last_branch_id_foreign` (`last_branch_id`),
+  KEY `transfer_products_new_branch_id_foreign` (`new_branch_id`),
+  KEY `transfer_products_product_id_foreign` (`product_id`),
+  KEY `transfer_products_destination_user_id_foreign` (`destination_user_id`),
+  CONSTRAINT `transfer_products_destination_user_id_foreign` FOREIGN KEY (`destination_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `transfer_products_last_branch_id_foreign` FOREIGN KEY (`last_branch_id`) REFERENCES `branches` (`id`),
+  CONSTRAINT `transfer_products_new_branch_id_foreign` FOREIGN KEY (`new_branch_id`) REFERENCES `branches` (`id`),
+  CONSTRAINT `transfer_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  CONSTRAINT `transfer_products_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+<table name="users" view="colnames">
+<left>845</left>
+<top>393</top>
+<width>120</width>
+<height>193</height>
+<sql_create_table>CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_user` tinyint(1) NOT NULL,
+  `suscription_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `terms_conditions` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `salary` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `shop_id` int(10) unsigned NOT NULL,
+  `branch_id` int(10) unsigned DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  KEY `users_shop_id_foreign` (`shop_id`),
+  KEY `users_branch_id_foreign` (`branch_id`),
+  CONSTRAINT `users_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`),
+  CONSTRAINT `users_shop_id_foreign` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

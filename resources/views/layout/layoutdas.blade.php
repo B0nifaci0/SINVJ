@@ -648,7 +648,7 @@
 <section>
   @yield('content')
 </section>
-<!-- Footer -->
+<!-- Footer 
   <section>
     @yield('footer')
     <footer class="site-footer">
@@ -658,7 +658,7 @@
       </div>
     </footer>
   </section>
-<section>
+<section>-->
   @yield('js')
     <!-- Core  -->
     <script src={{{url('global/vendor/babel-external-helpers/babel-external-helpers.js')}}}></script>
