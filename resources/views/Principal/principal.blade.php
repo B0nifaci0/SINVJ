@@ -92,7 +92,7 @@ Panel Principal
         <div class=" col-12"> 
           <div class="panel panel-bordered">
             <div class="panel-heading">
-              <h3 class="bg-info panel-title text-center text-white">Repoerte De Nomina Por Sucursal</h3>
+              <h3 class="bg-info panel-title text-center text-white">Reporte De Nomina Por Sucursal</h3>
             </div>
             <div class="panel-body row col-12">
               <div class="row col-12">
@@ -128,12 +128,12 @@ Panel Principal
                           <i class="icon md-calendar" aria-hidden="true"></i>
                         </span>
                       </div>
-                      <input type="text" class="form-control round" data-plugin="datepicker" data-multidate="true">
+                      <input type="text"   class="form-control round" data-plugin="datepicker" data-multidate="true">
                     </div>
                 </div>
               </div>
                   <div class="form-group col-3">
-                      <button id="ok" type="submit"  data-toggle="button" class="btn btn-primary">Generar Reporte</button>
+                       <button href='productospdf' id="ok" type="button"  data-toggle="button" class="btn btn-primary">Generar Reporte</button> 
                   </div>
             </div>
         </div>

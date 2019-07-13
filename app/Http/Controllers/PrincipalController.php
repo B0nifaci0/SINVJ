@@ -23,7 +23,13 @@ class PrincipalController extends Controller
         return view ('Principal/principal',compact('branch','user'));
     }
 
-
+    public function exportPdf(){ 
+        $branch = Auth::user()->shop->id;
+        $user = Auth::user();
+        $branch = Shop::find($branch)->branches()->get();
+        $pdf  = PDF::loadView('Principal.pdf', compact('branch', 'user'));
+        return $pdf->download('Principal.pdf');
+      }
     /**
      * Funciones para el reporte de nomina
      */
