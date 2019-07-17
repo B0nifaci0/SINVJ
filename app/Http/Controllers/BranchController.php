@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Branch;
 use App\Shop;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\BranchRequest;
 //use App\Http\Requests\BranchValidate;

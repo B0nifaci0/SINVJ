@@ -130,171 +130,19 @@
                 </i>
               </a>
             </li>
-            <li class="nav-item hidden-sm-down" id="toggleFullscreen">
-              <a class="nav-link icon icon-fullscreen" data-toggle="fullscreen" href="#" role="button">
-                <span class="sr-only">Toggle fullscreen</span>
-              </a>
-            </li>
             <li class="nav-item hidden-float">
               <a class="nav-link icon md-search" data-toggle="collapse" href="#" data-target="#site-navbar-search"
                 role="button">
                 <span class="sr-only">Toggle Search</span>
               </a>
             </li>
-            <li class="nav-item dropdown dropdown-fw dropdown-mega">
-              <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="fade"
-                role="button">Mega <i class="icon md-chevron-down" aria-hidden="true"></i></a>
-              <div class="dropdown-menu" role="menu">
-                <div class="mega-content">
-                  <div class="row">
-                    <div class="col-md-4">
-                      <h5>UI Kit</h5>
-                      <ul class="blocks-2">
-                        <li class="mega-menu m-0">
-                          <ul class="list-icons">
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="advanced/animation.html">Animation</a></li>
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="uikit/buttons.html">Buttons</a></li>
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="uikit/colors.html">Colors</a></li>
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="uikit/dropdowns.html">Dropdowns</a></li>
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="uikit/icons.html">Icons</a></li>
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="advanced/lightbox.html">Lightbox</a></li>
-                          </ul>
-                        </li>
-                        <li class="mega-menu m-0">
-                          <ul class="list-icons">
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="uikit/modals.html">Modals</a></li>
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="uikit/panel-structure.html">Panels</a></li>
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="structure/overlay.html">Overlay</a></li>
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="uikit/tooltip-popover.html ">Tooltips</a></li>
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="advanced/scrollable.html">Scrollable</a></li>
-                            <li><i class="md-chevron-right" aria-hidden="true"></i><a href="uikit/typography.html">Typography</a></li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="col-md-4">
-                      <h5>Media
-                        <span class="badge badge-pill badge-success">4</span>
-                      </h5>
-                      <ul class="blocks-3">
-                        <li>
-                          <a class="thumbnail m-0" href="javascript:void(0)">
-                            <img class="w-full" src={{{url('global/photos/placeholder.png')}}} alt="..." />
-                          </a>
-                        </li>
-                        <li>
-                          <a class="thumbnail m-0" href="javascript:void(0)">
-                            <img class="w-full" src="../../global/photos/placeholder.png" alt="..." />
-                          </a>
-                        </li>
-                        <li>
-                          <a class="thumbnail m-0" href="javascript:void(0)">
-                            <img class="w-full" src="../../global/photos/placeholder.png" alt="..." />
-                          </a>
-                        </li>
-                        <li>
-                          <a class="thumbnail m-0" href="javascript:void(0)">
-                            <img class="w-full" src="../../global/photos/placeholder.png" alt="..." />
-                          </a>
-                        </li>
-                        <li>
-                          <a class="thumbnail m-0" href="javascript:void(0)">
-                            <img class="w-full" src="../../global/photos/placeholder.png" alt="..." />
-                          </a>
-                        </li>
-                        <li>
-                          <a class="thumbnail m-0" href="javascript:void(0)">
-                            <img class="w-full" src="../../global/photos/placeholder.png" alt="..." />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="col-md-4">
-                      <h5 class="mb-0">Accordion</h5>
-                      <!-- Accordion -->
-                      <div class="panel-group panel-group-simple" id="siteMegaAccordion" aria-multiselectable="true"
-                        role="tablist">
-                        <div class="panel">
-                          <div class="panel-heading" id="siteMegaAccordionHeadingOne" role="tab">
-                            <a class="panel-title" data-toggle="collapse" href="#siteMegaCollapseOne" data-parent="#siteMegaAccordion"
-                              aria-expanded="false" aria-controls="siteMegaCollapseOne">
-                              Collapsible Group Item #1
-                            </a>
-                          </div>
-                          <div class="panel-collapse collapse" id="siteMegaCollapseOne" aria-labelledby="siteMegaAccordionHeadingOne"
-                            role="tabpanel">
-                            <div class="panel-body">
-                              De moveat laudatur vestra parum doloribus labitur sentire partes, eripuit praesenti
-                              congressus ostendit alienae, voluptati ornateque accusamus
-                              clamat reperietur convicia albucius.
-                            </div>
-                          </div>
-                        </div>
-                        <div class="panel">
-                          <div class="panel-heading" id="siteMegaAccordionHeadingTwo" role="tab">
-                            <a class="panel-title collapsed" data-toggle="collapse" href="#siteMegaCollapseTwo"
-                              data-parent="#siteMegaAccordion" aria-expanded="false"
-                              aria-controls="siteMegaCollapseTwo">
-                              Collapsible Group Item #2
-                            </a>
-                          </div>
-                          <div class="panel-collapse collapse" id="siteMegaCollapseTwo" aria-labelledby="siteMegaAccordionHeadingTwo"
-                            role="tabpanel">
-                            <div class="panel-body">
-                              Praestabiliorem. Pellat excruciant legantur ullum leniter vacare foris voluptate
-                              loco ignavi, credo videretur multoque choro fatemur mortis
-                              animus adoptionem, bello statuat expediunt naturales.
-                            </div>
-                          </div>
-                        </div>
-    
-                        <div class="panel">
-                          <div class="panel-heading" id="siteMegaAccordionHeadingThree" role="tab">
-                            <a class="panel-title collapsed" data-toggle="collapse" href="#siteMegaCollapseThree"
-                              data-parent="#siteMegaAccordion" aria-expanded="false"
-                              aria-controls="siteMegaCollapseThree">
-                              Collapsible Group Item #3
-                            </a>
-                          </div>
-                          <div class="panel-collapse collapse" id="siteMegaCollapseThree" aria-labelledby="siteMegaAccordionHeadingThree"
-                            role="tabpanel">
-                            <div class="panel-body">
-                              Horum, antiquitate perciperet d conspectum locus obruamus animumque perspici probabis
-                              suscipere. Desiderat magnum, contenta poena desiderant
-                              concederetur menandri damna disputandum corporum.
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- End Accordion -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
+            
           </ul>
           <!-- End Navbar Toolbar -->
     
           <!-- Navbar Toolbar Right -->
           <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
-            <li class="nav-item dropdown">
-              <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" data-animation="scale-up"
-                aria-expanded="false" role="button">
-                <span class="flag-icon flag-icon-us"></span>
-              </a>
-              <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
-                  <span class="flag-icon flag-icon-gb"></span> English</a>
-                <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
-                  <span class="flag-icon flag-icon-fr"></span> French</a>
-                <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
-                  <span class="flag-icon flag-icon-cn"></span> Chinese</a>
-                <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
-                  <span class="flag-icon flag-icon-de"></span> German</a>
-                <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
-                  <span class="flag-icon flag-icon-nl"></span> Dutch</a>
-              </div>
-            </li>
+      
             <li class="nav-item dropdown">
               <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
                 data-animation="scale-up" role="button">
@@ -304,14 +152,14 @@
                 </span>
               </a>
               <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
-                <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-card" aria-hidden="true"></i> Billing</a>
-                <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-settings" aria-hidden="true"></i> Settings</a>
+                <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Perfil</a>
+                <a class="dropdown-item" href="/pagos" role="menuitem"><i class="icon  md-money" aria-hidden="true"></i> Pagos</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
+                <a class="dropdown-item" href="logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i>Iniciar Sesión</a>
               </div>
-            </li>
-            <li class="nav-item dropdown">
+            </li> 
+            <!--Notifications-->
+            <!--<li class="nav-item dropdown">
               <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
                 aria-expanded="false" data-animation="scale-up" role="button">
                 <i class="icon md-notifications" aria-hidden="true"></i>
@@ -393,8 +241,11 @@
                   </a>
                 </div>
               </div>
-            </li>
-            <li class="nav-item dropdown">
+            </li>-->
+            <!--END-Notifications-->
+
+            <!--Messages-->
+            <!--<li class="nav-item dropdown">
               <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Messages"
                 aria-expanded="false" data-animation="scale-up" role="button">
                 <i class="icon md-email" aria-hidden="true"></i>
@@ -489,13 +340,17 @@
                   </a>
                 </div>
               </div>
-            </li>
-            <li class="nav-item" id="toggleChat">
+            </li>-->
+            <!--END-Messages-->
+
+            <!-- toggleChat-->
+            <!--<li class="nav-item" id="toggleChat">
               <a class="nav-link" data-toggle="site-sidebar" href="javascript:void(0)" title="Chat"
                 data-url="site-sidebar.tpl">
                 <i class="icon md-comment" aria-hidden="true"></i>
               </a>
-            </li>
+            </li>-->
+            <!--END-toggleChat-->
           </ul>
           <!-- End Navbar Toolbar Right -->
     
@@ -530,6 +385,7 @@
 
 <section>
   @yield('menu')
+  @section('admin-section')
   <div class="site-menubar">
       <div class="site-menubar-header">
         <div class="cover overlay">
@@ -541,8 +397,8 @@
                 <img src="../../global/portraits/1.jpg" alt="">
               </a>
               <div class="site-menubar-info">
-                <h5 class="site-menubar-user">Machi</h5>
-                <p class="site-menubar-email">machidesign@gmail.com</p>
+                <h5 class="site-menubar-user">{{$user->name }}</h5>
+                <p class="site-menubar-email">{{$user->email }}</p>
               </div>
             </div>
           </div>
@@ -551,6 +407,8 @@
       <div class="site-menubar-body">
         <div>
           <div>
+          <!-- AA =(0)  Administrator-->
+          @if($user->type_user == 0)
             <ul class="site-menu" data-plugin="menu">
                 <li class="site-menu-item active">
                   <a class="animsition-link" href="/principal">
@@ -565,12 +423,54 @@
                     <span class="site-menu-arrow"></span>
                   </a>
                   <ul class="site-menu-sub">
-                  <li class="site-menu-item">
-                        <a class="animsition-link" href="/productos">
-                        <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
-                          <span class="site-menu-title">Productos</span>
-                          </a>
-                    </li>
+                  <li class="site-menu-item has-sub">
+                    <a  href="javascript:void(0)">
+                      <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
+                        <span class="site-menu-title">Productos</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
+                        <span class="site-menu-title">Reportes</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="">
+                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reporte gramos por linea y y por sucursal.</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="">
+                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reporte Gramos por sucursal en total y en $.</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href=" ">
+                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reportes Productos de Estatus vendido, Traspaso , Apartado.</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href=" ">
+                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reporte de las ultimas entradas por fecha.</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                    </ul>
+                  </li>
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/sucursales">
@@ -592,12 +492,29 @@
                       </a>
                     </li>
 
+                    <li class="site-menu-item has-sub">
+                    <a  href="javascript:void(0)">
+                      <i class="site-menu-icon fa-shopping-basket" aria-hidden="true"></i>
+                        <span class="site-menu-title"> Generar Venta</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/ventas">
                         <i class="site-menu-icon fa-line-chart" aria-hidden="true"></i>
-                          <span class="site-menu-title">Ventas</span>
+                          <span class="site-menu-title">Mis Ventas</span>
                       </a>
                     </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href=" ">
+                        <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
+                          <span class="site-menu-title">Reporte de ventas<br> por sucursal y Estatus</span>
+                      </a>
+                    </li>
+                    </ul>
+                  </li>
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/status">
@@ -606,43 +523,213 @@
                       </a>
                     </li>
                     
-
-                    <li class="site-menu-item">
-                        <a class="animsition-link" href="/pagos">
-                        <i class="site-menu-icon md-money" aria-hidden="true"></i>
-                          <span class="site-menu-title">Pagos</span>
-                      </a>
-                    </li>
-
-                    <li class="site-menu-item">
-                        <a class="animsition-link" href="/traspasos">
-                        <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
-                          <span class="site-menu-title">Traspasos</span>
-                      </a>
-                    </li>
-
+                    <li class="site-menu-item has-sub">
+                    <a  href="javascript:void(0)">
+                      <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
+                        <span class="site-menu-title">Traspasos</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/sucursales/{{$branch->id}}/producto">
+                          <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reporte de traspasos por sucursal</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                    
+                    <li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                        <span class="site-menu-title">Gastos</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/gastos">
-                        <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
-                          <span class="site-menu-title">Gastos</span>
+                        <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
+                          <span class="site-menu-title">Reporte de Gastos</span>
                       </a>
                     </li>
+                    </ul>
+                  </li>
+                    
 
                   </ul>
                 </li>
-                <li class="site-menu-item ">
-                    <a class="animsition-link" href="/usuarios">
+                  <li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
                       <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
-                      <span class="site-menu-title">Usuarios</span>
+                        <span class="site-menu-title">Usuarios</span>
+                      <span class="site-menu-arrow"></span>
                     </a>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href=" ">
+                        <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                          <span class="site-menu-title">Reporte de Nomina</span>
+                      </a>
+                    </li>
+                    </ul>
                   </li>
               </ul>
+            @endif
+            <!-- AA =(0) END-Administrator-->
 
-              
+            <!-- SA =(1) Sub-Administrator-->
+            @if($user->type_user == 1)
+              <ul class="site-menu" data-plugin="menu">
+                  <li class="site-menu-item active">
+                    <a class="animsition-link" href="/principal">
+                      <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
+                      <span class="site-menu-title">Inicio</span>
+                    </a>
+                  </li>
+                  <li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon md-store" aria-hidden="true"></i>
+                        <span class="site-menu-title">Tienda</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                          <a class="animsition-link" href="/productos">
+                          <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
+                            <span class="site-menu-title">Productos</span>
+                            </a>
+                      </li>
+
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/sucursales">
+                          <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                            <span class="site-menu-title">Sucursales</span>
+                        </a>
+                      </li>
+
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/categorias">
+                          <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
+                            <span class="site-menu-title">Categorias</span>
+                        </a>
+                      </li>
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/lineas">
+                          <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
+                            <span class="site-menu-title">Lineas</span>
+                        </a>
+                      </li>
+
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/ventas">
+                          <i class="site-menu-icon fa-line-chart" aria-hidden="true"></i>
+                            <span class="site-menu-title">Ventas</span>
+                        </a>
+                      </li>
+
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/status">
+                          <i class="site-menu-icon fa-check-square-o" aria-hidden="true"></i>
+                            <span class="site-menu-title">Estatus</span>
+                        </a>
+                      </li>
+                      
+
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/pagos">
+                          <i class="site-menu-icon md-money" aria-hidden="true"></i>
+                            <span class="site-menu-title">Pagos</span>
+                        </a>
+                      </li>
+
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/traspasos">
+                          <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
+                            <span class="site-menu-title">Traspasos</span>
+                        </a>
+                      </li>
+
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/gastos">
+                          <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                            <span class="site-menu-title">Gastos</span>
+                        </a>
+                      </li>
+
+                    </ul>
+                  </li>
+                  <li class="site-menu-item ">
+                      <a class="animsition-link" href="/usuarios">
+                        <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
+                        <span class="site-menu-title">Usuarios</span>
+                      </a>
+                    </li>
+                </ul>
+              @endif
+              <!-- SA =(1) END-Sub-Administrator-->
+
+              <!-- CO =(2) Colaborador-->
+              @if($user->type_user == 2)
+              <ul class="site-menu" data-plugin="menu">
+                  <li class="site-menu-item active">
+                    <a class="animsition-link" href="/sucursales">
+                      <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
+                      <span class="site-menu-title">Inicio</span>
+                    </a>
+                  </li>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                          <a class="animsition-link" href="/productos">
+                          <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
+                            <span class="site-menu-title">Productos</span>
+                            </a>
+                      </li>
+                    </ul>
+                  <!--END-Productos-->
+                  <!--Sucursales-->
+                  <li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                        <span class="site-menu-title">Sucursales</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/productos">
+                          <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mis Productos</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <!--END-Sucursales-->
+                  <!--Ventas-->
+                  <li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon fa-shopping-basket" aria-hidden="true"></i>
+                        <span class="site-menu-title">Ventas</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/ventas">
+                          <i class="site-menu-icon fa-line-chart" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mis Ventas</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <!--END-Ventas-->
+                    </ul>
+                  </li>
+                </ul>
+              @endif
+                <!-- CO =(2) END-Colaborador-->    
             </div>
           </div>
         </div>
     </div>
+    @endsection
 </section>
 
 <section>
@@ -824,6 +911,8 @@
     @section('example')
     @show
     @section('traspaso')
+    @show
+    @section('admin-section')
     @show
 </body>
 </html>

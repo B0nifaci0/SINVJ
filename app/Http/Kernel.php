@@ -67,5 +67,7 @@ class Kernel extends HttpKernel
         'producto' => \App\Http\Middleware\Product::class,
         'LineMiddleware' => \App\Http\Middleware\LineMiddleware::class,
         'StatusMiddleware' => \App\Http\Middleware\StatusMiddleware::class,
+        'admin' => \App\Http\Middleware\admin::class,
+
     ];
 }

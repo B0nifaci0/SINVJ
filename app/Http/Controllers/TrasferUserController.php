@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Shop;
-use App\TransferProduct;
+use App\TrasferUser;
 use App\Product;
 use App\Branch;
 use App\User;
@@ -18,17 +18,11 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-class TranferProductsController extends Controller
+class TrasferUserController extends Controller
 {
-    public function __construct(){
-    }
     public function index()
        {
-         $user = Auth::user();
-        $trans = TransferProduct::with('user')
-          ->with('newBranch')
-          ->where('new_branch_id', $user->branch_id)
-          ->get();
+        $trans = TrasferUser::with('user')->with('branch')->get();
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
         //$statuses = Shop::find($status)->statuss()->get();
@@ -42,7 +36,7 @@ class TranferProductsController extends Controller
         
         //return $transs;
         $branches=Branch::all();
-        return view('transfer/index', compact('branches','user','trans'));
+        return view('transfer/TrasferUser/index', compact('branches','users','trans'));
         
        }
 
@@ -51,31 +45,21 @@ class TranferProductsController extends Controller
         $user = Auth::user();
         $users = User::where('id', '!=', $user->id)->get();
         $products = Product::where('branch_id', $user->branch_id)->get();
-        $branches = Branch::where('id', '!=', $user->branch_id)->get();
-        return view('transfer/add', compact('branches','users','products'));
+        $branches = Branch::all();
+        return view('transfer/TrasferUser/add', compact('branches','users','products'));
        }
 
        public function store(Request $request)
        {
-          $user = Auth::user();
-          $data = $request->all();
-          $data['last_branch_id']  = $user->branch_id;
-          $data['user_id'] = $user->id;
-
-           $transfer_product = TransferProduct::create($data);
+           $transfer_user = new TrasferUser($request->all());
+           //return $transfer_product;
+           $transfer_user->save();
            return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
-    }
-
-  public function answerTransferRequest(Request $request) {
-    $transfer = TransferProduct::find($request->transfer_id);
-    $transfer->status_product = $request->answer;
-    $transfer->save();
-    return redirect('/traspasos');
-  }
-
+}
+ 
 public function exportPdf(){ 
-    $trans = TransferProduct::all();
-    $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));
+    $trans = TrasferUser::all();
+    $pdf  = PDF::loadView('transfer.TrasferUser.PdfTranferUser', compact('trans'));
     return $pdf->download('Traspasos.pdf');
   }
 
