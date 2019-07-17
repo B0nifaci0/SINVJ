@@ -28,6 +28,16 @@ class BranchController extends Controller
         return view('Branches/index', ['branches' => $branches]);
     }
 
+        /**
+     * Index para usuario colaborador.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexCo()
+    {
+        return view('Branches/CO/sucursal');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

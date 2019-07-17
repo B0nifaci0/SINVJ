@@ -37,28 +37,14 @@
     <link rel="stylesheet" href={{{url('assets/examples/css/dashboard/v1.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/dropify/dropify.css')}}}>
-
-    <!--datatables -->
-    <link rel="stylesheet" href={{{url('global/vendor/datatables.net-fixedheader-bs4/dataTables.fixedheader.bootstrap4.css')}}}>
-    <link rel="stylesheet" href={{{url('global/vendor/datatables.net-bs4/dataTables.bootstrap4.css')}}}>
-    <link rel="stylesheet" href={{{url('global/vendor/datatables.net-fixedcolumns-bs4/dataTables.fixedcolumns.bootstrap4.css')}}}>
-    <link rel="stylesheet" href={{{url('global/vendor/datatables.net-rowgroup-bs4/dataTables.rowgroup.bootstrap4.css')}}}>
-    <link rel="stylesheet" href={{{url('global/vendor/datatables.net-scroller-bs4/dataTables.scroller.bootstrap4.css')}}}>
-    <link rel="stylesheet" href={{{url('global/vendor/datatables.net-select-bs4/dataTables.select.bootstrap4.css')}}}>
-    <link rel="stylesheet" href={{{url('global/vendor/datatables.net-responsive-bs4/dataTables.responsive.bootstrap4.css')}}}>
-    <link rel="stylesheet" href={{{url('global/vendor/datatables.net-buttons-bs4/dataTables.buttons.bootstrap4.css')}}}>
-    <link rel="stylesheet" href={{{url('assets/examples/css/tables/datatable.css')}}}>
-    
     <!-- Fonts -->
     <link rel="stylesheet" href={{{url('global/fonts/material-design/material-design.min.css')}}}>
     <link rel="stylesheet" href={{{url('global/fonts/brand-icons/brand-icons.min.css')}}}>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
     <link rel="stylesheet" href={{{url('global/fonts/font-awesome/font-awesome.css')}}}>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-    
-    
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <!--<script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>-->
 
 
     <!--DATA TABLES CSS-->
@@ -71,14 +57,17 @@
     <link rel="stylesheet" href={{{url('global/vendor/datatables.net-responsive-bs4/dataTables.responsive.bootstrap4.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/datatables.net-buttons-bs4/dataTables.buttons.bootstrap4.css')}}}>
     <link rel="stylesheet" href={{{url('assets/examples/css/tables/datatable.css')}}}>
-    <!--[if lt IE 9]>
+    <!--DATE PICKER-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+
+    <!--[if lt IE 9]-->
     <script src={{{url('global/vendor/html5shiv/html5shiv.min.js')}}}></script>
-    <![endif]-->
+    <!--[endif]-->
     
-    <!--[if lt IE 10]>
+    <!--[if lt IE 10]-->
     <script src={{{url('global/vendor/media-match/media.match.min.js')}}}></script>
     <script src={{{url('global/vendor/respond/respond.min.js')}}}></script>
-    <![endif]-->
+    <!--[endif]-->
     
     <!-- Scripts -->
     <script src={{{url('global/vendor/breakpoints/breakpoints.js')}}}></script>
@@ -529,6 +518,7 @@
 </section>
 
 <section>
+  
   @yield('menu')
   <div class="site-menubar">
       <div class="site-menubar-header">
@@ -662,7 +652,7 @@
   @yield('js')
     <!-- Core  -->
     <script src={{{url('global/vendor/babel-external-helpers/babel-external-helpers.js')}}}></script>
-    <script src={{{url('global/vendor/jquery/jquery.js')}}}></script>
+    <script src={{{url('global/vendor/jquery/jquery.min.js')}}}></script>
     <script src={{{url('global/vendor/popper-js/umd/popper.min.js')}}}></script>
     <script src={{{url('global/vendor/bootstrap/bootstrap.js')}}}></script>
     <script src={{{url('global/vendor/animsition/animsition.js')}}}></script>
@@ -676,16 +666,16 @@
     <script src={{{url('global/vendor/intro-js/intro.js')}}}></script>
     <script src={{{url('global/vendor/screenfull/screenfull.js')}}}></script>
     <script src={{{url('global/vendor/slidepanel/jquery-slidePanel.js')}}}></script>
-    <script src={{{url('global/vendor/chartist/chartist.min.js')}}}></script>
+    <script src={{{url('global/vendor/chartist/chartist.min.js')}}}></script> 
     <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
     <!--<script src={{{url('global/vendor/jvectormap/jquery-jvectormap.min.js')}}}></script>-->
-    <script src={{{url('global/vendor/jvectormap/maps/jquery-jvectormap-world-mill-en.js')}}}></script>
+    <!--<script src={{{url('global/vendor/jvectormap/maps/jquery-jvectormap-world-mill-en.js')}}}></script>-->
     <script src={{{url('global/vendor/matchheight/jquery.matchHeight-min.js')}}}></script>
     <script src={{{url('global/vendor/peity/jquery.peity.min.js')}}}></script>
     <script src={{{url('global/vendor/select2/select2.full.min.js')}}}></script>
     <script src={{{url('global/vendor/jquery-ui/jquery-ui.js')}}}></script>
         <script src={{{url('global/vendor/blueimp-tmpl/tmpl.js')}}}></script>
-        <script src={{{url('global/vendor/blueimp-canvas-to-blob/canvas-to-blob.js')}}}></script>
+        <!--<script src={{{url('global/vendor/blueimp-canvas-to-blob/canvas-to-blob.js')}}}></script>
         <script src={{{url('global/vendor/blueimp-load-image/load-image.all.min.js')}}}></script>
         <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.js')}}}></script>
         <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-process.js')}}}></script>
@@ -694,25 +684,9 @@
         <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-video.js')}}}></script>
         <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-validate.js')}}}></script>
         <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-ui.js')}}}></script>
-        <script src={{{url('global/vendor/dropify/dropify.min.js')}}}></script>
+        <script src={{{url('global/vendor/dropify/dropify.min.js')}}}></script>-->
     
-        
-    <!-- datatables -->
-    <script src={{{url('global/vendor/datatables.net/jquery.dataTables.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-bs4/dataTables.bootstrap4.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-fixedheader/dataTables.fixedHeader.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-fixedcolumns/dataTables.fixedColumns.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-rowgroup/dataTables.rowGroup.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-scroller/dataTables.scroller.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-responsive/dataTables.responsive.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-responsive-bs4/responsive.bootstrap4.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-buttons/dataTables.buttons.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-buttons/buttons.html5.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-buttons/buttons.flash.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-buttons/buttons.print.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-buttons/buttons.colVis.js')}}}></script>
-    <script src={{{url('global/vendor/datatables.net-buttons-bs4/buttons.bootstrap4.js')}}}></script>
-    
+          
     <!-- Scripts -->
     <script src={{{url('global/js/Component.js')}}}></script>
     <script src={{{url('global/js/Plugin.js')}}}></script>
@@ -740,7 +714,7 @@
     <script src={{{url('global/js/Plugin/select2.js')}}}></script>
     <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
     <script src={{{url('global/js/Plugin/dropify.js')}}}></script>
-    <script src={{{url('assets/examples/js/forms/uploads.js')}}}></script>
+    <!--<script src={{{url('assets/examples/js/forms/uploads.js')}}}></script>-->
 
     <!--DATA TABLES-->
     <script src={{{url('global/vendor/datatables.net/jquery.dataTables.js')}}}></script>
@@ -764,7 +738,6 @@
     
         <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
         <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
-  </body>
 
     <script src={{{url('global/js/Plugin/matchheight.js')}}}></script>
     <script src={{{url('global/js/Plugin/jvectormap.js')}}}></script>
@@ -772,16 +745,11 @@
 
     <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
 
-    <!-- datatable -->
+    <!-- datatable 
     <script src={{{url('global/js/Plugin/datatables.js')}}}></script>
-    <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
+    <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>-->
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
-
-    
-
-    
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
 
   
 

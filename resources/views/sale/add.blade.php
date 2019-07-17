@@ -206,7 +206,7 @@ $(function(){
   console.log(productId);
   var product = products.filter(p => p.id == productId)[0];
   console.log(product);
-  var _tr = '<tr id="removetr' +product.id+'" alt="product.id"><td>'+ product.id +'</td> <td>'+ product.name +'</td><td>'+ product.weigth +'</td> <td>'+ product.category.name +'</td> <td>'+ product.line.name +'</td> <td>'+ product.branch.name +'</td> <td>'+ product.status.name +'</td> <td>$'+ product.price +'</td><td>0</td><td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger" id="deletr">-</button></div></td></tr>';
+  var _tr = '<tr id="removetr" alt="product.id"><td>'+ product.id +'</td> <td>'+ product.name +'</td><td>'+ product.weigth +'</td> <td>'+ product.category.name +'</td> <td>'+ product.line.name +'</td> <td>'+ product.branch.name +'</td> <td>'+ product.status.name +'</td> <td>$'+ product.price +'</td><td>0</td><td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger" id="deletr">-</button></div></td></tr>';
 
 
   $('tbody').append(_tr); 

@@ -73,6 +73,9 @@ Route::resource('usuarios', 'UserController');
 //Sucursales
 Route::resource('sucursales', 'BranchController');
 
+// Sucursal CO
+Route::get('sucursal', 'BranchController@indexCo');
+
 Route::post('traspasos/respuesta', 'TranferProductsController@answerTransferRequest');
 
 //Excel
