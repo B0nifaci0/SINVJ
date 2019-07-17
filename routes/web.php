@@ -55,6 +55,10 @@ Route::resource('status', 'StatusController');
 Route::resource('traspasos', 'TranferProductsController');
 Route::get('traspasospdf', 'TranferProductsController@exportPdf');
 
+//Taspasos Admin
+Route::resource('traspasosadmin', 'TrasferUserController');
+Route::get('traspasosadminpdf', 'TrasferUserController@exportPdf');
+
 //Ventas
 Route::resource('ventas', 'SaleController');
 

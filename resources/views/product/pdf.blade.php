@@ -39,7 +39,6 @@
        vertical-align: middle;
      }.sale-head,table.table thead tr th,table tbody tr td,table tfoot tr td{
        border: 1px solid #212121;
-       /*white-space: nowrap;*/
      }.sale-head h1,table thead tr th,table tfoot tr td{
        background-color: #f8f8f8;
      }tfoot{
@@ -49,13 +48,15 @@
      }
    </style>
 </head>
+<body>
 <div class="page-content">
     <div class="panel">
     <h2 align="center">Productos</h2>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-              <tr>  
-              <th scope="col">Clave</th>
-                <th scope="col">Nombre</th>
+              <thead>
+                <tr>
+				         <th scope="col">Clave</th>
+                 <th scope="col">Nombre</th>
                  <th scope="col">Descripción</th>
                  <th scope="col">Peso</th>
                  <th scope="col">Observaciónes</th>
@@ -63,18 +64,17 @@
                  <th scope="col">Linea</th>
                  <th scope="col">Sucursal</th>
                  <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-
+                </tr>
+              </thead>  
+              <tbody>
+              
       @foreach ($products as $i => $product)
-        <tr id="row{{$product->id}}">
+                <tr id="row{{$product->id}}">
                  <td>{{ $product->id }}</td> 
-                <td>{{ $product->name }}</td>
+                 <td>{{ $product->name }}</td>
                  <td>{{ $product->description }}</td>
                  <td>{{ $product->weigth }}</td>
                  <td>{{ $product->observations }}</td>
-                 
                  <td>{{ $product->category->name }}</td>
                  <td>{{ $product->line->name }}</td>
                  <td>{{ $product->branch->name }}</td>
@@ -85,6 +85,7 @@
             </table>
           </div>
           </div>
+    </body>
 </html>
 
 

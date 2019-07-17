@@ -81,7 +81,8 @@
                           <td>{{$transfer->user->name}}</td>
                           <td>{{$transfer->newBranch->name}}</td>
                           <td>{{$transfer->destinationUser->name}}</td>
-                          <td>{{$transfer->created_at->format('m-d-Y')}}</td>
+                          <td>{{$transfer->created_at}}</td>
+                          <td>
                     </tr>
                     @endforeach
               </tbody>

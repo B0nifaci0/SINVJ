@@ -3,8 +3,6 @@
 LISTA PRODUCTO
 @endsection
 
-@section('admin-section')
-@endsection
 @section('nav')
 
 @endsection
@@ -51,19 +49,12 @@ LISTA PRODUCTO
                    data-toggle="tooltip" data-original-title="Generar reporte PDF">
                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                 </div>
-                <div class="col-md-4 col-md-offset-2">
+                <div class="col-md- col-md-offset-2">
                   <button onclick="window.location.href='#'" 
                   type="button" class=" btn btn-sm small btn-floating 
                    toggler-left  btn-success waves-effect waves-light waves-round float-right"
                    data-toggle="tooltip" data-original-title="Generar reporte Excel">
                    <i class="icon fa-file-excel-o" aria-hidden="true"></i></button>
-                </div>
-                <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='/productos/create'" 
-                  type="button" class=" btn btn-sm small btn-floating 
-                   toggler-left  btn-info waves-effect waves-light waves-round float-right"
-                   data-toggle="tooltip" data-original-title="Agregar">
-                   <i class="icon md-plus" aria-hidden="true"></i></button>
                 </div>
           </div>
         </div>
@@ -84,8 +75,6 @@ LISTA PRODUCTO
                  <th>Linea</th>
                  <th>Sucursal</th>
                  <th>Status</th>
-                 <th>c.Barras</th>
-                 <th>Opciones</th>
               </tr>
             </thead>
             <tfoot>
@@ -100,8 +89,6 @@ LISTA PRODUCTO
                  <th>Linea</th>
                  <th>Sucursal</th>
                  <th>Status</th>
-                <th>c.Barras</th>
-                 <th>Opciones</th>
               </tr> 
             </tfoot>
             <tbody>
@@ -124,27 +111,6 @@ LISTA PRODUCTO
                  <td>{{ $product->line->name }}</td>
                  <td>{{ $product->branch->name }}</td>
                  <td>{{ $product->status->name }}</td>
-                 <td><svg  class="barcode" ;
-                  jsbarcode-format="CODE128" 
-                  jsbarcode-value="{{ $product->id}}.{{$product->line->name }}{{ $product->branch->name }}" 
-                  jsbarcode-textmargin="0"
-                  jsbarcode-fontoptions="bold">
-                    </svg>
-                    </td>
-                 <td>    
-                
-                 <a href="/productos/{{$product->id}}/edit"<button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round"
-                      data-toggle="tooltip" data-original-title="Editar">
-                      <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      
-
-                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                       alt="{{$product->id}}" role="button" 
-                        data-toggle="tooltip" data-original-title="Borrar">
-                        <i class="icon md-delete" aria-hidden="true"></i>
-                    </button>   
-                  </td>
                 </tr>
                 @endforeach
             </tbody>
@@ -160,56 +126,9 @@ LISTA PRODUCTO
 @endsection
 
 @section('barcode-product')
-<script type="text/javascript">
-JsBarcode(".barcode").init();
-</script>
+
 @endsection
 
 @section('delete-productos')
-<script type="text/javascript">
-console.log("a")
-$(document).ready(function() {
-  console.log("b")
-  $(".delete").click(function() {
-    var id = $(this).attr("alt");
-    console.log(id);
-    Swal.fire({
-      title: 'Confirmación',
-      text: "¿Seguro que desea eliminar este registro?",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Borralo!'
-    }).then((result) => {
-      if (result.value) {
-        $.ajax({
-           headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          url:  '/productos/' + id,
-          method: 'DELETE',
-          success: function () {
-            $("#row" + id).remove();
-            Swal.fire(
-              'Eliminado',
-              'El registro ha sido eliminado.',
-              'success'
-            )
-          }, 
-          error: function () {
-            Swal.fire(
-              'Eliminado',
-              'El registro no ha sido eliminado.'+ id,
-              'error'
-            )
-          }
-        })
-      }
-    })
 
-  });
-});
-
-</script>
 @endsection

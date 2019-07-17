@@ -3,6 +3,9 @@
 LISTA DE  SUCURSALES
 @endsection
 
+@section('admin-section')
+@endsection
+
 @section('nav')
 
 @endsection

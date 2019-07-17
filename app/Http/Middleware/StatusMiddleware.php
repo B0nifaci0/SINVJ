@@ -17,9 +17,9 @@ class StatusMiddleware
      */
     public function handle($request, Closure $next)
     {
-        /*if (Auth::user()->type_user == User::AA) {
+        if (Auth::user()->type_user = User::AA) {
             return redirect('/index');
-       }*/
+       }
  
        if (Auth::user()->shop->statuss->count() == 0){
            return redirect('/status/create')->with('mesage', 'Primero debes configurar un Estatus!');

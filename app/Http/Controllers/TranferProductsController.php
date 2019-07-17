@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Storage;
 
 class TranferProductsController extends Controller
 {
+    public function __construct(){
+    }
     public function index()
        {
         $user = Auth::user();
