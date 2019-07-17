@@ -184,7 +184,7 @@ $(document).ready(function() {
            headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
-          url:  '/sucursales/' + id,
+          url:  '/productos/' + id,
           method: 'DELETE',
           success: function () {
             $("#row" + id).remove();

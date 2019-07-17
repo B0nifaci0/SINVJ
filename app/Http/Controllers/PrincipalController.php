@@ -16,18 +16,21 @@ class PrincipalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $total = User::sum('salary');
+        //return $total; 
          $branch = Auth::user()->shop->id;
          $user = Auth::user();
          $branch = Shop::find($branch)->branches()->get();
         return view ('Principal/principal',compact('branch','user'));
     }
 
-    public function exportPdf(){ 
+    public function exportPdf(){
+        $total = User::sum('salary'); 
         $branch = Auth::user()->shop->id;
         $user = Auth::user();
         $branch = Shop::find($branch)->branches()->get();
-        $pdf  = PDF::loadView('Principal.pdf', compact('branch', 'user'));
+        $pdf  = PDF::loadView('Principal.pdf', compact('branch', 'user', 'total'));
         return $pdf->download('Principal.pdf');
       }
     /**

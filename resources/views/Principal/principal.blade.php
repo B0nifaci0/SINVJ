@@ -119,7 +119,7 @@ Panel Principal
                           <i class="icon md-calendar" aria-hidden="true"></i>
                         </span>
                       </div>
-                      <input type="text" class="form-control round" data-plugin="datepicker">
+                      <input id="fecini" type="text" class="form-control round fecini" data-plugin="datepicker">
                     </div>
                   <div class="input-group col-3">
                       <div class="row container"><label>Hasta la Fecha:</label></div>
@@ -128,7 +128,7 @@ Panel Principal
                           <i class="icon md-calendar" aria-hidden="true"></i>
                         </span>
                       </div>
-                      <input type="text"   class="form-control round" data-plugin="datepicker" data-multidate="true">
+                      <input id="fecter" type="text"   class="form-control round" data-plugin="datepicker" data-multidate="true">
                     </div>
                 </div>
               </div>
@@ -170,3 +170,4 @@ $(".usuarios").change(function(){
     });
 </script>
 @endsection
+

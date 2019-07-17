@@ -825,5 +825,7 @@
     @show
     @section('traspaso')
     @show
+    @section('fechas')
+    @show
 </body>
 </html>
