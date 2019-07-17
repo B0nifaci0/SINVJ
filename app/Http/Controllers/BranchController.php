@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Branch;
 use App\Shop;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\BranchRequest;
 //use App\Http\Requests\BranchValidate;
@@ -24,8 +25,9 @@ class BranchController extends Controller
      */
     public function index()
     {
-        $branches= Auth::user()->shop->branches;
-        return view('Branches/index', ['branches' => $branches]);
+      $user = Auth::user();
+      $branches= Auth::user()->shop->branches;
+        return view('Branches/index', compact('branches','user'));
     }
 
         /**
@@ -35,7 +37,10 @@ class BranchController extends Controller
      */
     public function indexCo()
     {
-        return view('Branches/CO/sucursal');
+      $user = Auth::user();
+      $branch = Branch::find(10);
+
+        return view('Branches/CO/sucursal', compact('user','branch'));
     }
 
     /**

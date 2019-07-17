@@ -29,6 +29,7 @@ class UserController extends Controller
     {
       //Consulta para obetener el usuario y la sucursal que tiene cada uno  $users=User::with('shop')->get();
       //Consulta para obtener los usuarios con referencia de la tienda a la que pertenecen
+      //$users = Auth::user()->shop->users;
       $users = Auth::user()->shop->users;
      //$users = User::with('shop')->with('branch')->get(); //Consulta que se utiliza para poder acceder a los campos de cada modelo 
       //Consulta para obtener las sucursales con referencia de la tienda a la que pertenecen

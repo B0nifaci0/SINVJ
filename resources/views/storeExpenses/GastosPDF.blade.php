@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Reporte de Productos</title>
+   <title>Reporte de Gastos</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
@@ -51,41 +51,32 @@
 <body>
 <div class="page-content">
     <div class="panel">
-    <h2 align="center">Traspasos</h2>
+    <h2 align="center">Gastos</h2>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-                 <th>Clave</th>
-                 <th>Clave Del Producto</th>
-                 <th>Producto</th>
-                 <th>Peso</th>
-                 <th>Categoría</th>
-                 <th>Linea</th>
-                 <th>Sucursal</th>
-                 <th>Quien lo mando</th>
-                 <th>Destino</th>
-                 <th>Quien recibio</th>
-                 <th>Fecha</th>
+                  <th>Clave</th>
+                  <th>Nombre</th>
+                  <th>Descripcion</th>
+                  <th>Precio</th>
+                  <th>Tienda</th>
+                  <th>Fecha</th>
                 </tr>
-              </thead>  
+              </thead>
               <tbody>
-                    @foreach ($trans as $transfer)
-                    <tr id = "row{{$transfer->id}}">
-                    <td>{{ $transfer->id }}</td> 
-                          <td>{{ $transfer->product->id }}</td> 
-                          <td>{{ $transfer->product->name }}</td>
-                          <td>{{ $transfer->product->weigth }}</td>
-                          <td>{{ $transfer->product->category->name }}</td>
-                          <td>{{ $transfer->product->line->name }}</td>
-                          <td>{{$transfer->lastBranch->name}}</td>
-                          <td>{{$transfer->user->name}}</td>
-                          <td>{{$transfer->newBranch->name}}</td>
-                          <td>{{$transfer->destinationUser->name}}</td>
-                          <td>{{$transfer->created_at->format('m-d-Y')}}</td>
-                    </tr>
-                    @endforeach
+              @foreach ($expenses as  $expense)
+                  <tr id ="row{{$expense->id}}">
+                    <td>{{ $expense->id}}</td>
+                    <td>{{ $expense->name }}</td>
+                    <td>{{ $expense->descripcion }}</td>
+                    <td>$ {{ $expense->price }}</td>
+                    <td>{{ $expense->shop->name }}</td>
+                    <td>{{ $expense->created_at->format('m-d-Y')}}</td>
+                  </tr>
+                  @endforeach
               </tbody>
             </table>
+            <h3>Gasto Total = ${{$total}}</h3>
           </div>
           </div>
     </body>

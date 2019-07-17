@@ -3,6 +3,8 @@
 LISTA DE  LINEA
 @endsection
 
+@section('admin-section')
+@endsection
 @section('nav')
 
 @endsection

@@ -90,7 +90,7 @@ LISTA DE  USUARIOS
                         @if($user->type_user == 2)
                           <td>Colaborador</td>
                         @endif
-                        @if($user->branch_id == 0)
+                        @if($user->branch_id == '')
                         <td>Sin sucursal es Administrador</td>
                         @endif
                         @if($user->branch_id != 0)

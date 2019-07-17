@@ -55,6 +55,10 @@ Route::resource('status', 'StatusController');
 Route::resource('traspasos', 'TranferProductsController');
 Route::get('traspasospdf', 'TranferProductsController@exportPdf');
 
+//Taspasos Admin
+Route::resource('traspasosadmin', 'TrasferUserController');
+Route::get('traspasosadminpdf', 'TrasferUserController@exportPdf');
+
 //Ventas
 Route::resource('ventas', 'SaleController');
 
@@ -94,7 +98,9 @@ Route::get('homepdf', 'HomeController@exportPdf');
 Route::get('/usuarios/activo/{id}', 'UserController@soft');
 
 //Sucursales Producto
-Route::resource('sucursales.producto', 'BranchProductsController');
+Route::resource('sucursales.producto', 'BranchProductsController'); 
+//Sucursal Producto PDF
+Route::get('sucursalpdf/{id}', 'BranchProductsController@exportPdf')->name('sucursalpdf');
 
 //Productod AA
 Route::get('productoAA/{id}/', 'ProductController@soft');
@@ -121,6 +127,9 @@ Route::resource('sucursales.usuarios', 'BranchUserController');
 
 Route::resource('principal', 'PrincipalController');
 
+//Gastos
 Route::resource('gastos' , 'ControllerExpenses');
+//Gastos PDF
+Route::get('gastospdf', 'ControllerExpenses@exportPdf');
 
 

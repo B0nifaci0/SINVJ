@@ -3,11 +3,14 @@
 LISTA DE  SUCURSALES
 @endsection
 
+@section('admin-section')
+@endsection
+
 @section('nav')
 
 @endsection
 @section('menu')
-
+  
 @endsection
 @section('content')
   <div class="panel-body">

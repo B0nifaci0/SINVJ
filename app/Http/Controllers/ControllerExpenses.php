@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ExpensesRequest;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 
 class ControllerExpenses extends Controller
@@ -131,4 +132,12 @@ class ControllerExpenses extends Controller
     {
         Expenses::destroy($id);
     }
+    public function exportPdf(){
+        $total = Expenses::sum('price');
+        $expense = Auth::user()->shop->id;
+        $expenses = Shop::find($expense)->expenses()->get();
+        $shops = Auth::user()->shop()->get();
+        $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('expenses', 'shops','total'));
+        return $pdf->download('gastos.pdf');
+      }
 }

@@ -33,11 +33,18 @@ LISTA DE  GASTOS
         <!-- Panel Basic -->
     <div class="panel">
       <header class="panel-heading">
-        <div class="panel-actions">
-          <div class="col-md-14 col-md-offset-2">
+        <div class="row panel-actions">
+            <div class="col-md-6 col-md-offset-2">
+                <button onclick="window.location.href='gastospdf'" 
+                type="button" class=" btn btn-sm small btn-floating 
+                toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+              </div>
+          <div class="col-md-6 col-md-offset-2">
             <button onclick="window.location.href='/gastos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
              <i class="icon md-plus" aria-hidden="true"></i></button>
-          </div>
+            </div>
         </div>
         <h3 class="panel-title">Gastos</h3>
       </header>
@@ -77,7 +84,7 @@ LISTA DE  GASTOS
                         @endphp
                         <img width="100px" height="100px" src="{{ $image }}">
                     </td>
-                    <td>{{$expense->price}}</td>
+                    <td>$ {{$expense->price}}</td>
                     <td>{{$expense->shop->name}}</td>
                       <td>    
                       <a href="/gastos/{{$expense->id}}/edit"<button type="button" 
