@@ -69,7 +69,7 @@ class TranferProductsController extends Controller
         //return $products;
         $branches = Branch::where('id', '!=', $user->branch_id)->get(); 
         //return $branches;
-        return view('transfer/add', compact('branches','users','products'));
+        return view('transfer/add', compact('branches','users','products','user'));
        }
 
        public function store(Request $request)

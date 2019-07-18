@@ -61,6 +61,8 @@ Route::get('traspasosadminpdf', 'TrasferUserController@exportPdf');
 
 //Ventas
 Route::resource('ventas', 'SaleController');
+//Ventas CO
+Route::get('ventasCO', 'SaleController@indexCO');
 
 //Pagos
 Route::resource('pagos', 'PaymentsController');
@@ -79,6 +81,11 @@ Route::resource('sucursales', 'BranchController');
 
 // Sucursal CO
 Route::get('sucursal', 'BranchController@indexCo');
+
+// Productos CO
+Route::get('productosCO', 'ProductController@indexCo');
+// Productos COP
+Route::get('productosCOP', 'ProductController@indexCOP');
 
 Route::post('traspasos/respuesta', 'TranferProductsController@answerTransferRequest');
 

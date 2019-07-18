@@ -38,8 +38,7 @@ class BranchController extends Controller
     public function indexCo()
     {
       $user = Auth::user();
-      $branch = Branch::find(10);
-
+      $branch = Branch::find(1);
         return view('Branches/CO/sucursal', compact('user','branch'));
     }
 
@@ -50,8 +49,9 @@ class BranchController extends Controller
      */
     public function create()
     {
+      $user = Auth::user();
       $shops = Shop::all();
-      return view('Branches/add', compact('shops'));
+      return view('Branches/add', compact('shops','user'));
     }
 
     /**
@@ -95,9 +95,10 @@ class BranchController extends Controller
      */
     public function edit($id)
     {
+      $user = Auth::user();
         $branch = Branch::find($id);
       //return $category;
-      return view('Branches/edit', compact('branch'));
+      return view('Branches/edit', compact('branch','user'));
     }
 
     /**

@@ -54,7 +54,7 @@ class TrasferUserController extends Controller
            $transfer_user = new TrasferUser($request->all());
            //return $transfer_product;
            $transfer_user->save();
-           return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
+          // return redirect('')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
 }
  
 public function exportPdf(){ 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Shop;
+use App\User;
 use App\store_expenses as Expenses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,11 +25,12 @@ class ControllerExpenses extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $expense = Auth::user()->shop->id;
         $expenses = Shop::find($expense)->expenses()->get();
         //return $expenses;
         $shops = Auth::user()->shop()->get();
-        return view('storeExpenses/index', compact('expenses','shops'));
+        return view('storeExpenses/index', compact('expenses','shops','user'));
     }
 
     /**
@@ -38,10 +40,10 @@ class ControllerExpenses extends Controller
      */
     public function create()
     {
-        
+        $user = Auth::user();
         $shops = Auth::user()->shop()->get();
         //return $shops;
-        return view('storeExpenses/add ',compact('shops')); 
+        return view('storeExpenses/add ',compact('shops','user')); 
     }
 
     /**
@@ -84,10 +86,10 @@ class ControllerExpenses extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $expense = Expenses::find($id);
-
         $shops = Auth::user()->shop()->get();
-        return view('storeExpenses/edit ',compact('shops','expense'));
+        return view('storeExpenses/edit ',compact('shops','expense','user'));
 
     }
 

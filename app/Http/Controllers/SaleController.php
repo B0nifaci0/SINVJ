@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Sale;
 use App\Product;
 use App\Line;
+use App\User;
 use PDF;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaleRequest;
@@ -23,15 +24,27 @@ class SaleController extends Controller
      */
     public function index()
     {
+      $user = Auth::user();
       $sales = Sale::all();
       $products = Product::with('line')
         ->with('branch')
         ->with('category')
         ->with('status')
         ->get();
-    return view('sale/index', compact('sales','products'));
+    return view('sale/index', compact('sales','products','user'));
     }
 
+    public function indexCO()
+    {
+      $user = Auth::user(); 
+      $sales = Sale::all();
+      $products = Product::with('line')
+        ->with('branch')
+        ->with('category')
+        ->with('status')
+        ->get();
+      return view('sale/index', compact('sales','products','user'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -40,6 +53,7 @@ class SaleController extends Controller
      */
     public function create()
     {
+      $user = Auth::user();
       $branchId = Auth::user()->branch->id;
       $productsBranch = Product::where('branch_id',$branchId)->get();
       $products = Product::with('line')
@@ -48,7 +62,7 @@ class SaleController extends Controller
         ->with('status')
         ->get();
       //return $products;
-        return view('sale/add', compact('products','productsBranch'));
+        return view('sale/add', compact('products','productsBranch','user'));
     }
 
     /**
@@ -85,10 +99,11 @@ class SaleController extends Controller
      */
     public function edit($id)
     {
+      $user = Auth::user();
       $sale = Sale::findOrFail($id);
       $products = Product::all();
       //return $sale;
-      return view('sale/edit', compact('sale','products'));
+      return view('sale/edit', compact('sale','products','user'));
        }
 
 

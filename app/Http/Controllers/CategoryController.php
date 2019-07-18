@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use categories;
 use Alert;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoriesRequest;
 use Illuminate\Support\Facades\Auth;
@@ -21,14 +22,14 @@ class CategoryController extends Controller
      */
     public function index()
     {  // Codigo para determinar el tipo de usuario y la tienda a la que pertenece
-        /*$users = Auth::user();
-        return $users;
+        $user = Auth::user();
+        /*return $users;
         $shop = Auth::user()->shop;
         return $shop; */   
         $categories = Auth::user()->shop->categories;
         //Lista el array de datos de categorias almacenados en la variable $categories
         //return $categories;
-        return view('category/index', compact('categories'));
+        return view('category/index', compact('categories','user'));
     }
 
 
@@ -39,7 +40,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category/add');
+       $user = Auth::user();
+        return view('category/add', compact('categories','user'));
     }
 
     /**
@@ -80,9 +82,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+      $user = Auth::user();
       $category = Category::findOrFail($id);
       //return $category;
-      return view('category/edit', compact('category'));
+      return view('category/edit', compact('category','user'));
        }
 
 

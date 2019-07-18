@@ -38,6 +38,7 @@ class UserController extends Controller
       //return $branches;
       //Comprobacion de datos
       //return $users;
+      
       return view('User/index', compact('users','branches')); 
     }
 
@@ -48,13 +49,14 @@ class UserController extends Controller
      */
     public function create()
     {   
+       $user = Auth::user();
         // Consulta para obtener la tienda de acuerdo al usuario
         $shops=Auth::user()->shop()->get();
         //return $shops;
         // Consulta para obtener la sucursal de acuerdo a la tienda del usuario
         $branches=Auth::user()->shop->branches;
         //return $branches;
-        return view('User/add', compact('shops','branches'));
+        return view('User/add', compact('shops','branches','user'));
     }
 
     /**
@@ -107,13 +109,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+      $user = Auth::user();
       $users = User::findOrFail($id);
       //$user = Auth::user()->shop->branches;
       $shops=Auth::user()->shop()->get();
       $branches=Auth::user()->shop->branches;
 
       //return $users;
-      return view('User/edit', compact('users','shops','branches'));
+      return view('User/edit', compact('users','shops','branches','user'));
       
     }
 

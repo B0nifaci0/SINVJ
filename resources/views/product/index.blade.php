@@ -3,8 +3,7 @@
 LISTA PRODUCTO
 @endsection
 
-@section('admin-section')
-@endsection
+
 @section('nav')
 
 @endsection
@@ -67,7 +66,7 @@ LISTA PRODUCTO
                 </div>
           </div>
         </div>
-        <h3 class="panel-title">Productos</h3>
+        <h3 class="panel-title">Productos </h3>
       </header>
       <div class="panel-body">
             <table id="example"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">

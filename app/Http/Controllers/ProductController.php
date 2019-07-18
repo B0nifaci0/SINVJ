@@ -27,8 +27,40 @@ class ProductController extends Controller
     $this->middleware('LineMiddleware');
     $this->middleware('StatusMiddleware'); 
   }
+
+  public function index()
+  {
+   /* $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
+    $categories = Category::all();
+    $user = Auth::user();
+      //return $user ;
+    $lines = Line::all();
+    $statuses = Status::all();
+    return view('product/index', compact('user','products', 'categories','lines','statuses')); */
+      
+      $user = Auth::user();
+      $shop_id = $user->shop->id;
+      if($user->type_user == User::CO) {
+        $products = Product::where('branch_id', $user->branch_id)->get();
+      } else {
+        $products = Shop::find($shop_id)->products()->get();
+      }
+      //return $products; 
+      //$categories = Category::all();
+      $shops = Auth::user()->shop()->get();
+      //return $shops;
+      $category = Auth::user()->shop->id;  
+      $categories = Shop::find($category)->categories()->get();
+      $line = Auth::user()->shop->id; 
+      $lines = Shop::find($line)->lines()->get();
+      //return $lines;  
+      $status = Auth::user()->shop->id;
+      $statuses = Shop::find($status)->statuss()->get();
+
+      return view('product/index', compact('user', 'categories','lines','shops','statuses','products'));
+  }
     
-    public function index()
+    public function indexCOP()
     {
      /* $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
       $categories = Category::all();
@@ -40,13 +72,12 @@ class ProductController extends Controller
         
         $user = Auth::user();
         $shop_id = $user->shop->id;
-        if($user->type_user == User::CO) {
+        if($user->type_user == User::AA) {
           $products = Product::where('branch_id', $user->branch_id)->get();
         } else {
           $products = Shop::find($shop_id)->products()->get();
         }
-        //return $products;
-        $user = Auth::user(); 
+        //return $products; 
         //$categories = Category::all();
         $shops = Auth::user()->shop()->get();
         //return $shops;
@@ -59,6 +90,40 @@ class ProductController extends Controller
         $statuses = Shop::find($status)->statuss()->get();
 
         return view('product/index', compact('user', 'categories','lines','shops','statuses','products'));
+    }
+
+    public function indexCO()
+    {
+     /* $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
+      $categories = Category::all();
+      $user = Auth::user();
+        //return $user ;
+      $lines = Line::all();
+      $statuses = Status::all();
+      return view('product/index', compact('user','products', 'categories','lines','statuses')); */
+        
+        $user = Auth::user();
+        $shop_id = $user->shop->id;
+        if($user->type_user == User::AA) {
+          $products = Product::where('branch_id', $user->branch_id)->get();
+          
+        } else {
+          $products = Shop::find($shop_id)->products()->get();
+        
+        }
+        //return $products;
+        //$categories = Category::all();
+        $shops = Auth::user()->shop()->get();
+        //return $shops;
+        $category = Auth::user()->shop->id;  
+        $categories = Shop::find($category)->categories()->get();
+        $line = Auth::user()->shop->id; 
+        $lines = Shop::find($line)->lines()->get();
+        //return $lines;  
+        $status = Auth::user()->shop->id;
+        $statuses = Shop::find($status)->statuss()->get();
+
+        return view('product/productCO/index', compact('user', 'categories','lines','shops','statuses','products'));
     }
 
     /**

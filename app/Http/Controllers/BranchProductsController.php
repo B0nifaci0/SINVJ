@@ -5,6 +5,8 @@ use App\Branch;
 use Illuminate\Http\Request;
 use App\Product;
 use PDF; 
+use App\User;
+use Illuminate\Support\Facades\Auth;
 class BranchProductsController extends Controller
 
 {
@@ -13,7 +15,7 @@ class BranchProductsController extends Controller
 
       $branches= Branch::find($id);
       $products = Product::withTrashed()->where('branch_id','=',$id)->get();
-      return view('Branches/branchproduct', compact('branches','id','products')); 
+      return view('Branches/branchproduct', compact('branches','id','products','user')); 
   }
   public function edit($id)
     {
