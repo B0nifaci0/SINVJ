@@ -25,10 +25,11 @@ class LineController extends Controller
      */
     public function index()
     {
+        $user = Auth::User();
         //Muestra los las lineas que pertenecen a esa tienda midiante la variable $lines
         $lines = Auth::user()->shop->lines;
         //return $lines;
-      return view('line/index', compact('lines'));
+      return view('line/index', compact('lines','user'));
       }
 
     /**
@@ -38,7 +39,8 @@ class LineController extends Controller
      */
     public function create()
     {
-        return view('line/add');
+        $user = Auth::User();
+        return view('line/add', compact('user'));
     }
 
     /**
@@ -48,7 +50,9 @@ class LineController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(LineRequest $request)
-    {
+    {   
+        //$nombre = $request->input("name");
+        //return $nombre; 
         $line = new Line($request->all());
         $line->shop_id = Auth::user()->shop->id;
         $line->save();

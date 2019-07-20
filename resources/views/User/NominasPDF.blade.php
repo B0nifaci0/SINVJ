@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Reporte de Gastos</title>
+   <title>Reporte de Nominas</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
@@ -51,33 +51,28 @@
 <body>
 <div class="page-content">
     <div class="panel">
-    <h2 align="center" style="color:blue">Gastos</h2>
+    <h2 align="center" style="color:blue">Nominas</h2>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                   <th>Clave</th>
                   <th>Nombre</th>
-                  <th>Descripcion</th>
-                  <th>Precio</th>
+                  <th>Salario</th>
                 </tr>
               </thead>
               <tbody>
-              @foreach ($expenses as  $expense)
+              @foreach ($users as  $expense)
                   <tr id ="row{{$expense->id}}">
                     <td>{{ $expense->id}}</td>
                     <td>{{ $expense->name }}</td>
-                    <td>{{ $expense->descripcion }}</td>
-                    <td>$ {{ $expense->price }}</td>
+                    <td>$ {{ $expense->salary }}</td>
                   </tr>
                   @endforeach
               </tbody>
             </table>
-            <h4 style="color:green">Tienda: {{ $expense->shop->name }}</h4>
-            <h5 style="color:green">Fecha del reporte: {{ $expense->created_at->format('m-d-Y')}}</h5>
-            <h3 style="color:darkred">Gasto Total = ${{$total}}</h3>
+          <h4 style="color:darkblue">{{$expense->shop->name}}</h4>
+          <h3 style="color:red">Total de salarios a pagar: $ {{$total}}</h3>
           </div>
           </div>
     </body>
 </html>
-
-

@@ -34,7 +34,7 @@ ALTA PRODUCTO
               <input type="text" class="form-control" name="clave"  value="{{old('clave')}}" required>
             </div>
           <div class="form-group form-material col-md-4">
-              <label>Nombre</label>
+              <label>Nombre</label> 
               <input type="text" class="form-control" name="name"  value="{{old('name')}}" required>
             </div>
             <div class="form-group form-material col-md-4">

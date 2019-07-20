@@ -28,7 +28,8 @@ class ControllerExpenses extends Controller
         $expenses = Shop::find($expense)->expenses()->get();
         //return $expenses;
         $shops = Auth::user()->shop()->get();
-        return view('storeExpenses/index', compact('expenses','shops'));
+        $user = Auth::user();
+        return view('storeExpenses/index', compact('expenses','shops','user'));
     }
 
     /**
@@ -38,10 +39,10 @@ class ControllerExpenses extends Controller
      */
     public function create()
     {
-        
+        $user = Auth::user();
         $shops = Auth::user()->shop()->get();
         //return $shops;
-        return view('storeExpenses/add ',compact('shops')); 
+        return view('storeExpenses/add ',compact('shops','user')); 
     }
 
     /**
@@ -62,7 +63,7 @@ class ControllerExpenses extends Controller
         return redirect('/gastos')->with('success', true);
          } 
     
-    }
+    } 
 
     /**
      * Display the specified resource.
@@ -138,6 +139,9 @@ class ControllerExpenses extends Controller
         $expenses = Shop::find($expense)->expenses()->get();
         $shops = Auth::user()->shop()->get();
         $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('expenses', 'shops','total'));
-        return $pdf->download('gastos.pdf');
+        //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
+        //return $pdf->stream('gastos.pdf'); //solo visualizacion del archivo en la vista web
+         return $pdf->stream('gastos.pdf');
       }
+     
 }

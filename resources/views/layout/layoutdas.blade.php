@@ -531,7 +531,6 @@
                     </a>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
-                          <a class="animsition-link" href="/sucursales/{{$branch->id}}/producto">
                           <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
                             <span class="site-menu-title">Reporte de traspasos por sucursal</span>
                         </a>

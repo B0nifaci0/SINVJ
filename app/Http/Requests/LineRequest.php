@@ -24,7 +24,7 @@ class LineRequest extends FormRequest
     public function rules()
     {
          return [
-            'name' => 'required|string|max:15',
+            'name' => 'required|alpha|max:15|unique:lines,name',
             'price' => 'required|numeric',
         ];
     }

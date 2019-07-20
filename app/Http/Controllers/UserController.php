@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use PDF;
 
 
 
@@ -175,5 +175,21 @@ class UserController extends Controller
       return $user;
       //return redirect('/usuarios')->with('mesage', 'El usuario  se ha activado exitosamente!');
 
+    }
+    public function nominasPdf( Request $request){
+      /*$fech1 = $request->input("fecini");
+      $fech2 = $request->input("fecter");
+      $user_id = $request->input("user_id");
+      //$users = User::find('user_id');
+      $users = User::where("created_at",">=",$fech1)
+           ->where("created_at","<=",$fech2)
+           ->get();
+           return $users;*/
+      $total = User::sum('salary');
+      $users = User::all();
+      //return $users;
+      $pdf  = PDF::loadView('User.NominasPDF', compact('users','total'));
+      //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
+      return $pdf->stream('nominas.pdf');
     }
 }
