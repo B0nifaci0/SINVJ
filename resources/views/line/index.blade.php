@@ -70,7 +70,7 @@ LISTA DE  LINEA
 
       </header>
       <div class="panel-body">
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                   <th>Clave</th>
@@ -195,4 +195,14 @@ $(document).ready(function() {
 });
 
 </script>
+@endsection
+
+@section('barcode-product')
+<script type="text/javascript">
+        $('#example').dataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            }
+        });
+    </script>
 @endsection

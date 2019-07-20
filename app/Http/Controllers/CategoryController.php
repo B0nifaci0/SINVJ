@@ -41,7 +41,7 @@ class CategoryController extends Controller
     public function create()
     {
        $user = Auth::user();
-        return view('category/add', compact('categories','user'));
+        return view('category/add', compact('user'));
     }
 
     /**

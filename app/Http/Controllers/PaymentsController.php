@@ -23,7 +23,8 @@ class PaymentsController extends Controller
      */
      public function index()
        {
-        return view('payments/index');
+        $user = Auth::user();
+        return view('payments/index', compact('user'));
        }
 
     /**

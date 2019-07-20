@@ -151,7 +151,7 @@
                 <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Perfil</a>
                 <a class="dropdown-item" href="/pagos" role="menuitem"><i class="icon  md-money" aria-hidden="true"></i> Pagos</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i>Iniciar Sesión</a>
+                <a class="dropdown-item" href="logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i>Cerrar Sesión</a>
               </div>
             </li> 
             <!--Notifications-->
@@ -428,7 +428,7 @@
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/productos">
-                          <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
+                          <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Productos</span>
                         </a>
                       </li>
@@ -568,7 +568,7 @@
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/traspasos">
-                          <i  class="site-menu-icon fa-exchange" aria-hidden="true"></i>
+                          <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Traspasos</span>
                         </a>
                       </li>
@@ -592,7 +592,7 @@
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/gastos">
-                        <i  class="site-menu-icon icon md-money-box"  aria-hidden="true"></i>
+                        <i  class="site-menu-icon icon fa-book"  aria-hidden="true"></i>
                           <span class="site-menu-title">Mis Gastos</span>
                       </a>
                     </li>
@@ -755,7 +755,7 @@
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/productosCOP">
-                          <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
+                          <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Productos</span>
                         </a>
                       </li>
@@ -794,7 +794,7 @@
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/traspasos">
-                          <i  class="site-menu-icon fa-exchange" aria-hidden="true"></i>
+                          <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Traspasos</span>
                         </a>
                       </li>

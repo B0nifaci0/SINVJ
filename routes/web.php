@@ -55,9 +55,8 @@ Route::resource('status', 'StatusController');
 Route::resource('traspasos', 'TranferProductsController');
 Route::get('traspasospdf', 'TranferProductsController@exportPdf');
 
-//Taspasos Admin
-Route::resource('traspasosadmin', 'TrasferUserController');
-Route::get('traspasosadminpdf', 'TrasferUserController@exportPdf');
+//Traspaso id PDF
+Route::get('traspasopdf/{id}', 'TranferProductsController@exportPdfall')->name('traspasopdf');
 
 //Ventas
 Route::resource('ventas', 'SaleController');
@@ -108,6 +107,7 @@ Route::get('/usuarios/activo/{id}', 'UserController@soft');
 Route::resource('sucursales.producto', 'BranchProductsController'); 
 //Sucursal Producto PDF
 Route::get('sucursalpdf/{id}', 'BranchProductsController@exportPdf')->name('sucursalpdf');
+
 
 //Productod AA
 Route::get('productoAA/{id}/', 'ProductController@soft');

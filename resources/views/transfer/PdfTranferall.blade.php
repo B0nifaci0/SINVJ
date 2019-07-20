@@ -1,9 +1,8 @@
-	 
-	 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
  <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Reporte de Lineas</title>
+   <title>Reporte de Traspasos</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
@@ -40,10 +39,8 @@
        vertical-align: middle;
      }.sale-head,table.table thead tr th,table tbody tr td,table tfoot tr td{
        border: 1px solid #212121;
-       text-align: center;
      }.sale-head h1,table thead tr th,table tfoot tr td{
        background-color: #f8f8f8;
-       text-align: center;
      }tfoot{
        color:#000;
        text-transform: uppercase;
@@ -54,25 +51,38 @@
 <body>
 <div class="page-content">
     <div class="panel">
-    <h2 align="center">Lineas</h2>
+    <h2 align="center">Traspasos</h2>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
-              <tr>
-                <th>Clave</th>
-                <th>Nombre</th>
-                <th>Precio Venta</th>
-                <th>Precio Compra</th>
-              </tr>
-              </thead>
+                <tr>
+                 <th>Clave</th>
+                 <th>Clave Del Producto</th>
+                 <th>Producto</th>
+                 <th>Peso</th>
+                 <th>Categoría</th>
+                 <th>Linea</th>
+                 <th>Sucursal</th>
+                 <th>Quien lo mando</th>
+                 <th>Destino</th>
+                 <th>Quien recibio</th>
+                 <th>Fecha</th>
+                </tr>
+              </thead>  
               <tbody>
-                  @foreach ($lines as $line)
-                  <tr id = "row{{ $line->id }}">
-                    <td>{{ $line->id}}</td>
-                    <td>{{ $line->name }}</td>
-                    <td>$ {{ $line->price }}</td>
-                    <td>    
-                    </td>
-                  </tr>
+                    @foreach ($trans as $transfer)
+                    <tr id = "row{{$transfer->id}}">
+                    <td>{{ $transfer->id }}</td> 
+                          <td>{{ $transfer->product->id }}</td> 
+                          <td>{{ $transfer->product->name }}</td>
+                          <td>{{ $transfer->product->weigth }}</td>
+                          <td>{{ $transfer->product->category->name }}</td>
+                          <td>{{ $transfer->product->line->name }}</td>
+                          <td>{{$transfer->lastBranch->name}}</td>
+                          <td>{{$transfer->user->name}}</td>
+                          <td>{{$transfer->newBranch->name}}</td>
+                          <td>{{$transfer->destinationUser->name}}</td>
+                          <td>{{$transfer->created_at->format('m-d-Y')}}</td>
+                    </tr>
                     @endforeach
               </tbody>
             </table>
@@ -80,3 +90,5 @@
           </div>
     </body>
 </html>
+
+

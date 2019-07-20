@@ -6,6 +6,7 @@ use App\Sale;
 use App\Product;
 use App\Line;
 use App\User;
+use App\Parcial;
 use PDF;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaleRequest;
@@ -77,7 +78,14 @@ class SaleController extends Controller
         $sale->save();
 
     return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
+    \App\Parcial::create([
+      'parcial_pay' => $request['parcial_pay'],
+      'total_pay' => $request['total_pay'],
+  ]);
+
     }
+
+    
 
     /**
      * Display the specified resource.

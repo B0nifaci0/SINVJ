@@ -49,14 +49,13 @@ class UserController extends Controller
      */
     public function create()
     {   
-       $user = Auth::user();
         // Consulta para obtener la tienda de acuerdo al usuario
         $shops=Auth::user()->shop()->get();
         //return $shops;
         // Consulta para obtener la sucursal de acuerdo a la tienda del usuario
         $branches=Auth::user()->shop->branches;
         //return $branches;
-        return view('User/add', compact('shops','branches','user'));
+        return view('User/add', compact('shops','branches'));
     }
 
     /**

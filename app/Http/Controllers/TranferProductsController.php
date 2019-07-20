@@ -25,10 +25,7 @@ class TranferProductsController extends Controller
     public function index()
        {
         $user = Auth::user();
-        $trans = TransferProduct::with('user')
-          ->with('newBranch')
-          ->where('new_branch_id', $user->branch_id)
-          ->get();
+        $trans = TransferProduct::all();
           // return ['new_branch_id', $user->branch_id];
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
@@ -92,8 +89,14 @@ class TranferProductsController extends Controller
 
 public function exportPdf(){ 
     $trans = TransferProduct::all();
-    $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));
+    $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans'));
     return $pdf->download('Traspasos.pdf');
+  }
+
+    public function exportPdfall($id){ 
+    $trans = TransferProduct::find($id);
+    $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans','id'));
+    return $pdf->download('Traspaso.pdf');
   }
 
 }

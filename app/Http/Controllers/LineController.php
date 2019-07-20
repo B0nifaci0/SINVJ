@@ -115,7 +115,7 @@ class LineController extends Controller
     public function exportPdf(){ 
         $lines = Line::all();
         $pdf  = PDF::loadView('line.pdf', compact('lines'));
-        return $pdf->download('line.pdf');
+        return $pdf->download('lineas.pdf');
     }
 
     // Funcion para gener excel!!

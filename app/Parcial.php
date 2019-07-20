@@ -10,7 +10,6 @@ class Parcial extends Model
 
     protected $fillable = [
     'sale_id',
-    'name',
     'parcial_pay',
     'total_pay'
     ];
