@@ -32,7 +32,7 @@ class BranchProductsController extends Controller
         $statuses = Shop::find($status)->statuss()->get();
         $product = Product::find($id);
         
-      return view('product/edit', compact('product', 'categorys','lines','shops','branches','statuses','user'));
+      return view('Branches/editproduct', compact('product', 'categorys','lines','shops','branches','statuses','user'));
     }
     public function update(Request $request, $id)
     {

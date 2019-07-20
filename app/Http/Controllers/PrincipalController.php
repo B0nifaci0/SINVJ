@@ -103,4 +103,8 @@ class PrincipalController extends Controller
     {
         //
     }
+    public function download(){
+            $pdf = PDF::loadVIEW('principal');
+            return $pdf->download();
+    }
 }

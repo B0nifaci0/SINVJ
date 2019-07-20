@@ -96,7 +96,7 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoriesRequest $request, $id)
+    public function update(Request $request, $id)
     {
       $category = Category::findOrFail($id);
         $category->name = $request->name;

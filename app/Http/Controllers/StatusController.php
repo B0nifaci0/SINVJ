@@ -87,7 +87,7 @@ class StatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StatusRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $status = estatus::findOrFail($id);
         $status->name = $request->name;

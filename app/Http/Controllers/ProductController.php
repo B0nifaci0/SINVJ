@@ -200,14 +200,14 @@ class ProductController extends Controller
         $categorys = Shop::find($category)->categories()->get();
         $lines = Shop::find($line)->lines()->get();
         $branch = Auth::user()->shop->id; 
-        $branches = Shop::find($branch)->branches()->get();
+        $branches = Shop::find($branch)->branches()->get(); 
         //return $lines;  
         $status = Auth::user()->shop->id;
         $statuses = Shop::find($status)->statuss()->get();
         $product = Product::find($id);
         //return $product;
         
-      return view('product/edit', compact('product', 'categorys','lines','shops','branches','statuses'));
+      return view('product/edit', compact('product', 'categorys','lines','shops','branches','statuses','user'));
     }
 
     /**
@@ -216,8 +216,8 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
-     */
-    public function update(ProductValidate $request, $id)
+     */ 
+    public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
 

@@ -63,7 +63,7 @@ Route::resource('ventas', 'SaleController');
 //Ventas CO
 Route::get('ventasCO', 'SaleController@indexCO');
 
-//Pagos
+//Pagos 
 Route::resource('pagos', 'PaymentsController');
 //Productos
 Route::resource('productos', 'ProductController');
@@ -105,8 +105,11 @@ Route::get('/usuarios/activo/{id}', 'UserController@soft');
 
 //Sucursales Producto
 Route::resource('sucursales.producto', 'BranchProductsController'); 
+Route::resource('sucursal', 'TestController');
+Route::get('sucursalespdf{id}', 'TestController@exportPdf')->name('sucursalespdf');
+
 //Sucursal Producto PDF
-Route::get('sucursalpdf/{id}', 'BranchProductsController@exportPdf')->name('sucursalpdf');
+//Route::get('sucursalpdf/{id}', 'BranchProductsController@exportPdf')->name('sucursalpdf');
 
 
 //Productod AA
@@ -131,12 +134,19 @@ Route::resource('estados.municipios', 'StateMunicipalityController');
 
 Route::resource('sucursales.usuarios', 'BranchUserController');
 
-
+//Vista para usuario AA
 Route::resource('principal', 'PrincipalController');
+
+/*Route::get('download', function (){
+  $pdf = PDF::loadVIEW('principal');
+  return $pdf->download();
+})->name('download');*/
+Route::get('download', 'PrincipalController@download')->name('download');
 
 //Gastos
 Route::resource('gastos' , 'ControllerExpenses');
 //Gastos PDF
 Route::get('gastospdf', 'ControllerExpenses@exportPdf');
+Route::get('nominaspdf', 'UserController@nominasPdf');
 
 
