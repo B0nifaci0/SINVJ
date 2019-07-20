@@ -103,10 +103,10 @@ TRASFERENCIAS
                       <td>{{ $transfer->product->weigth }}</td>
                       <td>{{ $transfer->product->category->name }}</td>
                       <td>{{ $transfer->product->line->name }}</td>
-                      <td>{{$transfer->lastBranch->name}}</td>
-                      <td>{{$transfer->user->name}}</td>
                       <td>{{$transfer->newBranch->name}}</td>
                       <td>{{$transfer->destinationUser->name}}</td>
+                      <td>{{$transfer->lastBranch->name}}</td>
+                      <td>{{$transfer->user->name}}</td>
                       <td>{{$transfer->created_at->format('m-d-Y')}}</td>
                       <td>{{ $transfer->status_product }}</td>
                       <td>

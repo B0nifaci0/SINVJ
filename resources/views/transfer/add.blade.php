@@ -52,7 +52,7 @@ ALTA PRODUCTO
                 <div class="form-group  col-md-3 col-md-offset-1 visible-md visible-lg">
                   <label>Recibe</label>
                   <select id="usuarios_1" name="destination_user_id" class="form-control ">
-                    <option value="">Selecciona Colaborador</option>
+                    <option value="" selected disabled>Selecciona Colaborador</option>
                   </select>
                 </div>
           <div class="col-md-3">
@@ -79,7 +79,10 @@ $(".sucursales").change(function(){
     $('#usuarios_' + selector).empty();
     //alert('#municipios_' + selector);
         $.each(json,function(i, user){
-          $('#usuarios_' + selector).append('<option value = '+ user.id +'>' + user.name +'</option>')
+          $('#usuarios_' + selector).append(
+              '<option value="" selected disabled>Seleccione un colaborador</option>'
+            + '<option value = '+ user.id +'>' + user.name +'</option>'
+          );
         });
   });
 });

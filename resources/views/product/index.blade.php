@@ -3,8 +3,7 @@
 LISTA PRODUCTO
 @endsection
 
-@section('admin-section')
-@endsection
+
 @section('nav')
 
 @endsection
@@ -67,10 +66,10 @@ LISTA PRODUCTO
                 </div>
           </div>
         </div>
-        <h3 class="panel-title">Productos</h3>
+        <h3 class="panel-title">Productos </h3>
       </header>
       <div class="panel-body">
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table id="example"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
             {{ csrf_field() }}
 
@@ -84,7 +83,6 @@ LISTA PRODUCTO
                  <th>Linea</th>
                  <th>Sucursal</th>
                  <th>Status</th>
-                 <th>c.Barras</th>
                  <th>Opciones</th>
               </tr>
             </thead>
@@ -100,7 +98,6 @@ LISTA PRODUCTO
                  <th>Linea</th>
                  <th>Sucursal</th>
                  <th>Status</th>
-                <th>c.Barras</th>
                  <th>Opciones</th>
               </tr> 
             </tfoot>
@@ -124,13 +121,6 @@ LISTA PRODUCTO
                  <td>{{ $product->line->name }}</td>
                  <td>{{ $product->branch->name }}</td>
                  <td>{{ $product->status->name }}</td>
-                 <td><svg  class="barcode" ;
-                  jsbarcode-format="CODE128" 
-                  jsbarcode-value="{{ $product->id}}.{{$product->line->name }}{{ $product->branch->name }}" 
-                  jsbarcode-textmargin="0"
-                  jsbarcode-fontoptions="bold">
-                    </svg>
-                    </td>
                  <td>    
                 
                  <a href="/productos/{{$product->id}}/edit"<button type="button" 
@@ -161,8 +151,12 @@ LISTA PRODUCTO
 
 @section('barcode-product')
 <script type="text/javascript">
-JsBarcode(".barcode").init();
-</script>
+        $('#example').dataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            }
+        });
+    </script>
 @endsection
 
 @section('delete-productos')

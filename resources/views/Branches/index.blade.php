@@ -10,7 +10,7 @@ LISTA DE  SUCURSALES
 
 @endsection
 @section('menu')
-
+  
 @endsection
 @section('content')
   <div class="panel-body">

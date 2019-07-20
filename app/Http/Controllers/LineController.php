@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Line;
 use Illuminate\Http\Request;
 use App\Http\Requests\LineRequest;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,7 +26,11 @@ class LineController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         $user = Auth::User();
+=======
+        $user = Auth::user();
+>>>>>>> b83c1b7058494730e1b3d5227953bb9c8b1d266e
         //Muestra los las lineas que pertenecen a esa tienda midiante la variable $lines
         $lines = Auth::user()->shop->lines;
         //return $lines;
@@ -79,9 +84,10 @@ class LineController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $line = Line::findOrFail($id);
         //return $line;
-        return view('line/edit', compact('line'));
+        return view('line/edit', compact('line','user'));
     }
 
     /**

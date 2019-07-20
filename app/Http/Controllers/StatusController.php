@@ -21,10 +21,11 @@ class StatusController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         //$sta = estatus::with('shop')->get();
         $sta = Auth::user()->shop->statuss;
         //return $sta;
-        return view('Status/index',compact('sta'));
+        return view('Status/index',compact('sta','user'));
     }
 
     /**
@@ -34,8 +35,9 @@ class StatusController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
         $shops = Shop::all();
-        return view ('Status/add', compact('shops'));
+        return view ('Status/add', compact('shops','user'));
     }
 
     /**
@@ -73,8 +75,9 @@ class StatusController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $status = estatus::findOrFail($id);
-        return view('Status/edit', compact('status'));
+        return view('Status/edit', compact('status','user'));
     }
 
     /**

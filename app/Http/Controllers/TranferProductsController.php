@@ -29,6 +29,7 @@ class TranferProductsController extends Controller
           ->with('newBranch')
           ->where('new_branch_id', $user->branch_id)
           ->get();
+          // return ['new_branch_id', $user->branch_id];
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
         //$statuses = Shop::find($status)->statuss()->get();
@@ -48,6 +49,17 @@ class TranferProductsController extends Controller
 
        public function create()
        {
+        $user = Auth::user();
+        $shop = $user->branch->shop;
+        $users = User::where('id', '!=', $user->id)->get();
+        $products = Product::where('branch_id', $user->branch_id)->get();
+        
+        $branches = Branch::where('branches.id', '!=', $user->branch_id)
+          ->join('shops', 'shops.id', 'branches.shop_id')
+          ->where('shops.id', $shop->id)
+          ->select('branches.id', 'branches.name')
+          ->get();
+        
         $user = Auth::user(); //Retorna el usuario con el que se encuentra logueado 
         $users = User::where('id', '!=', $user->id)->get(); // Retorna los usuarios que pertenecen a la tienda y no estan logueados
         //return $users;
@@ -57,7 +69,7 @@ class TranferProductsController extends Controller
         //return $products;
         $branches = Branch::where('id', '!=', $user->branch_id)->get(); 
         //return $branches;
-        return view('transfer/add', compact('branches','users','products'));
+        return view('transfer/add', compact('branches','users','products','user'));
        }
 
        public function store(Request $request)
