@@ -26,11 +26,7 @@ class LineController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
         $user = Auth::User();
-=======
-        $user = Auth::user();
->>>>>>> b83c1b7058494730e1b3d5227953bb9c8b1d266e
         //Muestra los las lineas que pertenecen a esa tienda midiante la variable $lines
         $lines = Auth::user()->shop->lines;
         //return $lines;
