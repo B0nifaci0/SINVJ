@@ -93,7 +93,7 @@ class LineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(LineRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $line = Line::findOrFail($id);
         $line->name = $request->name;

@@ -111,6 +111,9 @@ class UserController extends Controller
     {
       $user = Auth::user();
       $users = User::findOrFail($id);
+      if($users->type_user == 0){
+        return redirect('/usuarios')->with('mesage-delete','El administrador no puede ser actualizado');
+      }
       //$user = Auth::user()->shop->branches;
       $shops=Auth::user()->shop()->get();
       $branches=Auth::user()->shop->branches;
@@ -127,7 +130,7 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request,$id)
+    public function update(Request $request,$id)
     {
       $users = User::findOrFail($id);
         $users->name = $request->name;

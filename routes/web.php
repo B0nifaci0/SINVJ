@@ -64,7 +64,7 @@ Route::resource('ventas', 'SaleController');
 //Ventas CO
 Route::get('ventasCO', 'SaleController@indexCO');
 
-//Pagos
+//Pagos 
 Route::resource('pagos', 'PaymentsController');
 //Productos
 Route::resource('productos', 'ProductController');
@@ -106,6 +106,9 @@ Route::get('/usuarios/activo/{id}', 'UserController@soft');
 
 //Sucursales Producto
 Route::resource('sucursales.producto', 'BranchProductsController'); 
+Route::resource('sucursal', 'TestController');
+Route::get('sucursalespdf{id}', 'TestController@exportPdf')->name('sucursalespdf');
+
 //Sucursal Producto PDF
 //Route::get('sucursalpdf/{id}', 'BranchProductsController@exportPdf')->name('sucursalpdf');
 

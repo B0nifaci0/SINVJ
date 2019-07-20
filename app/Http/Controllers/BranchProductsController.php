@@ -12,14 +12,13 @@ class BranchProductsController extends Controller
 {
   public function index($id)
   {
-
+      $user = Auth::user();
       $branches= Branch::find($id);
       $products = Product::withTrashed()->where('branch_id','=',$id)->get();
       return view('Branches/branchproduct', compact('branches','id','products','user')); 
   }
   public function edit($id)
     {
-    
         $category = Auth::user()->shop->id;
         $user = Auth::user();
         $line = Auth::user()->shop->id; 
@@ -32,7 +31,7 @@ class BranchProductsController extends Controller
         $statuses = Shop::find($status)->statuss()->get();
         $product = Product::find($id);
         
-      return view('product/edit', compact('product', 'categorys','lines','shops','branches','statuses'));
+      return view('Branches/editproduct', compact('product', 'categorys','lines','shops','branches','statuses','user'));
     }
     public function update(Request $request, $id)
     {
