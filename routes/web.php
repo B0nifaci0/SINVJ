@@ -107,7 +107,7 @@ Route::get('/usuarios/activo/{id}', 'UserController@soft');
 //Sucursales Producto
 Route::resource('sucursales.producto', 'BranchProductsController'); 
 Route::resource('sucursal', 'TestController');
-Route::get('sucursalespdf{id}', 'TestController@exportPdf')->name('sucursalespdf');
+Route::get('sucursales/{id}/sucursalespdf', 'TestController@exportPdf'); 
 
 //Sucursal Producto PDF
 //Route::get('sucursalpdf/{id}', 'BranchProductsController@exportPdf')->name('sucursalpdf');

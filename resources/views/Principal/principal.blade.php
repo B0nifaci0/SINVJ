@@ -143,11 +143,11 @@ Termina Reporte De Nomina -->
           <div class=" col-12"> 
               <div class="panel panel-bordered">
                 <div class="panel-heading">
-                  <h3 class="bg-info panel-title text-center text-white">Reporte De Nomina Por Sucursal</h3>
+                  <h3 class="bg-info panel-title text-center text-white">Reporte De Nomina Por Tiendas</h3>
                 </div>
                 <div class="panel-body row col-12">
                   <div class="row col-12">
-                      <div class="col-3">
+                     <div class="col-3">
                         <label>Seleccione Sucursal</label>
                           <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
                             <option value="*">Seleccione Sucursal</option>

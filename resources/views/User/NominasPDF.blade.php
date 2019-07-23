@@ -52,26 +52,12 @@
 <div class="page-content">
     <div class="panel">
     <h2 align="center" style="color:blue">Nominas</h2>
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-              <thead>
-                <tr>
-                  <th>Clave</th>
-                  <th>Nombre</th>
-                  <th>Salario</th>
-                </tr>
-              </thead>
-              <tbody>
-              @foreach ($users as  $expense)
-                  <tr id ="row{{$expense->id}}">
-                    <td>{{ $expense->id}}</td>
-                    <td>{{ $expense->name }}</td>
-                    <td>$ {{ $expense->salary }}</td>
-                  </tr>
-                  @endforeach
-              </tbody>
-            </table>
-          <h4 style="color:darkblue">{{$expense->shop->name}}</h4>
-          <h3 style="color:red">Total de salarios a pagar: $ {{$total}}</h3>
+    <label>De {{$fech1}} a {{$fech2}}</label>
+    <br>
+    <label>Empleado <label style="color:red">{{$users -> name}}</label> el salario es 
+                 <label style="color:red">$ {{$salary}} </label>por semana, trabajo
+                 <label style="color:red">{{$hoy}} </label> semanas</label>
+    <label style="color:blue">El pago total fue de : $ {{$nomina}}</label>
           </div>
           </div>
     </body>

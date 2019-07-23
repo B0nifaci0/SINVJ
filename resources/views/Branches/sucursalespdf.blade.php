@@ -51,7 +51,8 @@
 <body>
 <div class="page-content">
     <div class="panel">
-    <h2 align="center">Productos de la Sucursal</h2>
+    <h1 align="center">Productos</h1>
+    <h2 align="center">{{$branches->name}}</h2>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
@@ -74,11 +75,11 @@
                     <td>{{ $product->id}}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->description }}</td>
-                    <td>$ {{ $product->weigth }}</td>
-                    <td>$ {{ $product->observations }}</td>
+                    <td>{{ $product->weigth }}</td>
+                    <td>{{ $product->observations }}</td>
                     <td>$ {{ $product->price }}</td>
-                    <td>$ {{ $product->category->name  }}</td>
-                    <td>$ {{ $product->line->name  }}</td>
+                    <td>{{ $product->category->name  }}</td>
+                    <td>{{ $product->line->name  }}</td>
                     <td>{{ $product->branch->name }}</td>
                     <td>{{ $product->status->name }}</td>
                     <td>{{ $product->created_at->format('m-d-Y')}}</td>

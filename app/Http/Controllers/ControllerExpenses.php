@@ -143,7 +143,7 @@ class ControllerExpenses extends Controller
         $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('expenses', 'shops','total'));
         //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
         //return $pdf->stream('gastos.pdf'); //solo visualizacion del archivo en la vista web
-         return $pdf->stream('gastos.pdf');
+         return $pdf->download('gastos.pdf');
       }
      
 }
