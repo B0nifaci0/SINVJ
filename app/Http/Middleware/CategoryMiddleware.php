@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 use App\User;
 use App\Category;
-use App\shop;
+use App\Shop;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;

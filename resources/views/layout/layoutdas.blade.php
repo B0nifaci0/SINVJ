@@ -393,8 +393,17 @@
                 <img src="../../global/portraits/1.jpg" alt="">
               </a>
               <div class="site-menubar-info">
-                <h5 class="site-menubar-user">{{$user->name}}</h5>
-                <p class="site-menubar-email">{{$user->email}}</p>
+                <h5 class="site-menubar-user">{{Auth::user()->name}}</h5>
+                <p class="site-menubar-email">{{Auth::user()->email}}</p>
+                <h6 class="site-menubar-email">@if( $user->type_user == 1 )
+                                                          <h6>Administrador</h6>
+                                                      @endif
+                                                      @if($user->type_user  == 2)
+                                                          <h6>Sub-Administrador</h6>
+                                                      @endif
+                                                      @if($user->type_user == 3)
+                                                        <h6>Colaborador</h6>
+                                                      @endif</h6>
               </div>
             </div>
           </div>
@@ -403,8 +412,8 @@
       <div class="site-menubar-body">
         <div>
           <div>
-          <!-- AA =(0)  Administrator-->
-          @if($user->type_user == 0)
+          <!-- AA =(1)  Administrator-->
+          @if(Auth::user()->type_user == 1)
             <ul class="site-menu" data-plugin="menu">
                 <li class="site-menu-item active">
                   <a class="animsition-link" href="/principal">
@@ -633,10 +642,10 @@
                   </li>
               </ul>
             @endif
-            <!-- AA =(0) END-Administrator-->
+            <!-- AA =(1) END-Administrator-->
 
-            <!-- SA =(1) Sub-Administrator-->
-            @if($user->type_user == 1)
+            <!-- SA =(2) Sub-Administrator-->
+            @if($user->type_user == 2)
 
               <ul class="site-menu" data-plugin="menu">
                   <li class="site-menu-item active">
@@ -725,10 +734,10 @@
                     </li>
                 </ul>
               @endif
-              <!-- SA =(1) END-Sub-Administrator-->
+              <!-- SA =(2) END-Sub-Administrator-->
 
-              <!-- CO =(2) Colaborador-->
-              @if($user->type_user == 2)
+              <!-- CO =(3) Colaborador-->
+              @if($user->type_user == 3)
               <ul class="site-menu" data-plugin="menu">
                   <li class="site-menu-item active">
                     <a class="animsition-link" href="/sucursal">
@@ -805,7 +814,7 @@
                   </li>
                 </ul>
               @endif
-                <!-- CO =(2) END-Colaborador-->    
+                <!-- CO =(3) END-Colaborador-->    
             </div>
           </div>
         </div>

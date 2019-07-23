@@ -87,16 +87,17 @@ class TranferProductsController extends Controller
     return redirect('/traspasos');
   }
 
-public function exportPdf(){ 
+public function exportPdfall(){ 
     $trans = TransferProduct::all();
     $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans'));
     return $pdf->download('Traspasos.pdf');
   }
 
-    public function exportPdfall($id){ 
-    $trans = TransferProduct::find($id);
-    $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans','id'));
-    return $pdf->download('Traspaso.pdf');
+    public function exportPdf($id){
+     // return $id;
+    $trans = TransferProduct::find($id)->get();
+    $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));
+    return $pdf->stream('Traspaso.pdf');
   }
 
 }

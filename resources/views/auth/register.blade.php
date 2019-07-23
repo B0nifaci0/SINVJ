@@ -64,7 +64,7 @@
             @endif
             </div>
             <div>
-              <input type="hidden" name='type_user' value='0'> 
+              <input type="hidden" name='type_user' value='1'> 
             </div>
             <!--<div class="form-group form-material floating" data-plugin="formMaterial">
                 <input type="text" class="form-control empty{{ $errors->has('name_branch') ? ' is-invalid' : '' }}" id="name_branch" name="name_branch" value="{{ old('name_branch') }}" required autofocus>

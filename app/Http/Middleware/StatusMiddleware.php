@@ -17,8 +17,9 @@ class StatusMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->type_user = User::AA) {
-            return redirect('/index');
+        // return response()->json( [Auth::user()->type_user, User::AA]);
+        if (Auth::user()->type_user != User::AA) {
+            return redirect('/home');
        }
  
        if (Auth::user()->shop->statuss->count() == 0){

@@ -24,7 +24,7 @@ class StatusRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|alpha|max:15|unique:statuss,name',
+            'name' => 'required|string|unique:statuss,name',
         ];
     }
     public function messages(){

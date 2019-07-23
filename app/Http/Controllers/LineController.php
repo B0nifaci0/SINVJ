@@ -17,7 +17,7 @@ class LineController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('Authentication');
+        //$this->middleware('Authentication');
     }
     /**
      * Display a listing of the resource. 

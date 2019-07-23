@@ -6,7 +6,7 @@ use Closure;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class Product
+class ProductMiddleware
 {
     /**
      * Handle an incoming request.

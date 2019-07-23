@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|alpha|max:20|unique:users,name',
+            'name' => 'required|string|unique:users,name',
         ];
     }
     public function messages(){

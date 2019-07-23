@@ -72,7 +72,7 @@
                     @foreach ($trans as $transfer)
                     <tr id = "row{{$transfer->id}}">
                     <td>{{ $transfer->id }}</td> 
-                          <td>{{ $transfer->product->id }}</td> 
+                          <td>{{ $transfer->product->clave }}</td> 
                           <td>{{ $transfer->product->name }}</td>
                           <td>{{ $transfer->product->weigth }}</td>
                           <td>{{ $transfer->product->category->name }}</td>

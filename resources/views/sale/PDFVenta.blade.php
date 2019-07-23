@@ -62,6 +62,7 @@ th.cantidad {
 img {
     max-width: inherit;
     width: inherit;
+    
 }
 @page {size: 7cm 190mm;
      }
@@ -70,7 +71,7 @@ img {
 <body>
         <div class="ticket">
             <img
-                src="https://image.flaticon.com/icons/png/512/131/131050.png"
+                src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d442db70-59ff-489c-a4b0-e9d66fdfdab6/d71s15s-53f5ab9d-bd41-4036-9913-37e06b069505.png/v1/fit/w_150,h_150,strp/diamante_png_by_openyourearseditions_d71s15s-150.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc5IiwicGF0aCI6IlwvZlwvZDQ0MmRiNzAtNTlmZi00ODljLWE0YjAtZTlkNjZmZGZkYWI2XC9kNzFzMTVzLTUzZjVhYjlkLWJkNDEtNDAzNi05OTEzLTM3ZTA2YjA2OTUwNS5wbmciLCJ3aWR0aCI6Ijw9NjA2In1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.SfIpPWUfzdOHhz4XcgswitZh5z9bzeYavEq_qyEJttY"
                 alt="Logotipo">
                 <p class="centrado">Joyeria Fina
                 <br>Toluca de Lerdo #1006
