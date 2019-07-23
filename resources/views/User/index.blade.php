@@ -81,13 +81,13 @@ LISTA DE  USUARIOS
                         <td>{{$user->email }}</td>
                         <!-- Definir si la tienda se tiene que mostrar o se puede omitir
                           <td>{{$user->shop->name }}</td> -->
-                        @if( $user->type_user == 0 )
+                        @if( $user->type_user == 1 )
                             <td>Administracion</td>
                         @endif
-                        @if($user->type_user  == 1)
+                        @if($user->type_user  == 2)
                             <td>Sub-Administracion</td>
                         @endif
-                        @if($user->type_user == 2)
+                        @if($user->type_user == 3)
                           <td>Colaborador</td>
                         @endif
                         @if($user->branch_id == '')

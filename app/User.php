@@ -13,11 +13,11 @@ class User extends Authenticatable
 
   // Tipos de usuario
   //AA = application administrator
-  const AA= '0';
+  const AA= '1';
   // SA = sub administrator
-  const SA = '1';
+  const SA = '2';
   // CO = collaborator
-  const CO = '2';
+  const CO = '3';
 
 
   // Tipos de suscripcion

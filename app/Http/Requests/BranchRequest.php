@@ -24,7 +24,7 @@ class BranchRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|alpha|max:15|unique:branches,name',
+            'name' => 'required|string|unique:branches,name',
         ];
     }
     public function messages(){

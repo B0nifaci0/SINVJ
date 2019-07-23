@@ -49,6 +49,11 @@
     text-align: center;
     align-content: center;
 }
+.firma {
+    font-size: 13px;
+    text-align: center;
+    align-content: center;
+}
 .hora {
     font-size: 8px;
     text-align: right;
@@ -68,21 +73,25 @@
 }
 
 
-@page {size: 8cm 100mm;
+@page {size: 8cm 120mm;
      }
    </style>
 
 <body>
         @foreach ($trans as $transfer)
-        <div class="ticket" id = "{{$transfer->id}}">>
+        <div class="ticket" id = "{{$transfer->id}}">
                 <p class="titulo">TRASPASO</p>
+                <p class="hora">{{$transfer->created_at->format('m/d/Y H:i:s')}}</p> 
                 <p class="sucursalorigen">Sucursal  Origen................{{$transfer->lastBranch->name}}</p>
                 <p class="quienlomando">Envió................{{$transfer->user->name}}</p>
                 <p class="producto">{{ $transfer->product->clave }}</p>
                 <p class="pesolinea">{{ $transfer->product->weigth }}.{{ $transfer->product->line->name }}</p>
                 <p class="sucursaldestino">Sucursal Destino...............{{$transfer->newBranch->name}}</p>
                 <p class="quienrecibe">Recibió................{{$transfer->destinationUser->name}}</p>
-                <p class="hora">{{$transfer->created_at->format('m/d/Y H:i:s')}}</p> 
+                <br>
+                
+                <p class="firma">________________
+                <br>Firma</p> 
         </div>
         @endforeach
     </body>
