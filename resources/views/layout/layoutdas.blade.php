@@ -630,6 +630,14 @@
                       </a>
                     </li>
                     </ul>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="recibo">
+                        <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                          <span class="site-menu-title">Recibo de Nomina</span>
+                        </a>
+                    </li>
+                    </ul>
                   </li>
               </ul>
             @endif

@@ -37,7 +37,7 @@ LISTA PRODUCTO
   </button>
 	</div>
 		@endif
-		<div class="page-content">
+		<div class="page-content"> 
         <!-- Panel Basic -->
     <div class="panel">
       <header class="panel-heading">

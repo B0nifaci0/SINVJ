@@ -185,6 +185,7 @@ class UserController extends Controller
          $branch = Shop::find($branch)->branches()->get();
         return view ('Payroll/nomina',compact('branch','user'));
     }
+
     public function nominasPdf( Request $request){
 
       $fech1 = Carbon::parse($request->fecini);
@@ -198,5 +199,34 @@ class UserController extends Controller
       $pdf  = PDF::loadView('User.NominasPDF', compact('users','nomina','hoy','fech1','fech2','salary'));
       // //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
       return $pdf->stream('nominas.pdf');
+    }
+
+    public function indexReceipt(){
+      $branch = Auth::user()->shop->id;
+      $user = Auth::user();
+      $branch = Shop::find($branch)->branches()->get();
+     return view ('Payroll/recibo',compact('branch','user'));
+    }
+
+    public function receiptPDF(Request $request){
+    
+      $date = Carbon::now();
+      $date = $date->format('d-m-Y');
+
+      $users = User::where("id","=",$request->user_id)->get();
+    
+      $pdf  = PDF::loadView('Payroll.receipt', compact('users','date'));
+      return $pdf->stream('recibo.pdf');
+    }
+
+    public function receiptallPDF(){
+    
+      $users = Auth::user()->shop->users;
+
+      $date = Carbon::now();
+      $date = $date->format('d-m-Y');
+    
+      $pdf  = PDF::loadView('Payroll.receipall', compact('users','date'));
+      return $pdf->stream('recibos.pdf');
     }
 }

@@ -1,6 +1,6 @@
 @extends('layout.layoutdas')
 @section('title')
-Panel Principal
+Panel Usuario Administrador
 @endsection
 
 @section('nav')
@@ -12,9 +12,6 @@ Panel Principal
 @section('content')
 <div class="page">
         <div class="page-content container-fluid">
-
-
-
 <form action="/nominaspdf">
     <div class=" col-12"> 
         <div class="panel panel-bordered">
@@ -61,9 +58,8 @@ Panel Principal
             </div>
             <div class="input-group col-3">
                 <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
-            </div>
+            </div> 
   </form>
-
 </div>
 </div>
 @endsection

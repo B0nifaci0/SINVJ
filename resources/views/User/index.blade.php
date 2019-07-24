@@ -40,12 +40,21 @@ LISTA DE  USUARIOS
     <div class="panel">
       <header class="panel-heading">
         <div class="panel-actions">
-          <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/usuarios/create'" 
-            type="button" class=" btn btn-sm small btn-floating  toggler-left 
-             btn-info waves-effect waves-light waves-round float-right"
-              data-toggle="tooltip" data-original-title="Agregar">
-             <i class="icon md-plus" aria-hidden="true"></i></button>
+          <div class="row">
+              <div class="col-md-4 col-md-offset-2">
+                  <button onclick="window.location.href='recibospdf'" 
+                  type="button" class=" btn btn-sm small btn-floating 
+                   toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                   data-toggle="tooltip" data-original-title="Generar recibos PDF">
+                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                </div>
+                <div>
+                <button onclick="window.location.href='/usuarios/create'" 
+                type="button" class=" btn btn-sm small btn-floating  toggler-left 
+                btn-info waves-effect waves-light waves-round float-right"
+                  data-toggle="tooltip" data-original-title="Agregar">
+                <i class="icon md-plus" aria-hidden="true"></i></button>
+                </div>
           </div>
         </div>
         <h3 class="panel-title">Usuarios</h3>
@@ -108,7 +117,11 @@ LISTA DE  USUARIOS
                        data-toggle="tooltip" data-original-title="Borrar">
                       <i class="icon md-delete" aria-hidden="true"></i>
                       </button>
-
+                      <!--
+                      <a href="recibopdf"<button type="button" 
+                        class="btn btn-icon btn-warning waves-effect waves-light waves-round"
+                        data-toggle="tooltip" data-original-title="Recibo PDF">
+                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button></a> -->
                     </td>
                   </tr>
                   @endforeach
