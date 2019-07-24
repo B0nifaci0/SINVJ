@@ -20,11 +20,11 @@ class ShopMiddleware
         /* if (Auth::user()->type_user == User::AA) {
              return redirect('/index');
 
-        }*/
+        }
 
         if (Auth::user()->shop == '') {
             return redirect('/tiendas/create')->with('mesage', 'Primero debes configurar tu tienda!');
-        }
+        }*/
         return $next($request);
     }
 }

@@ -44,9 +44,7 @@ LISTA DE  SUCURSALES
       <header class="panel-heading">
         <div class="panel-actions">
           <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/sucursales/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left 
-            btn-info waves-effect waves-light waves-round float-right "
-             data-toggle="tooltip" data-original-title="Agregar">
+            <button onclick="window.location.href='/sucursales/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right " data-toggle="tooltip" data-original-title="Agregar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
         </div>
@@ -151,11 +149,4 @@ $(document).ready(function() {
 @endsection
 
 @section('barcode-product')
-<script type="text/javascript">
-        $('#example').dataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-            }
-        });
-    </script>
 @endsection

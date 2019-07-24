@@ -166,12 +166,19 @@ Route::resource('tiendas','ShopController');
 
 });
 */
-
-Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware', 'ProductBranchMiddleware','ShopMiddleware','StatusMiddleware']], function () {
+//PRODUCTS
+Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware','StatusMiddleware']],function(){
   Route::get('productos', 'ProductController@index');
-});
-Route::group(['middleware' => ['auth']], function () {
+  Route::get('productos/create', 'ProductController@create');
+  Route::post('/productos', 'ProductController@store');
+  Route::get('/productos/{id}/edit', 'ProductController@edit');
+  Route::get('/productos/{id}/show', 'ProductController@show');
+  Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
+  Route::delete('/productos/{id}/delete');
 
+});
+
+Route::group(['middleware' => ['auth']],function () {
   //SUCURSALES
   Route::get('sucursales/create', 'BranchController@create');
   Route::get('/sucursales', 'BranchController@index');
@@ -200,31 +207,23 @@ Route::group(['middleware' => ['auth']], function () {
   Route::delete('/categorias/{id}/delete');
 
   //ESTATUS
-  Route::get('status/create', 'StatusController@create');
+  /*Route::get('status/create', 'StatusController@create');
   Route::get('/status', 'StatusController@index');
   Route::post('/status', 'StatusController@store');
   Route::get('/status/{id}/edit', 'StatusController@edit');
   Route::get('/status/{id}/show', 'StatusController@show');
   Route::put('/status/{id}/update', 'StatusController@update')->name('status.update');
   Route::delete('/status/{id}/delete');
-
-  //PRODUCTOS
-  Route::get('productos/create', 'ProductController@create');
-  Route::get('/productos', 'ProductController@index');
-  Route::post('/productos', 'ProductController@store');
-  Route::get('/productos/{id}/edit', 'ProductController@edit');
-  Route::get('/productos/{id}/show', 'ProductController@show');
-  Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
-  Route::delete('/productos/{id}/delete');
-
+ 
+ 
   //USUARIOS
-  Route::get('usuarios/create', 'UserController@create');
+   Route::get('usuarios/create', 'UserController@create');
   Route::get('/usuarios', 'UserController@index');
   Route::post('/usuarios', 'UserController@store');
   Route::get('/usuarios/{id}/edit', 'UserController@edit');
   Route::get('/usuarios/{id}/show', 'UserController@show');
   Route::put('/usuarios/{id}/update', 'UserController@update')->name('usuarios.update');
-  Route::delete('/usuarios/{id}/delete');
+  Route::delete('/usuarios/{id}/delete');*/
 
 
   Route::get('/grupos', 'ShopGroupsController@index');
