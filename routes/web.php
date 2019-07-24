@@ -170,7 +170,7 @@ Route::resource('tiendas','ShopController');
 Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware', 'ProductBranchMiddleware','ShopMiddleware','StatusMiddleware']], function () {
   Route::get('productos', 'ProductController@index');
 });
-Route::group(['middleware' => ['auth']],function () {
+Route::group(['middleware' => ['auth']], function () {
 
   //SUCURSALES
   Route::get('sucursales/create', 'BranchController@create');
@@ -227,6 +227,11 @@ Route::group(['middleware' => ['auth']],function () {
   Route::delete('/usuarios/{id}/delete');
 
 
+  Route::get('/grupos', 'ShopGroupsController@index');
+  Route::get('/grupos/crear', 'ShopGroupsController@create');
+  Route::post('/grupos', 'ShopGroupsController@store');
+  Route::get('/grupos/invitacion', 'ShopGroupsController@groupJoinForm');
+  Route::post('/grupos/invitacion', 'ShopGroupsController@groupJoin');
 
 });
 

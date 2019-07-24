@@ -15,12 +15,12 @@ LISTA PRODUCTO
 
 	@if (session('mesage'))
 	<div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{ session('mesage') }}</strong>
+    <strong>{{ session('mesage') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+      <span aria-hidden="true">&times;</span>
+    </button>
 	</div>
-		@endif
+  @endif
     @if (session('mesage-update'))	
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage-update') }}</strong>
