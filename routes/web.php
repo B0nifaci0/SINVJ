@@ -47,6 +47,7 @@ Route::get('lineasexc', 'LineController@exportExcel');
 
 //Taspasos
 Route::resource('traspasos', 'TranferProductsController');
+Route::resource('traspasosAA', 'TrasferUserController');
 //Route::get('traspasospdf', 'TranferProductsController@exportPdf');
 
 //Traspaso id PDF
@@ -207,7 +208,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::delete('/categorias/{id}/delete');
 
   //ESTATUS
-  /*Route::get('status/create', 'StatusController@create');
+  Route::get('status/create', 'StatusController@create');
   Route::get('/status', 'StatusController@index');
   Route::post('/status', 'StatusController@store');
   Route::get('/status/{id}/edit', 'StatusController@edit');
@@ -223,7 +224,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::get('/usuarios/{id}/edit', 'UserController@edit');
   Route::get('/usuarios/{id}/show', 'UserController@show');
   Route::put('/usuarios/{id}/update', 'UserController@update')->name('usuarios.update');
-  Route::delete('/usuarios/{id}/delete');*/
+  Route::delete('/usuarios/{id}/delete');
 
 
 

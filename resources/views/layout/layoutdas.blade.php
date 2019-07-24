@@ -395,13 +395,13 @@
               <div class="site-menubar-info">
                 <h5 class="site-menubar-user">{{Auth::user()->name}}</h5>
                 <p class="site-menubar-email">{{Auth::user()->email}}</p>
-                <h6 class="site-menubar-email">@if( $user->type_user == 1 )
+                <h6 class="site-menubar-email">@if(Auth::user()->type_user == 1 )
                                                           <h6>Administrador</h6>
                                                       @endif
-                                                      @if($user->type_user  == 2)
+                                                      @if(Auth::user()->type_user  == 2)
                                                           <h6>Sub-Administrador</h6>
                                                       @endif
-                                                      @if($user->type_user == 3)
+                                                      @if(Auth::user()->type_user == 3)
                                                         <h6>Colaborador</h6>
                                                       @endif</h6>
               </div>
@@ -576,7 +576,7 @@
                     </a>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
-                          <a class="animsition-link" href="/traspasos">
+                          <a class="animsition-link" href="/traspasosAA">
                           <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Traspasos</span>
                         </a>
