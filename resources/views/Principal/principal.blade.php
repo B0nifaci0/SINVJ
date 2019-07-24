@@ -14,6 +14,12 @@ Panel Principal
 <div class="page">
   <div class="page-content container-fluid">
     <div class="row" data-plugin="matchHeight" data-by-row="true">
+      <div class="col-md-12">
+        <a class="animsition-link" href="/tiendas">
+            <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+              <span class="site-menu-title">Actualizar tienda</span>
+            </a>
+      </div>
       <div class="col-xl-3 col-md-6">
         <!-- Widget Linearea One-->
         <div class="card card-shadow" id="widgetLineareaOne">
@@ -85,6 +91,7 @@ Panel Principal
           </div>
         </div>
         <!-- End Widget Linearea Four -->
+
         </div>
       </div>
     </div>

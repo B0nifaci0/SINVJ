@@ -22,8 +22,9 @@ class ShopController extends Controller
    */
   public function index()
   {
-    $shops = Shop::where('user_id', Auth::user()->id)->get();
-    return view('shop/index ', ['shops' => $shops]);
+    $user = Auth::user();
+    $shops = Auth::user()->shop()->get();
+    return view('Shop/index ', compact('shops','user'));
   }
 
   /**
@@ -83,9 +84,10 @@ class ShopController extends Controller
    */
   public function edit($id)
   {
-    $shop = Shop::find($id);
-    $states = State::all();
-    return view('shop/edit', compact('shop', 'states'));
+      $user = Auth::user();
+      $shop = Shop::find($id);
+      $states = State::all();
+      return view('Shop/edit', compact('shop', 'states','user'));
   }
 
   /**
@@ -95,7 +97,7 @@ class ShopController extends Controller
    * @param  \App\Shop  $shop
    * @return \Illuminate\Http\Response
    */
-  public function update(ShopsValidate $request, $id)
+  public function update(Request $request, $id)
   { 
        $shop = Shop::findOrFail($id);
 
@@ -111,12 +113,10 @@ class ShopController extends Controller
     }
 
        $shop->name = $request->name;
-       $shop->web_site = $request->web_site;
        $shop->description = $request->description;
        $shop->email = $request->email;
        $shop->phone_number = $request->phone_number;
-       $shop->municipality_id = $request->municipality_id;
-      $shop->save();
+       $shop->save();
     //return $request->all();
     return redirect('/tiendas')->with('mesage-update', 'La tienda se ha modificoo exitosamente!');;
   }
