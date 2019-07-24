@@ -18,9 +18,12 @@ class CreateShopsTable extends Migration
             $table->string('name', 15)->unique();
             $table->string('image')->default('NULL');
             $table->string('description')->default('NULL');
-            //asignamos la llave forane
             $table->string('email')->default('NULL');
             $table->string('phone_number')->default('NULL');
+
+            $table->integer('shop_group_id')->unsigned()->nullable();
+            $table->foreign('shop_group_id')->references('id')->on('shop_groups');
+
             $table->integer('municipality_id')->unsigned();
             $table->foreign('municipality_id')->references('id')->on('municipalities');
             $table->integer('state_id')->unsigned();
