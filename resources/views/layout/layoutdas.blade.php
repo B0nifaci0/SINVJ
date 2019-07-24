@@ -606,7 +606,7 @@
                     </li>
                     </ul>
                   </li> 
-                  </ul>
+                  </ul> 
                 </li>
                   <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
@@ -624,7 +624,7 @@
                     </ul>
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
-                        <a class="animsition-link" href=" ">
+                        <a class="animsition-link" href="nomina">
                         <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
                           <span class="site-menu-title">Reporte de Nomina</span>
                       </a>

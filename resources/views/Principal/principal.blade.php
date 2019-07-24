@@ -137,9 +137,9 @@ Panel Principal
                   </div>
             </div>
         </div>
-Termina Reporte De Nomina -->
+Termina Reporte De Nomina --> 
         <!-- Formulario de prueba-->
-        <form action="/nominaspdf">
+        <!--<form action="/nominaspdf">
           <div class=" col-12"> 
               <div class="panel panel-bordered">
                 <div class="panel-heading">
@@ -186,7 +186,7 @@ Termina Reporte De Nomina -->
                   <div class="input-group col-3">
                       <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
                   </div>
-        </form>
+        </form> -->
 </div>
 </div>
           <!-- Termina formulario de Prueba -->

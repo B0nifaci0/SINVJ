@@ -179,6 +179,12 @@ class UserController extends Controller
       //return redirect('/usuarios')->with('mesage', 'El usuario  se ha activado exitosamente!');
 
     }
+    public function indexNomina(){
+         $branch = Auth::user()->shop->id;
+         $user = Auth::user();
+         $branch = Shop::find($branch)->branches()->get();
+        return view ('Payroll/nomina',compact('branch','user'));
+    }
     public function nominasPdf( Request $request){
 
       $fech1 = Carbon::parse($request->fecini);

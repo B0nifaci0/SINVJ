@@ -25,7 +25,7 @@ class PrincipalController extends Controller
         return view ('Principal/principal',compact('branch','user'));
     }
 
-    public function exportPdf(){
+    public function exportPdf(){ 
         $total = User::sum('salary'); 
         $branch = Auth::user()->shop->id;
         $user = Auth::user();
