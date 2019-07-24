@@ -56,32 +56,32 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
+                  <th>Linea</th>
                   <th>Clave</th>
-                  <th>Nombre</th>
-                  <th>Descripcion</th>
                   <th>Peso</th>
+                  <th>Descripcion</th>
+                  <th>Categoria</th>
+                  <th>Estatus</th>
                   <th>Observaciones</th>
                   <th>Precio</th>
-                  <th>Categoria</th>
-                  <th>Linea</th>
                   <th>Sucursal</th>
-                  <th>Estatus</th>
+                  <th>Nombre</th>
                   <th>Fecha</th>
                 </tr>
               </thead>  
               <tbody>
               @foreach ($products as  $product)
                   <tr id ="row{{$product->id}}">
-                    <td>{{ $product->id}}</td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->description }}</td>
+                    <td>{{ $product->line->name  }}</td>
+                    <td>{{ $product->clave}}</td>
                     <td>{{ $product->weigth }}</td>
+                    <td>{{ $product->description }}</td>
+                    <td>{{ $product->category->name  }}</td>
+                    <td>{{ $product->status->name }}</td>
                     <td>{{ $product->observations }}</td>
                     <td>$ {{ $product->price }}</td>
-                    <td>{{ $product->category->name  }}</td>
-                    <td>{{ $product->line->name  }}</td>
                     <td>{{ $product->branch->name }}</td>
-                    <td>{{ $product->status->name }}</td>
+                    <td>{{$product->name}}</td>
                     <td>{{ $product->created_at->format('m-d-Y')}}</td>
                   </tr>
                   @endforeach
