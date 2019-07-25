@@ -50,7 +50,7 @@ LISTA DE  CATEGORIA
         <h3 class="panel-title">Categorías</h3>
       </header>
       <div class="panel-body">
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table id='categorias'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                   <th>Clave</th>
@@ -153,3 +153,6 @@ $(document).ready(function() {
 
 
 
+@section('barcode-product')
+
+@endsection

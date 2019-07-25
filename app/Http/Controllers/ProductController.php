@@ -20,16 +20,17 @@ class ProductController extends Controller
 {
 
   public function __construct(){
-    $this->middleware('Authentication');
-    $this->middleware('shop');
-    $this->middleware('BranchMiddleware');
-    $this->middleware('CategoryMiddleware');
-    $this->middleware('LineMiddleware');
-    $this->middleware('StatusMiddleware'); 
+    // $this->middleware('Authentication');
+    // $this->middleware('shop');
+    // $this->middleware('BranchMiddleware');
+    // $this->middleware('CategoryMiddleware');
+    // $this->middleware('LineMiddleware');
+    // $this->middleware('StatusMiddleware'); 
   }
-
+/** FUNCIONES PARA CRUD DE PRODUCTO */
   public function index()
   {
+    $user = Auth::user();
    /* $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
     $categories = Category::all();
     $user = Auth::user();
@@ -38,7 +39,6 @@ class ProductController extends Controller
     $statuses = Status::all();
     return view('product/index', compact('user','products', 'categories','lines','statuses')); */
       
-      $user = Auth::user();
       $shop_id = $user->shop->id;
       if($user->type_user == User::CO) {
         $products = Product::where('branch_id', $user->branch_id)->get();
@@ -57,7 +57,7 @@ class ProductController extends Controller
       $status = Auth::user()->shop->id;
       $statuses = Shop::find($status)->statuss()->get();
 
-      return view('product/index', compact('user', 'categories','lines','shops','statuses','products'));
+      return view('product/index', compact('user','categories','lines','shops','statuses','products'));
   }
     
     public function indexCOP()
@@ -72,7 +72,7 @@ class ProductController extends Controller
         
         $user = Auth::user();
         $shop_id = $user->shop->id;
-        if($user->type_user == User::AA) {
+        if($user->type_user == User::CO) {
           $products = Product::where('branch_id', $user->branch_id)->get();
         } else {
           $products = Shop::find($shop_id)->products()->get();
@@ -104,7 +104,7 @@ class ProductController extends Controller
         
         $user = Auth::user();
         $shop_id = $user->shop->id;
-        if($user->type_user == User::AA) {
+        if($user->type_user == User::CO) {
           $products = Product::where('branch_id', $user->branch_id)->get();
           
         } else {
@@ -244,7 +244,6 @@ class ProductController extends Controller
     }
 
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -254,9 +253,11 @@ class ProductController extends Controller
         public function destroy($id)
         {
           Product::destroy($id);
-        // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
-      
+        // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');    
         }
+/**TERMINA FUNCIONES DE CRUD DE PRODUCTOS */
+
+/**FUNCIONES DE REPORTES DE PDF */
     public function exportPdf(){ 
         $product = Auth::user()->shop->id;
         $products = Shop::find($product)->products()->get();
@@ -273,7 +274,25 @@ class ProductController extends Controller
         $status = Auth::user()->shop->id;
         $statuses = Shop::find($status)->statuss()->get();
       $pdf  = PDF::loadView('product.pdf', compact('user', 'categories','lines','shops','statuses','products'));
-      return $pdf->download('product.pdf');
+      return $pdf->download('Productos.pdf');
     }
+
+    /**
+     * Funcion para la vista del Reporte por Producto por Sucursal status
+     * 
+     ***/
+
+     public function reportProduct(){
+        $idshop = Auth::user()->shop->id;
+         $user = Auth::user();
+         $branch = Shop::find($idshop)->branches()->get();
+         $status = Shop::find($idshop)->statuss()->get();
+         $line = Shop::find($idshop)->lines()->get();
+        $category = Auth::user()->shop->id;  
+        $categories = Shop::find($category)->categories()->get();
+         //return $status;
+    
+      return view('product.Reports.reportproduct',compact('branch','user','status','line','categories'));
+     }
 
 }

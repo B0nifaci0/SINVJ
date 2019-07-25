@@ -49,7 +49,7 @@ LISTA DE  GASTOS
         <h3 class="panel-title">Gastos</h3>
       </header>
       <div class="panel-body">
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table id='example' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                   <th>Clave</th>
@@ -153,4 +153,7 @@ $(document).ready(function() {
 @endsection
 
 @section('footer')
+@endsection
+
+@section('barcode-product')
 @endsection

@@ -25,10 +25,7 @@ class TranferProductsController extends Controller
     public function index()
        {
         $user = Auth::user();
-        $trans = TransferProduct::with('user')
-          ->with('newBranch')
-          ->where('new_branch_id', $user->branch_id)
-          ->get();
+        $trans = TransferProduct::all();
           // return ['new_branch_id', $user->branch_id];
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
@@ -46,6 +43,38 @@ class TranferProductsController extends Controller
         return view('transfer/index', compact('branches','user','trans'));
         
        }
+       public function indexAA()
+       {
+         
+        $user = Auth::user();
+        $trans = TransferProduct::all();
+        
+          // return ['new_branch_id', $user->branch_id];
+         //return response()->json($trans);
+         //$status = Auth::user()->shop->id;
+        //$statuses = Shop::find($status)->statuss()->get();
+        /*$users=Auth::user()->shop->id;
+        $trans = Shop::find('users')->trans();
+        return $trans;
+        if($trans == 0){
+          return redirect('/traspasos/create');
+        }else{
+        }*/
+        
+        //return $transs;
+        $branches=Branch::all();
+        return view('transfer/TrasferUser/index', compact('branches','user','trans'));
+        
+       }
+       public function createAA()
+       {
+        $user = Auth::user();
+        $users = User::where('id', '!=', $user->id)->get();
+        $products = Product::where('branch_id', $user->branch_id)->get();
+        $branches = Branch::all();
+        return view('transfer/TrasferUser/add', compact('branches','users','products'));
+       }
+       
 
        public function create()
        {
@@ -72,6 +101,8 @@ class TranferProductsController extends Controller
         return view('transfer/add', compact('branches','users','products','user'));
        }
 
+       
+
        public function store(Request $request)
        {
           $user = Auth::user();
@@ -90,10 +121,18 @@ class TranferProductsController extends Controller
     return redirect('/traspasos');
   }
 
-public function exportPdf(){ 
+  
+public function exportPdfall(){ 
     $trans = TransferProduct::all();
-    $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));
+    $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans'));
     return $pdf->download('Traspasos.pdf');
+  }
+
+    public function exportPdf($id){
+     // return $id;
+    $trans = TransferProduct::find($id)->get();
+    $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));
+    return $pdf->stream('Traspaso.pdf');
   }
 
 }

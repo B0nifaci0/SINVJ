@@ -95,3 +95,30 @@ LISTA TIENDAS
     <!-- End Panel Basic -->
 @endsection
 
+
+@section('delshop')
+<script type="text/javascript">
+$(".delete").click(function() {
+   var id = $(this).attr("alt");
+   alertify.confirm("¿Seguro que desea eliminar este registro?",
+     function (e) {
+     if (e) {
+       $.ajax({
+         method: 'DELETE',
+         url: '/tiendas/' + id,
+         success: function(){
+           $("#row" + id).remove();
+           alertify.success("Se ha <strong>eliminado</strong> el registro" + id);
+         },
+         error: function(){
+           alertify.error("<strong>Ha ocurrido un error en la eliminación</strong>");
+         }
+       });
+     }
+  });
+});
+
+</script>
+@endsection
+@section('barcode-product')
+@endsection

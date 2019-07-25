@@ -24,8 +24,9 @@ class LineRequest extends FormRequest
     public function rules()
     {
          return [
-            'name' => 'required|alpha|max:15|unique:lines,name',
-            'price' => 'required|numeric',
+            'name' => 'required|string',
+            'purchase_price' => 'required|numeric',
+            'sale_price' => 'required|numeric',
         ];
     }
 
@@ -33,7 +34,9 @@ class LineRequest extends FormRequest
       public function messages(){
         return[
             'name.required' => 'El nombre es requerido y con solo 15 caracteres',
-            'price.required' => 'El precio es requerido',
+            'purchase_price.required' => 'El precio es requerido',
+            'sale_price' => 'El precio es requerido',
+
             
         ];
     }

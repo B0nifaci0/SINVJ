@@ -6,6 +6,8 @@ use App\Sale;
 use App\Product;
 use App\Line;
 use App\User;
+use App\Branch;
+use App\Parcial;
 use PDF;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaleRequest;
@@ -15,7 +17,7 @@ class SaleController extends Controller
 { 
     public function __construct()
       {
-          $this->middleware('Authentication');
+          //$this->middleware('Authentication');
       }
     /**
      * Display a listing of the resource.
@@ -77,7 +79,14 @@ class SaleController extends Controller
         $sale->save();
 
     return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
+    \App\Parcial::create([
+      'parcial_pay' => $request['parcial_pay'],
+      'total_pay' => $request['total_pay'],
+  ]);
+
     }
+
+    
 
     /**
      * Display the specified resource.
@@ -137,9 +146,12 @@ class SaleController extends Controller
    
 }
 public function exportPdf(){ 
+  $user = Auth::user();
   $sales = Sale::all();
-  $pdf  = PDF::loadView('sale.PDFVenta', compact('sales'));
-  return $pdf->download('venta.pdf');
+  $shops = Auth::user()->shop()->get();
+  $branches = Branch::where('id', '!=', $user->branch_id)->get(); 
+  $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops'));
+  return $pdf->stream('venta.pdf');
 }
 
 }

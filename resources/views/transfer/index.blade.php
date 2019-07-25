@@ -59,7 +59,7 @@ TRASFERENCIAS
         <h3 class="panel-title">Traspasos</h3>
       </header>
       <div class="panel-body">
-            <table class="table table-hover dataTable table-striped w-full">
+            <table id='example'  class="table table-hover dataTable table-striped w-full">
               <thead>
                 <tr>
                  <th>id</th>
@@ -75,6 +75,7 @@ TRASFERENCIAS
                  <th>Fecha</th>
                  <th>Status</th>
                  <th>Opciones</th>
+                 <th>Reporte</th>
                 </tr>
               </thead>
               <tfoot>
@@ -92,26 +93,33 @@ TRASFERENCIAS
                  <th>Fecha</th>
                  <th>Status</th>
                  <th>Opciones</th>
+                 <th>Reporte</th>
                 </tr> 
               </tfoot>  
               <tbody>
               @foreach  ($trans as $transfer)
                     <tr id = "row{{$transfer->id}}">
                       <td>{{ $transfer->id }}</td> 
-                      <td>{{ $transfer->product->id }}</td> 
+                      <td>{{ $transfer->product->clave }}</td> 
                       <td>{{ $transfer->product->name }}</td>
                       <td>{{ $transfer->product->weigth }}</td>
                       <td>{{ $transfer->product->category->name }}</td>
                       <td>{{ $transfer->product->line->name }}</td>
-                      <td>{{$transfer->newBranch->name}}</td>
-                      <td>{{$transfer->destinationUser->name}}</td>
                       <td>{{$transfer->lastBranch->name}}</td>
                       <td>{{$transfer->user->name}}</td>
+                      <td>{{$transfer->newBranch->name}}</td>
+                      <td>{{$transfer->destinationUser->name}}</td>
                       <td>{{$transfer->created_at->format('m-d-Y')}}</td>
                       <td>{{ $transfer->status_product }}</td>
                       <td>
                          <button class="btn btn-primary accept" alt="{{ $transfer->id }}">Aceptar</button>
                          <button class="btn btn-warning cancel" alt="{{ $transfer->id }}">Rechazar</button>
+                      </td>
+                      <td>    
+                      <a href="traspasopdf/{{$transfer->id}}"<button type="button" 
+                          class="btn btn-icon btn-danger waves-effect waves-light"
+                          data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button></a>                
                       </td>
                     </tr>  
                     @endforeach
@@ -189,3 +197,12 @@ $(document).ready(function(){
 </script>
 @endsection
 
+@section('barcode-product')
+<script type="text/javascript">
+        $('#example').dataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            }
+        });
+    </script>
+@endsection

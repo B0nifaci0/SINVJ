@@ -16,7 +16,8 @@ class CreateLinesTable extends Migration
         Schema::create('lines', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 15)->unique();
-            $table->string('price');
+            $table->string('purchase_price');
+            $table->string('sale_price');
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
             $table->softDeletes();

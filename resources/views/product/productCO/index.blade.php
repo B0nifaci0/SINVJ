@@ -61,7 +61,7 @@ LISTA PRODUCTO
         <h3 class="panel-title">Productos</h3>
       </header>
       <div class="panel-body">
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
             {{ csrf_field() }}
 
@@ -126,7 +126,15 @@ LISTA PRODUCTO
 @endsection
 
 @section('barcode-product')
-
+<script>
+$(document).ready(function() {
+        $('#example').dataTable( {
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            }
+        });
+    });
+    </script>
 @endsection
 
 @section('delete-productos')

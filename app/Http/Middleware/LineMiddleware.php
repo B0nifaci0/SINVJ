@@ -21,6 +21,7 @@ class LineMiddleware
             return redirect('/index');
        }*/
  
+       // return response()->json([Auth::user()->shop->lines->count(), 1]);
        if (Auth::user()->shop->lines->count() == 0){
            return redirect('/lineas/create')->with('mesage', 'Primero debes configurar tu linea!');
        }else{

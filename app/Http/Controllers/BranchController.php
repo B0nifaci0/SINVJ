@@ -15,7 +15,7 @@ class BranchController extends Controller
 {
 
      public function __construct(){
-        $this->middleware('Authentication');
+        //$this->middleware('Authentication');
 
     }
     /**

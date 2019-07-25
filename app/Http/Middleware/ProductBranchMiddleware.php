@@ -25,7 +25,7 @@ class ProductBranchMiddleware
  
        if (Auth::user()->shop->branches->count() == 0) {
     
-        return redirect('/sucursale/create');
+        return redirect('/sucursales/create');
 
        }
     

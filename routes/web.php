@@ -25,7 +25,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('tiendas','ShopController');
 
 
-Route::resource('tiendas','ShopController');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('test', 'BranchController@test');
@@ -38,26 +37,21 @@ Route::group(['middleware' => ['auth']], function () {
   
 });
 
-//Lineas
-Route::resource('lineas', 'LineController');
+
 
 Route::get('lineaspdf', 'LineController@exportPdf');
 
 Route::get('lineasexc', 'LineController@exportExcel');
 
-//categorias
-Route::resource('categorias', 'CategoryController');
 
-//Status
-Route::resource('status', 'StatusController');
 
 //Taspasos
 Route::resource('traspasos', 'TranferProductsController');
-Route::get('traspasospdf', 'TranferProductsController@exportPdf');
+Route::resource('traspasosAA', 'TrasferUserController');
+//Route::get('traspasospdf', 'TranferProductsController@exportPdf');
 
-//Taspasos Admin
-Route::resource('traspasosadmin', 'TrasferUserController');
-Route::get('traspasosadminpdf', 'TrasferUserController@exportPdf');
+//Traspaso id PDF
+Route::get('traspasopdf/{id}', 'TranferProductsController@exportPdf')->name('traspasopdf');
 
 //Ventas
 Route::resource('ventas', 'SaleController');
@@ -67,17 +61,12 @@ Route::get('ventasCO', 'SaleController@indexCO');
 //Pagos 
 Route::resource('pagos', 'PaymentsController');
 //Productos
-Route::resource('productos', 'ProductController');
 Route::get('productospdf', 'ProductController@exportPdf');
 
 //Ventas PDF
 Route::get('ventaspdf', 'SaleController@exportPdf');
 
-//Usuarios
-Route::resource('usuarios', 'UserController');
 
-//Sucursales
-Route::resource('sucursales', 'BranchController');
 
 // Sucursal CO
 Route::get('sucursal', 'BranchController@indexCo');
@@ -111,6 +100,7 @@ Route::get('sucursales/{id}/sucursalespdf', 'TestController@exportPdf');
 
 //Sucursal Producto PDF
 //Route::get('sucursalpdf/{id}', 'BranchProductsController@exportPdf')->name('sucursalpdf');
+
 
 //Productod AA
 Route::get('productoAA/{id}/', 'ProductController@soft');
@@ -155,4 +145,102 @@ Route::get('recibo', 'UserController@indexReceipt');
 Route::get('recibopdf', 'UserController@receiptPDF');
 Route::get('recibospdf', 'UserController@receiptallPDF');
 
+/*
+Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware', 'ProductBranchMiddleware','ShopMiddleware','StatusMiddleware']], function () {
+
+//Usuarios
+Route::resource('usuarios', 'UserController');
+
+//Sucursales
+Route::resource('sucursales', 'BranchController');
+
+
+//Lineas
+Route::resource('lineas', 'LineController');
+
+//categorias
+Route::resource('categorias', 'CategoryController');
+
+//Status
+Route::resource('status', 'StatusController');
+
+//Productos
+Route::resource('productos',  'ProductController');
+
+//Shop
+Route::resource('tiendas','ShopController');
+
+
+});
+*/
+//PRODUCTS
+Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware','StatusMiddleware']],function(){
+Route::get('productos', 'ProductController@index');
+Route::get('productos/create', 'ProductController@create');
+Route::post('/productos', 'ProductController@store');
+Route::get('/productos/{id}/edit', 'ProductController@edit');
+Route::get('/productos/{id}/show', 'ProductController@show');
+Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
+Route::delete('/productos/{id}/delete');
+
+});
+
+Route::group(['middleware' => ['auth']],function () {
+  //SUCURSALES
+  Route::get('sucursales/create', 'BranchController@create');
+  Route::get('/sucursales', 'BranchController@index');
+  Route::post('/sucursales', 'BranchController@store');
+  Route::get('/sucursales/{id}/edit', 'BranchController@edit');
+  Route::get('/sucursales/{id}/show', 'BranchController@show');
+  Route::put('/sucursales/{id}/update', 'BranchController@update')->name('sucursales.update');
+  Route::delete('/sucursales/{id}/delete');
+
+  //LINEAS
+  Route::get('lineas/create', 'LineController@create');
+  Route::get('/lineas', 'LineController@index');
+  Route::post('/lineas', 'LineController@store');
+  Route::get('/lineas/{id}/edit', 'LineController@edit');
+  Route::get('/lineas/{id}/show', 'LineController@show');
+  Route::put('/lineas/{id}/update', 'LineController@update')->name('lineas.update');
+  Route::delete('/lineas/{id}/delete');
+
+  //CATEGORIAS
+  Route::get('categorias/create', 'CategoryController@create');
+  Route::get('/categorias', 'CategoryController@index');
+  Route::post('/categorias', 'CategoryController@store');
+  Route::get('/categorias/{id}/edit', 'CategoryController@edit');
+  Route::get('/categorias/{id}/show', 'CategoryController@show');
+  Route::put('/categorias/{id}/update', 'CategoryController@update')->name('categorias.update');
+  Route::delete('/categorias/{id}/delete');
+
+  //ESTATUS
+  Route::get('status/create', 'StatusController@create');
+  Route::get('/status', 'StatusController@index');
+  Route::post('/status', 'StatusController@store');
+  Route::get('/status/{id}/edit', 'StatusController@edit');
+  Route::get('/status/{id}/show', 'StatusController@show');
+  Route::put('/status/{id}/update', 'StatusController@update')->name('status.update');
+  Route::delete('/status/{id}/delete');
+ 
+ 
+  //USUARIOS
+  Route::get('usuarios/create', 'UserController@create');
+  Route::get('/usuarios', 'UserController@index');
+  Route::post('/usuarios', 'UserController@store');
+  Route::get('/usuarios/{id}/edit', 'UserController@edit');
+  Route::get('/usuarios/{id}/show', 'UserController@show');
+  Route::put('/usuarios/{id}/update', 'UserController@update')->name('usuarios.update');
+  Route::delete('/usuarios/{id}/delete');
+
+
+  Route::get('/grupos', 'ShopGroupsController@index');
+  Route::get('/grupos/crear', 'ShopGroupsController@create');
+  Route::post('/grupos', 'ShopGroupsController@store');
+  Route::get('/grupos/invitacion', 'ShopGroupsController@groupJoinForm');
+  Route::post('/grupos/invitacion', 'ShopGroupsController@groupJoin');
+
+  /**Reportes Rutas y Vistas */
+  Route::get('/reportes-productos','ProductController@reportProduct');
+
+});
 

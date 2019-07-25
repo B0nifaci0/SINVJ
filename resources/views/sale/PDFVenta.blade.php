@@ -4,81 +4,209 @@
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <title>Reporte de Ventas</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+     </head>
    <style>
-   @media print {
-     html,body{
-        font-size: 9.5pt;
-        margin: 0;
-        padding: 0;
-     }.page-break {
-       page-break-before:always;
-       width: auto;
-       margin: auto;
-      }
-    }
-    .page-break{
-      width: 980px;
-      margin: 0 auto;
-    }
-     .sale-head{
-       margin: 40px 0;
-       text-align: center;
-     }.sale-head h1,.sale-head strong{
-       padding: 10px 20px;
-       display: block;
-     }.sale-head h1{
-       margin: 0;
-       border-bottom: 1px solid #212121;
-     }.table>thead:first-child>tr:first-child>th{
-       border-top: 1px solid #000;
-      }
-      table thead tr th {
-       text-align: center;
-       border: 1px solid #ededed;
-     }table tbody tr td{
-       vertical-align: middle;
-     }.sale-head,table.table thead tr th,table tbody tr td,table tfoot tr td{
-       border: 1px solid #212121;
-     }.sale-head h1,table thead tr th,table tfoot tr td{
-       background-color: #f8f8f8;
-     }tfoot{
-       color:#000;
-       text-transform: uppercase;
-       font-weight: 500;
+   {
+    font-size: 8px;
+    font-family: 'Times New Roman';
+}
+
+td,
+th,
+tr,
+table {
+    border-collapse: collapse;
+}
+
+td.sucursal{
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
+}
+td.nota{
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
+}
+td.fecha{
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
+}
+td.hora{
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
+}
+td.cliente {
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
+}
+td.vendedor {
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
+}
+
+
+td.sucursal1 {
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
+}
+
+td.nota1 {
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
+}
+
+td.fecha1 {
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
+}
+
+td.hora1 {
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
+}
+
+
+td.cliente1{
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
+}
+td.vendedor1{
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
+}
+
+th.clave{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
+th.producto{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
+th.precio{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
+td.clave1{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
+td.producto1{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
+td.precio1{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
+
+.centrado {
+    text-align: center;
+    align-content: center;
+}
+
+.ticket {
+    width: 200px;
+    max-width: 200px;
+}
+
+img {
+    width: center ;
+    max-width: center;
+    text-align: center;
+}
+@page {size: 8cm 190mm;
      }
    </style>
-</head>
+
 <body>
-<div class="page-content">
-    <div class="panel">
-    <h2 align="center">Venta</h2>
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-              <thead>
-                <tr>
-                  <th>Clave</th>
-                  <th>Nombre del cliente</th>
-                  <th>Teléfono</th>
-                  <th>Productos</th>
-                  <th>Total a pagar</th>
-                  <th>Fecha</th>
-                </tr>
-              </thead>  
-              <tbody>
-              @foreach ($sales as  $sale)
-                  <tr id ="row{{$sale->id}}">
-                    <td>{{ $sale->id}}</td>
-                    <td>{{ $sale->customer_name }}</td>
-                    <td>{{ $sale->telephone }}</td>
-                    <td>{{ $sale->product->name }}</td>
-                    <td>{{ $sale->price }}</td>
-                    <td>{{ $sale->created_at->format('m-d-Y')}}</td>
-                  </tr>
-                  @endforeach
-              </tbody>
-            </table>
-          </div>
-          </div>
+        <div class="ticket">
+            <img
+                src="https://images.vexels.com/media/users/3/151701/isolated/preview/b46f3c41fa0350842e75ac9450c64789-icono-de-golpe-de-diamante-by-vexels.png"
+                alt="Logotipo">
+                <p class="centrado">@foreach ($shops as  $shop) 
+                {{ $shop->name}}
+                <br>Toluca de Lerdo #1006</p>
+                @endforeach
+                <br>
+            <table>
+                <tbody>
+                    <tr>
+                    <td class="sucursal">Sucursal:</td>
+                    @foreach ($branches as  $branch)
+                        <td class="sucursal1">{{ $branch->name}}</td>
+                        @endforeach
+                    </tr>
+                    @foreach ($sales as  $sale)
+                    <tr>
+                        <td class="nota">Nota no.:</td>
+                        <td class="nota1">{{ $sale->id}}</td>
+                    </tr>
+                    <tr>
+                        <td class="fecha">Fecha:</td>
+                        <td class="fecha1">{{ $sale->created_at->format('m/d/Y')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="hora">Hora:</td>
+                        <td class="hora1">{{ $sale->created_at->format('H:i:s')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="cliente">Cliente:</td>
+                        <td class="cliente1">{{ $sale->customer_name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="vendedor">Vendedor:</td>
+                        <td class="vendedor1">{{Auth::user()->name}}</td>
+                    </tr>
+                    </tbody>
+                   </table>
+                   <br>
+                   <table>
+                    <tbody>
+                      <tr>
+                        <th class="clave">Clave</th>
+                        <th class="producto">Producto</th>
+                        <th class="precio">Precio</th>
+                      </tr>
+                      <tr>
+                        <td class="clave1">{{ $sale->product->clave }}</td>
+                        <td class="producto1">{{ $sale->product->name }}</td>
+                        <td class="precio1">$ {{ $sale->product->price }}</td>
+                     </tr>
+                     <tr>
+                        <td ></td>
+                        <th >Total</th>
+                        <td class="precio1">$ {{ $sale->price }}</td>>
+                     </tr>
+                    </tbody>
+                  </table>
+                    @endforeach
+                    <br>
+            <p class="centrado">¡GRACIAS POR SU COMPRA!
+                <br>joyeriafina.com</p>
+        </div>
     </body>
 </html>
-
-

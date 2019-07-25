@@ -151,7 +151,7 @@
                 <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Perfil</a>
                 <a class="dropdown-item" href="/pagos" role="menuitem"><i class="icon  md-money" aria-hidden="true"></i> Pagos</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i>Iniciar Sesión</a>
+                <a class="dropdown-item" href="logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i>Cerrar Sesión</a>
               </div>
             </li> 
             <!--Notifications-->
@@ -393,8 +393,17 @@
                 <img src="../../global/portraits/1.jpg" alt="">
               </a>
               <div class="site-menubar-info">
-                <h5 class="site-menubar-user">{{$user->name}}</h5>
-                <p class="site-menubar-email">{{$user->email}}</p>
+                <h5 class="site-menubar-user">{{Auth::user()->name}}</h5>
+                <p class="site-menubar-email">{{Auth::user()->email}}</p>
+                <h6 class="site-menubar-email">@if(Auth::user()->type_user == 1 )
+                                                          <h6>Administrador</h6>
+                                                      @endif
+                                                      @if(Auth::user()->type_user  == 2)
+                                                          <h6>Sub-Administrador</h6>
+                                                      @endif
+                                                      @if(Auth::user()->type_user == 3)
+                                                        <h6>Colaborador</h6>
+                                                      @endif</h6>
               </div>
             </div>
           </div>
@@ -403,8 +412,8 @@
       <div class="site-menubar-body">
         <div>
           <div>
-          <!-- AA =(0)  Administrator-->
-          @if($user->type_user == 0)
+          <!-- AA =(1)  Administrator-->
+          @if(Auth::user()->type_user == 1)
             <ul class="site-menu" data-plugin="menu">
                 <li class="site-menu-item active">
                   <a class="animsition-link" href="/principal">
@@ -428,18 +437,27 @@
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/productos">
-                          <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
+                          <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Productos</span>
                         </a>
                       </li>
                     </ul>
                     <ul class="site-menu-sub">
-                      <li class="site-menu-item has-sub">
-                    <a href="javascript:void(0)">
+                      <li class="site-menu-item">
+                    <a class="animsition-link" href="/reportes-productos">
                       <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
                         <span class="site-menu-title">Reportes</span>
                       <span class="site-menu-arrow"></span>
                     </a>
+                    <!--<ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="#">
+                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reporte gr por linea.</span>
+                        </a>
+                      </li>
+                    </ul>
+                    
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="#">
@@ -496,7 +514,7 @@
                         </a>
                       </li>
                     </ul>
-                  </li>
+                  </li>-->
                     </ul>
                   </li>
 
@@ -567,8 +585,8 @@
                     </a>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
-                          <a class="animsition-link" href="/traspasos">
-                          <i  class="site-menu-icon fa-exchange" aria-hidden="true"></i>
+                          <a class="animsition-link" href="/traspasosAA">
+                          <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Traspasos</span>
                         </a>
                       </li>
@@ -592,7 +610,7 @@
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/gastos">
-                        <i  class="site-menu-icon icon md-money-box"  aria-hidden="true"></i>
+                        <i  class="site-menu-icon icon fa-book"  aria-hidden="true"></i>
                           <span class="site-menu-title">Mis Gastos</span>
                       </a>
                     </li>
@@ -627,6 +645,27 @@
                         <a class="animsition-link" href="nomina">
                         <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
                           <span class="site-menu-title">Reporte de Nomina</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
+                        <span class="site-menu-title">Grupos</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/grupos">
+                        <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
+                          <span class="site-menu-title">Mis grupos</span>
+                      </a>
+                    </li>
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/grupos/invitacion">
+                        <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
+                          <span class="site-menu-title">Unirme a un grupo</span>
                       </a>
                     </li>
                     </ul>
@@ -641,10 +680,10 @@
                   </li>
               </ul>
             @endif
-            <!-- AA =(0) END-Administrator-->
+            <!-- AA =(1) END-Administrator-->
 
-            <!-- SA =(1) Sub-Administrator-->
-            @if($user->type_user == 1)
+            <!-- SA =(2) Sub-Administrator-->
+            @if($user->type_user == 2)
 
               <ul class="site-menu" data-plugin="menu">
                   <li class="site-menu-item active">
@@ -733,10 +772,10 @@
                     </li>
                 </ul>
               @endif
-              <!-- SA =(1) END-Sub-Administrator-->
+              <!-- SA =(2) END-Sub-Administrator-->
 
-              <!-- CO =(2) Colaborador-->
-              @if($user->type_user == 2)
+              <!-- CO =(3) Colaborador-->
+              @if($user->type_user == 3)
               <ul class="site-menu" data-plugin="menu">
                   <li class="site-menu-item active">
                     <a class="animsition-link" href="/sucursal">
@@ -763,7 +802,7 @@
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/productosCOP">
-                          <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
+                          <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Productos</span>
                         </a>
                       </li>
@@ -802,7 +841,7 @@
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/traspasos">
-                          <i  class="site-menu-icon fa-exchange" aria-hidden="true"></i>
+                          <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Traspasos</span>
                         </a>
                       </li>
@@ -813,7 +852,7 @@
                   </li>
                 </ul>
               @endif
-                <!-- CO =(2) END-Colaborador-->    
+                <!-- CO =(3) END-Colaborador-->    
             </div>
           </div>
         </div>

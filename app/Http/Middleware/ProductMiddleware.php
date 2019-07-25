@@ -6,7 +6,7 @@ use Closure;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-class Product
+class ProductMiddleware
 {
     /**
      * Handle an incoming request.
@@ -20,10 +20,10 @@ class Product
         /* if (Auth::user()->type_user == USER::AA) {
             return redirect('/index');
  
-       }*/
+       
        if (Auth::user()->shop->branch == ''){
            return redirect('/sucursales/create')->with('mesage', 'Primero debes configurar tu sucursal!');
-       }
+       }}*/
         return $next($request);
     }
 } 

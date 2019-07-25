@@ -17,7 +17,7 @@ class LineController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('Authentication');
+        //$this->middleware('Authentication');
     }
     /**
      * Display a listing of the resource. 
@@ -97,7 +97,9 @@ class LineController extends Controller
     {
         $line = Line::findOrFail($id);
         $line->name = $request->name;
-        $line->price = $request->price;
+        $line->purchase_price = $request->purchase_price;
+        $line->sale_price = $request->sale_price;
+
         $line->save();
         return redirect('/lineas')->with('mesage-update', 'La Linea se ha modificado exitosamente!');
     }
@@ -117,7 +119,7 @@ class LineController extends Controller
     public function exportPdf(){ 
         $lines = Line::all();
         $pdf  = PDF::loadView('line.pdf', compact('lines'));
-        return $pdf->download('line.pdf');
+        return $pdf->download('lineas.pdf');
     }
 
     // Funcion para gener excel!!

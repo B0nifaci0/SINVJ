@@ -29,6 +29,7 @@ class UserController extends Controller
      */
     public function index()
     {
+      $user = Auth::user();
       //Consulta para obetener el usuario y la sucursal que tiene cada uno  $users=User::with('shop')->get();
       //Consulta para obtener los usuarios con referencia de la tienda a la que pertenecen
       //$users = Auth::user()->shop->users;
@@ -40,8 +41,8 @@ class UserController extends Controller
       //return $branches;
       //Comprobacion de datos
       //return $users;
-      
-      return view('User/index', compact('users','branches')); 
+      // sreturn $user;
+      return view('User/index', compact('users','branches','user')); 
     }
 
     /**
@@ -51,7 +52,7 @@ class UserController extends Controller
      */
     public function create()
     {   
-       $user = Auth::user();
+        $user = Auth::user();
         // Consulta para obtener la tienda de acuerdo al usuario
         $shops=Auth::user()->shop()->get();
         //return $shops;

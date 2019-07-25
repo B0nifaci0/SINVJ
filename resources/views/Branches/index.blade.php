@@ -44,16 +44,14 @@ LISTA DE  SUCURSALES
       <header class="panel-heading">
         <div class="panel-actions">
           <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/sucursales/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left 
-            btn-info waves-effect waves-light waves-round float-right "
-             data-toggle="tooltip" data-original-title="Agregar">
+            <button onclick="window.location.href='/sucursales/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right " data-toggle="tooltip" data-original-title="Agregar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
         </div>
         <h3 class="panel-title">Sucursales</h3>
       </header>
       <div class="panel-body">
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                  <!-- <th>Id</th> -->
@@ -148,4 +146,7 @@ $(document).ready(function() {
 });
 
 </script>
+@endsection
+
+@section('barcode-product')
 @endsection

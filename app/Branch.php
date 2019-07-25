@@ -33,6 +33,11 @@ class Branch extends Model
         return $this->hasMany(TranferProducts::class);
     }
 
+    public function transf()
+    {
+        return $this->hasMany(TrasferUser::class);
+    }
+
     public function users(){
         return $this->hasMany(User::class);
       }

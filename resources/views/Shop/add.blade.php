@@ -7,7 +7,7 @@ ALTA TIENDAS
 
 @endsection
 @section('menu')
-
+ 
 @endsection
 @section('content')
 <div class="page-content container-fluid">

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class ShopMiddleware
@@ -16,11 +17,15 @@ class ShopMiddleware
      */
     public function handle($request, Closure $next)
     {
-        /*$user = Auth::user();
-        if($user && $user->type == User::ADMIN) {
-            return $next($request);
+        /* if (Auth::user()->type_user == User::AA) {
+             return redirect('/index');
+
         }
 
-        return redirect('/'); */
+        if (Auth::user()->shop == '') {
+            return redirect('/tiendas/create')->with('mesage', 'Primero debes configurar tu tienda!');
+        }*/
+        return $next($request);
     }
 }
+ 

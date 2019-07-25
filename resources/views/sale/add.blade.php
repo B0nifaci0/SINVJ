@@ -93,6 +93,8 @@ ALTA VENTA
       <div class="col-md-2 form-group">
         <button class="btn btn-success"  data-target="#exampleTabs" data-toggle="modal"type="button">$ Tipo de Pago</button>
       </div>
+      <input type="hidden" class="form-control" name="parcial_pay" id="faltan"/>
+      <input type="hidden" class="form-control" name="total_pay" id="totalpayparcial"/>
       <div class="form-group col-md-1">
         <button  id="submit" type="submit" name="" class="btn btn-primary">Guardar</button>
       </div>
@@ -149,7 +151,7 @@ ALTA VENTA
                     </div> 
                     <div class="form-group form-material col-md-3">
                       <label class="form-control-label" for="inputBasicFirstName">Restan</label>
-                      <input type="text" class="form-control" name="" id="falta" required="required" placeholder="$"required /> 
+                      <input type="text" class="form-control" name="parcial" id="falta" required="required" placeholder="$"required /> 
                     </div> 
                     <div class="form-group form-material col-md-3">
                       <label class="form-control-label">Total a Pagar:</label>
@@ -217,9 +219,9 @@ $(function(){
   $('#pagar').val(total);
   $('#pagotarjeta').val(total);
   $('#totalpayment').val(total);
+  $('#totalpayparcial').val(total);
   $('#vari').val(cambio);
   $('#tabl').val(_tr);
-
 
   
   $('#deletr').click(function(){
@@ -240,6 +242,7 @@ $(function(){
 $('#apartado').keyup(function() {
   var falta = $('#totalpayment').val() -$(this).val();
   $('#falta').val(falta);
+  $('#faltan').val(falta);
   
 }); 
 $('#continuar').click(function(e) {

@@ -19,6 +19,7 @@ class BranchProductsController extends Controller
   }
   public function edit($id)
     {
+        $user = Auth::user();
         $category = Auth::user()->shop->id;
         $user = Auth::user();
         $line = Auth::user()->shop->id; 

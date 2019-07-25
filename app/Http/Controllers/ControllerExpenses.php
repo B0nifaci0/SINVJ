@@ -14,10 +14,11 @@ use PDF;
 
 class ControllerExpenses extends Controller
 {
-    public function __construct(){
+    /*public function __construct(){
         $this->middleware('Authentication');
 
-    }
+    }/*
+
     /**
      * Display a listing of the resource.
      *

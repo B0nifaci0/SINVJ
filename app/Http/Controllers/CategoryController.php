@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
-    public function __construct(){
+    /*public function __construct(){
       $this->middleware('Authentication');
-  }
+    }/*
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +41,7 @@ class CategoryController extends Controller
     public function create(Request  $request)
     { 
        $user = Auth::user();
-        return view('category/add', compact('categories','user'));
+        return view('category/add', compact('user'));
     }
 
     /**

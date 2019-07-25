@@ -60,7 +60,7 @@ LISTA DE  USUARIOS
         <h3 class="panel-title">Usuarios</h3>
       </header>
       <div class="panel-body">
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                   <th>Nombre</th>
@@ -90,13 +90,13 @@ LISTA DE  USUARIOS
                         <td>{{$user->email }}</td>
                         <!-- Definir si la tienda se tiene que mostrar o se puede omitir
                           <td>{{$user->shop->name }}</td> -->
-                        @if( $user->type_user == 0 )
+                        @if( $user->type_user == 1 )
                             <td>Administracion</td>
                         @endif
-                        @if($user->type_user  == 1)
+                        @if($user->type_user  == 2)
                             <td>Sub-Administracion</td>
                         @endif
-                        @if($user->type_user == 2)
+                        @if($user->type_user == 3)
                           <td>Colaborador</td>
                         @endif
                         @if($user->branch_id == '')
@@ -206,6 +206,5 @@ $(document).ready(function() {
 
   });
 });
-
 </script>
 @endsection
