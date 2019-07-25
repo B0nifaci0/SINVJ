@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
  <head>
@@ -8,7 +7,7 @@
      </head>
    <style>
    {
-    font-size: 12px;
+    font-size: 8px;
     font-family: 'Times New Roman';
 }
 
@@ -16,38 +15,113 @@ td,
 th,
 tr,
 table {
-    border-top: 1px solid black;
     border-collapse: collapse;
 }
 
-td.producto,
-th.producto {
-    width: 75px;
-    max-width: 75px;
+td.sucursal{
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
+}
+td.nota{
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
+}
+td.fecha{
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
+}
+td.hora{
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
+}
+td.cliente {
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
+}
+td.vendedor {
+    width: 85px;
+    max-width: 85px;
+    text-align: left;
 }
 
-td.productoprecio,
-th.productoprecio {
-    width: 75px;
-    max-width: 75px;
+
+td.sucursal1 {
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
 }
 
-td.cantidad,
-th.cantidad {
-    width: 20px;
-    max-width: 20px;
-    word-break: normal;
+td.nota1 {
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
+}
+
+td.fecha1 {
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
+}
+
+td.hora1 {
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
 }
 
 
-.precio {
-  text-align: right;
-    align-content: right;
+td.cliente1{
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
 }
-.espacio {
-  text-align: right;
-    align-content: right;
+td.vendedor1{
+    width: 85px;
+    max-width: 85px;
+    text-align: right;
 }
+
+th.clave{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
+th.producto{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
+th.precio{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
+td.clave1{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
+td.producto1{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
+td.precio1{
+    width: 80px;
+    max-width: 80px;
+    text-align: left;
+}
+
 
 .centrado {
     text-align: center;
@@ -55,53 +129,82 @@ th.cantidad {
 }
 
 .ticket {
-    width: 155px;
-    max-width: 155px;
+    width: 200px;
+    max-width: 200px;
 }
 
 img {
-    max-width: inherit;
-    width: inherit;
-    
+    width: center ;
+    max-width: center;
+    text-align: center;
 }
-@page {size: 7cm 190mm;
+@page {size: 8cm 190mm;
      }
    </style>
 
 <body>
         <div class="ticket">
             <img
-                src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d442db70-59ff-489c-a4b0-e9d66fdfdab6/d71s15s-53f5ab9d-bd41-4036-9913-37e06b069505.png/v1/fit/w_150,h_150,strp/diamante_png_by_openyourearseditions_d71s15s-150.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc5IiwicGF0aCI6IlwvZlwvZDQ0MmRiNzAtNTlmZi00ODljLWE0YjAtZTlkNjZmZGZkYWI2XC9kNzFzMTVzLTUzZjVhYjlkLWJkNDEtNDAzNi05OTEzLTM3ZTA2YjA2OTUwNS5wbmciLCJ3aWR0aCI6Ijw9NjA2In1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.SfIpPWUfzdOHhz4XcgswitZh5z9bzeYavEq_qyEJttY"
+                src="https://images.vexels.com/media/users/3/151701/isolated/preview/b46f3c41fa0350842e75ac9450c64789-icono-de-golpe-de-diamante-by-vexels.png"
                 alt="Logotipo">
-                <p class="centrado">Joyeria Fina
-                <br>Toluca de Lerdo #1006
-                <br>19/07/2019 12:33 a.m.</p>
+                <p class="centrado">@foreach ($shops as  $shop) 
+                {{ $shop->name}}
+                <br>Toluca de Lerdo #1006</p>
+                @endforeach
+                <br>
             <table>
-                <thead>
-                    <!--<tr>
-                        <th class="cantidad">CLAVE</th>
-                        <th class="producto">PRODUCTO</th>
-                        <th class="producto">PRODUCTO</th>
-                        <th class="precio">TOTAL</th>
-                    </tr>-->
-                </thead>
                 <tbody>
+                    <tr>
+                    <td class="sucursal">Sucursal:</td>
+                    @foreach ($branches as  $branch)
+                        <td class="sucursal1">{{ $branch->name}}</td>
+                        @endforeach
+                    </tr>
                     @foreach ($sales as  $sale)
                     <tr>
-                        <td class="cantidad">{{ $sale->id}}</td>
-                        <td class="producto">{{ $sale->product->name }}</td>
-                        <td class="productoprecio">${{ $sale->product->price }}</td>
+                        <td class="nota">Nota no.:</td>
+                        <td class="nota1">{{ $sale->id}}</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="fecha">Fecha:</td>
+                        <td class="fecha1">{{ $sale->created_at->format('m/d/Y')}}</td>
                     </tr>
+                    <tr>
+                        <td class="hora">Hora:</td>
+                        <td class="hora1">{{ $sale->created_at->format('H:i:s')}}</td>
+                    </tr>
+                    <tr>
+                        <td class="cliente">Cliente:</td>
+                        <td class="cliente1">{{ $sale->customer_name }}</td>
+                    </tr>
+                    <tr>
+                        <td class="vendedor">Vendedor:</td>
+                        <td class="vendedor1">{{Auth::user()->name}}</td>
+                    </tr>
+                    </tbody>
+                   </table>
+                   <br>
+                   <table>
+                    <tbody>
+                      <tr>
+                        <th class="clave">Clave</th>
+                        <th class="producto">Producto</th>
+                        <th class="precio">Precio</th>
+                      </tr>
+                      <tr>
+                        <td class="clave1">{{ $sale->product->clave }}</td>
+                        <td class="producto1">{{ $sale->product->name }}</td>
+                        <td class="precio1">$ {{ $sale->product->price }}</td>
+                     </tr>
+                     <tr>
+                        <td ></td>
+                        <th >Total</th>
+                        <td class="precio1">$ {{ $sale->price }}</td>>
+                     </tr>
+                    </tbody>
+                  </table>
                     @endforeach
-                </tbody>
-            </table>
-            <p class="espacio"></p>
-            <p class="precio">Total: $ {{ $sale->price }}</p>
+                    <br>
             <p class="centrado">¡GRACIAS POR SU COMPRA!
                 <br>joyeriafina.com</p>
         </div>
