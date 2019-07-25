@@ -75,7 +75,8 @@ LISTA DE  LINEA
                 <tr>
                   <th>Clave</th>
                   <th>Nombre</th>
-                  <th>Precio</th>
+                  <th>Precio Compra</th>
+                  <th>Precio Venta</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
@@ -92,7 +93,9 @@ LISTA DE  LINEA
                   <tr id = "row{{ $line->id }}">
                     <td>{{ $line->id}}</td>
                     <td>{{ $line->name }}</td>
-                    <td>$ {{ $line->price }}</td>
+                    <td>$ {{ $line->purchase_price }}</td>
+                    <td>$ {{ $line->sale_price }}</td>
+
                     <td>    
                     <a href="/lineas/{{$line->id}}/edit"<button type="button" 
                       class="btn btn-icon btn-info waves-effect waves-light waves-round"

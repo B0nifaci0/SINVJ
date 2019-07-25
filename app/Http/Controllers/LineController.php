@@ -97,7 +97,9 @@ class LineController extends Controller
     {
         $line = Line::findOrFail($id);
         $line->name = $request->name;
-        $line->price = $request->price;
+        $line->purchase_price = $request->purchase_price;
+        $line->sale_price = $request->sale_price;
+
         $line->save();
         return redirect('/lineas')->with('mesage-update', 'La Linea se ha modificado exitosamente!');
     }

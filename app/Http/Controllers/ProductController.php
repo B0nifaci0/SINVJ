@@ -27,7 +27,7 @@ class ProductController extends Controller
     // $this->middleware('LineMiddleware');
     // $this->middleware('StatusMiddleware'); 
   }
-
+/** FUNCIONES PARA CRUD DE PRODUCTO */
   public function index()
   {
     $user = Auth::user();
@@ -244,7 +244,6 @@ class ProductController extends Controller
     }
 
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -254,9 +253,11 @@ class ProductController extends Controller
         public function destroy($id)
         {
           Product::destroy($id);
-        // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
-      
+        // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');    
         }
+/**TERMINA FUNCIONES DE CRUD DE PRODUCTOS */
+
+/**FUNCIONES DE REPORTES DE PDF */
     public function exportPdf(){ 
         $product = Auth::user()->shop->id;
         $products = Shop::find($product)->products()->get();
@@ -275,5 +276,23 @@ class ProductController extends Controller
       $pdf  = PDF::loadView('product.pdf', compact('user', 'categories','lines','shops','statuses','products'));
       return $pdf->download('Productos.pdf');
     }
+
+    /**
+     * Funcion para la vista del Reporte por Producto por Sucursal status
+     * 
+     ***/
+
+     public function reportProduct(){
+        $idshop = Auth::user()->shop->id;
+         $user = Auth::user();
+         $branch = Shop::find($idshop)->branches()->get();
+         $status = Shop::find($idshop)->statuss()->get();
+         $line = Shop::find($idshop)->lines()->get();
+        $category = Auth::user()->shop->id;  
+        $categories = Shop::find($category)->categories()->get();
+         //return $status;
+    
+      return view('product.Reports.reportproduct',compact('branch','user','status','line','categories'));
+     }
 
 }
