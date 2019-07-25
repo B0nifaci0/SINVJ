@@ -198,7 +198,7 @@ class UserController extends Controller
 
       $pdf  = PDF::loadView('User.NominasPDF', compact('users','nomina','hoy','fech1','fech2','salary'));
       // //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
-      return $pdf->stream('nominas.pdf');
+      return $pdf->download('nominas.pdf');
     }
 
     public function indexReceipt(){
@@ -216,7 +216,7 @@ class UserController extends Controller
       $users = User::where("id","=",$request->user_id)->get();
     
       $pdf  = PDF::loadView('Payroll.receipt', compact('users','date'));
-      return $pdf->stream('recibo.pdf');
+      return $pdf->download('recibo.pdf');
     }
 
     public function receiptallPDF(){
@@ -227,6 +227,6 @@ class UserController extends Controller
       $date = $date->format('d-m-Y');
     
       $pdf  = PDF::loadView('Payroll.receipall', compact('users','date'));
-      return $pdf->stream('recibos.pdf');
+      return $pdf->download('recibos.pdf');
     }
 }
