@@ -28,25 +28,6 @@ EDITAR LINEA
         {{ csrf_field() }}
         {{ method_field('PUT') }}
         <div class="row">
-<<<<<<< HEAD
-          <!-- Input para editar precio de linea-->
-          <div class="form-group form-material col-md-6">
-            <label class="form-control-label" for="inputBasicLastName"> Nombre Linea:</label>
-            <input type="text" class="form-control"value="{{$line->name}}" name="name"> 
-          </div>
-          <!-- END Input--> 
-          <!-- Input para editar precio de linea-->
-          <div class="form-group form-material col-md-6">
-            <label class="form-control-label" for="inputBasicLastName">Precio:</label>
-            <input type="text" class="form-control"value="{{$line->price}}" name="price"> 
-          </div>
-          <!-- END Input-->
-          <!-- Botón para guardar cambios-->
-          <div class="form-group col-md-12">
-           <button type="submit" name="button" class="btn btn-primary">Guardar</button>
-          </div>
-          <!-- END Botón-->
-=======
         <div class="form-group form-material col-md-4">
                <label class="form-control-label" for="inputBasicLastName"> Nombre Linea:</label>
                <input type="text" class="form-control"value="{{$line->name}}" name="name"> 
@@ -63,7 +44,6 @@ EDITAR LINEA
 
         <div class="form-group col-md-12">
           <button type="submit" name="button" class="btn btn-primary">Guardar</button>
->>>>>>> 837fba63e5f71b5a6f44ff606bc58a87a013f60b
         </div>
       </form>
     </div>
