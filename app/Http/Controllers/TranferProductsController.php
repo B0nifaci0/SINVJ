@@ -115,10 +115,26 @@ class TranferProductsController extends Controller
     }
 
   public function answerTransferRequest(Request $request) {
+    $user = Auth::user();
     $transfer = TransferProduct::find($request->transfer_id);
-    $transfer->status_product = $request->answer;
-    $transfer->save();
-    return redirect('/traspasos');
+    $product = Product::find($transfer->product_id);
+
+    if($request->answer === null) {
+      $transfer->delete();
+    } else {
+      $transfer->status_product = $request->answer;
+      $transfer->save();
+      if($request->answer) {
+        $product->branch_id = $transfer->new_branch_id;
+        $product->shop_id = $user->shop->id;
+        $product->save();
+      }
+    }
+    if($user->type_user == User::AA || $user->type_user == User::SA) {
+      return redirect('/traspasosAA');
+    } else {
+      return redirect('/traspasos');
+    }
   }
 
   

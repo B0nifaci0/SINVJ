@@ -117,11 +117,25 @@ TRASFERENCIAS
                   <td>{{$transfer->newBranch->name}}</td>
                   <td>{{$transfer->destinationUser->name}}</td>
                   <td>{{$transfer->created_at->format('m-d-Y')}}</td>
-                  <td>{{ $transfer->status_product }}</td>
+                  <td>
+                    @if($transfer->status_product === 1)
+                      Aceptado
+                    @elseif($transfer->status_product === 0)
+                      Rechazado
+                    @else
+                      Pendiente
+                    @endif
+                  </td>
                   <td>
                     <!-- Botón para Aceptar o Rechazar Traspaso -->
-                    <button class="btn btn-primary accept" alt="{{ $transfer->id }}">Aceptar</button>
-                    <button class="btn btn-warning cancel" alt="{{ $transfer->id }}">Rechazar</button>
+                    @if($transfer->status_product === null)
+                      @if(Auth::user()->id == $transfer->user_id)
+                        <button class="btn btn-warning cancel" alt="{{ $transfer->id }}">Cancelar</button>
+                      @else
+                      <button class="btn btn-primary accept" alt="{{ $transfer->id }}">Aceptar</button>
+                      <button class="btn btn-warning reject" alt="{{ $transfer->id }}">Rechazar</button>
+                      @endif
+                    @endif
                     <!-- END Botón-->
                   </td>
                   <td>
@@ -163,6 +177,13 @@ $(document).ready(function(){
   })
 
   $('.cancel').click(function() {
+    var id = $(this).attr('alt');
+      $('#transfer_id').val(id);
+      $('#answer').val(null);
+      $('#form').submit();
+  })
+
+  $('.reject').click(function() {
     var id = $(this).attr('alt');
       $('#transfer_id').val(id);
       $('#answer').val(0);
