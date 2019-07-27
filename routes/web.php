@@ -137,7 +137,13 @@ Route::get('download', 'PrincipalController@download')->name('download');
 Route::resource('gastos' , 'ControllerExpenses');
 //Gastos PDF
 Route::get('gastospdf', 'ControllerExpenses@exportPdf');
+//Nominas por usuario
+Route::get('nomina', 'UserController@indexNomina');
 Route::get('nominaspdf', 'UserController@nominasPdf');
+//Recibo de nomina
+Route::get('recibo', 'UserController@indexReceipt');
+Route::get('recibopdf', 'UserController@receiptPDF');
+Route::get('recibospdf', 'UserController@receiptallPDF');
 
 /*
 Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware', 'ProductBranchMiddleware','ShopMiddleware','StatusMiddleware']], function () {
@@ -169,13 +175,13 @@ Route::resource('tiendas','ShopController');
 */
 //PRODUCTS
 Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware','StatusMiddleware']],function(){
-  Route::get('productos', 'ProductController@index');
-  Route::get('productos/create', 'ProductController@create');
-  Route::post('/productos', 'ProductController@store');
-  Route::get('/productos/{id}/edit', 'ProductController@edit');
-  Route::get('/productos/{id}/show', 'ProductController@show');
-  Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
-  Route::delete('/productos/{id}/delete');
+Route::get('productos', 'ProductController@index');
+Route::get('productos/create', 'ProductController@create');
+Route::post('/productos', 'ProductController@store');
+Route::get('/productos/{id}/edit', 'ProductController@edit');
+Route::get('/productos/{id}/show', 'ProductController@show');
+Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
+Route::delete('/productos/{id}/delete');
 
 });
 
@@ -218,7 +224,7 @@ Route::group(['middleware' => ['auth']],function () {
  
  
   //USUARIOS
-   Route::get('usuarios/create', 'UserController@create');
+  Route::get('usuarios/create', 'UserController@create');
   Route::get('/usuarios', 'UserController@index');
   Route::post('/usuarios', 'UserController@store');
   Route::get('/usuarios/{id}/edit', 'UserController@edit');
@@ -232,6 +238,9 @@ Route::group(['middleware' => ['auth']],function () {
   Route::post('/grupos', 'ShopGroupsController@store');
   Route::get('/grupos/invitacion', 'ShopGroupsController@groupJoinForm');
   Route::post('/grupos/invitacion', 'ShopGroupsController@groupJoin');
+
+  /**Reportes Rutas y Vistas */
+  Route::get('/reportes-productos','ProductController@reportProduct');
 
 });
 

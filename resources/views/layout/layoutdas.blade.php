@@ -443,12 +443,21 @@
                       </li>
                     </ul>
                     <ul class="site-menu-sub">
-                      <li class="site-menu-item has-sub">
-                    <a href="javascript:void(0)">
+                      <li class="site-menu-item">
+                    <a class="animsition-link" href="/reportes-productos">
                       <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
                         <span class="site-menu-title">Reportes</span>
                       <span class="site-menu-arrow"></span>
                     </a>
+                    <!--<ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="#">
+                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reporte gr por linea.</span>
+                        </a>
+                      </li>
+                    </ul>
+                    
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="#">
@@ -505,7 +514,7 @@
                         </a>
                       </li>
                     </ul>
-                  </li>
+                  </li>-->
                     </ul>
                   </li>
 
@@ -615,7 +624,7 @@
                     </li>
                     </ul>
                   </li> 
-                  </ul>
+                  </ul> 
                 </li>
                   <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
@@ -632,9 +641,9 @@
                     </li>
                     </ul>
                     <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                        <a class="animsition-link" href=" ">
-                          <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="nomina">
+                        <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
                           <span class="site-menu-title">Reporte de Nomina</span>
                         </a>
                       </li>
@@ -658,6 +667,14 @@
                         <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
                           <span class="site-menu-title">Unirme a un grupo</span>
                       </a>
+                    </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="recibo">
+                        <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                          <span class="site-menu-title">Recibo de Nomina</span>
+                        </a>
                     </li>
                     </ul>
                   </li>

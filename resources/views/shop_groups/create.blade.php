@@ -48,8 +48,8 @@ GRUPOS
         <form action="/grupos" method="post">
             @csrf
             <div class="row">
-                <div class="col-md-6">
-                    <label>Nombre del grupo</label>
+                <div class="col-md-6 form-material">
+                    <label class="form-control-label">Nombre del grupo</label>
                     <input name="name" type="text" class="form-control">
                 </div>
             </div>

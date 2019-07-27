@@ -13,11 +13,9 @@ class Shop extends Model
     protected $fillable = [
         'name',
         'image',
-        'web_site',
         'description',
         'email',
         'phone_number',
-        'schedules',
         'user_id',
         'municipality_id',
         'state_id',

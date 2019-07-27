@@ -124,10 +124,11 @@ class TestController extends Controller
     }
     public function exportPdf($id){
 
+        $user = Auth::user();
         $branches= Branch::find($id);
-        $products = Product::where('branch_id','=',$id)->get();
-        $pdf  = PDF::loadView('Branches.sucursalespdf', compact('branches', 'products'));
-        //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
+        $products = Product::withTrashed()->where('branch_id','=',$id)->get();
+        $pdf  = PDF::loadView('Branches.sucursalespdf', compact('branches', 'products','user'));
+        $pdf->setPaper('a4', 'landscape');// Orientacion de los archivos pdf
         //return $pdf->stream('gastos.pdf'); //solo visualizacion del archivo en la vista web
          return $pdf->stream('prodsuc.pdf');
       }

@@ -38,8 +38,8 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(Request  $request)
+    { 
        $user = Auth::user();
         return view('category/add', compact('user'));
     }
@@ -50,8 +50,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoriesRequest $request)
+    public function store(Categories  Request $request)
     {
+        //$name = $request->input("name");
+        //return $name;
+        //$category = Category::where('name')
         $category = new Category($request->all());
         $category->shop_id = Auth::user()->shop->id;
         $category->save();
@@ -98,7 +101,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $category = Category::findOrFail($id);
+        $category = Category::findOrFail($id);
         $category->name = $request->name;
         $category->save();
         return redirect('/categorias')->with('mesage-update', 'La categoria se ha modificado exitosamente!');

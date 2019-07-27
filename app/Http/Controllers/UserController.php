@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Shop;
+use App\Branch;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use Carbon\Carbon;
 
 
 
@@ -178,20 +180,54 @@ class UserController extends Controller
       //return redirect('/usuarios')->with('mesage', 'El usuario  se ha activado exitosamente!');
 
     }
+    public function indexNomina(){
+         $branch = Auth::user()->shop->id;
+         $user = Auth::user();
+         $branch = Shop::find($branch)->branches()->get();
+        return view ('Payroll/nomina',compact('branch','user'));
+    }
+
     public function nominasPdf( Request $request){
-      /*$fech1 = $request->input("fecini");
-      $fech2 = $request->input("fecter");
-      $user_id = $request->input("user_id");
-      //$users = User::find('user_id');
-      $users = User::where("created_at",">=",$fech1)
-           ->where("created_at","<=",$fech2)
-           ->get();
-           return $users;*/
-      $total = User::sum('salary');
-      $users = User::all();
-      //return $users;
-      $pdf  = PDF::loadView('User.NominasPDF', compact('users','total'));
-      //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
-      return $pdf->stream('nominas.pdf');
+
+      $fech1 = Carbon::parse($request->fecini);
+      $fech2 = Carbon::parse($request->fecter);
+      $hoy = $fech1->diffInWeeks($fech2);
+      $users = User::where("id","=",$request->user_id)->first();
+      $salary = $users->salary;
+      $nomina = ($hoy * $salary);
+
+
+      $pdf  = PDF::loadView('User.NominasPDF', compact('users','nomina','hoy','fech1','fech2','salary'));
+      // //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
+      return $pdf->download('nominas.pdf');
+    }
+
+    public function indexReceipt(){
+      $branch = Auth::user()->shop->id;
+      $user = Auth::user();
+      $branch = Shop::find($branch)->branches()->get();
+     return view ('Payroll/recibo',compact('branch','user'));
+    }
+
+    public function receiptPDF(Request $request){
+    
+      $date = Carbon::now();
+      $date = $date->format('d-m-Y');
+
+      $users = User::where("id","=",$request->user_id)->get();
+    
+      $pdf  = PDF::loadView('Payroll.receipt', compact('users','date'));
+      return $pdf->download('recibo.pdf');
+    }
+
+    public function receiptallPDF(){
+    
+      $users = Auth::user()->shop->users;
+
+      $date = Carbon::now();
+      $date = $date->format('d-m-Y');
+    
+      $pdf  = PDF::loadView('Payroll.receipall', compact('users','date'));
+      return $pdf->download('recibos.pdf');
     }
 }

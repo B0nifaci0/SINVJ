@@ -50,9 +50,9 @@ ALTA LíNEAS
              <button type="submit" name="button" class="btn btn-primary">Guardar</button>
             </div>
             <!-- END Botón-->
+          </div>
         </form>
-      </div>
-    </div> 
+      </div> 
+    </div>
   </div>
-</div>
 @endsection

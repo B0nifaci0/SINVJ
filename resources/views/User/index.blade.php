@@ -40,18 +40,28 @@ LISTA DE  USUARIOS
       <div class="panel">
         <header class="panel-heading">
           <div class="panel-actions">
-            @if(Auth::user()->type_user == 1 )
-              <!-- Botón para crear usuario-->
-              <div class="col-md-14 col-md-offset-2">
-                <button onclick="window.location.href='/usuarios/create'" 
-                  type="button" class=" btn btn-sm small btn-floating  toggler-left 
-                  btn-info waves-effect waves-light waves-round float-right"
-                  data-toggle="tooltip" data-original-title="Agregar">
-                  <i class="icon md-plus" aria-hidden="true"></i>
+            <div class='row'>
+              @if(Auth::user()->type_user == 1 )
+                <!-- Botón para crear usuario-->
+                <div class="col-md-14 col-md-offset-2">
+                  <button onclick="window.location.href='/usuarios/create'" 
+                    type="button" class=" btn btn-sm small btn-floating  toggler-left 
+                    btn-info waves-effect waves-light waves-round float-right"
+                    data-toggle="tooltip" data-original-title="Agregar">
+                    <i class="icon md-plus" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <!-- END Botón-->
+              @endif
+              <div class="col-md-4 col-md-offset-2">
+                <button onclick="window.location.href='recibospdf'" 
+                  type="button" class=" btn btn-sm small btn-floating 
+                  toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                  data-toggle="tooltip" data-original-title="Generar recibos PDF">
+                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                 </button>
               </div>
-              <!-- END Botón-->
-            @endif
+            </div>
           </div>
           <h3 class="panel-title">Usuarios</h3>
         </header>
