@@ -38,7 +38,7 @@ class TrasferUserController extends Controller
         
         //return $transs;
         $branches=Branch::all();
-        return view('transfer/TrasferUser/index', compact('branches','users','trans','user'));
+        return view('transfer/TrasferUser/index', compact('branches','trans','user'));
         
        }
 

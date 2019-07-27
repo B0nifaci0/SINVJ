@@ -22,7 +22,7 @@ EDITA VENTA
             @endforeach
           </ul>
         </div>
-    @endif
+      @endif
       <center><h3> Venta</h3></center>
       <form action="{{ route('ventas.update', ['id' => $sale->id]) }}" method="POST">
         {{ csrf_field() }}
@@ -30,7 +30,6 @@ EDITA VENTA
         <div class="form-group col-md-6">
           <label>Fecha de la veta:</label>
           <input type="text" class="form-control" value="{{old('date')}}" name="date">
-        
           <label>Folio_ota</label>
           <input type="text" class="form-control" value="{{old('folio_nota')}}" name="folio_nota">
           

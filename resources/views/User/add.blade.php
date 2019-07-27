@@ -10,94 +10,94 @@ ALTA USUARIOS
 
 @endsection
 @section('content')
-<div class="page-content container-fluid">
-  <form autocomplete="off" method="POST" action="/usuarios" enctype="multipart/form-data">
-    {{ csrf_field() }}
-    <div class="panel">
-      <div class="panel-body">
+  <div class="page-content container-fluid">
+    <form autocomplete="off" method="POST" action="/usuarios" enctype="multipart/form-data">
+      {{ csrf_field() }}
+      <div class="panel">
+        <div class="panel-body">
           @if (session('mesage'))
             <div class="alert alert-success">
                   <strong>{{ session('mesage') }}</strong>
             </div>
           @endif
           @if($errors->count() > 0)
-              <div class="alert alert-danger" role="alert">
-                <ul>
-                  @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li> 
+            <div class="alert alert-danger" role="alert">
+              <ul>
+                @foreach($errors->all() as $error)
+                  <li>{{ $error }}</li> 
+                @endforeach
+              </ul>
+            </div>
+          @endif
+          <h2 class="panel-title">Registar Usuario</h2>
+          <div class="row">
+            <!-- Input para ingresar Nombre-->
+            <div class="form-group form-material col-md-6">
+              <label class="form-control-label" for="inputBasicFirstName">Nombre: </label>
+              <input type="text" class="form-control" name="name" value="{{old('name')}}" required="required" placeholder="El nombre del Usuario" />
+            </div>
+            <!-- END Input-->
+            <!-- Input para ingresar Correo Electronico-->
+            <div class="form-group form-material col-md-6">
+              <label class="form-control-label" for="inputBasicLastName"> Coreo Electronico:</label>
+              <input type="text" class="form-control" name="email" value="{{old('email')}}" required="required" placeholder="example@hotmail.com" />
+            </div>
+            <!-- END Input-->
+            <!-- Input para Ingresar Contraseña-->
+            <div class="form-group form-material col-md-6">
+              <label class="form-control-label" for="inputBasicFirstName">Contraseña : </label>
+              <input type="password" name="password" class="form-control">
+            </div>
+            <!-- END Input-->
+            <!-- Input para Ingresar Contraseña (Confirmar)-->
+            <div class="form-group form-material col-md-6">
+              <label class="form-control-label" for="inputBasicFirstName">Confirmar Contraseña: </label>
+              <input type="password" name="password_confirm" class="form-control">
+            </div>
+            <!-- END Input-->
+            <div>
+              @foreach ($shops as $shop)
+               <input type="hidden" name="shop_id" value="{{$shop->id}}">
+              @endforeach 
+            </div> 
+            <!-- Select para Seleccionar Sucursal-->
+            <div class="col-md-offset-1 visible-md visible-lg col-md-6">
+                <label class="form-control-label" for="inputBranch">Seleccione una Sucursal</label>
+                <select id="branches" class="form-control round sucursales" name="branch_id" >
+                <option value=" ">Seleccione Sucursal</option>
+                  @foreach ($branches as $branch)
+                    <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
                   @endforeach
-                </ul>
-              </div>
-            @endif
-            <h2 class="panel-title">Registar Usuario</h2>
-                  <div class="row">
-                        <div class="form-group form-material col-md-6">
-                            <label class="form-control-label" for="inputBasicFirstName">Nombre: </label>
-                            <input type="text" class="form-control" name="name" value="{{old('name')}}" required="required" placeholder="El nombre del Usuario" />
-                        </div>
-                        <div class="form-group form-material col-md-6">
-                            <label class="form-control-label" for="inputBasicLastName"> Coreo Electronico:</label>
-                            <input type="text" class="form-control" name="email" value="{{old('email')}}" required="required" placeholder="example@hotmail.com" />
-                        </div>
-                        <div class="form-group form-material col-md-6">
-                            <label class="form-control-label" for="inputBasicFirstName">Contraseña : </label>
-                            <input type="password" name="password" class="form-control">
-                        </div>
-                        <div class="form-group form-material col-md-6">
-                            <label class="form-control-label" for="inputBasicFirstName">Confirmar Contraseña: </label>
-                            <input type="password" name="password_confirm" class="form-control">
-                        </div>
-                        <div>
-                            @foreach ($shops as $shop)
-                            <input type="hidden" name="shop_id" value="{{$shop->id}}">
-                            @endforeach 
-                        </div> 
-                          <!--
-                        <div class="col-md-offset-1 visible-md visible-lg col-md-6">
-                          @foreach ($shops as $shop)
-                            <label class="form-control-label" for="inputBasicFirstName">Tienda : </label>
-                        <input type="text" name="shop_id" class="form-control" value="{{$shop->id}}" readonly>
-                          @endforeach 
-
-                          <label class="form-control-label" for="inputShop">Seleccione una Tienda</label>
-                          <select id="shops" class="form-control round tiendas" name="shop_id" >
-                          <option value="*">Seleccione Tienda</option>
-                            @foreach ($shops as $shop)
-                              <option value="<?= $shop->id ?>"><?= $shop->name ?></option>
-                            @endforeach
-                          </select>
-                        </div> 
-                        -->
-                        <div class="col-md-offset-1 visible-md visible-lg col-md-6">
-                            <label class="form-control-label" for="inputBranch">Seleccione una Sucursal</label>
-                            <select id="branches" class="form-control round sucursales" name="branch_id" >
-                            <option value=" ">Seleccione Sucursal</option>
-                              @foreach ($branches as $branch)
-                                <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
-                              @endforeach
-                            </select>
-                        </div> 
-                        <div class="col-md-offset-1 visible-md visible-lg col-md-6">
-                          <label class="form-control-label" for="inputTypeUser">Tipo de Usuario: </label>
-                          <select id="type_user" class="form-control round type_user" name="type_user" >
-                            <option value=" ">Seleccione Tipo de Usuario</option>
-                            <option value="2" name='type_user'>Sub-Administrador</option>
-                            <option value="3" name='type_usyer'>Colaborador</option>
-                          </select>
-                        </div>
-                        <div class="form-group form-material col-md-6">
-                            <label class="form-control-label" for="inputBasicFirstName">Salario : </label>
-                            <input type="text" name="salary" class="form-control" placeholder="$ 1000">
-                            </div>
-                        <div>
-                          <input type="hidden" name="terms_conditions" value="1">
-                        </div>   
-                    </div>
+                </select>
+            </div> 
+            <!-- END Select-->
+            <!-- Seleccionar Tipo de Usuario -->
+            <div class="col-md-offset-1 visible-md visible-lg col-md-6">
+              <label class="form-control-label" for="inputTypeUser">Tipo de Usuario: </label>
+              <select id="type_user" class="form-control round type_user" name="type_user" >
+                <option value=" ">Seleccione Tipo de Usuario</option>
+                <option value="2" name='type_user'>Sub-Administrador</option>
+                <option value="3" name='type_usyer'>Colaborador</option>
+              </select>
+            </div>
+            <!-- END Select-->
+            <!-- Input para ingresar Salario-->
+            <div class="form-group form-material col-md-6">
+              <label class="form-control-label" for="inputBasicFirstName">Salario : </label>
+              <input type="text" name="salary" class="form-control" placeholder="$ 1000">
+            </div>
+            <!-- END Input-->
+            <div>
+              <input type="hidden" name="terms_conditions" value="1">
+            </div>   
+          </div>
+          <!-- Botón para guardar Usuario-->
           <div class="form-group col-md-12">
             <button type="submit" name="button"  class="btn btn-primary">Guardar</button>
           </div>
-      </div>
-    </div> 
-  </form>
-</div>
+          <!-- END Botón-->
+        </div>
+      </div> 
+    </form>
+  </div>
 @endsection

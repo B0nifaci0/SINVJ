@@ -12,112 +12,129 @@ LISTA DE  LINEA
 
 @endsection 
 @section('content')
-  <div class="panel-body">
-	@if (session('mesage'))	
-	<div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{ session('mesage') }}</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-	</div>
-		@endif
+<div class="panel-body">
+    @if (session('mesage'))	
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>{{ session('mesage') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
     @if (session('mesage-update'))	
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>{{ session('mesage-update') }}</strong>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+       <strong>{{ session('mesage-update') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-	</div>
-		@endif
-			@if (session('mesage-delete'))	
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+       <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    @endif
+    @if (session('mesage-delete'))	
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage-delete') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-	</div>
-		@endif    
-      <div class="page-content">
-        <!-- Panel Basic -->
-    <div class="panel">
-      <header class="panel-heading">
-        <div class="panel-actions">
+       <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    @endif    
+    <div class="page-content">
+      <!-- Panel Basic -->
+      <div class="panel">
+        <header class="panel-heading">
+          <div class="panel-actions">
             <div class="row">
+              @if(Auth::user()->type_user == 1 )
+                <!-- Botón para generar PDF de linea-->
                 <div class="col-md-4 col-md-offset-2">
                   <button onclick="window.location.href='lineaspdf'" 
-                  type="button" class=" btn btn-sm small btn-floating 
-                   toggler-left  btn-danger waves-effect waves-light waves-round float-right"
-                   data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                    type="button" class=" btn btn-sm small btn-floating 
+                    toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                    data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                  </button>
                 </div>
+                <!-- END Botón-->
+                <!-- Botón para generar Excel de linea-->
                 <div class="col-md-4 col-md-offset-2">
                   <button onclick="window.location.href='#'" 
-                  type="button" class=" btn btn-sm small btn-floating 
-                   toggler-left  btn-success waves-effect waves-light waves-round float-right"
-                   data-toggle="tooltip" data-original-title="Generar reporte Excel">
-                   <i class="icon fa-file-excel-o" aria-hidden="true"></i></button>
+                    type="button" class=" btn btn-sm small btn-floating 
+                    toggler-left  btn-success waves-effect waves-light waves-round float-right"
+                    data-toggle="tooltip" data-original-title="Generar reporte Excel">
+                    <i class="icon fa-file-excel-o" aria-hidden="true"></i>
+                  </button>
                 </div>
+                <!-- END Función-->
+                <!-- Botón para crear linea-->
                 <div class="col-md-4 col-md-offset-2">
                   <button onclick="window.location.href='/lineas/create'" 
-                  type="button" class=" btn btn-sm small btn-floating 
-                   toggler-left  btn-info waves-effect waves-light waves-round float-right"
-                   data-toggle="tooltip" data-original-title="Agregar">
-                   <i class="icon md-plus" aria-hidden="true"></i></button>
+                    type="button" class=" btn btn-sm small btn-floating 
+                    toggler-left  btn-info waves-effect waves-light waves-round float-right"
+                    data-toggle="tooltip" data-original-title="Agregar">
+                    <i class="icon md-plus" aria-hidden="true"></i>
+                  </button>
                 </div>
-        </div>
-        </div>
-        <h3 class="panel-title">Lineas</h3>
-
-      </header>
-      <div class="panel-body">
-            <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-              <thead>
-                <tr>
-                  <th>Clave</th>
-                  <th>Nombre</th>
-                  <th>Precio</th>
-                  <th>Opciones</th>
-                </tr>
-              </thead>
-              <tfoot>
+                <!-- END Botón-->
+              @endif
+            </div>
+          </div>
+          <h3 class="panel-title">Lineas</h3>
+        </header>
+        <div class="panel-body">
+        <!-- Tabla para listar lineas-->
+          <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <thead>
               <tr>
-                  <th>Clave</th>
-                  <th>Nombre</th>
-                  <th>Precio</th>
-                  <th>Opciones</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                  @foreach ($lines as $line)
-                  <tr id = "row{{ $line->id }}">
-                    <td>{{ $line->id}}</td>
-                    <td>{{ $line->name }}</td>
-                    <td>$ {{ $line->price }}</td>
-                    <td>    
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                @if(Auth::user()->type_user == 1 )
+                <th>Opciones</th>
+                @endif
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                @if(Auth::user()->type_user == 1 )
+                <th>Opciones</th>
+                @endif
+              </tr>
+            </tfoot>
+            <tbody>
+              @foreach ($lines as $line)
+                <tr id = "row{{ $line->id }}">
+                  <td>{{ $line->id}}</td>
+                  <td>{{ $line->name }}</td>
+                  <td>$ {{ $line->price }}</td>
+                  @if(Auth::user()->type_user == 1 )
+                  <td>    
+                    <!-- Botón para editar linea-->
                     <a href="/lineas/{{$line->id}}/edit"<button type="button" 
                       class="btn btn-icon btn-info waves-effect waves-light waves-round"
-                              data-toggle="tooltip" data-original-title="Editar">
-                      <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                       alt="{{$line->id}}" role="button"
-                       data-toggle="tooltip" data-original-title="Borrar">
-                        <i class="icon md-delete" aria-hidden="true"></i>
+                      data-toggle="tooltip" data-original-title="Editar">
+                      <i class="icon md-edit" aria-hidden="true"></i></button>
+                    </a>
+                    <!-- END Botón-->
+                    <!-- Botónpara eliminar linea-->
+                    <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                      alt="{{$line->id}}" role="button"
+                      data-toggle="tooltip" data-original-title="Borrar">
+                      <i class="icon md-delete" aria-hidden="true"></i>
                     </button>
-                    </td>
-                  </tr>
-                  @endforeach
-              </tbody>
-            </table>
-          </div>
+                    <!-- END Botón-->
+                  </td>
+                  @endif
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+           <!-- END Tabla-->
         </div>
       </div>
     </div>
   </div>
-        <!-- End Panel Basic -->
-</div>
-
-
-
 @endsection
 <!--
 @section('edit-lineas')
@@ -147,7 +164,7 @@ $(document).ready(function(){
 </script>
 @endsection-->
 
-
+<!-- Función Sweet Alert para eliminar linea-->
 @section('delete-lineas')
 <script type="text/javascript">
 console.log("a")
@@ -196,7 +213,7 @@ $(document).ready(function() {
 
 </script>
 @endsection
-
+<!-- END Función-->
 @section('barcode-product')
 
 @endsection
