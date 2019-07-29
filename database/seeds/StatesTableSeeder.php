@@ -1,5 +1,5 @@
 <?php
-
+//use App\Satates;
 use Illuminate\Database\Seeder;
 
 class StatesTableSeeder extends Seeder

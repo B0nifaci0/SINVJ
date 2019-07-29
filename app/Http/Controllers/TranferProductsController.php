@@ -70,6 +70,7 @@ class TranferProductsController extends Controller
        {
         $user = Auth::user();
         $users = User::where('id', '!=', $user->id)->get();
+        return $users;
         $products = Product::where('branch_id', $user->branch_id)->get();
         $branches = Branch::all();
         return view('transfer/TrasferUser/add', compact('branches','users','products'));

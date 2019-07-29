@@ -53,7 +53,7 @@ ALTA PRODUCTO
                   <label>Recibe</label>
                   <select id="usuarios_1" name="destination_user_id" class="form-control ">
                     <option value="" selected disabled>Selecciona Colaborador</option>
-                  </select>
+                  </select> 
                 </div>
           <div class="col-md-3">
               <input type="hidden" name="status_product" value="0">
