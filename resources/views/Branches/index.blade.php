@@ -43,14 +43,17 @@ LISTA DE  SUCURSALES
     <div class="panel">
       <header class="panel-heading">
         <div class="panel-actions">
+          @if(Auth::user()->type_user == 1 )
           <div class="col-md-14 col-md-offset-2">
             <button onclick="window.location.href='/sucursales/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right " data-toggle="tooltip" data-original-title="Agregar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
+           @endif
         </div>
         <h3 class="panel-title">Sucursales</h3>
       </header>
       <div class="panel-body">
+            <!-- Tabla para listar sucursales-->
             <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
@@ -71,34 +74,44 @@ LISTA DE  SUCURSALES
               <tbody>
                   @foreach ($branches as $branch)
                   <tr id = "row{{$branch->id}}">
-                         <!-- <td>{{$branch->id}}</td>  -->
-                        <td>{{$branch->name }}</td>
-                         <!-- <td>{{$branch->shop->name }}</td> -->
-                        <td>    
-                          <a href="/sucursales/{{$branch->id}}/edit"<button type="button" 
-                          class="btn btn-icon btn-primary waves-effect waves-light waves-round"
-                          data-toggle="tooltip" data-original-title="Editar">
-                          <i class=" icon md-edit" aria-hidden="true"></i></button></a>
-                          <a href="/sucursales/{{$branch->id}}/producto" type="button" 
-                          class="btn btn-icon btn-warning waves-effect waves-light waves-round"
-                          data-toggle="tooltip" data-original-title="Productos">
-                          <i class="icon md-label-heart" aria-hidden="true"></i></button></a> 
-                          <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                              alt="{{$branch->id}}" role="button"
-                              data-toggle="tooltip" data-original-title="Borrar">
-                              <i class="icon md-delete" aria-hidden="true"></i>
-                          </button>                   
-                        </td>
+                    <!-- <td>{{$branch->id}}</td>  -->
+                    <td>{{$branch->name }}</td>
+                      <!-- <td>{{$branch->shop->name }}</td> -->
+                    <td>  
+                    @if(Auth::user()->type_user == 1 ) 
+                      <!-- Botón para editar sucursal--> 
+                      <a href="/sucursales/{{$branch->id}}/edit"<button type="button" 
+                      class="btn btn-icon btn-primary waves-effect waves-light waves-round"
+                      data-toggle="tooltip" data-original-title="Editar">
+                      <i class=" icon md-edit" aria-hidden="true"></i></button></a>
+                      <!--END Botón -->  
+                      <!-- Botón para borrar sucursal-->
+                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                        alt="{{$branch->id}}" role="button"
+                        data-toggle="tooltip" data-original-title="Borrar">
+                        <i class="icon md-delete" aria-hidden="true"></i>
+                      </button> 
+                      <!--END Botón -->  
+                      @endif
+                      <!-- Botón para ver productos por sucursal-->
+                      <a href="/sucursales/{{$branch->id}}/producto" type="button" 
+                      class="btn btn-icon btn-warning waves-effect waves-light waves-round"
+                      data-toggle="tooltip" data-original-title="Productos">
+                      <i class="icon md-label-heart" aria-hidden="true"></i></button></a> 
+                      <!--END Botón -->                 
+                    </td> 
                   </tr>
                   @endforeach
               </tbody>
             </table>
+            <!-- END Tabla-->
           </div>
         </div>
       </div>
     </div>
   <!-- End Panel Basic -->
 @endsection
+<!-- Función Sweet Alert para eliminar sucursal-->
 @section('delete-sucursales')
 <script type="text/javascript">
 console.log("a")
@@ -147,6 +160,7 @@ $(document).ready(function() {
 
 </script>
 @endsection
+<!--END Función-->
 
 @section('barcode-product')
 @endsection

@@ -11,98 +11,113 @@ LISTA DE  GASTOS
 @endsection
 @section('content')
   <div class="panel-body">
-	@if (session('mesage'))	
-	<div class="alert alert-success">
-				<strong>{{ session('mesage') }}</strong>
-	</div>
-		@endif
+    @if (session('mesage'))	
+      <div class="alert alert-success">
+        <strong>{{ session('mesage') }}</strong>
+      </div>
+    @endif
     @if (session('mesage-update'))	
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage-update') }}</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-	</div>
-		@endif
-			@if (session('mesage-delete'))	
-	<div class="alert alert-danger">
-				<strong>{{ session('mesage-delete') }}</strong>
-	</div>
-		@endif    
-  <div class="page-content">
-        <!-- Panel Basic -->
-    <div class="panel">
-      <header class="panel-heading">
-        <div class="row panel-actions">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    @endif
+    @if (session('mesage-delete'))	
+      <div class="alert alert-danger">
+        <strong>{{ session('mesage-delete') }}</strong>
+      </div>
+    @endif    
+    <div class="page-content">
+      <!-- Panel Basic -->
+      <div class="panel">
+        <header class="panel-heading">
+          <div class="row panel-actions">
+            <!-- Botón para generar PDF de gastos-->
             <div class="col-md-6 col-md-offset-2">
-                <button onclick="window.location.href='gastospdf'" 
+              <button onclick="window.location.href='gastospdf'" 
                 type="button" class=" btn btn-sm small btn-floating 
                 toggler-left  btn-danger waves-effect waves-light waves-round float-right"
                 data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
-              </div>
-          <div class="col-md-6 col-md-offset-2">
-            <button onclick="window.location.href='/gastos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
-             <i class="icon md-plus" aria-hidden="true"></i></button>
+                <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+              </button>
             </div>
-        </div>
-        <h3 class="panel-title">Gastos</h3>
-      </header>
-      <div class="panel-body">
-            <table id='example' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-              <thead>
-                <tr>
-                  <th>Clave</th>
-                  <th>Nombre</th>
-                  <th>Descripcion</th>
-                  <th>Imagen de     Comprobante</th>
-                  <th>Precio</th>
-                  <th>Tienda</th>
-                  <th>Opciones</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                    <th>Clave</th>
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    <th>Imagen de Comprobante</th>
-                    <th>Precio</th>
-                    <th>Tienda</th>
-                    <th>Opciones</th>
-                </tr>
-                </tfoot>
-              <tbody>
-                    @foreach ($expenses as $expense)
-                <tr id = "row{{ $expense->id }}">
-                    <td>{{ $expense->id}}</td>
-                    <td>{{ $expense->name }}</td>
-                    <td>{{ $expense->descripcion }}</td>
-                    <td>
-                        @php
-                        $image = route('images',"app/public/upload/expenses/$expense->image")
-                        @endphp
-                        <img width="100px" height="100px" src="{{ $image }}">
-                    </td>
-                    <td>$ {{$expense->price}}</td>
-                    <td>{{$expense->shop->name}}</td>
-                      <td>    
-                      <a href="/gastos/{{$expense->id}}/edit"<button type="button" 
-                        class="btn btn-icon btn-info waves-effect waves-light waves-round">
-                        <i class="icon md-edit" aria-hidden="true"></i></button></a>  
-                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                         alt="{{$expense->id}}" role="button">
-                          <i class="icon md-delete" aria-hidden="true"></i>      
-                      </td>
-                </tr>
-                    @endforeach
-              </tbody>
-            </table>
+            <!-- END Botón-->
+            <!-- Botón para crear gastos-->
+            <div class="col-md-6 col-md-offset-2">
+              <button onclick="window.location.href='/gastos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+                <i class="icon md-plus" aria-hidden="true"></i>
+              </button>
+            </div>
+            <!-- END Botón-->
           </div>
+          <h3 class="panel-title">Gastos</h3>
+        </header>
+        <div class="panel-body">
+        <!-- Tabla para listar gastos-->
+          <table id='example' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <thead>
+              <tr>
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Imagen de Comprobante</th>
+                <th>Precio</th>
+                <th>Tienda</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Imagen de Comprobante</th>
+                <th>Precio</th>
+                <th>Tienda</th>
+                <th>Opciones</th>
+              </tr>
+            </tfoot>
+            <tbody>
+              @foreach ($expenses as $expense)
+                <tr id = "row{{ $expense->id }}">
+                  <td>{{ $expense->id}}</td>
+                  <td>{{ $expense->name }}</td>
+                  <td>{{ $expense->descripcion }}</td>
+                  <td>
+                    @php
+                    $image = route('images',"app/public/upload/expenses/$expense->image")
+                    @endphp
+                    <img width="100px" height="100px" src="{{ $image }}">
+                  </td>
+                  <td>$ {{$expense->price}}</td>
+                  <td>{{$expense->shop->name}}</td>
+                  <td>  
+                     <!-- Botón para editar gasto-->  
+                    <a href="/gastos/{{$expense->id}}/edit"<button type="button" 
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round">
+                      <i class="icon md-edit" aria-hidden="true"></i></button>
+                    </a> 
+                    <!-- END Botón--> 
+                    <!-- Botón para eliminar gasto-->
+                    <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                      alt="{{$expense->id}}" role="button">
+                      <i class="icon md-delete" aria-hidden="true"></i> 
+                    </button> 
+                    <!-- END Botón-->    
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+          <!-- END Tabla-->
         </div>
       </div>
     </div>
+  </div>
 @endsection
+<!-- Función Sweet Alert para eliminar gasto-->
 @section('delete-gastos')
 <script type="text/javascript">
 console.log("a")
@@ -151,7 +166,7 @@ $(document).ready(function() {
 
 </script>
 @endsection
-
+<!-- END Función-->
 @section('footer')
 @endsection
 

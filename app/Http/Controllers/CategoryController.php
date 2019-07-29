@@ -50,7 +50,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Categories  Request $request)
+    public function store(CategoriesRequest $request)
     {
         //$name = $request->input("name");
         //return $name;

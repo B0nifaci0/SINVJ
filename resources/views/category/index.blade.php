@@ -9,99 +9,111 @@ LISTA DE  CATEGORIA
 
 @endsection
 @section('content')
-  <div class="panel-body">
-	@if (session('mesage'))	
-	<div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{ session('mesage') }}</strong>
+<div class="panel-body">
+  @if (session('mesage'))	
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{ session('mesage') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-	</div>
-		@endif
-			@if (session('mesage-update'))	
-      <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>{{ session('mesage-update') }}</strong>
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  @endif
+  @if (session('mesage-update'))	
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>{{ session('mesage-update') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-	</div>
-		@endif
-			@if (session('mesage-delete'))	
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>{{ session('mesage-delete') }}</strong>
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif
+  @if (session('mesage-delete'))	
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>{{ session('mesage-delete') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-	</div>
-		@endif    
-    <div class="page-content">
-        <!-- Panel Basic -->
+      <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif    
+  <div class="page-content">
+    <!-- Panel Basic -->
     <div class="panel">
-      <header class="panel-heading">
-        <div class="panel-actions">
-          <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/categorias/create'" type="button"
-             class=" btn btn-sm small btn-floating  toggler-left 
-              btn-info waves-effect waves-light waves-round float-right "
-               data-toggle="tooltip" data-original-title="Agregar">
-             <i class="icon md-plus" aria-hidden="true"></i></button>
+        <header class="panel-heading">
+          <div class="panel-actions">
+            @if(Auth::user()->type_user == 1 )
+            <div class="col-md-14 col-md-offset-2">
+              <!-- Botón Para editar categorias-->
+              <button onclick="window.location.href='/categorias/create'" type="button"
+                class=" btn btn-sm small btn-floating  toggler-left 
+                btn-info waves-effect waves-light waves-round float-right "
+                data-toggle="tooltip" data-original-title="Agregar">
+                <i class="icon md-plus" aria-hidden="true"></i>
+              </button>
+              <!-- END Botón-->
+            </div>
+            @endif
           </div>
-        </div>
-        <h3 class="panel-title">Categorías</h3>
-      </header>
-      <div class="panel-body">
-            <table id='categorias'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-              <thead>
-                <tr>
-                  <th>Clave</th>
-                  <th>Nombre</th>
-                  <th>Opciones</th>
-                </tr>
-              </thead>
-              <tfoot>
+            <h3 class="panel-title">Categorías</h3>
+        </header>
+        <div class="panel-body">
+        <!-- Tabla listar las categorias-->
+          <table id='categorias'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <thead>
               <tr>
-                  <th>Clave</th>
-                  <th>Nombre</th>
-                  <th>Opciones</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                  @foreach ($categories as $category)
-                  <tr id = "row{{ $category->id }}">
-                    <td>{{ $category->id}}</td>
-                    <td>{{ $category->name }}</td>
-                    <td> 
-
-                    <a href="/categorias/{{$category->id}}/edit"<button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round"
-                      data-toggle="tooltip" data-original-title="Editar">
-                      <i class="icon md-edit" aria-hidden="true"></i></button></a>  
-                     
-                      
-                      
-
-                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                       alt="{{$category->id}}" role="button" 
-                        data-toggle="tooltip" data-original-title="Borrar">
-                        <i class="icon md-delete" aria-hidden="true"></i>
-                    </button> 
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody>
-            </table>
-          </div>
+                <th>Clave</th>
+                <th>Nombre</th>
+                @if(Auth::user()->type_user == 1 )
+                <th>Opciones</th>
+                @endif
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Clave</th>
+                <th>Nombre</th>
+                @if(Auth::user()->type_user == 1 )
+                <th>Opciones</th>
+                @endif
+              </tr>
+            </tfoot>
+            <tbody>
+              @foreach ($categories as $category)
+              <tr id = "row{{ $category->id }}">
+                <td>{{ $category->id}}</td>
+                <td>{{ $category->name }}</td>
+                @if(Auth::user()->type_user == 1 )
+                <td>
+                  <!-- Botón Para editar categoria--> 
+                  <a href="/categorias/{{$category->id}}/edit"<button type="button" 
+                    class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                    data-toggle="tooltip" data-original-title="Editar">
+                    <i class="icon md-edit" aria-hidden="true"></i></button>
+                  </a>
+                  <!-- END Botón-->
+                  <!-- Botón Para eliminar categoria-->  
+                  <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                    alt="{{$category->id}}" role="button" 
+                    data-toggle="tooltip" data-original-title="Borrar">
+                    <i class="icon md-delete" aria-hidden="true"></i>
+                  </button>
+                  <!-- END Botón--> 
+                </td>
+                @endif
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+          <!-- END Tabla-->
         </div>
       </div>
     </div>
   </div>
-        <!-- End Panel Basic -->
-</div>
+  <!-- End Panel Basic -->
 
 @endsection
 
 
 
+<!-- Función Sweet Alert para eliminar categoria-->
 @section('delete-categorias')
 <script type="text/javascript">
 console.log("a")
@@ -150,6 +162,7 @@ $(document).ready(function() {
 
 </script>
 @endsection
+<!-- END Función-->
 
 
 

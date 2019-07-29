@@ -230,4 +230,5 @@ class UserController extends Controller
       $pdf  = PDF::loadView('Payroll.receipall', compact('users','date'));
       return $pdf->download('recibos.pdf');
     }
+
 }

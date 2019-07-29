@@ -10,81 +10,89 @@ ALTA PRODUCTO
 
 @endsection
 @section('content')
-
-
-<div class="page-content">
-  <div class="panel">
-    <div class="panel-body">
-     @if($errors->count() > 0)
-        <div class="alert alert-danger" role="alert">
-          <ul> 
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-          </ul>
-        </div>
-    @endif
-      <h2 align="center">Nuevo Traspaso</h2>
-      <br>  
-    <form class="" action="/traspasosAA" method="POST">
-      {{ csrf_field() }} 
-      <div class='row'>
-               <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
-                  <label>Producto</label>
-                  <select name="product_id" class="form-control" data-plugin="select2" data-placeholder="Seleccione Producto"
-                      data-allow-clear="true">
-                      <option></option>
-                      <optgroup label="Productos">
-                      @foreach($products as $product)
-                     <option value="{{ $product->id }}" required>{{$product->clave}}-{{ $product->name }}</option>
-                     @endforeach
-                      </optgroup>
-                   </select>
-               </div>
+  <div class="page-content">
+    <div class="panel">
+      <div class="panel-body">
+        @if($errors->count() > 0)
+          <div class="alert alert-danger" role="alert">
+            <ul> 
+              @foreach($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
+        <h2 align="center">Nuevo Traspaso</h2>
+        <br>  
+        <form class="" action="/traspasosAA" method="POST">
+          {{ csrf_field() }} 
+          <div class='row'>
+            <!-- Select para Seleccionar producto-->
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
-                <label class="floating-label" for="inputBranch">{{ __('Sucursal Origen') }}</label>
-                <select id="sucursales_1" class="form-control sucursales" name="last_branch_id" alt="1" >
-                <option value="*">Seleccione Sucursal</option>
-                @foreach ($branches as $branch)
-                    <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
+              <label>Producto</label>
+              <select id="product" class="form-control" data-plugin="select2" data-placeholder="Seleccione Producto"
+                data-allow-clear="true">
+                <option></option>
+                <optgroup label="Productos">
+                @foreach($products as $product)
+                <option value="{{ $product->name }}" required>{{$product->clave}}-{{ $product->name }}</option>
                 @endforeach
-                </select>
+                </optgroup>
+              </select>
+              <input type="text" name="product_id" id="product_id">
             </div>
-            <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
+            <!-- END Select-->
+            <!-- Select para Seleccionar Sucursal Origen-->
+            <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
+              <label class="floating-label" for="inputBranch">{{ __('Sucursal Origen') }}</label>
+              <input type="text" class="form-control" id="branch" readonly>
+              <input type="text" class="form-control" name="branch_id" id="branch_id" readonly>
+            </div>
+            <!-- END Select-->
+            <!-- Select para Seleccionar Quien recibe (Usuario)-->
+            <!-- <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputUser">{{ __('Quien lo manda') }}</label>
               <select id="usuarios_1" name="user_id" class="form-control "></select>
-            </div>
-
+            </div> -->
+            <!-- END Select-->
+            <!-- Select para Seleccionar Sucursal Destino-->
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
-                <label class="floating-label" for="inputBranch">{{ __('Destino') }}</label>
-                <select id="sucursales_1" class="form-control  sucursales1" name="new_branch_id" alt="1" >
+              <label class="floating-label" for="inputBranch">{{ __('Destino') }}</label>
+              <select id="sucursales_1" class="form-control  sucursales1" name="new_branch_id" alt="1" >
                 <option value="*">Seleccione Sucursal</option>
                 @foreach ($branches as $branch)
                     <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
                 @endforeach
-                </select>
+              </select>
             </div>
+            <!-- END Select-->
+            <!-- Select para Seleccionar Quien lo recibe (Usuario)-->
             <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputUser">{{ __('Quien lo recibe') }}</label>
               <select id="usuario_1" name="destination_user_id" class="form-control "></select>
             </div>
-                <br>
-              </div>
-             <br>
-             
+            <!-- END Select-->
+            <br>
+          </div>
+          <br> 
           <div>
-              <input type="hidden" name="status_product" value="0">
+            <input type="hidden" name="status_product" value="0">
           </div>   
-            <div class="form-group col-md-12">
-          <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
+          <div class="form-group col-md-12">
+            <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
+          </div>
         </form>
+      </div>
     </div>
   </div>
-</div>
 @endsection
-        
+<!-- Función para seleccionar solo los usuarios de esa sucursal(Combo dinamico)-->       
 @section('branch-user')
 <script type="text/javascript">
+
+var products = {!! $products !!};
+console.log("PPPP", products)
+
 
 $(".sucursales").change(function(){
   var selector =  $(this).attr("alt");
@@ -92,7 +100,6 @@ $(".sucursales").change(function(){
   var url = '/sucursales/' + id_sucursal + '/usuarios';
   $.get(url, function(json){
     $('#usuarios_' + selector).empty();
-    //alert('#municipios_' + selector);
         $.each(json,function(i, user){
           $('#usuarios_' + selector).append('<option value = '+ user.id +'>' + user.name +'</option>')
         });
@@ -110,7 +117,6 @@ $(".sucursales1").change(function(){
   var url = '/sucursales/' + id_sucursal + '/usuarios';
   $.get(url, function(json){
     $('#usuario_' + selector).empty();
-    //alert('#municipios_' + selector);
         $.each(json,function(i, user){
           $('#usuario_' + selector).append('<option value = '+ user.id +'>' + user.name +'</option>')
         });
@@ -122,5 +128,23 @@ $(".usuarios").change(function(){
       $("#id_user_" + selector).val(id_user);
     });
 
+
+$('#product').change(function() {
+  var name = $(this).val();
+  var p = products.filter(p => p.name = name)[0];
+  console.log(p);
+  $('#branch').val(p.branchName)
+  $('#branch_id').val(p.branchId)
+  $('#product_id').val(p.branchId);
+});
+
+// $('#sucursales_1').change(function(){
+//   console.log($(this).val());
+//   $.ajax({
+//     url: 
+//   })
+// });
+
 </script>
 @endsection
+<!-- END Función-->

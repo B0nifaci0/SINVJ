@@ -14,15 +14,15 @@ EDITAR LINEA
 <div class="page-content">
   <div class="panel">
     <div class="panel-body">
-     @if($errors->count() > 0)
+      @if($errors->count() > 0)
         <div class="alert alert-danger" role="alert">
           <ul>
             @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
+              <li>{{ $error }}</li>
             @endforeach
           </ul>
         </div>
-    @endif
+      @endif
       <center><h3> Linea</h3></center>
       <form action="{{ route('lineas.update', ['id' => $line->id]) }}" method="POST">
         {{ csrf_field() }}
@@ -48,6 +48,5 @@ EDITAR LINEA
       </form>
     </div>
   </div>
-</div>
 </div>
 @endsection

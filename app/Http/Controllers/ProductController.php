@@ -62,14 +62,6 @@ class ProductController extends Controller
     
     public function indexCOP()
     {
-     /* $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
-      $categories = Category::all();
-      $user = Auth::user();
-        //return $user ;
-      $lines = Line::all();
-      $statuses = Status::all();
-      return view('product/index', compact('user','products', 'categories','lines','statuses')); */
-        
         $user = Auth::user();
         $shop_id = $user->shop->id;
         if($user->type_user == User::CO) {
@@ -94,23 +86,9 @@ class ProductController extends Controller
 
     public function indexCO()
     {
-     /* $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
-      $categories = Category::all();
-      $user = Auth::user();
-        //return $user ;
-      $lines = Line::all();
-      $statuses = Status::all();
-      return view('product/index', compact('user','products', 'categories','lines','statuses')); */
-        
         $user = Auth::user();
         $shop_id = $user->shop->id;
-        if($user->type_user == User::CO) {
-          $products = Product::where('branch_id', $user->branch_id)->get();
-          
-        } else {
-          $products = Shop::find($shop_id)->products()->get();
-        
-        }
+        $products = Shop::find($shop_id)->products()->get();
         //return $products;
         //$categories = Category::all();
         $shops = Auth::user()->shop()->get();

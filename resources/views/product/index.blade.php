@@ -12,142 +12,156 @@ LISTA PRODUCTO
 @endsection
 @section('content')
   <div class="panel-body">
-
-	@if (session('mesage'))
-	<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>{{ session('mesage') }}</strong>
+    @if (session('mesage'))
+     <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{ session('mesage') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-	</div>
-  @endif
+         <span aria-hidden="true">&times;</span>
+      </button>
+     </div>
+    @endif
     @if (session('mesage-update'))	
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>{{ session('mesage-update') }}</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-	</div>
-		@endif
-			@if (session('mesage-delete'))	
+          <strong>{{ session('mesage-update') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    @endif
+    @if (session('mesage-delete'))	
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>{{ session('mesage-delete') }}</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-	</div>
-		@endif
-		<div class="page-content"> 
-        <!-- Panel Basic -->
-    <div class="panel">
-      <header class="panel-heading">
-        <div class="panel-actions">
-          <div class="row">
-          @if(Auth::user()->type_user == 1 )
+          <strong>{{ session('mesage-delete') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    @endif
+		<div class="page-content">
+      <!-- Panel Basic -->
+      <div class="panel">
+        <header class="panel-heading">
+          <div class="panel-actions">
+            <div class="row">
+              @if(Auth::user()->type_user == 1 )
+                <!-- Botón para Generar PDF de productos-->
                 <div class="col-md-4 col-md-offset-2">
                   <button onclick="window.location.href='productospdf'" 
-                  type="button" id='pdf01' name='pdf01'class=" btn btn-sm small btn-floating 
-                   toggler-left  btn-danger waves-effect waves-light waves-round float-right"
-                   data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                    type="button" id='pdf01' name='pdf01'class=" btn btn-sm small btn-floating 
+                    toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                    data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                  </button>
                 </div>
+                <!-- END Botón-->
+                <!-- Botón para generar Excel-->
                 <div class="col-md-4 col-md-offset-2">
                   <button onclick="window.location.href='#'" 
-                  type="button" class=" btn btn-sm small btn-floating 
-                   toggler-left  btn-success waves-effect waves-light waves-round float-right"
-                   data-toggle="tooltip" data-original-title="Generar reporte Excel">
-                   <i class="icon fa-file-excel-o" aria-hidden="true"></i></button>
+                    type="button" class=" btn btn-sm small btn-floating 
+                    toggler-left  btn-success waves-effect waves-light waves-round float-right"
+                    data-toggle="tooltip" data-original-title="Generar reporte Excel">
+                    <i class="icon fa-file-excel-o" aria-hidden="true"></i>
+                  </button>
                 </div>
-          @endif
+                <!-- END Botón-->
+                <!-- Botón para editar productos-->
                 <div class="col-md-4 col-md-offset-2">
                   <button onclick="window.location.href='/productos/create'" 
-                  type="button" class=" btn btn-sm small btn-floating 
-                   toggler-left  btn-info waves-effect waves-light waves-round float-right"
-                   data-toggle="tooltip" data-original-title="Agregar">
-                   <i class="icon md-plus" aria-hidden="true"></i></button>
+                    type="button" class=" btn btn-sm small btn-floating 
+                    toggler-left  btn-info waves-effect waves-light waves-round float-right"
+                    data-toggle="tooltip" data-original-title="Agregar">
+                    <i class="icon md-plus" aria-hidden="true"></i>
+                  </button>
                 </div>
+                <!-- END Botón-->
+              @endif
+            </div>
           </div>
-        </div>
-        <h3 class="panel-title">Productos </h3>
-      </header>
-      <div class="panel-body">
-            <table id="example"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+          <h3 class="panel-title">Productos </h3>
+        </header>
+        <div class="panel-body">
+        <!-- Tabla para listar productos-->
+          <table id="example"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
-            {{ csrf_field() }}
-
-          <tr>  <th>Clave</th>
-                <!--<th>Nombre</th>-->
-                 <th>Descripción</th>
-                 <th>Peso</th>
-                 <th>Observaciónes</th>
-                 <th>Imagen</th>
-                 <th>Categoría</th>
-                 <th>Linea</th>
-                 <th>Sucursal</th>
-                 <th>Status</th>
-                 <th>Opciones</th>
+              {{ csrf_field() }}
+              <tr>  
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Peso</th>
+                <th>Observaciónes</th>
+                <th>Imagen</th>
+                <th>Categoría</th>
+                <th>Linea</th>
+                <th>Sucursal</th>
+                <th>Status</th>
+                @if(Auth::user()->type_user == 1 )
+                  <th>Opciones</th>
+                @endif
               </tr>
             </thead>
             <tfoot>
-            <tr>
-            <th>Clave</th>
-            <!--<th>Nombre</th>-->
-                 <th>Descripción</th>
-                 <th>Peso</th>
-                 <th>Observaciónes</th>
-                 <th>Imagen</th>
-                 <th>Categoría</th>
-                 <th>Linea</th>
-                 <th>Sucursal</th>
-                 <th>Status</th>
-                 <th>Opciones</th>
+              <tr>
+                <th>Clave</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Peso</th>
+                <th>Observaciónes</th>
+                <th>Imagen</th>
+                <th>Categoría</th>
+                <th>Linea</th>
+                <th>Sucursal</th>
+                <th>Status</th>
+                @if(Auth::user()->type_user == 1 )
+                <th>Opciones</th>
+                @endif
               </tr> 
             </tfoot>
             <tbody>
-
-      @foreach ($products as $i => $product)
-        <tr id="row{{$product->id}}">
-                 <td>{{ $product->clave }}</td> 
-                <!--<td>{{ $product->name }}</td>-->
-                 <td>{{ $product->description }}</td>
-                 <td>{{ $product->weigth }}</td>
-                 <td>{{ $product->observations }}</td>
-                 
+              @foreach ($products as $i => $product)
+                <tr id="row{{$product->id}}">
+                  <td>{{ $product->clave }}</td> 
+                  <td>{{ $product->name }}</td>
+                  <td>{{ $product->description }}</td>
+                  <td>{{ $product->weigth }}</td>
+                  <td>{{ $product->observations }}</td>
                   <td>
-							@php
-              $image = route('images',"app/public/upload/products/$product->image")
-							@endphp
-							<img width="100px" height="100px" src="{{ $image }}">
-						</td>
-                 <td>{{ $product->category->name }}</td>
-                 <td>{{ $product->line->name }}</td>
-                 <td>{{ $product->branch->name }}</td>
-                 <td>{{ $product->status->name }}</td>
-                 <td>    
-                
-                 <a href="/productos/{{$product->id}}/edit"<button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round"
-                      data-toggle="tooltip" data-original-title="Editar">
-                      <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      
-
+                    @php
+                    $image = route('images',"app/public/upload/products/$product->image")
+                    @endphp
+                    <img width="100px" height="100px" src="{{ $image }}">
+                  </td>
+                  <td>{{ $product->category->name }}</td>
+                  <td>{{ $product->line->name }}</td>
+                  <td>{{ $product->branch->name }}</td>
+                  <td>{{ $product->status->name }}</td>
+                  @if(Auth::user()->type_user == 1 )
+                    <td>   
+                      <!-- Botón para editar producto-->
+                      <a href="/productos/{{$product->id}}/edit"<button type="button" 
+                        class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                        data-toggle="tooltip" data-original-title="Editar">
+                        <i class="icon md-edit" aria-hidden="true"></i></button>
+                      </a>
+                      <!-- END Botón-->
+                      <!-- Botón para eliminar producto -->
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                       alt="{{$product->id}}" role="button" 
+                        alt="{{$product->id}}" role="button" 
                         data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
-                    </button>   
-                  </td>
+                      </button>
+                      <!-- END Botón-->   
+                    </td>
+                  @endif
                 </tr>
-                @endforeach
+              @endforeach
             </tbody>
           </table>
+          <!-- END Tabla-->
         </div>
       </div>
-    </div>
   </div>
+  <!-- End Panel Basic -->
 </div>
-
-<!-- End Panel Basic -->
 
 @endsection
 
@@ -155,6 +169,7 @@ LISTA PRODUCTO
 
 @endsection
 
+<!-- Función Sweet Alert para eliminar producto-->
 @section('delete-productos')
 <script type="text/javascript">
 console.log("a")
@@ -202,5 +217,6 @@ $(document).ready(function() {
 });
 </script>
 @endsection
+<!-- END Función-->
 
 

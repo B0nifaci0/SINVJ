@@ -74,7 +74,7 @@ Route::get('sucursal', 'BranchController@indexCo');
 // Productos CO
 Route::get('productosCO', 'ProductController@indexCo');
 // Productos COP
-Route::get('productosCOP', 'ProductController@indexCOP');
+Route::get('productoCO', 'ProductController@indexCOP');
 
 Route::post('traspasos/respuesta', 'TranferProductsController@answerTransferRequest');
 
@@ -95,8 +95,8 @@ Route::get('/usuarios/activo/{id}', 'UserController@soft');
 
 //Sucursales Producto
 Route::resource('sucursales.producto', 'BranchProductsController'); 
-Route::resource('sucursal', 'TestController');
-Route::get('sucursales/{id}/sucursalespdf', 'TestController@exportPdf'); 
+Route::get('sucursal', 'BranchController@indexCo');
+Route::get('sucursalespdf{id}', 'TestController@exportPdf')->name('sucursalespdf');
 
 //Sucursal Producto PDF
 //Route::get('sucursalpdf/{id}', 'BranchProductsController@exportPdf')->name('sucursalpdf');

@@ -27,6 +27,11 @@ class Shop extends Model
         return $this->hasMany(Branch::class);
     }
 
+    public function admin()
+    {
+      return $this->belongsTo(User::class);
+    }
+
     public function products()
     {
       return $this->hasMany(Product::class);

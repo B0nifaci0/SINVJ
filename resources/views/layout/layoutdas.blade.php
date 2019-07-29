@@ -412,7 +412,7 @@
       <div class="site-menubar-body">
         <div>
           <div>
-          <!-- AA =(1)  Administrator-->
+          <!--Menú AA =(1)  Administrator-->
           @if(Auth::user()->type_user == 1)
             <ul class="site-menu" data-plugin="menu">
                 <li class="site-menu-item active">
@@ -651,7 +651,7 @@
                   </li>
                   <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
-                      <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
+                      <i class="site-menu-icon fa-group" aria-hidden="true"></i>
                         <span class="site-menu-title">Grupos</span>
                       <span class="site-menu-arrow"></span>
                     </a>
@@ -680,10 +680,10 @@
                   </li>
               </ul>
             @endif
-            <!-- AA =(1) END-Administrator-->
+            <!--Menú AA =(1) END-Administrator-->
 
-            <!-- SA =(2) Sub-Administrator-->
-            @if($user->type_user == 2)
+            <!--Menú SA =(2) Sub-Administrator-->
+            @if(Auth::user()->type_user == 2)
 
               <ul class="site-menu" data-plugin="menu">
                   <li class="site-menu-item active">
@@ -772,10 +772,10 @@
                     </li>
                 </ul>
               @endif
-              <!-- SA =(2) END-Sub-Administrator-->
+              <!--Menú SA =(2) END-Sub-Administrator-->
 
-              <!-- CO =(3) Colaborador-->
-              @if($user->type_user == 3)
+              <!--Menú CO =(3) Colaborador-->
+              @if(Auth::user()->type_user == 3)
               <ul class="site-menu" data-plugin="menu">
                   <li class="site-menu-item active">
                     <a class="animsition-link" href="/sucursal">
@@ -783,12 +783,13 @@
                       <span class="site-menu-title">Inicio</span>
                     </a>
                   </li>
+                    <!-- Productos-->
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
                           <a class="animsition-link" href="/productosCO">
-                          <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
+                            <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
                             <span class="site-menu-title">Productos</span>
-                            </a>
+                          </a>
                       </li>
                     </ul>
                   <!--END-Productos-->
@@ -799,14 +800,16 @@
                         <span class="site-menu-title">Sucursal</span>
                       <span class="site-menu-arrow"></span>
                     </a>
+                    <!-- Mis Productos-->
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
-                          <a class="animsition-link" href="/productosCOP">
+                          <a class="animsition-link" href="/productoCO">
                           <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Productos</span>
                         </a>
                       </li>
                     </ul>
+                    <!-- END Mis Productos-->
                   </li>
                   <!--END-Sucursales-->
                   <!--Ventas-->
@@ -816,6 +819,7 @@
                         <span class="site-menu-title">Ventas</span>
                       <span class="site-menu-arrow"></span>
                     </a>
+                    <!-- Agregar Venta-->
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/ventas/create">
@@ -824,6 +828,8 @@
                         </a>
                       </li>
                     </ul>
+                    <!-- END Agregar Venta-->
+                    <!-- Mis Ventas-->
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/ventasCO">
@@ -832,12 +838,16 @@
                         </a>
                       </li>
                     </ul>
+                    <!-- END Mis Ventas-->
+                    <!--END-Ventas-->
+                    <!-- Traspasos-->
                     <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
                       <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
                         <span class="site-menu-title">Traspasos</span>
                       <span class="site-menu-arrow"></span>
                     </a>
+                    <!-- Mis Traspasos-->
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/traspasos">
@@ -846,8 +856,9 @@
                         </a>
                       </li>
                     </ul>
+                    <!-- END Mis Taspasos-->
+                    <!-- END Taspasos-->
                   </li>
-                  <!--END-Ventas-->
                     </ul>
                   </li>
                 </ul>
