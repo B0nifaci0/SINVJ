@@ -29,7 +29,7 @@ class ProductController extends Controller
   }
 /** FUNCIONES PARA CRUD DE PRODUCTO */
   public function index()
-  {
+  { 
     $user = Auth::user();
    /* $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
     $categories = Category::all();

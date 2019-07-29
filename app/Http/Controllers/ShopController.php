@@ -118,7 +118,7 @@ class ShopController extends Controller
        $shop->phone_number = $request->phone_number;
        $shop->save();
     //return $request->all();
-    return redirect('/tiendas')->with('mesage-update', 'La tienda se ha modificoo exitosamente!');;
+    return redirect('/principal')->with('mesage-update', 'La tienda se ha modificoo exitosamente!');;
   }
 
 
