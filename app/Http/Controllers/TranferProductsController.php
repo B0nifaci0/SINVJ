@@ -101,7 +101,10 @@ class TranferProductsController extends Controller
         return view('transfer/add', compact('branches','users','products','user'));
        }
 
-       
+       public function show()
+       {
+       return view('transfer.show');
+       }
 
        public function store(Request $request)
        {
