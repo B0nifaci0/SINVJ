@@ -30,33 +30,30 @@ ALTA PRODUCTO
             <!-- Select para Seleccionar producto-->
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
               <label>Producto</label>
-              <select name="product_id" class="form-control" data-plugin="select2" data-placeholder="Seleccione Producto"
+              <select id="product" class="form-control" data-plugin="select2" data-placeholder="Seleccione Producto"
                 data-allow-clear="true">
                 <option></option>
                 <optgroup label="Productos">
                 @foreach($products as $product)
-                <option value="{{ $product->id }}" required>{{$product->clave}}-{{ $product->name }}</option>
+                <option value="{{ $product->name }}" required>{{$product->clave}}-{{ $product->name }}</option>
                 @endforeach
                 </optgroup>
               </select>
+              <input type="text" name="product_id" id="product_id">
             </div>
             <!-- END Select-->
             <!-- Select para Seleccionar Sucursal Origen-->
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputBranch">{{ __('Sucursal Origen') }}</label>
-              <select id="sucursales_1" class="form-control sucursales" name="last_branch_id" alt="1" >
-                <option value="*">Seleccione Sucursal</option>
-                @foreach ($branches as $branch)
-                    <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
-                @endforeach
-              </select>
+              <input type="text" class="form-control" id="branch" readonly>
+              <input type="text" class="form-control" name="branch_id" id="branch_id" readonly>
             </div>
             <!-- END Select-->
             <!-- Select para Seleccionar Quien recibe (Usuario)-->
-            <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
+            <!-- <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputUser">{{ __('Quien lo manda') }}</label>
               <select id="usuarios_1" name="user_id" class="form-control "></select>
-            </div>
+            </div> -->
             <!-- END Select-->
             <!-- Select para Seleccionar Sucursal Destino-->
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
@@ -93,6 +90,10 @@ ALTA PRODUCTO
 @section('branch-user')
 <script type="text/javascript">
 
+var products = {!! $products !!};
+console.log("PPPP", products)
+
+
 $(".sucursales").change(function(){
   var selector =  $(this).attr("alt");
   var id_sucursal = $(this).val();
@@ -126,6 +127,23 @@ $(".usuarios").change(function(){
       var selector = $(this).attr("alt");
       $("#id_user_" + selector).val(id_user);
     });
+
+
+$('#product').change(function() {
+  var name = $(this).val();
+  var p = products.filter(p => p.name = name)[0];
+  console.log(p);
+  $('#branch').val(p.branchName)
+  $('#branch_id').val(p.branchId)
+  $('#product_id').val(p.branchId);
+});
+
+// $('#sucursales_1').change(function(){
+//   console.log($(this).val());
+//   $.ajax({
+//     url: 
+//   })
+// });
 
 </script>
 @endsection

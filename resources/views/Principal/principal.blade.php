@@ -6,20 +6,79 @@ Panel Principal
 @section('nav')
 
 @endsection
-@section('menu')
+@section('menu') 
 
 @endsection
 @section('content')
 <!-- Page -->
 <div class="page">
+    @if (session('mesage'))	
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>{{ session('mesage') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+      @endif
+      @if (session('mesage-update'))	
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <strong>{{ session('mesage-update') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+      @endif
+        @if (session('mesage-delete'))	
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>{{ session('mesage-delete') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+      @endif    
   <div class="page-content container-fluid">
     <div class="row" data-plugin="matchHeight" data-by-row="true">
-      <div class="col-md-12">
-        <a class="animsition-link" href="/tiendas">
-            <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+      <div class="col-md-12"> 
+        <div class="panel">
+          <div class="panel-heading bg-primary  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
+            <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultTwo" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultTwo">
+          Tienda:  {{$shop->name}}
+          <a class="animsition-link col-md-6" href="/tiendas/{{$shop->id}}/edit">
+            <i class="site-menu-icon icon md-help" aria-hidden="true"></i>
               <span class="site-menu-title">Actualizar tienda</span>
             </a>
+            <a class="animsition-link" href="/tiendas">
+              <i class="site-menu-icon icon md-alert-circle col-md-6" aria-hidden="true"></i>
+                <span class="site-menu-title">Informacion de la tienda</span>
+              </a>
+        </a>
+          </div>
+          <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo" aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">
+            <div class="panel-body">
+            <form action="/">
+              <div class=" col-12"> 
+                  <div class="panel panel-bordered">
+                    <div class="panel-body row col-12">
+                      <div class="row">
+                          <div class="col-3">
+                            <label>Seleccione Sucursal</label>
+                          </div>
+                          <div class="col-3">
+                            <label>Seleccione Linea</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="input-group col-3">
+                          <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
+                      </div>
+                  </div>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="col-xl-3 col-md-6">
         <!-- Widget Linearea One-->
         <div class="card card-shadow" id="widgetLineareaOne">

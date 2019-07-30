@@ -15,7 +15,7 @@ class CreateBranchesTable extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 15)->unique()->default('NULL');
+            $table->string('name', 50)->unique()->default('NULL');
             //asignamos la llave forane
             $table->integer('shop_id')->unsigned();
             //funcion para crear la llave foranea//onDelete sirve para boorrar los articulos del usuario que se elimine en forma de4 cascada

@@ -220,7 +220,7 @@ class UserController extends Controller
       return $pdf->download('recibo.pdf');
     }
 
-    public function receiptallPDF(){
+    public function receiptallPDF(){ 
     
       $users = Auth::user()->shop->users;
 
@@ -230,4 +230,5 @@ class UserController extends Controller
       $pdf  = PDF::loadView('Payroll.receipall', compact('users','date'));
       return $pdf->download('recibos.pdf');
     }
+
 }

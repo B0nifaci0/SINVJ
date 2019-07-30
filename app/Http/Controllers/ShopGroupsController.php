@@ -31,7 +31,8 @@ class ShopGroupsController extends Controller
             'group_code' => time(),
             'password' => Str::random(10), 
         ]);
-
+        $user->shop->shop_group_id = $shopGroup->id;
+        $user->shop->save();
         return redirect('/grupos')->with('mesage', 'Se ha creado el grupo correctamente');
     }
 

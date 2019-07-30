@@ -189,13 +189,15 @@ $(document).ready(function(){
 
 var lines = {!! $lines !!};
 
-$('#line_price').val(lines[0].price);
+console.log("lines", lines)
+
+$('#line_price').val(lines[0].sale_price);
 
 $('#line_id').change(function() {
   var id = $(this).val();
   var line = lines.filter(l => l.id == id)[0];
-  $('#line_price').val(line.price);
-});
+  $('#line_price').val(line.sale_price);
+}); 
 
 $('#multiplicador').keyup(function() {
   var total = $('#line_price').val() * $(this).val();

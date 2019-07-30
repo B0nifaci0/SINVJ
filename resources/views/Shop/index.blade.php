@@ -52,7 +52,6 @@ LISTA TIENDAS
                     <th>Correo</th>
                     <th>Numero telefonico</th>
                     <th>Logo</th>
-                    <th>Opciones</th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -62,7 +61,6 @@ LISTA TIENDAS
                     <th>Correo</th>
                     <th>Numero telefonico</th>
                     <th>Logo</th>
-                    <th>Opciones</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -78,12 +76,6 @@ LISTA TIENDAS
                               @endphp
                               <img width="100px" height="100px" src="{{ $image }}">
                             </td>
-                          <td>    
-                              <a href="/tiendas/{{$shop->id}}/edit"<button type="button" 
-                                class="btn btn-icon btn-info waves-effect waves-light waves-round"
-                                data-toggle="tooltip" data-original-title="Editar">
-                                <i class="icon md-edit" aria-hidden="true"></i></button></a>
-                      </td>
                     </tr>
                     @endforeach
                 </tbody>

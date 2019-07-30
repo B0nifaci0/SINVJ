@@ -1,5 +1,5 @@
 <?php
-
+//use App\Municipalities;
 use Illuminate\Database\Seeder;
 
 class MunicipalitiesTableSeeder extends Seeder
