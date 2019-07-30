@@ -42,7 +42,7 @@ Panel Principal
         <div class="panel">
           <div class="panel-heading bg-primary  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
             <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultTwo" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultTwo">
-          INFORMACION REFERENTE A LA TIENDA
+          Tienda:  {{$shop->name}}
           <a class="animsition-link col-md-6" href="/tiendas/{{$shop->id}}/edit">
             <i class="site-menu-icon icon md-help" aria-hidden="true"></i>
               <span class="site-menu-title">Actualizar tienda</span>

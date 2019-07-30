@@ -8,7 +8,7 @@ Panel Principal
 @endsection
 @section('menu')
 
-@endsection
+@endsection 
 @section('content')
  <!-- Formulario de Reporte de Productos por estatus-->
     <div class="page">
@@ -25,7 +25,7 @@ Panel Principal
                       </div>
                       <div class="panel-collapse collapse" id="exampleCollapseDefaultOne" aria-labelledby="exampleHeadingDefaultOne" role="tabpanel" style="">
                         <div class="panel-body">
-                        <form action="/">
+                        <form action="estatusproducto">
                           <div class=" col-12"> 
                               <div class="panel panel-bordered">
                                 <div class="panel-body row col-12">
@@ -41,11 +41,11 @@ Panel Principal
                                           <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                           @endforeach
                                           </select>
-                                      </div>
+                                      </div> 
 
                                       <div class="col-3">
                                         <label>Seleccione Estatus</label>
-                                          <select id=""  name="branch_id" alt="1" class="form-control round sucursales">
+                                          <select id=""  name="estatus_id" alt="1" class="form-control round sucursales">
                                             <option value="">Selecciona Estatus</option>
                                             <option value="*">Tod@s</option>
                                             @foreach($status as $onestatus)
@@ -55,8 +55,8 @@ Panel Principal
                                       </div>
                                       <div class="col-3">
                                         <label>Seleccione Categoria</label>
-                                          <select id=""  name="id" alt="1" class="form-control round sucursales">
-                                            <option value="">Selecciona Estatus</option>
+                                          <select id=""  name="category_id" alt="1" class="form-control round sucursales">
+                                            <option value="">Selecciona Categoria</option>
                                             <option value="*">Tod@s</option>
                                             @foreach($categories as $categories)
                                           <option value="{{$categories->id}}" required>{{$categories->name}}</option>
@@ -81,7 +81,7 @@ Panel Principal
                               </div>
                             </div>
                         </form> 
-                        </div>
+                        </div> 
                       </div>
                     </div>
                     <div class="panel">
@@ -92,7 +92,7 @@ Panel Principal
                       </div>
                       <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo" aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">
                         <div class="panel-body">
-                        <form action="/">
+                        <form action="gramoslinea">
                           <div class=" col-12"> 
                               <div class="panel panel-bordered">
                                 <div class="panel-body row col-12">
@@ -139,7 +139,7 @@ Panel Principal
                       </div>
                       <div class="panel-collapse" id="exampleCollapseDefaultThree" aria-labelledby="exampleHeadingDefaultThree" role="tabpanel">
                         <div class="panel-body">
-                        <form action="/">
+                        <form action="entradasproducto">
                           <div class=" col-12"> 
                               <div class="panel panel-bordered">
                                 <div class="panel-body row col-12">

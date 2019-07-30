@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Reporte de Nominas</title>
+   <title>Reporte de Productos</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
@@ -16,7 +16,7 @@
        margin: auto;
       }
     }
-    .page-break{ 
+    .page-break{
       width: 980px;
       margin: 0 auto;
     }
@@ -51,13 +51,31 @@
 <body>
 <div class="page-content">
     <div class="panel">
-    <h2 align="center" style="color:blue">Nominas</h2>
-    <label>De {{$fech1}} a {{$fech2}}</label>
-    <br>
-    <label>Empleado <label style="color:red">{{$users -> name}}</label> el salario es 
-                 <label style="color:red">$ {{$salary}} </label>por semana, trabajo
-                 <label style="color:red">{{$hoy}} </label> semanas</label>
-    <label style="color:blue">El pago total fue de : $ {{$nomina}}</label>
+    <h2 align="center">Productos</h2>
+        <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+              <thead>
+                <tr>
+				 <th scope="col">Clave</th>
+                 <th scope="col">Nombre</th>
+                 <th scope="col">Descripción</th>
+                 <th scope="col">Peso</th>
+                 <th scope="col">Observaciones</th>
+                </tr>
+              </thead>  
+              <tbody>
+              
+      @foreach ($products as $i => $product)
+                <tr id="row{{$product->id}}">
+                 <td>{{ $product->clave }}</td> 
+                 <td>{{ $product->name }}</td>
+                 <td>{{ $product->description }}</td>
+                 <td>{{ $product->weigth }} gr</td>
+                 <td>{{ $product->observations }}</td>
+                </tr>
+                  @endforeach
+              </tbody>
+            </table>
           </div>
           </div>
     </body>

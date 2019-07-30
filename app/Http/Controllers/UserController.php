@@ -220,7 +220,7 @@ class UserController extends Controller
       return $pdf->download('recibo.pdf');
     }
 
-    public function receiptallPDF(){
+    public function receiptallPDF(){ 
     
       $users = Auth::user()->shop->users;
 

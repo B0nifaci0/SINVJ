@@ -273,4 +273,26 @@ class ProductController extends Controller
       return view('product.Reports.reportproduct',compact('branch','user','status','line','categories'));
      }
 
+     public function reportEstatus(Request $request){
+
+      $branches = Branch::where("id","=",$request->branch_id)->get();
+      $products = Product::where("branch_id","=",$request->branch_id)
+                          ->where("status_id","=",$request->estatus_id)
+                          ->where("category_id","=",$request->category_id)
+                          ->where("line_id","=",$request->id)
+                          ->get();
+
+      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches'));
+      return $pdf->stream('ReporteEstatus.pdf');
+
+      
+     }
+
+     public function reportLineaG(){
+      return('Reporte por lineas y gramos');
+    } 
+
+    public function reportEntradas(){
+      return('Reporte por entradas de productos');
+    }    
 }
