@@ -315,9 +315,13 @@ class ProductController extends Controller
       $fech2 = Carbon::parse($request->fecter);
       $branches = Branch::where("id","=",$request->branch_id)->get();
       $lines = Line::where("id","=",$request->id)->get();
-      $products = Product::where('created_at',">=",$fech1)
-                          ->where('created_at',"<=",$fech2)
+      $products = Product::where("branch_id","=",$request->branch_id)
+                          ->where("line_id","=",$request->id)
+                          ->where('created_at',">=",$fech1 )
+                          ->where('created_at' ,"<=",$fech2)
                           ->get();
+      
+                          
      $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
      return $pdf->stream('ReporteEntradas.pdf');
     }    
