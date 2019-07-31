@@ -107,8 +107,8 @@ LISTA DE  LINEA
                 <tr id = "row{{ $line->id }}">
                   <td>{{ $line->id}}</td>
                   <td>{{ $line->name }}</td>
-                  <td>$ {{ $line->price }}</td>
-                  @if(Auth::user()->type_user == 1 )
+                  <td>$ {{ $line->sale_price }}</td>
+                  @if(Auth::user()->type_user == 1 ) 
                   <td>    
                     <!-- Botón para editar linea-->    
                     <a href="/lineas/{{$line->id}}/edit"<button type="button" 
