@@ -146,7 +146,7 @@ img {
     max-width: center;
     text-align: center;
 }
-@page {size: 5.5cm 30cm;
+@page {size: 5.5cm 25cm;
      }
    </style>
 
@@ -158,7 +158,6 @@ img {
                 <p class="centrado">@foreach ($shops as  $shop) 
                 {{ $shop->name}}
                 <br>Toluca de Lerdo #1006</p>
-                @endforeach
                 <br>
             <table>
                 <tbody>
@@ -214,7 +213,9 @@ img {
                     @endforeach
                     <br>
             <p class="centrado">¡GRACIAS POR SU COMPRA!
-                <br>joyeriafina.com</p>
+                <br>{{$shop->email }}<br>
+                {{$shop->phone_number }}</p>
+                @endforeach
         </div>
     </body>
 </html>
