@@ -38,7 +38,7 @@ MODIFICACIÓN TIENDA
                     <input type="text" class="form-control" name="description"  value="{{$shop->description}}" required>
                 </div>
                 <div class="form-group form-material col-md-6">
-                        <label>Correol</label>
+                        <label>Correo</label>
                         <input type="text" class="form-control" name="email"  value="{{$shop->email}}" required>
                     </div>
                     <div class="form-group form-material col-md-6">

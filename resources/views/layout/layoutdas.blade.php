@@ -444,11 +444,10 @@
                     </ul>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
-                    <a class="animsition-link" href="/reportes-productos">
-                      <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
-                        <span class="site-menu-title">Reportes</span>
-                      <span class="site-menu-arrow"></span>
-                    </a>
+                          <a class="animsition-link" href="/reportes-productos">
+                          <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mis Productos</span>
+                        </a>
                     <!--<ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="#">
@@ -664,7 +663,7 @@
                     </li>
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/grupos/invitacion">
-                        <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
+                        <i class="site-menu-icon icon fa-wechat" aria-hidden="true"></i>
                           <span class="site-menu-title">Unirme a un grupo</span>
                       </a>
                     </li>
