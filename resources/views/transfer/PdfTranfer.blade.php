@@ -90,7 +90,7 @@
                 <p class="quienrecibe">Recibió................{{$transfer->destinationUser->name}}</p>
                 <br>
                 <p class="firma">________________
-                Firma</p> 
+                <br>Firma</p> 
         </div>
         @endforeach
     </body>

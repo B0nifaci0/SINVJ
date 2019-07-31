@@ -48,7 +48,7 @@ Route::get('lineasexc', 'LineController@exportExcel');
 //Taspasos
 Route::resource('traspasos', 'TranferProductsController');
 Route::resource('traspasosAA', 'TrasferUserController');
-//Route::get('traspasospdf', 'TranferProductsController@exportPdf');
+Route::get('traspasospdf', 'TranferProductsController@exportPdfall');
 
 //Traspaso id PDF
 Route::get('traspasopdf/{id}', 'TranferProductsController@exportPdf')->name('traspasopdf');

@@ -53,7 +53,7 @@ ALTA VENTA
                       <option></option>
                     <optgroup label="Productos">
                       @foreach($productsBranch as $product)
-                      <option value="{{ $product->id }}" required>{{$product->id}}-{{$product->name}}</option>
+                      <option value="{{ $product->id }}" required>{{$product->clave}}-{{$product->name}}</option>
                       @endforeach
                     </optgroup>
                   </select>
