@@ -24,7 +24,7 @@ class CategoriesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|alpha|max:15|unique:categories,name',
+            'name' => 'required|string|max:15',
         ];
     }
     public function messages(){
