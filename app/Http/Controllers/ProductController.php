@@ -134,6 +134,15 @@ class ProductController extends Controller
      */
     public function store(ProductValidate $request)
     {
+      $branches= Auth::user()->shop->branches;
+
+      foreach($branches as $product){
+        $total = $product->name;
+        }
+        
+        if($total == $request->name){
+          return redirect('/sucursales')->with('mesage', 'El nombre ya ha sido registrado!');
+        }
       $product = new Product($request->all());
       if ($request->hasFile('image')){
          $filename = $request->image->getCLientOriginalName();

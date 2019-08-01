@@ -59,7 +59,17 @@ class BranchController extends Controller
      */
     public function store(BranchRequest $request)
     {
-      //return $request->all();
+        $branches= Auth::user()->shop->branches;
+      
+        foreach($branches as $branch){
+         $total = $request->name;
+        }
+        
+
+        if($total == $request->name){
+          return redirect('/sucursales')->with('mesage-delete', 'El nombre ya ha sido registrado!');
+        }
+
         $branch = new Branch($request->all());
         $branch->shop_id = Auth::user()->shop->id;
         $branch->save();
