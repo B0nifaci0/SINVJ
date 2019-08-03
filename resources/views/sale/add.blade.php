@@ -52,7 +52,7 @@ ALTA VENTA
                       data-placeholder="Seleccione Producto" data-allow-clear="true">
                       <option></option>
                     <optgroup label="Productos">
-                      @foreach($productsBranch as $product)
+                      @foreach($products as $product)
                       <option value="{{ $product->id }}" required>{{$product->id}}-{{$product->name}}</option>
                       @endforeach
                     </optgroup>
@@ -241,6 +241,7 @@ seleccionado con sus respectivos datos-->
 <script>
 
 var products = {!! $products !!};
+var selectedProducts = [];
 var total = 0;
 
 
@@ -248,10 +249,31 @@ $(function(){
  $('#btn-add').click(function(){
 
   var productId = $('#current_product').val();
-  console.log(productId);
   var product = products.filter(p => p.id == productId)[0];
-  console.log(product);
-  var _tr = '<tr id="removetr" alt="product.id"><td>'+ product.id +'</td> <td>'+ product.name +'</td><td>'+ product.weigth +'</td> <td>'+ product.category.name +'</td> <td>'+ product.line.name +'</td> <td>'+ product.branch.name +'</td> <td>'+ product.status.name +'</td> <td>$'+ product.price +'</td><td>0</td><td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger" id="deletr">-</button></div></td></tr>';
+
+  var exist = selectedProducts.filter(p => p.id == product.id);
+  if(exist.length) {
+    Swal.fire(
+      'No permitido',
+      'Este producto ya se ha agregado',
+      'error'
+    );
+    return;
+  }
+
+  selectedProducts.push(product);
+  var _tr = `<tr id="raw-${product.id}">
+    <td>${product.id}</td>
+    <td>${product.name}</td>
+    <td>${product.weigth}</td>
+    <td>${product.category.name}</td>
+    <td>${product.line.name}</td>
+    <td>${product.branch.name}</td>
+    <td>${product.status.name}</td>
+    <td>$ ${product.price}</td>
+    <td>0</td>
+    <td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button></div></td>
+  </tr>`;
 
 //END Función//
 
@@ -269,12 +291,23 @@ $(function(){
   $('#vari').val(cambio);
   $('#tabl').val(_tr);
 
+  $(".deletr").unbind();
   
-  $('#deletr').click(function(){
-    $("#removetr").remove();
-      total -= Number(product.price);
-      $("#total").html("$" - total);
-        });
+  $('.deletr').click(function() {
+    var productId = $(this).attr('alt');
+    var product = products.filter(p => p.id == productId)[0];
+
+    var index = selectedProducts.map(p => p.id).indexOf(selectedProducts.filter(p => p.id == productId)[0].id)
+    selectedProducts.splice(index, 1);
+
+    console.log(JSON.stringify(selectedProducts))
+    console.log("buscar " + productId + " en", selectedProducts.map(p => p.id))
+    console.log("Indice", index);
+    $(`#raw-${product.id}`).remove();
+    total -= Number(product.price);
+    console.log(total);
+    $("#total").html("$" + total);
+  });
 
 });
   $('#resta').keyup(function() {
