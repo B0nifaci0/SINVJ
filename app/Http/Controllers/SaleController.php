@@ -63,7 +63,7 @@ class SaleController extends Controller
       } else {
         $branches = Branch::where('shop_id', $user->shop->id)->get();
         $branch_ids = $branches->map(function($item) {
-          return $item->id;
+          //return $item->id;
         });
         $products = Product::whereIn('branch_id', $branch_ids)->get();
       }
@@ -84,7 +84,7 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-      return $request;
+      //return $request;
       $sale = Sale::create([
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,

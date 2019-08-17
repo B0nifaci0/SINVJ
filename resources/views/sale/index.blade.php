@@ -82,8 +82,8 @@ LISTA DE  VENTAS
             <tbody>
                 @foreach ($sales as $sale)
                   <tr id = "row{{ $sale->id }}">
-                    <td>{{ $sale->id}}</td>
-                    <td></td>
+                    <td>{{$sale->id}}</td>
+                  <td></td>
                     <td>{{ $sale->telephone }}</td>
                     <td></td>
                     <td>$ {{ $sale->price }}</td>

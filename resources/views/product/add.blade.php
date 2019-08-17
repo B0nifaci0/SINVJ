@@ -32,13 +32,7 @@ ALTA PRODUCTO
             <label>Clave</label>
             <input type="text" class="form-control" name="clave"  value="{{old('clave')}}" required>
           </div>
-          <!-- END Input--> 
-          <!-- Input para ingresar Nombre del producto-->
-          <!--<div class="form-group form-material col-md-4">
-              <label>Nombre</label> 
-              <input type="text" class="form-control" name="name"  value="{{old('name')}}" required>
-            </div>-->
-            <!-- END Input--> 
+
             <!-- Input para ingresar descripcion-->
             <div class="form-group form-material col-md-4">
               <label>Descripcion</label>
@@ -46,14 +40,15 @@ ALTA PRODUCTO
             </div>
             <!-- END Input--> 
             <!-- Select para Seleccionar linea-->
-            <div class="col-md-3">
+            <div  id="linea" class="col-md-3">
                <label  class="control-label">Seleccione Linea</label>
               <select id="line_id"   name="line_id"  class="form-control round">
                 @foreach($lines as $line)            
                   <option value="{{ $line->id }}" required>{{ $line->name }}</option>
                 @endforeach
               </select> 
-            </div>  
+            </div>
+
             <!-- END Select-->  
             <!-- Input para ingresar precio de la linea para el producto-->   
             <div class="col-md-3 form-material">
@@ -76,9 +71,11 @@ ALTA PRODUCTO
             <!-- Select para Seleccionar categoria--> 
             <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
               <label>Seleccione Categoria </label>
-              <select  name="category_id" class="form-control round">
+              <select  id="categorie_id" name="category_id" class="form-control round">
                 @foreach($categories as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
+                  <!--<option class="invisible" id="categorie_type_product" value="{{ $category->id }}" required>{{ $category->type_product }}</option>-->
+
                 @endforeach
               </select>
             </div>
@@ -144,8 +141,6 @@ ALTA PRODUCTO
 <script type="text/javascript">
 $(document).ready(function(){
 
- 
-  
   $("#categories").change(function(){
     if ($(this).val() == "" || $("#file").val() == "") {
       $("#submit").prop("disabled", true);
@@ -180,16 +175,30 @@ $(document).ready(function(){
 
 });
 </script>
-
 @endsection
 
 <!-- Función para obtener el precio de linea-->
 @section('precio-linea')
 <script type="text/javascript">
+//var categoryTypeproduct = {!! $categories !!};
+//console.log("categoryTypeproduct", categoryTypeproduct);
+//$('#categorie_type_product').val(categoryTypeproduct[0].type_product);
+
+/*$('#categorie_id').click(function(){
+  var id = $(this).val();
+  var categorie = categoryTypeproduct.filter(l => l.id == id)[0];
+
+  console.log(id);
+  if( id = 1)
+  $('#line_id').remove();
+  if( id = 2)
+    $('#line').html('<label  class="control-label">Precio de la linea</label><input type="text" name="" id="line_price" class="form-control" readonly>');
+  //$('#linea').remove();
+});*/
 
 var lines = {!! $lines !!};
 
-console.log("lines", lines)
+console.log("lines", lines);
 
 $('#line_price').val(lines[0].sale_price);
 

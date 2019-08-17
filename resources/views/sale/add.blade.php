@@ -52,7 +52,7 @@ ALTA VENTA
                       <option></option>
                     <optgroup label="Productos">
                       @foreach($products as $product)
-                      <option value="{{ $product->id }}" required>{{$product->clave}}-{{$product->name}}</option>
+                      <option value="{{ $product->id }}" required>{{$product->clave}}-{{$product->description}}</option>
                       @endforeach
                     </optgroup>
                   </select>
@@ -277,7 +277,7 @@ $(function(){
   selectedProducts.push(product);
   var _tr = `<tr id="raw-${product.id}">
     <td>${product.id}</td>
-    <td>${product.name}</td>
+    <td>${product.description}</td>
     <td>${product.weigth}</td>
     <td>${product.category.name}</td>
     <td>${product.line.name}</td>

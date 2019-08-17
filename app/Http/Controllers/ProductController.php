@@ -109,6 +109,7 @@ class ProductController extends Controller
         $shops = Auth::user()->shop()->get();
         //return $shops;  
         $categories = Shop::find($category)->categories()->get();
+        //$categories;
         $lines = Shop::find($line)->lines()->get();
         //return $lines;  
         $status = Auth::user()->shop->id;
