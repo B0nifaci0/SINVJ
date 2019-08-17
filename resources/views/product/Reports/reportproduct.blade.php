@@ -25,6 +25,29 @@ Panel Principal
                       </div>
                       <div class="panel-collapse collapse" id="exampleCollapseDefaultOne" aria-labelledby="exampleHeadingDefaultOne" role="tabpanel" style="">
                         <div class="panel-body">
+                            @if (session('mesage'))	
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                              <strong>{{ session('mesage') }}</strong>
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                             </div>
+                          @endif
+                          @if (session('mesage-update'))	
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                              <strong>{{ session('mesage-update') }}</strong>
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                          @endif
+                          @if (session('mesage-delete'))	
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                              <strong>{{ session('mesage-delete') }}</strong>
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                              @endif
                         <form action="estatusproducto">
                           <div class=" col-12"> 
                               <div class="panel panel-bordered">
@@ -36,18 +59,18 @@ Panel Principal
                                             <option value="*">Seleccione Sucursal</option>
                                           @php  
                                             $branches = $user->shop->branches;
-                                          @endphp
+                                          @endphp 
                                             @foreach($branches as $branch)
                                           <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                           @endforeach
                                           </select>
                                       </div> 
-
+ 
                                       <div class="col-3">
                                         <label>Seleccione Estatus</label>
                                           <select id=""  name="estatus_id" alt="1" class="form-control round sucursales">
                                             <option value="">Selecciona Estatus</option>
-                                            <option value="*">Tod@s</option>
+                                            <option value="*" name="todos">Tod@s</option>
                                             @foreach($status as $onestatus)
                                           <option value="{{$onestatus->id}}" required>{{$onestatus->name}}</option>
                                           @endforeach

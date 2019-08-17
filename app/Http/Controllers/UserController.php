@@ -70,6 +70,12 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+     $password = $request->password;
+     $passcon = $request->password_confirmation;
+     
+     if($password != $passcon){
+      return redirect('/usuarios/create')->with('mesage-delete', 'Contraseñas diferentes, captura contraseñas iguales !');
+     }
       //$shops=Auth::user()->shop()->get();
       \App\User::create([
         'name' => $request['name'],

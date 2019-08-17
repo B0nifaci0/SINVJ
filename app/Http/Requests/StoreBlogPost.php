@@ -24,7 +24,7 @@ class StoreBlogPost extends FormRequest
     public function rules()
     {
         return [
-          'name' => 'required|alpha|max:200',
+          'name' => 'required|string|max:200',
         ];
     }
 

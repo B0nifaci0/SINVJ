@@ -150,7 +150,7 @@ public function exportPdfall(){
 
     public function exportPdf($id){
      // return $id;
-    $trans = TransferProduct::find($id)->get();
+    $trans = TransferProduct::where("id","=",$id)->get();
     $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));
     return $pdf->stream('Traspaso.pdf');
   }

@@ -12,6 +12,7 @@ LISTA PRODUCTO
 @endsection
 @section('content')
   <div class="panel-body">
+  <!-- Mesage-Muestra mensaje De que el producto se a agregado exitosamente-->
     @if (session('mesage'))
      <div class="alert alert-success alert-dismissible fade show" role="alert">
       <strong>{{ session('mesage') }}</strong>
@@ -20,6 +21,8 @@ LISTA PRODUCTO
       </button>
      </div>
     @endif
+    <!-- END Mesage-->
+    <!-- Mesage-Muestra mensaje De que el producto se a modificado exitosamente-->
     @if (session('mesage-update'))	
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <strong>{{ session('mesage-update') }}</strong>
@@ -28,6 +31,8 @@ LISTA PRODUCTO
         </button>
       </div>
     @endif
+    <!-- END Mesage-->
+    <!-- Mesage-Muestra mensaje De que el producto se a eliminado exitosamente-->
     @if (session('mesage-delete'))	
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
           <strong>{{ session('mesage-delete') }}</strong>
@@ -36,6 +41,7 @@ LISTA PRODUCTO
         </button>
       </div>
     @endif
+    <!-- END Mesage-->
 		<div class="page-content">
       <!-- Panel Basic -->
       <div class="panel">

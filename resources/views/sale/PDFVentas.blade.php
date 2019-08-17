@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Reporte de Productos</title>
+   <title>Reporte de Ventas</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
@@ -44,56 +44,41 @@
      }tfoot{
        color:#000;
        text-transform: uppercase;
-       font-weight: 500; 
+       font-weight: 500;
      }
    </style>
 </head>
- 
 <body>
 <div class="page-content">
     <div class="panel">
-          
-              <p align="right">Fecha: {{$dates}}</p>
-          
-              <p align="right">Hora: {{$hour}}</p>
-          
-              <p align="right">Linea: @foreach ($products as $i => $product){{$product->line->name}} @endforeach </p>
-          
-    <h2 align="center">Reporte de Productos por Estatus</h2>
-        <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+    <h2 align="center">Reporte de Ventas</h2>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-                 <th scope="col">Linea</th>
-                 <th scope="col">Clave</th>
-                 <th scope="col">Descripción</th>
-                 <th scope="col">Peso</th>
-                 <th scope="col">Precio</th>
-                 <th scope="col">Observaciones</th>
-                 <th scope="col">Id Venta</th>
+                  <th>Clave</th>
+                  <th>Nombre del cliente</th>
+                  <th>Teléfono</th>
+                  <th>Productos</th>
+                  <th>Total a pagar</th>
+                  <th>Fecha</th>
                 </tr>
               </thead>  
               <tbody>
-              
-      @foreach ($products as $i => $product)
-                <tr id="row{{$product->id}}">
-                 <td>{{ $product->line->name }}</td> 
-                 <td>{{ $product->clave }}</td>
-                 <td>{{ $product->description }}</td>
-                 <td>{{ $product->weigth }} gr</td>
-                 <td>$ {{ $product->price }}</td> 
-                 <td>{{ $product->observations }}</td>
-                 @if ($sales == '')
-                  <td>{{$product->status}}</td>
-                 @endif
-                 @if ($sales != '')
-                 <td>@foreach($sales as $sale){{$sale->id}} @endforeach</td>
-                 @endif
-                </tr>
+              @foreach ($sales as  $sale)
+                  <tr id ="row{{$sale->id}}">
+                    <td>{{ $sale->id}}</td>
+                    <td>{{ $sale->customer_name }}</td>
+                    <td>{{ $sale->telephone }}</td>
+                    <td>{{ $sale->product->name }}</td>
+                    <td>${{ $sale->price }}</td>
+                    <td>{{ $sale->created_at->format('m-d-Y')}}</td>
+                  </tr>
                   @endforeach
               </tbody>
-            </table> 
+            </table>
           </div>
           </div>
     </body>
 </html>
+
+

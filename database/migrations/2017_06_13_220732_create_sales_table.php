@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateSalesTable extends Migration
-{
+{ 
     /**
      * Run the migrations.
      *
@@ -17,8 +17,6 @@ class CreateSalesTable extends Migration
             $table->increments('id');
             $table->string('customer_name', 20)->unique();
             $table->string('telephone')->unique();
-            $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products');
             $table->string('price'); 
             $table->softDeletes();
             $table->timestamps();
