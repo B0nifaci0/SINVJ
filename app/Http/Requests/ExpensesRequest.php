@@ -24,7 +24,7 @@ class ExpensesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|alpha|max:15|unique:store_expenses,name',
+            'name' => 'required|string|max:15',
             'descripcion' => 'required|string|max:15',
         ];
     }

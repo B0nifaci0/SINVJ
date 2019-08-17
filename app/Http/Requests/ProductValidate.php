@@ -24,7 +24,7 @@ class ProductValidate extends FormRequest
     public function rules()
     {
         return [
-            'clave' => 'required|string|max:10|unique:products,clave',
+            'clave' => 'required|string|max:10',
             //'name' => 'required|alpha|max:15|unique:products,name',
             'description' => 'required|string|max:15',
             'weigth' => 'required|numeric|max:200',

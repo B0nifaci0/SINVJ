@@ -24,12 +24,15 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|unique:users,name',
+            'name' => 'required|string',
+            'email' => 'required|email'
         ];
     }
     public function messages(){
         return[
-            'name.required' => 'El nombre es requerido y con solo 20 caracteres', 
+            'name.required' => 'El nombre es requerido ',
+            'email.required' => 'El correo es requerido ', 
+ 
         ];
     }
 }

@@ -10,6 +10,7 @@ use App\Line;
 use App\Branch;
 use App\Status;
 use App\User;
+use App\Sale;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,24 +22,13 @@ class ProductController extends Controller
 {
 
   public function __construct(){
-    // $this->middleware('Authentication');
-    // $this->middleware('shop');
-    // $this->middleware('BranchMiddleware');
-    // $this->middleware('CategoryMiddleware');
-    // $this->middleware('LineMiddleware');
-    // $this->middleware('StatusMiddleware'); 
+
   }
 /** FUNCIONES PARA CRUD DE PRODUCTO */
   public function index()
   { 
     $user = Auth::user();
-   /* $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
-    $categories = Category::all();
-    $user = Auth::user();
-      //return $user ;
-    $lines = Line::all();
-    $statuses = Status::all();
-    return view('product/index', compact('user','products', 'categories','lines','statuses')); */
+  
       
       $shop_id = $user->shop->id;
       if($user->type_user == User::CO) {
@@ -134,6 +124,15 @@ class ProductController extends Controller
      */
     public function store(ProductValidate $request)
     {
+      $branches= Auth::user()->shop->branches;
+
+      foreach($branches as $product){
+        $total = $product->name;
+        }
+        
+        if($total == $request->name){
+          return redirect('/sucursales')->with('mesage', 'El nombre ya ha sido registrado!');
+        }
       $product = new Product($request->all());
       if ($request->hasFile('image')){
          $filename = $request->image->getCLientOriginalName();
@@ -163,12 +162,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-      /*$product = Product::find($id);
-      $categorys = Category::all();
-      $lines = Line::all();
-      $shops = Shop::all();
-      $branches = Branch::all();
-      $statuses = Status::all();*/
+     
         $category = Auth::user()->shop->id;
         //return $category;
         $user = Auth::user();
@@ -243,7 +237,7 @@ class ProductController extends Controller
         //return $products;
         $user = Auth::user(); 
         //$categories = Category::all();
-        $shops = Auth::user()->shop()->get();
+        $shops = Auth::user()->shop()->get(); 
         //return $shops;
         $category = Auth::user()->shop->id;  
         $categories = Shop::find($category)->categories()->get();
@@ -274,7 +268,33 @@ class ProductController extends Controller
       return view('product.Reports.reportproduct',compact('branch','user','status','line','categories'));
      }
 
+
      public function reportEstatus(Request $request){
+
+/**Codigo para hacer las validaciones de los campos para realizar las consultas para el reporte */
+
+      $idshop = Auth::user()->shop->id;
+      $status = Shop::find($idshop)->statuss()->get();
+      $line = Shop::find($idshop)->lines()->get();
+      $category = Auth::user()->shop->id;  
+      $categories = Shop::find($category)->categories()->get();
+
+      $status = $request->estatus_id;
+      $categories = $request->category_id;
+      $line = $request->id;
+
+      if($status == null || $categories == null || $line == null){
+      return redirect('/reportes-productos')->with('mesage-update', 'Seleccina alguna opcion de cada selector!');      }
+
+/**Termina codigo de validacion de campos */
+
+      if($status == '*' || $categories == '*' || $line == '*'){
+        return "Holis";
+      }
+    
+
+    
+/**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
 
       $branches = Branch::where("id","=",$request->branch_id)->get();
       $products = Product::where("branch_id","=",$request->branch_id)
@@ -282,10 +302,29 @@ class ProductController extends Controller
                           ->where("category_id","=",$request->category_id)
                           ->where("line_id","=",$request->id)
                           ->get();
-      
-      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches'));
+
+/**Finaliza codigo de las consultas por campos seleccionados */
+
+/**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
+      $sales = Sale::where("id","=","sale_id")->get();
+
+      $hour = Carbon::now();
+      $hour = date('H:i:s');
+
+      $dates = Carbon::now(); 
+      $dates = $dates->format('d-m-Y');
+
+/**Finalizan consultas de folio de la venta, la hora y el dia */
+
+/**Variable para retornar los archivos que podran ser descargados en pdf
+ * contiene las variables de las cuales se hicieron las consultas para poder 
+ * hacer uso de la informacion de cada consulta
+ */
+
+      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates'));
       return $pdf->stream('ReporteEstatus.pdf');
 
+/**Termina el retorno del pdf */
       
      }
 

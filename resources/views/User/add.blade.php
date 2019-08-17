@@ -11,6 +11,7 @@ ALTA USUARIOS
 @endsection
 @section('content')
   <div class="page-content container-fluid">
+    <!-- Form, Method "POST" para enviar los datos del formulario a la base de datos--> 
     <form autocomplete="off" method="POST" action="/usuarios" enctype="multipart/form-data">
       {{ csrf_field() }}
       <div class="panel">
