@@ -11,50 +11,56 @@
 }
 
 .titulo {
-    font-size: 20px;
+    font-size: 30px;
     text-align: center;
     align-content: center;
 }
 .tienda {
-    font-size: 13px;
+    font-size: 20x;
     text-align: center;
     align-content: center;
 }
 .msg1 {
-    font-size: 13px;
-    text-align: center;
-    align-content: center;
+    font-size: 12px;
+    text-align: justify;
+    align-content: justify;
 }
 
 .date {
-    font-size: 10px;
+    font-size: 12px;
     text-align: center;
     align-content: center;
 }
 .msg2 {
 
     font-size: 12px;
+    text-align: justify;
+    align-content: justify;
+}
+.line {
+    font-size: 6px;
     text-align: center;
     align-content: center;
 }
 .recibi {
-    font-size: 10px;
+    font-size: 12px;
     text-align: center;
     align-content: center;
 }
 
 .ticket {
-    width: 200px;
-    max-width: 200px;
+    width: 110px;
+    max-width: 110px;
 }
 
 
-@page {size: 8cm 120mm;
+@page {size: 48.5mm 170mm;
      }
+
    </style>
 
 <body>
-        <div class="recibo">
+        <div class="ticket">
                 @foreach($users as $user)  
                 <p class="titulo" >RECIBO DE NOMINA</p>
                 <p class="tienda" align="center">{{$user->shop->name}}</p> 
@@ -64,8 +70,8 @@
                 <br>
                 <table align="center">
                     <tr>
-                        <th><p class="recibi">______________</p></th>
-                        <th><p class="recibi">______________</p></th>
+                        <th><p class="line">______________</p></th>
+                        <th><p class="line">______________</p></th>
                     </tr>
                     <tr align="center">
                     <th><p class="recibi">Recibí</p></th>
