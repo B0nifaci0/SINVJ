@@ -65,6 +65,7 @@ LISTA DE  VENTAS
                 <th>Productos</th>
                 <th>Total a pagar</th>
                 <th>Fecha</th>
+                <th>Reporte</th>
               </tr>
             </thead>
             <tfoot>
@@ -75,6 +76,7 @@ LISTA DE  VENTAS
                 <th>Productos</th>
                 <th>Total a pagar</th>
                 <th>Fecha</th>
+                <th>Reporte</th>
               </tr>
             </tfoot>
             <tbody>
@@ -86,6 +88,13 @@ LISTA DE  VENTAS
                     <td>{{ $sale->product->name }}</td>
                     <td>$ {{ $sale->price }}</td>
                     <td>{{ $sale->created_at->format('m-d-Y')}}</td>
+                    <td>
+                    <a href="ventapdf/{{$sale->id}}"<button type="button" 
+                      class="btn btn-icon btn-danger waves-effect waves-light"
+                      data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                      <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                    </a> 
+                    </td>
                   </tr>
                 @endforeach
             </tbody>

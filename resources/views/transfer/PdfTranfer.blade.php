@@ -68,12 +68,12 @@
 
 
 .ticket {
-    width: 200px;
-    max-width: 200px;
+    width: 120px;
+    max-width: 120px;
 }
 
 
-@page {size: 8cm 200mm;
+@page {size: 5.5cm 140mm;
      }
    </style>
 

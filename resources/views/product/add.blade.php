@@ -24,6 +24,7 @@ ALTA PRODUCTO
       @endif
       <h2 align="center">Nuevo Producto</h2>
       <br>  
+      <!-- Form,Method "POST" Envia los datos del formulario a la base de datos-->
       <form id="multiplicar" class="" action="/productos" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }} 
         <div class='row'>

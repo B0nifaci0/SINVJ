@@ -145,9 +145,16 @@ class SaleController extends Controller
      // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
    
 }
-public function exportPdf(){ 
+public function exportPdfall(){ 
+  $sales = Sale::all();
+  $pdf  = PDF::loadView('sale.PDFVentas', compact('sales'));
+  return $pdf->stream('venta.pdf');
+}
+
+public function exportPdf($id){ 
   $user = Auth::user();
   $sales = Sale::all();
+  $sales = Sale::where("id","=",$id)->get();
   $shops = Auth::user()->shop()->get();
   $branches = Branch::where('id', '!=', $user->branch_id)->get(); 
   $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops'));
