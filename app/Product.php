@@ -58,4 +58,7 @@ class Product extends Model
     {
       return $this->belongsTo(TransferProduct::class);
     }
+    public function sale(){
+      return $this->belongsTo(Sale::class);
+    }
 }

@@ -48,36 +48,51 @@
      }
    </style>
 </head>
+ 
 <body>
 <div class="page-content">
     <div class="panel">
+          
+              <p align="right">Fecha: {{$dates}}</p>
+          
+              <p align="right">Hora: {{$hour}}</p>
+          
+              <p align="right">Linea: @foreach ($products as $i => $product){{$product->line->name}} @endforeach </p>
+          
     <h2 align="center">Reporte de Productos por Estatus</h2>
         <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-				 <th scope="col">Clave</th>
-                 <th scope="col">Nombre</th>
+                 <th scope="col">Linea</th>
+                 <th scope="col">Clave</th>
                  <th scope="col">Descripción</th>
                  <th scope="col">Peso</th>
-                 <th scope="col">Observaciones</th>
                  <th scope="col">Precio</th>
+                 <th scope="col">Observaciones</th>
+                 <th scope="col">Id Venta</th>
                 </tr>
               </thead>  
               <tbody>
               
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->clave }}</td> 
-                 <td>{{ $product->name }}</td>
+                 <td>{{ $product->line->name }}</td> 
+                 <td>{{ $product->clave }}</td>
                  <td>{{ $product->description }}</td>
                  <td>{{ $product->weigth }} gr</td>
+                 <td>$ {{ $product->price }}</td> 
                  <td>{{ $product->observations }}</td>
-                 <td>$ {{ $product->price }}</td>
+                 @if ($sales == '')
+                  <td>{{$product->status}}</td>
+                 @endif
+                 @if ($sales != '')
+                 <td>@foreach($sales as $sale){{$sale->id}} @endforeach</td>
+                 @endif
                 </tr>
                   @endforeach
               </tbody>
-            </table>
+            </table> 
           </div>
           </div>
     </body>
