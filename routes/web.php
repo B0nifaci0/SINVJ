@@ -64,9 +64,9 @@ Route::resource('pagos', 'PaymentsController');
 Route::get('productospdf', 'ProductController@exportPdf');
 
 //Ventas PDF
-Route::get('ventaspdf', 'SaleController@exportPdf');
+Route::get('ventaspdf', 'SaleController@exportPdfall');
 
-
+Route::get('ventapdf/{id}', 'SaleController@exportPdf')->name('ventapdf');
 
 // Sucursal CO
 Route::get('sucursal', 'BranchController@indexCo');

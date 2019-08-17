@@ -11,7 +11,6 @@
           </div>
           <p class="font-size-20">Sistema De Inventarios Para Joyeria Fina.</p>
         </div>
-
         <div class="page-login-main">
           <div class="brand hidden-md-up">
             <img class="brand-img" src="../../assets/images/logo-colored@2x.png" alt="...">
@@ -19,10 +18,10 @@
           </div>
           <h3 class="font-size-24">INICIAR SESIÓN</h3>
           <p>Ingresa Usuario y Contraseña Para Iniciar Sesión.</p>
-
+          <!-- Form, Method "POST" para verificar correo y contraseña del usuario en la base de datos--> 
           <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
           @csrf
-
+            <!-- Input para ingresar Correo electronico--> 
             <div class="form-group form-material floating" data-plugin="formMaterial">
               <input type="email" class="form-control empty{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" id="email" name="email" value="{{ old('email') }}" required autofocus>
               @if ($errors->has('email'))
@@ -32,6 +31,8 @@
             @endif
               <label class="floating-label" for="inputEmail">{{ __('Correo Electronico') }}</label>
             </div>
+             <!-- END Input--> 
+             <!-- Input para ingresar Contraseña--> 
             <div class="form-group form-material floating" data-plugin="formMaterial">
               <input type="password" class="form-control empty{{ $errors->has('password') ? ' is-invalid' : '' }}" id="password" name="password" required>
               @if ($errors->has('password'))
@@ -41,6 +42,8 @@
                 @endif
               <label class="floating-label" for="inputPassword">{{ __('Contraseña') }}</label>
             </div>
+             <!-- END Input--> 
+             <!-- CheckBox para Recordar Usuario--> 
             <div class="form-group clearfix">
               <div class="checkbox-custom checkbox-inline checkbox-primary float-left">
                 <input type="checkbox" id="remember" name="checkbox" {{ old('remember') ? 'checked' : '' }} >
@@ -48,7 +51,10 @@
               </div>
               <a class="float-right" href="href="{{route('password.request') }}">{{ __('Olvidaste tu contraseña?')}}</a>
             </div>
+             <!-- END CheckBox--> 
+             <!-- Botón para ingresar Iniciar Sesion--> 
             <button type="submit" class="btn btn-primary btn-block">Iniciar</button>
+             <!-- END Botón--> 
           </form>
 
           <p>No tienes Cuenta? <a href={{{url('usuario')}}}>Registrarse</a></p>
@@ -69,7 +75,6 @@
             </div>
           </footer>
         </div>
-
       </div>
     </div>
     <!-- End Page -->
