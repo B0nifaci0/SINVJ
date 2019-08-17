@@ -16,13 +16,14 @@ class PrincipalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   $shop = Auth::user()->shop;
+    {   $shop = Auth::user()->shop; 
         $total = User::sum('salary');
         //return $total; 
          $branch = Auth::user()->shop->id;
          $user = Auth::user();
          $branch = Shop::find($branch)->branches()->get();
-        return view ('Principal/principal',compact('branch','user','shop'));
+         $shops = Auth::user()->shop()->get();     
+        return view ('Principal/principal',compact('branch','user','shop','shops'));
     }
 
     public function exportPdf(){ 

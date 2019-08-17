@@ -11,6 +11,7 @@ use App\Branch;
 use App\Status;
 use App\User;
 use PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
@@ -29,7 +30,7 @@ class ProductController extends Controller
   }
 /** FUNCIONES PARA CRUD DE PRODUCTO */
   public function index()
-  {
+  { 
     $user = Auth::user();
    /* $products = Product::with('category')->with('branch')->with('line')->with('status')->get();
     $categories = Category::all();
@@ -273,4 +274,55 @@ class ProductController extends Controller
       return view('product.Reports.reportproduct',compact('branch','user','status','line','categories'));
      }
 
+     public function reportEstatus(Request $request){
+
+      $branches = Branch::where("id","=",$request->branch_id)->get();
+      $products = Product::where("branch_id","=",$request->branch_id)
+                          ->where("status_id","=",$request->estatus_id)
+                          ->where("category_id","=",$request->category_id)
+                          ->where("line_id","=",$request->id)
+                          ->get();
+      
+      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches'));
+      return $pdf->stream('ReporteEstatus.pdf');
+
+      
+     }
+
+     public function reportLineaG(Request $request){
+      $branches = Branch::where("id","=",$request->branch_id)->get();
+      $lines = Line::where("id","=",$request->id)->get();
+      $products = Product::where("branch_id","=",$request->branch_id)
+                          ->where("line_id","=",$request->id)
+                          ->get();
+        $total = 0;
+        foreach($products as $product){
+        $total = $product->weigth + $total;
+        }
+
+        $cash = 0;
+        foreach($products as $product){
+          $cash = $product->price + $cash;
+        }
+
+      $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('products','branches','lines','total','cash'));
+      return $pdf->stream('ReporteLineas.pdf');
+    } 
+
+    public function reportEntradas(Request $request){
+
+      $fech1 = Carbon::parse($request->fecini);
+      $fech2 = Carbon::parse($request->fecter);
+      $branches = Branch::where("id","=",$request->branch_id)->get();
+      $lines = Line::where("id","=",$request->id)->get();
+      $products = Product::where("branch_id","=",$request->branch_id)
+                          ->where("line_id","=",$request->id)
+                          ->where('created_at',">=",$fech1 )
+                          ->where('created_at' ,"<=",$fech2)
+                          ->get();
+      
+                          
+     $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
+     return $pdf->stream('ReporteEntradas.pdf');
+    }    
 }

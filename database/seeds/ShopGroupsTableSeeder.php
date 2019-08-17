@@ -12,7 +12,7 @@ class ShopGroupsTableSeeder extends Seeder
      */
     public function run()
     {
-        /*
+        
         DB::table('shop_groups')->insert([ 
             'name' =>  'Joyeria Bad Dog',
             'email' => 'jorge@hotmail.com',
@@ -23,6 +23,6 @@ class ShopGroupsTableSeeder extends Seeder
             'created_at' => '2019-01-01 16:00:00',
             'updated_at' => '2019-01-01 16:00:00',
         ]);
-        */
+        
     }
 }

@@ -17,18 +17,18 @@ class Sale extends Model
     protected $fillable = [
         'customer_name',
         'telephone',
-        'product_id',
         'price'
     ];
 
-    public function product(){
-      return $this->belongsTo(Product::class);
- }
- public function line(){
-  return $this->belongsTo(Line::class);
-}
-public function parcial(){
-  return $this->hasMany(Parcial::class);
-}
+  public function line(){
+    return $this->belongsTo(Line::class);
+  }
+  public function parcial(){
+    return $this->hasMany(Parcial::class);
+  }
+
+  public function items() {
+    return $this->hasMany(SaleDetails::class);
+  }
 }
 

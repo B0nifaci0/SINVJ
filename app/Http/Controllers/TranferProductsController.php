@@ -70,6 +70,7 @@ class TranferProductsController extends Controller
        {
         $user = Auth::user();
         $users = User::where('id', '!=', $user->id)->get();
+        return $users;
         $products = Product::where('branch_id', $user->branch_id)->get();
         $branches = Branch::all();
         return view('transfer/TrasferUser/add', compact('branches','users','products'));
@@ -101,7 +102,10 @@ class TranferProductsController extends Controller
         return view('transfer/add', compact('branches','users','products','user'));
        }
 
-       
+       public function show()
+       {
+       return view('transfer.show');
+       }
 
        public function store(Request $request)
        {
@@ -141,7 +145,7 @@ class TranferProductsController extends Controller
 public function exportPdfall(){ 
     $trans = TransferProduct::all();
     $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans'));
-    return $pdf->download('Traspasos.pdf');
+    return $pdf->stream('Traspasos.pdf');
   }
 
     public function exportPdf($id){

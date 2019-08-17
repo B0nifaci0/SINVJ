@@ -73,7 +73,7 @@
 }
 
 
-@page {size: 8cm 120mm;
+@page {size: 8cm 200mm;
      }
    </style>
 
@@ -89,7 +89,6 @@
                 <p class="sucursaldestino">Sucursal Destino...............{{$transfer->newBranch->name}}</p>
                 <p class="quienrecibe">Recibió................{{$transfer->destinationUser->name}}</p>
                 <br>
-                
                 <p class="firma">________________
                 <br>Firma</p> 
         </div>

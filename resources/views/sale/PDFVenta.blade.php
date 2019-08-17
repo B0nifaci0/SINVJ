@@ -10,6 +10,9 @@
     font-size: 8px;
     font-family: 'Times New Roman';
 }
+body{
+    font-size: 12px;
+}
 
 td,
 th,
@@ -19,107 +22,112 @@ table {
 }
 
 td.sucursal{
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: left;
 }
 td.nota{
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: left;
 }
 td.fecha{
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: left;
 }
 td.hora{
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: left;
 }
 td.cliente {
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: left;
 }
 td.vendedor {
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: left;
 }
 
 
 td.sucursal1 {
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: right;
 }
 
 td.nota1 {
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: right;
 }
 
 td.fecha1 {
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: right;
 }
 
 td.hora1 {
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: right;
 }
 
 
 td.cliente1{
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: right;
 }
 td.vendedor1{
-    width: 85px;
-    max-width: 85px;
+    width: 50px;
+    max-width: 50px;
     text-align: right;
 }
 
 th.clave{
-    width: 80px;
-    max-width: 80px;
+    width: center ;
+    max-width: center;
     text-align: left;
 }
 
 th.producto{
-    width: 80px;
-    max-width: 80px;
+    width: center ;
+    max-width: center;
     text-align: left;
+    
 }
 
 th.precio{
-    width: 80px;
-    max-width: 80px;
+    width: center ;
+    max-width: center;
     text-align: left;
+    
 }
 
 td.clave1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
+    width: center ;
+    max-width: center;
+    text-align: center;
+    
 }
 
 td.producto1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
+    width: center ;
+    max-width: center;
+    text-align: center;
+    
 }
 
 td.precio1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
+    width: center ;
+    max-width: center;
+    text-align: center;
+    
 }
 
 
@@ -129,8 +137,8 @@ td.precio1{
 }
 
 .ticket {
-    width: 200px;
-    max-width: 200px;
+    width: 120px;
+    max-width: 190px;
 }
 
 img {
@@ -138,7 +146,7 @@ img {
     max-width: center;
     text-align: center;
 }
-@page {size: 8cm 190mm;
+@page {size: 5.5cm 25cm;
      }
    </style>
 
@@ -150,7 +158,6 @@ img {
                 <p class="centrado">@foreach ($shops as  $shop) 
                 {{ $shop->name}}
                 <br>Toluca de Lerdo #1006</p>
-                @endforeach
                 <br>
             <table>
                 <tbody>
@@ -194,19 +201,21 @@ img {
                       <tr>
                         <td class="clave1">{{ $sale->product->clave }}</td>
                         <td class="producto1">{{ $sale->product->name }}</td>
-                        <td class="precio1">$ {{ $sale->product->price }}</td>
+                        <td class="precio1">${{ $sale->product->price }}</td>
                      </tr>
                      <tr>
                         <td ></td>
                         <th >Total</th>
-                        <td class="precio1">$ {{ $sale->price }}</td>>
+                        <td class="precio1">${{ $sale->price }}</td>>
                      </tr>
                     </tbody>
                   </table>
                     @endforeach
                     <br>
             <p class="centrado">¡GRACIAS POR SU COMPRA!
-                <br>joyeriafina.com</p>
+                <br>{{$shop->email }}<br>
+                {{$shop->phone_number }}</p>
+                @endforeach
         </div>
     </body>
 </html>

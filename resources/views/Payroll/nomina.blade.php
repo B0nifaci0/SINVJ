@@ -18,7 +18,7 @@ Panel Usuario Administrador
           <div class="panel-heading">
             <h3 class="bg-info panel-title text-center text-white">Reporte De Nomina Por Usuario</h3>
           </div>
-          <div class="panel-body row col-12">
+          <div class="panel-body row col-12"> 
             <div class="row col-12">
                <div class="col-3">
                   <label>Seleccione Sucursal</label>

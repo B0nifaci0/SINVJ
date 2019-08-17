@@ -1,4 +1,3 @@
-
 @extends('layout.layoutdas')
 @section('title')
 ALTA VENTA
@@ -28,8 +27,8 @@ ALTA VENTA
                 @endforeach
               </ul>
             </div>
-           @endif
-          <form autocomplete="off" method="POST" action="/ventas" enctype="multipart/form-data">
+           @endif 
+          <form id="form" method="POST" action="/ventas">
             <center><h3>Registrate Venta</h3></center>
             {{ csrf_field() }}    
             <div class="row">
@@ -53,7 +52,7 @@ ALTA VENTA
                       <option></option>
                     <optgroup label="Productos">
                       @foreach($products as $product)
-                      <option value="{{ $product->id }}" required>{{$product->id}}-{{$product->name}}</option>
+                      <option value="{{ $product->id }}" required>{{$product->clave}}-{{$product->name}}</option>
                       @endforeach
                     </optgroup>
                   </select>
@@ -107,8 +106,11 @@ ALTA VENTA
                   <input type="hidden" class="form-control" name="parcial_pay" id="faltan"/>
                   <input type="hidden" class="form-control" name="total_pay" id="totalpayparcial"/>
                 <!-- Botón para guardar venta-->
+
+                <input type="hidden" class="form-control" name="products_list" id="products_list"/>
+
                 <div class="form-group col-md-1">
-                  <button  id="submit" type="submit" name="" class="btn btn-primary">Guardar</button>
+                  <button  id="submit" type="submit" class="btn btn-primary">Guardar</button>
                 </div>
                 <!-- END Botón-->
               </div>
@@ -161,7 +163,7 @@ ALTA VENTA
                               </div>
                               <!-- END Input-->
                             </div>
-                            <button id="submit" type="submit" name="continuar" data-dismiss="modal" class="btn btn-success btn-lg btn-block" aria-label="Close" >Continuar</button>
+                            <button type="button" name="continuar" data-dismiss="modal" class="btn btn-success btn-lg btn-block" aria-label="Close" >Continuar</button>
                           </div>
                           <!-- END CONTADO-->
                           
@@ -187,7 +189,7 @@ ALTA VENTA
                               </div>
                               <!-- END Input--> 
                             </div>
-                            <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
+                            <button class="btn btn-success btn-lg btn-block" type="button">Continuar</button>
                           </div>
                           <!-- END APARTADO-->
 
@@ -216,7 +218,7 @@ ALTA VENTA
                               <!-- END Input-->
                             </div>
                             <hr class="mb-4">
-                            <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
+                            <button class="btn btn-success btn-lg btn-block" type="button">Continuar</button>
                           </div>
                           <!-- END PAGO CON TARJETA-->
                         </div>
@@ -246,6 +248,17 @@ var total = 0;
 
 
 $(function(){
+
+
+  $('#form').submit(function() {
+    let productIds = selectedProducts.map(p => p.id);
+    $('#products_list').val(productIds);
+    console.log($('#products_list').val());
+
+    return true;
+  });
+
+
  $('#btn-add').click(function(){
 
   var productId = $('#current_product').val();
@@ -324,13 +337,14 @@ $('#apartado').keyup(function() {
   $('#faltan').val(falta);
   
 }); 
-$('#continuar').click(function(e) {
- e.preventDefault();
- if('El dinero recibido ddebe ser mayor al total a pagar'){
-   $('#form').submit();
- }
-  
-}); 
+
+  // $('#continuar').click(function(e) {
+  // e.preventDefault();
+  // if('El dinero recibido debe ser mayor al total a pagar'){
+  //   $('#form').submit();
+  // }
+    
+  // }); 
 });
 
 

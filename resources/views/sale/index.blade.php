@@ -81,9 +81,9 @@ LISTA DE  VENTAS
                 @foreach ($sales as $sale)
                   <tr id = "row{{ $sale->id }}">
                     <td>{{ $sale->id}}</td>
-                    <td>{{ $sale->customer_name }}</td>
+                    <td></td>
                     <td>{{ $sale->telephone }}</td>
-                    <td>{{ $sale->product->name }}</td>
+                    <td></td>
                     <td>$ {{ $sale->price }}</td>
                     <td>{{ $sale->created_at->format('m-d-Y')}}</td>
                   </tr>

@@ -48,7 +48,7 @@ Route::get('lineasexc', 'LineController@exportExcel');
 //Taspasos
 Route::resource('traspasos', 'TranferProductsController');
 Route::resource('traspasosAA', 'TrasferUserController');
-//Route::get('traspasospdf', 'TranferProductsController@exportPdf');
+Route::get('traspasospdf', 'TranferProductsController@exportPdfall');
 
 //Traspaso id PDF
 Route::get('traspasopdf/{id}', 'TranferProductsController@exportPdf')->name('traspasopdf');
@@ -241,6 +241,8 @@ Route::group(['middleware' => ['auth']],function () {
 
   /**Reportes Rutas y Vistas */
   Route::get('/reportes-productos','ProductController@reportProduct');
-
+  Route::get('estatusproducto', 'ProductController@reportEstatus');
+  Route::get('gramoslinea', 'ProductController@reportLineaG');
+  Route::get('entradasproducto', 'ProductController@reportEntradas');
 });
 

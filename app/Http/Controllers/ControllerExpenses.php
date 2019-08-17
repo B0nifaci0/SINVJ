@@ -136,6 +136,7 @@ class ControllerExpenses extends Controller
     {
         Expenses::destroy($id);
     }
+    
     public function exportPdf(){
         $total = Expenses::sum('price');
         $expense = Auth::user()->shop->id;
