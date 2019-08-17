@@ -10,6 +10,14 @@ ALTA USUARIOS
 
 @endsection
 @section('content')
+    @if (session('mesage-delete'))	
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage-delete') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+	    </div>
+		@endif  
   <div class="page-content container-fluid">
     <!-- Form, Method "POST" para enviar los datos del formulario a la base de datos--> 
     <form autocomplete="off" method="POST" action="/usuarios" enctype="multipart/form-data">
@@ -53,10 +61,10 @@ ALTA USUARIOS
             <!-- Input para Ingresar Contraseña (Confirmar)-->
             <div class="form-group form-material col-md-6">
               <label class="form-control-label" for="inputBasicFirstName">Confirmar Contraseña: </label>
-              <input type="password" name="password_confirm" class="form-control">
+              <input type="password" name="password_confirmation" class="form-control">
             </div>
             <!-- END Input-->
-            <div>
+            <div> 
               @foreach ($shops as $shop)
                <input type="hidden" name="shop_id" value="{{$shop->id}}">
               @endforeach 
