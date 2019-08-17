@@ -1,4 +1,3 @@
-
 @extends('layout.layoutdas')
 @section('title')
 ALTA VENTA
@@ -28,8 +27,8 @@ ALTA VENTA
                 @endforeach
               </ul>
             </div>
-           @endif
-          <form autocomplete="off" method="POST" action="/ventas" enctype="multipart/form-data">
+           @endif 
+          <form id="form" method="POST" action="/ventas">
             <center><h3>Registrate Venta</h3></center>
             {{ csrf_field() }}    
             <div class="row">
@@ -52,7 +51,7 @@ ALTA VENTA
                       data-placeholder="Seleccione Producto" data-allow-clear="true">
                       <option></option>
                     <optgroup label="Productos">
-                      @foreach($productsBranch as $product)
+                      @foreach($products as $product)
                       <option value="{{ $product->id }}" required>{{$product->clave}}-{{$product->name}}</option>
                       @endforeach
                     </optgroup>
@@ -107,8 +106,11 @@ ALTA VENTA
                   <input type="hidden" class="form-control" name="parcial_pay" id="faltan"/>
                   <input type="hidden" class="form-control" name="total_pay" id="totalpayparcial"/>
                 <!-- Botón para guardar venta-->
+
+                <input type="hidden" class="form-control" name="products_list" id="products_list"/>
+
                 <div class="form-group col-md-1">
-                  <button  id="submit" type="submit" name="" class="btn btn-primary">Guardar</button>
+                  <button  id="submit" type="submit" class="btn btn-primary">Guardar</button>
                 </div>
                 <!-- END Botón-->
               </div>
@@ -161,7 +163,7 @@ ALTA VENTA
                               </div>
                               <!-- END Input-->
                             </div>
-                            <button id="submit" type="submit" name="continuar" data-dismiss="modal" class="btn btn-success btn-lg btn-block" aria-label="Close" >Continuar</button>
+                            <button type="button" name="continuar" data-dismiss="modal" class="btn btn-success btn-lg btn-block" aria-label="Close" >Continuar</button>
                           </div>
                           <!-- END CONTADO-->
                           
@@ -187,7 +189,7 @@ ALTA VENTA
                               </div>
                               <!-- END Input--> 
                             </div>
-                            <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
+                            <button class="btn btn-success btn-lg btn-block" type="button">Continuar</button>
                           </div>
                           <!-- END APARTADO-->
 
@@ -216,7 +218,7 @@ ALTA VENTA
                               <!-- END Input-->
                             </div>
                             <hr class="mb-4">
-                            <button class="btn btn-success btn-lg btn-block" type="submit">Continuar</button>
+                            <button class="btn btn-success btn-lg btn-block" type="button">Continuar</button>
                           </div>
                           <!-- END PAGO CON TARJETA-->
                         </div>
@@ -241,17 +243,50 @@ seleccionado con sus respectivos datos-->
 <script>
 
 var products = {!! $products !!};
+var selectedProducts = [];
 var total = 0;
 
 
 $(function(){
+
+
+  $('#form').submit(function() {
+    let productIds = selectedProducts.map(p => p.id);
+    $('#products_list').val(productIds);
+    console.log($('#products_list').val());
+
+    return true;
+  });
+
+
  $('#btn-add').click(function(){
 
   var productId = $('#current_product').val();
-  console.log(productId);
   var product = products.filter(p => p.id == productId)[0];
-  console.log(product);
-  var _tr = '<tr id="removetr" alt="product.id"><td>'+ product.id +'</td> <td>'+ product.name +'</td><td>'+ product.weigth +'</td> <td>'+ product.category.name +'</td> <td>'+ product.line.name +'</td> <td>'+ product.branch.name +'</td> <td>'+ product.status.name +'</td> <td>$'+ product.price +'</td><td>0</td><td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger" id="deletr">-</button></div></td></tr>';
+
+  var exist = selectedProducts.filter(p => p.id == product.id);
+  if(exist.length) {
+    Swal.fire(
+      'No permitido',
+      'Este producto ya se ha agregado',
+      'error'
+    );
+    return;
+  }
+
+  selectedProducts.push(product);
+  var _tr = `<tr id="raw-${product.id}">
+    <td>${product.id}</td>
+    <td>${product.name}</td>
+    <td>${product.weigth}</td>
+    <td>${product.category.name}</td>
+    <td>${product.line.name}</td>
+    <td>${product.branch.name}</td>
+    <td>${product.status.name}</td>
+    <td>$ ${product.price}</td>
+    <td>0</td>
+    <td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button></div></td>
+  </tr>`;
 
 //END Función//
 
@@ -269,12 +304,23 @@ $(function(){
   $('#vari').val(cambio);
   $('#tabl').val(_tr);
 
+  $(".deletr").unbind();
   
-  $('#deletr').click(function(){
-    $("#removetr").remove();
-      total -= Number(product.price);
-      $("#total").html("$" - total);
-        });
+  $('.deletr').click(function() {
+    var productId = $(this).attr('alt');
+    var product = products.filter(p => p.id == productId)[0];
+
+    var index = selectedProducts.map(p => p.id).indexOf(selectedProducts.filter(p => p.id == productId)[0].id)
+    selectedProducts.splice(index, 1);
+
+    console.log(JSON.stringify(selectedProducts))
+    console.log("buscar " + productId + " en", selectedProducts.map(p => p.id))
+    console.log("Indice", index);
+    $(`#raw-${product.id}`).remove();
+    total -= Number(product.price);
+    console.log(total);
+    $("#total").html("$" + total);
+  });
 
 });
   $('#resta').keyup(function() {
@@ -291,13 +337,14 @@ $('#apartado').keyup(function() {
   $('#faltan').val(falta);
   
 }); 
-$('#continuar').click(function(e) {
- e.preventDefault();
- if('El dinero recibido ddebe ser mayor al total a pagar'){
-   $('#form').submit();
- }
-  
-}); 
+
+  // $('#continuar').click(function(e) {
+  // e.preventDefault();
+  // if('El dinero recibido debe ser mayor al total a pagar'){
+  //   $('#form').submit();
+  // }
+    
+  // }); 
 });
 
 

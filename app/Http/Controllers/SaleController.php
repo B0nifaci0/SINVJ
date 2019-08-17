@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Sale;
 use App\Product;
+use App\SaleDetails;
 use App\Line;
 use App\User;
 use App\Branch;
@@ -56,15 +57,23 @@ class SaleController extends Controller
     public function create()
     {
       $user = Auth::user();
-      $branchId = Auth::user()->branch->id;
-      $productsBranch = Product::where('branch_id',$branchId)->get();
+      if($user->branch) {
+        $branch_id = $user->branch->id;
+        $products = Product::where('branch_id',$branch_id)->get();
+      } else {
+        $branches = Branch::where('shop_id', $user->shop->id)->get();
+        $branch_ids = $branches->map(function($item) {
+          return $item->id;
+        });
+        $products = Product::whereIn('branch_id', $branch_ids)->get();
+      }
       $products = Product::with('line')
         ->with('branch')
         ->with('category')
         ->with('status')
         ->get();
       //return $products;
-        return view('sale/add', compact('products','productsBranch','user'));
+        return view('sale/add', compact('products','products','user', 'branches'));
     }
 
     /**
@@ -75,15 +84,28 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        $sale = new Sale($request->all());
-        $sale->save();
+      return $request;
+      $sale = Sale::create([
+        'customer_name' => $request->customer_name,
+        'telephone' => $request->telephone,
+        'price' => $request->price,
+        'customer_name' => $request->customer_name,
+        'total_pay' => $request->total_pay
+      ]);
+      $product_ids = explode(",", $request->products_list);
+      foreach ($product_ids as $id) {
+        SaleDetails::create([
+          'sale_id' => $sale->id,
+          'product_id' => $id,
+          'final_price' => $request->total_pay
+        ]);
+      }
 
-    return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
-    \App\Parcial::create([
-      'parcial_pay' => $request['parcial_pay'],
-      'total_pay' => $request['total_pay'],
-  ]);
-
+      return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
+        \App\Parcial::create([
+          'parcial_pay' => $request['parcial_pay'],
+          'total_pay' => $request['total_pay'],
+      ]);
     }
 
     
@@ -96,8 +118,9 @@ class SaleController extends Controller
      */
     public function show($id)
     {
-     return view('sale.show', ['sale' => Sale::findOrFail($id)]);
-
+      $sale = Sale::findOrFail($id);
+      $sale->items = SaleDetails::where('sale_id', $sale->id)->get();
+      return view('sale.show', ['sale' => $sale]);
     }
 
     /**
@@ -157,7 +180,7 @@ public function exportPdf($id){
   $sales = Sale::where("id","=",$id)->get();
   $shops = Auth::user()->shop()->get();
   $branches = Branch::where('id', '!=', $user->branch_id)->get(); 
-  $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops'));
+  $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops')); 
   return $pdf->stream('venta.pdf');
 }
 
