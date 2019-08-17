@@ -35,12 +35,6 @@ MODIFICACIÓ PRODUCTO
               <input type="text" class="form-control" name="clave"  value="{{$product->clave}}" required>
           </div>
           <!-- END Input-->
-          <!-- Input para ingresar Nombre del producto-->
-          <div class="form-group form-material col-md-4">
-            <label>Nombre</label>
-            <input type="text" class="form-control"value="{{$product->name}}" name="name">
-          </div>
-          <!-- END Input-->
           <!-- Input para ingresar descripcion-->
           <div class="form-group form-material col-md-4 ">
             <label>Descripcion</label>

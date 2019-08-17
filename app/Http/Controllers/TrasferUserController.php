@@ -75,7 +75,7 @@ class TrasferUserController extends Controller
         $users = User::where('id', '!=', $user->id)->get();
        
         $branches = Branch::all();
-        return view('transfer/TrasferUser/add', compact('branches','users','products','user','shop'));
+        return view('transfer/TrasferUser/add', compact('branches','users','products'));
        }
 
   public function store(Request $request)

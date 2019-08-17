@@ -19,6 +19,7 @@
     <link rel="stylesheet" href={{{url('/assets/css/site.min.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/select2/select2.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/editable-table/editable-table.css')}}}>
+    <link rel="stylesheet" href={{{url('global/vendor/icheck/icheck.css')}}}>
 
 
 
@@ -978,6 +979,7 @@
     <script src={{{url('global/js/Plugin/peity.js')}}}></script>
 
     <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
+    <script src={{{url('global/js/Plugin/icheck.js')}}}></script>
 
     <!-- datatable 
     <script src={{{url('global/js/Plugin/datatables.js')}}}></script>

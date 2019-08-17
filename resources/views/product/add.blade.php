@@ -23,7 +23,7 @@ ALTA PRODUCTO
         </div>
       @endif
       <h2 align="center">Nuevo Producto</h2>
-      <br>  
+      <br> 
       <form id="multiplicar" class="" action="/productos" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }} 
         <div class='row'>
@@ -34,10 +34,10 @@ ALTA PRODUCTO
           </div>
           <!-- END Input--> 
           <!-- Input para ingresar Nombre del producto-->
-          <div class="form-group form-material col-md-4">
+          <!--<div class="form-group form-material col-md-4">
               <label>Nombre</label> 
               <input type="text" class="form-control" name="name"  value="{{old('name')}}" required>
-            </div>
+            </div>-->
             <!-- END Input--> 
             <!-- Input para ingresar descripcion-->
             <div class="form-group form-material col-md-4">

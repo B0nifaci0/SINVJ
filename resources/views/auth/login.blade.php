@@ -46,7 +46,7 @@
                 <input type="checkbox" id="remember" name="checkbox" {{ old('remember') ? 'checked' : '' }} >
                 <label for="inputCheckbox">{{ __('Recuerdame') }}</label>
               </div>
-              <a class="float-right" href="href="{{route('password.request') }}">{{ __('Olvidaste tu contraseña?')}}</a>
+              <!--<a class="float-right" href="href=¡"{{route('password.request') }}">{{ __('Olvidaste tu contraseña?')}}</a>-->
             </div>
             <button type="submit" class="btn btn-primary btn-block">Iniciar</button>
           </form>
