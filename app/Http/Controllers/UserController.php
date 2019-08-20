@@ -120,7 +120,7 @@ class UserController extends Controller
     {
       $user = Auth::user();
       $users = User::findOrFail($id);
-      if($users->type_user == 0){
+      if($users->type_user == 1){
         return redirect('/usuarios')->with('mesage-delete','El administrador no puede ser actualizado');
       }
       //$user = Auth::user()->shop->branches;
@@ -141,7 +141,7 @@ class UserController extends Controller
      */
     public function update(Request $request,$id)
     {
-      $users = User::findOrFail($id);
+        $users = User::findOrFail($id);
         $users->name = $request->name;
         $users->email = $request->email;
         $users->password = bcrypt($request->password);
