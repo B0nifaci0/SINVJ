@@ -30,5 +30,8 @@ class Sale extends Model
   public function items() {
     return $this->hasMany(SaleDetails::class);
   }
+  public function saledetail() {
+    return $this->hasMany(SaleDetails::class);
+  }
 }
 

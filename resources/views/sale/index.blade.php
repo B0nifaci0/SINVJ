@@ -83,7 +83,7 @@ LISTA DE  VENTAS
                 @foreach ($sales as $sale)
                   <tr id = "row{{ $sale->id }}">
                     <td>{{ $sale->id}}</td>
-                    <td></td>
+                    <td> {{ $sale->customer_name }}</td>
                     <td>{{ $sale->telephone }}</td>
                     <td></td>
                     <td>$ {{ $sale->price }}</td>

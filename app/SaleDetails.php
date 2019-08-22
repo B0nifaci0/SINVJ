@@ -11,4 +11,11 @@ class SaleDetails extends Model
         'product_id',
         'final_price',
     ];
+
+    public function sale()
+    {
+      return $this->belongsTo(Sale::class);
+    }
 }
+
+
