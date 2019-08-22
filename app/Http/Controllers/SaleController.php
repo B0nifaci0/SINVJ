@@ -175,7 +175,7 @@ public function exportPdfall(){
 }
 
 public function exportPdf($id){ 
-  $user = Auth::user();
+  $user = Auth::user();  
   $sales = Sale::all();
   $sales = Sale::where("id","=",$id)->get();
   $shops = Auth::user()->shop()->get();

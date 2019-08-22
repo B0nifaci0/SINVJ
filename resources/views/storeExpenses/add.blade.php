@@ -50,7 +50,7 @@ ALTA GASTOS
                 <label>Selecciona imagen de comprobante</label>
                 <br>
                 <label for="image" class="btn btn-primary">Explorar</label>
-                <input type="file" name="image" id="image" class="hidden">
+                <input type="file" name="image" id="image" class="hidden" required>
               </div>
               <!-- END Select--> 
               <!-- Input para Ingresar el precio-->
