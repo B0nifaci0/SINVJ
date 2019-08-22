@@ -77,8 +77,8 @@ EDITAR USUARIOS
               <label>Tipo de Usuario</label>
               <select id="type_user" class="form-control round type_user" name="type_user" required >
                 <option value="*">Seleccione Tipo de Usuario</option>
-                <option value="1" name='type_user'>Sub-Administrador</option>
-                <option value="2" name='type_usyer'>Colaborador</option>
+                <option value="2" name='type_user'>Sub-Administrador</option>
+                <option value="3" name='type_usyer'>Colaborador</option>
               </select>
             </div> 
             <!-- END Select-->

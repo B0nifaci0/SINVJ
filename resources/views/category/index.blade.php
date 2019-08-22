@@ -61,6 +61,7 @@ LISTA DE  CATEGORIA
               <tr>
                 <th>Clave</th>
                 <th>Nombre</th>
+                <th>Tipo de Producto</th>
                 @if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
                 @endif
@@ -70,6 +71,7 @@ LISTA DE  CATEGORIA
               <tr>
                 <th>Clave</th>
                 <th>Nombre</th>
+                <th>T.Porducto</th>
                 @if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
                 @endif
@@ -80,6 +82,12 @@ LISTA DE  CATEGORIA
               <tr id = "row{{ $category->id }}">
                 <td>{{ $category->id}}</td>
                 <td>{{ $category->name }}</td>
+                @if($category->type_product == 1 )
+                    <td><span class="text-center badge badge-success">Pieza</span></td>
+                @endif
+                @if($category->type_product == 2 )
+                    <td><span class="text-center badge badge-primary">Gramos</span></td>
+                @endif
                 @if(Auth::user()->type_user == 1 )
                 <td>
                   <!-- Botón Para editar categoria--> 

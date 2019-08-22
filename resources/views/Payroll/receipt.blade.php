@@ -49,8 +49,9 @@
 }
 
 
-@page {size: 8cm 120mm;
+@page {size: 5.5cm 140mm;
      }
+
    </style>
 
 <body>

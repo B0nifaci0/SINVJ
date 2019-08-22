@@ -57,7 +57,7 @@
           
               <p align="right">Hora: {{$hour}}</p>
           
-              <p align="right">Linea: @foreach ($products as $i => $product){{$product->line->name}} @endforeach </p>
+              <p align="right">Linea: {{$product->line->name}} </p>
           
     <h2 align="center">Reporte de Productos por Estatus</h2>
         <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>

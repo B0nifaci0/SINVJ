@@ -24,10 +24,11 @@ class Category extends Authenticatable
      * The attributes that are mass assignable.
      *
      * @var array
-     */
+     */  
     protected $fillable = [
         'name',
-        'shop_id'
+        'shop_id',
+        'type_product'
     ];
 
     public function product(){

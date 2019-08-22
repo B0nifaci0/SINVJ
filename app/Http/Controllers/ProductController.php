@@ -109,6 +109,7 @@ class ProductController extends Controller
         $shops = Auth::user()->shop()->get();
         //return $shops;  
         $categories = Shop::find($category)->categories()->get();
+        //$categories;
         $lines = Shop::find($line)->lines()->get();
         //return $lines;  
         $status = Auth::user()->shop->id;
@@ -322,7 +323,7 @@ class ProductController extends Controller
  */
 
       $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates'));
-      return $pdf->stream('ReporteEstatus.pdf');
+      return $pdf->download('ReporteEstatus.pdf');
 
 /**Termina el retorno del pdf */
       
@@ -345,7 +346,7 @@ class ProductController extends Controller
         }
 
       $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('products','branches','lines','total','cash'));
-      return $pdf->stream('ReporteLineas.pdf');
+      return $pdf->download('ReporteLineas.pdf');
     } 
 
     public function reportEntradas(Request $request){
@@ -362,6 +363,6 @@ class ProductController extends Controller
       
                           
      $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
-     return $pdf->stream('ReporteEntradas.pdf');
+     return $pdf->download('ReporteEntradas.pdf');
     }    
 }

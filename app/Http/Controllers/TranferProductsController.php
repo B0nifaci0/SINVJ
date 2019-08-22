@@ -145,6 +145,7 @@ class TranferProductsController extends Controller
 public function exportPdfall(){ 
     $trans = TransferProduct::all();
     $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans'));
+    $pdf->setpaper('letter', 'landscape');
     return $pdf->stream('Traspasos.pdf');
   }
 
