@@ -120,7 +120,7 @@ class UserController extends Controller
     {
       $user = Auth::user();
       $users = User::findOrFail($id);
-      if($users->type_user == 0){
+      if($users->type_user == 1){
         return redirect('/usuarios')->with('mesage-delete','El administrador no puede ser actualizado');
       }
       //$user = Auth::user()->shop->branches;
@@ -141,7 +141,7 @@ class UserController extends Controller
      */
     public function update(Request $request,$id)
     {
-      $users = User::findOrFail($id);
+        $users = User::findOrFail($id);
         $users->name = $request->name;
         $users->email = $request->email;
         $users->password = bcrypt($request->password);
@@ -194,6 +194,12 @@ class UserController extends Controller
     }
 
     public function nominasPdf( Request $request){
+      $hour = Carbon::now();
+      $hour = date('H:i:s');
+
+      $dates = Carbon::now(); 
+      $dates = $dates->format('d-m-Y');
+
 
       $fech1 = Carbon::parse($request->fecini);
       $fech2 = Carbon::parse($request->fecter);
@@ -203,9 +209,9 @@ class UserController extends Controller
       $nomina = ($hoy * $salary);
 
 
-      $pdf  = PDF::loadView('User.NominasPDF', compact('users','nomina','hoy','fech1','fech2','salary'));
+      $pdf  = PDF::loadView('User.NominasPDF', compact('users','nomina','hoy','fech1','fech2','salary','hour','dates'));
       // //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
-      return $pdf->download('nominas.pdf');
+      return $pdf->stream('nominas.pdf');
     }
 
     public function indexReceipt(){
@@ -234,7 +240,7 @@ class UserController extends Controller
       $date = $date->format('d-m-Y');
     
       $pdf  = PDF::loadView('Payroll.receipall', compact('users','date'));
-      return $pdf->download('recibos.pdf');
+      return $pdf->stream('recibos.pdf');
     }
 
 }
