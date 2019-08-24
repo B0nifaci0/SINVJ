@@ -199,8 +199,8 @@ img {
                         <th class="precio">Precio</th>
                       </tr>
                       <tr>
-                        <td class="clave1">{{ $sale->product->clave }}</td>
-                        <td class="producto1">{{ $sale->product->name }}</td>
+                        <td class="clave1">1</td>
+                        <td class="producto1">{{ $sale->product->description }}</td>
                         <td class="precio1">${{ $sale->product->price }}</td>
                      </tr>
                      <tr>

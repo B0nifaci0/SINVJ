@@ -19,6 +19,7 @@
     <link rel="stylesheet" href={{{url('/assets/css/site.min.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/select2/select2.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/editable-table/editable-table.css')}}}>
+    <link rel="stylesheet" href={{{url('global/vendor/icheck/icheck.css')}}}>
 
 
 
@@ -698,19 +699,35 @@
                       <span class="site-menu-arrow"></span>
                     </a>
                     <ul class="site-menu-sub">
-                    <li class="site-menu-item">
+                  <li class="site-menu-item has-sub">
+                    <a  href="javascript:void(0)">
+                      <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
+                        <span class="site-menu-title">Productos</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
                           <a class="animsition-link" href="/productos">
-                          <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
-                            <span class="site-menu-title">Productos</span>
-                            </a>
+                          <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mis Productos</span>
+                        </a>
                       </li>
-
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/productos/create">
+                          <i class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                            <span class="site-menu-title">Agregar Productos</span>
+                        </a>
+                        </li>
+                    </ul>
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/sucursales">
                           <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
                             <span class="site-menu-title">Sucursales</span>
                         </a>
                       </li>
+                      
 
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/categorias">
@@ -978,6 +995,7 @@
     <script src={{{url('global/js/Plugin/peity.js')}}}></script>
 
     <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
+    <script src={{{url('global/js/Plugin/icheck.js')}}}></script>
 
     <!-- datatable 
     <script src={{{url('global/js/Plugin/datatables.js')}}}></script>

@@ -67,7 +67,7 @@ class SaleController extends Controller
       } else {
         $branches = Branch::where('shop_id', $user->shop->id)->get();
         $branch_ids = $branches->map(function($item) {
-          return $item->id;
+          //return $item->id;
         });
         $products = Product::whereIn('branch_id', $branch_ids)->get();
       }
@@ -179,7 +179,7 @@ public function exportPdfall(){
 }
 
 public function exportPdf($id){ 
-  $user = Auth::user();
+  $user = Auth::user();  
   $sales = Sale::all();
   $sales = Sale::where("id","=",$id)->get();
   $shops = Auth::user()->shop()->get();

@@ -24,14 +24,16 @@ class ProductValidate extends FormRequest
     public function rules()
     {
         return [
-            'clave' => 'required|string|max:10',
+            'clave' => 'required|string|max:50',
             //'name' => 'required|alpha|max:15|unique:products,name',
             'description' => 'required|string|max:15',
-            'weigth' => 'required|numeric|max:200',
+            'weigth'=> 'required_if:product,is:true',
+            //'weigth' => 'required|numeric|max:200',
             'observations' => 'required|string|max:15',
             'image' => 'image',
             'price' => 'required|numeric',
-            'category_id' => 'required',
+            //'category_id' => 'required',
+            //'category_id' => 'required_if:product,is:true',
             'line_id' => 'required',
             'shop_id' => 'required',
             'branch_id' => 'required',

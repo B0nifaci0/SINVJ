@@ -13,7 +13,6 @@ class Product extends Model
 
     protected $fillable = [
       'clave',
-      'name',
     	'description',
       'weigth',
       'observations',

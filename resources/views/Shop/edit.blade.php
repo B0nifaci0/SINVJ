@@ -46,7 +46,7 @@ MODIFICACIÓN TIENDA
                             <input type="text" class="form-control" name="phone_number"  value="{{$shop->phone_number}}" required>
                         </div>
             <div class="form-group form-material col-md-6">
-              <label>Selecciona imagen del producto</label>
+              <label>Selecciona el logo de tu tienda</label>
               <br>
               <label for="image" class="btn btn-primary">Explorar</label>
               <input type="file" name="image" id="image" class="hidden" required>

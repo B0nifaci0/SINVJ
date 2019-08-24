@@ -69,7 +69,7 @@ LISTA PRODUCTO
                   </button>
                 </div>
                 <!-- END Botón-->
-                <!-- Botón para editar productos-->
+                <!-- Botón para agregar productos-->
                 <div class="col-md-4 col-md-offset-2">
                   <button onclick="window.location.href='/productos/create'" 
                     type="button" class=" btn btn-sm small btn-floating 
@@ -91,7 +91,6 @@ LISTA PRODUCTO
               {{ csrf_field() }}
               <tr>  
                 <th>Clave</th>
-                <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Peso</th>
                 <th>Observaciónes</th>
@@ -108,7 +107,6 @@ LISTA PRODUCTO
             <tfoot>
               <tr>
                 <th>Clave</th>
-                <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Peso</th>
                 <th>Observaciónes</th>
@@ -126,7 +124,6 @@ LISTA PRODUCTO
               @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
                   <td>{{ $product->clave }}</td> 
-                  <td>{{ $product->name }}</td>
                   <td>{{ $product->description }}</td>
                   <td>{{ $product->weigth }}</td>
                   <td>{{ $product->observations }}</td>
