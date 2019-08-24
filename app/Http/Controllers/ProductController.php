@@ -273,7 +273,6 @@ class ProductController extends Controller
      public function reportEstatus(Request $request){
 
 /**Codigo para hacer las validaciones de los campos para realizar las consultas para el reporte */
-
       $idshop = Auth::user()->shop->id;
       $status = Shop::find($idshop)->statuss()->get();
       $line = Shop::find($idshop)->lines()->get();
@@ -288,11 +287,6 @@ class ProductController extends Controller
       return redirect('/reportes-productos')->with('mesage-update', 'Seleccina alguna opcion de cada selector!');      }
 
 /**Termina codigo de validacion de campos */
-
-      if($status == '*' || $categories == '*' || $line == '*'){
-        return "Holis";
-      }
-    
 
     
 /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */

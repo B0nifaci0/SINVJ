@@ -69,7 +69,7 @@ LISTA PRODUCTO
                   </button>
                 </div>
                 <!-- END Botón-->
-                <!-- Botón para editar productos-->
+                <!-- Botón para agregar productos-->
                 <div class="col-md-4 col-md-offset-2">
                   <button onclick="window.location.href='/productos/create'" 
                     type="button" class=" btn btn-sm small btn-floating 
