@@ -48,7 +48,10 @@ ALTA PRODUCTO
                 @endforeach
               </select> 
             </div>
-
+            <div  id="price" class="col-md-3">
+                 <label  class="control-label">Precio de la linea</label>
+                  <input type="text" name="" id="line_price" class="form-control" readonly>
+            </div>
             <!-- END Select-->  
             <!-- Input para ingresar precio de la linea para el producto-->   
             <div class="col-md-3 form-material">
@@ -74,7 +77,7 @@ ALTA PRODUCTO
               <select  id="categorie_id" name="category_id" class="form-control round">
                 @foreach($categories as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
-                  <!--<option class="invisible" id="categorie_type_product" value="{{ $category->id }}" required>{{ $category->type_product }}</option>-->
+                  <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
 
                 @endforeach
               </select>
@@ -180,25 +183,29 @@ $(document).ready(function(){
 <!-- Función para obtener el precio de linea-->
 @section('precio-linea')
 <script type="text/javascript">
-//var categoryTypeproduct = {!! $categories !!};
-//console.log("categoryTypeproduct", categoryTypeproduct);
-//$('#categorie_type_product').val(categoryTypeproduct[0].type_product);
+var categoryTypeproduct = {!! $categories !!};
 
-/*$('#categorie_id').click(function(){
-  var id = $(this).val();
-  var categorie = categoryTypeproduct.filter(l => l.id == id)[0];
+console.log("categoryTypeproduct", categoryTypeproduct);
 
-  console.log(id);
-  if( id = 1)
-  $('#line_id').remove();
-  if( id = 2)
-    $('#line').html('<label  class="control-label">Precio de la linea</label><input type="text" name="" id="line_price" class="form-control" readonly>');
-  //$('#linea').remove();
-});*/
+$('#categorie_id').change(function(){
+  var categoryTypeproduct = {!! $categories !!};
+  $.each( categoryTypeproduct, function(key, value) {
+    
+        //alert(JSON.stringify(value.type_product));
+      //alert( key + ": " + value.type_product );
 
+  });
+    $('#categorie_id').click(function(){
+    //alert('entra');
+    if(value.type_product = 1)
+    $('#line').addClass("invisible");
+    if( value.type_product = 2)
+        $('#price').addClass('');
+    });
+});
 var lines = {!! $lines !!};
 
-console.log("lines", lines);
+//console.log("lines", lines);
 
 $('#line_price').val(lines[0].sale_price);
 
@@ -208,7 +215,7 @@ $('#line_id').change(function() {
   $('#line_price').val(line.sale_price);
 }); 
 
-$('#multiplicador').keyup(function() {
+$('#multiplicador').keyup(function(){
   var total = $('#line_price').val() * $(this).val();
   $('#total').val(total);
 });
