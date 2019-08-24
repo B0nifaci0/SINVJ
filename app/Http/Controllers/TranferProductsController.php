@@ -127,7 +127,7 @@ class TranferProductsController extends Controller
       $transfer->delete();
     } else {
       $transfer->status_product = $request->answer;
-      $transfer->save();
+      $transfer->save(); 
       if($request->answer) {
         $product->branch_id = $transfer->new_branch_id;
         $product->shop_id = $user->shop->id;

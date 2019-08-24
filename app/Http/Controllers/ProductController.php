@@ -288,7 +288,10 @@ class ProductController extends Controller
 
 /**Termina codigo de validacion de campos */
 
-    
+      if($status == '*'){
+        $idshop = Auth::user()->shop->id;
+        $status = Shop::find($idshop)->statuss()->get();
+      }
 /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
 
       $branches = Branch::where("id","=",$request->branch_id)->get();
