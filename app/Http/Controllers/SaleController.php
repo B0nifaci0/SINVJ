@@ -25,16 +25,20 @@ class SaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $user = Auth::user();
+     /*$p = SaleDetails::where('product_id','=','1')->first();
+      //return $p;
+      $po = Product::where('id','=','p')->first();
+      return $po;*/
       $sales = Sale::all();
+      $user = Auth::user();
       $products = Product::with('line')
         ->with('branch')
         ->with('category')
         ->with('status')
         ->get();
-    return view('sale/index', compact('sales','products','user'));
+    return view('sale/index', compact('sales','products','user','SaleDetails'));
     }
 
     public function indexCO()
@@ -84,7 +88,7 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-      return $request;
+      //return $request;
       $sale = Sale::create([
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,

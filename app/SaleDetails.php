@@ -11,4 +11,5 @@ class SaleDetails extends Model
         'product_id',
         'final_price',
     ];
+
 }
