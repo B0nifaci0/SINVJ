@@ -17,8 +17,9 @@ class CreateParcialsTable extends Migration
             $table->increments('id');
             $table->integer('sale_id')->unsigned();
             $table->foreign('sale_id')->references('id')->on('sales');
-            $table->string('parcial_pay'); 
-            $table->string('total_pay'); 
+            $table->string('amount'); 
+            $table->string('type');
+            $table->string('reference')->nullable(); 
             $table->timestamps();
         });
     }

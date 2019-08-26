@@ -29,7 +29,7 @@ ALTA VENTA
             </div>
            @endif 
           <form id="form" method="POST" action="/ventas">
-            <center><h3>Registrate Venta</h3></center>
+            <center><h3>Registrate Venta</h3></center> 
             {{ csrf_field() }}    
             <div class="row">
               <!-- Input para Ingresar Nombre del cliente-->
@@ -77,8 +77,8 @@ ALTA VENTA
                       <th>Linea</th>
                       <th>Sucursal</th>
                       <th>Status</th>
-                      <th>Precio</th>
-                      <th>Precio</th>
+                      <th>Precio de linea</th>
+                      <th>Precio final</th>
                       <th>Eliminar</th>
                     </tr>
                   </thead>
@@ -100,17 +100,19 @@ ALTA VENTA
               <div class="row">
                 <!-- Botón para mostar el Modal de Tipos de pago-->
                 <div class="col-md-2 form-group">
-                  <button class="btn btn-success"  data-target="#exampleTabs" data-toggle="modal"type="button">$ Tipo de Pago</button>
+                  <button class="btn btn-success"  data-target="#exampleTabs" data-toggle="modal"type="button">$ Registro de pago</button>
                 </div>
                 <!-- END Botón-->
                   <input type="hidden" class="form-control" name="parcial_pay" id="faltan"/>
-                  <input type="hidden" class="form-control" name="total_pay" id="totalpayparcial"/>
+                  <input type="hidden" class="form-control" name="total_pay" id="totalPay"/>
                 <!-- Botón para guardar venta-->
 
-                <input type="hidden" class="form-control" name="products_list" id="products_list"/>
+                <input type="hidden" class="form-control" name="products_list" id="productsList"/>
+                <input type="hidden" class="form-control" name="cash_income" id="cashPayment"/>
+                <input type="hidden" class="form-control" name="card_income" id="cardPayment"/>
 
                 <div class="form-group col-md-1">
-                  <button  id="submit" type="submit" class="btn btn-primary">Guardar</button>
+                  <button  id="submit" type="submit" class="btn btn-primary">Terminar compra</button>
                 </div>
                 <!-- END Botón-->
               </div>
@@ -133,11 +135,14 @@ ALTA VENTA
                       </div>
                         <ul class="nav nav-tabs nav-tabs-line" role="tablist">
                           <li class="nav-item " role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleLine1"
-                              aria-controls="exampleLine1" role="tab">Contado</a></li>
-                          <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleLine2"
-                              aria-controls="exampleLine2 " role="tab">Apartado</a></li>
+                            aria-controls="exampleLine1" role="tab">Contado</a>
+                          </li>
+                          <!-- <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleLine2"
+                            aria-controls="exampleLine2 " role="tab">Apartado</a>
+                          </li> -->
                           <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleLine3"
-                              aria-controls="exampleLine3" role="tab">Pago con Tarjeta</a></li>
+                            aria-controls="exampleLine3" role="tab">Pago con Tarjeta</a>
+                          </li>
                         </ul>
                       <div class="modal-body">
                         <div class="tab-content">
@@ -147,20 +152,20 @@ ALTA VENTA
                               <!-- Input para Ingresar cantidad a pagar-->
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
-                                  <input type="text" class="form-control" name="" id="resta" required="required" placeholder="$"required /> 
+                                  <input type="text" class="form-control" name="" id="cashIncome" required="required" placeholder="$"required /> 
                               </div>
                               <!-- END Input-->
                               <!-- Input para mostar el total a pagar--> 
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
-                                <input type="text" class="form-control" name="price" id="totalpay" required="required" readonly="readonly"/>
+                                <input type="text" class="form-control" name="price" id="totalCash" required="required" readonly="readonly"/>
                               </div>
                               <!-- END Input-->
                               <!-- Input para mostar cambio--> 
-                              <div class="form-group form-material col-md-3">
+                              <!-- <div class="form-group form-material col-md-3">
                                 <label class="form-control-label" for="inputBasicLastName">Tu Cambio es:</label>
                                 <input type="text" class="form-control" name="" id="cambio" required="required" />
-                              </div>
+                              </div> -->
                               <!-- END Input-->
                             </div>
                             <button type="button" name="continuar" data-dismiss="modal" class="btn btn-success btn-lg btn-block" aria-label="Close" >Continuar</button>
@@ -168,29 +173,23 @@ ALTA VENTA
                           <!-- END CONTADO-->
                           
                           <!-- APARTADO-->
-                          <div class="tab-pane" id="exampleLine2" role="tabpanel"> 
+                          <!-- <div class="tab-pane" id="exampleLine2" role="tabpanel"> 
                             <div class="row">
-                               <!-- Input para ingresar cantidad-->
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
                                 <input type="text" class="form-control" name="" id="apartado" required="required" placeholder="$"required /> 
                               </div> 
-                              <!-- END Input-->
-                              <!-- Input mostrar cuanto queda a deber-->
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label" for="inputBasicFirstName">Restan</label>
                                 <input type="text" class="form-control" name="parcial" id="falta" required="required" placeholder="$"required /> 
                               </div>
-                              <!-- END Input--> 
-                              <!-- Input para mostar el total a pagar-->
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label">Total a Pagar:</label>
                                 <input type="text" class="form-control" id="totalpayment"  required="required" readonly="readonly" />
                               </div>
-                              <!-- END Input--> 
                             </div>
                             <button class="btn btn-success btn-lg btn-block" type="button">Continuar</button>
-                          </div>
+                          </div> -->
                           <!-- END APARTADO-->
 
                           <!-- PAGO CON TARJETA-->
@@ -199,13 +198,13 @@ ALTA VENTA
                               <!-- Input para ingresar cantidad a pagar-->
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label">Recibo:</label>
-                                <input type="text" class="form-control" id=""  required="required"/>
+                                <input type="text" class="form-control" id="cardIncome" placeholder="$"  required="required"/>
                               </div> 
                               <!-- END Input-->
                               <!-- Input para mostar total a pagar-->
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label">Total a Pagar:</label>
-                                <input type="text" class="form-control" id="pagotarjeta"  required="required" readonly="readonly" />
+                                <input type="text" class="form-control" id="totalCard"  required="required" readonly="readonly" />
                               </div>
                               <!-- END Input--> 
                               <!-- Input para seleccionar Imagen del ticket-->
@@ -250,18 +249,41 @@ var total = 0;
 $(function(){
 
 
-  $('#form').submit(function() {
-    let productIds = selectedProducts.map(p => p.id);
-    $('#products_list').val(productIds);
-    console.log($('#products_list').val());
+  $('#form').submit(function(e) {
+
+    if(!Number($('#cashIncome').val()) && !Number($('#cardIncome').val())) {
+      Swal.fire(
+        'No permitido',
+        'Debe agregar un monto de pago',
+        'error'
+      );
+      e.preventDefault();
+      return
+    }
+
+    let productIds = selectedProducts.map(p => { 
+      console.log({ id: p.id, price: $(`#finalPrice${p.id}`).val() });
+      return { id: p.id, price: $(`#finalPrice${p.id}`).val() } 
+    });
+    
+    $('#productsList').val(JSON.stringify(productIds));
+
+    let cashPayment = $('#cashIncome').val();
+    let cardPayment = $('#cardIncome').val();
+    $('#cashPayment').val(cashPayment);
+    $('#cardPayment').val(cardPayment);
+    console.log($('#productsList').val());
 
     return true;
   });
 
 
  $('#btn-add').click(function(){
+   var tempPrice = 0;
+   var currentPrice = 0;
 
   var productId = $('#current_product').val();
+  if(!productId) return
   var product = products.filter(p => p.id == productId)[0];
 
   var exist = selectedProducts.filter(p => p.id == product.id);
@@ -284,7 +306,7 @@ $(function(){
     <td>${product.branch.name}</td>
     <td>${product.status.name}</td>
     <td>$ ${product.price}</td>
-    <td>0</td>
+    <td><input class="finalPrice" id="finalPrice${product.id}" alt="${product.id}" type="text" value="${product.price}"/></td>
     <td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button></div></td>
   </tr>`;
 
@@ -296,17 +318,55 @@ $(function(){
   $("#total").html("$" + total); 
 //END Función//
 
-  $('#totalpay').val(total);
+  $('#totalCash').val(total);
   $('#pagar').val(total);
-  $('#pagotarjeta').val(total);
+  $('#totalCard').val(total);
   $('#totalpayment').val(total);
-  $('#totalpayparcial').val(total);
-  $('#vari').val(cambio);
+  $('#totalPay').val(total);
+  // $('#vari').val(cambio);
   $('#tabl').val(_tr);
 
   $(".deletr").unbind();
+  $(".finalPrice").unbind();
+
+  $('.finalPrice').keydown(function() {
+    var productId = $(this).attr('alt');
+    var product = products.filter(p => p.id == productId)[0];
+
+    tempPrice = Number($(`#finalPrice${product.id}`).val());
+    // console.log("valor anterior", tempPrice)
+  });
+
+  $('.finalPrice').keyup(function() {
+    var productId = $(this).attr('alt');
+    var product = products.filter(p => p.id == productId)[0];
+
+    currentPrice = Number($(`#finalPrice${product.id}`).val());
+    // console.log("valor nuevo ", currentPrice)
+    if(tempPrice == currentPrice) {
+      console.log("entra return", tempPrice, currentPrice)
+      return
+    }
+
+
+    if(tempPrice > currentPrice) {
+      console.log(`${total} = ${total} - ${currentPrice}`)
+      total = total - tempPrice + currentPrice;
+    } else if(tempPrice < currentPrice) {
+      console.log(`${total} = ${total} + ${currentPrice}`)
+      total = total - tempPrice + currentPrice;
+    }
+
+    console.log(total);
+    $("#total").html("$" + total);
+    $("#totalPay").val(total);
+    $("#totalCash").val(total);
+    $("#totalCard").val(total);
+  });
+
   
   $('.deletr').click(function() {
+
     var productId = $(this).attr('alt');
     var product = products.filter(p => p.id == productId)[0];
 
@@ -316,27 +376,27 @@ $(function(){
     console.log(JSON.stringify(selectedProducts))
     console.log("buscar " + productId + " en", selectedProducts.map(p => p.id))
     console.log("Indice", index);
+    
+    total -= Number($(`#finalPrice${product.id}`).val());
     $(`#raw-${product.id}`).remove();
-    total -= Number(product.price);
-    console.log(total);
     $("#total").html("$" + total);
   });
 
 });
-  $('#resta').keyup(function() {
-  var cambio =  $(this).val() - $('#totalpay').val();
-  $('#cambio').val(cambio);
-  console.log(cambio);
-  
-  
-});  
+
+  // $('#resta').keyup(function() {
+  //   var cambio =  $(this).val() - $('#totalCash').val();
+  //   $('#cambio').val(cambio);
+  //   console.log(cambio);
+  // });
 
 $('#apartado').keyup(function() {
   var falta = $('#totalpayment').val() -$(this).val();
   $('#falta').val(falta);
   $('#faltan').val(falta);
   
-}); 
+});
+
 
   // $('#continuar').click(function(e) {
   // e.preventDefault();
