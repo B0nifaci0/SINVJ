@@ -10,6 +10,7 @@ use App\User;
 use App\Branch;
 use App\Parcial;
 use PDF;
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaleRequest;
 use Illuminate\Support\Facades\Auth;
@@ -28,12 +29,25 @@ class SaleController extends Controller
     public function index()
     {
       $user = Auth::user();
-      $sales = Sale::all();
-      $products = Product::with('line')
-        ->with('branch')
-        ->with('category')
-        ->with('status')
-        ->get();
+      $sales =Sale::all();
+      // $sales =DB::table('sales')
+      // ->join('sale_details','sale_id', '=' ,'sales.id')
+      // ->join('products','product_id', '=' ,'sale_details.product_id')
+      // ->select('sales.id as Venta','sale_details.sale_id as Detalle','sales.customer_name as Cliente',
+      // 'sale_details.id as ProductoVendido','products.name as Producto')->get();
+      // return $sales;
+
+     $s=Product::find(1);
+    //  return $s;
+      $products =DB::table('sale_details')
+      ->join('products','product_id', '=' ,'sale_details.product_id')
+      ->select('products.name as  ')->get();
+     // return $products;
+      //  $products = Product::with('line')
+      //   ->with('branch')
+      //   ->with('category')
+      //   ->with('status')
+      //   ->get();
     return view('sale/index', compact('sales','products','user'));
     }
 

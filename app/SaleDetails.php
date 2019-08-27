@@ -1,5 +1,5 @@
 <?php
-
+use App\Product;
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +16,11 @@ class SaleDetails extends Model
     {
       return $this->belongsTo(Sale::class);
     }
+    public function product()
+    {
+      return $this->belongsTo(Product::class);
+    }
+
 }
 
 

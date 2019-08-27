@@ -73,7 +73,7 @@
 }
 
 
-@page {size: 5.5cm 140mm;
+@page {size: 5.5cm 170mm;
      }
    </style>
 
