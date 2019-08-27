@@ -163,9 +163,7 @@ img {
                 <tbody>
                     <tr>
                     <td class="sucursal">Sucursal:</td>
-                    @foreach ($branches as  $branch)
-                        <td class="sucursal1">{{ $branch->name}}</td>
-                        @endforeach
+                    <td class="sucursal1">{{ $branch->name}}</td>
                     </tr>
                     @foreach ($sales as  $sale)
                     <tr>
@@ -200,7 +198,7 @@ img {
                       </tr>
                       <tr>
                         <td class="clave1">1</td>
-                        <td class="producto1">{{ $sale->product->description }}</td>
+                        <td class="producto1">{{ $sale->product->name }}</td>
                         <td class="precio1">${{ $sale->product->price }}</td>
                      </tr>
                      <tr>

@@ -98,7 +98,13 @@ LISTA DE  SUCURSALES
                       class="btn btn-icon btn-warning waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Productos">
                       <i class="icon md-label-heart" aria-hidden="true"></i></button></a> 
-                      <!--END Botón -->                 
+                      <!--END Botón --> 
+                      <!-- Botón para ver corte de venta -->
+                      <a href="/sucursales/{{$branch->id}}/corte" type="button" 
+                      class="btn btn-icon  waves-effect waves-light waves-ligth delete
+                      data-toggle="tooltip" data-original-title="Productos">
+                      <i class="icon md-money" aria-hidden="true"></i></button></a> 
+                      <!--END Botón -->                
                     </td> 
                   </tr>
                   @endforeach

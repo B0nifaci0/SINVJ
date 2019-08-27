@@ -53,8 +53,6 @@ Route::get('traspasospdf', 'TranferProductsController@exportPdfall');
 //Traspaso id PDF
 Route::get('traspasopdf/{id}', 'TranferProductsController@exportPdf')->name('traspasopdf');
 
-//Ventas
-Route::resource('ventas', 'SaleController');
 //Ventas CO
 Route::get('ventasCO', 'SaleController@indexCO');
 
@@ -62,11 +60,6 @@ Route::get('ventasCO', 'SaleController@indexCO');
 Route::resource('pagos', 'PaymentsController');
 //Productos
 Route::get('productospdf', 'ProductController@exportPdf');
-
-//Ventas PDF
-Route::get('ventaspdf', 'SaleController@exportPdfall');
-
-Route::get('ventapdf/{id}', 'SaleController@exportPdf')->name('ventapdf');
 
 // Sucursal CO
 Route::get('sucursal', 'BranchController@indexCo');
@@ -175,17 +168,26 @@ Route::resource('tiendas','ShopController');
 */
 //PRODUCTS
 Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware','StatusMiddleware']],function(){
-Route::get('productos', 'ProductController@index');
-Route::get('productos/create', 'ProductController@create');
-Route::post('/productos', 'ProductController@store');
-Route::get('/productos/{id}/edit', 'ProductController@edit');
-Route::get('/productos/{id}/show', 'ProductController@show');
-Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
-Route::delete('/productos/{id}/delete');
 
+    //Ventas
+    Route::resource('ventas', 'SaleController');
+
+  Route::get('productos', 'ProductController@index');
+  Route::get('productos/create', 'ProductController@create');
+  Route::post('/productos', 'ProductController@store');
+  Route::get('/productos/{id}/edit', 'ProductController@edit');
+  Route::get('/productos/{id}/show', 'ProductController@show');
+  Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
+  Route::delete('/productos/{id}/delete');
 });
 
 Route::group(['middleware' => ['auth']],function () {
+
+  //Ventas PDF
+  Route::get('ventaspdf', 'SaleController@exportPdfall');
+
+  Route::get('ventapdf/{id}', 'SaleController@exportPdf')->name('ventapdf');
+
   //SUCURSALES
   Route::get('sucursales/create', 'BranchController@create');
   Route::get('/sucursales', 'BranchController@index');

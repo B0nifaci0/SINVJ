@@ -73,7 +73,6 @@ LISTA PRODUCTO
               {{ csrf_field() }}
               <tr>  
                 <th>Clave</th>
-                <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Peso</th>
                 <th>Observaciónes</th>
@@ -87,7 +86,6 @@ LISTA PRODUCTO
             <tfoot>
              <tr>
                 <th>Clave</th>
-                <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Peso</th>
                 <th>Observaciónes</th>
@@ -102,7 +100,6 @@ LISTA PRODUCTO
              @foreach ($products as $i => $product)
               <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td> 
-                 <td>{{ $product->name }}</td>
                  <td>{{ $product->description }}</td>
                  <td>{{ $product->weigth }}</td>
                  <td>{{ $product->observations }}</td>

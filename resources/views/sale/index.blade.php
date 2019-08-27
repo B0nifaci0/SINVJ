@@ -85,7 +85,7 @@ LISTA DE  VENTAS
                     <td>{{ $sale->id}}</td>
                     <td> {{ $sale->customer_name }}</td>
                     <td>{{ $sale->telephone }}</td>
-                    <td>{{ $products }} </td>
+                    <td>{{ $sale->items->count() }}</td>
                     <td>$ {{ $sale->price }}</td>
                     <td>{{ $sale->created_at->format('m-d-Y')}}</td>
                     <td>

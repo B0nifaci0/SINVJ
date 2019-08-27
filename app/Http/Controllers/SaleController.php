@@ -26,29 +26,21 @@ class SaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $user = Auth::user();
-      $sales =Sale::all();
-      // $sales =DB::table('sales')
-      // ->join('sale_details','sale_id', '=' ,'sales.id')
-      // ->join('products','product_id', '=' ,'sale_details.product_id')
-      // ->select('sales.id as Venta','sale_details.sale_id as Detalle','sales.customer_name as Cliente',
-      // 'sale_details.id as ProductoVendido','products.name as Producto')->get();
+     $p = SaleDetails::where('product_id','=','1')->first();
+      //return $p;
+      $po = Product::where('id','=','p')->first();
+      // return $po;
+      $sales = Sale::all();
       // return $sales;
-
-     $s=Product::find(1);
-    //  return $s;
-      $products =DB::table('sale_details')
-      ->join('products','product_id', '=' ,'sale_details.product_id')
-      ->select('products.name as  ')->get();
-     // return $products;
-      //  $products = Product::with('line')
-      //   ->with('branch')
-      //   ->with('category')
-      //   ->with('status')
-      //   ->get();
-    return view('sale/index', compact('sales','products','user'));
+      $user = Auth::user();
+      $products = Product::with('line')
+        ->with('branch')
+        ->with('category')
+        ->with('status')
+        ->get();
+    return view('sale/index', compact('sales','products','user','SaleDetails'));
     }
 
     public function indexCO()
@@ -98,28 +90,37 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-      //return $request;
+      // return $request;
       $sale = Sale::create([
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,
         'price' => $request->price,
         'customer_name' => $request->customer_name,
-        'total_pay' => $request->total_pay
+        'price' => $request->total_pay
       ]);
-      $product_ids = explode(",", $request->products_list);
-      foreach ($product_ids as $id) {
+      $products = json_decode($request->products_list);
+      
+      foreach ($products as $p) {
         SaleDetails::create([
           'sale_id' => $sale->id,
-          'product_id' => $id,
-          'final_price' => $request->total_pay
+          'product_id' => $p->id,
+          'final_price' => $p->price
         ]);
       }
 
-      return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
-        \App\Parcial::create([
-          'parcial_pay' => $request['parcial_pay'],
-          'total_pay' => $request['total_pay'],
+      Parcial::create([
+        'sale_id' => $sale->id,
+        'amount' => $request->cash_income,
+        'type' => Parcial::CASH,
       ]);
+
+      Parcial::create([
+        'sale_id' => $sale->id,
+        'amount' => $request->card_income,
+        'type' => Parcial::CARD,
+      ]);
+
+      return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
     }
 
     
@@ -188,12 +189,23 @@ public function exportPdfall(){
   return $pdf->stream('venta.pdf');
 }
 
-public function exportPdf($id){ 
+// public function exportPdf($id){ 
+//   $user = Auth::user();  
+//   $sales = Sale::all();
+//   $sales = Sale::where("id","=",$id)->get();
+//   $shops = Auth::user()->shop()->get();
+//   $branches = Branch::where('id', '!=', $user->branch_id)->get(); 
+//   $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops')); 
+//   return $pdf->stream('venta.pdf');
+// }
+
+public function exportPdf($id){
   $user = Auth::user();  
-  $sales = Sale::all();
-  $sales = Sale::where("id","=",$id)->get();
+  // $sales = Sale::all();
+  $sale = Sale::find($id);
   $shops = Auth::user()->shop()->get();
-  $branches = Branch::where('id', '!=', $user->branch_id)->get(); 
+  $branches = Branch::where('id', '!=', $user->branch_id)->get();
+  // return [$sale,$branches,$user,$shops];
   $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops')); 
   return $pdf->stream('venta.pdf');
 }
