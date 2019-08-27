@@ -15,13 +15,14 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('customer_name', 50)->unique();
-            $table->string('telephone')->unique();
+            $table->string('customer_name', 50);
+            $table->string('telephone');
+            $table->integer('branch_id');
             $table->string('price'); 
             $table->softDeletes();
             $table->timestamps();
         });
-    }
+    } 
 
     /**
      * Reverse the migrations.
