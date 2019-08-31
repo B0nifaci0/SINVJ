@@ -71,4 +71,14 @@ class BranchProductsController extends Controller
       $pdf  = PDF::loadView('Branches.sucursalespdf', compact('branches', 'products'));
       return $pdf->download('productossucursal.pdf');
   }
+
+  /**fucntion for inventory index */
+    public function inventory($id){
+      $user = Auth::user();
+      $branches= Branch::find($id);
+      //return $branches;
+      $products = Product::withTrashed()->where('branch_id','=',$id)->get();
+      //return $products;
+      return view('Branches/Inventory/biproduct', compact('branches','id','products','user')); 
+    }
 }
