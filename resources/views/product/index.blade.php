@@ -191,10 +191,12 @@ $(document).ready(function() {
       confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
       if (result.value) {
+        $.ajaxSetup({
+         headers: {
+          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+           }
+      });
         $.ajax({
-           headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
           url:  '/productos/' + id,
           method: 'DELETE',
           success: function () {

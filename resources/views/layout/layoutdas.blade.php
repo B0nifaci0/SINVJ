@@ -5,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="description" content="bootstrap material admin template">
+    <meta name="_token" content="{{ csrf_token() }}"/>
+
     <meta name="author" content="">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>Dashboard | Remark Material Admin Template</title>
+    <title>Admin | SINVJ</title>
     
     <link rel="apple-touch-icon" href={{{url('/assets/images/apple-touch-icon.png')}}}>
     <link rel="shortcut icon" href={{{url('/assets/images/favicon.ico')}}}>
@@ -20,6 +21,8 @@
     <link rel="stylesheet" href={{{url('global/vendor/select2/select2.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/editable-table/editable-table.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/icheck/icheck.css')}}}>
+  <link rel="stylesheet" href={{{url('assets/examples/css/forms/advanced.css')}}}>
+
 
 
 
@@ -925,17 +928,17 @@
     <script src={{{url('global/vendor/peity/jquery.peity.min.js')}}}></script>
     <script src={{{url('global/vendor/select2/select2.full.min.js')}}}></script>
     <script src={{{url('global/vendor/jquery-ui/jquery-ui.js')}}}></script>
-        <script src={{{url('global/vendor/blueimp-tmpl/tmpl.js')}}}></script>
-        <!--<script src={{{url('global/vendor/blueimp-canvas-to-blob/canvas-to-blob.js')}}}></script>
-        <script src={{{url('global/vendor/blueimp-load-image/load-image.all.min.js')}}}></script>
-        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.js')}}}></script>
-        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-process.js')}}}></script>
-        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-image.js')}}}></script>
-        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-audio.js')}}}></script>
-        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-video.js')}}}></script>
-        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-validate.js')}}}></script>
-        <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-ui.js')}}}></script>
-        <script src={{{url('global/vendor/dropify/dropify.min.js')}}}></script>-->
+    <script src={{{url('global/vendor/blueimp-tmpl/tmpl.js')}}}></script>
+    <!-- <script src={{{url('global/vendor/blueimp-canvas-to-blob/canvas-to-blob.js')}}}></script>
+    <script src={{{url('global/vendor/blueimp-load-image/load-image.all.min.js')}}}></script>
+    <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.js')}}}></script>
+    <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-process.js')}}}></script>
+    <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-image.js')}}}></script>
+    <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-audio.js')}}}></script>
+    <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-video.js')}}}></script>
+    <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-validate.js')}}}></script>
+    <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-ui.js')}}}></script>
+    <script src={{{url('global/vendor/dropify/dropify.min.js')}}}></script>-->
     
           
     <!-- Scripts -->

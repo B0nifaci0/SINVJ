@@ -72,13 +72,13 @@ Route::get('productoCO', 'ProductController@indexCOP');
 Route::post('traspasos/respuesta', 'TranferProductsController@answerTransferRequest');
 
 //Excel
-Route::resource('excel','ExcelController');
+//Route::resource('excel','ExcelController');
 
 //Reporte Excel Productos Sucursal
 Route::get('productossucursalreporte/{id}','BranchProductsExcelController@index')->name('productossucursalreporte');
 
 //Usuarios Excel
-Route::resource('usuariosexcel','UserExcelController');
+//Route::resource('usuariosexcel','UserExcelController');
 
 //Reporte
 Route::get('homepdf', 'HomeController@exportPdf');
@@ -88,6 +88,7 @@ Route::get('/usuarios/activo/{id}', 'UserController@soft');
 
 //Sucursales Producto
 Route::resource('sucursales.producto', 'BranchProductsController'); 
+Route::get('sucursales/{id}/inventario', 'BranchProductsController@inventory'); 
 Route::get('sucursal', 'BranchController@indexCo');
 //Route::get('sucursalespdf{id}', 'TestController@exportPdf')->name('sucursalespdf');
 
@@ -178,7 +179,7 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
   Route::get('/productos/{id}/edit', 'ProductController@edit');
   Route::get('/productos/{id}/show', 'ProductController@show');
   Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
-  Route::delete('/productos/{id}/delete');
+  Route::delete('/productos/{id}','ProductController@destroy');
 });
 
 Route::group(['middleware' => ['auth']],function () {
@@ -195,7 +196,9 @@ Route::group(['middleware' => ['auth']],function () {
   Route::get('/sucursales/{id}/edit', 'BranchController@edit');
   Route::get('/sucursales/{id}/show', 'BranchController@show');
   Route::put('/sucursales/{id}/update', 'BranchController@update')->name('sucursales.update');
-  Route::delete('/sucursales/{id}/delete');
+  Route::delete('/sucursales/{id}','BranchController@destroy');
+  
+
 
   //LINEAS
   Route::get('lineas/create', 'LineController@create');
@@ -204,7 +207,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::get('/lineas/{id}/edit', 'LineController@edit');
   Route::get('/lineas/{id}/show', 'LineController@show');
   Route::put('/lineas/{id}/update', 'LineController@update')->name('lineas.update');
-  Route::delete('/lineas/{id}/delete');
+  Route::delete('/lineas/{id}','LineController@destroy');
 
   //CATEGORIAS
   Route::get('categorias/create', 'CategoryController@create');
@@ -213,7 +216,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::get('/categorias/{id}/edit', 'CategoryController@edit');
   Route::get('/categorias/{id}/show', 'CategoryController@show');
   Route::put('/categorias/{id}/update', 'CategoryController@update')->name('categorias.update');
-  Route::delete('/categorias/{id}/delete');
+  Route::delete('/categorias/{id}','CategoryController@destroy');
 
   //ESTATUS
   Route::get('status/create', 'StatusController@create');
@@ -222,7 +225,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::get('/status/{id}/edit', 'StatusController@edit');
   Route::get('/status/{id}/show', 'StatusController@show');
   Route::put('/status/{id}/update', 'StatusController@update')->name('status.update');
-  Route::delete('/status/{id}/delete');
+  Route::delete('/status/{id}','StatusController@destroy');
  
  
   //USUARIOS
@@ -232,7 +235,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::get('/usuarios/{id}/edit', 'UserController@edit');
   Route::get('/usuarios/{id}/show', 'UserController@show');
   Route::put('/usuarios/{id}/update', 'UserController@update')->name('usuarios.update');
-  Route::delete('/usuarios/{id}/delete');
+  Route::delete('/usuarios/{id}', 'UserController@destroy');
 
 
   Route::get('/grupos', 'ShopGroupsController@index');
