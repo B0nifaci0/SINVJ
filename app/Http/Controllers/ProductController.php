@@ -337,7 +337,7 @@ class ProductController extends Controller
  */
 
       $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates','total','cash','compra','utilidad'));
-      return $pdf->stream('ReporteEstatus.pdf');
+      return $pdf->download('ReporteEstatus.pdf');
 
 /**Termina el retorno del pdf */
       
@@ -370,7 +370,7 @@ class ProductController extends Controller
 
 
       $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('products','branches','lines','total','cash','compra','utilidad'));
-      return $pdf->stream('ReporteLineas.pdf');
+      return $pdf->download('ReporteLineas.pdf');
     } 
 
     public function reportEntradas(Request $request){
@@ -389,7 +389,7 @@ class ProductController extends Controller
                           ->where('created_at','=',$fech1)
                           ->get();
                           $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
-                          return $pdf->stream('ReporteEntradas.pdf');
+                          return $pdf->download('ReporteEntradas.pdf');
                                 
       }
 
@@ -401,67 +401,11 @@ class ProductController extends Controller
                             ->whereBetween('created_at', [$fech1 , $fech2])
                             ->get();
                             $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
-                            return $pdf->stream('ReporteEntradas.pdf');
+                            return $pdf->download('ReporteEntradas.pdf');
                        
       }                       
     }
 
-    public function reportEstatusGeneral(){
-
-        /**Codigo para hacer las validaciones de los campos para realizar las consultas para el reporte */
-        $idshop = Auth::user()->shop->id;
-        $status = Shop::find($idshop)->statuss()->get();
-        $line = Shop::find($idshop)->lines()->get();
-        $category = Auth::user()->shop->id;  
-        $categories = Shop::find($category)->categories()->get();
-
-        $status = $request->estatus_id;
-        $categories = $request->category_id;
-        $line = $request->id;
-
-
-        if($status == null || $categories == null || $line == null){
-        return redirect('/reportes-productos')->with('mesage-update', 'Seleccina alguna opcion de cada selector!');      }
-
-        /**Termina codigo de validacion de campos */
-
-        /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
-
-        $branches = Branch::where("id","=",$request->branch_id)->get();
-        $products = Product::where("branch_id","=",$request->branch_id)
-                            ->where("status_id","=",$request->estatus_id)
-                            ->where("category_id","=",$request->category_id)
-                            ->where("line_id","=",$request->id)
-                            ->get();
-
-        /**Finaliza codigo de las consultas por campos seleccionados */
-
-        /**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
-        $sales = Sale::where("id","=","sale_id")->get();
-
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
-
-        $dates = Carbon::now(); 
-        $dates = $dates->format('d-m-Y');
-
-        $total = 0;
-        foreach($products as $product){
-        $total = $product->weigth + $total;
-        }
-        /**Finalizan consultas de folio de la venta, la hora y el dia */
-
-        /**Variable para retornar los archivos que podran ser descargados en pdf
-        * contiene las variables de las cuales se hicieron las consultas para poder 
-        * hacer uso de la informacion de cada consulta
-        */
-
-        $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates','total'));
-        return $pdf->stream('ReporteEstatus.pdf');
-
-        /**Termina el retorno del pdf */      
-    }
-    
     public function reportLineaGGeneral(){
       $branches= Auth::user()->shop->branches;   
       $product = Auth::user()->shop->id;
@@ -486,7 +430,7 @@ class ProductController extends Controller
         
   
     $pdf  = PDF::loadView('product.Reports.reportLineaGGeneral', compact('branches','lines','products','total','cash','precio'));
-    return $pdf->stream('ReporteLineasGeneral.pdf');
+    return $pdf->download('ReporteLineasGeneral.pdf');
   }
 
   public function reportEstatusG(){
@@ -526,7 +470,7 @@ class ProductController extends Controller
       
 
   $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('branches','lines','products','total','cash','precio','hour','dates','sales','compra','utilidad'));
-  return $pdf->stream('ReporteEstatusGeneral.pdf');
+  return $pdf->download('ReporteEstatusGeneral.pdf');
   }
   
   public function reportEntradasG(){
@@ -534,6 +478,11 @@ class ProductController extends Controller
     $branches= Auth::user()->shop->branches;   
     $product = Auth::user()->shop->id;
     $products = Shop::find($product)->products()->get();
+    //return $products;
+    $idshop = Auth::user()->shop->id;
+    $status = Shop::find($idshop)->statuss()->get();
+      
+    return $status;
     $line = Auth::user()->shop->id; 
     $lines = Shop::find($line)->lines()->get();
 
@@ -566,6 +515,6 @@ class ProductController extends Controller
       
 
   $pdf  = PDF::loadView('product.Reports.reportEntradasG', compact('branches','lines','products','total','cash','precio','hour','dates','sales','compra','utilidad'));
-  return $pdf->stream('ReportereportEntradasGeneral.pdf');
+  return $pdf->download('ReportereportEntradasGeneral.pdf');
   }
 }

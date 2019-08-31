@@ -40,7 +40,7 @@ ALTA PRODUCTO
             </div>
             <!-- END Input--> 
             <!-- Select para Seleccionar linea-->
-            <div  id="linea" class="col-md-3">
+            <div  id="linea" class="col-md-4">
                <label  class="control-label">Seleccione Linea</label>
               <select id="line_id"   name="line_id"  class="form-control round">
                 @foreach($lines as $line)            
@@ -48,25 +48,22 @@ ALTA PRODUCTO
                 @endforeach
               </select> 
             </div>
-            <div  id="price" class="col-md-3">
-                 <label  class="control-label">Precio de la linea</label>
-                  <input type="text" name="" id="line_price" class="form-control" readonly>
-            </div>
+            
             <!-- END Select-->  
             <!-- Input para ingresar precio de la linea para el producto-->   
-            <div class="col-md-3 form-material">
+            <div class="col-md-4 form-material">
               <label  class="control-label">Precio de la linea</label>
               <input type="text" name="" id="line_price" class="form-control" readonly>
             </div>
             <!-- END Input--> 
             <!-- Input para ingresar Peso del producto-->
-            <div class="form-group form-material col-md-3">
+            <div class="form-group form-material col-md-4">
               <label>Peso</label>
               <input type="text" id="multiplicador"  class="form-control" name="weigth" > 
             </div>
             <!-- END Input--> 
             <!-- Input para ingresar precio del producto-->
-            <div class="form-group form-material col-md-3">
+            <div class="form-group form-material col-md-4">
               <label>Precio del Producto</label>
               <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
             </div> 
