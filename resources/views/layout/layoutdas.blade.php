@@ -28,6 +28,7 @@
 
              
     <!-- Plugins -->
+        <link rel="stylesheet" href={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/animsition/animsition.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/asscrollable/asScrollable.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/switchery/switchery.css')}}}>
@@ -37,7 +38,6 @@
     <link rel="stylesheet" href={{{url('global/vendor/waves/waves.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/chartist/chartist.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/jvectormap/jquery-jvectormap.css')}}}>
-    <link rel="stylesheet" href={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}}>
     <link rel="stylesheet" href={{{url('assets/examples/css/dashboard/v1.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/dropify/dropify.css')}}}>
@@ -75,6 +75,7 @@
     
     <!-- Scripts -->
     <script src={{{url('global/vendor/breakpoints/breakpoints.js')}}}></script>
+
     <script>
       Breakpoints();
     </script>
@@ -915,13 +916,13 @@
     <script src={{{url('global/vendor/asscrollable/jquery-asScrollable.js')}}}></script>
     <script src={{{url('global/vendor/waves/waves.js')}}}></script>
     
-    <!-- Plugins -->
+    <!-- Plugins -->    
+    <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
     <script src={{{url('global/vendor/switchery/switchery.js')}}}></script>
     <script src={{{url('global/vendor/intro-js/intro.js')}}}></script>
     <script src={{{url('global/vendor/screenfull/screenfull.js')}}}></script>
     <script src={{{url('global/vendor/slidepanel/jquery-slidePanel.js')}}}></script>
     <script src={{{url('global/vendor/chartist/chartist.min.js')}}}></script> 
-    <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
     <!--<script src={{{url('global/vendor/jvectormap/jquery-jvectormap.min.js')}}}></script>-->
     <!--<script src={{{url('global/vendor/jvectormap/maps/jquery-jvectormap-world-mill-en.js')}}}></script>-->
     <script src={{{url('global/vendor/matchheight/jquery.matchHeight-min.js')}}}></script>
@@ -1000,11 +1001,12 @@
     <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
     <script src={{{url('global/js/Plugin/icheck.js')}}}></script>
 
-    <!-- datatable 
+    <!-- datatable -->
     <script src={{{url('global/js/Plugin/datatables.js')}}}></script>
-    <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>-->
+    <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
 
   
 

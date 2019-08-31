@@ -203,7 +203,7 @@ console.log("categoryTypeproduct", categoryTypeproduct);
     $('#s').toggle();
     }else if(categoryTypeproduct.type_product == 2){
      alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
-     $('#s').show('<p>agregar campos</p>');
+     $('#s').html('<p>agregar campos</p>');
 
 
     }

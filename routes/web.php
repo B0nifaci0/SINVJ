@@ -87,7 +87,9 @@ Route::get('homepdf', 'HomeController@exportPdf');
 Route::get('/usuarios/activo/{id}', 'UserController@soft');
 
 //Sucursales Producto
-Route::resource('sucursales.producto', 'BranchProductsController'); 
+Route::resource('sucursales.producto', 'BranchProductsController');
+Route::put('sucursalproducto.update', 'BranchProductsController@update')->name('sucursalproducto.update');
+Route::get('sucursalproducto/{id}/edit', 'BranchProductsController@edit');
 Route::get('sucursales/{id}/inventario', 'BranchProductsController@inventory'); 
 Route::get('sucursal', 'BranchController@indexCo');
 //Route::get('sucursalespdf{id}', 'TestController@exportPdf')->name('sucursalespdf');
@@ -221,7 +223,7 @@ Route::group(['middleware' => ['auth']],function () {
   //ESTATUS
   Route::get('status/create', 'StatusController@create');
   Route::get('/status', 'StatusController@index');
-  Route::post('/status', 'StatusController@store');
+  Route::post('/status', 'StatusController@store');  
   Route::get('/status/{id}/edit', 'StatusController@edit');
   Route::get('/status/{id}/show', 'StatusController@show');
   Route::put('/status/{id}/update', 'StatusController@update')->name('status.update');

@@ -50,7 +50,6 @@ LISTA DE PRODUCTOS POR SUCURSAL
                      <th>Sucursal</th>
                      <th>Status</th>
                      @if(Auth::user()->type_user == 1 )
-                     <th>Opciones</th>
                      <th>Inventario</th>
                      @endif
               </tr>
@@ -69,8 +68,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                         <th>Sucursal</th>
                         <th>Status</th>
                         @if(Auth::user()->type_user == 1 )
-                        <th>Opciones</th>
-                        <th>Inventario</th>
++                        <th>Inventario</th>
                         @endif
                 </tr>
             </tfoot>
@@ -95,23 +93,14 @@ LISTA DE PRODUCTOS POR SUCURSAL
                  <td>{{ $branchproduct->branch->name }}</td>
                  <td>{{ $branchproduct->status->name }}</td>
                  @if(Auth::user()->type_user == 1 )
-                 <td>
-                    <!-- Botón Para editar producto por sucursal-->    
-                    <a href="/sucursal/{{$branchproduct->id}}/edit"<button type="button"  
-                    class="btn btn-icon btn-primary waves-effect waves-light waves-round"
-                    data-toggle="tooltip" data-original-title="Editar">
-                    <i class=" icon md-edit" aria-hidden="true"></i></button></a>
-                    <!-- END Botón-->
-                    <!-- Botón Para eliminar producto por sucursal-->
-                    <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                        alt="{{ $branchproduct->id }}" role="button"
-                        data-toggle="tooltip" data-original-title="Borrar">
-                        <i class="icon md-delete" aria-hidden="true"></i>
-                    </button>
-                    <!-- END Botón-->                   
-                  </td>
                   <td>
-                    <input type="checkbox" class="icheckbox-green" id="inputColorGreen" name="inputiCheckColorCheckboxes" data-plugin="iCheck" data-checkbox-class="icheckbox_flat-green" checked>
+                  <form action="{{route('sucursalproducto.update',['id' => $branchproduct->id])}}" method="POST">
+                        {{ csrf_field()}}
+                        {{ method_field('PUT')}}
+                        <input type="text" class="form-control hidden"value="{{$branchproduct->description}}" name="description">
+                        <input  value="1" type="checkbox" class="icheckbox-green" id="inputColorGreen" name="inventory" data-plugin="iCheck" data-checkbox-class="icheckbox_flat-green" >
+                        <button type="submit" class="btn btn-icon btn-success">Guardar Inventario</button>
+                  </form>
                   </td>
                   @endif
                 </tr>

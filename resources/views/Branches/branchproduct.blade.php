@@ -39,7 +39,6 @@ LISTA DE PRODUCTOS POR SUCURSAL
             {{ csrf_field() }}
                <tr>  
                      <th>Clave</th>
-                     <th>Nombre</th>
                      <th>Descripción</th>
                      <th>Peso</th>
                      <th>Observaciónes</th>
@@ -57,7 +56,6 @@ LISTA DE PRODUCTOS POR SUCURSAL
             <tfoot>
                 <tr>  
                         <th>Clave</th>
-                        <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Peso</th>
                         <th>Observaciónes</th>
@@ -78,7 +76,6 @@ LISTA DE PRODUCTOS POR SUCURSAL
       <tr id="row{{$branchproduct->id}}">
 
                  <td>{{ $branchproduct->clave }}</td> 
-                 <td>{{ $branchproduct->name }}</td> 
                  <td>{{ $branchproduct->description }}</td>
                  <td>{{ $branchproduct->weigth }}</td>
                  <td>{{ $branchproduct->observations }}</td>
@@ -96,7 +93,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                  @if(Auth::user()->type_user == 1 )
                  <td>
                     <!-- Botón Para editar producto por sucursal-->    
-                    <a href="/sucursal/{{$branchproduct->id}}/edit"<button type="button"  
+                    <a href="/sucursalproducto/{{$branchproduct->id}}/edit"<button type="button"  
                     class="btn btn-icon btn-primary waves-effect waves-light waves-round"
                     data-toggle="tooltip" data-original-title="Editar">
                     <i class=" icon md-edit" aria-hidden="true"></i></button></a>
