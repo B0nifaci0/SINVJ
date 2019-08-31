@@ -57,9 +57,9 @@
           
               <p align="right">Hora: {{$hour}}</p>
           
-              <p align="right">Linea: {{$product->line->name}} </p>
           
-    <h2 align="center">Reporte de Productos por Estatus</h2>
+    <h2 align="center">Reporte de Productos por  @foreach($products as $product)
+      {{$product->status->name}}@endforeach</h2>
         <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
@@ -70,7 +70,12 @@
                  <th scope="col">Peso</th>
                  <th scope="col">Precio</th>
                  <th scope="col">Observaciones</th>
-                 <th scope="col">Id Venta</th>
+                 @foreach ($products as $i => $product)
+                 @if($product->status->name === 'Vendido'){
+                  <th scope="col">Id Venta</th>
+                 }
+                 @endif
+                 @endforeach
                 </tr>
               </thead>  
               <tbody>
@@ -83,16 +88,26 @@
                  <td>{{ $product->weigth }} gr</td>
                  <td>$ {{ $product->price }}</td> 
                  <td>{{ $product->observations }}</td>
-                 @if ($sales == '')
-                  <td>{{$product->status}}</td>
-                 @endif
-                 @if ($sales != '')
-                 <td>@foreach($sales as $sale){{$sale->id}} @endforeach</td>
+                 @if ($product->status->name === 'Vendido')
+                  <td>@foreach($sales as $sale){{$sale->id}} @endforeach</td>
                  @endif
                 </tr>
                   @endforeach
               </tbody>
-            </table> 
+            </table>
+            <br>
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                <thead>
+                    <tr>
+                      <th scope="col">Total de Gramos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td>{{$total}} gr</td>
+                    </tr>
+                </tbody>    
+            </table>
           </div>
           </div>
     </body>

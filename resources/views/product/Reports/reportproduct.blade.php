@@ -56,7 +56,7 @@ Panel Principal
                                       <div class="col-3">
                                         <label>Seleccione Sucursal</label>
                                           <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
-                                            <option value="*">Seleccione Sucursal</option>
+                                            <!-- <option value="*">Seleccione Sucursal</option> -->
                                           @php  
                                             $branches = $user->shop->branches;
                                           @endphp 
@@ -69,8 +69,8 @@ Panel Principal
                                       <div class="col-3">
                                         <label>Seleccione Estatus</label>
                                           <select id=""  name="estatus_id" alt="1" class="form-control round sucursales">
-                                            <option value="">Selecciona Estatus</option>
-                                            <option value="*" name="todos">Tod@s</option>
+                                            <!-- <option value="">Selecciona Estatus</option>
+                                            <option value="*" name="todos">Tod@s</option> -->
                                             @foreach($status as $onestatus)
                                           <option value="{{$onestatus->id}}" required>{{$onestatus->name}}</option>
                                           @endforeach
@@ -79,8 +79,8 @@ Panel Principal
                                       <div class="col-3">
                                         <label>Seleccione Categoria</label>
                                           <select id=""  name="category_id" alt="1" class="form-control round sucursales">
-                                            <option value="">Selecciona Categoria</option>
-                                            <option value="*">Tod@s</option>
+                                            <!-- <option value="">Selecciona Categoria</option>
+                                            <option value="*">Tod@s</option> -->
                                             @foreach($categories as $categories)
                                           <option value="{{$categories->id}}" required>{{$categories->name}}</option>
                                           @endforeach
@@ -89,8 +89,8 @@ Panel Principal
                                       <div class="col-3">
                                         <label>Seleccione Linea</label>
                                           <select id=""  name="id" alt="1" class="form-control round sucursales">
-                                            <option value="">Selecciona Linea</option>
-                                            <option value="*">Tod@s</option>
+                                            <!-- <option value="">Selecciona Linea</option>
+                                            <option value="*">Tod@s</option> -->
                                             @foreach($line as $linea)
                                           <option value="{{$linea->id}}" required>{{$linea->name}}</option>
                                           @endforeach
@@ -103,7 +103,20 @@ Panel Principal
                                   </div>
                               </div>
                             </div>
-                        </form> 
+                        </form>
+                        <form action="reporte">
+                            <div class=" col-12"> 
+                                <div class="panel panel-bordered">
+                                  <div class="panel-body row col-12">
+                                    <div class="row col-12">
+                                      </div>
+                                    </div>
+                                    <div class="input-group col-3">
+                                        <button id="submit" type="submit" name="button" class="btn btn-danger">Reporte General</button>
+                                    </div>
+                                </div>
+                              </div>
+                          </form> 
                         </div> 
                       </div>
                     </div>
@@ -120,10 +133,10 @@ Panel Principal
                               <div class="panel panel-bordered">
                                 <div class="panel-body row col-12">
                                   <div class="row col-12">
-                                      <div class="col-3">
+                                      <div class="col-6">
                                         <label>Seleccione Sucursal</label>
                                           <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
-                                            <option value="*">Seleccione Sucursal</option>
+                                          <!--  <option value="*">Seleccione Sucursal</option> -->
                                           @php  
                                             $branches = $user->shop->branches;
                                           @endphp
@@ -132,11 +145,11 @@ Panel Principal
                                           @endforeach
                                           </select>
                                       </div>
-                                      <div class="col-3">
+                                      <div class="col-6">
                                         <label>Seleccione Linea</label>
                                           <select id=""  name="id" alt="1" class="form-control round sucursales">
-                                            <option value="">Selecciona Linea</option>
-                                            <option value="*">Tod@s</option>
+                                            <!-- <option value="">Selecciona Linea</option>
+                                            <option value="*">Tod@s</option> -->
                                           @foreach($line as $line)
                                           <option value="{{$line->id}}" required>{{$line->name}}</option>
                                         @endforeach
@@ -150,6 +163,19 @@ Panel Principal
                               </div>
                             </div>
                         </form>
+                        <form action="reporte2">
+                            <div class=" col-12"> 
+                                <div class="panel panel-bordered">
+                                  <div class="panel-body row col-12">
+                                    <div class="row col-12">
+                                      </div>
+                                    </div>
+                                    <div class="input-group col-3">
+                                        <button id="submit" type="submit" name="button" class="btn btn-danger">Reporte General</button>
+                                    </div>
+                                </div>
+                              </div>
+                          </form>
                         </div>
                       </div>
                     </div>
@@ -170,7 +196,7 @@ Panel Principal
                                       <div class="col-3">
                                         <label>Seleccione Sucursal</label>
                                           <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
-                                            <option value="*">Seleccione Sucursal</option>
+                                            <!-- <option value="*">Seleccione Sucursal</option> -->
                                           @php  
                                             $branches = $user->shop->branches;
                                           @endphp
@@ -182,11 +208,11 @@ Panel Principal
                                       <div class="col-3">
                                         <label>Seleccione Linea</label>
                                           <select id=""  name="id" alt="1" class="form-control round sucursales">
-                                            <option value="">Selecciona Linea</option>
+                                             <!-- <option value="">Selecciona Linea</option> -->
                                            @php  
                                             $lines= $user->shop->lines;
                                           @endphp
-                                            <option value="*">Tod@s</option>
+                                            <!-- <option value="*">Tod@s</option> -->
                                           @foreach($lines as $line)
                                           <option value="{{$line->id}}" required>{{$line->name}}</option>
                                         @endforeach
@@ -218,6 +244,19 @@ Panel Principal
                               </div>
                             </div>
                         </form>
+                        <form action="reporte3">
+                            <div class=" col-12"> 
+                                <div class="panel panel-bordered">
+                                  <div class="panel-body row col-12">
+                                    <div class="row col-12">
+                                      </div>
+                                    </div>
+                                    <div class="input-group col-3">
+                                        <button id="submit" type="submit" name="button" class="btn btn-danger">Reporte General</button>
+                                    </div>
+                                </div>
+                              </div>
+                          </form>
                         </div>
                       </div>
                     </div>

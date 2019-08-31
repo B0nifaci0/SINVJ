@@ -58,7 +58,6 @@
               <thead>
                 <tr>
 				 <th scope="col">Clave</th>
-                 <th scope="col">Nombre</th>
                  <th scope="col">Descripción</th>
                  <th scope="col">Peso</th>
                  <th scope="col">Observaciones</th>
@@ -71,7 +70,6 @@
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td> 
-                 <td>{{ $product->name }}</td>
                  <td>{{ $product->description }}</td>
                  <td>{{ $product->weigth }} gr</td>
                  <td>{{ $product->observations }}</td>

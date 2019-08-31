@@ -58,7 +58,6 @@
               <thead>
                 <tr>
 				 <th scope="col">Clave</th>
-                 <th scope="col">Nombre</th>
                  <th scope="col">Descripción</th>
                  <th scope="col">Peso</th>
                  <th scope="col">Precio</th>
@@ -72,7 +71,6 @@
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td> 
-                 <td>{{ $product->name }}</td>
                  <td>{{ $product->description }}</td>
                  <td>{{ $product->weigth }} gr</td>
                  <td>$ {{ $product->price }}</td>
@@ -89,13 +87,15 @@
                     <tr>
                             <th scope="col">Total de Gramos</th>
                             <th scope="col">Linea</th>
-                            <th scope="col">Total de dinero por linea</th>
+                            <th scope="col">Dinero por P/C</th>
+                            <th scope="col">Dinero de P/V</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>{{$total}} gr</td>
                         <td>@foreach($lines as $line){{$line->name}} @endforeach</td>
+                        <td>$ {{$compra}}</td>
                         <td>$ {{$cash}}</td>
                     </tr>
                 </tbody>    

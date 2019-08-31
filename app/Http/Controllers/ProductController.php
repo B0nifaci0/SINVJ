@@ -283,15 +283,12 @@ class ProductController extends Controller
       $categories = $request->category_id;
       $line = $request->id;
 
+
       if($status == null || $categories == null || $line == null){
       return redirect('/reportes-productos')->with('mesage-update', 'Seleccina alguna opcion de cada selector!');      }
 
 /**Termina codigo de validacion de campos */
 
-      if($status == '*'){
-        $idshop = Auth::user()->shop->id;
-        $status = Shop::find($idshop)->statuss()->get();
-      }
 /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
 
       $branches = Branch::where("id","=",$request->branch_id)->get();
@@ -300,7 +297,7 @@ class ProductController extends Controller
                           ->where("category_id","=",$request->category_id)
                           ->where("line_id","=",$request->id)
                           ->get();
-
+      
 /**Finaliza codigo de las consultas por campos seleccionados */
 
 /**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
@@ -311,7 +308,11 @@ class ProductController extends Controller
 
       $dates = Carbon::now(); 
       $dates = $dates->format('d-m-Y');
-
+      
+      $total = 0;
+      foreach($products as $product){
+      $total = $product->weigth + $total;
+      }
 /**Finalizan consultas de folio de la venta, la hora y el dia */
 
 /**Variable para retornar los archivos que podran ser descargados en pdf
@@ -319,8 +320,8 @@ class ProductController extends Controller
  * hacer uso de la informacion de cada consulta
  */
 
-      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates'));
-      return $pdf->download('ReporteEstatus.pdf');
+      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates','total'));
+      return $pdf->stream('ReporteEstatus.pdf');
 
 /**Termina el retorno del pdf */
       
@@ -329,6 +330,7 @@ class ProductController extends Controller
      public function reportLineaG(Request $request){
       $branches = Branch::where("id","=",$request->branch_id)->get();
       $lines = Line::where("id","=",$request->id)->get();
+      //return $lines;
       $products = Product::where("branch_id","=",$request->branch_id)
                           ->where("line_id","=",$request->id)
                           ->get();
@@ -342,24 +344,105 @@ class ProductController extends Controller
           $cash = $product->price + $cash;
         }
 
-      $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('products','branches','lines','total','cash'));
-      return $pdf->download('ReporteLineas.pdf');
+        $precio = 0;
+        foreach($lines as $line){
+          $precio = $line->purchase_price;
+        }
+        
+        $compra = $total * $precio;
+
+
+      $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('products','branches','lines','total','cash','compra'));
+      return $pdf->stream('ReporteLineas.pdf');
     } 
 
     public function reportEntradas(Request $request){
 
       $fech1 = Carbon::parse($request->fecini);
       $fech2 = Carbon::parse($request->fecter);
-      $branches = Branch::where("id","=",$request->branch_id)->get();
-      $lines = Line::where("id","=",$request->id)->get();
-      $products = Product::where("branch_id","=",$request->branch_id)
+
+      /**
+       * Checar este if para la validacion de la fecha de un rango de 1 a 1
+       */
+      if($fech1 === $fech2){
+        $branches = Branch::where("id","=",$request->branch_id)->get();
+        $lines = Line::where("id","=",$request->id)->get();
+        $products = Product::where("branch_id","=",$request->branch_id)
                           ->where("line_id","=",$request->id)
-                          ->where('created_at',">=",$fech1 )
-                          ->where('created_at' ,"<=",$fech2)
+                          ->where('created_at','=',$fech1)
                           ->get();
-      
-                          
-     $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
-     return $pdf->download('ReporteEntradas.pdf');
-    }    
+                          $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
+                          return $pdf->stream('ReporteEntradas.pdf');
+                                
+      }
+
+      if($fech1 != $fech2){
+        $branches = Branch::where("id","=",$request->branch_id)->get();
+        $lines = Line::where("id","=",$request->id)->get();
+        $products = Product::where("branch_id","=",$request->branch_id)
+                            ->where("line_id","=",$request->id)
+                            ->whereBetween('created_at', [$fech1 , $fech2])
+                            ->get();
+                            $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
+                            return $pdf->stream('ReporteEntradas.pdf');
+                       
+      }                       
+    }
+
+    public function reportEstatusGeneral(){
+
+        /**Codigo para hacer las validaciones de los campos para realizar las consultas para el reporte */
+        $idshop = Auth::user()->shop->id;
+        $status = Shop::find($idshop)->statuss()->get();
+        $line = Shop::find($idshop)->lines()->get();
+        $category = Auth::user()->shop->id;  
+        $categories = Shop::find($category)->categories()->get();
+
+        $status = $request->estatus_id;
+        $categories = $request->category_id;
+        $line = $request->id;
+
+
+        if($status == null || $categories == null || $line == null){
+        return redirect('/reportes-productos')->with('mesage-update', 'Seleccina alguna opcion de cada selector!');      }
+
+        /**Termina codigo de validacion de campos */
+
+        /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
+
+        $branches = Branch::where("id","=",$request->branch_id)->get();
+        $products = Product::where("branch_id","=",$request->branch_id)
+                            ->where("status_id","=",$request->estatus_id)
+                            ->where("category_id","=",$request->category_id)
+                            ->where("line_id","=",$request->id)
+                            ->get();
+
+        /**Finaliza codigo de las consultas por campos seleccionados */
+
+        /**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
+        $sales = Sale::where("id","=","sale_id")->get();
+
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+
+        $dates = Carbon::now(); 
+        $dates = $dates->format('d-m-Y');
+
+        $total = 0;
+        foreach($products as $product){
+        $total = $product->weigth + $total;
+        }
+        /**Finalizan consultas de folio de la venta, la hora y el dia */
+
+        /**Variable para retornar los archivos que podran ser descargados en pdf
+        * contiene las variables de las cuales se hicieron las consultas para poder 
+        * hacer uso de la informacion de cada consulta
+        */
+
+        $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates','total'));
+        return $pdf->stream('ReporteEstatus.pdf');
+
+        /**Termina el retorno del pdf */      
+    }
+          
 }
