@@ -232,7 +232,7 @@ class ProductController extends Controller
 /**TERMINA FUNCIONES DE CRUD DE PRODUCTOS */
 
 /**FUNCIONES DE REPORTES DE PDF */
-    public function exportPdf(){ 
+    public function exportPdf(){
         $product = Auth::user()->shop->id;
         $products = Shop::find($product)->products()->get();
         //return $products;
@@ -313,6 +313,22 @@ class ProductController extends Controller
       foreach($products as $product){
       $total = $product->weigth + $total;
       }
+
+      $cash = 0;
+        foreach($products as $product){
+          $cash = $product->price + $cash;
+        }
+
+        $lines = Line::where("id","=",$request->id)->get();
+
+        $precio = 0;
+        foreach($lines as $line){
+          $precio = $line->purchase_price;
+        }
+        
+        $compra = $total * $precio;
+        $utilidad = $cash - $compra;
+
 /**Finalizan consultas de folio de la venta, la hora y el dia */
 
 /**Variable para retornar los archivos que podran ser descargados en pdf
@@ -320,7 +336,7 @@ class ProductController extends Controller
  * hacer uso de la informacion de cada consulta
  */
 
-      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates','total'));
+      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates','total','cash','compra','utilidad'));
       return $pdf->stream('ReporteEstatus.pdf');
 
 /**Termina el retorno del pdf */
@@ -350,9 +366,10 @@ class ProductController extends Controller
         }
         
         $compra = $total * $precio;
+        $utilidad = $cash - $compra;
 
 
-      $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('products','branches','lines','total','cash','compra'));
+      $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('products','branches','lines','total','cash','compra','utilidad'));
       return $pdf->stream('ReporteLineas.pdf');
     } 
 
@@ -444,5 +461,111 @@ class ProductController extends Controller
 
         /**Termina el retorno del pdf */      
     }
-          
+    
+    public function reportLineaGGeneral(){
+      $branches= Auth::user()->shop->branches;   
+      $product = Auth::user()->shop->id;
+      $products = Shop::find($product)->products()->get();
+      $line = Auth::user()->shop->id; 
+      $lines = Shop::find($line)->lines()->get();
+
+      $total = 0;
+        foreach($products as $product){
+        $total = $product->weigth + $total;
+        }
+
+        $cash = 0;
+        foreach($products as $product){
+          $cash = $product->price + $cash;
+        }
+
+        $precio = 0;
+        foreach($lines as $line){
+          $precio = $line->purchase_price;
+        }
+        
+  
+    $pdf  = PDF::loadView('product.Reports.reportLineaGGeneral', compact('branches','lines','products','total','cash','precio'));
+    return $pdf->stream('ReporteLineasGeneral.pdf');
+  }
+
+  public function reportEstatusG(){
+
+    $branches= Auth::user()->shop->branches;   
+    $product = Auth::user()->shop->id;
+    $products = Shop::find($product)->products()->get();
+    $line = Auth::user()->shop->id; 
+    $lines = Shop::find($line)->lines()->get();
+
+
+    $sales = Sale::where("id","=","sale_id")->get();
+
+      $hour = Carbon::now();
+      $hour = date('H:i:s');
+
+      $dates = Carbon::now(); 
+      $dates = $dates->format('d-m-Y');
+
+    $total = 0;
+      foreach($products as $product){
+      $total = $product->weigth + $total;
+      }
+
+      $cash = 0;
+      foreach($products as $product){
+        $cash = $product->price + $cash;
+      }
+
+      $precio = 0;
+      foreach($lines as $line){
+        $precio = $line->purchase_price;
+      }
+
+      $compra = $total * $precio;
+      $utilidad = $cash - $compra;
+      
+
+  $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('branches','lines','products','total','cash','precio','hour','dates','sales','compra','utilidad'));
+  return $pdf->stream('ReporteEstatusGeneral.pdf');
+  }
+  
+  public function reportEntradasG(){
+
+    $branches= Auth::user()->shop->branches;   
+    $product = Auth::user()->shop->id;
+    $products = Shop::find($product)->products()->get();
+    $line = Auth::user()->shop->id; 
+    $lines = Shop::find($line)->lines()->get();
+
+
+    $sales = Sale::where("id","=","sale_id")->get();
+
+      $hour = Carbon::now();
+      $hour = date('H:i:s');
+
+      $dates = Carbon::now(); 
+      $dates = $dates->format('d-m-Y');
+
+    $total = 0;
+      foreach($products as $product){
+      $total = $product->weigth + $total;
+      }
+
+      $cash = 0;
+      foreach($products as $product){
+        $cash = $product->price + $cash;
+      }
+
+      $precio = 0;
+      foreach($lines as $line){
+        $precio = $line->purchase_price;
+      }
+
+      $compra = $total * $precio;
+      $utilidad = $cash - $compra;
+      
+
+  $pdf  = PDF::loadView('product.Reports.reportEntradasG', compact('branches','lines','products','total','cash','precio','hour','dates','sales','compra','utilidad'));
+  return $pdf->stream('ReportereportEntradasGeneral.pdf');
+  }
 }

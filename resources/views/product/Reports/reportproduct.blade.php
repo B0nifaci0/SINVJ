@@ -25,6 +25,13 @@ Panel Principal
                       </div>
                       <div class="panel-collapse collapse" id="exampleCollapseDefaultOne" aria-labelledby="exampleHeadingDefaultOne" role="tabpanel" style="">
                         <div class="panel-body">
+                            <div align="right">
+                                <a href="/reportEstatusG"<button type="button" 
+                                  class="btn btn-icon btn-danger waves-effect waves-light waves-round"
+                                  data-toggle="tooltip" data-original-title="Editar">
+                                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                </a>
+                            </div>
                             @if (session('mesage'))	
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                               <strong>{{ session('mesage') }}</strong>
@@ -103,19 +110,6 @@ Panel Principal
                                   </div>
                               </div>
                             </div>
-                        </form>
-                        <form action="reporte">
-                            <div class=" col-12"> 
-                                <div class="panel panel-bordered">
-                                  <div class="panel-body row col-12">
-                                    <div class="row col-12">
-                                      </div>
-                                    </div>
-                                    <div class="input-group col-3">
-                                        <button id="submit" type="submit" name="button" class="btn btn-danger">Reporte General</button>
-                                    </div>
-                                </div>
-                              </div>
                           </form> 
                         </div> 
                       </div>
@@ -128,6 +122,13 @@ Panel Principal
                       </div>
                       <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo" aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">
                         <div class="panel-body">
+                            <div align="right">
+                                <a href="/gramoslineageneral"<button type="button" 
+                                  class="btn btn-icon btn-danger waves-effect waves-light waves-round"
+                                  data-toggle="tooltip" data-original-title="Editar">
+                                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                </a>
+                            </div>
                         <form action="gramoslinea">
                           <div class=" col-12"> 
                               <div class="panel panel-bordered">
@@ -162,32 +163,26 @@ Panel Principal
                                   </div>
                               </div>
                             </div>
-                        </form>
-                        <form action="reporte2">
-                            <div class=" col-12"> 
-                                <div class="panel panel-bordered">
-                                  <div class="panel-body row col-12">
-                                    <div class="row col-12">
-                                      </div>
-                                    </div>
-                                    <div class="input-group col-3">
-                                        <button id="submit" type="submit" name="button" class="btn btn-danger">Reporte General</button>
-                                    </div>
-                                </div>
-                              </div>
                           </form>
                         </div>
                       </div>
                     </div>
 
                     <div class="panel">
-                      <div class="panel-heading bg-success  text-center text-white" id="exampleHeadingDefaultThree" role="tab">
+                      <div class="panel-heading bg-success  text-center text-white" id="exampleHeadingDefaultThree" role="tab"> 
                         <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultThree" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultThree">
                       Reporte de Entradas De Productos
-                    </a>
+                        </a>
                       </div>
                       <div class="panel-collapse" id="exampleCollapseDefaultThree" aria-labelledby="exampleHeadingDefaultThree" role="tabpanel">
                         <div class="panel-body">
+                            <div align="right">
+                                <a href="/reportEntradasG"<button type="button" 
+                                  class="btn btn-icon btn-danger waves-effect waves-light waves-round"
+                                  data-toggle="tooltip" data-original-title="Editar">
+                                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                </a>
+                            </div>
                         <form action="entradasproducto">
                           <div class=" col-12"> 
                               <div class="panel panel-bordered">
@@ -244,19 +239,6 @@ Panel Principal
                               </div>
                             </div>
                         </form>
-                        <form action="reporte3">
-                            <div class=" col-12"> 
-                                <div class="panel panel-bordered">
-                                  <div class="panel-body row col-12">
-                                    <div class="row col-12">
-                                      </div>
-                                    </div>
-                                    <div class="input-group col-3">
-                                        <button id="submit" type="submit" name="button" class="btn btn-danger">Reporte General</button>
-                                    </div>
-                                </div>
-                              </div>
-                          </form>
                         </div>
                       </div>
                     </div>
