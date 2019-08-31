@@ -101,9 +101,15 @@ LISTA DE  SUCURSALES
                       <!--END Botón --> 
                       <!-- Botón para ver corte de venta -->
                       <a href="/sucursales/{{$branch->id}}/corte" type="button" 
-                      class="btn btn-icon  waves-effect waves-light waves-ligth delete
+                      class="btn btn-icon  waves-effect waves-light waves-ligth 
                       data-toggle="tooltip" data-original-title="Productos">
                       <i class="icon md-money" aria-hidden="true"></i></button></a> 
+                      <!--END Botón -->                
+                      <!-- Botón para ver corte de venta -->
+                      <a href="/sucursales/{{$branch->id}}/inventario" type="button" 
+                      class="btn btn-icon btn-success  waves-effect waves-light waves-ligth 
+                      data-toggle="tooltip" data-original-title="Productos">
+                      <i class="icon md-check" aria-hidden="true"></i></button></a> 
                       <!--END Botón -->                
                     </td> 
                   </tr>
@@ -135,11 +141,14 @@ $(document).ready(function() {
       cancelButtonColor: '#3085d6',
       confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
-      if (result.value) {
+      if (result.value) 
+      {
+        $.ajaxSetup({
+         headers: {
+             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+          }
+        });
         $.ajax({
-           headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
           url:  '/sucursales/' + id,
           method: 'DELETE',
           success: function () {

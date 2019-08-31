@@ -25,7 +25,7 @@ MODIFICACIÓN DE PRODUCTO
         </div>
     @endif
       <h2 align="center">Editar producto</h2>
-      <form id="multiplicar" class="" action="{{route('sucursal.update',['id' => $product->id])}}" method="post" enctype="multipart/form-data">
+      <form id="multiplicar" class="" action="{{route('sucursales.update',['id' => $product->id])}}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         {{ method_field('PUT') }}
         <div class='row'>
@@ -35,12 +35,12 @@ MODIFICACIÓN DE PRODUCTO
               <input type="text" class="form-control" name="clave"  value="{{$product->clave}}" required>
           </div>
           <!-- END Input-->
-          <!-- Input Para editar Nombre-->
+          <!-- Input Para editar Nombre
           <div class="form-group form-material col-md-4">
             <label>Nombre</label>
             <input type="text" class="form-control"value="{{$product->name}}" name="name">
           </div>
-          <!-- END Input-->
+           END Input-->
           <!-- Input Para editar Descripcion-->
           <div class="form-group form-material col-md-4 ">
             <label>Descripcion</label>

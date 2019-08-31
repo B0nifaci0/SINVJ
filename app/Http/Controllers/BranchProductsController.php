@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Branch;
 use Illuminate\Http\Request;
 use App\Product;
+use App\Category;
+use App\Shop;
 use PDF; 
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +38,7 @@ class BranchProductsController extends Controller
     }
     public function update(Request $request, $id)
     {
+      return $request;
         $product = Product::findOrFail($id);
 
         if ($request->hasFile('image')){
@@ -47,13 +50,15 @@ class BranchProductsController extends Controller
           $timestamp = time();
           $request->image->storeAs('public/upload/products', $timestamp . $filename);
           $product->image = $timestamp . $filename;
-      }
+      } 
 
-         $product->name = $request->name;
          $product->description = $request->description;
          $product->weigth = $request->weigth;
          $product->observations = $request->observations;
          $product->price = $request->price;
+         
+         $product->inventory = $request->inventory;
+
          $product->save();
 
       //return $request->all();
@@ -71,4 +76,14 @@ class BranchProductsController extends Controller
       $pdf  = PDF::loadView('Branches.sucursalespdf', compact('branches', 'products'));
       return $pdf->download('productossucursal.pdf');
   }
+
+  /**fucntion for inventory index */
+    public function inventory($id){
+      $user = Auth::user();
+      $branches= Branch::find($id);
+      //return $branches;
+      $products = Product::withTrashed()->where('branch_id','=',$id)->get();
+      //return $products;
+      return view('Branches/Inventory/biproduct', compact('branches','id','products','user')); 
+    }
 }

@@ -1,5 +1,5 @@
 <?php
-
+use App\Product;
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -12,13 +12,15 @@ class SaleDetails extends Model
         'final_price',
     ];
 
-<<<<<<< HEAD
-=======
     public function sale()
     {
       return $this->belongsTo(Sale::class);
     }
->>>>>>> 7b9ea605bc7398b6c654f3c122983373019c4ec4
+    public function product()
+    {
+      return $this->belongsTo(Product::class);
+    }
+
 }
 
 

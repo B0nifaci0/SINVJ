@@ -205,12 +205,11 @@ class ProductController extends Controller
           $request->image->storeAs('public/upload/products', $timestamp . $filename);
           $product->image = $timestamp . $filename;
       }
-
-         $product->name = $request->name;
          $product->description = $request->description;
          $product->weigth = $request->weigth;
-         $product->observations = $request->observations;
+         $product->observations = $request->observations;  
          $product->price = $request->price;
+          $product->inventory = $request->inventory;
          $product->save();
 
       //return $request->all();

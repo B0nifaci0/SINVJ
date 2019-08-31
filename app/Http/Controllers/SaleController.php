@@ -10,6 +10,7 @@ use App\User;
 use App\Branch;
 use App\Parcial;
 use PDF;
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaleRequest;
 use Illuminate\Support\Facades\Auth;
@@ -27,11 +28,12 @@ class SaleController extends Controller
      */
     public function index(Request $request)
     {
-     /*$p = SaleDetails::where('product_id','=','1')->first();
+     $p = SaleDetails::where('product_id','=','1')->first();
       //return $p;
       $po = Product::where('id','=','p')->first();
-      return $po;*/
+      // return $po;
       $sales = Sale::all();
+      // return $sales;
       $user = Auth::user();
       $products = Product::with('line')
         ->with('branch')
@@ -88,28 +90,37 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-      //return $request;
+      // return $request;
       $sale = Sale::create([
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,
         'price' => $request->price,
         'customer_name' => $request->customer_name,
-        'total_pay' => $request->total_pay
+        'price' => $request->total_pay
       ]);
-      $product_ids = explode(",", $request->products_list);
-      foreach ($product_ids as $id) {
+      $products = json_decode($request->products_list);
+      
+      foreach ($products as $p) {
         SaleDetails::create([
           'sale_id' => $sale->id,
-          'product_id' => $id,
-          'final_price' => $request->total_pay
+          'product_id' => $p->id,
+          'final_price' => $p->price
         ]);
       }
 
-      return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
-        \App\Parcial::create([
-          'parcial_pay' => $request['parcial_pay'],
-          'total_pay' => $request['total_pay'],
+      Parcial::create([
+        'sale_id' => $sale->id,
+        'amount' => $request->cash_income,
+        'type' => Parcial::CASH,
       ]);
+
+      Parcial::create([
+        'sale_id' => $sale->id,
+        'amount' => $request->card_income,
+        'type' => Parcial::CARD,
+      ]);
+
+      return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
     }
 
     
@@ -178,12 +189,23 @@ public function exportPdfall(){
   return $pdf->stream('venta.pdf');
 }
 
-public function exportPdf($id){ 
+// public function exportPdf($id){ 
+//   $user = Auth::user();  
+//   $sales = Sale::all();
+//   $sales = Sale::where("id","=",$id)->get();
+//   $shops = Auth::user()->shop()->get();
+//   $branches = Branch::where('id', '!=', $user->branch_id)->get(); 
+//   $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops')); 
+//   return $pdf->stream('venta.pdf');
+// }
+
+public function exportPdf($id){
   $user = Auth::user();  
   $sales = Sale::all();
   $sales = Sale::where("id","=",$id)->get();
   $shops = Auth::user()->shop()->get();
-  $branches = Branch::where('id', '!=', $user->branch_id)->get(); 
+  $branches = Branch::where('id', '=', $user->branch_id)->get();
+  //return [$sales,$branches,$user,$shops];
   $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops')); 
   return $pdf->stream('venta.pdf');
 }

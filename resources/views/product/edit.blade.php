@@ -111,7 +111,7 @@ MODIFICACIÓ PRODUCTO
             <label>Selecciona imagen del producto</label>
             <br>
             <label for="image" class="btn btn-primary">Explorar</label>
-            <input type="file" name="image" id="image" class="hidden" required>
+            <input type="file" name="image" id="image" class="hidden">
           </div>
           <!-- END Input--> 
           <br>

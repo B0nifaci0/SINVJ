@@ -30,7 +30,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                 @endif
               </div>
             </div>
-        <h3 class="panel-title">Productos de la sucursal</h3>
+          <h4 class="panel-title text-center">Inventario {{$branches->name}}</h4>
       </header>
       <div class="panel-body">
             <!-- Tabla para listar productos por sucursal-->
@@ -39,6 +39,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
             {{ csrf_field() }}
                <tr>  
                      <th>Clave</th>
+                     <th>Nombre</th>
                      <th>Descripción</th>
                      <th>Peso</th>
                      <th>Observaciónes</th>
@@ -49,13 +50,14 @@ LISTA DE PRODUCTOS POR SUCURSAL
                      <th>Sucursal</th>
                      <th>Status</th>
                      @if(Auth::user()->type_user == 1 )
-                     <th>Opciones</th>
+                     <th>Inventario</th>
                      @endif
               </tr>
             </thead>
             <tfoot>
                 <tr>  
                         <th>Clave</th>
+                        <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Peso</th>
                         <th>Observaciónes</th>
@@ -66,16 +68,16 @@ LISTA DE PRODUCTOS POR SUCURSAL
                         <th>Sucursal</th>
                         <th>Status</th>
                         @if(Auth::user()->type_user == 1 )
-                        <th>Opciones</th>
++                        <th>Inventario</th>
                         @endif
                 </tr>
             </tfoot>
             <tbody>
-
       @foreach ($products as $branchproduct)
       <tr id="row{{$branchproduct->id}}">
 
                  <td>{{ $branchproduct->clave }}</td> 
+                 <td>{{ $branchproduct->name }}</td> 
                  <td>{{ $branchproduct->description }}</td>
                  <td>{{ $branchproduct->weigth }}</td>
                  <td>{{ $branchproduct->observations }}</td>
@@ -91,20 +93,14 @@ LISTA DE PRODUCTOS POR SUCURSAL
                  <td>{{ $branchproduct->branch->name }}</td>
                  <td>{{ $branchproduct->status->name }}</td>
                  @if(Auth::user()->type_user == 1 )
-                 <td>
-                    <!-- Botón Para editar producto por sucursal-->    
-                    <a href="/sucursalproducto/{{$branchproduct->id}}/edit"<button type="button"  
-                    class="btn btn-icon btn-primary waves-effect waves-light waves-round"
-                    data-toggle="tooltip" data-original-title="Editar">
-                    <i class=" icon md-edit" aria-hidden="true"></i></button></a>
-                    <!-- END Botón-->
-                    <!-- Botón Para eliminar producto por sucursal-->
-                    <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                        alt="{{ $branchproduct->id }}" role="button"
-                        data-toggle="tooltip" data-original-title="Borrar">
-                        <i class="icon md-delete" aria-hidden="true"></i>
-                    </button>
-                    <!-- END Botón-->                   
+                  <td>
+                  <form action="{{route('sucursalproducto.update',['id' => $branchproduct->id])}}" method="POST">
+                        {{ csrf_field()}}
+                        {{ method_field('PUT')}}
+                        <input type="text" class="form-control hidden"value="{{$branchproduct->description}}" name="description">
+                        <input  value="1" type="checkbox" class="icheckbox-green" id="inputColorGreen" name="inventory" data-plugin="iCheck" data-checkbox-class="icheckbox_flat-green" >
+                        <button type="submit" class="btn btn-icon btn-success">Guardar Inventario</button>
+                  </form>
                   </td>
                   @endif
                 </tr>
