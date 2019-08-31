@@ -10,6 +10,7 @@ use App\User;
 use App\Branch;
 use App\Parcial;
 use PDF;
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaleRequest;
 use Illuminate\Support\Facades\Auth;
@@ -27,10 +28,10 @@ class SaleController extends Controller
      */
     public function index(Request $request)
     {
-     /*$p = SaleDetails::where('product_id','=','1')->first();
+     $p = SaleDetails::where('product_id','=','1')->first();
       //return $p;
       $po = Product::where('id','=','p')->first();
-      return $po;*/
+      // return $po;
       $sales = Sale::all();
       // return $sales;
       $user = Auth::user();
@@ -200,11 +201,11 @@ public function exportPdfall(){
 
 public function exportPdf($id){
   $user = Auth::user();  
-  // $sales = Sale::all();
-  $sale = Sale::find($id);
+  $sales = Sale::all();
+  $sales = Sale::where("id","=",$id)->get();
   $shops = Auth::user()->shop()->get();
-  $branches = Branch::where('id', '!=', $user->branch_id)->get();
-  // return [$sale,$branches,$user,$shops];
+  $branches = Branch::where('id', '=', $user->branch_id)->get();
+  //return [$sales,$branches,$user,$shops];
   $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops')); 
   return $pdf->stream('venta.pdf');
 }
