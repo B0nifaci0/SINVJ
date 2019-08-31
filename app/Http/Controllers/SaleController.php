@@ -201,11 +201,11 @@ public function exportPdfall(){
 
 public function exportPdf($id){
   $user = Auth::user();  
-  // $sales = Sale::all();
-  $sale = Sale::find($id);
+  $sales = Sale::all();
+  $sales = Sale::where("id","=",$id)->get();
   $shops = Auth::user()->shop()->get();
-  $branches = Branch::where('id', '!=', $user->branch_id)->get();
-  // return [$sale,$branches,$user,$shops];
+  $branches = Branch::where('id', '=', $user->branch_id)->get();
+  //return [$sales,$branches,$user,$shops];
   $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops')); 
   return $pdf->stream('venta.pdf');
 }
