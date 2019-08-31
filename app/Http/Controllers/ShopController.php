@@ -26,13 +26,6 @@ class ShopController extends Controller
     $user = Auth::user();
     $shops = Auth::user()->shop()->get();
 
-    foreach ($shops as $shop){
-    $description = $shop->description;
-    $email = $shop->email;
-    $phone_number = $shop->phone_number;
-      
-    }
-
     /**
      * Checar para hacer la comparacion entre el null para hacer el remplazo de informacion
      */

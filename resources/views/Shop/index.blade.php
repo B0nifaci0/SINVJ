@@ -67,9 +67,21 @@ LISTA TIENDAS
                     @foreach($shops as $shop)
                     <tr id = "row{{$user->id}}">
                           <td>{{$shop->name }}</td>
-                          <td>{{$shop->description }}</td>
-                          <td>{{$shop->email }}</td>
-                          <td>{{$shop->phone_number }}</td>
+                          @if($shop->description == "NULL")
+                          <td></td>
+                          @elseif($shop->description != "NULL")
+                          <td>{{$shop->description}}</td>
+                          @endif
+                          @if($shop->email == "NULL")
+                          <td></td>
+                          @elseif($shop->email != "NULL")
+                          <td>{{$shop->email}}</td>
+                          @endif
+                          @if($shop->phone_number == "NULL")
+                          <td></td>
+                          @elseif($shop->phone_number != "NULL")
+                          <td>{{$shop->phone_number}}</td>
+                          @endif
                           <td>
                               @php
                               $image = route('images',"app/public/upload/shops/$shop->image")
