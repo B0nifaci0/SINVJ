@@ -125,16 +125,31 @@ class ProductController extends Controller
      */
     public function store(ProductValidate $request)
     {
+      //return $request;
       $branches= Auth::user()->shop->branches;
-
+        $exist = Product::where('clave', $request->clave)
+        ->where('shop_id', Auth::user()->shop->id)
+        ->first();
+        if($exist){
+              return redirect('/productos')->with('mesage', 'La Clave que intentas registrar ya existe!');
+       }
       foreach($branches as $product){
-        $total = $product->name;
+        $total = $product->description;
+        if($total == $request->description){
+          return redirect('/products')->with('mesage', 'El nombre que intentas registrar ya existe!');
+          }
         }
         
-        if($total == $request->name){
-          return redirect('/sucursales')->with('mesage', 'El nombre ya ha sido registrado!');
+        $data = $request->all();
+        $data['price'] = ($request->pricepz) ? $request->pricepz : $request->price;
+        
+        $category = Category::find($request->category_id);
+        if($category->type_product == 1) {
+          $data['line_id'] = null;
+          $data['weigth'] = null;
         }
-      $product = new Product($request->all());
+
+        $product = new Product($data);
       if ($request->hasFile('image')){
          $filename = $request->image->getCLientOriginalName();
          $request->image->storeAs('public/upload/products',$filename);

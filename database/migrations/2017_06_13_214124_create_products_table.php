@@ -18,15 +18,15 @@ class CreateProductsTable extends Migration
             $table->string('clave');
             //$table->string('name', 20)->unique()->default('NULL');
             $table->string('description', 15);
-            $table->string('weigth');
-            $table->string('observations', 15)->default('NULL');
+            $table->string('weigth')->nullable();
+            $table->string('observations', 15)->nullable();
             $table->string('price');
             $table->string('image')->default('default.jpg'); 
 
             $table->integer('category_id')->unsigned(); 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
 
-            $table->integer('line_id')->unsigned();
+            $table->integer('line_id')->unsigned()->nullable();
             $table->foreign('line_id')->references('id')->on('lines')->onDelete('cascade');
 
             $table->integer('shop_id')->unsigned();

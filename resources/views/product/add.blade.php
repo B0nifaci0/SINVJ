@@ -49,18 +49,18 @@ ALTA PRODUCTO
               </select> 
             </div>
             <!-- Input para ingresar precio del producto-->
-            <div class="form-group form-material col-md-3 removeClass invisible">
+            <div id ="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
-              <input type="text"  class="form-control"  name="price">
+              <input type="text"  class="form-control"  name="pricepzt">
             </div> 
             <!-- END Input-->
-            <div  id="show" class="col-md-3 remove">
+            <div   class="col-md-3 remove">
                  <label  class="control-label">Precio de la linea</label>
                   <input type="text" name="" id="line_price" class="form-control" readonly>
             </div>
             <!-- END Select-->  
             <!-- Input para ingresar Peso del producto-->
-            <div  id="show" class="form-group form-material col-md-3 remove">
+            <div   class="form-group form-material col-md-3 remove">
               <label>Peso</label>
               <input type="text" id="multiplicador"  class="form-control" name="weigth" > 
             </div>
@@ -184,12 +184,27 @@ $(document).ready(function(){
 <!-- Función para obtener el precio de linea-->
 @section('precio-linea')
 <script type="text/javascript">
-//var categoryTypeproduct = {!! $categories !!};
+  var categoryTypeproduct = {!! $categories !!};
 
-//console.log("categoryTypeproduct", categoryTypeproduct);
+  let defaul = categoryTypeproduct[0]
+    if(defaul.type_product == 1){
+      alert(JSON.stringify('pz'+defaul.type_product));
+    $('.remove').css('display', 'none');
+    $('#pricepz').css('display', 'initial'); 
+
+    //$('.removeClass').removeClass('invisible');
+    //$('#s').toggle();
+    }else if(defaul.type_product == 2){
+     alert(JSON.stringify('pz'+defaul.type_product));
+     console.log()
+    $('.remove').css('display', 'initial');  
+    $('#pricepz').css('display', 'none');
+  
+    }
 
 $('#categorie_id').change(function(){
   var categoryTypeproduct = {!! $categories !!};
+
   var id = $(this).val();
   var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == id)[0];
   
@@ -198,14 +213,17 @@ console.log("categoryTypeproduct", categoryTypeproduct);
     //alert('entra');
     if(categoryTypeproduct.type_product == 1){
       alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
-    $('.remove').toggle(500);
-    $('.removeClass').removeClass('invisible');
-    $('#s').toggle();
+    $('.remove').css('display', 'none');
+    $('#pricepz').css('display', 'initial'); 
+
+    //$('.removeClass').removeClass('invisible');
+    //$('#s').toggle();
     }else if(categoryTypeproduct.type_product == 2){
      alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
-     $('#s').html('<p>agregar campos</p>');
-
-
+     console.log()
+    $('.remove').css('display', 'initial');  
+    $('#pricepz').css('display', 'none');
+  
     }
 });
 var lines = {!! $lines !!};

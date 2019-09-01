@@ -89,7 +89,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
 							<img width="100px" height="100px" src="{{ $image }}">
 						</td>
                  <td>{{ $branchproduct->category->name }}</td>
-                 <td>{{ $branchproduct->line->name }}</td>
+                 <td>{{ ($branchproduct->line) ? $branchproduct->line->name : ''}}</td>
                  <td>{{ $branchproduct->branch->name }}</td>
                  <td>{{ $branchproduct->status->name }}</td>
                  @if(Auth::user()->type_user == 1 )
