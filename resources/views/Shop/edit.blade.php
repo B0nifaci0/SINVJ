@@ -31,25 +31,37 @@ MODIFICACIÓN TIENDA
         <div class='row'>
             <div class="form-group form-material col-md-6">
                 <label>Nombre</label>
-                <input type="text" class="form-control" name="name"  value="{{$shop->name}}" required>
+                <input type="text" class="form-control" name="name"  value="{{$shop->name}}">
             </div>
             <div class="form-group form-material col-md-6">
                     <label>Descripcion</label>
-                    <input type="text" class="form-control" name="description"  value="{{$shop->description}}" required>
-                </div>
-                <div class="form-group form-material col-md-6">
-                        <label>Correo</label>
-                        <input type="text" class="form-control" name="email"  value="{{$shop->email}}" required>
-                    </div>
-                    <div class="form-group form-material col-md-6">
-                            <label>Telefono</label>
-                            <input type="text" class="form-control" name="phone_number"  value="{{$shop->phone_number}}" required>
-                        </div>
+                    @if($shop->description == "NULL")
+                    <input type="text" class="form-control" name="description"  value=" ">
+                    @elseif($shop->description != "NULL")
+                    <input type="text" class="form-control" name="description"  value="{{$shop->description}}">
+                    @endif
+            </div>
+            <div class="form-group form-material col-md-6">
+                    <label>Correo</label>
+                    @if($shop->email == "NULL")
+                    <input type="text" class="form-control" name="email"  value=" ">
+                    @elseif($shop->email != "NULL")
+                    <input type="text" class="form-control" name="email"  value="{{$shop->email}}">
+                    @endif
+            </div>
+            <div class="form-group form-material col-md-6">
+                    <label>Telefono</label>
+                    @if($shop->phone_number == "NULL")
+                    <input type="text" class="form-control" name="phone_number"  value=" ">
+                    @elseif($shop->phone_number != "NULL")
+                    <input type="text" class="form-control" name="phone_number"  value="{{$shop->phone_number}}">
+                    @endif
+            </div>
             <div class="form-group form-material col-md-6">
               <label>Selecciona el logo de tu tienda</label>
               <br>
               <label for="image" class="btn btn-primary">Explorar</label>
-              <input type="file" name="image" id="image" class="hidden" required>
+              <input type="file" name="image" id="image" class="hidden" >
             </div> 
           <br>
           <div>

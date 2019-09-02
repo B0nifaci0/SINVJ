@@ -29,7 +29,7 @@ ALTA PRODUCTO
         <div class='row'>
           <!-- Input para ingresar clave del producto-->
           <div class="form-group form-material col-md-3">
-            <label>Clave</label>
+            <label>Clave</label> 
             <input type="text" class="form-control" name="clave"  value="{{old('clave')}}" required>
           </div>
             <!-- Input para ingresar descripcion-->
@@ -48,6 +48,18 @@ ALTA PRODUCTO
                 @endforeach
               </select> 
             </div>
+<<<<<<< HEAD
+            
+            <!-- END Select-->  
+            <!-- Input para ingresar precio de la linea para el producto-->   
+            <div class="col-md-4 form-material">
+              <label  class="control-label">Precio de la linea</label>
+              <input type="text" name="" id="line_price" class="form-control" readonly>
+            </div>
+            <!-- END Input--> 
+            <!-- Input para ingresar Peso del producto-->
+            <div class="form-group form-material col-md-4">
+=======
             <!-- Input para ingresar precio del producto-->
             <div id ="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
@@ -60,14 +72,23 @@ ALTA PRODUCTO
             </div>
             <!-- END Select-->  
             <!-- Input para ingresar Peso del producto-->
+<<<<<<< HEAD
             <div   class="form-group form-material col-md-3 remove">
+=======
+            <div  id="show" class="form-group form-material col-md-3 remove">
+>>>>>>> 49e9d1d0f01d4602e73ba8f3c32b5049742baf26
+>>>>>>> 9256a83f656666a228d855f83ccacc99c8122299
               <label>Peso</label>
               <input type="text" id="multiplicador"  class="form-control" name="weigth" > 
             </div>
 
             <!-- END Input-->
             <!-- Input para ingresar precio del producto-->
+<<<<<<< HEAD
+            <div class="form-group form-material col-md-4">
+=======
             <div id="show" class="form-group form-material col-md-3 remove">
+>>>>>>> 49e9d1d0f01d4602e73ba8f3c32b5049742baf26
               <label>Precio del Producto</label>
               <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
             </div> 

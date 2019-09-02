@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Shop;
-use App\State;
+use App\State; 
 use Illuminate\Http\Request;
-use App\Http\Requests\ShopsValidate;
+use App\Http\Requests\ShopRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,8 +22,14 @@ class ShopController extends Controller
    */
   public function index()
   {
+
     $user = Auth::user();
     $shops = Auth::user()->shop()->get();
+
+    /**
+     * Checar para hacer la comparacion entre el null para hacer el remplazo de informacion
+     */
+
     return view('Shop/index ', compact('shops','user'));
   }
 
@@ -45,7 +51,7 @@ class ShopController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(ShopsValidate $request)
+  public function store(ShopRequest $request)
   {
     if ($request->hasFile('image')){
       $filename = $request->image->getCLientOriginalName();
@@ -97,7 +103,7 @@ class ShopController extends Controller
    * @param  \App\Shop  $shop
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(ShopRequest $request, $id)
   { 
        $shop = Shop::findOrFail($id);
 

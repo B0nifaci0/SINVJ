@@ -21,7 +21,7 @@ class PrincipalController extends Controller
         //return $total; 
          $branch = Auth::user()->shop->id;
          $user = Auth::user();
-         $branch = Shop::find($branch)->branches()->get();
+         $branch = Shop::find($branch)->branches()->get(); 
          $shops = Auth::user()->shop()->get();     
         return view ('Principal/principal',compact('branch','user','shop','shops'));
     }
