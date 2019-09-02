@@ -38,57 +38,36 @@ ALTA PRODUCTO
               <input type="text" class="form-control" name="description"  value="{{old('description')}}" required>
             </div>
             <!-- END Input--> 
-            <div id="s" class=""></div>
             <!-- Select para Seleccionar linea-->
-            <div id="show"  class="col-md-3 remove"> 
+            <div class="col-md-3 form-material remove"> 
                <label  class="control-label">Seleccione Linea</label>
               <select id="line_id"   name="line_id"  class="form-control round">
                 @foreach($lines as $line)            
                   <option value="{{ $line->id }}" required>{{ $line->name }}</option>
                 @endforeach
               </select> 
-            </div>
-<<<<<<< HEAD
-            
+            </div>            
             <!-- END Select-->  
-            <!-- Input para ingresar precio de la linea para el producto-->   
-            <div class="col-md-4 form-material">
-              <label  class="control-label">Precio de la linea</label>
-              <input type="text" name="" id="line_price" class="form-control" readonly>
-            </div>
-            <!-- END Input--> 
-            <!-- Input para ingresar Peso del producto-->
-            <div class="form-group form-material col-md-4">
-=======
+
             <!-- Input para ingresar precio del producto-->
             <div id ="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
               <input type="text"  class="form-control"  name="pricepzt">
             </div> 
             <!-- END Input-->
-            <div   class="col-md-3 remove">
+            <div   class="col-md-3 form-material remove">
                  <label  class="control-label">Precio de la linea</label>
                   <input type="text" name="" id="line_price" class="form-control" readonly>
             </div>
             <!-- END Select-->  
             <!-- Input para ingresar Peso del producto-->
-<<<<<<< HEAD
-            <div   class="form-group form-material col-md-3 remove">
-=======
-            <div  id="show" class="form-group form-material col-md-3 remove">
->>>>>>> 49e9d1d0f01d4602e73ba8f3c32b5049742baf26
->>>>>>> 9256a83f656666a228d855f83ccacc99c8122299
+            <div class="form-group form-material col-md-3 remove">
               <label>Peso</label>
               <input type="text" id="multiplicador"  class="form-control" name="weigth" > 
             </div>
-
             <!-- END Input-->
             <!-- Input para ingresar precio del producto-->
-<<<<<<< HEAD
-            <div class="form-group form-material col-md-4">
-=======
             <div id="show" class="form-group form-material col-md-3 remove">
->>>>>>> 49e9d1d0f01d4602e73ba8f3c32b5049742baf26
               <label>Precio del Producto</label>
               <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
             </div> 
@@ -100,7 +79,6 @@ ALTA PRODUCTO
                 @foreach($categories as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
                   <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-
                 @endforeach
               </select>
             </div>
@@ -111,7 +89,7 @@ ALTA PRODUCTO
                 @endforeach 
             </div>  
             <!-- Select para Seleccionar sucursal--> 
-            <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
+            <div class="col-md-3">
               <label>Seleccione Sucursal</label>
               <select name="branch_id" class="form-control round">
                 @php  
@@ -124,7 +102,7 @@ ALTA PRODUCTO
             </div>
             <!-- END Select--> 
             <!-- Select para Seleccionar status-->
-            <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
+            <div class="col-md-3">
               <label>Seleccione Status</label>
               <select  name="status_id" class="form-control round">
                 @foreach($statuses as $status)             
@@ -141,15 +119,11 @@ ALTA PRODUCTO
             <!-- END Input--> 
             <!-- Input para Seleccionar Imagen del producto-->
             <div class="form-group form-material col-md-3">
-              <label>Selecciona imagen del producto</label>
-              <br>
-              <label for="image" class="btn btn-primary">Explorar</label>
+              <label for="image" class="btn btn-primary">Imagen</label>
               <input type="file" name="image" id="image" class="hidden">
             </div>
             <!-- END Input--> 
-            <br>
           </div>
-          <br>
           <!-- Botón para guardar Producto-->
           <div class="form-group col-md-4">
            <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
@@ -159,7 +133,6 @@ ALTA PRODUCTO
       </form>
     </div>
   </div>
-</div>
 @endsection
 
 @section('disabled-submit')
