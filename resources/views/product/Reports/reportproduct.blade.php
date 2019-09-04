@@ -101,7 +101,7 @@ Panel Principal
                                             @foreach($line as $linea)
                                           <option value="{{$linea->id}}" required>{{$linea->name}}</option>
                                           @endforeach
-                                          </select>
+                                          </select> 
                                       </div>
                                     </div>
                                   </div>
@@ -167,7 +167,6 @@ Panel Principal
                         </div>
                       </div>
                     </div>
-
                     <div class="panel">
                       <div class="panel-heading bg-success  text-center text-white" id="exampleHeadingDefaultThree" role="tab"> 
                         <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultThree" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultThree">
@@ -183,8 +182,8 @@ Panel Principal
                                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                                 </a>
                             </div>
-                        <form action="entradasproducto">
                           <div class=" col-12"> 
+                            <form action="entradasproducto">
                               <div class="panel panel-bordered">
                                 <div class="panel-body row col-12">
                                   <div class="row col-12">
@@ -237,15 +236,75 @@ Panel Principal
                                       <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
                                   </div>
                               </div>
-                            </div>
                         </form>
+                    </div>
+                  </div>
+                      </div>
+                    </div>
+                    <div class="panel">
+                      <div class="panel-heading bg-warning  text-center text-white" id="exampleHeadingDefaultFour" role="tab">
+                        <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultFour" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultFour">
+                      Reporte de Productos PZ Con Descuento
+                    </a>
+                      </div>
+                      <div class="panel-collapse collapse" id="exampleCollapseDefaultFour" aria-labelledby="exampleHeadingDefaultFour" role="tabpanel" style="">
+                        <div class="panel-body">
+                            <div align="right">
+                                <a href="/gramoslineageneral"<button type="button" 
+                                  class="btn btn-icon btn-danger waves-effect waves-light waves-round"
+                                  data-toggle="tooltip" data-original-title="Editar">
+                                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                </a>
+                            </div>
+                          <div class=" col-12"> 
+                              <div class="panel panel-bordered">
+                                <div class="panel-body row col-12">
+                                  <div class="row col-12">
+                                      <div class="col-3">
+                                        <label>Seleccione Sucursal</label>
+                                          <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
+                                          @php  
+                                            $branches = $user->shop->branches;
+                                          @endphp
+                                            @foreach($branches as $branch)
+                                          <option value="{{$branch->id}}" required>{{$branch->name}}</option>
+                                          @endforeach
+                                          </select>
+                                      </div>
+                                      <div class="col-3">
+                                        <label>Seleccione Categoria</label>
+                                          @php  
+                                            $categories = $user->shop->categories;
+                                          @endphp
+                                          <select id=""  name="category_id" alt="1" class="form-control round sucursales">
+                                            <!-- <option value="">Selecciona Categoria</option>
+                                            <option value="*">Tod@s</option> -->
+                                            @foreach($categories as $categories)
+                                            @if($categories->type_product == 1 )
+                                          <option value="{{$categories->id}}" required>{{$categories->name}}</option>
+                                          @endif
+                                          @endforeach
+                                          </select>
+                                      </div>
+                                      <div class="form-material col-3">
+                                      <label class="form-control-label" for="inputBasicFirstName">Descuento: </label>
+                                        <input type="text" name="" id="" class="form-control">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="input-group col-3">
+                                      <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
+                                  </div>
+                              </div>
+                            </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-      </div>
+          </div>
+       </div>
     </div>        
 <!-- Termina formulario de Prueba -->
 @endsection

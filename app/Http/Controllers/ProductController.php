@@ -278,7 +278,7 @@ class ProductController extends Controller
          $line = Shop::find($idshop)->lines()->get();
         $category = Auth::user()->shop->id;  
         $categories = Shop::find($category)->categories()->get();
-         //return $status;
+         //return $categories;
     
       return view('product.Reports.reportproduct',compact('branch','user','status','line','categories'));
      }
@@ -496,7 +496,7 @@ class ProductController extends Controller
     $idshop = Auth::user()->shop->id;
     $status = Shop::find($idshop)->statuss()->get();
       
-    return $status;
+    //return $status;
     $line = Auth::user()->shop->id; 
     $lines = Shop::find($line)->lines()->get();
 
