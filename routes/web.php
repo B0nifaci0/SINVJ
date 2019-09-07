@@ -172,8 +172,9 @@ Route::resource('tiendas','ShopController');
 //PRODUCTS
 Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware','StatusMiddleware']],function(){
 
-    //Ventas
-    Route::resource('ventas', 'SaleController');
+  //Ventas
+  Route::resource('ventas', 'SaleController');
+  Route::resource('inventarios', 'InventoryController');
 
   Route::get('productos', 'ProductController@index');
   Route::get('productos/create', 'ProductController@create');
