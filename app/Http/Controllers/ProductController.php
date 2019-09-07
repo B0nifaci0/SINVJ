@@ -125,16 +125,31 @@ class ProductController extends Controller
      */
     public function store(ProductValidate $request)
     {
+      //return $request;
       $branches= Auth::user()->shop->branches;
-
+        $exist = Product::where('clave', $request->clave)
+        ->where('shop_id', Auth::user()->shop->id)
+        ->first();
+        if($exist){
+              return redirect('/productos')->with('mesage', 'La Clave que intentas registrar ya existe!');
+       }
       foreach($branches as $product){
-        $total = $product->name;
+        $total = $product->description;
+        if($total == $request->description){
+          return redirect('/products')->with('mesage', 'El nombre que intentas registrar ya existe!');
+          }
         }
         
-        if($total == $request->name){
-          return redirect('/sucursales')->with('mesage', 'El nombre ya ha sido registrado!');
+        $data = $request->all();
+        $data['price'] = ($request->pricepz) ? $request->pricepz : $request->price;
+        
+        $category = Category::find($request->category_id);
+        if($category->type_product == 1) {
+          $data['line_id'] = null;
+          $data['weigth'] = null;
         }
-      $product = new Product($request->all());
+
+        $product = new Product($data);
       if ($request->hasFile('image')){
          $filename = $request->image->getCLientOriginalName();
          $request->image->storeAs('public/upload/products',$filename);
@@ -231,7 +246,7 @@ class ProductController extends Controller
 /**TERMINA FUNCIONES DE CRUD DE PRODUCTOS */
 
 /**FUNCIONES DE REPORTES DE PDF */
-    public function exportPdf(){ 
+    public function exportPdf(){
         $product = Auth::user()->shop->id;
         $products = Shop::find($product)->products()->get();
         //return $products;
@@ -263,7 +278,7 @@ class ProductController extends Controller
          $line = Shop::find($idshop)->lines()->get();
         $category = Auth::user()->shop->id;  
         $categories = Shop::find($category)->categories()->get();
-         //return $status;
+         //return $categories;
     
       return view('product.Reports.reportproduct',compact('branch','user','status','line','categories'));
      }
@@ -282,15 +297,12 @@ class ProductController extends Controller
       $categories = $request->category_id;
       $line = $request->id;
 
+
       if($status == null || $categories == null || $line == null){
       return redirect('/reportes-productos')->with('mesage-update', 'Seleccina alguna opcion de cada selector!');      }
 
 /**Termina codigo de validacion de campos */
 
-      if($status == '*'){
-        $idshop = Auth::user()->shop->id;
-        $status = Shop::find($idshop)->statuss()->get();
-      }
 /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
 
       $branches = Branch::where("id","=",$request->branch_id)->get();
@@ -299,7 +311,7 @@ class ProductController extends Controller
                           ->where("category_id","=",$request->category_id)
                           ->where("line_id","=",$request->id)
                           ->get();
-
+      
 /**Finaliza codigo de las consultas por campos seleccionados */
 
 /**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
@@ -310,6 +322,26 @@ class ProductController extends Controller
 
       $dates = Carbon::now(); 
       $dates = $dates->format('d-m-Y');
+      
+      $total = 0;
+      foreach($products as $product){
+      $total = $product->weigth + $total;
+      }
+
+      $cash = 0;
+        foreach($products as $product){
+          $cash = $product->price + $cash;
+        }
+
+        $lines = Line::where("id","=",$request->id)->get();
+
+        $precio = 0;
+        foreach($lines as $line){
+          $precio = $line->purchase_price;
+        }
+        
+        $compra = $total * $precio;
+        $utilidad = $cash - $compra;
 
 /**Finalizan consultas de folio de la venta, la hora y el dia */
 
@@ -318,7 +350,7 @@ class ProductController extends Controller
  * hacer uso de la informacion de cada consulta
  */
 
-      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates'));
+      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates','total','cash','compra','utilidad'));
       return $pdf->download('ReporteEstatus.pdf');
 
 /**Termina el retorno del pdf */
@@ -328,6 +360,7 @@ class ProductController extends Controller
      public function reportLineaG(Request $request){
       $branches = Branch::where("id","=",$request->branch_id)->get();
       $lines = Line::where("id","=",$request->id)->get();
+      //return $lines;
       $products = Product::where("branch_id","=",$request->branch_id)
                           ->where("line_id","=",$request->id)
                           ->get();
@@ -341,7 +374,16 @@ class ProductController extends Controller
           $cash = $product->price + $cash;
         }
 
-      $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('products','branches','lines','total','cash'));
+        $precio = 0;
+        foreach($lines as $line){
+          $precio = $line->purchase_price;
+        }
+        
+        $compra = $total * $precio;
+        $utilidad = $cash - $compra;
+
+
+      $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('products','branches','lines','total','cash','compra','utilidad'));
       return $pdf->download('ReporteLineas.pdf');
     } 
 
@@ -349,16 +391,157 @@ class ProductController extends Controller
 
       $fech1 = Carbon::parse($request->fecini);
       $fech2 = Carbon::parse($request->fecter);
-      $branches = Branch::where("id","=",$request->branch_id)->get();
-      $lines = Line::where("id","=",$request->id)->get();
-      $products = Product::where("branch_id","=",$request->branch_id)
+
+      /**
+       * Checar este if para la validacion de la fecha de un rango de 1 a 1
+       */
+      if($fech1 === $fech2){
+        $branches = Branch::where("id","=",$request->branch_id)->get();
+        $lines = Line::where("id","=",$request->id)->get();
+        $products = Product::where("branch_id","=",$request->branch_id)
                           ->where("line_id","=",$request->id)
-                          ->where('created_at',">=",$fech1 )
-                          ->where('created_at' ,"<=",$fech2)
+                          ->where('created_at','=',$fech1)
                           ->get();
+                          $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
+                          return $pdf->download('ReporteEntradas.pdf');
+                                
+      }
+
+      if($fech1 != $fech2){
+        $branches = Branch::where("id","=",$request->branch_id)->get();
+        $lines = Line::where("id","=",$request->id)->get();
+        $products = Product::where("branch_id","=",$request->branch_id)
+                            ->where("line_id","=",$request->id)
+                            ->whereBetween('created_at', [$fech1 , $fech2])
+                            ->get();
+                            $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
+                            return $pdf->download('ReporteEntradas.pdf');
+                       
+      }                       
+    }
+
+    public function reportLineaGGeneral(){
+      $branches= Auth::user()->shop->branches;   
+      $product = Auth::user()->shop->id;
+      $products = Shop::find($product)->products()->get();
+      $line = Auth::user()->shop->id; 
+      $lines = Shop::find($line)->lines()->get();
+
+      $total = 0;
+        foreach($products as $product){
+        $total = $product->weigth + $total;
+        }
+
+        $cash = 0;
+        foreach($products as $product){
+          $cash = $product->price + $cash;
+        }
+
+        $precio = 0;
+        foreach($lines as $line){
+          $precio = $line->purchase_price;
+        }
+        
+  
+    $pdf  = PDF::loadView('product.Reports.reportLineaGGeneral', compact('branches','lines','products','total','cash','precio'));
+    return $pdf->download('ReporteLineasGeneral.pdf');
+  }
+
+  public function reportEstatusG(){
+
+    $branches= Auth::user()->shop->branches;   
+    $product = Auth::user()->shop->id;
+    $products = Shop::find($product)->products()->get();
+    $line = Auth::user()->shop->id; 
+    $lines = Shop::find($line)->lines()->get();
+
+
+    $sales = Sale::where("id","=","sale_id")->get();
+
+      $hour = Carbon::now();
+      $hour = date('H:i:s');
+
+      $dates = Carbon::now(); 
+      $dates = $dates->format('d-m-Y');
+
+    $total = 0;
+      foreach($products as $product){
+      $total = $product->weigth + $total;
+      }
+
+      $cash = 0;
+      foreach($products as $product){
+        $cash = $product->price + $cash;
+      }
+
+      $precio = 0;
+      foreach($lines as $line){
+        $precio = $line->purchase_price;
+      }
+
+      $compra = $total * $precio;
+      $utilidad = $cash - $compra;
       
-                          
-     $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
-     return $pdf->download('ReporteEntradas.pdf');
-    }    
+
+  $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('branches','lines','products','total','cash','precio','hour','dates','sales','compra','utilidad'));
+  return $pdf->download('ReporteEstatusGeneral.pdf');
+  }
+  
+  public function reportEntradasG(){
+
+    $branches= Auth::user()->shop->branches;   
+    $product = Auth::user()->shop->id;
+    $products = Shop::find($product)->products()->get();
+    //return $products;
+    $idshop = Auth::user()->shop->id;
+    $status = Shop::find($idshop)->statuss()->get();
+      
+    //return $status;
+    $line = Auth::user()->shop->id; 
+    $lines = Shop::find($line)->lines()->get();
+
+    /* $branches= Auth::user()->shop->branches;   
+    $product = Auth::user()->shop->id;
+
+    $name = 0;
+    foreach($status as $sta){
+      $sta->name =$name;
+    }
+    return $name;
+    
+
+    $products = Shop::find($product)->products()
+                          ->where($sta->name,"!=",'Vendido')
+                          ->get();
+                          return $products;
+      */
+
+      $hour = Carbon::now();
+      $hour = date('H:i:s');
+
+      $dates = Carbon::now(); 
+      $dates = $dates->format('d-m-Y');
+
+    $total = 0;
+      foreach($products as $product){
+      $total = $product->weigth + $total;
+      }
+
+      $cash = 0;
+      foreach($products as $product){
+        $cash = $product->price + $cash;
+      }
+
+      $precio = 0;
+      foreach($lines as $line){
+        $precio = $line->purchase_price;
+      }
+
+      $compra = $total * $precio;
+      $utilidad = $cash - $compra;
+      
+
+  $pdf  = PDF::loadView('product.Reports.reportEntradasG', compact('branches','lines','products','total','cash','precio','hour','dates','sales','compra','utilidad'));
+  return $pdf->download('ReportereportEntradasGeneral.pdf');
+  }
 }

@@ -52,7 +52,7 @@
 <div class="page-content">
     <div class="panel">
     <h1 align="center">Reporte de Entrada de Productos</h1>
-        <h2 align="center">Linea: @foreach($lines as $line){{$line->name}} @endforeach</h2>
+        <h2 align="center">Todas las lineas</h2>
             <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>

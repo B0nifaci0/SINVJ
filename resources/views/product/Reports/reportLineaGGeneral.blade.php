@@ -48,49 +48,37 @@
      }
    </style>
 </head>
- 
 <body>
 <div class="page-content">
     <div class="panel">
-          
-              <p align="right">Fecha: {{$dates}}</p>
-          
-              <p align="right">Hora: {{$hour}}</p>
-          
-          
-    <h2 align="center">Reporte de Productos por  @foreach($products as $product)
-      {{$product->status->name}}@endforeach</h2>
-        <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+    <h1 align="center">Reporte de Productos por Gramos y Dinero</h1>
+        <h2 align="center">Todas las lineas</h2>
+            <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-                 <th scope="col">Linea</th>
-                 <th scope="col">Clave</th>
+				 <th scope="col">Clave</th>
                  <th scope="col">Descripción</th>
+                 <th scope="col">Linea</th>
                  <th scope="col">Peso</th>
                  <th scope="col">Precio</th>
                  <th scope="col">Observaciones</th>
-                 @foreach ($products as $i => $product)
-                 @if($product->status->name === 'Vendido'){
-                  <th scope="col">Id Venta</th>
-                 }
-                 @endif
-                 @endforeach
+                 <th scope="col">Categoria</th>
+                 <th scope="col">Estatus</th>
                 </tr>
               </thead>  
               <tbody>
-              
+               
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->line->name }}</td> 
-                 <td>{{ $product->clave }}</td>
+                 <td>{{ $product->clave }}</td> 
                  <td>{{ $product->description }}</td>
+                 <td>{{ $product->line->name }}</td>
                  <td>{{ $product->weigth }} gr</td>
-                 <td>$ {{ $product->price }}</td> 
+                 <td>$ {{ $product->price }}</td>
                  <td>{{ $product->observations }}</td>
-                 @if ($product->status->name === 'Vendido')
-                  <td>@foreach($sales as $sale){{$sale->id}} @endforeach</td>
-                 @endif
+                 <td>{{ $product->category->name }}</td>
+                 <td>{{ $product->status->name }}</td>
                 </tr>
                   @endforeach
               </tbody>
@@ -100,28 +88,13 @@
                 <thead>
                     <tr>
                             <th scope="col">Total de Gramos</th>
-                            <th scope="col">Total Precio Compra</th>
-                            <th scope="col">Total precio Venta</th>
+                            <th scope="col">Total precio venta</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td align="center">{{$total}} gr</td>
-                        <td align="center">$ {{$compra}}</td>
-                        <td align="center">$ {{$cash}}</td>
-                    </tr>
-                </tbody> 
-                <br>   
-            </table>
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-                <thead>
-                    <tr>
-                            <th scope="col">Utilidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td align="center">$ {{$utilidad}}</td>
+                        <td>{{$total}} gr</td>
+                        <td>$ {{$cash}}</td>
                     </tr>
                 </tbody>    
             </table>

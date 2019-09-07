@@ -25,6 +25,13 @@ Panel Principal
                       </div>
                       <div class="panel-collapse collapse" id="exampleCollapseDefaultOne" aria-labelledby="exampleHeadingDefaultOne" role="tabpanel" style="">
                         <div class="panel-body">
+                            <div align="right">
+                                <a href="/reportEstatusG"<button type="button" 
+                                  class="btn btn-icon btn-danger waves-effect waves-light waves-round"
+                                  data-toggle="tooltip" data-original-title="Editar">
+                                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                </a>
+                            </div>
                             @if (session('mesage'))	
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                               <strong>{{ session('mesage') }}</strong>
@@ -56,7 +63,7 @@ Panel Principal
                                       <div class="col-3">
                                         <label>Seleccione Sucursal</label>
                                           <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
-                                            <option value="*">Seleccione Sucursal</option>
+                                            <!-- <option value="*">Seleccione Sucursal</option> -->
                                           @php  
                                             $branches = $user->shop->branches;
                                           @endphp 
@@ -69,8 +76,8 @@ Panel Principal
                                       <div class="col-3">
                                         <label>Seleccione Estatus</label>
                                           <select id=""  name="estatus_id" alt="1" class="form-control round sucursales">
-                                            <option value="">Selecciona Estatus</option>
-                                            <option value="*" name="todos">Tod@s</option>
+                                            <!-- <option value="">Selecciona Estatus</option>
+                                            <option value="*" name="todos">Tod@s</option> -->
                                             @foreach($status as $onestatus)
                                           <option value="{{$onestatus->id}}" required>{{$onestatus->name}}</option>
                                           @endforeach
@@ -79,8 +86,8 @@ Panel Principal
                                       <div class="col-3">
                                         <label>Seleccione Categoria</label>
                                           <select id=""  name="category_id" alt="1" class="form-control round sucursales">
-                                            <option value="">Selecciona Categoria</option>
-                                            <option value="*">Tod@s</option>
+                                            <!-- <option value="">Selecciona Categoria</option>
+                                            <option value="*">Tod@s</option> -->
                                             @foreach($categories as $categories)
                                           <option value="{{$categories->id}}" required>{{$categories->name}}</option>
                                           @endforeach
@@ -89,12 +96,12 @@ Panel Principal
                                       <div class="col-3">
                                         <label>Seleccione Linea</label>
                                           <select id=""  name="id" alt="1" class="form-control round sucursales">
-                                            <option value="">Selecciona Linea</option>
-                                            <option value="*">Tod@s</option>
+                                            <!-- <option value="">Selecciona Linea</option>
+                                            <option value="*">Tod@s</option> -->
                                             @foreach($line as $linea)
                                           <option value="{{$linea->id}}" required>{{$linea->name}}</option>
                                           @endforeach
-                                          </select>
+                                          </select> 
                                       </div>
                                     </div>
                                   </div>
@@ -103,7 +110,7 @@ Panel Principal
                                   </div>
                               </div>
                             </div>
-                        </form> 
+                          </form> 
                         </div> 
                       </div>
                     </div>
@@ -115,15 +122,22 @@ Panel Principal
                       </div>
                       <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo" aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">
                         <div class="panel-body">
+                            <div align="right">
+                                <a href="/gramoslineageneral"<button type="button" 
+                                  class="btn btn-icon btn-danger waves-effect waves-light waves-round"
+                                  data-toggle="tooltip" data-original-title="Editar">
+                                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                </a>
+                            </div>
                         <form action="gramoslinea">
                           <div class=" col-12"> 
                               <div class="panel panel-bordered">
                                 <div class="panel-body row col-12">
                                   <div class="row col-12">
-                                      <div class="col-3">
+                                      <div class="col-6">
                                         <label>Seleccione Sucursal</label>
                                           <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
-                                            <option value="*">Seleccione Sucursal</option>
+                                          <!--  <option value="*">Seleccione Sucursal</option> -->
                                           @php  
                                             $branches = $user->shop->branches;
                                           @endphp
@@ -132,11 +146,11 @@ Panel Principal
                                           @endforeach
                                           </select>
                                       </div>
-                                      <div class="col-3">
+                                      <div class="col-6">
                                         <label>Seleccione Linea</label>
                                           <select id=""  name="id" alt="1" class="form-control round sucursales">
-                                            <option value="">Selecciona Linea</option>
-                                            <option value="*">Tod@s</option>
+                                            <!-- <option value="">Selecciona Linea</option>
+                                            <option value="*">Tod@s</option> -->
                                           @foreach($line as $line)
                                           <option value="{{$line->id}}" required>{{$line->name}}</option>
                                         @endforeach
@@ -149,28 +163,34 @@ Panel Principal
                                   </div>
                               </div>
                             </div>
-                        </form>
+                          </form>
                         </div>
                       </div>
                     </div>
-
                     <div class="panel">
-                      <div class="panel-heading bg-success  text-center text-white" id="exampleHeadingDefaultThree" role="tab">
+                      <div class="panel-heading bg-success  text-center text-white" id="exampleHeadingDefaultThree" role="tab"> 
                         <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultThree" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultThree">
                       Reporte de Entradas De Productos
-                    </a>
+                        </a>
                       </div>
                       <div class="panel-collapse" id="exampleCollapseDefaultThree" aria-labelledby="exampleHeadingDefaultThree" role="tabpanel">
                         <div class="panel-body">
-                        <form action="entradasproducto">
+                            <div align="right">
+                                <a href="/reportEntradasG"<button type="button" 
+                                  class="btn btn-icon btn-danger waves-effect waves-light waves-round"
+                                  data-toggle="tooltip" data-original-title="Editar">
+                                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                </a>
+                            </div>
                           <div class=" col-12"> 
+                            <form action="entradasproducto">
                               <div class="panel panel-bordered">
                                 <div class="panel-body row col-12">
                                   <div class="row col-12">
                                       <div class="col-3">
                                         <label>Seleccione Sucursal</label>
                                           <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
-                                            <option value="*">Seleccione Sucursal</option>
+                                            <!-- <option value="*">Seleccione Sucursal</option> -->
                                           @php  
                                             $branches = $user->shop->branches;
                                           @endphp
@@ -182,11 +202,11 @@ Panel Principal
                                       <div class="col-3">
                                         <label>Seleccione Linea</label>
                                           <select id=""  name="id" alt="1" class="form-control round sucursales">
-                                            <option value="">Selecciona Linea</option>
+                                             <!-- <option value="">Selecciona Linea</option> -->
                                            @php  
                                             $lines= $user->shop->lines;
                                           @endphp
-                                            <option value="*">Tod@s</option>
+                                            <!-- <option value="*">Tod@s</option> -->
                                           @foreach($lines as $line)
                                           <option value="{{$line->id}}" required>{{$line->name}}</option>
                                         @endforeach
@@ -216,15 +236,75 @@ Panel Principal
                                       <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
                                   </div>
                               </div>
-                            </div>
                         </form>
+                    </div>
+                  </div>
+                      </div>
+                    </div>
+                    <div class="panel">
+                      <div class="panel-heading bg-warning  text-center text-white" id="exampleHeadingDefaultFour" role="tab">
+                        <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultFour" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultFour">
+                      Reporte de Productos PZ Con Descuento
+                    </a>
+                      </div>
+                      <div class="panel-collapse collapse" id="exampleCollapseDefaultFour" aria-labelledby="exampleHeadingDefaultFour" role="tabpanel" style="">
+                        <div class="panel-body">
+                            <div align="right">
+                                <a href="/gramoslineageneral"<button type="button" 
+                                  class="btn btn-icon btn-danger waves-effect waves-light waves-round"
+                                  data-toggle="tooltip" data-original-title="Editar">
+                                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                </a>
+                            </div>
+                          <div class=" col-12"> 
+                              <div class="panel panel-bordered">
+                                <div class="panel-body row col-12">
+                                  <div class="row col-12">
+                                      <div class="col-3">
+                                        <label>Seleccione Sucursal</label>
+                                          <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
+                                          @php  
+                                            $branches = $user->shop->branches;
+                                          @endphp
+                                            @foreach($branches as $branch)
+                                          <option value="{{$branch->id}}" required>{{$branch->name}}</option>
+                                          @endforeach
+                                          </select>
+                                      </div>
+                                      <div class="col-3">
+                                        <label>Seleccione Categoria</label>
+                                          @php  
+                                            $categories = $user->shop->categories;
+                                          @endphp
+                                          <select id=""  name="category_id" alt="1" class="form-control round sucursales">
+                                            <!-- <option value="">Selecciona Categoria</option>
+                                            <option value="*">Tod@s</option> -->
+                                            @foreach($categories as $categories)
+                                            @if($categories->type_product == 1 )
+                                          <option value="{{$categories->id}}" required>{{$categories->name}}</option>
+                                          @endif
+                                          @endforeach
+                                          </select>
+                                      </div>
+                                      <div class="form-material col-3">
+                                      <label class="form-control-label" for="inputBasicFirstName">Descuento: </label>
+                                        <input type="text" name="" id="" class="form-control">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="input-group col-3">
+                                      <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
+                                  </div>
+                              </div>
+                            </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-      </div>
+          </div>
+       </div>
     </div>        
 <!-- Termina formulario de Prueba -->
 @endsection

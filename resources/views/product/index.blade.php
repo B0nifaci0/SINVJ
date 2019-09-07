@@ -134,7 +134,8 @@ LISTA PRODUCTO
                     <img width="100px" height="100px" src="{{ $image }}">
                   </td>
                   <td>{{ $product->category->name }}</td>
-                  <td>{{ $product->line->name }}</td>
+                
+                  <td>{{ ($product->line) ? $product->line->name : '' }}</td>
                   <td>{{ $product->branch->name }}</td>
                   <td>{{ $product->status->name }}</td>
                   @if(Auth::user()->type_user == 1 )

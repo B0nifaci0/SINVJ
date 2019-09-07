@@ -41,17 +41,42 @@ Panel Principal
       <div class="col-md-12"> 
         <div class="panel">
           <div class="panel-heading bg-primary  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
-            <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultTwo" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultTwo">
-          Tienda:  {{$shop->name}}
-          <a class="animsition-link col-md-6" href="/tiendas/{{$shop->id}}/edit">
-            <i class="site-menu-icon icon md-help" aria-hidden="true"></i>
-              <span class="site-menu-title">Actualizar tienda</span>
-            </a>
-            <a class="animsition-link" href="/tiendas">
-              <i class="site-menu-icon icon md-alert-circle col-md-6" aria-hidden="true"></i>
-                <span class="site-menu-title">Informacion de la tienda</span>
-              </a>
-        </a>
+            <div class="row">
+              <div class="col-md-3">
+                  @foreach ($shops as $shop)
+                  @php
+                  $image = route('images',"app/public/upload/shops/$shop->image")
+                  @endphp
+                  <img align = "left" width="90px" height="90px" src="{{ $image }}">
+                  @endforeach
+              </div>
+              <div class="col-md-6">
+                  <h2 style="color:white">
+                      {{$shop->name}}                 
+                  </h2>
+              </div>
+              <div  align="right" class="col-md-3">
+                  <div>
+                      <button onclick="window.location.href='/tiendas'" 
+                        type="button" class=" btn btn-floating 
+                        toggler-left  btn-warning waves-effect waves-light waves-round float-right"
+                        data-toggle="tooltip" data-original-title="Generar reporte Excel">
+                        <i class="icon md-eye" aria-hidden="true"></i>
+                      </button>
+                  </div>
+        
+                  <div>
+                      @foreach ($shops as $shop)
+                      <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'" 
+                        type="button" class="btn btn-floating 
+                        toggler-left  btn-primary waves-effect waves-light waves-round float-right"
+                        data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                        <i class="icon md-edit" aria-hidden="true"></i>
+                      </button>
+                      @endforeach
+                  </div>
+              </div>
+            </div>    
           </div>
           <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo" aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">
             <div class="panel-body">

@@ -29,7 +29,7 @@ ALTA PRODUCTO
         <div class='row'>
           <!-- Input para ingresar clave del producto-->
           <div class="form-group form-material col-md-3">
-            <label>Clave</label>
+            <label>Clave</label> 
             <input type="text" class="form-control" name="clave"  value="{{old('clave')}}" required>
           </div>
             <!-- Input para ingresar descripcion-->
@@ -38,33 +38,33 @@ ALTA PRODUCTO
               <input type="text" class="form-control" name="description"  value="{{old('description')}}" required>
             </div>
             <!-- END Input--> 
-            <div id="s" class=""></div>
             <!-- Select para Seleccionar linea-->
-            <div id="show"  class="col-md-3 remove"> 
+            <div class="col-md-3 form-material remove"> 
                <label  class="control-label">Seleccione Linea</label>
               <select id="line_id"   name="line_id"  class="form-control round">
                 @foreach($lines as $line)            
                   <option value="{{ $line->id }}" required>{{ $line->name }}</option>
                 @endforeach
               </select> 
-            </div>
+            </div>            
+            <!-- END Select-->  
+
             <!-- Input para ingresar precio del producto-->
-            <div class="form-group form-material col-md-3 removeClass invisible">
+            <div id ="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
-              <input type="text"  class="form-control"  name="price">
+              <input type="text"  class="form-control"  name="pricepzt">
             </div> 
             <!-- END Input-->
-            <div  id="show" class="col-md-3 remove">
+            <div   class="col-md-3 form-material remove">
                  <label  class="control-label">Precio de la linea</label>
                   <input type="text" name="" id="line_price" class="form-control" readonly>
             </div>
             <!-- END Select-->  
             <!-- Input para ingresar Peso del producto-->
-            <div  id="show" class="form-group form-material col-md-3 remove">
+            <div class="form-group form-material col-md-3 remove">
               <label>Peso</label>
               <input type="text" id="multiplicador"  class="form-control" name="weigth" > 
             </div>
-
             <!-- END Input-->
             <!-- Input para ingresar precio del producto-->
             <div id="show" class="form-group form-material col-md-3 remove">
@@ -79,7 +79,6 @@ ALTA PRODUCTO
                 @foreach($categories as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
                   <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-
                 @endforeach
               </select>
             </div>
@@ -90,7 +89,7 @@ ALTA PRODUCTO
                 @endforeach 
             </div>  
             <!-- Select para Seleccionar sucursal--> 
-            <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
+            <div class="col-md-3">
               <label>Seleccione Sucursal</label>
               <select name="branch_id" class="form-control round">
                 @php  
@@ -103,7 +102,7 @@ ALTA PRODUCTO
             </div>
             <!-- END Select--> 
             <!-- Select para Seleccionar status-->
-            <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
+            <div class="col-md-3">
               <label>Seleccione Status</label>
               <select  name="status_id" class="form-control round">
                 @foreach($statuses as $status)             
@@ -120,15 +119,11 @@ ALTA PRODUCTO
             <!-- END Input--> 
             <!-- Input para Seleccionar Imagen del producto-->
             <div class="form-group form-material col-md-3">
-              <label>Selecciona imagen del producto</label>
-              <br>
-              <label for="image" class="btn btn-primary">Explorar</label>
+              <label for="image" class="btn btn-primary">Imagen</label>
               <input type="file" name="image" id="image" class="hidden">
             </div>
             <!-- END Input--> 
-            <br>
           </div>
-          <br>
           <!-- Botón para guardar Producto-->
           <div class="form-group col-md-4">
            <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
@@ -138,7 +133,6 @@ ALTA PRODUCTO
       </form>
     </div>
   </div>
-</div>
 @endsection
 
 @section('disabled-submit')
@@ -184,12 +178,27 @@ $(document).ready(function(){
 <!-- Función para obtener el precio de linea-->
 @section('precio-linea')
 <script type="text/javascript">
-//var categoryTypeproduct = {!! $categories !!};
+  var categoryTypeproduct = {!! $categories !!};
 
-//console.log("categoryTypeproduct", categoryTypeproduct);
+  let defaul = categoryTypeproduct[0]
+    if(defaul.type_product == 1){
+      alert(JSON.stringify('pz'+defaul.type_product));
+    $('.remove').css('display', 'none');
+    $('#pricepz').css('display', 'initial'); 
+
+    //$('.removeClass').removeClass('invisible');
+    //$('#s').toggle();
+    }else if(defaul.type_product == 2){
+     alert(JSON.stringify('pz'+defaul.type_product));
+     console.log()
+    $('.remove').css('display', 'initial');  
+    $('#pricepz').css('display', 'none');
+  
+    }
 
 $('#categorie_id').change(function(){
   var categoryTypeproduct = {!! $categories !!};
+
   var id = $(this).val();
   var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == id)[0];
   
@@ -198,15 +207,18 @@ console.log("categoryTypeproduct", categoryTypeproduct);
     //alert('entra');
     if(categoryTypeproduct.type_product == 1){
       alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
-    $('.remove').toggle(500);
-    $('.removeClass').removeClass('invisible');
-    $('#s').toggle();
+    $('.remove').css('display', 'none');
+    $('#pricepz').css('display', 'initial'); 
+
+    //$('.removeClass').removeClass('invisible');
+    //$('#s').toggle();
     }else if(categoryTypeproduct.type_product == 2){
       console.log('<p>agregar campos</p>');
      alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
-     $('#s').html('<p>agregar campos</p>');
-
-
+     console.log()
+    $('.remove').css('display', 'initial');  
+    $('#pricepz').css('display', 'none');
+  
     }
 });
 var lines = {!! $lines !!};

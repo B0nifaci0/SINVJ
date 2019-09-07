@@ -80,6 +80,7 @@ LISTA DE  LINEA
           <h3 class="panel-title">Lineas</h3>
         </header>
         <div class="panel-body">
+           
         <!-- Tabla para listar lineas-->
           <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>

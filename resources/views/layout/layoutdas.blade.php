@@ -451,74 +451,8 @@
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/reportes-productos">
                           <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
-                            <span class="site-menu-title">Mis Productos</span>
+                            <span class="site-menu-title">Reporte de Productos</span>
                         </a>
-                    <!--<ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="#">
-                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reporte gr por linea.</span>
-                        </a>
-                      </li>
-                    </ul>
-                    
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="#">
-                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reporte gr por linea.</span>
-                        </a>
-                      </li>
-                    </ul>
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="#">
-                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reporte gr por sucursal.</span>
-                        </a>
-                      </li>
-                    </ul>
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="#">
-                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reporte gr por sucursal en total y en $.</span>
-                        </a>
-                      </li>
-                    </ul>
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="#">
-                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reportes de Traspaso.</span>
-                        </a>
-                      </li>
-                    </ul>
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="#">
-                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reportes de Apartado.</span>
-                        </a>
-                      </li>
-                    </ul>
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="#">
-                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reportes Productos de Estatus vendido.</span>
-                        </a>
-                      </li>
-                    </ul>
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href=" ">
-                          <i class="site-menu-icon fa-ellipsis-h" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reporte de las ultimas entradas por fecha.</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>-->
                     </ul>
                   </li>
 
@@ -651,6 +585,14 @@
                       </a>
                     </li>
                     </ul>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="recibo">
+                        <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                          <span class="site-menu-title">Recibo de Nomina</span>
+                        </a>
+                    </li>
+                  </ul>
                   <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
                       <i class="site-menu-icon fa-group" aria-hidden="true"></i>
@@ -669,14 +611,6 @@
                         <i class="site-menu-icon icon fa-wechat" aria-hidden="true"></i>
                           <span class="site-menu-title">Unirme a un grupo</span>
                       </a>
-                    </li>
-                    </ul>
-                    <ul class="site-menu-sub">
-                    <li class="site-menu-item">
-                        <a class="animsition-link" href="recibo">
-                        <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
-                          <span class="site-menu-title">Recibo de Nomina</span>
-                        </a>
                     </li>
                     </ul>
                   </li>
