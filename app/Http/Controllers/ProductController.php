@@ -479,14 +479,30 @@ class ProductController extends Controller
     $products = Shop::find($product)->products()->get();
     //return $products;
     $idshop = Auth::user()->shop->id;
-    $status = Shop::find($idshop)->statuss()->get();
-      
-    return $status;
+    $status = Shop::find($idshop)->statuss()
+//                                ->where('name','!=','Vendido')
+                                ->get();
+
+    //return $status;
+
     $line = Auth::user()->shop->id; 
     $lines = Shop::find($line)->lines()->get();
 
+    /* $branches= Auth::user()->shop->branches;   
+    $product = Auth::user()->shop->id;
 
-    $sales = Sale::where("id","=","sale_id")->get();
+    $name = 0;
+    foreach($status as $sta){
+      $sta->name =$name;
+    }
+    return $name;
+    
+
+    $products = Shop::find($product)->products()
+                          ->where($sta->name,"!=",'Vendido')
+                          ->get();
+                          return $products;
+      */
 
       $hour = Carbon::now();
       $hour = date('H:i:s');
