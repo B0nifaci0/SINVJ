@@ -40,7 +40,7 @@ class SaleController extends Controller
         ->with('category')
         ->with('status')
         ->get();
-    return view('sale/index', compact('sales','products','user','SaleDetails'));
+    return view('sale/index', compact('sales','products','user','p'));
     }
 
     public function indexCO()
@@ -90,7 +90,7 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-      // return $request;
+       //return $request;
       $sale = Sale::create([
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,

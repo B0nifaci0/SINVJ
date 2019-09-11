@@ -173,75 +173,75 @@ Panel Principal
                       Reporte de Entradas De Productos
                         </a>
                       </div>
-                      <div class="panel-collapse" id="exampleCollapseDefaultThree" aria-labelledby="exampleHeadingDefaultThree" role="tabpanel">
-                        <div class="panel-body">
-                            <div align="right">
-                                <a href="/reportEntradasG"<button type="button" 
-                                  class="btn btn-icon btn-danger waves-effect waves-light waves-round"
-                                  data-toggle="tooltip" data-original-title="Editar">
-                                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
-                                </a>
+                            <div class="panel-collapse collapse" id="exampleCollapseDefaultThree" aria-labelledby="exampleHeadingDefaultThree" role="tabpanel">
+                              <div class="panel-body">
+                                  <div align="right">
+                                      <a href="/reportEntradasG"<button type="button" 
+                                        class="btn btn-icon btn-danger waves-effect waves-light waves-round"
+                                        data-toggle="tooltip" data-original-title="Editar">
+                                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                      </a>
+                                  </div>
+                                <div class=" col-12"> 
+                                  <form action="entradasproducto">
+                                      <div class="panel panel-bordered">
+                                        <div class="panel-body row col-12">
+                                          <div class="row col-12">
+                                              <div class="col-3">
+                                                <label>Seleccione Sucursal</label>
+                                                  <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
+                                                    <!-- <option value="*">Seleccione Sucursal</option> -->
+                                                  @php  
+                                                    $branches = $user->shop->branches;
+                                                  @endphp
+                                                    @foreach($branches as $branch)
+                                                  <option value="{{$branch->id}}" required>{{$branch->name}}</option>
+                                                  @endforeach
+                                                  </select>
+                                              </div>
+                                              <div class="col-3">
+                                                <label>Seleccione Linea</label>
+                                                  <select id=""  name="id" alt="1" class="form-control round sucursales">
+                                                      <!-- <option value="">Selecciona Linea</option> -->
+                                                    @php  
+                                                    $lines= $user->shop->lines;
+                                                  @endphp
+                                                    <!-- <option value="*">Tod@s</option> -->
+                                                  @foreach($lines as $line)
+                                                  <option value="{{$line->id}}" required>{{$line->name}}</option>
+                                                @endforeach
+                                                  </select>
+                                              </div>
+                                              <div class="input-group col-3">
+                                                <div class="row container"><label>De la Fecha:</label></div>
+                                                <div class="input-group-prepend">
+                                                  <span class="input-group-text">
+                                                    <i class="icon md-calendar" aria-hidden="true"></i>
+                                                  </span>
+                                                </div>
+                                                <input name="fecini" type="text" class="form-control round fecini" data-plugin="datepicker">
+                                              </div>
+                                            <div class="input-group col-3">
+                                                <div class="row container"><label>Hasta la Fecha:</label></div>
+                                                <div class="input-group-prepend">
+                                                  <span class="input-group-text">
+                                                    <i class="icon md-calendar" aria-hidden="true"></i>
+                                                  </span>
+                                                </div>
+                                                <input name="fecter" type="text"   class="form-control round" data-plugin="datepicker" data-multidate="true">
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="input-group col-3">
+                                              <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
+                                          </div>
+                                      </div>
+                                </form>
                             </div>
-                          <div class=" col-12"> 
-                            <form action="entradasproducto">
-                              <div class="panel panel-bordered">
-                                <div class="panel-body row col-12">
-                                  <div class="row col-12">
-                                      <div class="col-3">
-                                        <label>Seleccione Sucursal</label>
-                                          <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
-                                            <!-- <option value="*">Seleccione Sucursal</option> -->
-                                          @php  
-                                            $branches = $user->shop->branches;
-                                          @endphp
-                                            @foreach($branches as $branch)
-                                          <option value="{{$branch->id}}" required>{{$branch->name}}</option>
-                                          @endforeach
-                                          </select>
-                                      </div>
-                                      <div class="col-3">
-                                        <label>Seleccione Linea</label>
-                                          <select id=""  name="id" alt="1" class="form-control round sucursales">
-                                             <!-- <option value="">Selecciona Linea</option> -->
-                                           @php  
-                                            $lines= $user->shop->lines;
-                                          @endphp
-                                            <!-- <option value="*">Tod@s</option> -->
-                                          @foreach($lines as $line)
-                                          <option value="{{$line->id}}" required>{{$line->name}}</option>
-                                        @endforeach
-                                          </select>
-                                      </div>
-                                      <div class="input-group col-3">
-                                       <div class="row container"><label>De la Fecha:</label></div>
-                                        <div class="input-group-prepend">
-                                          <span class="input-group-text">
-                                            <i class="icon md-calendar" aria-hidden="true"></i>
-                                          </span>
-                                        </div>
-                                        <input name="fecini" type="text" class="form-control round fecini" data-plugin="datepicker">
-                                      </div>
-                                    <div class="input-group col-3">
-                                        <div class="row container"><label>Hasta la Fecha:</label></div>
-                                        <div class="input-group-prepend">
-                                          <span class="input-group-text">
-                                            <i class="icon md-calendar" aria-hidden="true"></i>
-                                          </span>
-                                        </div>
-                                        <input name="fecter" type="text"   class="form-control round" data-plugin="datepicker" data-multidate="true">
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="input-group col-3">
-                                      <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
-                                  </div>
-                              </div>
-                        </form>
-                    </div>
-                  </div>
+                          </div>
                       </div>
-                    </div>
-                    <div class="panel">
+                  </div>
+                  <div class="panel">
                       <div class="panel-heading bg-warning  text-center text-white" id="exampleHeadingDefaultFour" role="tab">
                         <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultFour" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultFour">
                       Reporte de Productos PZ Con Descuento
@@ -250,13 +250,14 @@ Panel Principal
                       <div class="panel-collapse collapse" id="exampleCollapseDefaultFour" aria-labelledby="exampleHeadingDefaultFour" role="tabpanel" style="">
                         <div class="panel-body">
                             <div align="right">
-                                <a href="/gramoslineageneral"<button type="button" 
+                                <a href="/"<button type="button" 
                                   class="btn btn-icon btn-danger waves-effect waves-light waves-round"
                                   data-toggle="tooltip" data-original-title="Editar">
                                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                                 </a>
                             </div>
                           <div class=" col-12"> 
+                            <form action="/reportProductspzs">
                               <div class="panel panel-bordered">
                                 <div class="panel-body row col-12">
                                   <div class="row col-12">
@@ -288,7 +289,7 @@ Panel Principal
                                       </div>
                                       <div class="form-material col-3">
                                       <label class="form-control-label" for="inputBasicFirstName">Descuento: </label>
-                                        <input type="text" name="" id="" class="form-control">
+                                        <input value ="" type="text" name="descuento" id="" class="form-control">
                                       </div>
                                     </div>
                                   </div>
@@ -296,15 +297,17 @@ Panel Principal
                                       <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
                                   </div>
                               </div>
+                            </form>
                             </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                 </div>
               </div>
           </div>
        </div>
-    </div>        
+    </div>
+</div>
+      
 <!-- Termina formulario de Prueba -->
 @endsection

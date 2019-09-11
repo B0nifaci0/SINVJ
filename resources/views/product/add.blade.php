@@ -49,15 +49,21 @@ ALTA PRODUCTO
             </div>            
             <!-- END Select-->  
 
-            <!-- Input para ingresar precio del producto-->
-            <div id ="pricepz" class="form-group form-material col-md-3">
+            <!-- Input para ingresar precio del producto pz-->
+            <div id="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
               <input type="text"  class="form-control"  name="pricepzt">
+            </div>
+            
+            <!-- Input para ingresar precio del producto pz-->
+            <div id="pricecp" class="form-group form-material col-md-3">
+              <label>Precio Compra</label>
+              <input type="text"  class="form-control"  name="price_purchase">
             </div> 
             <!-- END Input-->
             <div   class="col-md-3 form-material remove">
-                 <label  class="control-label">Precio de la linea</label>
-                  <input type="text" name="" id="line_price" class="form-control" readonly>
+              <label  class="control-label">Precio de la linea</label>
+              <input type="text" name="" id="line_price" class="form-control" readonly>
             </div>
             <!-- END Select-->  
             <!-- Input para ingresar Peso del producto-->
@@ -185,6 +191,7 @@ $(document).ready(function(){
       alert(JSON.stringify('pz'+defaul.type_product));
     $('.remove').css('display', 'none');
     $('#pricepz').css('display', 'initial'); 
+    $('#pricecp').css('display', 'initial');
 
     //$('.removeClass').removeClass('invisible');
     //$('#s').toggle();
@@ -193,6 +200,8 @@ $(document).ready(function(){
      console.log()
     $('.remove').css('display', 'initial');  
     $('#pricepz').css('display', 'none');
+    $('#pricecp').css('display', 'none');
+ 
   
     }
 
@@ -204,11 +213,12 @@ $('#categorie_id').change(function(){
   
 console.log("categoryTypeproduct", categoryTypeproduct);
     
-    //alert('entra');
+    alert('entra');
     if(categoryTypeproduct.type_product == 1){
       alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
     $('.remove').css('display', 'none');
     $('#pricepz').css('display', 'initial'); 
+    $('#pricecp').css('display', 'initial'); 
 
     //$('.removeClass').removeClass('invisible');
     //$('#s').toggle();
@@ -217,6 +227,7 @@ console.log("categoryTypeproduct", categoryTypeproduct);
      console.log()
     $('.remove').css('display', 'initial');  
     $('#pricepz').css('display', 'none');
+    $('#pricecp').css('display', 'none');
   
     }
 });
