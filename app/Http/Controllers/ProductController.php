@@ -501,8 +501,21 @@ class ProductController extends Controller
     $line = Auth::user()->shop->id; 
     $lines = Shop::find($line)->lines()->get();
 
+    /* $branches= Auth::user()->shop->branches;   
+    $product = Auth::user()->shop->id;
 
-    $sales = Sale::where("id","=","sale_id")->get();
+    $name = 0;
+    foreach($status as $sta){
+      $sta->name =$name;
+    }
+    return $name;
+    
+
+    $products = Shop::find($product)->products()
+                          ->where($sta->name,"!=",'Vendido')
+                          ->get();
+                          return $products;
+      */
 
       $hour = Carbon::now();
       $hour = date('H:i:s');
