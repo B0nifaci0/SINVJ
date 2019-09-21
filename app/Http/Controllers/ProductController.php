@@ -395,15 +395,16 @@ class ProductController extends Controller
       /**
        * Checar este if para la validacion de la fecha de un rango de 1 a 1
        */
-      if($fech1 === $fech2){
+      if($fech1 == $fech2){
         $branches = Branch::where("id","=",$request->branch_id)->get();
         $lines = Line::where("id","=",$request->id)->get();
         $products = Product::where("branch_id","=",$request->branch_id)
                           ->where("line_id","=",$request->id)
                           ->where('created_at','=',$fech1)
                           ->get();
-                          $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
-                          return $pdf->download('ReporteEntradas.pdf');
+                          return $products;
+                          //$pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
+                          //return $pdf->download('ReporteEntradas.pdf');
                                 
       }
 
@@ -543,5 +544,27 @@ class ProductController extends Controller
 
   $pdf  = PDF::loadView('product.Reports.reportEntradasG', compact('branches','lines','products','total','cash','precio','hour','dates','sales','compra','utilidad'));
   return $pdf->download('ReportereportEntradasGeneral.pdf');
+  }
+  
+/**Reporte para sacar la utilida de productos por pzs */
+  public function reportProductpzs(Request $request){
+    $dates = Carbon::now(); 
+    $dates = $dates->format('d-m-Y');
+    $hour = Carbon::now();
+    $hour = date('H:i:s');
+    $productos = Auth::user()->shop->id;
+    $category = 1;
+    $productos = Product::where('category_id',$category)->get();
+    $sumprice = Product::where('category_id',$category)->sum('products.pricepzt');
+    $sumprice_purchase = Product::where('category_id',$category)->sum('products.price_purchase');
+    $adescuento = $request->descuento;
+    $descuento = $sumprice * $request->descuento / 100;
+    $total = $sumprice - $descuento;
+       //return response()->json(['productos'=>$productos,'sumprice'=>$sumprice, 'utilida'=>$descuento, 'total'=>$total]);
+
+      $pdf  = PDF::loadView('product.Reports.reportProductpzs', compact('productos','sumprice','sumprice_purchase','descuento','total','dates','hour','adescuento'));
+      return $pdf->stream('ReporteProductospzs.pdf');
+
+   //return response()->json(['productos'=>$productos,'sumprice'=>$sumprice, 'utilida'=>$descuento, 'total'=>$total]);
   }
 }

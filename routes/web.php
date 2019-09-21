@@ -185,6 +185,8 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
   Route::get('/productos/{id}/show', 'ProductController@show');
   Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
   Route::delete('/productos/{id}','ProductController@destroy');
+
+  // Route::get('/gastos', 'ExpenseController@index');
 });
 
 Route::group(['middleware' => ['auth']],function () {
@@ -258,6 +260,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::get('gramoslineageneral', 'ProductController@reportLineaGGeneral');
   Route::get('reportEstatusG', 'ProductController@reportEstatusG');
   Route::get('reportEntradasG', 'ProductController@reportEntradasG');
+  Route::get('reportProductspzs', 'ProductController@reportProductpzs');
   
 });
 

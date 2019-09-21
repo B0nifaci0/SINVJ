@@ -26,6 +26,8 @@ class Product extends Model
       'inventory',
       'discarded_product',
       'discar_cause',
+      'price_purchase',
+      'pricepzt'
     ];
 
     public function branch()
