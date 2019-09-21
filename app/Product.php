@@ -23,7 +23,9 @@ class Product extends Model
       'shop_id',
       'branch_id',
       'status_id',
-      'inventory'
+      'inventory',
+      'discarded_product',
+      'discar_cause',
     ];
 
     public function branch()

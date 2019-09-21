@@ -176,6 +176,8 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
   Route::resource('ventas', 'SaleController');
   Route::resource('inventarios', 'InventoryController');
 
+  Route::post('inventory/check', 'InventoryController@check'); 
+
   Route::get('productos', 'ProductController@index');
   Route::get('productos/create', 'ProductController@create');
   Route::post('/productos', 'ProductController@store');

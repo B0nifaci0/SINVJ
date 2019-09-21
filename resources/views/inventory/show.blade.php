@@ -39,7 +39,8 @@ LISTA DE  LINEA
                     <i class="icon fa-file-excel-o" aria-hidden="true"></i>
                   </button>
                 </div>
-                <!-- END Función-->
+                <!-- END Función--><!-- Función Sweet Alert para eliminar linea-->
+<!-- END Función-->
                 <!-- Botón para crear linea-->
                 <div class="col-md-4 col-md-offset-2">
                   <button onclick="window.location.href='/inventarios/create'" 
@@ -57,7 +58,7 @@ LISTA DE  LINEA
         </header>
         <div class="panel-body">
         <!-- Tabla para listar inventarios-->
-          <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+          <table id='example'  class="table table-hover table-striped w-full" data-plugin="">
             <thead>
               <tr>
                 <th>Producto</th>
@@ -68,17 +69,34 @@ LISTA DE  LINEA
               <tr>
                 <th>Producto</th>
                 <th>Status</th>
+                <th>Opciones</th>
               </tr>
             </tfoot>
             <tbody>
               @foreach ($inventory->products as $item)
                 <tr id = "row{{ $inventory->id }}">
-                  <td>{{ $item->product->description }}</td>
+                  <td>{{ $item->description }}</td>
                   <td>
                     @if( $item->status === null )
                         Pendiente
-                    @elseif( $item->status === true)
+                    @elseif( $item->status === 1)
                         Listado
+                    @elseif( $item->status === 0)
+                        Eliminado
+                    @endif
+                  </td>
+                  <td>
+                    @if( $item->status === null )
+                      <button class="btn btn-success exist" alt="{{ $item->id }}">
+                        Listo
+                        <i class="icon md-check"></i>
+                      </button>
+                      <button class="btn btn-danger lost" alt="{{ $item->id }}">
+                        Dañado
+                      </button>
+                      <button class="btn btn-danger damaged" alt="{{ $item->id }}">
+                        Perdido
+                      </button>
                     @endif
                   </td>
                 </tr>
@@ -88,62 +106,84 @@ LISTA DE  LINEA
            <!-- END Tabla-->
         </div>
       </div>
+      <form method="post" action="/inventory/check" id="form" class="d-none">
+          {{ csrf_field() }}
+          <input type="text" name="inventory_id" id="inventory_id">
+          <input type="text" name="status" id="status">
+          <input type="text" name="discar_cause" id="discar_cause">
+        </form>
     </div>
   </div>
 @endsection
 
-<!-- Función Sweet Alert para eliminar linea-->
-@section('delete-inventarios')
-<script type="text/javascript">
-console.log("a")
+@section('delete-categorias')
+<script type="text/javascript"> 
 $(document).ready(function() {
-  console.log("b")
-  $(".delete").click(function() {
-    var id = $(this).attr("alt");
-    console.log(id);
-    Swal.fire({
-      title: 'Confirmación',
-      text: "¿Seguro que desea eliminar este registro?",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33' ,
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Si, Borralo!'
-    }).then((result) => {
-      if (result.value) {
-        $.ajaxSetup({
-         headers: {
-             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-          }
-        });
-        $.ajax({
-          url:  '/inventarios/' + id,
-          method: 'DELETE',
-          success: function () {
-            $("#row" + id).remove();
-            Swal.fire(
-              'Eliminado',
-              'El registro ha sido eliminado.',
-              'success'
-            )
-          }, 
-          error: function () {
-            Swal.fire(
-              'Eliminado',
-              'El registro no ha sido eliminado.'+ id,
-              'error'
-            )
-          }
-        })
-      }
-    })
+  $(".exist").click(function() {
+      let id = $(this).attr("alt");
 
-  });
+      Swal.fire({
+        title: 'Confirmación',
+        text: "¿El producto se encuentra en inventario?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#4caf50' ,
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.value) 
+        {
+          $('#inventory_id').val(id);
+          $('#status').val(1);
+          $('#form').submit();
+        }
+      })
+    });
+
+    $(".lost").click(function() {
+      let id = $(this).attr("alt");
+
+      Swal.fire({
+        title: 'Confirmación',
+        text: "¿El producto se encuentra dañado?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#4caf50' ,
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.value) 
+        {
+          $('#inventory_id').val(id);
+          $('#status').val(0);
+          $('#discar_cause').val(2);
+          $('#form').submit();
+        }
+      })
+    });
+
+    $(".damaged").click(function() {
+      let id = $(this).attr("alt");
+
+      Swal.fire({
+        title: 'Confirmación',
+        text: "¿El producto NO se encuentra en inventario?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#4caf50' ,
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.value) 
+        {
+          $('#inventory_id').val(id);
+          $('#status').val(0);
+          $('#discar_cause').val(1);
+          $('#form').submit();
+        }
+      })
+    });
 });
-
 </script>
 @endsection
-<!-- END Función-->
-@section('barcode-product')
-
-@endsection
+ 

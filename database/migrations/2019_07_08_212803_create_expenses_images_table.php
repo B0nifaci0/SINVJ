@@ -19,9 +19,8 @@ class CreateExpensesImagesTable extends Migration
             $table->date('date_upload');
             $table->integer('store_expenses_id')->unsigned();
             $table->foreign('store_expenses_id')->references('id')->on('store_expenses')->onDelete('cascade');
-            $table->softDeletes();
             $table->timestamps();
-
+            $table->softDeletes();
         });
     }
 

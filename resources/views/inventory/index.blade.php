@@ -87,6 +87,7 @@ LISTA DE  LINEA
                 <th>Fecha de inicio</th>
                 <th>Fecha de termino</th>
                 <th>Status</th>
+                <th></th>
               </tr>
             </thead>
             <tfoot>
@@ -94,14 +95,20 @@ LISTA DE  LINEA
                 <th>Fecha de inicio</th>
                 <th>Fecha de termino</th>
                 <th>Status</th>
+                <th></th>
               </tr>
             </tfoot>
             <tbody>
               @foreach ($inventories as $inventory)
                 <tr id = "row{{ $inventory->id }}">
-                  <td>{{ $inventory->id}}</td>
+                  <td>{{ $inventory->id }}</td>
                   <td>{{ $inventory->start_date }}</td>
                   <td>{{ $inventory->end_date }}</td>
+                  <td>
+                    <a class="btn btn-primary" href="/inventarios/{{ $inventory->id }}">
+                    <i class="icon md-search"></i>
+                    </a>
+                  </td>
                 </tr>
               @endforeach
             </tbody>

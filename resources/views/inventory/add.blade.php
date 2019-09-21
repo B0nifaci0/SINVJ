@@ -31,7 +31,7 @@ ALTA LíNEAS
       <center><h3>Creación de inventario</h3></center>
 
       <form class="" action="/inventarios" method="post">
-      {{ csrf_field() }} 
+      {{ csrf_field() }}
       <div class="row">
         <div class="form-group col-md-12">
         @if($date)
