@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
+ <head> 
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <title>Reporte de Productos</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
@@ -57,9 +57,8 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-				 <th scope="col">Clave</th>
+				        <th scope="col">Clave</th>
                  <th scope="col">Descripción</th>
-                 <th scope="col">Linea</th>
                  <th scope="col">Peso</th>
                  <th scope="col">Precio</th>
                  <th scope="col">Observaciones</th>
@@ -73,7 +72,6 @@
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td> 
                  <td>{{ $product->description }}</td>
-                 <td>{{ $product->line->name }}</td>
                  <td>{{ $product->weigth }} gr</td>
                  <td>$ {{ $product->price }}</td>
                  <td>{{ $product->observations }}</td>

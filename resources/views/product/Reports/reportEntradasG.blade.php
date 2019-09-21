@@ -46,6 +46,9 @@
        text-transform: uppercase;
        font-weight: 500; 
      }
+      .sizedate{
+       font-size: 12px!important;
+     }
    </style>
 </head>
 <body>
@@ -63,6 +66,8 @@
                  <th scope="col">Observaciones</th>
                  <th scope="col">Categoria</th>
                  <th scope="col">Estatus</th>
+                 <th scope="col" >Fecha</th>
+
                 </tr>
               </thead>  
               <tbody>
@@ -75,6 +80,8 @@
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->category->name }}</td>
                  <td>{{ $product->status->name }}</td>
+                <td class="sizedate">{{ $product->date_creation }}</td>
+
                 </tr>
                   @endforeach
               </tbody>

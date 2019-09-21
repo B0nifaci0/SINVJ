@@ -37,6 +37,7 @@ class CreateProductsTable extends Migration
 
             $table->integer('status_id')->unsigned();
             $table->foreign('status_id')->references('id')->on('statuss')->onDelete('cascade');
+            $table->string('date_creation', 25);
 
 
             $table->softDeletes();

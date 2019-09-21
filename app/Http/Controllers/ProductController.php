@@ -126,6 +126,7 @@ class ProductController extends Controller
     public function store(ProductValidate $request)
     {
       //return $request;
+      $date= date("Y-m-d");
       $branches= Auth::user()->shop->branches;
         $exist = Product::where('clave', $request->clave)
         ->where('shop_id', Auth::user()->shop->id)
@@ -142,14 +143,15 @@ class ProductController extends Controller
         
         $data = $request->all();
         $data['price'] = ($request->pricepz) ? $request->pricepz : $request->price;
-        
         $category = Category::find($request->category_id);
         if($category->type_product == 1) {
           $data['line_id'] = null;
           $data['weigth'] = null;
+
         }
 
         $product = new Product($data);
+        $product->date_creation= $date;
       if ($request->hasFile('image')){
          $filename = $request->image->getCLientOriginalName();
          $request->image->storeAs('public/upload/products',$filename);
@@ -388,10 +390,9 @@ class ProductController extends Controller
     } 
 
     public function reportEntradas(Request $request){
-
-      $fech1 = Carbon::parse($request->fecini);
-      $fech2 = Carbon::parse($request->fecter);
-
+//return $request;
+      $fech1 = Carbon::parse($request->fecini)->format('Y-m-d');
+      $fech2 = Carbon::parse($request->fecter)->format('Y-m-d');                
       /**
        * Checar este if para la validacion de la fecha de un rango de 1 a 1
        */
@@ -400,25 +401,35 @@ class ProductController extends Controller
         $lines = Line::where("id","=",$request->id)->get();
         $products = Product::where("branch_id","=",$request->branch_id)
                           ->where("line_id","=",$request->id)
-                          ->where('created_at','=',$fech1)
+                          ->where('date_creation','=',$fech1)
+                          ->where('date_creation','=',$fech2)
                           ->get();
-                          return $products;
-                          //$pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
-                          //return $pdf->download('ReporteEntradas.pdf');
+                          //return $products;
+                          $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
+                          return $pdf->download('ReporteEntradas.pdf');
                                 
-      }
+      }elseif($fech1 != $fech2){
+        $branches = Branch::where("id","=",$request->branch_id)->get();
+        $lines = Line::where("id","=",$request->id)->get();
+        $products = Product::where("branch_id","=",$request->branch_id)
+                            ->where("line_id","=",$request->id)
+                            ->whereBetween('date_creation',[$fech1,$fech2])
+                            ->get();
+                    //return $products;
 
-      if($fech1 != $fech2){
+                            $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
+                            return $pdf->download('ReporteEntradas.pdf');
+                       
+      }/**elseif($fech1 == $fech2){
         $branches = Branch::where("id","=",$request->branch_id)->get();
         $lines = Line::where("id","=",$request->id)->get();
         $products = Product::where("branch_id","=",$request->branch_id)
                             ->where("line_id","=",$request->id)
                             ->whereBetween('created_at', [$fech1 , $fech2])
                             ->get();
-                            $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
-                            return $pdf->download('ReporteEntradas.pdf');
-                       
-      }                       
+                    return $products;
+
+      }*/                       
     }
 
     public function reportLineaGGeneral(){
@@ -456,7 +467,7 @@ class ProductController extends Controller
     $line = Auth::user()->shop->id; 
     $lines = Shop::find($line)->lines()->get();
 
-
+      //return $branches;
     $sales = Sale::where("id","=","sale_id")->get();
 
       $hour = Carbon::now();
@@ -489,7 +500,7 @@ class ProductController extends Controller
   }
   
   public function reportEntradasG(){
-
+      $sales = Sale::where("id","=","sale_id")->get();
     $branches= Auth::user()->shop->branches;   
     $product = Auth::user()->shop->id;
     $products = Shop::find($product)->products()->get();

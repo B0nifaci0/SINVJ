@@ -212,15 +212,17 @@ Panel Principal
                                                 @endforeach
                                                   </select>
                                               </div>
-                                              <div class="input-group col-3">
+                                            <div class="input-group col-3">
                                                 <div class="row container"><label>De la Fecha:</label></div>
-                                                <div class="input-group-prepend">
-                                                  <span class="input-group-text">
-                                                    <i class="icon md-calendar" aria-hidden="true"></i>
-                                                  </span>
+                                                  <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                      <span class="input-group-text">
+                                                        <i class="icon md-calendar" aria-hidden="true"></i>
+                                                      </span>
+                                                    </div>
+                                                    <input name="fecini" type="text" class="form-control fecini round" data-plugin="datepicker" required>
+                                                  </div>
                                                 </div>
-                                                <input name="fecini" type="text" class="form-control round fecini" data-plugin="datepicker">
-                                              </div>
                                             <div class="input-group col-3">
                                                 <div class="row container"><label>Hasta la Fecha:</label></div>
                                                 <div class="input-group-prepend">
@@ -228,7 +230,7 @@ Panel Principal
                                                     <i class="icon md-calendar" aria-hidden="true"></i>
                                                   </span>
                                                 </div>
-                                                <input name="fecter" type="text"   class="form-control round" data-plugin="datepicker" data-multidate="true">
+                                                <input name="fecter" type="text"   class="form-control round" data-plugin="datepicker" required>
                                               </div>
                                             </div>
                                           </div>
@@ -289,7 +291,7 @@ Panel Principal
                                       </div>
                                       <div class="form-material col-3">
                                       <label class="form-control-label" for="inputBasicFirstName">Descuento: </label>
-                                        <input value ="" type="text" name="descuento" id="" class="form-control">
+                                        <input value ="" type="text" name="descuento" id="" class="form-control" required>
                                       </div>
                                     </div>
                                   </div>
