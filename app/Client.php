@@ -10,6 +10,7 @@ class Client extends Model
         'name',
         'first_lastname',
         'second_lastname',
-        'phone_number'
+        'phone_number',
+        'shop_id'
     ];
 }

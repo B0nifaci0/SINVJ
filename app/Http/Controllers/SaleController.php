@@ -6,6 +6,7 @@ use App\Sale;
 use App\Product;
 use App\SaleDetails;
 use App\Line;
+use App\Client;
 use App\User;
 use App\Branch;
 use App\Parcial;
@@ -63,6 +64,9 @@ class SaleController extends Controller
     public function create()
     {
       $user = Auth::user();
+
+      $clients = Client::where('shop_id', $user->shop->id)->get();
+
       if($user->branch) {
         $branch_id = $user->branch->id;
         $products = Product::where('branch_id',$branch_id)->get();
@@ -79,7 +83,7 @@ class SaleController extends Controller
         ->with('status')
         ->get();
       //return $products;
-        return view('sale/add', compact('products','products','user', 'branches'));
+        return view('sale/add', compact('products','products','user', 'branches', 'clients'));
     }
 
     /**
