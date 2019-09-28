@@ -76,7 +76,7 @@
               
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->line->name }}</td> 
+                 <td>{{ $product->line->name_status}}</td> 
                  <td>{{ $product->clave }}</td>
                  <td>{{ $product->status->name }}</td>
                  <td>{{ $product->description }}</td>

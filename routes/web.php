@@ -21,7 +21,7 @@ Auth::routes();
 
 Route::resource('usuario', 'Auth\RegisterController');
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('tiendas','ShopController');
 
 
@@ -165,7 +165,7 @@ Route::resource('productos',  'ProductController');
 
 //Shop
 Route::resource('tiendas','ShopController');
-
+  
 
 });
 */

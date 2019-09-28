@@ -188,7 +188,7 @@ $(document).ready(function(){
 
   let defaul = categoryTypeproduct[0]
     if(defaul.type_product == 1){
-      alert(JSON.stringify('pz'+defaul.type_product));
+      //alert(JSON.stringify('pz'+defaul.type_product));
     $('.remove').css('display', 'none');
     $('#pricepz').css('display', 'initial'); 
     $('#pricecp').css('display', 'initial');
@@ -196,7 +196,7 @@ $(document).ready(function(){
     //$('.removeClass').removeClass('invisible');
     //$('#s').toggle();
     }else if(defaul.type_product == 2){
-     alert(JSON.stringify('pz'+defaul.type_product));
+     //alert(JSON.stringify('pz'+defaul.type_product));
      console.log()
     $('.remove').css('display', 'initial');  
     $('#pricepz').css('display', 'none');
@@ -213,9 +213,9 @@ $('#categorie_id').change(function(){
   
 console.log("categoryTypeproduct", categoryTypeproduct);
     
-    alert('entra');
+    //alert('entra');
     if(categoryTypeproduct.type_product == 1){
-      alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
+      //alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
     $('.remove').css('display', 'none');
     $('#pricepz').css('display', 'initial'); 
     $('#pricecp').css('display', 'initial'); 

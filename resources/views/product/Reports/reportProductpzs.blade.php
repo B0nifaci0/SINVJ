@@ -46,6 +46,7 @@
        text-transform: uppercase;
        font-weight: 500; 
      }
+
    </style>
 </head>
  
