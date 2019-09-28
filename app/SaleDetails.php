@@ -10,6 +10,7 @@ class SaleDetails extends Model
         'sale_id',
         'product_id',
         'final_price',
+        
     ];
 
     public function sale()

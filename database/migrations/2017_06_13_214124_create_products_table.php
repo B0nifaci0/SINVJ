@@ -39,6 +39,9 @@ class CreateProductsTable extends Migration
             $table->integer('status_id')->unsigned();
             $table->foreign('status_id')->references('id')->on('statuss')->onDelete('cascade');
 
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->date('sold_at')->nullable();
             $table->date('discarded_at')->nullable();
 

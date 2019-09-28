@@ -56,15 +56,10 @@ class ControllerExpenses extends Controller
      */
     public function store(ExpensesRequest $request)
     {
-         if ($request->hasFile('image')){
-            $filename = $request->image->getCLientOriginalName();
-            $request->image->storeAs('public/upload/expenses',$filename);
-            $expense = new Expenses($request->all());
-            $expense->image = $filename;
-            $expense->save();
-            //return $expense;
+        $expense = new Expenses($request->all());
+        $expense->save();
+        //return $expense;
         return redirect('/gastos')->with('success', true);
-         } 
     
     } 
 

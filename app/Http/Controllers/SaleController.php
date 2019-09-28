@@ -96,7 +96,8 @@ class SaleController extends Controller
         'telephone' => $request->telephone,
         'price' => $request->price,
         'customer_name' => $request->customer_name,
-        'price' => $request->total_pay
+        'price' => $request->total_pay,
+        'branch_id' => 0,
       ]);
       $products = json_decode($request->products_list);
       
@@ -110,13 +111,13 @@ class SaleController extends Controller
 
       Parcial::create([
         'sale_id' => $sale->id,
-        'amount' => $request->cash_income,
+        'amount' => ($request->cash_income) ? $request->cash_income : 0,
         'type' => Parcial::CASH,
       ]);
 
       Parcial::create([
         'sale_id' => $sale->id,
-        'amount' => $request->card_income,
+        'amount' => ($request->card_income) ? $request->card_income : 0,
         'type' => Parcial::CARD,
       ]);
 

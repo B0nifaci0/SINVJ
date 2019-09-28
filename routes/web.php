@@ -186,7 +186,7 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
   Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
   Route::delete('/productos/{id}','ProductController@destroy');
 
-  // Route::get('/gastos', 'ExpenseController@index');
+  Route::resource('/mayoristas', 'ClientController');
 });
 
 Route::group(['middleware' => ['auth']],function () {

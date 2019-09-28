@@ -20,7 +20,8 @@ class Branch extends Model
         'longitude',
         'phone_number',
         'shop_id',
-        'state'
+        'state',
+        'password'
     ];
 
     public function shop()

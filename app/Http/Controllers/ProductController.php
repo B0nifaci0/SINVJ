@@ -126,7 +126,8 @@ class ProductController extends Controller
     public function store(ProductValidate $request)
     {
       //return $request;
-      $branches= Auth::user()->shop->branches;
+      $user = Auth::user();
+      $branches= $user->shop->branches;
         $exist = Product::where('clave', $request->clave)
         ->where('shop_id', Auth::user()->shop->id)
         ->first();
@@ -142,6 +143,7 @@ class ProductController extends Controller
         
         $data = $request->all();
         $data['price'] = ($request->pricepz) ? $request->pricepz : $request->price;
+        $data['user_id'] = $user->id;
         
         $category = Category::find($request->category_id);
         if($category->type_product == 1) {
