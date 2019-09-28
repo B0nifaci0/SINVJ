@@ -62,7 +62,6 @@ LISTA DE  GASTOS
                 <th>Clave</th>
                 <th>Nombre</th>
                 <th>Descripcion</th>
-                <th>Imagen de Comprobante</th>
                 <th>Precio</th>
                 <th>Tienda</th>
                 <th>Opciones</th>
@@ -73,7 +72,6 @@ LISTA DE  GASTOS
                 <th>Clave</th>
                 <th>Nombre</th>
                 <th>Descripcion</th>
-                <th>Imagen de Comprobante</th>
                 <th>Precio</th>
                 <th>Tienda</th>
                 <th>Opciones</th>
@@ -85,12 +83,6 @@ LISTA DE  GASTOS
                   <td>{{ $expense->id}}</td>
                   <td>{{ $expense->name }}</td>
                   <td>{{ $expense->descripcion }}</td>
-                  <td>
-                    @php
-                    $image = route('images',"app/public/upload/expenses/$expense->image")
-                    @endphp
-                    <img width="100px" height="100px" src="{{ $image }}">
-                  </td>
                   <td>$ {{$expense->price}}</td>
                   <td>{{$expense->shop->name}}</td>
                   <td>  

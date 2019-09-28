@@ -15,7 +15,7 @@ class CreateShopsTable extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 15)->unique();
+            $table->string('name', 15);
             $table->string('image')->default('NULL');
             $table->string('description')->default('NULL');
             $table->string('email')->default('NULL');

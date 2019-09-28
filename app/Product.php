@@ -24,6 +24,8 @@ class Product extends Model
       'branch_id',
       'status_id',
       'inventory',
+      'discarded_product',
+      'discar_cause',
       'price_purchase',
       'pricepzt'
     ];

@@ -223,6 +223,7 @@ console.log("categoryTypeproduct", categoryTypeproduct);
     //$('.removeClass').removeClass('invisible');
     //$('#s').toggle();
     }else if(categoryTypeproduct.type_product == 2){
+      console.log('<p>agregar campos</p>');
      alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
      console.log()
     $('.remove').css('display', 'initial');  

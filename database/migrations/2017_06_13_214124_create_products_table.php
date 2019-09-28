@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('weigth')->nullable();
             $table->string('observations', 15)->nullable();
             $table->string('price');
+            $table->integer('discar_cause')->nullable();
             $table->string('image')->default('default.jpg'); 
 
             $table->integer('category_id')->unsigned(); 
@@ -39,6 +40,11 @@ class CreateProductsTable extends Migration
             $table->foreign('status_id')->references('id')->on('statuss')->onDelete('cascade');
             $table->string('date_creation', 25);
 
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->date('sold_at')->nullable();
+            $table->date('discarded_at')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

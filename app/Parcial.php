@@ -15,7 +15,7 @@ class Parcial extends Model
     protected $fillable = [
     'sale_id',
     'amount',
-    'type'
+    'type',
     ];
 
 

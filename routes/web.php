@@ -172,8 +172,11 @@ Route::resource('tiendas','ShopController');
 //PRODUCTS
 Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware','StatusMiddleware']],function(){
 
-    //Ventas
-    Route::resource('ventas', 'SaleController');
+  //Ventas
+  Route::resource('ventas', 'SaleController');
+  Route::resource('inventarios', 'InventoryController');
+
+  Route::post('inventory/check', 'InventoryController@check'); 
 
   Route::get('productos', 'ProductController@index');
   Route::get('productos/create', 'ProductController@create');
@@ -182,6 +185,8 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
   Route::get('/productos/{id}/show', 'ProductController@show');
   Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
   Route::delete('/productos/{id}','ProductController@destroy');
+
+  Route::resource('/mayoristas', 'ClientController');
 });
 
 Route::group(['middleware' => ['auth']],function () {

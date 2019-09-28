@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExpensesImagesTable extends Migration
+class CreateInventoryReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateExpensesImagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('expenses_images', function (Blueprint $table) {
+        Schema::create('inventory_reports', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->date('date_upload');
-            $table->integer('store_expenses_id')->unsigned();
-            $table->foreign('store_expenses_id')->references('id')->on('store_expenses')->onDelete('cascade');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +29,6 @@ class CreateExpensesImagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('expenses_images');
+        Schema::dropIfExists('inventory_reports');
     }
 }

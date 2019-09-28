@@ -464,6 +464,13 @@
                     </li>
 
                     <li class="site-menu-item">
+                        <a class="animsition-link" href="/inventarios">
+                        <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                          <span class="site-menu-title">Inventarios</span>
+                      </a>
+                    </li>
+
+                    <li class="site-menu-item">
                         <a class="animsition-link" href="/categorias">
                         <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
                           <span class="site-menu-title">Categorias</span>
@@ -571,21 +578,36 @@
                       <span class="site-menu-arrow"></span>
                     </a>
                     <ul class="site-menu-sub">
-                    <li class="site-menu-item">
-                        <a class="animsition-link" href="/usuarios">
-                        <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
-                          <span class="site-menu-title">Mis Usuarios</span>
-                      </a>
-                    </li>
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/usuarios">
+                          <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mis Usuarios</span>
+                        </a>
+                      </li>
                     </ul>
                     <ul class="site-menu-sub">
-                    <li class="site-menu-item">
+                      <li class="site-menu-item">
                         <a class="animsition-link" href="recibo">
                         <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
                           <span class="site-menu-title">Recibo de Nomina</span>
                         </a>
-                    </li>
-                  </ul>
+                      </li>
+                    </ul>
+                    <li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon fa-group" aria-hidden="true"></i>
+                        <span class="site-menu-title">Clientes</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/mayoristas">
+                          <i class="site-menu-icon icon fa-user-circle" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mayoristas</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
                   <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
                       <i class="site-menu-icon fa-group" aria-hidden="true"></i>
@@ -593,18 +615,18 @@
                       <span class="site-menu-arrow"></span>
                     </a>
                     <ul class="site-menu-sub">
-                    <li class="site-menu-item">
-                        <a class="animsition-link" href="/grupos">
-                        <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
-                          <span class="site-menu-title">Mis grupos</span>
-                      </a>
-                    </li>
-                    <li class="site-menu-item">
-                        <a class="animsition-link" href="/grupos/invitacion">
-                        <i class="site-menu-icon icon fa-wechat" aria-hidden="true"></i>
-                          <span class="site-menu-title">Unirme a un grupo</span>
-                      </a>
-                    </li>
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/grupos">
+                          <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mis grupos</span>
+                        </a>
+                      </li>
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/grupos/invitacion">
+                          <i class="site-menu-icon icon fa-wechat" aria-hidden="true"></i>
+                            <span class="site-menu-title">Unirme a un grupo</span>
+                        </a>
+                      </li>
                     </ul>
                   </li>
               </ul>
@@ -664,6 +686,14 @@
                             <span class="site-menu-title">Categorias</span>
                         </a>
                       </li>
+
+                      <li class="site-menu-item">
+                        <a class="animsition-link" href="/sucursales">
+                        <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                          <span class="site-menu-title">Inventarios</span>
+                      </a>
+                    </li>
+
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/lineas">
                           <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>

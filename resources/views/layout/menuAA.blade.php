@@ -122,6 +122,14 @@
                           <span class="site-menu-title">Categorias</span>
                       </a>
                     </li>
+
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/sucursales">
+                        <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                          <span class="site-menu-title">Inventarios</span>
+                      </a>
+                    </li> 
+                    
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/lineas">
                         <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>

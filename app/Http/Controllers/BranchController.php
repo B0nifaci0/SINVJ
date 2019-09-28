@@ -7,7 +7,6 @@ use App\Shop;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\BranchRequest;
-//use App\Http\Requests\BranchValidate;
 use Illuminate\Support\Facades\Auth;
 
 

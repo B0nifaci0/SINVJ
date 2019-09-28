@@ -128,6 +128,8 @@ class ProductController extends Controller
       //return $request;
       $date= date("Y-m-d");
       $branches= Auth::user()->shop->branches;
+      $user = Auth::user();
+      $branches= $user->shop->branches;
         $exist = Product::where('clave', $request->clave)
         ->where('shop_id', Auth::user()->shop->id)
         ->first();
@@ -143,6 +145,11 @@ class ProductController extends Controller
         
         $data = $request->all();
         $data['price'] = ($request->pricepz) ? $request->pricepz : $request->price;
+<<<<<<< HEAD
+=======
+        $data['user_id'] = $user->id;
+        
+>>>>>>> 1f190bf1ce530128902c472479ea68fdd0c8499f
         $category = Category::find($request->category_id);
         if($category->type_product == 1) {
           $data['line_id'] = null;
