@@ -57,19 +57,20 @@ LISTA DE  SUCURSALES
             <table id='table'  class="table table-hover dataTable table-striped w-full">
               <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Primer apellido</th>
-                    <th>Segundo apellido</th>
-                    <th>Opciones</th>
+                  <th>Nombre</th>
+                  <th>Primer apellido</th>
+                  <th>Segundo apellido</th>
+                  <th>Teléfono</th>
+                  <th>Opciones</th>
                 </tr>
               </thead>
               <tfoot>
               <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Primer apellido</th>
-                    <th>Segundo apellido</th>
+                  <th>Nombre</th>
+                  <th>Primer apellido</th>
+                  <th>Segundo apellido</th>
+                  <th>Teléfono</th>
+                  <th>Opciones</th>
                 </tr>
               </tfoot>
               <tbody>

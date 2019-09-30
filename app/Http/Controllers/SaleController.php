@@ -33,8 +33,8 @@ class SaleController extends Controller
       //return $p;
       $po = Product::where('id','=','p')->first();
       // return $po;
-      $sales = Sale::all();
-      // return $sales;
+      $sales = Sale::with('client')->get();
+      
       $user = Auth::user();
       $products = Product::with('line')
         ->with('branch')
@@ -94,7 +94,7 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-       //return $request;
+      //  return $request;
       $sale = Sale::create([
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,
@@ -102,6 +102,7 @@ class SaleController extends Controller
         'customer_name' => $request->customer_name,
         'price' => $request->total_pay,
         'branch_id' => 0,
+        'client_id' => $request->client_id
       ]);
       $products = json_decode($request->products_list);
       

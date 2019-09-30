@@ -145,11 +145,8 @@ class ProductController extends Controller
         
         $data = $request->all();
         $data['price'] = ($request->pricepz) ? $request->pricepz : $request->price;
-<<<<<<< HEAD
-=======
         $data['user_id'] = $user->id;
         
->>>>>>> 1f190bf1ce530128902c472479ea68fdd0c8499f
         $category = Category::find($request->category_id);
         if($category->type_product == 1) {
           $data['line_id'] = null;

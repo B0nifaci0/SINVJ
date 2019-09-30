@@ -16,7 +16,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
+        $clients = Client::with('sales')->get();
+        foreach ($clients as $client) {
+            // $items = 
+        }
         return view('clients.index', compact('clients'));
     }
 
@@ -27,7 +30,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('clients.add');
+        return view('clients.form');
     }
 
     /**
@@ -58,6 +61,9 @@ class ClientController extends Controller
     public function show($id)
     {
         $client = Client::find($id);
+        foreach ($client->sales as $sale) {
+            $sale->itemsSold = $client->itemsSold();
+        }        
         return view('clients.show', compact('client'));
     }
 
@@ -67,9 +73,10 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit(Client $client)
+    public function edit($id)
     {
-        //
+        $client = Client::find($id);
+        return view('clients.form', compact('client'));;
     }
 
     /**
@@ -79,9 +86,17 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, $id)
     {
-        //
+        $client = Client::find($id);
+        $client->fill($request->only(
+            'name',
+            'first_lastname',
+            'second_lastname',
+            'phone_number'
+        ));
+        $client->save();
+        return redirect('/mayoristas')->with('mesage', 'El cliente se ha actualizado correctamente');
     }
 
     /**

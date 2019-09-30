@@ -18,8 +18,13 @@ class Sale extends Model
         'branch_id',
         'customer_name',
         'telephone',
-        'price'
+        'price',
+        'client_id'
     ];
+
+    public function client() {
+      return $this->belongsTo(Client::class);
+    }
 
   public function line(){
     return $this->belongsTo(Line::class);

@@ -47,7 +47,7 @@ ALTA VENTA
                             <!-- Input para Ingresar Nombre del cliente-->
                             <div class="form-group form-material">
                                 <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente: </label>
-                                <input type="text" class="form-control" name="customer_name" required="required" placeholder="Fernando Bonifacio"required />
+                                <input type="text" class="form-control" name="customer_name" placeholder="Fernando Bonifacio" />
                             </div>
                             <!-- END Input-->
                         </div>
@@ -55,7 +55,7 @@ ALTA VENTA
                             <!-- Input para Ingresar telefono del cliente-->
                             <div class="form-group form-material">
                                 <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-                                <input type="text" class="form-control" name="telephone" value="{{old('telephone')}}" required="required" placeholder="7225674569" />
+                                <input type="text" class="form-control" name="telephone" value="{{old('telephone')}}" placeholder="7225674569" />
                             </div>
                             <!-- END Input-->
                         </div>
@@ -66,11 +66,11 @@ ALTA VENTA
                     <div class="row">
                         <div class="col-md-6">
                             <label for="user-type">Seleccionar cliente</label>
-                            <select name="user_type" id="user-type" class="form-control">
+                            <select name="client_id" id="user-id" class="form-control">
                                 @foreach($clients as $client)
                                     <option value="{{ $client->id }}">{{ $client->name }} {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
                                 @endforeach
-                            </select>
+                            </select> 
                         </div>
                     </div>
                 </div>

@@ -73,6 +73,7 @@ LISTA DE  VENTAS
                 <th>Clave</th>
                 <th>Nombre del cliente</th>
                 <th>Teléfono</th>
+                <th>Tipo</th>
                 <th>Productos</th>
                 <th>Total a pagar</th>
                 <th>Fecha</th>
@@ -83,7 +84,16 @@ LISTA DE  VENTAS
                 @foreach ($sales as $sale)
                   <tr id = "row{{ $sale->id }}">
                     <td>{{ $sale->id}}</td>
-                    <td> {{ $sale->customer_name }}</td>
+                    <td>
+                      @if($sale->client)
+                      <a href="/mayoristas/{{$sale->client->id}}">
+                      {{ "{$sale->client->name} {$sale->client->first_lastname} {$sale->client->second_lastname}" }}
+                      </a>
+                      @else
+                        {{$sale->customer_name}}
+                      @endif
+                    </td>
+                    <td>{{ ($sale->client) ? 'Mayorista' : 'General' }}</td>
                     <td>{{ $sale->telephone }}</td>
                     <td>{{ $sale->items->count() }}</td>
                     <td>$ {{ $sale->price }}</td>
