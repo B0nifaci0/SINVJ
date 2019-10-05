@@ -57,19 +57,20 @@ LISTA DE  SUCURSALES
             <table id='table'  class="table table-hover dataTable table-striped w-full">
               <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Primer apellido</th>
-                    <th>Segundo apellido</th>
-                    <th>Opciones</th>
+                  <th>Nombre</th>
+                  <th>Primer apellido</th>
+                  <th>Segundo apellido</th>
+                  <th>Teléfono</th>
+                  <th>Opciones</th>
                 </tr>
               </thead>
               <tfoot>
               <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Primer apellido</th>
-                    <th>Segundo apellido</th>
+                  <th>Nombre</th>
+                  <th>Primer apellido</th>
+                  <th>Segundo apellido</th>
+                  <th>Teléfono</th>
+                  <th>Opciones</th>
                 </tr>
               </tfoot>
               <tbody>
@@ -79,7 +80,26 @@ LISTA DE  SUCURSALES
                     <td>{{$client->first_lastname }}</td>
                     <td>{{$client->second_lastname }}</td>
                     <td>{{$client->phone_number }}</td>
-                    <td></td>
+                    <td>
+                        <!-- Botón para ver productos por sucursal-->
+                        <a href="/mayoristas/{{ $client->id }}" type="button" 
+                        class="btn btn-icon btn-primary waves-effect waves-light waves-round"
+                        data-toggle="tooltip" data-original-title="Productos">
+                        <i class="icon fa-search" aria-hidden="true"></i></button></a> 
+                        <!--END Botón --> 
+                        <!-- Botón para ver corte de venta -->
+                        <a href="/mayoristas/{{ $client->id }}/edit" type="button" 
+                        class="btn btn-info  waves-effect waves-light waves-ligth 
+                        data-toggle="tooltip" data-original-title="Productos">
+                        <i class="icon md-edit" aria-hidden="true"></i></button></a> 
+                        <!--END Botón -->                
+                        <!-- Botón para ver corte de venta -->
+                        <a href="/mayoristas/{{ $client->id }}/inventario" type="button" 
+                        class="btn btn-icon btn-danger  waves-effect waves-light waves-ligth 
+                        data-toggle="tooltip" data-original-title="Productos">
+                        <i class="icon md-delete" aria-hidden="true"></i></button></a> 
+                        <!--END Botón -->
+                    </td>
                   </tr>
                   @endforeach
               </tbody>

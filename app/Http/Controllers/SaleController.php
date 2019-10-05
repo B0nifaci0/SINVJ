@@ -6,6 +6,7 @@ use App\Sale;
 use App\Product;
 use App\SaleDetails;
 use App\Line;
+use App\Client;
 use App\User;
 use App\Branch;
 use App\Parcial;
@@ -32,8 +33,8 @@ class SaleController extends Controller
       //return $p;
       $po = Product::where('id','=','p')->first();
       // return $po;
-      $sales = Sale::all();
-      // return $sales;
+      $sales = Sale::with('client')->get();
+      
       $user = Auth::user();
       $products = Product::with('line')
         ->with('branch')
@@ -63,6 +64,9 @@ class SaleController extends Controller
     public function create()
     {
       $user = Auth::user();
+
+      $clients = Client::where('shop_id', $user->shop->id)->get();
+
       if($user->branch) {
         $branch_id = $user->branch->id;
         $products = Product::where('branch_id',$branch_id)->get();
@@ -79,7 +83,7 @@ class SaleController extends Controller
         ->with('status')
         ->get();
       //return $products;
-        return view('sale/add', compact('products','products','user', 'branches'));
+        return view('sale/add', compact('products','products','user', 'branches', 'clients'));
     }
 
     /**
@@ -90,7 +94,7 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-       //return $request;
+      //  return $request;
       $sale = Sale::create([
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,
@@ -98,6 +102,7 @@ class SaleController extends Controller
         'customer_name' => $request->customer_name,
         'price' => $request->total_pay,
         'branch_id' => 0,
+        'client_id' => $request->client_id
       ]);
       $products = json_decode($request->products_list);
       

@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Client;
 use App\Municipality;
+use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
 {

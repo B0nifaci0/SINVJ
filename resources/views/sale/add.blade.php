@@ -12,9 +12,9 @@ ALTA VENTA
 @section('content')
   <div class="panel-body">
     @if (session('mesage'))
-      <div class="alert alert-success">
-        <strong>{{ session('mesage') }}</strong>
-      </div>
+        <div class="alert alert-success">
+            <strong>{{ session('mesage') }}</strong>
+        </div>
     @endif
     <div class="page-content">
       <div class="panel">
@@ -27,44 +27,76 @@ ALTA VENTA
                 @endforeach
               </ul>
             </div>
-           @endif 
+           @endif
           <form id="form" method="POST" action="/ventas">
-            <center><h3>Registrate Venta</h3></center> 
-            {{ csrf_field() }}    
-            <div class="row">
-              <!-- Input para Ingresar Nombre del cliente-->
-              <div class="form-group form-material col-md-3">
-                <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente: </label>
-                  <input type="text" class="form-control" name="customer_name" required="required" placeholder="Fernando Bonifacio"required /> 
-                </div> 
-                <!-- END Input-->
-                <!-- Input para Ingresar telefono del cliente-->
-                <div class="form-group form-material col-md-3">
-                    <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-                    <input type="text" class="form-control" name="telephone" value="{{old('telephone')}}" required="required" placeholder="7225674569" />
-                </div> 
-                <!-- END Input-->
-                <!-- Select para Seleccionar  producto-->
-                <div class="form-group form-material col-md-3">
-                    <label>Producto</label>
-                  <select id="current_product" name="product_id" class="form-control" data-plugin="select2" 
-                      data-placeholder="Seleccione Producto" data-allow-clear="true">
-                      <option></option>
-                    <optgroup label="Productos">
-                      @foreach($products as $product)
-                      <option value="{{ $product->id }}" required>{{$product->clave}}-{{$product->description}}</option>
-                      @endforeach
-                    </optgroup>
-                  </select>
+            <center><h3>Registrate Venta</h3></center>
+            {{ csrf_field() }}
+            <div class="row mb-10">
+                <div class="col-md-3">
+                    <label for="user-type">Tipo de venta</label>
+                    <select name="user_type" id="user-type" class="form-control">
+                        <option value="1">Venta normal</option>
+                        <option value="2">Venta a mayorista</option>
+                    </select>
                 </div>
-                <!-- END Select-->
-                <!-- Botón para agregar producto-->
-                <div class="col-md-1 form-group">
-                  <br>
-                  <button type="button" class="btn btn-primary" id="btn-add">+</button>
-                </div> 
-              </div> 
-              <!-- END Botón--> 
+            </div>
+            <div class="row">
+                <div id="wholesalers" class="col-md-7">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!-- Input para Ingresar Nombre del cliente-->
+                            <div class="form-group form-material">
+                                <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente: </label>
+                                <input type="text" class="form-control" name="customer_name" placeholder="Fernando Bonifacio" />
+                            </div>
+                            <!-- END Input-->
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Input para Ingresar telefono del cliente-->
+                            <div class="form-group form-material">
+                                <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
+                                <input type="text" class="form-control" name="telephone" value="{{old('telephone')}}" placeholder="7225674569" />
+                            </div>
+                            <!-- END Input-->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="normal-client" class="d-none">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="user-type">Seleccionar cliente</label>
+                            <select name="client_id" id="user-id" class="form-control">
+                                @foreach($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->name }} {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
+                                @endforeach
+                            </select> 
+                        </div>
+                    </div>
+                </div>
+
+                  <!-- Select para Seleccionar  producto-->
+                  <div class="form-group form-material col-md-4">
+                      <label>Producto</label>
+                    <select id="current_product" name="product_id" class="form-control" data-plugin="select2"
+                        data-placeholder="Seleccione Producto" data-allow-clear="true">
+                        <option></option>
+                      <optgroup label="Productos">
+                        @foreach($products as $product)
+                        <option value="{{ $product->id }}" required>{{$product->clave}}-{{$product->description}}</option>
+                        @endforeach
+                      </optgroup>
+                    </select>
+                  </div>
+                  <!-- END Select-->
+                  <!-- Botón para agregar producto-->
+                  <div class="col-md-1 form-group">
+                    <br>
+                    <button type="button" class="btn btn-primary" id="btn-add">+</button>
+                  </div>
+                </div>
+
+              <!-- END Botón-->
               <div class="panel-body">
               <!-- Tabla para listar productos agregados-->
                 <table class="table table-hover dataTable table-striped w-full" id="tabla">
@@ -152,16 +184,16 @@ ALTA VENTA
                               <!-- Input para Ingresar cantidad a pagar-->
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
-                                  <input type="text" class="form-control" name="" id="cashIncome" required="required" placeholder="$"required /> 
+                                  <input type="text" class="form-control" name="" id="cashIncome" required="required" placeholder="$"required />
                               </div>
                               <!-- END Input-->
-                              <!-- Input para mostar el total a pagar--> 
+                              <!-- Input para mostar el total a pagar-->
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
                                 <input type="text" class="form-control" name="price" id="totalCash" required="required" readonly="readonly"/>
                               </div>
                               <!-- END Input-->
-                              <!-- Input para mostar cambio--> 
+                              <!-- Input para mostar cambio-->
                               <!-- <div class="form-group form-material col-md-3">
                                 <label class="form-control-label" for="inputBasicLastName">Tu Cambio es:</label>
                                 <input type="text" class="form-control" name="" id="cambio" required="required" />
@@ -171,17 +203,17 @@ ALTA VENTA
                             <button type="button" name="continuar" data-dismiss="modal" class="btn btn-success btn-lg btn-block" aria-label="Close" >Continuar</button>
                           </div>
                           <!-- END CONTADO-->
-                          
+
                           <!-- APARTADO-->
-                          <!-- <div class="tab-pane" id="exampleLine2" role="tabpanel"> 
+                          <!-- <div class="tab-pane" id="exampleLine2" role="tabpanel">
                             <div class="row">
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
-                                <input type="text" class="form-control" name="" id="apartado" required="required" placeholder="$"required /> 
-                              </div> 
+                                <input type="text" class="form-control" name="" id="apartado" required="required" placeholder="$"required />
+                              </div>
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label" for="inputBasicFirstName">Restan</label>
-                                <input type="text" class="form-control" name="parcial" id="falta" required="required" placeholder="$"required /> 
+                                <input type="text" class="form-control" name="parcial" id="falta" required="required" placeholder="$"required />
                               </div>
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label">Total a Pagar:</label>
@@ -199,14 +231,14 @@ ALTA VENTA
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label">Recibo:</label>
                                 <input type="text" class="form-control" id="cardIncome" placeholder="$"  required="required"/>
-                              </div> 
+                              </div>
                               <!-- END Input-->
                               <!-- Input para mostar total a pagar-->
                               <div class="form-group form-material col-md-3">
                                 <label class="form-control-label">Total a Pagar:</label>
                                 <input type="text" class="form-control" id="totalCard"  required="required" readonly="readonly" />
                               </div>
-                              <!-- END Input--> 
+                              <!-- END Input-->
                               <!-- Input para seleccionar Imagen del ticket-->
                               <div class="form-group form-material col-md-6">
                                 <label>Selecciona Ticket de la venta</label>
@@ -232,10 +264,10 @@ ALTA VENTA
           </div>
         </div>
       <div>
-    </div> 
-  </div>     
+    </div>
+  </div>
 @endsection
-<!-- Función para agregar a la tabla el producto 
+<!-- Función para agregar a la tabla el producto
 seleccionado con sus respectivos datos-->
 @section('listado-productos')
 
@@ -248,6 +280,27 @@ var total = 0;
 
 $(function(){
 
+    let SALETYPE = {
+        NORMAL: 1,
+        WHOLESALERS: 2
+    }
+
+    $('#user-type').change(function() {
+        let type = $(this).val();
+        if(SALETYPE.NORMAL == type) {
+            $('#wholesalers').addClass('col-md-7');
+            $('#wholesalers').removeClass('d-none');
+
+            $('#normal-client').removeClass('col-md-7');
+            $('#normal-client').addClass('d-none');
+        } else {
+            $('#normal-client').addClass('col-md-7');
+            $('#normal-client').removeClass('d-none');
+
+            $('#wholesalers').removeClass('col-md-7');
+            $('#wholesalers').addClass('d-none');
+        }
+    });
 
   $('#form').submit(function(e) {
 
@@ -261,11 +314,11 @@ $(function(){
       return
     }
 
-    let productIds = selectedProducts.map(p => { 
+    let productIds = selectedProducts.map(p => {
       console.log({ id: p.id, price: $(`#finalPrice${p.id}`).val() });
-      return { id: p.id, price: $(`#finalPrice${p.id}`).val() } 
+      return { id: p.id, price: $(`#finalPrice${p.id}`).val() }
     });
-    
+
     $('#productsList').val(JSON.stringify(productIds));
 
     let cashPayment = $('#cashIncome').val();
@@ -313,9 +366,9 @@ $(function(){
 //END Función//
 
 //Hacer suma de productos seleccionados en imprimirlos en Total//
-  $('tbody').append(_tr); 
+  $('tbody').append(_tr);
   total += Number(product.price);
-  $("#total").html("$" + total); 
+  $("#total").html("$" + total);
 //END Función//
 
   $('#totalCash').val(total);
@@ -364,7 +417,7 @@ $(function(){
     $("#totalCard").val(total);
   });
 
-  
+
   $('.deletr').click(function() {
 
     var productId = $(this).attr('alt');
@@ -376,7 +429,7 @@ $(function(){
     console.log(JSON.stringify(selectedProducts))
     console.log("buscar " + productId + " en", selectedProducts.map(p => p.id))
     console.log("Indice", index);
-    
+
     total -= Number($(`#finalPrice${product.id}`).val());
     $(`#raw-${product.id}`).remove();
     $("#total").html("$" + total);
@@ -394,7 +447,7 @@ $('#apartado').keyup(function() {
   var falta = $('#totalpayment').val() -$(this).val();
   $('#falta').val(falta);
   $('#faltan').val(falta);
-  
+
 });
 
 
@@ -403,8 +456,8 @@ $('#apartado').keyup(function() {
   // if('El dinero recibido debe ser mayor al total a pagar'){
   //   $('#form').submit();
   // }
-    
-  // }); 
+
+  // });
 });
 
 

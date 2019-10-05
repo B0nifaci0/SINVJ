@@ -110,7 +110,7 @@ LISTA DE  SUCURSALES
                       class="btn btn-icon btn-success  waves-effect waves-light waves-ligth 
                       data-toggle="tooltip" data-original-title="Productos">
                       <i class="icon md-check" aria-hidden="true"></i></button></a> 
-                      <!--END Botón -->                
+                      <!--END Botón -->
                     </td> 
                   </tr>
                   @endforeach
