@@ -67,8 +67,8 @@ ALTA BITACORAS
                                 @endforeach
                                 <tr>
                                     <td colspan="3"></td>
-                                    <td>aa</td>
-                                </tr>
+                                    <td><strong>$ {{ $sale->total }}</strong></td>
+                                </tr> 
                             </tbody>
                         </table>
                     </div>

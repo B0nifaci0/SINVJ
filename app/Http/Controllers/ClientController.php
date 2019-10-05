@@ -63,7 +63,9 @@ class ClientController extends Controller
         $client = Client::find($id);
         foreach ($client->sales as $sale) {
             $sale->itemsSold = $client->itemsSold();
-        }        
+            $sale->total = $sale->itemsSold->sum('final_price');
+        }
+        
         return view('clients.show', compact('client'));
     }
 
