@@ -77,7 +77,7 @@ LISTA DE  VENTAS
                     <td>{{ $saleco->customer_name }}</td>
                     <td>{{ $saleco->telephone }}</td>
                     <td>{{ $saleco->product->name }}</td>
-                    <td>$ {{ $saleco->price }}</td>
+                    <td>$ {{ $saleco->total }}</td>
                     <td>{{ $saleco->created_at->format('m-d-Y')}}</td>
                   </tr>
                   @endforeach
