@@ -20,7 +20,8 @@ class CreateProductsTable extends Migration
             $table->string('description', 15);
             $table->string('weigth')->nullable();
             $table->string('observations', 15)->nullable();
-            $table->string('price');
+            $table->double('price');
+            $table->double('discount');
             $table->integer('discar_cause')->nullable();
             $table->string('image')->default('default.jpg'); 
 
