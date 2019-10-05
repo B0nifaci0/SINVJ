@@ -269,16 +269,18 @@ Panel Principal
                                                         </select>
                                                          </div>
                                                       <div class="col-3">
-                                                        <label>Seleccione Categoria</label>
-                                                          <select id=""  name="id" alt="1" class="form-control round sucursales">
-                                                              <!-- <option value="">Selecciona Linea</option> -->
-                                                            @php  
-                                                            $lines= $user->shop->lines;
+                                                          <label>Seleccione Categoria</label>
+                                                          @php  
+                                                            $categories = $user->shop->categories;
                                                           @endphp
-                                                            <!-- <option value="*">Tod@s</option> -->
-                                                          @foreach($lines as $line)
-                                                          <option value="{{$line->id}}" required>{{$line->name}}</option>
-                                                        @endforeach
+                                                          <select id=""  name="category_id" alt="1" class="form-control round sucursales">
+                                                            <!-- <option value="">Selecciona Categoria</option>
+                                                            <option value="*">Tod@s</option> -->
+                                                            @foreach($categories as $categories)
+                                                            @if($categories->type_product == 1 )
+                                                          <option value="{{$categories->id}}" required>{{$categories->name}}</option>
+                                                          @endif
+                                                          @endforeach
                                                           </select>
                                                       </div>
                                                 <div class="input-group col-3">

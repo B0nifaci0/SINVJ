@@ -193,7 +193,7 @@ Route::group(['middleware' => ['auth']],function () {
 
   //Ventas PDF
   Route::get('ventaspdf', 'SaleController@exportPdfall');
-
+  Route::get('/reportes_venta','saleController@reporstSale');
   Route::get('ventapdf/{id}', 'SaleController@exportPdf')->name('ventapdf');
 
   //SUCURSALES

@@ -81,9 +81,24 @@ LISTA PRODUCTO
                 <!-- END Botón-->
               @endif
             </div>
-          </div>
+          </div> 
+        </div>
           <h3 class="panel-title">Productos </h3>
-        </header>
+        <!-- Example Tabs -->
+        <div class="example-wrap">
+          <div class="nav-tabs-horizontal" data-plugin="tabs">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne"
+                  aria-controls="exampleTabsOne" role="tab">Productos Gr</a></li>
+              <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
+                  aria-controls="exampleTabsTwo" role="tab">Productos Pz</a></li>
+            </ul>
+            <div class="tab-content pt-20">
+              <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
+                    <form action="entradasproducto">
+                      <div class="panel panel-bordered">
+                          <div class="panel-body row col-12">
+                            <div class="row col-12">
         <div class="panel-body">
         <!-- Tabla para listar productos-->
           <table id="example"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
@@ -163,7 +178,17 @@ LISTA PRODUCTO
           <!-- END Tabla-->
         </div>
       </div>
+                             </div>
+                        </div>
+                     </div>
+                <!-- End Example Tabs -->
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
   </div>
+  
   <!-- End Panel Basic -->
 </div>
 

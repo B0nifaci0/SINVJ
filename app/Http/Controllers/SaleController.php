@@ -215,5 +215,12 @@ public function exportPdf($id){
   $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops')); 
   return $pdf->stream('venta.pdf');
 }
+/**Reportes De Ventas */
+public function reporstSale(){
+      $user = Auth::user();
+      $branches= Auth::user()->shop->branches;   
+
+  return view('sale.reportsales.reports',compact('user','branches'));
+}
 
 }
