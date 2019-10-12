@@ -26,25 +26,38 @@ SUCURSAl
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-3">
-						<p class="text-right">
+						<p class="">
 							<strong>Nombre: </strong>{{ ($sale->client) ? $sale->client->full_name : $sale->name }}
 						</p>
-						<p class="text-right">
+						<p class="">
 							<strong>Teléfono: </strong>{{ ($sale->client) ? $sale->client->phone_number : $sale->phone_number }}
 						</p>
 					</div>
 					<div class="col-md-3">
 						<p class="text-right">
-							<strong>Total: $ {{ $sale->total }}</strong>
+							<strong>Productos comprados: </strong>{{ $sale->itemsSold->count() }}
 						</p>
 						<p class="text-right">
-							<strong>Pagado: $ {{ $sale->partials->sum('amount') }}</strong>
-						</p>
-						<p class="text-right">
-							<strong>Restan: $ {{ $sale->total - $sale->paid_out }}</strong>
+							<strong>Abonos realizados: </strong>{{ $sale->partials->count() }}
 						</p>
 					</div>
-					<div class="col-md-3">
+					<div class="offset-md-2 col-md-3">
+						<table>
+							<tbody>
+								<tr>
+									<td><strong>Total:</strong></td>
+									<td>$ {{ $sale->total }}</td>
+								</tr>
+								<tr>
+									<td><strong>Pagado:</strong></td>
+									<td>$ {{ $sale->partials->sum('amount') }}</td>
+								</tr>
+								<tr>
+									<td><strong>Restan:</strong></td>
+									<td>$ {{ $sale->total - $sale->paid_out }}</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
