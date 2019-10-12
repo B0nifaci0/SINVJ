@@ -135,7 +135,7 @@ ALTA VENTA
                   <button class="btn btn-success"  data-target="#exampleTabs" data-toggle="modal"type="button">$ Registro de pago</button>
                 </div>
                 <!-- END Botón-->
-                  <input type="hidden" class="form-control" name="parcial_pay" id="faltan"/>
+                  <input type="hidden" class="form-control" name="partial_pay" id="faltan"/>
                   <input type="hidden" class="form-control" name="total_pay" id="totalPay"/>
                 <!-- Botón para guardar venta-->
 

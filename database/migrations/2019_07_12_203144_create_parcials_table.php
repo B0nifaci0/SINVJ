@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateParcialsTable extends Migration
+class CreatePartialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateParcialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('parcials', function (Blueprint $table) {
+        Schema::create('partials', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('sale_id')->unsigned();
             $table->foreign('sale_id')->references('id')->on('sales');
@@ -31,6 +31,6 @@ class CreateParcialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parcials');
+        Schema::dropIfExists('partials');
     }
 }

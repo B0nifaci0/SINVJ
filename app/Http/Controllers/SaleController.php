@@ -9,7 +9,7 @@ use App\Line;
 use App\Client;
 use App\User;
 use App\Branch;
-use App\Parcial;
+use App\Partial;
 use PDF;
 use DB;
 use Illuminate\Http\Request;
@@ -100,33 +100,40 @@ class SaleController extends Controller
         'telephone' => $request->telephone,
         'price' => $request->price,
         'customer_name' => $request->customer_name,
-        'price' => $request->total_pay,
+        'total' => $request->total_pay,
         'branch_id' => 0,
         'client_id' => $request->client_id
       ]);
       $products = json_decode($request->products_list);
       
-      foreach ($products as $p) {
-        SaleDetails::create([
-          'sale_id' => $sale->id,
-          'product_id' => $p->id,
-          'final_price' => $p->price
-        ]);
-      }
+    	foreach ($products as $p) {
+    		SaleDetails::create([
+    			'sale_id' => $sale->id,
+    			'product_id' => $p->id,
+    			'final_price' => $p->price
+    		]);
+		}
+	  
+		$partials_list = collect([]);
 
-      Parcial::create([
-        'sale_id' => $sale->id,
-        'amount' => ($request->cash_income) ? $request->cash_income : 0,
-        'type' => Parcial::CASH,
-      ]);
+    	$partial = Partial::create([
+    		'sale_id' => $sale->id,
+    		'amount' => ($request->cash_income) ? $request->cash_income : 0,
+    		'type' => Partial::CASH,
+    	]);
+		$partials_list->push($partial);
 
-      Parcial::create([
-        'sale_id' => $sale->id,
-        'amount' => ($request->card_income) ? $request->card_income : 0,
-        'type' => Parcial::CARD,
-      ]);
+    	$partial = Partial::create([
+    		'sale_id' => $sale->id,
+    		'amount' => ($request->card_income) ? $request->card_income : 0,
+    		'type' => Partial::CARD,
+		]);
+		$partials_list->push($partial);
 
-      return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
+		$sale->paid_out = $partials_list->sum('amount');
+		$sale->save();
+
+    	return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
     }
 
     
@@ -139,9 +146,11 @@ class SaleController extends Controller
      */
     public function show($id)
     {
-      $sale = Sale::findOrFail($id);
-      $sale->items = SaleDetails::where('sale_id', $sale->id)->get();
-      return view('sale.show', ['sale' => $sale]);
+    	$sale = Sale::with(['partials', 'client'])->findOrFail($id);
+		$sale->itemsSold = $sale->itemsSold();
+		$sale->total = $sale->itemsSold->sum('final_price');
+		// return $sale; 
+		return view('sale.show', ['sale' => $sale]);
     }
 
     /**

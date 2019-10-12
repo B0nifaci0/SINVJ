@@ -54,7 +54,7 @@ ALTA PRODUCTO
               <label>Precio del Producto</label>
               <input type="text"  class="form-control"  name="pricepzt">
             </div>
-            
+
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricecp" class="form-group form-material col-md-3">
               <label>Precio Compra</label>
@@ -76,6 +76,12 @@ ALTA PRODUCTO
             <div id="show" class="form-group form-material col-md-3 remove">
               <label>Precio del Producto</label>
               <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
+            </div> 
+            <!-- END Input-->
+            <!-- Input para ingresar Tope de descuento-->
+            <div class="form-group form-material col-md-3 remove">
+              <label>Tope de descuento</label>
+              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="price">
             </div> 
             <!-- END Input-->
             <!-- Select para Seleccionar categoria--> 
@@ -246,8 +252,11 @@ $('#line_id').change(function() {
 
 $('#multiplicador').keyup(function(){
   var total = $('#line_price').val() * $(this).val();
+  var discount = total - (total * 0.3)
+  $('#discount').val(discount);
   $('#total').val(total);
 });
+
 </script>
 @endsection
 <!-- END Función-->

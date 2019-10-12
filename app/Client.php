@@ -20,9 +20,7 @@ class Client extends Model
         return $this->hasMany(Sale::class);
     }
 
-    public function scopeItemsSold() {
-        return Product::join('sale_details', 'sale_details.product_id', 'products.id')
-            ->where('sale_id', $this->id)
-            ->get();
+    public function getFullNameAttribute() {
+        return "{$this->name} {$this->first_lastname} {$this->second_lastname} ";
     }
 }

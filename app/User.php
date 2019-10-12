@@ -27,42 +27,42 @@ class User extends Authenticatable
 
 
   public  function scopeLast($query){
-    return $query->orderBy("id");
+	return $query->orderBy("id");
   }
-    use Notifiable;
-    use SoftDeletes;
+	use Notifiable;
+	use SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-       'name','email','type_user' ,'suscription_type','password','shop_id','terms_conditions','branch_id','salary',
-    ];
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = [
+		'name','email','type_user' ,'suscription_type','password','shop_id','terms_conditions','branch_id','salary',
+	];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+	/**
+	 * The attributes that should be hidden for arrays.
+	 *
+	 * @var array
+	 */
+	protected $hidden = [
+		'password', 'remember_token',
+	];
 
-    public function shop()
-    {
-      return $this->belongsTo(Shop::class);
-    }
+	public function shop()
+	{
+		return $this->belongsTo(Shop::class);
+	}
 
-    public function branch()
-    {
-      return $this->belongsTo(Branch::class);
-    }
+	public function branch()
+	{
+		return $this->belongsTo(Branch::class);
+	}
 
-    public function trans()
-    {
-      return $this->hasMany(TranferProducts::class);
-    }
+	public function trans()
+	{
+		return $this->hasMany(TranferProducts::class);
+	}
 
 }

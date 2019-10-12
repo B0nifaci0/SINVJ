@@ -61,6 +61,7 @@ LISTA DE  VENTAS
               <tr>
                 <th>Clave</th>
                 <th>Nombre del cliente</th>
+                <th>Tipo</th>
                 <th>Teléfono</th>
                 <th>Productos</th>
                 <th>Total a pagar</th>
@@ -72,8 +73,8 @@ LISTA DE  VENTAS
               <tr>
                 <th>Clave</th>
                 <th>Nombre del cliente</th>
-                <th>Teléfono</th>
                 <th>Tipo</th>
+                <th>Teléfono</th>
                 <th>Productos</th>
                 <th>Total a pagar</th>
                 <th>Fecha</th>
@@ -96,14 +97,19 @@ LISTA DE  VENTAS
                     <td>{{ ($sale->client) ? 'Mayorista' : 'General' }}</td>
                     <td>{{ $sale->telephone }}</td>
                     <td>{{ $sale->items->count() }}</td>
-                    <td>$ {{ $sale->price }}</td>
+                    <td>$ {{ $sale->total }}</td>
                     <td>{{ $sale->created_at->format('m-d-Y')}}</td>
                     <td>
-                    <a href="ventapdf/{{$sale->id}}"<button type="button" 
-                      class="btn btn-icon btn-danger waves-effect waves-light"
-                      data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                      <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
-                    </a> 
+                      <a href="/ventas/{{ $sale->id }}"><button type="button" 
+                          class="btn btn-icon btn-primary waves-effect waves-light"
+                          data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                          <i class="icon fa-search" aria-hidden="true"></i></button>
+                      </a>
+                      <a href="ventapdf/{{$sale->id}}"><button type="button" 
+                        class="btn btn-icon btn-danger waves-effect waves-light"
+                        data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                      </a>
                     </td>
                   </tr>
                 @endforeach
