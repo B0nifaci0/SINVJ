@@ -46,7 +46,8 @@ LISTA DE  GASTOS
             <!-- END Botón-->
             <!-- Botón para crear gastos-->
             <div class="col-md-6 col-md-offset-2">
-              <button onclick="window.location.href='/gastos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right">
+              <button onclick="window.location.href='/gastos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right"
+              data-toggle="tooltip" data-original-title="Agregar">
                 <i class="icon md-plus" aria-hidden="true"></i>
               </button>
             </div>
@@ -63,6 +64,7 @@ LISTA DE  GASTOS
                 <th>Nombre</th>
                 <th>Descripcion</th>
                 <th>Precio</th>
+                <th>Imagen</th>
                 <th>Tienda</th>
                 <th>Opciones</th>
               </tr>
@@ -73,6 +75,7 @@ LISTA DE  GASTOS
                 <th>Nombre</th>
                 <th>Descripcion</th>
                 <th>Precio</th>
+                <th>Imagen</th>
                 <th>Tienda</th>
                 <th>Opciones</th>
               </tr>
@@ -85,15 +88,22 @@ LISTA DE  GASTOS
                   <td>{{ $expense->descripcion }}</td>
                   <td>$ {{$expense->price}}</td>
                   <td>{{$expense->shop->name}}</td>
+                <td>
+                  @php
+                  $image = route('images',"app/public/upload/expenses/$expense->image")
+                  @endphp
+                  <img width="100px" height="100px" src="{{ $image }}">
+                 </td>
                   <td>  
                      <!-- Botón para editar gasto-->  
-                    <a href="/gastos/{{$expense->id}}/edit"<button type="button" 
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round">
+                    <a href="/gastos/{{$expense->id}}/edit"><button type="button" 
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></button>
                     </a> 
                     <!-- END Botón--> 
                     <!-- Botón para eliminar gasto-->
                     <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                    data-toggle="tooltip" data-original-title="Borrar"
                       alt="{{$expense->id}}" role="button">
                       <i class="icon md-delete" aria-hidden="true"></i> 
                     </button> 

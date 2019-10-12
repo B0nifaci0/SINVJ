@@ -204,6 +204,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::get('/sucursales/{id}/show', 'BranchController@show');
   Route::put('/sucursales/{id}/update', 'BranchController@update')->name('sucursales.update');
   Route::delete('/sucursales/{id}','BranchController@destroy');
+  Route::get('/sucursales/corte', 'BranchController@boxcut');
   
 
 

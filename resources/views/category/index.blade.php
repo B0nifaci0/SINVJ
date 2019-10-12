@@ -91,7 +91,7 @@ LISTA DE  CATEGORIA
                 @if(Auth::user()->type_user == 1 )
                 <td>
                   <!-- Botón Para editar categoria--> 
-                  <a href="/categorias/{{$category->id}}/edit"<button type="button" 
+                  <a href="/categorias/{{$category->id}}/edit"><button type="button" 
                     class="btn btn-icon btn-info waves-effect waves-light waves-round"
                     data-toggle="tooltip" data-original-title="Editar">
                     <i class="icon md-edit" aria-hidden="true"></i></button>

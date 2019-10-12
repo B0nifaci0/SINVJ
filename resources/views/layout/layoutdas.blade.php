@@ -28,7 +28,7 @@
 
              
     <!-- Plugins -->
-        <link rel="stylesheet" href={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}}>
+        <!--<link rel="stylesheet" href={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}}>-->
     <link rel="stylesheet" href={{{url('global/vendor/animsition/animsition.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/asscrollable/asScrollable.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/switchery/switchery.css')}}}>
@@ -48,6 +48,9 @@
     <link rel="stylesheet" href={{{url('global/fonts/font-awesome/font-awesome.css')}}}>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+        <link rel="stylesheet" href="{{{url('/global/css/bootstrap-extend.min.css')}}}">
+  <link rel="stylesheet" href="{{{url('dashboard-assets/assets/global/css/bootstrap.min.css')}}}">
+
     <!--<script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>-->
 
 
@@ -671,6 +674,12 @@
                             <span class="site-menu-title">Agregar Productos</span>
                         </a>
                         </li>
+                         <li class="site-menu-item">
+                          <a class="animsition-link" href="/reportes-productos">
+                          <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reportes De Entradas</span>
+                        </a>
+                        </li>
                     </ul>
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/sucursales">
@@ -885,6 +894,8 @@
 <section>-->
   @yield('js')
     <!-- Core  -->
+      <script src="{{{url('/global/vendor/jquery/jquery.js')}}}"></script>
+
     <script src={{{url('global/vendor/babel-external-helpers/babel-external-helpers.js')}}}></script>
     <script src={{{url('global/vendor/jquery/jquery.min.js')}}}></script>
     <script src={{{url('global/vendor/popper-js/umd/popper.min.js')}}}></script>
@@ -986,8 +997,9 @@
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
     <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
-
-  
+      <script src={{{url('global/vendor/tooltip/tooltip-popover.js')}}}></script>
+  <script src="{{{url('global/js/components/material.js')}}}"></script>
+  <script src="{{{url('global/vendor/bootstrap/bootstrap.js')}}}"></script>
 
 
 

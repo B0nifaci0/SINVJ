@@ -17,7 +17,15 @@ class BranchProductsController extends Controller
       $user = Auth::user();
       $branches= Branch::find($id);
       $products = Product::withTrashed()->where('branch_id','=',$id)->get();
-      return view('Branches/branchproduct', compact('branches','id','products','user')); 
+      $category = Auth::user()->shop->id;  
+      $categories = Shop::find($category)->categories()->get();
+      $line = Auth::user()->shop->id; 
+      $lines = Shop::find($line)->lines()->get();
+      //return $lines;  
+      $status = Auth::user()->shop->id;
+      $statuses = Shop::find($status)->statuss()->get();
+      $products = Product::withTrashed()->where('branch_id','=',$id)->get();
+      return view('Branches/branchproduct', compact('branches','products','user','categories','lines','statuses')); 
   }
   public function edit($id)
     {
