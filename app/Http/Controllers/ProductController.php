@@ -146,6 +146,7 @@ class ProductController extends Controller
         $data = $request->all();
         $data['price'] = ($request->pricepz) ? $request->pricepz : $request->price;
         $data['user_id'] = $user->id;
+        $data['discount'] = $data['price'] - ($data['price'] * 0.3);
         
         $category = Category::find($request->category_id);
         if($category->type_product == 1) {
