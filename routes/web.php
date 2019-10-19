@@ -170,7 +170,7 @@ Route::resource('tiendas','ShopController');
 });
 */
 //PRODUCTS
-Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware','StatusMiddleware']],function(){
+Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware']],function(){
 
   //Ventas
   Route::resource('ventas', 'SaleController');
