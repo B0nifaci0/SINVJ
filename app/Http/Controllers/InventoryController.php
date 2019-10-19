@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Branch;
 use App\Product;
 use App\InventoryReport;
 use App\InventoryDetail;
@@ -18,15 +19,24 @@ class InventoryController extends Controller
     }
 
     public function create() {
-        $exist = InventoryReport::where('start_date', Carbon::now()->format('Y-m-d'))->first();
-        if($exist) {
-            $date = null;
-        } else  {
-            $date = Carbon::now()->toFormattedDateString();
-        }
+        $exist = InventoryReport::where('start_date', Carbon::now()->format('Y-m-d'))->get();
+        $branches = Branch::where('shop_id', Auth::user()->shop->id)->get();
 
-        
-        return view('inventory.add', compact('date'));
+        $branch_ids = $exist->map(function($item) {
+            return $item->branch_id;
+        })->toArray();
+
+        $branches = $branches->map(function($item) use($branch_ids) {
+            if(in_array($item->branch_id, $branch_ids)) {
+                $item->enabled = false;
+            } else {
+                $item->enabled = true;
+            }
+            return $item;
+        });
+        $date = Carbon::now()->toFormattedDateString();
+
+        return view('inventory.add', compact('date', 'branches'));
     }
 
     public function show($id) {
@@ -39,7 +49,7 @@ class InventoryController extends Controller
         return view('inventory.show', compact('inventory'));
     }
 
-    public function store() {
+    public function store(Request $request) {
         $shop = Auth::user()->shop;
 
         $branches_ids = $shop->branches->map(function($b) {

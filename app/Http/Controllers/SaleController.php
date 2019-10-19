@@ -147,10 +147,10 @@ class SaleController extends Controller
     public function show($id)
     {
     	$sale = Sale::with(['partials', 'client'])->findOrFail($id);
-		$sale->itemsSold = $sale->itemsSold();
-		$sale->total = $sale->itemsSold->sum('final_price');
-		// return $sale; 
-		return view('sale.show', ['sale' => $sale]);
+    	$sale->itemsSold = $sale->itemsSold();
+    	$sale->total = $sale->itemsSold->sum('final_price');
+    	// return $sale; 
+    	return view('sale.show', ['sale' => $sale]);
     }
 
     /**
@@ -214,15 +214,21 @@ public function exportPdfall(){
 //   return $pdf->stream('venta.pdf');
 // }
 
-public function exportPdf($id){
-  $user = Auth::user();  
-  $sales = Sale::all();
-  $sales = Sale::where("id","=",$id)->get();
-  $shops = Auth::user()->shop()->get();
-  $branches = Branch::where('id', '=', $user->branch_id)->get();
-  //return [$sales,$branches,$user,$shops];
-  $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops')); 
-  return $pdf->stream('venta.pdf');
+public function exportPdf($id) {
+	//   $user = Auth::user();  
+	//   $sales = Sale::all();
+	//   $sales = Sale::where("id","=",$id)->get(); 
+	//   $shops = Auth::user()->shop()->get();
+	//   $branches = Branch::where('shop_id', $user->shop->id)->get();
+	//return [$sales,$branches,$user,$shops];
+
+	$sale = Sale::with(['partials', 'client'])->findOrFail($id);
+	$sale->itemsSold = $sale->itemsSold();
+	$sale->total = $sale->itemsSold->sum('final_price');
+	// return $sale;
+	$pdf  = PDF::loadView('sale.PDFVenta', compact('sale')); 
+  	return $pdf->stream('venta.pdf');
+  	return $branches; 
 }
 /**Reportes De Ventas */
 public function reporstSale(){

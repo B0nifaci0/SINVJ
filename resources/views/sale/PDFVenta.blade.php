@@ -142,75 +142,48 @@ img {
      }
    </style>
 
-<body>
-        <div class="ticket">
-        @foreach ($shops as  $shop) 
-        @php
-        $image = route('images',"app/public/upload/products/$shop->image")
-        @endphp
-              <img align = "left" width="100px" height="100px" src="{{ $image }}">
-              @endforeach
-                alt="Logotipo">
-                <p class="centrado">@foreach ($shops as  $shop) 
-                {{ $shop->name}}
-                <br>Toluca de Lerdo #1006</p>
-                @endforeach
-                <br>
-            <table>
-                <tbody>
-                    <tr>
-                    <td class="sucursal">Sucursal:</td>
-                    @foreach ($branches as  $branch)
-                        <td class="sucursal1">{{ $branch->name}}</td>
-                        @endforeach
-                    </tr>
-                    @foreach ($sales as  $sale)
-                    <tr>
-                        <td class="nota">Nota no.:</td>
-                        <td class="nota1">{{ $sale->id}}</td>
-                    </tr>
-                    <tr>
-                        <td class="fecha">Fecha:</td>
-                        <td class="fecha1">{{ $sale->created_at->format('m/d/Y')}}</td>
-                    </tr>
-                    <tr>
-                        <td class="hora">Hora:</td>
-                        <td class="hora1">{{ $sale->created_at->format('H:i:s')}}</td>
-                    </tr>
-                    <tr>
-                        <td class="cliente">Cliente:</td>
-                        <td class="cliente1">{{ $sale->customer_name }}</td>
-                    </tr>
-                    <tr>
-                        <td class="vendedor">Vendedor:</td>
-                        <td class="vendedor1">{{Auth::user()->name}}</td>
-                    </tr>
-                    </tbody>
-                   </table>
-                   <br>
-                   <table>
-                    <tbody>
-                      <tr>
-                        <th class="clave">Clave</th>
-                        <th class="producto">Producto</th>
-                        <th class="precio">Precio</th>
-                      </tr>
-                      <tr>
-                        <td class="clave1"></td>
-                        <td class="producto1"></td>
-                        <td class="precio1">$ </td>
-                     </tr>
-                     <tr>
-                        <td ></td>
-                        <th >Total</th>
-                        <td class="precio1">$ {{ $sale->price }}</td>>
-                     </tr>
-                    </tbody>
-                  </table>
-                    @endforeach
-                    <br>
+    <body>
+        <div border="">
+        <img 
+            align = "left"
+            width="100px"
+            height="100px"
+            src="https://images.vexels.com/media/users/3/151690/isolated/preview/be2ec10fa7ff133565ba9a4bc65aae6c-icono-de-trazo-de-piedra-preciosa-de-diamante-by-vexels.png"
+            alt="Logotipo"
+            >
+
             <p class="centrado">¡GRACIAS POR SU COMPRA!
-                <br>joyeriafina.com</p>
+                <br>joyeriafina.com
+            </p>
+            <br>
+            <br>
+            <p>Toluca de Lerdo #1006</p>
+
+            <table class="table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Clave</th>
+                            <th>Descripción</th>
+                            <th>Peso</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($sale->itemsSold as $item)
+                        <tr>
+                            <td>{{ $item->clave }}</td>
+                            <td>{{ $item->description }}</td>
+                            <td>{{ $item->weigth }} g</td>
+                            <td>$ {{ $item->price }}</td>
+                        </tr>
+                        @endforeach
+                        <tr>
+                            <td colspan="3"></td>
+                            <td><strong>$ {{ $sale->total }}</strong></td>
+                        </tr> 
+                    </tbody>
+            </table>
+
         </div>
     </body>
 </html>

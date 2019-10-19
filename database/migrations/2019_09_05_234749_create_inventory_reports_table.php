@@ -17,6 +17,7 @@ class CreateInventoryReportsTable extends Migration
             $table->increments('id');
             $table->date('start_date');
             $table->date('end_date')->nullable();
+            $table->integer('branch_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

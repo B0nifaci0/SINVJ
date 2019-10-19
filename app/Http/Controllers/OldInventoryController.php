@@ -9,7 +9,7 @@ use App\InventoryDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class InventoryController extends Controller
+class OldInventoryController extends Controller
 {
     public function index() {
         $inventories = InventoryReport::all();

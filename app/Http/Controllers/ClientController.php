@@ -17,9 +17,9 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::with('sales')->get();
-        foreach ($clients as $client) {
-            // $items = 
-        }
+        // foreach ($clients as $client) {
+        //     // $items = 
+        // }
         return view('clients.index', compact('clients'));
     }
 
@@ -33,6 +33,8 @@ class ClientController extends Controller
         return view('clients.form');
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -42,7 +44,7 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        Client::create([
+        $client = Client::create([
             'name' => $request->name,
             'first_lastname' => $request->first_lastname,
             'second_lastname' => $request->second_lastname,
@@ -51,6 +53,18 @@ class ClientController extends Controller
         ]);
         return redirect('/mayoristas')->with('mesage', 'El cliente se ha creado correctamente');
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -62,10 +76,14 @@ class ClientController extends Controller
     {
         $client = Client::find($id);
         foreach ($client->sales as $sale) {
+
             $sale->itemsSold = $sale->itemsSold();
             $sale->partials = $sale->partials;
             $sale->total = $sale->itemsSold->sum('final_price');
         }
+        // return response()->json([
+        //     'client' => $client
+        // ]);
         return view('clients.show', compact('client'));
     }
 

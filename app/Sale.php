@@ -30,6 +30,7 @@ class Sale extends Model
     public function line(){
         return $this->belongsTo(Line::class);
     }
+    
     public function partial(){
         return $this->hasMany(Partial::class);
     }
