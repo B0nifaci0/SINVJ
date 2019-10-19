@@ -39,8 +39,6 @@ class CreateProductsTable extends Migration
             $table->integer('branch_id')->unsigned();
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
 
-            $table->integer('status_id')->unsigned();
-            $table->foreign('status_id')->references('id')->on('statuss')->onDelete('cascade');
             $table->date('date_creation', 25);
 
             $table->integer('user_id')->unsigned();
