@@ -18,6 +18,7 @@ class Product extends Model
       'observations',
       'price',
       'discount',
+      'user_id',
     	'image',
       'category_id',
       'line_id',

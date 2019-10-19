@@ -21,7 +21,6 @@ class CreateProductsTable extends Migration
             $table->string('weigth')->nullable();
             $table->string('observations', 15)->nullable();
             $table->double('price');
-            $table->double('pricepzt');
             $table->double('price_purchase');
             $table->double('discount');
             $table->integer('discar_cause')->nullable();
