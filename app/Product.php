@@ -28,7 +28,6 @@ class Product extends Model
       'discarded_product',
       'discar_cause',
       'price_purchase',
-      'pricepzt'
     ];
 
     public function branch()

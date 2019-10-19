@@ -81,7 +81,7 @@ ALTA PRODUCTO
             <!-- Input para ingresar Tope de descuento-->
             <div class="form-group form-material col-md-3 remove">
               <label>Tope de descuento</label>
-              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="price">
+              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount">
             </div> 
             <!-- END Input-->
             <!-- Select para Seleccionar categoria--> 
@@ -187,7 +187,7 @@ $(document).ready(function(){
       //alert(JSON.stringify('pz'+defaul.type_product));
     $('.remove').css('display', 'none');
     $('#pricepz').css('display', 'initial'); 
-    $('#pricecp').css('display', 'initial');
+    // $('#pricecp').css('display', 'initial');
 
     //$('.removeClass').removeClass('invisible');
     //$('#s').toggle();
@@ -196,7 +196,7 @@ $(document).ready(function(){
      console.log()
     $('.remove').css('display', 'initial');  
     $('#pricepz').css('display', 'none');
-    $('#pricecp').css('display', 'none');
+    // $('#pricecp').css('display', 'none');
  
   
     }

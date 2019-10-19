@@ -30,7 +30,8 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('clients.form');
+        $client = null;
+        return view('clients.form', compact('client'));
     }
 
 

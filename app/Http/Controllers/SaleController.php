@@ -102,16 +102,19 @@ class SaleController extends Controller
         'customer_name' => $request->customer_name,
         'total' => $request->total_pay,
         'branch_id' => 0,
-        'client_id' => $request->client_id
+        'client_id' => $request->client_id,
+        'paid_out' => 0
       ]);
       $products = json_decode($request->products_list);
       
     	foreach ($products as $p) {
+        $product = Product::find($p->id);
     		SaleDetails::create([
     			'sale_id' => $sale->id,
     			'product_id' => $p->id,
-    			'final_price' => $p->price
-    		]);
+    			'final_price' => $p->price,
+          'profit' => $p->price - $product->price_purchase
+        ]);
 		}
 	  
 		$partials_list = collect([]);

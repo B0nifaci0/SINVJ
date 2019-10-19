@@ -108,7 +108,6 @@ ALTA VENTA
                       <th>Categoría</th>
                       <th>Linea</th>
                       <th>Sucursal</th>
-                      <th>Status</th>
                       <th>Precio de linea</th>
                       <th>Precio final</th>
                       <th>Eliminar</th>
@@ -357,7 +356,6 @@ $(function(){
     <td>${product.category.name}</td>
     <td>${product.line.name}</td>
     <td>${product.branch.name}</td>
-    <td>${product.status.name}</td>
     <td>$ ${product.price}</td>
     <td><input class="finalPrice" id="finalPrice${product.id}" alt="${product.id}" type="text" value="${product.price}"/></td>
     <td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button></div></td>

@@ -20,7 +20,8 @@ class Sale extends Model
         'customer_name',
         'telephone',
         'total',
-        'client_id'
+        'client_id',
+        'paid_out'
     ];
 
     public function client() {
