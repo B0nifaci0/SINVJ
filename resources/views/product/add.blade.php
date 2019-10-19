@@ -113,16 +113,6 @@ ALTA PRODUCTO
               </select>
             </div>
             <!-- END Select--> 
-            <!-- Select para Seleccionar status-->
-            <div class="col-md-3">
-              <label>Seleccione Status</label>
-              <select  name="status_id" class="form-control round">
-                @foreach($statuses as $status)             
-                  <option value="{{ $status->id }}" required>{{ $status->name }}</option>
-                @endforeach
-              </select>
-            </div>
-            <!-- END Select--> 
             <!-- Input para ingresar Observaciones-->
             <div class="form-group form-material col-md-3">
               <label>Observaciones</label>
