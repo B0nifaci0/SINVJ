@@ -87,7 +87,7 @@ VERIFICACION DE ESTATUS
                     @if(Auth::user()->type_user == 1 )
                       <td>  
                         <!-- Botón para editar gasto-->  
-                        <a href="/status/{{$tsd->id}}/edit"<button type="button" 
+                        <a href="/status/{{$tsd->id}}/edit"><button type="button" 
                           class="btn btn-icon btn-info waves-effect waves-light waves-round"
                           data-toggle="tooltip" data-original-title="Editar">
                           <i class="icon md-edit" aria-hidden="true"></i></button>

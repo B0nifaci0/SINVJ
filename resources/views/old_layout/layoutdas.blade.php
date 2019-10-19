@@ -25,9 +25,9 @@
     <link rel="stylesheet" href={{{url('global/vendor/slidepanel/slidePanel.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/flag-icon-css/flag-icon.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/waves/waves.css')}}}>
-        <link rel="stylesheet" href={{{url('global/vendor/chartist/chartist.css')}}}>
+        <!--<link rel="stylesheet" href={{{url('global/vendor/chartist/chartist.css')}}}>
         <link rel="stylesheet" href={{{url('global/vendor/jvectormap/jquery-jvectormap.css')}}}>
-        <link rel="stylesheet" href={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}}>
+        <link rel="stylesheet" href={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}}>-->
         <link rel="stylesheet" href={{{url('assets/examples/css/dashboard/v1.css')}}}>
     
     
@@ -653,8 +653,8 @@
     <script src={{{url('global/vendor/intro-js/intro.js')}}}></script>
     <script src={{{url('global/vendor/screenfull/screenfull.js')}}}></script>
     <script src={{{url('global/vendor/slidepanel/jquery-slidePanel.js')}}}></script>
-        <script src={{{url('global/vendor/chartist/chartist.min.js')}}}></script>
-        <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
+        <!--<script src={{{url('global/vendor/chartist/chartist.min.js')}}}></script>
+        <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>-->
         <script src={{{url('global/vendor/jvectormap/jquery-jvectormap.min.js')}}}></script>
         <script src={{{url('global/vendor/jvectormap/maps/jquery-jvectormap-world-mill-en.js')}}}></script>
         <script src={{{url('global/vendor/matchheight/jquery.matchHeight-min.js')}}}></script>
@@ -684,7 +684,7 @@
         <script src={{{url('global/js/Plugin/matchheight.js')}}}></script>
         <script src={{{url('global/js/Plugin/jvectormap.js')}}}></script>
         <script src={{{url('global/js/Plugin/peity.js')}}}></script>
-    
+          <script src={{{url('global/vendor/tooltip/tooltip-popover.js')}}}></script>
         <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
 </body>
 </html>

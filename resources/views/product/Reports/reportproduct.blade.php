@@ -17,6 +17,7 @@ Panel Principal
                 <h4 class="example-title">Panel De Reportes de Productos</h4>
                 <div class="example">
                   <div class="panel-group" id="exampleAccordionDefault" aria-multiselectable="true" role="tablist">
+                    @if(Auth::user()->type_user == 1 )
                     <div class="panel">
                       <div class="panel-heading bg-info  text-center text-white" id="exampleHeadingDefaultOne" role="tab">
                         <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultOne" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultOne">
@@ -114,6 +115,8 @@ Panel Principal
                         </div> 
                       </div>
                     </div>
+                    @endif
+                    @if(Auth::user()->type_user == 1 )
                     <div class="panel">
                       <div class="panel-heading bg-primary  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
                         <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultTwo" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultTwo">
@@ -167,6 +170,7 @@ Panel Principal
                         </div>
                       </div>
                     </div>
+                    @endif
                     <div class="panel">
                       <div class="panel-heading bg-success  text-center text-white" id="exampleHeadingDefaultThree" role="tab"> 
                         <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultThree" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultThree">
@@ -175,13 +179,15 @@ Panel Principal
                       </div>
                             <div class="panel-collapse collapse" id="exampleCollapseDefaultThree" aria-labelledby="exampleHeadingDefaultThree" role="tabpanel">
                               <div class="panel-body">
+                                   @if(Auth::user()->type_user == 1 )
                                   <div align="right">
-                                      <a href="/reportEntradasG"<button type="button" 
+                                      <a href="/reportEntradasG"><button type="button" 
                                         class="btn btn-icon btn-danger waves-effect waves-light waves-round"
                                         data-toggle="tooltip" data-original-title="Editar">
                                         <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                                       </a>
                                   </div>
+                                  @endif
                                 <div class=" col-12"> 
                                 <!-- Example Tabs -->
                                 <div class="example-wrap">
@@ -319,7 +325,8 @@ Panel Principal
                 </div>
             </div>
         </div>
-                  <div class="panel">
+        @if(Auth::user()->type_user == 1 )
+              <div class="panel">
                       <div class="panel-heading bg-warning  text-center text-white" id="exampleHeadingDefaultFour" role="tab">
                         <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultFour" data-parent="#exampleAccordionDefault" aria-expanded="false" aria-controls="exampleCollapseDefaultFour">
                       Reporte de Productos PZ Con Descuento
@@ -400,6 +407,7 @@ Panel Principal
                             </div>
                         </div>
                       </div>
+                      @endif
                     </div>
                 </div>
               </div>

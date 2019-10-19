@@ -142,4 +142,10 @@ class BranchController extends Controller
     	$users = User::where('branch_id', $id);
     	return $users;
     }
+
+    public function boxcut(){
+      $user = Auth::user();
+      $branches=Auth::user()->shop->branches;
+      return view('Branches/boxcut/reportes',compact('branches','user'));
+    }
 }

@@ -46,12 +46,12 @@ ALTA GASTOS
               </div>
               <!-- END Input-->
               <!-- Select para Seleccionar imagen de comprobante-->
-              <!-- <div class="form-group form-material col-md-6">
+              <div class="form-group form-material col-md-6">
                 <label>Selecciona imagen de comprobante</label>
                 <br>
                 <label for="image" class="btn btn-primary">Explorar</label>
                 <input type="file" name="image" id="image" class="hidden" required>
-              </div> -->
+              </div>
               <!-- END Select--> 
               <!-- Input para Ingresar el precio-->
               <div class="form-group form-material col-md-6">

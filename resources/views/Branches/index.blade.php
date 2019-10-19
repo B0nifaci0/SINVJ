@@ -80,7 +80,7 @@ LISTA DE  SUCURSALES
                     <td>  
                     @if(Auth::user()->type_user == 1 ) 
                       <!-- Botón para editar sucursal--> 
-                      <a href="/sucursales/{{$branch->id}}/edit"<button type="button" 
+                      <a href="/sucursales/{{$branch->id}}/edit"><button type="button" 
                       class="btn btn-icon btn-primary waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Editar">
                       <i class=" icon md-edit" aria-hidden="true"></i></button></a>
@@ -94,21 +94,29 @@ LISTA DE  SUCURSALES
                       <!--END Botón -->  
                       @endif
                       <!-- Botón para ver productos por sucursal-->
-                      <a href="/sucursales/{{$branch->id}}/producto" type="button" 
+                      <a href="/sucursales/{{$branch->id}}/producto"><button type="button" 
                       class="btn btn-icon btn-warning waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Productos">
                       <i class="icon md-label-heart" aria-hidden="true"></i></button></a> 
                       <!--END Botón --> 
-                      <!-- Botón para ver corte de venta -->
-                      <a href="/sucursales/{{$branch->id}}/corte" type="button" 
-                      class="btn btn-icon  waves-effect waves-light waves-ligth 
-                      data-toggle="tooltip" data-original-title="Productos">
+                      <!-- Botón para ver corte de venta corte pendiente  -->
+                      <!--<a href="/sucursales/{{$branch->id}}/corte"><button  type="button" 
+                      class="btn btn-icon  waves-effect waves-light waves-ligth" 
+                      data-toggle="tooltip" data-original-title="Corte">
                       <i class="icon md-money" aria-hidden="true"></i></button></a> 
-                      <!--END Botón -->                
+                      END Botón -->
+                       
+                      <!--Botón para ver corte de venta corte pendiente-->
+                      <a href="/sucursales/corte"><button  type="button" 
+                      class="btn btn-icon  waves-effect waves-light waves-ligth" 
+                      data-toggle="tooltip" data-original-title="Corte">
+                      <i class="icon md-money" aria-hidden="true"></i></button></a> 
+                      <!--END Botón -->
+
                       <!-- Botón para ver corte de venta -->
-                      <a href="/sucursales/{{$branch->id}}/inventario" type="button" 
-                      class="btn btn-icon btn-success  waves-effect waves-light waves-ligth 
-                      data-toggle="tooltip" data-original-title="Productos">
+                      <a href="/sucursales/{{$branch->id}}/inventario"><button  type="button" 
+                      class="btn btn-icon btn-success  waves-effect waves-light waves-ligth" 
+                      data-toggle="tooltip" data-original-title="Inventario">
                       <i class="icon md-check" aria-hidden="true"></i></button></a> 
                       <!--END Botón -->
                     </td> 

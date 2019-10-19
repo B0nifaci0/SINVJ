@@ -27,12 +27,13 @@ class ControllerExpenses extends Controller
     public function index()
     {
         $user = Auth::user();
-        $expense = Auth::user()->shop->id;
-        $expenses = Shop::find($expense)->expenses()->get();
+        //return $user;
+        $shop_id = $user->shop->id;
+        //return $shop_id;
+        $expenses = Shop::find($shop_id)->expenses()->get();
         //return $expenses;
-        $shops = Auth::user()->shop()->get();
-        $user = Auth::user();
-        return view('storeExpenses/index', compact('expenses','shops','user'));
+        //$shops = Auth::user()->shop()->get();
+        return view('storeExpenses/index', compact('expenses','shop_id','user'));
     }
 
     /**
@@ -57,6 +58,11 @@ class ControllerExpenses extends Controller
     public function store(ExpensesRequest $request)
     {
         $expense = new Expenses($request->all());
+          if ($request->hasFile('image')){
+         $filename = $request->image->getCLientOriginalName();
+         $request->image->storeAs('public/upload/expenses',$filename);
+         $request->image = $filename;
+      }
         $expense->save();
         //return $expense;
         return redirect('/gastos')->with('success', true);
@@ -83,7 +89,7 @@ class ControllerExpenses extends Controller
      */
     public function edit($id)
     {
-        $user = Auth::user();
+        $user = Auth::user();  
         $expense = Expenses::find($id);
         $shops = Auth::user()->shop()->get();
         return view('storeExpenses/edit ',compact('shops','expense','user'));

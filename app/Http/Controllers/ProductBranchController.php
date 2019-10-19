@@ -23,7 +23,7 @@ class ProductBranchController extends Controller
      */
     public function create()
     {
-        //
+        //  
     }
 
     /**

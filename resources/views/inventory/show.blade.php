@@ -63,6 +63,7 @@ LISTA DE  LINEA
               <tr>
                 <th>Producto</th>
                 <th>Status</th>
+                <th>Operaciones</th>
               </tr>
             </thead>
             <tfoot>
