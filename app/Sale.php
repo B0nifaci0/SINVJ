@@ -20,7 +20,8 @@ class Sale extends Model
         'customer_name',
         'telephone',
         'total',
-        'client_id'
+        'client_id',
+        'paid_out'
     ];
 
     public function client() {
@@ -30,6 +31,7 @@ class Sale extends Model
     public function line(){
         return $this->belongsTo(Line::class);
     }
+    
     public function partial(){
         return $this->hasMany(Partial::class);
     }

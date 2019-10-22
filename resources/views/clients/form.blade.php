@@ -40,24 +40,24 @@ ALTA BITACORAS
                 <div class="form-group form-material col-md-6">
                     <label class="form-control-label" for="inputShop">Nombre</label>
                     <input type="text" name="name"
-                        value="{{ ($client->name) ? $client->name : old('name') }}" class="form-control">
+                        value="{{ isset($client->name) ? $client->name : old('name') }}" class="form-control">
                 </div>
                 <div class="form-group form-material col-md-6">
                     <label class="form-control-label" for="inputShop">Primer apellido</label>
                     <input type="text" name="first_lastname"
-                        value="{{ ($client->first_lastname) ? $client->first_lastname : old('first_lastname') }}" class="form-control">
+                        value="{{ isset($client->first_lastname) ? $client->first_lastname : old('first_lastname') }}" class="form-control">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group form-material col-md-6">
                     <label class="form-control-label" for="inputShop">Segundo apellido</label>
                     <input type="text" name="second_lastname"
-                        value="{{ ($client->second_lastname) ? $client->second_lastname : old('second_lastname') }}" class="form-control">
+                        value="{{ isset($client->second_lastname) ? $client->second_lastname : old('second_lastname') }}" class="form-control">
                 </div>
                 <div class="form-group form-material col-md-6">
                     <label class="form-control-label" for="inputShop">Número telefónico</label>
                     <input type="text" name="phone_number"
-                        value="{{ ($client->phone_number) ? $client->phone_number : old('phone_number') }}" class="form-control">
+                        value="{{ isset($client->phone_number) ? $client->phone_number : old('phone_number') }}" class="form-control">
                 </div>
             </div>
             <div class="row">

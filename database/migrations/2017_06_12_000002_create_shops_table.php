@@ -19,6 +19,7 @@ class CreateShopsTable extends Migration
             $table->string('image')->default('NULL');
             $table->string('description')->default('NULL');
             $table->string('email')->default('NULL');
+            $table->string('password', 50)->nullable();
             $table->string('phone_number')->default('NULL');
 
             $table->integer('shop_group_id')->unsigned()->nullable();

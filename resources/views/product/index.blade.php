@@ -99,7 +99,7 @@ LISTA PRODUCTO
                           <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                             <div class="page-content panel-body container-fluid">
                               <!-- Tabla para listar productos-->
-                                    <table id="example"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                                    <table id="product_table_gr"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                       <thead>
                                       {{ csrf_field() }}
                                         <tr>  
@@ -135,6 +135,7 @@ LISTA PRODUCTO
                                     </tfoot>
                                     <tbody>
                                     @foreach ($products as $i => $product)
+                                      @if($product->category->type_product == 2 )
                                       <tr id="row{{$product->id}}">
                                         <td>{{ $product->clave }}</td> 
                                         <td>{{ $product->description }}</td>
@@ -146,11 +147,10 @@ LISTA PRODUCTO
                                           @endphp
                                           <img width="100px" height="100px" src="{{ $image }}">
                                         </td>
-                                        <td>{{ $product->category->name }}</td>
-                                      
-                                        <td>{{ ($product->line) ? $product->line->name : '' }}</td>
-                                        <td>{{ $product->branch->name }}</td>
-                                        <td>{{ $product->status->name }}</td>
+                                        <td>{{ ($product->category) ? $product->category->name : '' }}</td>
+                                      <td>{{$product->line->name}}</td>
+                                        <td>{{$product->branch->name}}</td>
+                                        <td>{{$product->status->name}}</td>
                                         @if(Auth::user()->type_user == 1)
                                         <td>   
                                           <!-- Botón para editar producto-->
@@ -168,6 +168,7 @@ LISTA PRODUCTO
                                           </td>
                                         @endif
                                       </tr>
+                                      @endif
                                     @endforeach
                                   </tbody>
                                 </table>
@@ -178,7 +179,7 @@ LISTA PRODUCTO
                       </div>
                       <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
                             <!-- Tabla para listar productos-->
-                                    <table id="example"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                                    <table id="product_table_pz"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                       <thead>
                                       {{ csrf_field() }}
                                         <tr>  
@@ -218,7 +219,7 @@ LISTA PRODUCTO
                                       <tr id="row{{$product->id}}">
                                         <td>{{ $product->clave }}</td> 
                                         <td>{{ $product->description }}</td>
-                                        <td>{{ $product->category->name }}</td>
+                                        <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                                         <td>{{ $product->observations }}</td>
                                         <td>
                                           @php
@@ -226,8 +227,8 @@ LISTA PRODUCTO
                                           @endphp
                                           <img width="100px" height="100px" src="{{ $image }}">
                                         </td>                                      
-                                        <td>{{ $product->branch->name }}</td>
-                                        <td>{{ $product->status->name }}</td>
+                                        <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
+                                        <td>{{ ($product->status) ? $product->status->name : '' }}</td>
                                         <td>{{$product->pricepzt}}
                                         @if(Auth::user()->type_user == 1)
                                         <td>{{$product->price_purchase}}

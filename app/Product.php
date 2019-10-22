@@ -17,18 +17,18 @@ class Product extends Model
       'weigth',
       'observations',
       'price',
-      'discount',
+      //'discount',
+      'user_id',
     	'image',
       'category_id',
       'line_id',
       'shop_id',
       'branch_id',
-      'status_id',  
       'inventory',
       'discarded_product',
       'discar_cause',
       'price_purchase',
-      'pricepzt'
+      'status_id'
     ];
 
     public function branch()

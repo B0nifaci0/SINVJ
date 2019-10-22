@@ -17,15 +17,14 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('clave');
             //$table->string('name', 20)->unique()->default('NULL');
-            $table->string('description', 15);
+            $table->string('description', 50);
             $table->string('weigth')->nullable();
-            $table->string('observations', 15)->nullable();
+            $table->string('observations', 50)->nullable();
             $table->double('price');
-            $table->double('pricepzt');
             $table->double('price_purchase');
             $table->double('discount');
             $table->integer('discar_cause')->nullable();
-            $table->string('image')->default('default.jpg'); 
+            $table->string('image')->default('https://x.kinja-static.com/assets/images/logos/placeholders/default.png'); 
 
             $table->integer('category_id')->unsigned(); 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
@@ -39,8 +38,6 @@ class CreateProductsTable extends Migration
             $table->integer('branch_id')->unsigned();
             $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
 
-            $table->integer('status_id')->unsigned();
-            $table->foreign('status_id')->references('id')->on('statuss')->onDelete('cascade');
             $table->date('date_creation', 25);
 
             $table->integer('user_id')->unsigned();

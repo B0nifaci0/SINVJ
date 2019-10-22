@@ -18,7 +18,7 @@ class CreateSalesTable extends Migration
             $table->string('customer_name', 50)->nullable();
             $table->string('telephone')->nullable();
             $table->integer('branch_id');
-            $table->integer('client_id');
+            $table->integer('client_id')->nullable();
             $table->double('total');
             $table->double('paid_out');
             $table->softDeletes();

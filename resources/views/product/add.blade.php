@@ -26,6 +26,7 @@ ALTA PRODUCTO
       <br> 
       <form id="multiplicar" class="" action="/productos" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }} 
+        <input type="text" value="2" class="form-control"  name="status_id">
         <div class='row'>
           <!-- Input para ingresar clave del producto-->
           <div class="form-group form-material col-md-3">
@@ -56,7 +57,7 @@ ALTA PRODUCTO
             </div>
 
             <!-- Input para ingresar precio del producto pz-->
-            <div id="pricecp" class="form-group form-material col-md-3">
+            <div id="pricecp" class="form-group form-material col-md-3 remove">
               <label>Precio Compra</label>
               <input type="text"  class="form-control"  name="price_purchase">
             </div> 
@@ -78,12 +79,12 @@ ALTA PRODUCTO
               <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
             </div> 
             <!-- END Input-->
-            <!-- Input para ingresar Tope de descuento-->
+            <!-- Input para ingresar Tope de descuento
             <div class="form-group form-material col-md-3 remove">
               <label>Tope de descuento</label>
-              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="price">
+              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount">
             </div> 
-            <!-- END Input-->
+            END Input-->
             <!-- Select para Seleccionar categoria--> 
             <div class="col-md-3">
               <label>Seleccione Categoria </label>
@@ -111,17 +112,6 @@ ALTA PRODUCTO
                     <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
                   @endforeach
               </select>
-            </div>
-            <!-- END Select--> 
-            <!-- Select para Seleccionar status-->
-            <div class="col-md-3">
-              <input type="text" value="2" name="status_id" id="image" class="d-none">
-              <!--<label>Seleccione Status</label>
-              <select  name="status_id" class="form-control round">
-                @foreach($statuses as $status)             
-                  <option value="{{ $status->id }}" required>{{ $status->name }}</option>
-                @endforeach
-              </select>-->
             </div>
             <!-- END Select--> 
             <!-- Input para ingresar Observaciones-->
@@ -210,15 +200,14 @@ $(document).ready(function(){
     $('#pricecp').css('display', 'none');
  
   
-    }
-
+  }
 $('#categorie_id').change(function(){
   var categoryTypeproduct = {!! $categories !!};
 
   var id = $(this).val();
   var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == id)[0];
   
-console.log("categoryTypeproduct", categoryTypeproduct);
+//console.log("categoryTypeproduct", categoryTypeproduct);
     
     //alert('entra');
     if(categoryTypeproduct.type_product == 1){
@@ -231,8 +220,8 @@ console.log("categoryTypeproduct", categoryTypeproduct);
     //$('#s').toggle();
     }else if(categoryTypeproduct.type_product == 2){
       console.log('<p>agregar campos</p>');
-     alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
-     console.log()
+     //alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
+     //console.log()
     $('.remove').css('display', 'initial');  
     $('#pricepz').css('display', 'none');
     $('#pricecp').css('display', 'none');
