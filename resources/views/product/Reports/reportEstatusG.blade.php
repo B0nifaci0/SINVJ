@@ -63,8 +63,8 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
+                <th scope="col">Clave</th>
                  <th scope="col">Linea</th>
-                 <th scope="col">Clave</th>
                  <th scope="col">Estatus</th>
                  <th scope="col">Descripción</th>
                  <th scope="col">Peso</th>
@@ -76,8 +76,8 @@
               
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->line->name_status}}</td> 
                  <td>{{ $product->clave }}</td>
+                 <td>{{ $product->line->name}}</td> 
                  <td>{{ $product->status->name }}</td>
                  <td>{{ $product->description }}</td>
                  <td>{{ $product->weigth }} gr</td>

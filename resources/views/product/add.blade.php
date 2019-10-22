@@ -115,12 +115,13 @@ ALTA PRODUCTO
             <!-- END Select--> 
             <!-- Select para Seleccionar status-->
             <div class="col-md-3">
-              <label>Seleccione Status</label>
+              <input type="text" value="2" name="status_id" id="image" class="d-none">
+              <!--<label>Seleccione Status</label>
               <select  name="status_id" class="form-control round">
                 @foreach($statuses as $status)             
                   <option value="{{ $status->id }}" required>{{ $status->name }}</option>
                 @endforeach
-              </select>
+              </select>-->
             </div>
             <!-- END Select--> 
             <!-- Input para ingresar Observaciones-->

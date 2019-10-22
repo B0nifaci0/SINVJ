@@ -84,6 +84,20 @@
                   @endforeach
               </tbody>
             </table>
+              <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                <thead>
+                    <tr>
+                            <th scope="col">Total De Gramos</th>
+                            
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align="center">${{$products->sum('weigth')}}</td>
+                    </tr>
+                </tbody> 
+                <br>   
+            </table>
           </div>
           </div>
     </body>

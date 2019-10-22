@@ -72,8 +72,18 @@
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td> 
                  <td>{{ $product->description }}</td>
+                 @if($product->category->type_product == 2)
                  <td>{{ $product->weigth }} gr</td>
+                 @endif
+                @if($product->category->type_product ==  1)
+                 <td></td>
+                 @endif
+                @if($product->category->type_product == 2)
                  <td>$ {{ $product->price }}</td>
+                @endif
+                @if($product->category->type_product ==  1)
+                 <td></td>
+                 @endif
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->category->name }}</td>
                  <td>{{ $product->status->name }}</td>

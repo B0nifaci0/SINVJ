@@ -518,7 +518,7 @@
                     </ul>
                   </li>
 
-                    <li class="site-menu-item">
+                    <li class="d-none site-menu-item">
                         <a class="animsition-link" href="/status">
                         <i class="site-menu-icon fa-check-square-o" aria-hidden="true"></i>
                           <span class="site-menu-title">Estatus</span>
@@ -717,7 +717,7 @@
                         </a>
                       </li>
 
-                      <li class="site-menu-item">
+                      <li class="d-none site-menu-item">
                           <a class="animsition-link" href="/status">
                           <i class="site-menu-icon fa-check-square-o" aria-hidden="true"></i>
                             <span class="site-menu-title">Estatus</span>

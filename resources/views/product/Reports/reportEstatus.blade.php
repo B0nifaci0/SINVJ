@@ -15,7 +15,7 @@
        width: auto;
        margin: auto;
       }
-    }
+    }   
     .page-break{
       width: 980px;
       margin: 0 auto;
