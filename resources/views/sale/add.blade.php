@@ -396,7 +396,7 @@ $(function(){
 
   });
 
-  $('.finalPrice').keyup(function() {
+  $('.finalPrice').on('input', function() {
     var productId = $(this).attr('alt');
     product = products.filter(p => p.id == productId)[0];
 

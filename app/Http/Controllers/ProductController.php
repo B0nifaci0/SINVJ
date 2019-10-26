@@ -36,8 +36,22 @@ class ProductController extends Controller
       } else {
         $products = Shop::find($shop_id)->products()->get();
       }
-      //return $products; 
-      //$categories = Category::all();
+
+	  $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+
+	  foreach ($products as $product) {
+		if($product->image) {
+			$command = $adapter->getClient()->getCommand('GetObject', [
+				'Bucket' => $adapter->getBucket(),
+				'Key' => $adapter->getPathPrefix(). 'products/' . $product->clave
+			]);
+	
+			$result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+	
+			$product->clave = (string) $result->getUri();
+		}
+	  }
+	  
       $shops = Auth::user()->shop()->get();
       //return $shops;
       $category = Auth::user()->shop->id;  
@@ -47,7 +61,7 @@ class ProductController extends Controller
       //return $lines;  
       $status = Auth::user()->shop->id;
       $statuses = Shop::find($status)->statuss()->get();
-
+	  return $products;
       return view('product/index', compact('user','categories','lines','shops','statuses','products'));
   }
     
@@ -158,11 +172,20 @@ class ProductController extends Controller
 
         $product = new Product($data);
         $product->date_creation= $date;
-      if ($request->hasFile('image')){
-         $filename = $request->image->getCLientOriginalName();
-         $request->image->storeAs('public/upload/products',$filename);
-         $product->image = $filename;
-      }
+      // if ($request->hasFile('image')){
+      //    $filename = $request->image->getCLientOriginalName();
+      //    $request->image->storeAs('public/upload/products',$filename);
+      //    $product->image = $filename;
+      // }
+
+		if($request->hasFile('image')) {
+
+			$adapter = Storage::disk('s3')->getDriver()->getAdapter();
+			$image = file_get_contents($request->file('image')->path());
+			$base64Image = base64_encode($image);
+			$path = 'products';
+			$product->image = $this->saveImages($base64Image, $path, $product->clave);
+		}
       $product->save();
       return redirect('/productos')->with('success', true);
     }
@@ -584,4 +607,20 @@ class ProductController extends Controller
 
    //return response()->json(['productos'=>$productos,'sumprice'=>$sumprice, 'utilida'=>$descuento, 'total'=>$total]);
   }
+
+	private function saveImages($base_64, $path, $name)
+	{
+		// Prepare image
+		$base_64 = str_replace('data:image/png;base64,', '', $base_64);
+		$base_64 = str_replace('data:image/jpg;base64,', '', $base_64);
+		$base_64 = str_replace('data:image/jpeg;base64,', '', $base_64);
+		$base_64 = str_replace(' ', '+', $base_64);
+
+		$image = base64_decode($base_64);
+
+
+		$path = $path . '/' . $name;
+		Storage::disk('s3')->put($path, $image);
+		return  $path;
+	}
 }
