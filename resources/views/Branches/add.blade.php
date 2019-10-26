@@ -33,8 +33,22 @@ ALTA SUCURSALES
              <div class="row">
                 <!-- Input Para ingresar Nombre-->
                 <div class="form-group form-material col-md-6">
-                  <label class="form-control-label" for="inputBasicFirstName">Nombre: </label>
+                  <label class="form-control-label">Nombre: </label>
                   <input type="text" class="form-control" name="name"  required="required" placeholder="Joyeria AB" />
+                </div>
+                <!-- END Input-->
+              </div>
+              <div class="row">
+                <!-- Input Para ingresar Contraseña-->
+                <div class="form-group form-material col-md-6">
+                  <label class="form-control-label">Contraseña: </label>
+                  <input type="text" class="form-control" name="password"  required="required" />
+                </div>
+                <!-- END Input-->
+                <!-- Input Para ingresar Contraseña-->
+                <div class="form-group form-material col-md-6">
+                  <label class="form-control-label">Confirmar contraseña: </label>
+                  <input type="text" class="form-control" name="confirm_password"  required="required" />
                 </div>
                 <!-- END Input-->
               </div>

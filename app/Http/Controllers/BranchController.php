@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\BranchRequest;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
 
 class BranchController extends Controller
 {
@@ -64,12 +64,27 @@ class BranchController extends Controller
           return redirect('/sucursales')->with('mesage-delete', 'El nombre ya ha sido registrado!');
         } else */
           
-        $branch = new Branch($request->all());
+        $branch = new Branch([
+          'name' => $request->name,
+          'password' => Hash::make($request->password)
+        ]);
         $branch->shop_id = Auth::user()->shop->id;
         $branch->save();
         //return $branch;
       return redirect('/sucursales')->with('mesage', 'La sucursal  se ha agregado exitosamente!');
 
+    }
+
+    public function setStorePassword(Request $request, $branch)
+    {
+      // Hash::check($request->nip, $user->nip)
+      if($request->password != $request->confirm_password)
+        return back()->with('error', 'La contraseña y la confirmación no coinciden');
+
+      $branch->password = Hash::make($request->password);
+      $branch->save();
+      return Hash::make($request->password);
+      return back()->with('success', 'Se ha asignado la contraseña correctamente');
     }
 
     /**

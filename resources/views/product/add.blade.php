@@ -229,20 +229,20 @@ console.log("categoryTypeproduct", categoryTypeproduct);
     }
 });
 var lines = {!! $lines !!};
-
+var line = lines[0];
 //console.log("lines", lines);
 
 $('#line_price').val(lines[0].sale_price);
 
 $('#line_id').change(function() {
   var id = $(this).val();
-  var line = lines.filter(l => l.id == id)[0];
+  line = lines.filter(l => l.id == id)[0];
   $('#line_price').val(line.sale_price);
 }); 
 
 $('#multiplicador').keyup(function(){
   var total = $('#line_price').val() * $(this).val();
-  var discount = total - (total * 0.3)
+  var discount = total - (total * (Number(line.discount_percentage) / 100))
   $('#discount').val(discount);
   $('#total').val(total);
 });

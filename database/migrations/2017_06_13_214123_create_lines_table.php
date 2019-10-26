@@ -18,6 +18,7 @@ class CreateLinesTable extends Migration
             $table->string('name', 15);
             $table->string('purchase_price');
             $table->string('sale_price');
+            $table->integer('discount_percentage');
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
             $table->softDeletes();

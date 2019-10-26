@@ -67,22 +67,22 @@ class SaleController extends Controller
 
       $clients = Client::where('shop_id', $user->shop->id)->get();
 
-      if($user->branch) {
-        $branch_id = $user->branch->id;
-        $products = Product::where('branch_id',$branch_id)->get();
-      } else {
-        $branches = Branch::where('shop_id', $user->shop->id)->get();
-        $branch_ids = $branches->map(function($item) {
-          //return $item->id;
-        });
-        $products = Product::whereIn('branch_id', $branch_ids)->get();
-      }
-      $products = Product::with('line')
-        ->with('branch')
-        ->with('category')
-        ->with('status')
-        ->get();
-      //return $products;
+    if($user->branch) {
+      	$branch_id = $user->branch->id;
+      	$products = Product::where('branch_id',$branch_id)->get();
+    } else {
+      	$branches = Branch::where('shop_id', $user->shop->id)->get();
+      	$branch_ids = $branches->map(function($item) {
+      	  //return $item->id;
+      	});
+      	$products = Product::whereIn('branch_id', $branch_ids)->get();
+    }
+    $products = Product::with('line')
+    	->with('branch')
+    	->with('category')
+    	->with('status')
+    	->get();
+        
         return view('sale/add', compact('products','products','user', 'branches', 'clients'));
     }
 

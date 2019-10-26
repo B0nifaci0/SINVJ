@@ -379,18 +379,26 @@ $(function(){
 
   $(".deletr").unbind();
   $(".finalPrice").unbind();
+  var product
+  // $('.finalPrice').keydown(function() {
+  //   var productId = $(this).attr('alt');
+  //   product = products.filter(p => p.id == productId)[0];
 
-  $('.finalPrice').keydown(function() {
+  //   tempPrice = Number($(`#finalPrice${product.id}`).val());
+  //   // console.log("valor anterior", tempPrice)
+  // });
+
+  $('finalPrice').on('change',function (){
     var productId = $(this).attr('alt');
-    var product = products.filter(p => p.id == productId)[0];
+    product = products.filter(p => p.id == productId)[0];
 
-    tempPrice = Number($(`#finalPrice${product.id}`).val());
-    // console.log("valor anterior", tempPrice)
+    tempPrice = $(this).val();
+
   });
 
   $('.finalPrice').keyup(function() {
     var productId = $(this).attr('alt');
-    var product = products.filter(p => p.id == productId)[0];
+    product = products.filter(p => p.id == productId)[0];
 
     currentPrice = Number($(`#finalPrice${product.id}`).val());
     // console.log("valor nuevo ", currentPrice)
@@ -406,6 +414,11 @@ $(function(){
     } else if(tempPrice < currentPrice) {
       console.log(`${total} = ${total} + ${currentPrice}`)
       total = total - tempPrice + currentPrice;
+    }
+
+    if(tempPrice < Number(product.line.discount_percentage)){
+      console.log(tempPrice + "<" +  Number(product.line.discount_percentage))
+      // alert("No puedes sobrepasar el tope de descuento")
     }
 
     console.log(total);
