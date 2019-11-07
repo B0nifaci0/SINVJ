@@ -62,12 +62,10 @@
                 <tr>
 				 <th scope="col">Clave</th>
                  <th scope="col">Descripción</th>
-                 <th scope="col">Linea</th>
-                 <th scope="col">Peso</th>
                  <th scope="col">Observaciones</th>
                  <th scope="col">Categoria</th>
                  <th scope="col">Estatus</th>
-                 <th scope="col" >Fecha</th>
+                 <th scope="col">Fecha</th>
 
                 </tr>
               </thead>  
@@ -77,11 +75,9 @@
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td> 
                  <td>{{ $product->description }}</td>
-                 <td>{{ ($product->line) ? $product->line->name : '' }}</td> 
-                 <td>{{ $product->weigth }} gr</td>
                  <td>{{ $product->observations }}</td>
-                 <td>{{ $product->category->name }}</td>
-                 <td>{{ $product->status->name }}</td>
+                 <td>{{ $product->name_category }}</td>
+                 <td>{{ $product->name_status }}</td>
                 <td class="sizedate">{{ $product->date_creation }}</td>
 
                 </tr>
@@ -91,18 +87,18 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                            <th scope="col">Linea</th>
-                            <th scope="col">Total De Gramos</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Total</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                   @foreach ($lines as $i => $line)
+                   @foreach ($categories as $i => $categori)
                     <tr>
-                        <td>{{$line->name}}</td> 
-                        <td align="center">{{$line->total_g}}</td>
+                        <td>{{$categori->name}}</td> 
+                        <td align="center">0</td>
                     </tr>
-                     @endforeach
+                    @endforeach 
                 </tbody> 
                 <br>   
             </table>

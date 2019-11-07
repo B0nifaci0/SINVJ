@@ -67,7 +67,7 @@ Route::get('sucursal', 'BranchController@indexCo');
 // Productos CO
 Route::get('productosCO', 'ProductController@indexCo');
 // Productos COP
-Route::get('productoCO', 'ProductController@indexCOP');
+Route::get('sucursalproductoCO', 'ProductController@indexCOP');
 
 Route::post('traspasos/respuesta', 'TranferProductsController@answerTransferRequest');
 
@@ -79,7 +79,7 @@ Route::get('productossucursalreporte/{id}','BranchProductsExcelController@index'
 
 //Usuarios Excel
 //Route::resource('usuariosexcel','UserExcelController');
-
+  
 //Reporte
 Route::get('homepdf', 'HomeController@exportPdf');
 
@@ -261,7 +261,8 @@ Route::group(['middleware' => ['auth']],function () {
 
   Route::get('gramoslineageneral', 'ProductController@reportLineaGGeneral');
   Route::get('reportEstatusG', 'ProductController@reportEstatusG');
-  Route::get('reportEntradasG', 'ProductController@reportEntradasG');
+  Route::get('reportEntradasGpgr', 'ProductController@reportEntradasG_pgr');
+  Route::get('reportEntradasPpz', 'ProductController@reportEntradasP_pz');
   Route::get('reportProductspzs', 'ProductController@reportProductpzs');
   
 });

@@ -181,9 +181,14 @@ Panel Principal
                               <div class="panel-body">
                                    @if(Auth::user()->type_user == 1 )
                                   <div align="right">
-                                      <a href="/reportEntradasG"><button type="button" 
+                                      <a href="/reportEntradasGpgr"><button type="button" 
                                         class="btn btn-icon btn-danger waves-effect waves-light waves-round"
-                                        data-toggle="tooltip" data-original-title="Reporte Genral">
+                                        data-toggle="tooltip" data-original-title="Reporte General Productos Por Linea">
+                                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                      </a>
+                                      <a href="/reportEntradasPpz"><button type="button" 
+                                        class="btn btn-icon btn-danger waves-effect waves-light waves-round"
+                                        data-toggle="tooltip" data-original-title="Reporte General Productos Por Categoria">
                                         <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                                       </a>
                                   </div>

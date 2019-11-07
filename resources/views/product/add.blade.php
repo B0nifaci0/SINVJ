@@ -26,7 +26,7 @@ ALTA PRODUCTO
       <br> 
       <form id="multiplicar" class="" action="/productos" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }} 
-        <input type="text" value="2" class="form-control"  name="status_id">
+        <input type="text" value="2" class="form-control d-none"  name="status_id">
         <div class='row'>
           <!-- Input para ingresar clave del producto-->
           <div class="form-group form-material col-md-3">

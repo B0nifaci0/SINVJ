@@ -1,30 +1,38 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Branch;
-use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Product;
 use App\Category;
 use App\Shop;
-use PDF; 
+use App\Line;
+use App\Branch;
+use App\Status;
 use App\User;
+use App\Sale;
+use PDF;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ProductValidate;
+use Illuminate\Support\Facades\Storage;
+
 class BranchProductsController extends Controller
 
 {
-  public function index($id)
+  /** Función para listar los productos por sucursal pra el usuario administrador y sub-administrador  */
+  public function index($id)  
   {
       $user = Auth::user();
       $branches= Branch::find($id);
+      $shop_id = Auth::user()->shop->id;  
+      $categories = Shop::find($shop_id)->categories()->get();
+      $lines = Shop::find($shop_id)->lines()->get();
+      $statuses = Shop::find($shop_id)->statuss()->get();
       $products = Product::withTrashed()->where('branch_id','=',$id)->get();
-      $category = Auth::user()->shop->id;  
-      $categories = Shop::find($category)->categories()->get();
-      $line = Auth::user()->shop->id; 
-      $lines = Shop::find($line)->lines()->get();
-      //return $lines;  
-      $status = Auth::user()->shop->id;
-      $statuses = Shop::find($status)->statuss()->get();
-      $products = Product::withTrashed()->where('branch_id','=',$id)->get();
+      //return $products;
       return view('Branches/branchproduct', compact('branches','products','user','categories','lines','statuses')); 
   }
   public function edit($id)

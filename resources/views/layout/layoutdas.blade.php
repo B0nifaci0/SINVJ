@@ -104,8 +104,8 @@
           <i class="icon md-more" aria-hidden="true"></i>
         </button>
         <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
-          <img class="navbar-brand-logo" src={{{url('/images/logo.png')}}} title="Remark">
-          <span class="navbar-brand-text hidden-xs-down"> Remark</span>
+          <img class="navbar-brand-logo" src={{{url('/images/logo.png')}}}>
+          <span class="navbar-brand-text hidden-xs-down">SINVJ</span>
         </div>
         <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search"
           data-toggle="collapse">
@@ -357,11 +357,9 @@
             <!--END-toggleChat-->
           </ul>
           <!-- End Navbar Toolbar Right -->
-    
           <div class="navbar-brand navbar-brand-center">
             <a href="index.html">
-              <img class="navbar-brand-logo navbar-brand-logo-normal" src="../assets/images/logo.png"
-                title="Remark">
+            <img class="navbar-brand-logo navbar-brand-logo-normal" src={{{url('/images/logo.png')}}} title="Remark">
               <img class="navbar-brand-logo navbar-brand-logo-special" src="../assets/images/logo-colored.png"
                 title="Remark">
             </a>
@@ -393,7 +391,7 @@
   <div class="site-menubar">
       <div class="site-menubar-header">
         <div class="cover overlay">
-          <img class="cover-image" src="../assets//examples/images/dashboard-header.jpg"
+          <img class="cover-image" src="../assets/examples/images/dashboard-header.jpg"
             alt="...">
           <div class="overlay-panel vertical-align overlay-background">
             <div class="vertical-align-middle">
@@ -787,7 +785,7 @@
                     <!-- Mis Productos-->
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
-                          <a class="animsition-link" href="/productoCO">
+                          <a class="animsition-link" href="/sucursalproductoCO">
                           <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Productos</span>
                         </a>

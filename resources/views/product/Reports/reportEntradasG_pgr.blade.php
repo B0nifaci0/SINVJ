@@ -77,11 +77,11 @@
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td> 
                  <td>{{ $product->description }}</td>
-                 <td>{{ ($product->line) ? $product->line->name : '' }}</td> 
+                 <td>{{ $product->name_line}}</td> 
                  <td>{{ $product->weigth }} gr</td>
                  <td>{{ $product->observations }}</td>
-                 <td>{{ $product->category->name }}</td>
-                 <td>{{ $product->status->name }}</td>
+                 <td>{{ $product->name_category }}</td>
+                 <td>{{ $product->name_status }}</td>
                 <td class="sizedate">{{ $product->date_creation }}</td>
 
                 </tr>
