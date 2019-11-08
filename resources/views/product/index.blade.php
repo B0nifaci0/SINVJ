@@ -139,10 +139,7 @@ LISTA PRODUCTO
                                         <td>{{ $product->weigth }}</td>
                                         <td>{{ $product->observations }}</td>
                                         <td>
-                                          @php
-                                          $image = route('images',"app/public/upload/products/$product->image")
-                                          @endphp
-                                          <img width="100px" height="100px" src="{{ $image }}">
+                                          <img width="100px" height="100px" src="{{ $product->image }}">
                                         </td>
                                         <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                                       

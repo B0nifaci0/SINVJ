@@ -143,7 +143,7 @@ ALTA VENTA
                 <input type="hidden" class="form-control" name="card_income" id="cardPayment"/>
 
                 <div class="form-group col-md-1">
-                  <button  id="submit" type="submit" class="btn btn-primary">Terminar compra</button>
+                  <a  id="submit" type="button" class="btn btn-primary">Terminar compra</a>
                 </div>
                 <!-- END Botón-->
               </div>
@@ -274,6 +274,8 @@ seleccionado con sus respectivos datos-->
 
 var products = {!! $products !!};
 var selectedProducts = [];
+var overDiscount = [];
+var overDiscountAuth = false;
 var total = 0;
 
 
@@ -301,7 +303,73 @@ $(function(){
         }
     });
 
-  $('#form').submit(function(e) {
+  	$('#submit').click(function(e) {
+		e.preventDefault();
+		overDiscount = [];
+		console.log("selectedProducts", selectedProducts);
+
+		if(overDiscountAuth) {
+			selectedProducts.forEach(element => {
+				var product = products.filter(p => p.id == element.id);
+				var selectedPrice = Number($(`#finalPrice${element.id}`).val());
+				if(!product) return;
+				product = product[0]
+
+				if(selectedPrice < product.discount) {
+				overDiscount.push(product)
+				overDiscountAuth = true;
+				}
+			
+				var priceLinit = Number(products.filter(p => p.id == element.id)[0])
+			});
+		}
+
+	console.log("------------------>overDiscount", overDiscount.length, overDiscountAuth);
+	if(overDiscount.length > 0 && overDiscountAuth) {
+		var message = `${overDiscount.length} produsto${(overDiscount.length == 1) ? '' : 's'} tiene un descuento superior al permitido.
+		Ingrese la contraseña de seguridad para continuar`;
+		Swal.fire({
+		title: message,
+		input: 'password',
+		inputAttributes: {
+			autocapitalize: 'off'
+		},
+		showCancelButton: true,
+		confirmButtonText: 'Aceptar',
+		showLoaderOnConfirm: true,
+		preConfirm: (password) => {
+			return fetch(`/check-password`, {
+				method: 'POST',
+				body: JSON.stringify({password: password}),
+				headers:{
+    				'Content-Type': 'application/json',
+					'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+				}
+			})
+			.then(response => {
+				if (!response.ok) {
+				throw new Error(response.statusText)
+				}
+				return response.json()
+			})
+			.catch(error => {
+				Swal.showValidationMessage(
+				`Contraseña incorrecta`
+				)
+			})
+		},
+		allowOutsideClick: () => !Swal.isLoading()
+		}).then((result) => {
+    		if (result.value) {
+    			Swal.fire({
+    			  title: `La contraseña es correcta`
+    			})
+    		  overDiscountAuth = false;
+			  console.log("overDiscountAuth", overDiscountAuth);
+    		}
+		})
+		return;
+	}
 
     if(!Number($('#cashIncome').val()) && !Number($('#cardIncome').val())) {
       Swal.fire(
@@ -326,12 +394,15 @@ $(function(){
     $('#cardPayment').val(cardPayment);
     console.log($('#productsList').val());
 
-    return true;
+    $('#form').submit();
+	console.log("llega");
+
   });
 
 
  $('#btn-add').click(function(){
    var tempPrice = 0;
+   var lastPrice = 0;
    var currentPrice = 0;
 
   var productId = $('#current_product').val();
@@ -388,11 +459,20 @@ $(function(){
   //   // console.log("valor anterior", tempPrice)
   // });
 
-  $('finalPrice').on('change',function (){
+  $('.finalPrice').on('focusin',function (){
     var productId = $(this).attr('alt');
     product = products.filter(p => p.id == productId)[0];
 
-    tempPrice = $(this).val();
+    lastPrice = Number($(this).val());
+    console.log("entra focusin", lastPrice)
+
+  });
+
+  $('.finalPrice').on('change',function (){
+    var productId = $(this).attr('alt');
+    product = products.filter(p => p.id == productId)[0];
+
+    tempPrice = Number($(this).val());
 
   });
 
@@ -401,35 +481,36 @@ $(function(){
     product = products.filter(p => p.id == productId)[0];
 
     currentPrice = Number($(`#finalPrice${product.id}`).val());
-    // console.log("valor nuevo ", currentPrice)
-    if(tempPrice == currentPrice) {
-      console.log("entra return", tempPrice, currentPrice)
-      return
-    }
 
 
-    if(tempPrice > currentPrice) {
-      console.log(`${total} = ${total} - ${currentPrice}`)
-      total = total - tempPrice + currentPrice;
-    } else if(tempPrice < currentPrice) {
-      console.log(`${total} = ${total} + ${currentPrice}`)
-      total = total - tempPrice + currentPrice;
+    if(lastPrice > currentPrice) {
+      console.log(`Entra uno por que ${lastPrice} > ${currentPrice}`)
+      total = total - lastPrice + currentPrice;
+    } else if(lastPrice < currentPrice) {
+      console.log(`Entra dos por que ${lastPrice} > ${currentPrice}`)
+      total = total - lastPrice + currentPrice;
     }
 
-    if(tempPrice < Number(product.line.discount_percentage)){
-      console.log(tempPrice + "<" +  Number(product.line.discount_percentage))
-      // alert("No puedes sobrepasar el tope de descuento")
-    }
+    console.log("Current", currentPrice);
+    console.log("Last", lastPrice);
+
 
     console.log(total);
     $("#total").html("$" + total);
     $("#totalPay").val(total);
     $("#totalCash").val(total);
     $("#totalCard").val(total);
+
+
+    lastPrice = Number($(this).val());
+    if(!lastPrice) {
+      lastPrice = 0;
+      $(`#finalPrice${product.id}`).val()
+    }
   });
 
 
-  $('.deletr').click(function() {
+  $('.deletr').click(function() { 
 
     var productId = $(this).attr('alt');
     var product = products.filter(p => p.id == productId)[0];

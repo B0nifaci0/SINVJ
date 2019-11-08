@@ -141,6 +141,8 @@ Route::get('recibo', 'UserController@indexReceipt');
 Route::get('recibopdf', 'UserController@receiptPDF');
 Route::get('recibospdf', 'UserController@receiptallPDF');
 
+Route::post('check-password', 'StateController@checkPassword');
+
 /*
 Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware', 'ProductBranchMiddleware','ShopMiddleware','StatusMiddleware']], function () {
 

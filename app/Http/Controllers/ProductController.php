@@ -21,48 +21,47 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
 
-  public function __construct(){
+	public function __construct(){
 
-  }
-/** FUNCIONES PARA CRUD DE PRODUCTO */
-  public function index()
-  { 
-    $user = Auth::user();
+	}
+	/** FUNCIONES PARA CRUD DE PRODUCTO */
+	public function index()
+	{
+    	$user = Auth::user();
   
-      
-      $shop_id = $user->shop->id;
-      if($user->type_user == User::CO) {
-        $products = Product::where('branch_id', $user->branch_id)->get();
-      } else {
-        $products = Shop::find($shop_id)->products()->get();
-      }
+    	$shop_id = $user->shop->id;
+    	if($user->type_user == User::CO) {
+    		$products = Product::where('branch_id', $user->branch_id)->get();
+    	} else {
+    		$products = Shop::find($shop_id)->products()->get();
+    	}
 
-	  $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
-	  foreach ($products as $product) {
-		if($product->image) {
-			$command = $adapter->getClient()->getCommand('GetObject', [
-				'Bucket' => $adapter->getBucket(),
-				'Key' => $adapter->getPathPrefix(). 'products/' . $product->clave
-			]);
-	
-			$result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
-	
-			$product->clave = (string) $result->getUri();
+		foreach ($products as $product) {
+			if($product->image) {
+				$command = $adapter->getClient()->getCommand('GetObject', [
+					'Bucket' => $adapter->getBucket(),
+					'Key' => $adapter->getPathPrefix(). 'products/' . $product->clave
+				]);
+		
+				$result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+		
+				$product->image = (string) $result->getUri();
+			}
 		}
-	  }
-	  
-      $shops = Auth::user()->shop()->get();
-      //return $shops;
-      $category = Auth::user()->shop->id;  
-      $categories = Shop::find($category)->categories()->get();
-      $line = Auth::user()->shop->id; 
-      $lines = Shop::find($line)->lines()->get();
-      //return $lines;  
-      $status = Auth::user()->shop->id;
-      $statuses = Shop::find($status)->statuss()->get();
-	  return $products;
-      return view('product/index', compact('user','categories','lines','shops','statuses','products'));
+
+    	$shops = Auth::user()->shop()->get();
+    	//return $shops;
+    	$category = Auth::user()->shop->id;  
+    	$categories = Shop::find($category)->categories()->get();
+    	$line = Auth::user()->shop->id; 
+    	$lines = Shop::find($line)->lines()->get();
+    	//return $lines;  
+    	$status = Auth::user()->shop->id;
+    	$statuses = Shop::find($status)->statuss()->get();
+		// return $products;
+    	return view('product/index', compact('user','categories','lines','shops','statuses','products'));
   }
     
     public function indexCOP()

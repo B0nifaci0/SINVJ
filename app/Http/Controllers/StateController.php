@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class StateController extends Controller
 {	
@@ -27,6 +29,20 @@ class StateController extends Controller
     	///echo "dfsd";
     	$municipalities = Municipality::where('state_id', $id);
     	return $municipalities;
-    }
+	}
+	
+	public function checkPassword(Request $request) {
+		$branch = Auth::user()->shop->branches->first();
+		
+		if(Hash::check($request->password, $branch->password)) {
+			return response()->json([
+				'success' => true
+			], 200);
+		}
+
+		return response()->json([
+			'success' => false
+		], 401);
+	}
 
 }

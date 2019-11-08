@@ -38,6 +38,11 @@ ALTA SUCURSALES
                 </div>
                 <!-- END Input-->
               </div>
+              <div class="row">              
+                <div class="form-group form-material col-md-6">
+                  <label class="form-control-label">Asigna una contraseña de seguridad para la sucursal</label>
+                </div>
+              </div>
               <div class="row">
                 <!-- Input Para ingresar Contraseña-->
                 <div class="form-group form-material col-md-6">
