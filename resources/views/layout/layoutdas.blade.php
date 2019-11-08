@@ -401,15 +401,16 @@
               <div class="site-menubar-info">
                 <h5 class="site-menubar-user">{{Auth::user()->name}}</h5>
                 <p class="site-menubar-email">{{Auth::user()->email}}</p>
-                <h6 class="site-menubar-email">@if(Auth::user()->type_user == 1 )
-                                                          <h6>Administrador</h6>
-                                                      @endif
-                                                      @if(Auth::user()->type_user  == 2)
-                                                          <h6>Sub-Administrador</h6>
-                                                      @endif
-                                                      @if(Auth::user()->type_user == 3)
-                                                        <h6>Colaborador</h6>
-                                                      @endif</h6>
+                <h6 class="site-menubar-email">
+                    @if(Auth::user()->type_user == 1 )
+                        <h6>Administrador</h6>
+                    @endif
+                    @if(Auth::user()->type_user  == 2)
+                        <h6>Sub-Administrador</h6>
+                    @endif
+                    @if(Auth::user()->type_user == 3)
+                      <h6>Colaborador</h6>
+                    @endif</h6>
               </div>
             </div>
           </div>

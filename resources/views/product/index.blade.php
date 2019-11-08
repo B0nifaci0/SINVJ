@@ -99,7 +99,7 @@ LISTA PRODUCTO
                           <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                             <div class="page-content panel-body container-fluid">
                               <!-- Tabla para listar productos-->
-                                    <table id="product_table_gr"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                                    <table id="product_table_gr"  class="table table-hover dataTable table-striped w-full">
                                       <thead>
                                       {{ csrf_field() }}
                                         <tr>  
@@ -180,7 +180,7 @@ LISTA PRODUCTO
                       </div>
                       <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
                             <!-- Tabla para listar productos-->
-                                    <table id="product_table_pz"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                                    <table id="product_table_pz"  class="table table-hover dataTable table-striped w-full">
                                       <thead>
                                       {{ csrf_field() }}
                                         <tr>  
@@ -190,12 +190,7 @@ LISTA PRODUCTO
                                           <th>Observaciónes</th>
                                           <th>Imagen</th>
                                           <th>Sucursal</th>
-<<<<<<< HEAD
                                          <th>Precio Venta</th>
-=======
-                                          <th>Status</th>
-                                         <th>Precio</th>
->>>>>>> e2e67d929fad565d423d195c9a7c6bd75a2d3117
                                           @if(Auth::user()->type_user == 1 )
                                             <th>Precio Compra</th>
                                             <th>Opciones</th>
@@ -210,13 +205,8 @@ LISTA PRODUCTO
                                         <th>Observaciónes</th>
                                         <th>Imagen</th>
                                         <th>Sucursal</th>
-<<<<<<< HEAD
                                         <th>Precio Venta</th>
                                         <th>Precio Compra</th>
-=======
-                                        <th>Status</th>
-                                        <th>Precio</th>
->>>>>>> e2e67d929fad565d423d195c9a7c6bd75a2d3117
                                         @if(Auth::user()->type_user == 1 )
                                           <th>Precio Compra</th>
                                           <th>Opciones</th>
