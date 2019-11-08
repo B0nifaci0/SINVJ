@@ -29,7 +29,7 @@ Panel Principal
                             <div align="right">
                                 <a href="/reportEstatusG"<button type="button" 
                                   class="btn btn-icon btn-danger waves-effect waves-light waves-round"
-                                  data-toggle="tooltip" data-original-title="Editar">
+                                  data-toggle="tooltip" data-original-title="Reporte General">
                                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                                 </a>
                             </div>
@@ -126,9 +126,9 @@ Panel Principal
                       <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo" aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">
                         <div class="panel-body">
                             <div align="right">
-                                <a href="/gramoslineageneral"<button type="button" 
+                                <a href="/gramoslineageneral"><button type="button" 
                                   class="btn btn-icon btn-danger waves-effect waves-light waves-round"
-                                  data-toggle="tooltip" data-original-title="Editar">
+                                  data-toggle="tooltip" data-original-title="Reporte General">
                                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                                 </a>
                             </div>
@@ -181,9 +181,14 @@ Panel Principal
                               <div class="panel-body">
                                    @if(Auth::user()->type_user == 1 )
                                   <div align="right">
-                                      <a href="/reportEntradasG"><button type="button" 
+                                      <a href="/reportEntradasGpgr"><button type="button" 
                                         class="btn btn-icon btn-danger waves-effect waves-light waves-round"
-                                        data-toggle="tooltip" data-original-title="Editar">
+                                        data-toggle="tooltip" data-original-title="Reporte General Productos Por Linea">
+                                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                      </a>
+                                      <a href="/reportEntradasPpz"><button type="button" 
+                                        class="btn btn-icon btn-danger waves-effect waves-light waves-round"
+                                        data-toggle="tooltip" data-original-title="Reporte General Productos Por Categoria">
                                         <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                                       </a>
                                   </div>
@@ -323,7 +328,7 @@ Panel Principal
                 <!-- End Example Tabs -->
                     </div>
                 </div>
-            </div>
+            </div>   
         </div>
         @if(Auth::user()->type_user == 1 )
               <div class="panel">
@@ -337,7 +342,7 @@ Panel Principal
                             <div align="right">
                                 <a href="/"<button type="button" 
                                   class="btn btn-icon btn-danger waves-effect waves-light waves-round"
-                                  data-toggle="tooltip" data-original-title="Editar">
+                                  data-toggle="tooltip" data-original-title="Reporte General">
                                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                                 </a>
                             </div>
@@ -372,12 +377,7 @@ Panel Principal
                                           @endforeach
                                           </select>
                                       </div>
-                                      <div class="form-material col-4">
-                                      <label class="form-control-label" for="inputBasicFirstName">Descuento: </label>
-                                        <input value ="" type="text" name="descuento" id="" class="form-control" required>
-                                      </div>
-                                    </div>
-                                    <div class="input-group col-4">
+                                    <div class="input-group col-3">
                                           <div class="row container"><label>De la Fecha:</label></div>
                                             <div class="input-group">
                                               <div class="input-group-prepend">
@@ -388,7 +388,7 @@ Panel Principal
                                               <input name="fecini" type="text" class="form-control fecini round" data-plugin="datepicker" required>
                                             </div>
                                           </div>
-                                      <div class="input-group col-4">
+                                      <div class="input-group col-3">
                                           <div class="row container"><label>Hasta la Fecha:</label></div>
                                           <div class="input-group-prepend">
                                             <span class="input-group-text">
@@ -397,7 +397,12 @@ Panel Principal
                                           </div>
                                           <input name="fecter" type="text"   class="form-control round" data-plugin="datepicker" required>
                                         </div>
+                                    <div class="form-material col-3">
+                                      <label class="form-control-label" for="inputBasicFirstName">Descuento: </label>
+                                        <input value ="" type="text" name="descuento" id="" class="form-control" required>
+                                      </div>
                                     </div>
+                                  </div>
                                   </div>
                                   <div class="input-group col-3">
                                       <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>

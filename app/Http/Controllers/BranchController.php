@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\BranchRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PDF;
+use Carbon\Carbon;
 
 class BranchController extends Controller
 {
@@ -157,10 +159,21 @@ class BranchController extends Controller
     	$users = User::where('branch_id', $id);
     	return $users;
     }
-
+//**Vista /Sucursales/corte */
     public function boxcut(){
       $user = Auth::user();
       $branches=Auth::user()->shop->branches;
       return view('Branches/boxcut/reportes',compact('branches','user'));
     }
-}
+
+    public function reportBox_cutDate(Request $request){
+      $hour = Carbon::now();
+      $hour = date('H:i:s');
+      $dates = Carbon::now(); 
+      $dates = $dates->format('d-m-Y');
+      //return $dates;
+            return view('Branches/boxcut/reportes.box_curt_Branch');
+      //$pdf  = PDF::loadView('Branches.boxcut.reportes.box_curt_Branch');
+      //return $pdf->stream('CorteSucursal.pdf',compact('dates'));
+    }
+}   

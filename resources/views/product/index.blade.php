@@ -30,7 +30,7 @@ LISTA PRODUCTO
             <span aria-hidden="true">&times;</span>
             </button>
           </div>
-        @endif
+        @endif 
         <!-- END Mesage-->
         <!-- Mesage-Muestra mensaje De que el producto se a eliminado exitosamente-->
         @if (session('mesage-delete'))	
@@ -45,7 +45,7 @@ LISTA PRODUCTO
         <div class="panel">
             <div class="panel-body">
               <div class="example-wrap">
-                  <h1 class="text-center panel-title">Productos </h1>
+                  <h1 class="text-center panel-title">Productos Tienda</h1>
 
                 <div class="panel-actions">
                   
@@ -99,7 +99,7 @@ LISTA PRODUCTO
                           <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                             <div class="page-content panel-body container-fluid">
                               <!-- Tabla para listar productos-->
-                                    <table id="example"  class="table table-hover dataTable table-striped w-full">
+                                    <table id="product_table_gr"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                       <thead>
                                       {{ csrf_field() }}
                                         <tr>  
@@ -111,6 +111,8 @@ LISTA PRODUCTO
                                           <th>Categoría</th>
                                           <th>Linea</th>
                                           <th>Sucursal</th>
+                                          <th>Status</th>
+                                          <th>precio</th>
                                           @if(Auth::user()->type_user == 1 )
                                             <th>Opciones</th>
                                           @endif
@@ -126,6 +128,7 @@ LISTA PRODUCTO
                                         <th>Categoría</th>
                                         <th>Sucursal</th>
                                         <th>Status</th>
+                                        <th>Precio</th>
                                         @if(Auth::user()->type_user == 1 )
                                         <th>Opciones</th>
                                         @endif
@@ -133,6 +136,7 @@ LISTA PRODUCTO
                                     </tfoot>
                                     <tbody>
                                     @foreach ($products as $i => $product)
+                                      @if($product->category->type_product == 2 )
                                       <tr id="row{{$product->id}}">
                                         <td>{{ $product->clave }}</td> 
                                         <td>{{ $product->description }}</td>
@@ -142,9 +146,12 @@ LISTA PRODUCTO
                                           <img width="100px" height="100px" src="{{ $product->image }}">
                                         </td>
                                         <td>{{ ($product->category) ? $product->category->name : '' }}</td>
-                                      
                                         <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                                         <td>{{ ($product->status) ? $product->status->name : '' }}</td>
+                                        <td>{{$product->line->name}}</td>
+                                        <td>{{$product->branch->name}}</td>
+                                        <td>{{$product->status->name}}</td>
+                                        <td>${{$product->price }}</td>
                                         @if(Auth::user()->type_user == 1)
                                         <td>   
                                           <!-- Botón para editar producto-->
@@ -162,6 +169,7 @@ LISTA PRODUCTO
                                           </td>
                                         @endif
                                       </tr>
+                                      @endif
                                     @endforeach
                                   </tbody>
                                 </table>
@@ -172,7 +180,7 @@ LISTA PRODUCTO
                       </div>
                       <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
                             <!-- Tabla para listar productos-->
-                                    <table id="example"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                                    <table id="product_table_pz"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                       <thead>
                                       {{ csrf_field() }}
                                         <tr>  
@@ -182,7 +190,12 @@ LISTA PRODUCTO
                                           <th>Observaciónes</th>
                                           <th>Imagen</th>
                                           <th>Sucursal</th>
+<<<<<<< HEAD
                                          <th>Precio Venta</th>
+=======
+                                          <th>Status</th>
+                                         <th>Precio</th>
+>>>>>>> e2e67d929fad565d423d195c9a7c6bd75a2d3117
                                           @if(Auth::user()->type_user == 1 )
                                             <th>Precio Compra</th>
                                             <th>Opciones</th>
@@ -197,10 +210,16 @@ LISTA PRODUCTO
                                         <th>Observaciónes</th>
                                         <th>Imagen</th>
                                         <th>Sucursal</th>
+<<<<<<< HEAD
                                         <th>Precio Venta</th>
                                         <th>Precio Compra</th>
+=======
+                                        <th>Status</th>
+                                        <th>Precio</th>
+>>>>>>> e2e67d929fad565d423d195c9a7c6bd75a2d3117
                                         @if(Auth::user()->type_user == 1 )
-                                        <th>Opciones</th>
+                                          <th>Precio Compra</th>
+                                          <th>Opciones</th>
                                         @endif
                                       </tr> 
                                     </tfoot>
@@ -208,7 +227,7 @@ LISTA PRODUCTO
                                     @foreach ($products as $i => $product)
                                     @if($product->category->type_product == 1 )
                                       <tr id="row{{$product->id}}">
-                                        <td>{{ $product->clave }}</td> 
+                                        <td>{{$product->clave}}</td> 
                                         <td>{{ $product->description }}</td>
                                         <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                                         <td>{{ $product->observations }}</td>
@@ -220,9 +239,13 @@ LISTA PRODUCTO
                                         </td>                                      
                                         <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                                         <td>{{ ($product->status) ? $product->status->name : '' }}</td>
+<<<<<<< HEAD
                                         <td>{{$product->pricepzt}}
+=======
+                                        <td>${{$product->pricepzt }}</td>
+>>>>>>> e2e67d929fad565d423d195c9a7c6bd75a2d3117
                                         @if(Auth::user()->type_user == 1)
-                                        <td>{{$product->price_purchase}}
+                                        <td>{{$product->price_purchase}}</td>
                                         <td>   
                                           <!-- Botón para editar producto-->
                                           <a href="/productos/{{$product->id}}/edit"><button type="button" 

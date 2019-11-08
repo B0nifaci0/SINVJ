@@ -62,6 +62,7 @@
                 <tr>
 				 <th scope="col">Clave</th>
                  <th scope="col">Descripción</th>
+                 <th scope="col">Linea</th>
                  <th scope="col">Peso</th>
                  <th scope="col">Observaciones</th>
                  <th scope="col">Categoria</th>
@@ -76,15 +77,34 @@
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td> 
                  <td>{{ $product->description }}</td>
+                 <td>{{ $product->name_line}}</td> 
                  <td>{{ $product->weigth }} gr</td>
                  <td>{{ $product->observations }}</td>
-                 <td>{{ $product->category->name }}</td>
-                 <td>{{ $product->status->name }}</td>
+                 <td>{{ $product->name_category }}</td>
+                 <td>{{ $product->name_status }}</td>
                 <td class="sizedate">{{ $product->date_creation }}</td>
 
                 </tr>
                   @endforeach
               </tbody>
+            </table>
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                <thead>
+                    <tr>
+                            <th scope="col">Linea</th>
+                            <th scope="col">Total De Gramos</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                   @foreach ($lines as $i => $line)
+                    <tr>
+                        <td>{{$line->name}}</td> 
+                        <td align="center">{{$line->total_g}}</td>
+                    </tr>
+                     @endforeach
+                </tbody> 
+                <br>   
             </table>
           </div>
           </div>

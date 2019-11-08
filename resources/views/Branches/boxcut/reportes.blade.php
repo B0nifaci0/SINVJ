@@ -48,7 +48,7 @@ Panel Principal
                                 <span aria-hidden="true">&times;</span>
                               </button>
                               @endif
-                        <form action="estatusproducto">
+                        <form action="sucursalcorte">
                           <div class=" col-12"> 
                               <div class="panel panel-bordered">
                                 <div class="panel-body row col-12">
