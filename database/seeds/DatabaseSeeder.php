@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ShopsTableSeeder::class,
             BranchesTableSeeder::class,
             UsersTableSeeder::class,
+            StatusTableSeeder::class,
         ]);
     }
 }

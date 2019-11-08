@@ -79,12 +79,12 @@ ALTA PRODUCTO
               <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
             </div> 
             <!-- END Input-->
-            <!-- Input para ingresar Tope de descuento
+            <!-- Input para ingresar Tope de descuento -->
             <div class="form-group form-material col-md-3 remove">
               <label>Tope de descuento</label>
               <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount">
             </div> 
-            END Input-->
+            <!-- END Input-->
             <!-- Select para Seleccionar categoria--> 
             <div class="col-md-3">
               <label>Seleccione Categoria </label>
