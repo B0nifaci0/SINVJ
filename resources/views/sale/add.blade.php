@@ -275,7 +275,7 @@ seleccionado con sus respectivos datos-->
 var products = {!! $products !!};
 var selectedProducts = [];
 var overDiscount = [];
-var overDiscountAuth = false;
+var overDiscountAuth = null;
 var total = 0;
 
 
@@ -308,7 +308,7 @@ $(function(){
 		overDiscount = [];
 		console.log("selectedProducts", selectedProducts);
 
-		if(overDiscountAuth) {
+		if(overDiscountAuth === null) {
 			selectedProducts.forEach(element => {
 				var product = products.filter(p => p.id == element.id);
 				var selectedPrice = Number($(`#finalPrice${element.id}`).val());
@@ -395,7 +395,7 @@ $(function(){
     console.log($('#productsList').val());
 
     $('#form').submit();
-	console.log("llega");
+  	console.log("llega");
 
   });
 

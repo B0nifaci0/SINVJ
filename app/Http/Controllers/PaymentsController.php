@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PayPal;
 use App\Payment;
+use App\Partial;
 use App\Subscription;
 use App\CardInformation;
 use PayPal\Api\CreditCard;
@@ -44,7 +45,12 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Partial::create([
+            'sale_id' => $request->sale_id,
+            'amount' => $request->amount,
+            'type' => $request->type,
+        ]);
+        return back();
     }
 
     /**

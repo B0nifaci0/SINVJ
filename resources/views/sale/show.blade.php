@@ -94,10 +94,18 @@ SUCURSAl
 <div class="page-content">
   	<div class="panel panel-info panel-bordered" data-plugin="appear" data-animate="fade">
 		<header class="panel-heading">
-			<h3 class="panel-title">Historial de pagos</h3>
+				<div class="row">
+					<div class="col-md-9">
+						<h3 class="panel-title">Historial de pagos</h3>
+					</div>
+					<div class="col-md-3 mt-10">
+						<button id="newPayment" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Nuevo pago</button>					
+					</div>
+				</div>
 		</header>
     	<div class="table-responsive container-fluid">
 			<div class="panel-body">
+
 				<div class="row">
 					<div class="col-md-3">
 						<p>
@@ -124,7 +132,7 @@ SUCURSAl
                         @foreach($sale->partials as $partial)
                         <tr>
                             <td>{{ $partial->created_at }}</td>
-                            <td>{{ ($partial->type === 1) ? 'Efectivo' : 'Tarjeta' }} </td>
+                            <td>{{ ($partial->type === "1") ? 'Efectivo' : 'Tarjeta' }} </td>
                             <td>$ {{ $partial->amount }}</td>
                         </tr>
                         @endforeach
@@ -138,5 +146,54 @@ SUCURSAl
       	</div>
   	</div>
 </div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Nuevo pago</h4>
+      </div>
+      <div class="modal-body">
+			<form action="/pagos" method="post" id="saleForm">
+				<input type="hidden" name="sale_id" value="{{ $sale->id }}">
+				@csrf
+				<div class="row">
+					<div class="col-md-12">
+						<label>Método de pago</label>
+						<select name="type" id="" class="form-control">
+							<option value="1">Efectivo</option>
+							<option value="1">Tarjeta</option>
+						</select>
+					</div>			
+					<div class="col-md-12">
+						<label>Monto</label>
+						<input type="text" name="amount" class="form-control">
+					</div>
+				</div>
+			</form>
+      </div>
+      <div class="modal-footer">
+        <button id="savePartial" type="button" class="btn btn-primary">Guardar pago</button>
+        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button> -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+@section('listado-productos')
+	<script>
+		$('#savePartial').click(function() {
+			console.log("Holii");
+			$('#saleForm').submit();
+		})
+	</script>
+@endsection
+
 @endsection
 

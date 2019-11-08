@@ -115,7 +115,7 @@ class SaleController extends Controller
     			'final_price' => $p->price,
           'profit' => $p->price - $product->price_purchase
         ]);
-		}
+		} 
 	  
 		$partials_list = collect([]);
 
@@ -151,9 +151,9 @@ class SaleController extends Controller
     {
     	$sale = Sale::with(['partials', 'client'])->findOrFail($id);
     	$sale->itemsSold = $sale->itemsSold();
-    	$sale->total = $sale->itemsSold->sum('final_price');
-    	// return $sale; 
-    	return view('sale.show', ['sale' => $sale]);
+    	$sale->total = $sale->itemsSold->sum('final_price'); 
+      // return $sale;
+      return view('sale.show', ['sale' => $sale]); 
     }
 
     /**
