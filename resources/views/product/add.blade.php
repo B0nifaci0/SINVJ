@@ -201,33 +201,45 @@ $(document).ready(function(){
  
   
   }
-$('#categorie_id').change(function(){
+
+// var categoryTypeproduct = {!! $categories !!};
+// var categoryId = $(this).val();
+// var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == categoryId)[0];
+
+setTimeout(() => {
   var categoryTypeproduct = {!! $categories !!};
-
-  var id = $(this).val();
-  var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == id)[0];
-  
-//console.log("categoryTypeproduct", categoryTypeproduct);
-    
-    //alert('entra');
-    if(categoryTypeproduct.type_product == 1){
-      //alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
-    $('.remove').css('display', 'none');
-    $('#pricepz').css('display', 'initial'); 
-    $('#pricecp').css('display', 'initial'); 
-
-    //$('.removeClass').removeClass('invisible');
-    //$('#s').toggle();
-    }else if(categoryTypeproduct.type_product == 2){
+  // var categoryTypeproduct = categoryTypeproduct[0];
+  categoryTypeproduct = categoryTypeproduct[0];
+  console.log("Entraaaaaaa", categoryTypeproduct[0]);  
+  if(categoryTypeproduct.type_product == 1){
+      $('.remove').css('display', 'none');
+      $('#pricepz').css('display', 'initial'); 
+      $('#pricecp').css('display', 'initial'); 
+    } else if(categoryTypeproduct.type_product == 2){
       console.log('<p>agregar campos</p>');
-     //alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
-     //console.log()
-    $('.remove').css('display', 'initial');  
-    $('#pricepz').css('display', 'none');
-    $('#pricecp').css('display', 'none');
-  
+      $('.remove').css('display', 'initial');  
+      $('#pricepz').css('display', 'none');
+      $('#pricecp').css('display', 'none');
+    }  
+}, 1000);
+
+$('#categorie_id').change(function(){
+    var categoryTypeproduct = {!! $categories !!};
+    var categoryId = $(this).val();
+    var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == categoryId)[0];
+    if(categoryTypeproduct.type_product == 1){
+      $('.remove').css('display', 'none');
+      $('#pricepz').css('display', 'initial'); 
+      $('#pricecp').css('display', 'initial'); 
+    } else if(categoryTypeproduct.type_product == 2){
+      console.log('<p>agregar campos</p>');
+      $('.remove').css('display', 'initial');  
+      $('#pricepz').css('display', 'none');
+      $('#pricecp').css('display', 'none');
     }
 });
+
+
 var lines = {!! $lines !!};
 var line = lines[0];
 //console.log("lines", lines);
