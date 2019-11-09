@@ -10,10 +10,10 @@ LISTA DE  LINEA
 @endsection
 @section('menu')
 
-@endsection 
+@endsection
 @section('content')
 <div class="panel-body">
-    @if (session('mesage'))	
+    @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>{{ session('mesage') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -21,7 +21,7 @@ LISTA DE  LINEA
         </button>
     </div>
     @endif
-    @if (session('mesage-update'))	
+    @if (session('mesage-update'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
        <strong>{{ session('mesage-update') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -29,14 +29,14 @@ LISTA DE  LINEA
       </button>
     </div>
     @endif
-    @if (session('mesage-delete'))	
+    @if (session('mesage-delete'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage-delete') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
        <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    @endif    
+    @endif
     <div class="page-content">
       <!-- Panel Basic -->
       <div class="panel">
@@ -46,8 +46,8 @@ LISTA DE  LINEA
               @if(Auth::user()->type_user == 1 )
                 <!-- Botón para generar PDF de linea-->
                 <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='lineaspdf'" 
-                    type="button" class=" btn btn-sm small btn-floating 
+                  <button onclick="window.location.href='lineaspdf'"
+                    type="button" class=" btn btn-sm small btn-floating
                     toggler-left  btn-danger waves-effect waves-light waves-round float-right"
                     data-toggle="tooltip" data-original-title="Generar reporte PDF">
                     <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
@@ -56,8 +56,8 @@ LISTA DE  LINEA
                 <!-- END Botón-->
                 <!-- Botón para generar Excel de linea-->
                 <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='#'" 
-                    type="button" class=" btn btn-sm small btn-floating 
+                  <button onclick="window.location.href='#'"
+                    type="button" class="btn btn-sm small btn-floating 
                     toggler-left  btn-success waves-effect waves-light waves-round float-right"
                     data-toggle="tooltip" data-original-title="Generar reporte Excel">
                     <i class="icon fa-file-excel-o" aria-hidden="true"></i>
@@ -66,8 +66,8 @@ LISTA DE  LINEA
                 <!-- END Función-->
                 <!-- Botón para crear linea-->
                 <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='/lineas/create'" 
-                    type="button" class=" btn btn-sm small btn-floating 
+                  <button onclick="window.location.href='/lineas/create'"
+                    type="button" class=" btn btn-sm small btn-floating
                     toggler-left  btn-info waves-effect waves-light waves-round float-right"
                     data-toggle="tooltip" data-original-title="Agregar">
                     <i class="icon md-plus" aria-hidden="true"></i>
@@ -80,7 +80,7 @@ LISTA DE  LINEA
           <h3 class="panel-title">Lineas</h3>
         </header>
         <div class="panel-body">
-           
+
         <!-- Tabla para listar lineas-->
           <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
@@ -102,7 +102,7 @@ LISTA DE  LINEA
                 <th>Descuento</th>
                 @if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif 
+                @endif
               </tr>
             </tfoot>
             <tbody>
@@ -113,10 +113,10 @@ LISTA DE  LINEA
                   <td>$ {{ $line->sale_price }}</td>
                   <!--discount_percentage descuenta dinero-->
                   <td>$ {{ $line->discount_percentage }}</td>
-                  @if(Auth::user()->type_user == 1 ) 
-                  <td>    
-                    <!-- Botón para editar linea-->    
-                    <a href="/lineas/{{$line->id}}/edit"><button type="button" 
+                  @if(Auth::user()->type_user == 1 )
+                  <td>
+                    <!-- Botón para editar linea-->
+                    <a href="/lineas/{{$line->id}}/edit"><button type="button"
                       class="btn btn-icon btn-info waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></button>
@@ -145,7 +145,7 @@ LISTA DE  LINEA
 @section('edit-lineas')
 <script type="text/javascript">
 $(document).ready(function(){
-  setTimeout(function () {  
+  setTimeout(function () {
     $(".edit").click(function() {
     var id = $(this).attr("alt");
       swal.fire({
@@ -163,8 +163,8 @@ $(document).ready(function(){
           console.log('entraalif');
               window.location.href = '/lineas/' + id + '/edit';
             }
-      }); 
-    });},1000); 
+      });
+    });},1000);
   });
 </script>
 @endsection-->
@@ -203,7 +203,7 @@ $(document).ready(function() {
               'El registro ha sido eliminado.',
               'success'
             )
-          }, 
+          },
           error: function () {
             Swal.fire(
               'Eliminado',
