@@ -42,7 +42,7 @@ EDITAR LINEA
       </div>  
       <div class="form-group form-material col-md-4">
                <label class="form-control-label" for="inputBasicLastName">Tope de descuento:</label>
-               <input type="text" class="form-control" name="discount_percentage" value="{{old('discount_percentage')}}" required="required" placeholder="%" />
+               <input type="text" class="form-control" name="discount_percentage" value="{{old('discount_percentage')}}" required="required" placeholder="$" />
       </div>
 
         <div class="form-group col-md-12">
