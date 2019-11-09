@@ -93,10 +93,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                                 <td>{{$product->weigth}}</td>
                                                 <td>{{ $product->observations }}</td>
                                                 <td>
-                                                   @php
-                                                     $image = route('images',"app/public/upload/products/$product->image")
-                                                  @endphp
-                                                  <img width="100px" height="100px" src="{{ $image }}">
+                                                  <img width="100px" height="100px" src="{{ $product->image }}">
                                                  </td>
                                                  <td>{{$product->category->name}}</td>
                                                  <th>{{$product->branch->name}}</th>
@@ -175,10 +172,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                         <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                                         <td>{{ $branchproduct->observations }}</td>
                                         <td>
-                                          @php
-                                            $image = route('images',"app/public/upload/products/$branchproduct->image")
-							                            @endphp
-							                          <img width="100px" height="100px" src="{{ $image }}">
+                                        <img width="100px" height="100px" src="{{ $product->image }}">
                                         </td>
                                         <td>{{$branchproduct->status->name}}</td>
                                         <td>{{$branchproduct->pricepzt}}

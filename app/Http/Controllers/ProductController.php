@@ -216,7 +216,7 @@ class ProductController extends Controller
         $line = Auth::user()->shop->id;
         $shops = Auth::user()->shop()->get();
         //return $shops;
-        $categorys = Shop::find($category)->categories()->get();
+        $categories = Shop::find($category)->categories()->get();
         $lines = Shop::find($line)->lines()->get();
         $branch = Auth::user()->shop->id;
         $branches = Shop::find($branch)->branches()->get();
@@ -224,9 +224,9 @@ class ProductController extends Controller
         $status = Auth::user()->shop->id;
         $statuses = Shop::find($status)->statuss()->get();
         $product = Product::find($id);
-        //return $product;
+        // return $product; 
 
-      return view('product/edit', compact('product', 'categorys','lines','shops','branches','statuses','user'));
+      return view('product/edit', compact('product', 'categories','lines','shops','branches','statuses','user'));
     }
 
     /**

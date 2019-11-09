@@ -32,7 +32,22 @@ class BranchProductsController extends Controller
       $lines = Shop::find($shop_id)->lines()->get();
     	$statuses = Status::all();
       $products = Product::withTrashed()->where('branch_id','=',$id)->get();
-      //return $products;
+      
+      $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+
+      foreach ($products as $product) {
+        if($product->image) {
+          $command = $adapter->getClient()->getCommand('GetObject', [
+            'Bucket' => $adapter->getBucket(),
+            'Key' => $adapter->getPathPrefix(). 'products/' . $product->clave
+          ]);
+  
+          $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+  
+          $product->image = (string) $result->getUri();
+        }
+      }
+
       return view('Branches/branchproduct', compact('branch','products','user','categories','lines','statuses'));
   }
   public function edit($id)

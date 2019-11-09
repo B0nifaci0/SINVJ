@@ -42,7 +42,7 @@ MODIFICACIÓ PRODUCTO
           </div>
           <!-- END Input--> 
           <!-- Select para Seleccionar linea-->
-          <div class="col-md-3">
+          <div class="col-md-3 remove">
             <label  class="control-label">Seleccione Linea</label>                
             <select id="line_id"   name="line_id"  class="form-control round">
               @foreach($lines as $line)            
@@ -70,14 +70,14 @@ MODIFICACIÓ PRODUCTO
           <!-- Select para Seleccionar categoria-->
           <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
             <label>Categoria</label>
-              <select  name="category_id" class="form-control round">
-                @foreach($categorys as $category)            
+              <select id="categorie_id" name="category_id" class="form-control round">
+                @foreach($categories as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
                 @endforeach
               </select>
           </div>
           <!-- END Select--> 
-          <div>
+          <div> 
               @foreach ($shops as $shop)
                 <input type="hidden" name="shop_id" value="{{$shop->id}}">
               @endforeach 
@@ -128,9 +128,11 @@ MODIFICACIÓ PRODUCTO
 </div>
 @endsection
 
+
 @section('disabled-submit')
 <script type="text/javascript">
 $(document).ready(function(){
+
   $("#categories").change(function(){
     if ($(this).val() == "" || $("#file").val() == "") {
       $("#submit").prop("disabled", true);
@@ -165,32 +167,111 @@ $(document).ready(function(){
 
 });
 </script>
-
 @endsection
 
 <!-- Función para obtener el precio de linea-->
 @section('precio-linea')
 <script type="text/javascript">
+  var categoryTypeproduct = {!! $categories !!};
+
+  let defaul = categoryTypeproduct[0]
+    if(defaul.type_product == 1){
+      //alert(JSON.stringify('pz'+defaul.type_product));
+    $('.remove').css('display', 'none');
+    $('#pricepz').css('display', 'initial'); 
+    // $('#pricecp').css('display', 'initial');
+
+    //$('.removeClass').removeClass('invisible');
+    //$('#s').toggle();
+    }else if(defaul.type_product == 2){
+     //alert(JSON.stringify('pz'+defaul.type_product));
+     console.log()
+    $('.remove').css('display', 'initial');  
+    $('#pricepz').css('display', 'none');
+    // $('#pricecp').css('display', 'none');
+ 
+  
+  }
+
+// var categoryTypeproduct = {!! $categories !!};
+// var categoryId = $(this).val();
+// var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == categoryId)[0];
+
+// Init category config
+setTimeout(() => {
+  var categoryTypeproduct = {!! $categories !!};
+  
+  categoryTypeproduct = categoryTypeproduct[0];  
+  if(categoryTypeproduct.type_product == 1){
+      $('.remove').css('display', 'none');
+      $('#pricepz').css('display', 'initial'); 
+      $('#pricecp').css('display', 'initial'); 
+    } else if(categoryTypeproduct.type_product == 2){
+      console.log('<p>agregar campos</p>');
+      $('.remove').css('display', 'initial');  
+      $('#pricepz').css('display', 'none');
+      $('#pricecp').css('display', 'none');
+    }  
+}, 1000);
+
+$('#categorie_id').change(function(){
+    $('#pricepz').val(0);
+    $('#pricecp').val(0)
+
+
+    var categoryTypeproduct = {!! $categories !!};
+    var categoryId = $(this).val();
+    var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == categoryId)[0];
+    if(categoryTypeproduct.type_product == 1){
+      // PZA
+      $('.remove').css('display', 'none');
+      $('#pricepz').css('display', 'initial'); 
+      $('#pricecp').css('display', 'initial'); 
+      // set purchase price for Pza products
+      console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
+      console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
+      $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
+    } else if(categoryTypeproduct.type_product == 2){
+      // Gramos
+      $('.remove').css('display', 'initial');  
+      $('#pricepz').css('display', 'none');
+      $('#pricecp').css('display', 'none');
+    }
+});
+
 
 var lines = {!! $lines !!};
+var line = lines[0];
+//console.log("lines", lines);
+
+$('#line_price').val(lines[0].sale_price);
 
 $('#line_id').change(function() {
   var id = $(this).val();
-  var line = lines.filter(l => l.id == id)[0];
-  $('#line_price').val(line.price);
+  line = lines.filter(l => l.id == id)[0];
+  $('#line_price').val(line.sale_price);
+}); 
+
+$('#multiplicador').keyup(function(){
+  var total = $('#line_price').val() * $(this).val();
+  // var discount = total - (total * (Number(line.discount_percentage) / 100))
+  var discount = total - Number(line.discount_percentage)
+  $('#discount').val(discount);
+  $('#total').val(total);
+
+  // set purchase price for Pza products
+  console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
+  console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
+  $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
 });
 
-$('#multiplicador').keyup(function() {
-  var total = $('#line_price').val() * $(this).val();
-  $('#total').val(total);
-});
 </script>
 @endsection
 <!-- END Función-->
 <!-- Función para calcular el  
 (peso del producto por el precio de la linea)-->
 @section('calcular-precio')
-<script type="text/javascript">
+<script type="text/javascript"> 
 function multiplicar(){
   m1 = document.getElementById("secondary").value;
   m2 = document.getElementById("multiplicador").value;
