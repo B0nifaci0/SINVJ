@@ -102,7 +102,7 @@ LISTA DE  LINEA
                 <th>Descuento</th>
                 @if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif
+                @endif 
               </tr>
             </tfoot>
             <tbody>
@@ -111,6 +111,9 @@ LISTA DE  LINEA
                   <td>{{ $line->id}}</td>
                   <td>{{ $line->name }}</td>
                   <td>$ {{ $line->sale_price }}</td>
+                  <!--discount_percentage descuenta dinero-->
+                  <td>$ {{ $line->discount_percentage }}</td>
+
                   <th></th>
                   @if(Auth::user()->type_user == 1 ) 
                   <td>    
