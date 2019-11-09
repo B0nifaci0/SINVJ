@@ -121,19 +121,23 @@ class SaleController extends Controller
 	  
 		$partials_list = collect([]);
 
+    if($request->cash_income){
     	$partial = Partial::create([
     		'sale_id' => $sale->id,
     		'amount' => ($request->cash_income) ? $request->cash_income : 0,
     		'type' => Partial::CASH,
-    	]);
-		$partials_list->push($partial);
+      ]);
+  		$partials_list->push($partial);
+    }
 
+    if($request->card_income) {
     	$partial = Partial::create([
     		'sale_id' => $sale->id,
     		'amount' => ($request->card_income) ? $request->card_income : 0,
     		'type' => Partial::CARD,
-		]);
-		$partials_list->push($partial);
+		  ]);
+  		$partials_list->push($partial);
+    }
 
 		$sale->paid_out = $partials_list->sum('amount');
 		$sale->save();

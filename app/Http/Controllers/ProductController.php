@@ -33,9 +33,12 @@ class ProductController extends Controller
   
     	$shop_id = $user->shop->id;
     	if($user->type_user == User::CO) {
-    		$products = Product::where('branch_id', $user->branch_id)->get();
+    		$products = Product::where([
+          'branch_id' => $user->branch_id,
+          'status_id' => 1 
+          ])->get();
     	} else {
-    		$products = Shop::find($shop_id)->products()->get();
+    		$products = Shop::find($shop_id)->products()->where('status_id', 1)->get();
     	}
 
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
@@ -142,8 +145,8 @@ class ProductController extends Controller
         $total = $product->description;
         if($total == $request->description){
           return redirect('/products')->with('mesage', 'El nombre que intentas registrar ya existe!');
-          }
         }
+      }
         
         $data = $request->all();
         $data['price'] = ($request->pricepzt) ? $request->pricepzt : $request->price;
