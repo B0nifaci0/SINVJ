@@ -72,11 +72,7 @@ class ProductController extends Controller
     	//return $lines;
     	$status = Auth::user()->shop->id;
     	$statuses = Status::all();
-<<<<<<< HEAD
-		return $products;
-=======
 		  // return $products;
->>>>>>> 63330daeefda6369e0e03898329c732c90bdbcbf
     	return view('product/index', compact('user','categories','lines','shops','statuses','products'));
   }
 
@@ -164,13 +160,8 @@ class ProductController extends Controller
         $data['discount'] = $request->max_discount;
         $data['user_id'] = Auth::user()->id;
         $data['price_purchase'] = $request->price_purchase;
-<<<<<<< HEAD
-        $data['status_id'] = $request->status_id;
-
-=======
         $data['status_id'] = 2;
 
->>>>>>> 63330daeefda6369e0e03898329c732c90bdbcbf
         $category = Category::find($request->category_id);
         if($category->type_product == 1) {
           $data['line_id'] = null;
