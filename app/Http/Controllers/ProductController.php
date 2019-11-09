@@ -61,7 +61,7 @@ class ProductController extends Controller
     	$lines = Shop::find($line)->lines()->get();
     	//return $lines;  
     	$status = Auth::user()->shop->id;
-    	$statuses = Shop::find($status)->statuss()->get();
+    	$statuses = Status::all();
 		// return $products;
     	return view('product/index', compact('user','categories','lines','shops','statuses','products'));
   }
