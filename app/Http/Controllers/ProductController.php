@@ -146,7 +146,7 @@ class ProductController extends Controller
         }
         
         $data = $request->all();
-        $data['price'] = ($request->pricepz) ? $request->pricepz : $request->price;
+        $data['price'] = ($request->pricepzt) ? $request->pricepzt : $request->price;
         $data['discount'] = $request->max_discount; 
         $data['user_id'] = Auth::user()->id;
         $data['price_purchase'] = $request->price_purchase;

@@ -222,18 +222,12 @@ LISTA PRODUCTO
                                         <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                                         <td>{{ $product->observations }}</td>
                                         <td>
-                                          @php
-                                          $image = route('images',"app/public/upload/products/$product->image")
-                                          @endphp
-                                          <img width="100px" height="100px" src="{{ $image }}">
+                                          <img width="100px" height="100px" src="{{ $product->image }}">
                                         </td>                                      
                                         <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                                         <td>{{ ($product->status) ? $product->status->name : '' }}</td>
-<<<<<<< HEAD
-                                        <td>{{$product->pricepzt}}
-=======
+                                        
                                         <td>${{$product->pricepzt }}</td>
->>>>>>> e2e67d929fad565d423d195c9a7c6bd75a2d3117
                                         @if(Auth::user()->type_user == 1)
                                         <td>{{$product->price_purchase}}</td>
                                         <td>   
