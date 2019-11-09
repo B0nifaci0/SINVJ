@@ -115,6 +115,8 @@ class SaleController extends Controller
     			'final_price' => $p->price,
           'profit' => $p->price - $product->price_purchase
         ]);
+        $product->status_id = 1;
+        $product->save();
 		} 
 	  
 		$partials_list = collect([]);
