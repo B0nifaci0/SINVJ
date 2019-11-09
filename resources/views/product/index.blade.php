@@ -45,7 +45,7 @@ LISTA PRODUCTO
         <div class="panel">
             <div class="panel-body">
               <div class="example-wrap">
-                  <h1 class="text-center panel-title">Productos Tienda</h1>
+                  <h1 class="text-center panel-title">Productos De Tienda</h1>
 
                 <div class="panel-actions">
 
@@ -224,7 +224,7 @@ LISTA PRODUCTO
                                         <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                                         <td>{{ ($product->status) ? $product->status->name : '' }}</td>
 
-                                        <td>${{$product->pricepzt }}</td>
+                                        <td>${{$product->price }}</td>
                                         @if(Auth::user()->type_user == 1)
                                         <td>{{$product->price_purchase}}</td>
                                         <td>
