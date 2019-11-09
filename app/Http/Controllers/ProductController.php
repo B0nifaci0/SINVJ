@@ -35,10 +35,18 @@ class ProductController extends Controller
     	if($user->type_user == User::CO) {
     		$products = Product::where([
           'branch_id' => $user->branch_id,
-          'status_id' => 1 
+          'status_id' => 2
           ])->get();
     	} else {
-    		$products = Shop::find($shop_id)->products()->where('status_id', 1)->get();
+      	$branches = Branch::where('shop_id', $user->shop->id)->get();
+      	$branch_ids = $branches->map(function($item) {
+      	  return $item->id;
+        });
+        $products = Shop::find($shop_id)
+          ->products()
+          ->whereIn('branch_id', $branch_ids)
+          ->where('status_id', 2)
+          ->get();
     	}
 
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
@@ -65,7 +73,7 @@ class ProductController extends Controller
     	//return $lines;  
     	$status = Auth::user()->shop->id;
     	$statuses = Status::all();
-		// return $products;
+		  // return $products;
     	return view('product/index', compact('user','categories','lines','shops','statuses','products'));
   }
 
@@ -153,7 +161,7 @@ class ProductController extends Controller
         $data['discount'] = $request->max_discount; 
         $data['user_id'] = Auth::user()->id;
         $data['price_purchase'] = $request->price_purchase;
-        $data['status_id'] = $request->status_id;
+        $data['status_id'] = 2;
         
         $category = Category::find($request->category_id);
         if($category->type_product == 1) {
