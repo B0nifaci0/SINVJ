@@ -210,19 +210,17 @@ class ProductController extends Controller
     {
 
         $category = Auth::user()->shop->id;
-        //return $category;
         $user = Auth::user();
         #$categories = Category::all();
         $line = Auth::user()->shop->id;
         $shops = Auth::user()->shop()->get();
-        //return $shops;
         $categorys = Shop::find($category)->categories()->get();
         $lines = Shop::find($line)->lines()->get();
         $branch = Auth::user()->shop->id;
         $branches = Shop::find($branch)->branches()->get();
-        //return $lines;
-        $status = Auth::user()->shop->id;
-        $statuses = Shop::find($status)->statuss()->get();
+        //$status = Auth::user()->shop->id;
+        //$statuses = Shop::find($status)->statuss()->get();
+				$statuses = Status::all();
         $product = Product::find($id);
         //return $product;
 
