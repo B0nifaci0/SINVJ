@@ -12,6 +12,7 @@ LISTA PRODUCTO
 @endsection
 @section('content')
   <div class="panel-body">
+    <div class="page-content">
       <!-- Mesage-Muestra mensaje De que el producto se a agregado exitosamente-->
         @if (session('mesage'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -43,6 +44,7 @@ LISTA PRODUCTO
         @endif
         <!-- END Mesage-->
         <div class="panel">
+          
             <div class="panel-body">
               <div class="example-wrap">
                   <h1 class="text-center panel-title">Productos De Tienda</h1>
@@ -99,7 +101,7 @@ LISTA PRODUCTO
                           <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                             <div class="page-content panel-body container-fluid">
                               <!-- Tabla para listar productos-->
-                                    <table id="product_table_gr"  class="table table-hover dataTable table-striped w-full">
+                            <table id="product_table_gr"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                       <thead>
                                       {{ csrf_field() }}
                                         <tr>
@@ -175,8 +177,9 @@ LISTA PRODUCTO
 
                       </div>
                       <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+                          <div class="page-content panel-body container-fluid">
                             <!-- Tabla para listar productos-->
-                                    <table id="product_table_pz"  class="table table-hover dataTable table-striped w-full">
+                              <table id="product_table_pz"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                       <thead>
                                       {{ csrf_field() }}
                                         <tr>
@@ -219,7 +222,7 @@ LISTA PRODUCTO
                                         <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                                         <td>{{ $product->observations }}</td>
                                         <td>
-                                          <img width="100px" height="100px" src="{{ $product->image }}">
+                                            <img width="100px" height="100px" src="{{ $product->image }}">
                                         </td>
                                         <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                                         <td>{{ ($product->status) ? $product->status->name : '' }}</td>
@@ -250,20 +253,26 @@ LISTA PRODUCTO
                                   </tbody>
                                 </table>
                                 <!-- END Table-->
+                              </div>
+                        </div>
                       </div>
-                 </div>
-              </div>
-            </div>
+                    </div>
+                  </div>
                 <!-- End Example Tabs -->
                 </div>
-         </div>
-
-
+              </div>
   <!-- End Panel Basic -->
 @endsection
-
 @section('barcode-product')
-
+<script>
+$(document).ready(function() {
+        $('#example').dataTable( {
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            }
+        });
+    });
+    </script>
 @endsection
 
 <!-- Función Sweet Alert para eliminar producto-->

@@ -11,36 +11,8 @@ LISTA PRODUCTO
 @endsection
 @section('content')
   <div class="panel-body">
-		<div class="page-content">
       <!-- Panel Basic -->
       <div class="panel">
-        <header class="panel-heading">
-          <div class="panel-actions">
-            <div class="row">
-              @if(Auth::user()->type_user == 1 )
-                <!-- Botón para generar reporte PDF-->
-                <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='productospdf'" 
-                  type="button" class=" btn btn-sm small btn-floating 
-                  toggler-left  btn-danger waves-effect waves-light waves-round float-right"
-                  data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
-                </div>
-                <!-- END Botón-->
-                <!-- Botón para generar Excel-->
-                <div class="col-md- col-md-offset-2">
-                  <button onclick="window.location.href='#'" 
-                    type="button" class=" btn btn-sm small btn-floating 
-                    toggler-left  btn-success waves-effect waves-light waves-round float-right"
-                    data-toggle="tooltip" data-original-title="Generar reporte Excel">
-                    <i class="icon fa-file-excel-o" aria-hidden="true"></i>
-                  </button>
-                  <!-- END Botón-->
-                </div>
-              @endif
-            </div>
-          </div>
-        </header>
         <div class="panel-body">
           <div class="example-wrap">
               <h1 class="text-center panel-title">Productos De Tienda </h1>
@@ -140,10 +112,7 @@ LISTA PRODUCTO
                                 <td>{{ $product->weigth }}</td>
                                 <td>{{ $product->observations }}</td>
                                 <td>
-                                  @php
-                                  $image = route('images',"app/public/upload/products/$product->image")
-                                  @endphp
-                                  <img width="100px" height="100px" src="{{ $image }}">
+                                    <img width="100px" height="100px" src="{{ $product->image }}">
                                 </td>
                                 <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                                 <td>{{$product->line->name}}</td>
@@ -176,7 +145,7 @@ LISTA PRODUCTO
                  </div>
               </div>
               <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-                <!-- Tabla para listar productos-->
+                <div class="page-content panel-body container-fluid">
                   <table id="product_table_pz"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                           <thead>
                           {{ csrf_field() }}
@@ -219,10 +188,8 @@ LISTA PRODUCTO
                               <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                               <td>{{ $product->observations }}</td>
                               <td>
-                                @php
-                                $image = route('images',"app/public/upload/products/$product->image")
-                                @endphp
-                                <img width="100px" height="100px" src="{{ $image }}">
+                                <img width="100px" height="100px" src="{{ $product->image }}">
+
                               </td>                                      
                               <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                               <td>{{ ($product->status) ? $product->status->name : '' }}</td>
@@ -260,6 +227,7 @@ LISTA PRODUCTO
       </div>
     </div>
   </div>
+</div>
 <!-- End Panel Basic -->
 @endsection
 

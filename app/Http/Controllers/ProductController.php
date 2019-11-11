@@ -72,7 +72,7 @@ class ProductController extends Controller
     	//return $lines;
     	$status = Auth::user()->shop->id;
     	$statuses = Status::all();
-		  // return $products;
+		   //return $products;
     	return view('product/index', compact('user','categories','lines','shops','statuses','products'));
   }
 
@@ -94,18 +94,33 @@ class ProductController extends Controller
         return view('product/index', compact('user', 'categories','lines','shops','statuses','products'));
     }
 /** Listar todos los  Porductos de la tienda  para los colaboradores /productosCO */
-    public function indexCO()
+    public function indexCO()  
     {
         $user = Auth::user();
         $shop_id = $user->shop->id;
         $shops = Auth::user()->shop()->get();
         $categories = Shop::find($shop_id)->categories()->get();
         $lines = Shop::find($shop_id)->lines()->get();
-        $statuses = Shop::find($shop_id)->statuss()->get();
+        //$statuses = Shop::find($shop_id)->statuss()->get();
+        $statuses = Status::all();
         $products = Shop::find($shop_id)->products()->get();
+        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+
+        foreach ($products as $product) {
+          if($product->image) {
+            $command = $adapter->getClient()->getCommand('GetObject', [
+              'Bucket' => $adapter->getBucket(),
+              'Key' => $adapter->getPathPrefix(). 'products/' . $product->clave
+            ]);
+
+            $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+
+            $product->image = (string) $result->getUri();
          //return $products;
         return view('product/productCO/index', compact('user', 'categories','lines','shops','statuses','products'));
     }
+  }
+}
 
     /**
      * Show the form for creating a new resource.
