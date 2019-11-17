@@ -75,7 +75,7 @@ class ProductController extends Controller
     	//return $lines;
     	$status = Auth::user()->shop->id;
     	$statuses = Status::all();
-		   return $products;
+		  //  return $products;
     	return view('product/index', compact('user','categories','lines','shops','statuses','products'));
   }
 
