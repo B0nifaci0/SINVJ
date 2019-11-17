@@ -44,6 +44,7 @@ class ControllerExpenses extends Controller
     public function create()
     {
         $user = Auth::user();
+        //$shop = $user->branch->shop;
         $shops = Auth::user()->shop()->get();
         //return $shops;
         return view('storeExpenses/add ',compact('shops','user')); 
@@ -62,6 +63,7 @@ class ControllerExpenses extends Controller
          $filename = $request->image->getCLientOriginalName();
          $request->image->storeAs('public/upload/expenses',$filename);
          $request->image = $filename;
+         return $expense;
       }
         $expense->save();
         //return $expense;
