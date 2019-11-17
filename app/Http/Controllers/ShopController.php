@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ShopRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Traits\S3ImageManager;
+
 
 class ShopController extends Controller
 {
+
+	use S3ImageManager;
+
+
   public function __construct()
     {
         $this->middleware('Authentication');
@@ -103,29 +109,25 @@ class ShopController extends Controller
    * @param  \App\Shop  $shop
    * @return \Illuminate\Http\Response
    */
-  public function update(ShopRequest $request, $id)
-  { 
-       $shop = Shop::findOrFail($id);
+	public function update(ShopRequest $request, $id)
+	{ 
+    	$shop = Shop::findOrFail($id);
 
-      if ($request->hasFile('image')){
+		if($request->hasFile('image')) {
+			$adapter = Storage::disk('s3')->getDriver()->getAdapter();
+			$image = file_get_contents($request->file('image')->path());
+			$base64Image = base64_encode($image);
+			$path = 'shops';
+			$shop->image = $this->saveImages($base64Image, $path, $shop->id);
+		}
 
-        // Borrar imagen anterior
-        Storage::delete("public/upload/shops/{$shop->image}");
-
-         $filename = $request->image->getCLientOriginalName();
-        $timestamp = time();         
-        $request->image->storeAs('public/upload/shops', $timestamp . $filename);
-        $shop->image = $timestamp . $filename;       
-    }
-
-       $shop->name = $request->name;
-       $shop->description = $request->description;
-       $shop->email = $request->email;
-       $shop->phone_number = $request->phone_number;
-       $shop->save();
-    //return $request->all();
-    return redirect('/principal')->with('mesage-update', 'La tienda se ha modificoo exitosamente!');;
-  }
+    	$shop->name = $request->name;
+    	$shop->description = $request->description;
+    	$shop->email = $request->email;
+    	$shop->phone_number = $request->phone_number;
+    	$shop->save();
+    	return redirect('/principal')->with('mesage-update', 'La tienda se ha modificoo exitosamente!');;
+	}
 
 
   /**

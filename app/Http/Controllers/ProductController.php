@@ -18,10 +18,12 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
-use Illuminate\Support\Facades\Storage;
+use App\Traits\S3ImageManager;
 
 class ProductController extends Controller
 {
+
+  use S3ImageManager;
 
 	public function __construct(){
 
@@ -671,19 +673,4 @@ class ProductController extends Controller
    //return response()->json(['productos'=>$productos,'sumprice'=>$sumprice, 'utilida'=>$descuento, 'total'=>$total]);
   }
 
-	private function saveImages($base_64, $path, $name)
-	{
-		// Prepare image
-		$base_64 = str_replace('data:image/png;base64,', '', $base_64);
-		$base_64 = str_replace('data:image/jpg;base64,', '', $base_64);
-		$base_64 = str_replace('data:image/jpeg;base64,', '', $base_64);
-		$base_64 = str_replace(' ', '+', $base_64);
-
-		$image = base64_decode($base_64);
-
-
-		$path = $path . '/' . $name;
-		Storage::disk('s3')->put($path, $image);
-		return  $path;
-	}
 }

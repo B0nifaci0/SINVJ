@@ -60,15 +60,15 @@ MODIFICACIÓN TIENDA
             <div class="form-group form-material col-md-6">
               <label>Selecciona el logo de tu tienda</label>
               <br>
-              <label for="image" class="btn btn-primary">Explorar</label>
+              <label for="image" class="btn btn-info">Explorar</label>
               <input type="file" name="image" id="image" class="hidden" >
-            </div> 
-          <br>
-          <div>
-            <br>
-        <div class="form-group col-md-12">
-          <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button> 
-        </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-12">
+              <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button> 
+            </div>
+          </div>
       </form>
     </div>
   </div>
