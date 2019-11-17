@@ -178,7 +178,6 @@ class ProductController extends Controller
       // }
 
 		if($request->hasFile('image')) {
-
 			$adapter = Storage::disk('s3')->getDriver()->getAdapter();
 			$image = file_get_contents($request->file('image')->path());
 			$base64Image = base64_encode($image);
@@ -240,16 +239,14 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        if ($request->hasFile('image')){
+        if($request->hasFile('image')) {
+          $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+          $image = file_get_contents($request->file('image')->path());
+          $base64Image = base64_encode($image);
+          $path = 'products';
+          $product->image = $this->saveImages($base64Image, $path, $product->clave);
+        }
 
-          // Borrar imagen anterior
-          Storage::delete("public/upload/products/{$product->image}");
-
-          $filename = $request->image->getCLientOriginalName();
-          $timestamp = time();
-          $request->image->storeAs('public/upload/products', $timestamp . $filename);
-          $product->image = $timestamp . $filename;
-      }
          $product->description = $request->description;
          $product->weigth = $request->weigth;
          $product->observations = $request->observations;

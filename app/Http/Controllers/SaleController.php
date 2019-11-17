@@ -249,8 +249,7 @@ public function exportPdf($id) {
 	$sale->total = $sale->itemsSold->sum('final_price');
 	// return $sale;
 	$pdf  = PDF::loadView('sale.PDFVenta', compact('sale')); 
-  	return $pdf->stream('venta.pdf');
-  	return $branches; 
+  return $pdf->stream('venta.pdf');
 }
 /**Reportes De Ventas */
 public function reporstSale(){
