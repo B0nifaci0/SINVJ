@@ -6,13 +6,13 @@ Panel Principal
 @section('nav')
 
 @endsection
-@section('menu') 
+@section('menu')
 
 @endsection
 @section('content')
 <!-- Page -->
 <div class="page">
-    @if (session('mesage'))	
+    @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>{{ session('mesage') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -20,7 +20,7 @@ Panel Principal
     </button>
     </div>
       @endif
-      @if (session('mesage-update'))	
+      @if (session('mesage-update'))
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
           <strong>{{ session('mesage-update') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -28,60 +28,52 @@ Panel Principal
     </button>
     </div>
       @endif
-        @if (session('mesage-delete'))	
+        @if (session('mesage-delete'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
           <strong>{{ session('mesage-delete') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
     </div>
-      @endif    
+      @endif
   <div class="page-content container-fluid">
     <div class="row" data-plugin="matchHeight" data-by-row="true">
-      <div class="col-md-12"> 
+      <div class="col-md-12">
         <div class="panel">
           <div class="panel-heading bg-primary  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
             <div class="row">
-              <div class="col-md-3">
-                  @foreach ($shops as $shop)
-                  @php
-                  $image = route('images',"app/public/upload/shops/$shop->image")
-                  @endphp
-                  <img align = "left" width="90px" height="90px" src="{{ $image }}">
-                  @endforeach
+              <div class="col-md-3">   
+                  <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
               </div>
               <div class="col-md-6">
                   <h2 style="color:white">
-                      {{$shop->name}}                 
+                      {{$shop->name}}
                   </h2>
               </div>
-              <div  align="right" class="col-md-3">
-                  <div>
-                      <button onclick="window.location.href='/tiendas'" 
-                        type="button" class=" btn btn-floating 
-                        toggler-left  btn-warning waves-effect waves-light waves-round float-right"
-                        data-toggle="tooltip" data-original-title="Generar reporte Excel">
+              <div class="row aling-right">
+                  <div class="col-md-3 col-md-offset-3">
+                      <button onclick="window.location.href='/tiendas'"
+                        type="button" class="btn btn-sm small btn-floating toggler-left  btn-success waves-effect waves-light waves-round float-right"
+
+                        data-toggle="tooltip" data-original-title="Ver Más">
                         <i class="icon md-eye" aria-hidden="true"></i>
                       </button>
                   </div>
-        
-                  <div>
-                      @foreach ($shops as $shop)
-                      <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'" 
-                        type="button" class="btn btn-floating 
+                  <div class="col-md-3 col-md-offset-3">
+                      <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
+                        type="button" class="btn btn-sm small btn-floating
                         toggler-left  btn-primary waves-effect waves-light waves-round float-right"
-                        data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                        data-toggle="tooltip" data-original-title="Editar Tienda">
                         <i class="icon md-edit" aria-hidden="true"></i>
                       </button>
-                      @endforeach
                   </div>
               </div>
-            </div>    
+            </div>
           </div>
           <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo" aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">
             <div class="panel-body">
             <form action="/">
-              <div class=" col-12"> 
+              <div class=" col-12">
                   <div class="panel panel-bordered">
                     <div class="panel-body row col-12">
                       <div class="row">
@@ -110,7 +102,7 @@ Panel Principal
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>  14 kl Nacional                  
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>  14 kl Nacional
               </div>
               <span class="float-right grey-700 font-size-30">60 gr</span>
             </div>
@@ -181,7 +173,3 @@ Panel Principal
     </div>
 
 @endsection
-
-        
-
-

@@ -29,7 +29,7 @@ class SaleController extends Controller
      */
     public function index(Request $request)
     {
-     $p = SaleDetails::where('product_id','=','1')->first();
+      $p = SaleDetails::where('product_id','=','1')->first();
       //return $p;
       $po = Product::where('id','=','p')->first();
       // return $po;
@@ -69,21 +69,35 @@ class SaleController extends Controller
 
     if($user->branch) {
       	$branch_id = $user->branch->id;
-      	$products = Product::where('branch_id',$branch_id)->get();
+        $products = Product::where('branch_id',$branch_id)
+          ->with('line')
+          ->with('branch')
+          ->with('category')
+          ->with('status')
+          ->get();
     } else {
       	$branches = Branch::where('shop_id', $user->shop->id)->get();
       	$branch_ids = $branches->map(function($item) {
-      	  //return $item->id;
-      	});
-      	$products = Product::whereIn('branch_id', $branch_ids)->get();
+      	  return $item->id;
+        });
+        $products = Product::whereIn('branch_id', $branch_ids)
+          ->where('status_id', 2)
+          ->with('line')
+          ->with('branch')
+          ->with('category')
+          ->with('status')
+          ->get();
     }
-    $products = Product::with('line')
-    	->with('branch')
-    	->with('category')
-    	->with('status')
-    	->get();
-        
-        return view('sale/add', compact('products','products','user', 'branches', 'clients'));
+    // $products = Product::where([
+    //   'branch_id' => $user->branch_id,
+    //   'status_id' => 2
+    // ])
+    //   ->with('line')
+    // 	->with('branch')
+    // 	->with('category')
+    // 	->with('status')
+    // 	->get();
+        return view('sale/add', compact('products', 'user', 'branches', 'clients'));
     }
 
     /**
@@ -106,32 +120,37 @@ class SaleController extends Controller
         'paid_out' => 0
       ]);
       $products = json_decode($request->products_list);
-      
     	foreach ($products as $p) {
         $product = Product::find($p->id);
-    		SaleDetails::create([
+        SaleDetails::create([
     			'sale_id' => $sale->id,
     			'product_id' => $p->id,
     			'final_price' => $p->price,
           'profit' => $p->price - $product->price_purchase
         ]);
+        $product->status_id = 1;
+        $product->save();
 		} 
 	  
 		$partials_list = collect([]);
 
+    if($request->cash_income){
     	$partial = Partial::create([
     		'sale_id' => $sale->id,
     		'amount' => ($request->cash_income) ? $request->cash_income : 0,
     		'type' => Partial::CASH,
-    	]);
-		$partials_list->push($partial);
+      ]);
+  		$partials_list->push($partial);
+    }
 
+    if($request->card_income) {
     	$partial = Partial::create([
     		'sale_id' => $sale->id,
     		'amount' => ($request->card_income) ? $request->card_income : 0,
     		'type' => Partial::CARD,
-		]);
-		$partials_list->push($partial);
+		  ]);
+  		$partials_list->push($partial);
+    }
 
 		$sale->paid_out = $partials_list->sum('amount');
 		$sale->save();
@@ -230,8 +249,7 @@ public function exportPdf($id) {
 	$sale->total = $sale->itemsSold->sum('final_price');
 	// return $sale;
 	$pdf  = PDF::loadView('sale.PDFVenta', compact('sale')); 
-  	return $pdf->stream('venta.pdf');
-  	return $branches; 
+  return $pdf->stream('venta.pdf');
 }
 /**Reportes De Ventas */
 public function reporstSale(){

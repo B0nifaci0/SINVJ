@@ -183,7 +183,38 @@ img {
                         </tr> 
                     </tbody>
             </table>
+            <br>
+            <br>
+            @if(count($sale->partials) > 0)
+                <p>Abonos a la cuenta</p>
 
+                <table class="table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tipo de pago</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($sale->partials as $partial)
+                            <tr>
+                                <td>{{ $partial->created_at }}</td>
+                                <td>{{ ($partial->type === "1") ? 'Efectivo' : 'Tarjeta' }} </td>
+                                <td>$ {{ $partial->amount }}</td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <td colspan="2"></td>
+                                <td><strong>$ {{ $sale->partials->sum('amount') }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Restan</td>
+                                <td><strong>$ {{ $sale->total - $sale->partials->sum('amount') }}</strong></td>
+                            </tr>
+                        </tbody>
+                </table>
+            @endif
         </div>
     </body>
 </html>

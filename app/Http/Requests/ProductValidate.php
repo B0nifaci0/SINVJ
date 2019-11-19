@@ -25,11 +25,11 @@ class ProductValidate extends FormRequest
     {
         return [
             'clave' => 'required|string|max:50',
-            //'name' => 'required|alpha|max:15|unique:products,name',
-            'description' => 'required|string|max:15',
+            //'name' => 'required|alpha|unique:products,name',
+            'description' => 'required|string',
             'weigth'=> 'required_if:product,is:true',
             //'weigth' => 'required|numeric|max:200',
-            'observations' => 'required|string|max:15',
+            'observations' => 'required|string',
             'image' => 'image',
             //'price' => 'required|numeric',
             //'category_id' => 'required',

@@ -12,6 +12,7 @@ LISTA PRODUCTO
 @endsection
 @section('content')
   <div class="panel-body">
+    <div class="page-content">
       <!-- Mesage-Muestra mensaje De que el producto se a agregado exitosamente-->
         @if (session('mesage'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -23,17 +24,17 @@ LISTA PRODUCTO
         @endif
         <!-- END Mesage-->
         <!-- Mesage-Muestra mensaje De que el producto se a modificado exitosamente-->
-        @if (session('mesage-update'))	
+        @if (session('mesage-update'))
           <div class="alert alert-warning alert-dismissible fade show" role="alert">
               <strong>{{ session('mesage-update') }}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
           </div>
-        @endif 
+        @endif
         <!-- END Mesage-->
         <!-- Mesage-Muestra mensaje De que el producto se a eliminado exitosamente-->
-        @if (session('mesage-delete'))	
+        @if (session('mesage-delete'))
           <div class="alert alert-danger alert-dismissible fade show" role="alert">
               <strong>{{ session('mesage-delete') }}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -43,18 +44,19 @@ LISTA PRODUCTO
         @endif
         <!-- END Mesage-->
         <div class="panel">
+          
             <div class="panel-body">
               <div class="example-wrap">
-                  <h1 class="text-center panel-title">Productos Tienda</h1>
+                  <h1 class="text-center panel-title">Productos De Tienda</h1>
 
                 <div class="panel-actions">
-                  
+
                   <div class="container-fluid row col-md-12 col-xs-12 col-lg-12">
                     @if(Auth::user()->type_user == 1 )
                       <!-- Botón para Generar PDF de productos-->
                       <div class="col-md-4 col-md-offset-2 col-xs-4 col-xs-offset-2 col-xs-4">
-                        <button onclick="window.location.href='productospdf'" 
-                          type="button" id='pdf01' name='pdf01'class=" btn btn-sm small btn-floating 
+                        <button onclick="window.location.href='productospdf'"
+                          type="button" id='pdf01' name='pdf01'class=" btn btn-sm small btn-floating
                           toggler-left  btn-danger waves-effect waves-light waves-round float-right"
                           data-toggle="tooltip" data-original-title="Generar reporte PDF">
                           <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
@@ -63,8 +65,8 @@ LISTA PRODUCTO
                       <!-- END Botón-->
                       <!-- Botón para generar Excel-->
                       <div class="col-md-4 col-md-offset-2  col-xs-4 col-xs-offset-2">
-                        <button onclick="window.location.href='#'" 
-                          type="button" class=" btn btn-sm small btn-floating 
+                        <button onclick="window.location.href='#'"
+                          type="button" class=" btn btn-sm small btn-floating
                           toggler-left  btn-success waves-effect waves-light waves-round float-right"
                           data-toggle="tooltip" data-original-title="Generar reporte Excel">
                           <i class="icon fa-file-excel-o" aria-hidden="true"></i>
@@ -73,8 +75,8 @@ LISTA PRODUCTO
                       <!-- END Botón-->
                       <!-- Botón para agregar productos-->
                       <div class="col-md-4 col-md-offset-2  col-xs-4 col-xs-offset-2">
-                        <button onclick="window.location.href='/productos/create'" 
-                          type="button" class=" btn btn-sm small btn-floating 
+                        <button onclick="window.location.href='/productos/create'"
+                          type="button" class=" btn btn-sm small btn-floating
                           toggler-left  btn-info waves-effect waves-light waves-round float-right"
                           data-toggle="tooltip" data-original-title="Agregar">
                           <i class="icon md-plus" aria-hidden="true"></i>
@@ -83,7 +85,7 @@ LISTA PRODUCTO
                       <!-- END Botón-->
                     @endif
                     </div>
-                </div> 
+                </div>
               </div>
             </div>
             <div class="col-xl-12 col-md-12 col-sl">
@@ -99,17 +101,16 @@ LISTA PRODUCTO
                           <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                             <div class="page-content panel-body container-fluid">
                               <!-- Tabla para listar productos-->
-                                    <table id="product_table_gr"  class="table table-hover dataTable table-striped w-full">
+                            <table id="product_table_gr"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                       <thead>
                                       {{ csrf_field() }}
-                                        <tr>  
+                                        <tr>
                                           <th>Clave</th>
                                           <th>Descripción</th>
                                           <th>Peso</th>
                                           <th>Observaciónes</th>
                                           <th>Imagen</th>
                                           <th>Categoría</th>
-                                          <th>Linea</th>
                                           <th>Sucursal</th>
                                           <th>Status</th>
                                           <th>precio</th>
@@ -132,28 +133,25 @@ LISTA PRODUCTO
                                         @if(Auth::user()->type_user == 1 )
                                         <th>Opciones</th>
                                         @endif
-                                      </tr> 
+                                      </tr>
                                     </tfoot>
                                     <tbody>
                                     @foreach ($products as $i => $product)
                                       @if($product->category->type_product == 2 )
                                       <tr id="row{{$product->id}}">
-                                        <td>{{ $product->clave }}</td> 
+                                        <td>{{ $product->clave }}</td>
                                         <td>{{ $product->description }}</td>
                                         <td>{{ $product->weigth }}</td>
                                         <td>{{ $product->observations }}</td>
                                         <td>
                                           <img width="100px" height="100px" src="{{ $product->image }}">
                                         </td>
-                                        <td>{{ ($product->category) ? $product->category->name : '' }}</td>
-                                        <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
-                                        <td>{{ ($product->status) ? $product->status->name : '' }}</td>
-                                        <td>{{$product->line->name}}</td>
-                                        <td>{{$product->branch->name}}</td>
-                                        <td>{{$product->status->name}}</td>
+                                        <td>{{ ($product->category) ? $product->category->name: '' }}</td>
+                                        <td>{{ ($product->branch) ? $product->branch->name: '' }}</td>
+                                        <td>{{ ($product->status) ? $product->status->name: '' }}</td>
                                         <td>${{$product->price }}</td>
                                         @if(Auth::user()->type_user == 1)
-                                        <td>   
+                                        <td>
                                           <!-- Botón para editar producto-->
                                           <a href="/productos/{{$product->id}}/edit"><button type="button"  class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Editar">
                                             <i class="icon md-edit" aria-hidden="true"></i></button>
@@ -161,11 +159,11 @@ LISTA PRODUCTO
                                             <!-- END Botón-->
                                             <!-- Botón para eliminar producto -->
                                             <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                                              alt="{{$product->id}}" role="button" 
+                                              alt="{{$product->id}}" role="button"
                                               data-toggle="tooltip" data-original-title="Borrar">
                                               <i class="icon md-delete" aria-hidden="true"></i>
                                             </button>
-                                            <!-- END Botón-->   
+                                            <!-- END Botón-->
                                           </td>
                                         @endif
                                       </tr>
@@ -179,17 +177,19 @@ LISTA PRODUCTO
 
                       </div>
                       <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+                          <div class="page-content panel-body container-fluid">
                             <!-- Tabla para listar productos-->
-                                    <table id="product_table_pz"  class="table table-hover dataTable table-striped w-full">
+                              <table id="product_table_pz"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                       <thead>
                                       {{ csrf_field() }}
-                                        <tr>  
+                                        <tr>
                                           <th>Clave</th>
                                           <th>Descripción</th>
                                           <th>Categoría</th>
                                           <th>Observaciónes</th>
                                           <th>Imagen</th>
                                           <th>Sucursal</th>
+                                          <th>Status</th>
                                          <th>Precio Venta</th>
                                           @if(Auth::user()->type_user == 1 )
                                             <th>Precio Compra</th>
@@ -205,40 +205,34 @@ LISTA PRODUCTO
                                         <th>Observaciónes</th>
                                         <th>Imagen</th>
                                         <th>Sucursal</th>
+                                        <th>Status</th>
                                         <th>Precio Venta</th>
-                                        <th>Precio Compra</th>
                                         @if(Auth::user()->type_user == 1 )
                                           <th>Precio Compra</th>
                                           <th>Opciones</th>
                                         @endif
-                                      </tr> 
+                                      </tr>
                                     </tfoot>
                                     <tbody>
                                     @foreach ($products as $i => $product)
                                     @if($product->category->type_product == 1 )
                                       <tr id="row{{$product->id}}">
-                                        <td>{{$product->clave}}</td> 
+                                        <td>{{$product->clave}}</td>
                                         <td>{{ $product->description }}</td>
                                         <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                                         <td>{{ $product->observations }}</td>
                                         <td>
-                                          @php
-                                          $image = route('images',"app/public/upload/products/$product->image")
-                                          @endphp
-                                          <img width="100px" height="100px" src="{{ $image }}">
-                                        </td>                                      
+                                            <img width="100px" height="100px" src="{{ $product->image }}">
+                                        </td>
                                         <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                                         <td>{{ ($product->status) ? $product->status->name : '' }}</td>
-<<<<<<< HEAD
-                                        <td>{{$product->pricepzt}}
-=======
-                                        <td>${{$product->pricepzt }}</td>
->>>>>>> e2e67d929fad565d423d195c9a7c6bd75a2d3117
+
+                                        <td>${{$product->price }}</td>
                                         @if(Auth::user()->type_user == 1)
                                         <td>{{$product->price_purchase}}</td>
-                                        <td>   
+                                        <td>
                                           <!-- Botón para editar producto-->
-                                          <a href="/productos/{{$product->id}}/edit"><button type="button" 
+                                          <a href="/productos/{{$product->id}}/edit"><button type="button"
                                             class="btn btn-icon btn-info waves-effect waves-light waves-round"
                                             data-toggle="tooltip" data-original-title="Editar">
                                             <i class="icon md-edit" aria-hidden="true"></i></button>
@@ -246,11 +240,11 @@ LISTA PRODUCTO
                                             <!-- END Botón-->
                                             <!-- Botón para eliminar producto -->
                                             <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                                              alt="{{$product->id}}" role="button" 
+                                              alt="{{$product->id}}" role="button"
                                               data-toggle="tooltip" data-original-title="Borrar">
                                               <i class="icon md-delete" aria-hidden="true"></i>
                                             </button>
-                                            <!-- END Botón-->   
+                                            <!-- END Botón-->
                                           </td>
                                         @endif
                                       </tr>
@@ -259,20 +253,26 @@ LISTA PRODUCTO
                                   </tbody>
                                 </table>
                                 <!-- END Table-->
+                              </div>
+                        </div>
                       </div>
-                 </div>
-              </div>
-            </div>
+                    </div>
+                  </div>
                 <!-- End Example Tabs -->
                 </div>
-         </div>
-
-
+              </div>
   <!-- End Panel Basic -->
 @endsection
-
 @section('barcode-product')
-
+<script>
+$(document).ready(function() {
+        $('#example').dataTable( {
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+            }
+        });
+    });
+    </script>
 @endsection
 
 <!-- Función Sweet Alert para eliminar producto-->
@@ -311,7 +311,7 @@ $(document).ready(function() {
               'El registro ha sido eliminado.',
               'success'
             )
-          }, 
+          },
           error: function () {
             Swal.fire(
               'Eliminado',
@@ -328,5 +328,3 @@ $(document).ready(function() {
 </script>
 @endsection
 <!-- END Función-->
-
-

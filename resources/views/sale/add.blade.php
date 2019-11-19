@@ -425,7 +425,7 @@ $(function(){
     <td>${product.description}</td>
     <td>${product.weigth}</td>
     <td>${product.category.name}</td>
-    <td>${product.line.name}</td>
+    <td>${product.line ? product.line.name : '' }</td>
     <td>${product.branch.name}</td>
     <td>$ ${product.price}</td>
     <td><input class="finalPrice" id="finalPrice${product.id}" alt="${product.id}" type="text" value="${product.price}"/></td>

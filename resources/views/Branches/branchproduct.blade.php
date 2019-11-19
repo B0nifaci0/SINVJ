@@ -8,15 +8,32 @@ LISTA DE PRODUCTOS POR SUCURSAL
 @endsection
 @section('menu')
 
-@endsection 
+@endsection
 @section('content')
   <div class="panel-body">
 	<div class="page-content">
-        <!-- Panel Basic --> 
+        <!-- Panel Basic -->
     <div class="panel">
             <div class="panel-body">
               <div class="example-wrap">
-              <h1 class="text-center panel-title">Productos Por Sucursal</h1>
+                  <h1 class="text-center panel-title">Productos De Sucursal {{$branch->name}}</h1>
+              </div>
+              <div class="panel-actions">
+
+                <div class="container-fluid row col-md-12 col-xs-12 col-lg-12">
+                  @if(Auth::user()->type_user == 1 )
+                    <!-- Botón para agregar productos-->
+                    <div class="col-md-4 col-md-offset-2  col-xs-4 col-xs-offset-2">
+                      <button onclick="window.location.href='/productos/create'"
+                        type="button" class=" btn btn-sm small btn-floating
+                        toggler-left  btn-info waves-effect waves-light waves-round float-right"
+                        data-toggle="tooltip" data-original-title="Agregar">
+                        <i class="icon md-plus" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <!-- END Botón-->
+                  @endif
+                  </div>
               </div>
             </div>
             <div class="col-xl-12 col-md-12 col-sl">
@@ -35,7 +52,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                     <table id="product_table_gr"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                       <thead>
                                       {{ csrf_field() }}
-                                        <tr>  
+                                        <tr>
                                           <th>Clave</th>
                                           <th>Descripción</th>
                                           <th>Peso</th>
@@ -65,21 +82,18 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                         @if(Auth::user()->type_user == 1 )
                                         <th>Opciones</th>
                                         @endif
-                                      </tr> 
+                                      </tr>
                                     </tfoot>
                                     <tbody>
                                     @foreach ($products as $i => $product)
                                     @if($product->category->type_product == 2 )
                                         <tr id="row{{$product->id}}">
-                                                <td>{{ $product->clave }}</td> 
+                                                <td>{{ $product->clave }}</td>
                                                 <td>{{ $product->description }}</td>
                                                 <td>{{$product->weigth}}</td>
                                                 <td>{{ $product->observations }}</td>
                                                 <td>
-                                                   @php
-                                                     $image = route('images',"app/public/upload/products/$product->image")
-                                                  @endphp
-                                                  <img width="100px" height="100px" src="{{ $image }}">
+                                                  <img width="100px" height="100px" src="{{ $product->image }}">
                                                  </td>
                                                  <td>{{$product->category->name}}</td>
                                                  <th>{{$product->branch->name}}</th>
@@ -89,8 +103,8 @@ LISTA DE PRODUCTOS POR SUCURSAL
 
                                         @if(Auth::user()->type_user == 1)
                                         <td>
-                                            <!-- Botón Para editar producto por sucursal-->    
-                                            <a href="/sucursalproducto/{{$product->id}}/edit"><button type="button"  
+                                            <!-- Botón Para editar producto por sucursal-->
+                                            <a href="/sucursalproducto/{{$product->id}}/edit"><button type="button"
                                             class="btn btn-icon btn-primary waves-effect waves-light waves-round"
                                             data-toggle="tooltip" data-original-title="Editar">
                                             <i class=" icon md-edit" aria-hidden="true"></i></button></a>
@@ -101,7 +115,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                                 data-toggle="tooltip" data-original-title="Borrar">
                                                 <i class="icon md-delete" aria-hidden="true"></i>
                                             </button>
-                                            <!-- END Botón-->                   
+                                            <!-- END Botón-->
                                         </td>
                                         @endif
                                       </tr>
@@ -118,7 +132,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                     <table id="product_table_pz"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                       <thead>
                                       {{ csrf_field() }}
-                                        <tr>  
+                                        <tr>
                                           <th>Clave</th>
                                           <th>Descripción</th>
                                           <th>Categoría</th>
@@ -146,30 +160,27 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                         <th>Precio Compra</th>
                                         <th>Opciones</th>
                                         @endif
-                                      </tr> 
+                                      </tr>
                                     </tfoot>
                                     <tbody>
                                     @foreach ($products as $i => $branchproduct)
                                     @if($branchproduct->category->type_product == 1 )
                                       <tr id="row{{$branchproduct->id}}">
-                                        <td>{{ $branchproduct->clave }}</td> 
+                                        <td>{{ $branchproduct->clave }}</td>
                                         <td>{{ $branchproduct->description }}</td>
                                         <td>{{ ($branchproduct->category) ? $branchproduct->category->name : '' }}</td>
                                         <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                                         <td>{{ $branchproduct->observations }}</td>
                                         <td>
-                                          @php
-                                            $image = route('images',"app/public/upload/products/$branchproduct->image")
-							                            @endphp
-							                          <img width="100px" height="100px" src="{{ $image }}">
-                                        </td>                                      
+                                        <img width="100px" height="100px" src="{{ $product->image }}">
+                                        </td>
                                         <td>{{$branchproduct->status->name}}</td>
                                         <td>{{$branchproduct->pricepzt}}
                                         @if(Auth::user()->type_user == 1)
                                         <td>{{$branchproduct->price_purchase}}
-                                        <td>   
-                                            <!-- Botón Para editar producto por sucursal-->    
-                                            <a href="/sucursalproducto/{{$branchproduct->id}}/edit"><button type="button"  
+                                        <td>
+                                            <!-- Botón Para editar producto por sucursal-->
+                                            <a href="/sucursalproducto/{{$branchproduct->id}}/edit"><button type="button"
                                             class="btn btn-icon btn-primary waves-effect waves-light waves-round"
                                             data-toggle="tooltip" data-original-title="Editar">
                                             <i class=" icon md-edit" aria-hidden="true"></i></button></a>
@@ -180,7 +191,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                                 data-toggle="tooltip" data-original-title="Borrar">
                                                 <i class="icon md-delete" aria-hidden="true"></i>
                                             </button>
-                                            <!-- END Botón--> 
+                                            <!-- END Botón-->
                                           </td>
                                         @endif
                                       </tr>
@@ -243,7 +254,7 @@ $(document).ready(function() {
               'El registro ha sido eliminado.',
               'success'
             )
-          }, 
+          },
           error: function () {
             Swal.fire(
               'Eliminado',
@@ -261,5 +272,3 @@ $(document).ready(function() {
 </script>
 @endsection
 <!--END Función-->
-
-

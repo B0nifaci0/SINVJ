@@ -13,14 +13,14 @@ class User extends Authenticatable
 
   // Tipos de usuario
   //AA = application administrator
-  const AA= '1';
+  const AA = '1';
   // SA = sub administrator
   const SA = '2';
   // CO = collaborator
   const CO = '3';
 
 
-  // Tipos de suscripcion
+  // Tipos de suscripcion 
   const FREE = '0';
   const PREMIUM = '1';
   const PRO = '2';
@@ -38,7 +38,14 @@ class User extends Authenticatable
 	 * @var array
 	 */
 	protected $fillable = [
-		'name','email','type_user' ,'suscription_type','password','shop_id','terms_conditions','branch_id','salary',
+		'name',
+		'email',
+		'type_user' ,'suscription_type',
+		'password',
+		'shop_id',
+		'terms_conditions',
+		'branch_id',
+		'salary',
 	];
 
 	/**
@@ -47,7 +54,8 @@ class User extends Authenticatable
 	 * @var array
 	 */
 	protected $hidden = [
-		'password', 'remember_token',
+		'password',
+		'remember_token',
 	];
 
 	public function shop()

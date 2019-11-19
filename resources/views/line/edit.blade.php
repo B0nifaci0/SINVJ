@@ -38,11 +38,11 @@ EDITAR LINEA
       </div>
             <div class="form-group form-material col-md-4">
                <label class="form-control-label" for="inputBasicLastName">Precio venta:</label>
-               <input type="text" class="form-control" name="sale_price" value="{{old('price')}}" required="required" placeholder="$1200" />
+               <input type="text" class="form-control" name="sale_price" value="{{$line->sale_price}}" required="required" placeholder="$1200" />
       </div>  
       <div class="form-group form-material col-md-4">
                <label class="form-control-label" for="inputBasicLastName">Tope de descuento:</label>
-               <input type="text" class="form-control" name="discount_percentage" value="{{old('discount_percentage')}}" required="required" placeholder="%" />
+               <input type="text" class="form-control" name="discount_percentage" value="{{$line->discount_percentage}}" required="required" placeholder="$" />
       </div>
 
         <div class="form-group col-md-12">

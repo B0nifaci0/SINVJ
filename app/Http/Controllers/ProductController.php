@@ -18,10 +18,12 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
-use Illuminate\Support\Facades\Storage;
+use App\Traits\S3ImageManager;
 
 class ProductController extends Controller
 {
+
+  use S3ImageManager;
 
 	public function __construct(){
 
@@ -30,39 +32,52 @@ class ProductController extends Controller
 	public function index()
 	{
     	$user = Auth::user();
-  
     	$shop_id = $user->shop->id;
     	if($user->type_user == User::CO) {
-    		$products = Product::where('branch_id', $user->branch_id)->get();
+    		$products = Product::where([
+          'branch_id' => $user->branch_id,
+          'status_id' => 2
+          ])->get();
     	} else {
-    		$products = Shop::find($shop_id)->products()->get();
+      	$branches = Branch::where('shop_id', $user->shop->id)->get();
+      	$branch_ids = $branches->map(function($item) {
+      	  return $item->id;
+        });
+        $products = Shop::find($shop_id)
+          ->products()
+          ->whereIn('branch_id', $branch_ids)
+          ->where('status_id', 2)
+          ->get();
     	}
 
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
-
-		foreach ($products as $product) {
+    foreach ($products as $product) {
 			if($product->image) {
-				$command = $adapter->getClient()->getCommand('GetObject', [
-					'Bucket' => $adapter->getBucket(),
-					'Key' => $adapter->getPathPrefix(). 'products/' . $product->clave
-				]);
-		
-				$result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
-		
-				$product->image = (string) $result->getUri();
-			}
+        $path = 'products/' . $product->clave;
+      } else {
+        $path = 'dummy';
+      }
+
+      $command = $adapter->getClient()->getCommand('GetObject', [
+        'Bucket' => $adapter->getBucket(),
+        'Key' => $adapter->getPathPrefix(). $path
+      ]);
+
+      $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+
+      $product->image = (string) $result->getUri();
 		}
 
     	$shops = Auth::user()->shop()->get();
     	//return $shops;
-    	$category = Auth::user()->shop->id;  
+    	$category = Auth::user()->shop->id;
     	$categories = Shop::find($category)->categories()->get();
-    	$line = Auth::user()->shop->id; 
+    	$line = Auth::user()->shop->id;
     	$lines = Shop::find($line)->lines()->get();
-    	//return $lines;  
+    	//return $lines;
     	$status = Auth::user()->shop->id;
-    	$statuses = Shop::find($status)->statuss()->get();
-		// return $products;
+    	$statuses = Status::all();
+		  //  return $products;
     	return view('product/index', compact('user','categories','lines','shops','statuses','products'));
   }
 
@@ -84,18 +99,33 @@ class ProductController extends Controller
         return view('product/index', compact('user', 'categories','lines','shops','statuses','products'));
     }
 /** Listar todos los  Porductos de la tienda  para los colaboradores /productosCO */
-    public function indexCO()
+    public function indexCO()  
     {
         $user = Auth::user();
         $shop_id = $user->shop->id;
         $shops = Auth::user()->shop()->get();
         $categories = Shop::find($shop_id)->categories()->get();
         $lines = Shop::find($shop_id)->lines()->get();
-        $statuses = Shop::find($shop_id)->statuss()->get();
+        //$statuses = Shop::find($shop_id)->statuss()->get();
+        $statuses = Status::all();
         $products = Shop::find($shop_id)->products()->get();
+        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+
+        foreach ($products as $product) {
+          if($product->image) {
+            $command = $adapter->getClient()->getCommand('GetObject', [
+              'Bucket' => $adapter->getBucket(),
+              'Key' => $adapter->getPathPrefix(). 'products/' . $product->clave
+            ]);
+
+            $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+
+            $product->image = (string) $result->getUri();
          //return $products;
         return view('product/productCO/index', compact('user', 'categories','lines','shops','statuses','products'));
     }
+  }
+}
 
     /**
      * Show the form for creating a new resource.
@@ -107,15 +137,15 @@ class ProductController extends Controller
         $category = Auth::user()->shop->id;
         //return $category;
         $user = Auth::user();
-        $line = Auth::user()->shop->id; 
+        $line = Auth::user()->shop->id;
         $shops = Auth::user()->shop()->get();
-        //return $shops;  
+        //return $shops;
         $categories = Shop::find($category)->categories()->get();
         //$categories;
         $lines = Shop::find($line)->lines()->get();
-        //return $lines;  
+        //return $lines;
         $status = Auth::user()->shop->id;
-        $statuses = Shop::find($status)->statuss()->get();
+    	  $statuses = Status::all();
         return view('product/add', compact('user', 'categories','lines','shops','statuses'));
     }
 
@@ -142,16 +172,16 @@ class ProductController extends Controller
         $total = $product->description;
         if($total == $request->description){
           return redirect('/products')->with('mesage', 'El nombre que intentas registrar ya existe!');
-          }
         }
-        
+      }
+
         $data = $request->all();
-        $data['price'] = ($request->pricepz) ? $request->pricepz : $request->price;
-        $data['discount'] = $request->max_discount; 
+        $data['price'] = ($request->pricepzt) ? $request->pricepzt : $request->price;
+        $data['discount'] = $request->max_discount;
         $data['user_id'] = Auth::user()->id;
         $data['price_purchase'] = $request->price_purchase;
-        $data['status_id'] = $request->status_id;
-        
+        $data['status_id'] = 2;
+
         $category = Category::find($request->category_id);
         if($category->type_product == 1) {
           $data['line_id'] = null;
@@ -168,7 +198,6 @@ class ProductController extends Controller
       // }
 
 		if($request->hasFile('image')) {
-
 			$adapter = Storage::disk('s3')->getDriver()->getAdapter();
 			$image = file_get_contents($request->file('image')->path());
 			$base64Image = base64_encode($image);
@@ -198,25 +227,24 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-     
+
         $category = Auth::user()->shop->id;
-        //return $category;
         $user = Auth::user();
         #$categories = Category::all();
-        $line = Auth::user()->shop->id; 
+        $line = Auth::user()->shop->id;
         $shops = Auth::user()->shop()->get();
-        //return $shops;  
-        $categorys = Shop::find($category)->categories()->get();
+        //return $shops;
+        $categories = Shop::find($category)->categories()->get();
         $lines = Shop::find($line)->lines()->get();
-        $branch = Auth::user()->shop->id; 
-        $branches = Shop::find($branch)->branches()->get(); 
-        //return $lines;  
-        $status = Auth::user()->shop->id;
-        $statuses = Shop::find($status)->statuss()->get();
+        $branch = Auth::user()->shop->id;
+        $branches = Shop::find($branch)->branches()->get();
+        //$status = Auth::user()->shop->id;
+        //$statuses = Shop::find($status)->statuss()->get();
+				$statuses = Status::all();
         $product = Product::find($id);
-        //return $product;
-        
-      return view('product/edit', compact('product', 'categorys','lines','shops','branches','statuses','user'));
+        // return $product; 
+
+      return view('product/edit', compact('product', 'categories','lines','shops','branches','statuses','user'));
     }
 
     /**
@@ -225,24 +253,22 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
-     */ 
+     */
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
 
-        if ($request->hasFile('image')){
+        if($request->hasFile('image')) {
+          $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+          $image = file_get_contents($request->file('image')->path());
+          $base64Image = base64_encode($image);
+          $path = 'products';
+          $product->image = $this->saveImages($base64Image, $path, $product->clave);
+        }
 
-          // Borrar imagen anterior
-          Storage::delete("public/upload/products/{$product->image}");
-
-          $filename = $request->image->getCLientOriginalName();
-          $timestamp = time();
-          $request->image->storeAs('public/upload/products', $timestamp . $filename);
-          $product->image = $timestamp . $filename;
-      }
          $product->description = $request->description;
          $product->weigth = $request->weigth;
-         $product->observations = $request->observations;  
+         $product->observations = $request->observations;
          $product->price = $request->price;
           $product->inventory = $request->inventory;
          $product->save();
@@ -261,7 +287,7 @@ class ProductController extends Controller
         public function destroy($id)
         {
           Product::destroy($id);
-        // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');    
+        // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
         }
 /**TERMINA FUNCIONES DE CRUD DE PRODUCTOS */
 
@@ -270,15 +296,15 @@ class ProductController extends Controller
         $product = Auth::user()->shop->id;
         $products = Shop::find($product)->products()->get();
         //return $products;
-        $user = Auth::user(); 
+        $user = Auth::user();
         //$categories = Category::all();
-        $shops = Auth::user()->shop()->get(); 
+        $shops = Auth::user()->shop()->get();
         //return $shops;
-        $category = Auth::user()->shop->id;  
+        $category = Auth::user()->shop->id;
         $categories = Shop::find($category)->categories()->get();
-        $line = Auth::user()->shop->id; 
+        $line = Auth::user()->shop->id;
         $lines = Shop::find($line)->lines()->get();
-        //return $lines;  
+        //return $lines;
         $status = Auth::user()->shop->id;
         $statuses = Shop::find($status)->statuss()->get();
       $pdf  = PDF::loadView('product.pdf', compact('user', 'categories','lines','shops','statuses','products'));
@@ -287,7 +313,7 @@ class ProductController extends Controller
 
     /**
      * Funcion para la vista del Reporte por Producto por Sucursal status
-     * 
+     *
      ***/
 
      public function reportProduct(){
@@ -296,10 +322,10 @@ class ProductController extends Controller
          $branch = Shop::find($idshop)->branches()->get();
          $status = Shop::find($idshop)->statuss()->get();
          $line = Shop::find($idshop)->lines()->get();
-        $category = Auth::user()->shop->id;  
+        $category = Auth::user()->shop->id;
         $categories = Shop::find($category)->categories()->get();
          //return $categories;
-    
+
       return view('product.Reports.reportproduct',compact('branch','user','status','line','categories'));
      }
 
@@ -310,7 +336,7 @@ class ProductController extends Controller
       $idshop = Auth::user()->shop->id;
       $status = Shop::find($idshop)->statuss()->get();
       $line = Shop::find($idshop)->lines()->get();
-      $category = Auth::user()->shop->id;  
+      $category = Auth::user()->shop->id;
       $categories = Shop::find($category)->categories()->get();
 
       $status = $request->estatus_id;
@@ -331,7 +357,7 @@ class ProductController extends Controller
                           ->where("category_id","=",$request->category_id)
                           ->where("line_id","=",$request->id)
                           ->get();
-      
+
 /**Finaliza codigo de las consultas por campos seleccionados */
 
 /**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
@@ -340,9 +366,9 @@ class ProductController extends Controller
       $hour = Carbon::now();
       $hour = date('H:i:s');
 
-      $dates = Carbon::now(); 
+      $dates = Carbon::now();
       $dates = $dates->format('d-m-Y');
-      
+
       $total = 0;
       foreach($products as $product){
       $total = $product->weigth + $total;
@@ -359,14 +385,14 @@ class ProductController extends Controller
         foreach($lines as $line){
           $precio = $line->purchase_price;
         }
-        
+
         $compra = $total * $precio;
         $utilidad = $cash - $compra;
 
 /**Finalizan consultas de folio de la venta, la hora y el dia */
 
 /**Variable para retornar los archivos que podran ser descargados en pdf
- * contiene las variables de las cuales se hicieron las consultas para poder 
+ * contiene las variables de las cuales se hicieron las consultas para poder
  * hacer uso de la informacion de cada consulta
  */
 
@@ -374,7 +400,7 @@ class ProductController extends Controller
       return $pdf->download('ReporteEstatus.pdf');
 
 /**Termina el retorno del pdf */
-      
+
      }
 
      public function reportLineaG(Request $request){
@@ -391,26 +417,26 @@ class ProductController extends Controller
 
         $cash = 0;
         foreach($products as $product){
-          $cash = $product->price + $cash;  
+          $cash = $product->price + $cash;
         }
 
         $precio = 0;
         foreach($lines as $line){
           $precio = $line->purchase_price;
         }
-        
+
         $compra = $total * $precio;
         $utilidad = $cash - $compra;
 
 
       $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('products','branches','lines','total','cash','compra','utilidad'));
       return $pdf->stream('ReporteLineas.pdf');
-    } 
+    }
 //**Reporte de Entradas De Prosuctos Por Fechas */
     public function reportEntradas(Request $request){
 //return $request;
       $fech1 = Carbon::parse($request->fecini)->format('Y-m-d');
-      $fech2 = Carbon::parse($request->fecter)->format('Y-m-d');                
+      $fech2 = Carbon::parse($request->fecter)->format('Y-m-d');
       /**
        * Checar este if para la validacion de la fecha de un rango de 1 a 1
        */
@@ -426,7 +452,7 @@ class ProductController extends Controller
                           //return $products;
                           $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
                           return $pdf->download('ReporteEntradas.pdf');
-                                
+
       }elseif($fech1 != $fech2){
         $branches = Branch::where("id","=",$request->branch_id)->get();
         $lines = Line::where("id","=",$request->id)->get();
@@ -439,7 +465,7 @@ class ProductController extends Controller
 
                             $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('products','branches','lines'));
                             return $pdf->download('ReporteEntradas.pdf');
-                       
+
       }/**elseif($fech1 == $fech2){
         $branches = Branch::where("id","=",$request->branch_id)->get();
         $lines = Line::where("id","=",$request->id)->get();
@@ -449,14 +475,14 @@ class ProductController extends Controller
                             ->get();
                     return $products;
 
-      }*/                       
+      }*/
     }
 
     public function reportLineaGGeneral(){
-      $branches= Auth::user()->shop->branches;   
+      $branches= Auth::user()->shop->branches;
       $product = Auth::user()->shop->id;
       $products = Shop::find($product)->products()->get();
-      $line = Auth::user()->shop->id; 
+      $line = Auth::user()->shop->id;
       $lines = Shop::find($line)->lines()->get();
       $category = Auth::user()->shop->categories;
       $products = Shop::find($product)->products()->where('status_id',2)->get();
@@ -475,8 +501,8 @@ class ProductController extends Controller
         foreach($lines as $line){
           $precio = $line->purchase_price;
         }
-        
-  
+
+
     $pdf  = PDF::loadView('product.Reports.reportLineaGGeneral', compact('branches','lines','products','total','cash','precio'));
     return $pdf->stream('ReporteLineasGeneral.pdf');
   }
@@ -500,7 +526,7 @@ class ProductController extends Controller
    $hour = Carbon::now();
     $hour = date('H:i:s');
 
-      $dates = Carbon::now(); 
+      $dates = Carbon::now();
       $dates = $dates->format('d-m-Y');
 
     $total = 0;
@@ -520,17 +546,17 @@ class ProductController extends Controller
 
       $compra = $total * $precio;
       $utilidad = $cash - $compra;
-      
+
 
   $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('branches','categories','id_shop','lines','products','total','cash','precio','hour','dates','sales','compra','utilidad'));
   return $pdf->stream('ReporteEstatusGeneral.pdf');
   }
-  
+
   //** función que genera el reporte  general de productos por gramos-entradas */
   public function reportEntradasG_pgr(Request $request){
-    $branches= Auth::user()->shop->branches;   
+    $branches= Auth::user()->shop->branches;
     $shop_id = Auth::user()->shop->id;
-    #pasar fecha actual 
+    #pasar fecha actual
     $category_type_product = category::find($shop_id)->get();
    //return $category_type_product;
     $products = Shop::join('products','products.shop_id','shops.id')
@@ -541,7 +567,7 @@ class ProductController extends Controller
     ->where('categories.type_product',2)
     ->where('statuss.id',2)->get();
   //return $products;
-    $status = Shop::find($shop_id)->statuss()->get(); 
+    $status = Shop::find($shop_id)->statuss()->get();
     //return $status;
     $lines = Shop::find($shop_id)->lines()->get();
     foreach($lines as $line){
@@ -551,7 +577,7 @@ class ProductController extends Controller
       $hour = Carbon::now();
       $hour = date('H:i:s');
 
-      $dates = Carbon::now(); 
+      $dates = Carbon::now();
       $dates = $dates->format('d-m-Y');
 
     $total = 0;
@@ -571,7 +597,7 @@ class ProductController extends Controller
 
       $compra = $total * $precio;
       $utilidad = $cash - $compra;
-      
+
       //return $products;
 
   $pdf  = PDF::loadView('product.Reports.reportEntradasG_pgr', compact('branches','lines','products','total','cash','precio','hour','dates','compra','utilidad'));
@@ -580,12 +606,12 @@ class ProductController extends Controller
 
   //** función que genera el reporte  general de productos por pieza-entradas **//
   public function reportEntradasP_pz(Request $request){
-     $branches= Auth::user()->shop->branches;   
+     $branches= Auth::user()->shop->branches;
     $shop_id = Auth::user()->shop->id;
-    #pasar fecha actual 
+    #pasar fecha actual
     //$category_type_product = category::find($shop_id)->get();
    //return $category_type_product;
-    $status = Shop::find($shop_id)->statuss()->get(); 
+    $status = Shop::find($shop_id)->statuss()->get();
     $categories = Shop::find($shop_id)->categories()->get();
     $products = Shop::join('products','products.shop_id','shops.id')
     ->join('categories','categories.id','products.category_id')
@@ -596,7 +622,7 @@ class ProductController extends Controller
      //return $products;
     $hour = Carbon::now();
     $hour = date('H:i:s');
-    $dates = Carbon::now(); 
+    $dates = Carbon::now();
     $dates = $dates->format('d-m-Y');
     foreach($products as $product){
 
@@ -608,26 +634,26 @@ class ProductController extends Controller
       $product->total_price_purchase = $product->price_purchase + $total;
       }**/
       //return $total_price_purchase;
-      
+
       $total_sale_price = 0;
       foreach($products as $product){
         $total_sale_price = $product->pricepzt;
       }
 
-    
+
 
       //$compra = $total * $precio;
       //$utilidad = $cash - $compra;
-      
+
       //return $total_sale_price;
 
   $pdf  = PDF::loadView('product.Reports.reportEntradasGppz', compact('branches','categories','products','total','total_sale_price','hour','dates'));
   return $pdf->stream('R.EntradasGeneral_ppz.pdf');
   }
-  
+
 /**Reporte para sacar la utilida de productos por pzs */
   public function reportProductpzs(Request $request){
-    $dates = Carbon::now(); 
+    $dates = Carbon::now();
     $dates = $dates->format('d-m-Y');
     $hour = Carbon::now();
     $hour = date('H:i:s');
@@ -647,19 +673,4 @@ class ProductController extends Controller
    //return response()->json(['productos'=>$productos,'sumprice'=>$sumprice, 'utilida'=>$descuento, 'total'=>$total]);
   }
 
-	private function saveImages($base_64, $path, $name)
-	{
-		// Prepare image
-		$base_64 = str_replace('data:image/png;base64,', '', $base_64);
-		$base_64 = str_replace('data:image/jpg;base64,', '', $base_64);
-		$base_64 = str_replace('data:image/jpeg;base64,', '', $base_64);
-		$base_64 = str_replace(' ', '+', $base_64);
-
-		$image = base64_decode($base_64);
-
-
-		$path = $path . '/' . $name;
-		Storage::disk('s3')->put($path, $image);
-		return  $path;
-	}
 }

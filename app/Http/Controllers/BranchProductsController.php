@@ -23,33 +23,48 @@ class BranchProductsController extends Controller
 
 {
   /** Función para listar los productos por sucursal pra el usuario administrador y sub-administrador  */
-  public function index($id)  
+  public function index($id)
   {
       $user = Auth::user();
-      $branches= Branch::find($id);
-      $shop_id = Auth::user()->shop->id;  
+      $branch= Branch::find($id);
+      $shop_id = Auth::user()->shop->id;
       $categories = Shop::find($shop_id)->categories()->get();
       $lines = Shop::find($shop_id)->lines()->get();
-      $statuses = Shop::find($shop_id)->statuss()->get();
+    	$statuses = Status::all();
       $products = Product::withTrashed()->where('branch_id','=',$id)->get();
-      //return $products;
-      return view('Branches/branchproduct', compact('branches','products','user','categories','lines','statuses')); 
+      
+      $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+
+      foreach ($products as $product) {
+        if($product->image) {
+          $command = $adapter->getClient()->getCommand('GetObject', [
+            'Bucket' => $adapter->getBucket(),
+            'Key' => $adapter->getPathPrefix(). 'products/' . $product->clave
+          ]);
+  
+          $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+  
+          $product->image = (string) $result->getUri();
+        }
+      }
+
+      return view('Branches/branchproduct', compact('branch','products','user','categories','lines','statuses'));
   }
   public function edit($id)
     {
         $user = Auth::user();
         $category = Auth::user()->shop->id;
         $user = Auth::user();
-        $line = Auth::user()->shop->id; 
+        $line = Auth::user()->shop->id;
         $shops = Auth::user()->shop()->get();
         $categorys = Shop::find($category)->categories()->get();
         $lines = Shop::find($line)->lines()->get();
-        $branch = Auth::user()->shop->id; 
+        $branch = Auth::user()->shop->id;
         $branches = Shop::find($branch)->branches()->get();
         $status = Auth::user()->shop->id;
         $statuses = Shop::find($status)->statuss()->get();
         $product = Product::find($id);
-        
+
       return view('Branches/editproduct', compact('product', 'categorys','lines','shops','branches','statuses','user'));
     }
     public function update(Request $request, $id)
@@ -66,13 +81,13 @@ class BranchProductsController extends Controller
           $timestamp = time();
           $request->image->storeAs('public/upload/products', $timestamp . $filename);
           $product->image = $timestamp . $filename;
-      } 
+      }
 
          $product->description = $request->description;
          $product->weigth = $request->weigth;
          $product->observations = $request->observations;
          $product->price = $request->price;
-         
+
          $product->inventory = $request->inventory;
 
          $product->save();
@@ -84,7 +99,7 @@ class BranchProductsController extends Controller
     {
       Product::destroy($id);
     // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
-  
+
     }
   public function exportPdf($id){
       $branches= Branch::find($id);
@@ -100,6 +115,6 @@ class BranchProductsController extends Controller
       //return $branches;
       $products = Product::withTrashed()->where('branch_id','=',$id)->get();
       //return $products;
-      return view('Branches/Inventory/biproduct', compact('branches','id','products','user')); 
+      return view('Branches/Inventory/biproduct', compact('branches','id','products','user'));
     }
 }

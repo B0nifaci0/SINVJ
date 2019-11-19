@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js css-menubar" lang="en">
-  <head>    
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -8,12 +8,12 @@
     <meta name="_token" content="{{ csrf_token() }}"/>
 
     <meta name="author" content="">
-    
+
     <title>Admin | SINVJ</title>
-    
+
     <link rel="apple-touch-icon" href={{{url('/assets/images/apple-touch-icon.png')}}}>
     <link rel="shortcut icon" href={{{url('/assets/images/favicon.ico')}}}>
-    
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href={{{url('global/css/bootstrap.min.css')}}}>
     <link rel="stylesheet" href={{{url('global/css/bootstrap-extend.min.css')}}}>
@@ -26,7 +26,7 @@
 
 
 
-             
+
     <!-- Plugins -->
         <!--<link rel="stylesheet" href={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}}>-->
     <link rel="stylesheet" href={{{url('global/vendor/animsition/animsition.css')}}}>
@@ -70,12 +70,12 @@
     <!--[if lt IE 9]-->
     <script src={{{url('global/vendor/html5shiv/html5shiv.min.js')}}}></script>
     <!--[endif]-->
-    
+
     <!--[if lt IE 10]-->
     <script src={{{url('global/vendor/media-match/media.match.min.js')}}}></script>
     <script src={{{url('global/vendor/respond/respond.min.js')}}}></script>
     <!--[endif]-->
-    
+
     <!-- Scripts -->
     <script src={{{url('global/vendor/breakpoints/breakpoints.js')}}}></script>
 
@@ -92,7 +92,7 @@
       @yield('nav')
       <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega navbar-inverse"
       role="navigation">
-    
+
       <div class="navbar-header">
         <button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
           data-toggle="menubar">
@@ -113,7 +113,7 @@
           <i class="icon md-search" aria-hidden="true"></i>
         </button>
       </div>
-    
+
       <div class="navbar-container container-fluid">
         <!-- Navbar Collapse -->
         <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
@@ -140,13 +140,13 @@
                 <span class="sr-only">Toggle Search</span>
               </a>
             </li>
-            
+
           </ul>
           <!-- End Navbar Toolbar -->
-    
+
           <!-- Navbar Toolbar Right -->
           <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
-      
+
             <li class="nav-item dropdown">
               <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
                 data-animation="scale-up" role="button">
@@ -161,7 +161,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i>Cerrar Sesión</a>
               </div>
-            </li> 
+            </li>
             <!--Notifications-->
             <!--<li class="nav-item dropdown">
               <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
@@ -174,7 +174,7 @@
                   <h5>NOTIFICATIONS</h5>
                   <span class="badge badge-round badge-danger">New 5</span>
                 </div>
-    
+
                 <div class="list-group">
                   <div data-role="container">
                     <div data-role="content">
@@ -260,7 +260,7 @@
                   <h5>MESSAGES</h5>
                   <span class="badge badge-round badge-info">New 3</span>
                 </div>
-    
+
                 <div class="list-group" role="presentation">
                   <div data-role="container">
                     <div data-role="content">
@@ -366,7 +366,7 @@
           </div>
         </div>
         <!-- End Navbar Collapse -->
-    
+
         <!-- Site Navbar Seach -->
         <div class="collapse navbar-search-overlap" id="site-navbar-search">
           <form role="search">
@@ -382,11 +382,11 @@
         </div>
         <!-- End Site Navbar Seach -->
       </div>
-    </nav>      
+    </nav>
 </section>
 
 <section>
-  
+
   @yield('menu')
   <div class="site-menubar">
       <div class="site-menubar-header">
@@ -415,7 +415,7 @@
             </div>
           </div>
         </div>
-      </div>  
+      </div>
       <div class="site-menubar-body">
         <div>
           <div>
@@ -445,7 +445,7 @@
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/productos">
                           <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
-                            <span class="site-menu-title">Mis Productos</span>
+                            <span class="site-menu-title">Productos</span>
                         </a>
                       </li>
                     </ul>
@@ -523,7 +523,7 @@
                           <span class="site-menu-title">Estatus</span>
                       </a>
                     </li>
-                    
+
                     <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
                       <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
@@ -547,7 +547,7 @@
                       </li>
                     </ul>
                   </li>
-                    
+
                     <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
                       <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
@@ -570,8 +570,8 @@
                       </a>
                     </li>
                     </ul>
-                  </li> 
-                  </ul> 
+                  </li>
+                  </ul>
                 </li>
                   <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
@@ -662,7 +662,7 @@
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/productos">
                           <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
-                            <span class="site-menu-title">Mis Productos</span>
+                            <span class="site-menu-title">Productos Tienda</span>
                         </a>
                       </li>
                     </ul>
@@ -686,7 +686,7 @@
                             <span class="site-menu-title">Sucursales</span>
                         </a>
                       </li>
-                      
+
 
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/categorias">
@@ -722,7 +722,7 @@
                             <span class="site-menu-title">Estatus</span>
                         </a>
                       </li>
-                      
+
 
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/pagos">
@@ -788,7 +788,7 @@
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/sucursalproductoCO">
                           <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
-                            <span class="site-menu-title">Mis Productos</span>
+                            <span class="site-menu-title">Productos Tienda</span>
                         </a>
                       </li>
                     </ul>
@@ -863,14 +863,14 @@
                       </a>
                     </li>
                     </ul>
-                  </li> 
-                  </ul> 
+                  </li>
+                  </ul>
                   </li>
                     </ul>
                   </li>
                 </ul>
               @endif
-                <!-- CO =(3) END-Colaborador-->    
+                <!-- CO =(3) END-Colaborador-->
             </div>
           </div>
         </div>
@@ -880,7 +880,7 @@
 <section>
   @yield('content')
 </section>
-<!-- Footer 
+<!-- Footer
   <section>
     @yield('footer')
     <footer class="site-footer">
@@ -904,14 +904,14 @@
     <script src={{{url('global/vendor/asscrollbar/jquery-asScrollbar.js')}}}></script>
     <script src={{{url('global/vendor/asscrollable/jquery-asScrollable.js')}}}></script>
     <script src={{{url('global/vendor/waves/waves.js')}}}></script>
-    
-    <!-- Plugins -->    
+
+    <!-- Plugins -->
     <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
     <script src={{{url('global/vendor/switchery/switchery.js')}}}></script>
     <script src={{{url('global/vendor/intro-js/intro.js')}}}></script>
     <script src={{{url('global/vendor/screenfull/screenfull.js')}}}></script>
     <script src={{{url('global/vendor/slidepanel/jquery-slidePanel.js')}}}></script>
-    <script src={{{url('global/vendor/chartist/chartist.min.js')}}}></script> 
+    <script src={{{url('global/vendor/chartist/chartist.min.js')}}}></script>
     <!--<script src={{{url('global/vendor/jvectormap/jquery-jvectormap.min.js')}}}></script>-->
     <!--<script src={{{url('global/vendor/jvectormap/maps/jquery-jvectormap-world-mill-en.js')}}}></script>-->
     <script src={{{url('global/vendor/matchheight/jquery.matchHeight-min.js')}}}></script>
@@ -929,24 +929,24 @@
     <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-validate.js')}}}></script>
     <script src={{{url('global/vendor/blueimp-file-upload/jquery.fileupload-ui.js')}}}></script>
     <script src={{{url('global/vendor/dropify/dropify.min.js')}}}></script>-->
-    
-          
+
+
     <!-- Scripts -->
     <script src={{{url('global/js/Component.js')}}}></script>
     <script src={{{url('global/js/Plugin.js')}}}></script>
     <script src={{{url('global/js/Base.js')}}}></script>
     <script src={{{url('global/js/Config.js')}}}></script>
-    
+
     <script src={{{url('assets/js/Section/Menubar.js')}}}></script>
     <script src={{{url('assets/js/Section/Sidebar.js')}}}></script>
     <script src={{{url('assets/js/Section/PageAside.js')}}}></script>
     <script src={{{url('assets/js/Plugin/menu.js')}}}></script>
-    
+
     <!-- Config -->
     <script src={{{url('global/js/config/colors.js')}}}></script>
     <script src={{{url('assets/js/config/tour.js')}}}></script>
     <!--<script>Config.set({{{url('assets')}}},{{{url('assets')}}});</script>-->
-    
+
     <!-- Page -->
     <script src={{{url('assets/js/Site.js')}}}></script>
     <script src={{{url('global/js/Plugin/asscrollable.js')}}}></script>
@@ -979,7 +979,7 @@
         <script src={{{url('global/vendor/bootbox/bootbox.js')}}}></script>
         <script src={{{url('global/js/Plugin/switchery.js')}}}></script>
         <script src={{{url('global/js/Plugin/datatables.js')}}}></script>
-    
+
         <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
         <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
 
@@ -1040,6 +1040,6 @@
     @show
     @section('traspaso')
     @show
- 
+
 </body>
 </html>

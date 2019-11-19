@@ -10,11 +10,11 @@ LISTA DE  SUCURSALES
 
 @endsection
 @section('menu')
-  
+
 @endsection
 @section('content')
   <div class="panel-body">
-	@if (session('mesage'))	
+	@if (session('mesage'))
 	<div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -22,7 +22,7 @@ LISTA DE  SUCURSALES
   </button>
 	</div>
 		@endif
-    @if (session('mesage-update'))	
+    @if (session('mesage-update'))
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage-update') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -30,14 +30,14 @@ LISTA DE  SUCURSALES
   </button>
 	</div>
 		@endif
-			@if (session('mesage-delete'))	
+			@if (session('mesage-delete'))
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage-delete') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 	</div>
-		@endif    
+		@endif
   <div class="page-content">
         <!-- Panel Basic -->
     <div class="panel">
@@ -77,49 +77,49 @@ LISTA DE  SUCURSALES
                     <!-- <td>{{$branch->id}}</td>  -->
                     <td>{{$branch->name }}</td>
                       <!-- <td>{{$branch->shop->name }}</td> -->
-                    <td>  
-                    @if(Auth::user()->type_user == 1 ) 
-                      <!-- Botón para editar sucursal--> 
-                      <a href="/sucursales/{{$branch->id}}/edit"><button type="button" 
+                    <td>
+                    @if(Auth::user()->type_user == 1 )
+                      <!-- Botón para editar sucursal-->
+                      <a href="/sucursales/{{$branch->id}}/edit"><button type="button"
                       class="btn btn-icon btn-primary waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Editar">
                       <i class=" icon md-edit" aria-hidden="true"></i></button></a>
-                      <!--END Botón -->  
+                      <!--END Botón -->
                       <!-- Botón para borrar sucursal-->
                       <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
                         alt="{{$branch->id}}" role="button"
                         data-toggle="tooltip" data-original-title="Borrar">
                         <i class="icon md-delete" aria-hidden="true"></i>
-                      </button> 
-                      <!--END Botón -->  
+                      </button>
+                      <!--END Botón -->
                       @endif
                       <!-- Botón para ver productos por sucursal-->
-                      <a href="/sucursales/{{$branch->id}}/producto"><button type="button" 
+                      <a href="/sucursales/{{$branch->id}}/producto"><button type="button"
                       class="btn btn-icon btn-warning waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Productos">
-                      <i class="icon md-label-heart" aria-hidden="true"></i></button></a> 
-                      <!--END Botón --> 
+                      <i class="icon md-label-heart" aria-hidden="true"></i></button></a>
+                      <!--END Botón -->
                       <!-- Botón para ver corte de venta corte pendiente  -->
-                      <!--<a href="/sucursales/{{$branch->id}}/corte"><button  type="button" 
-                      class="btn btn-icon  waves-effect waves-light waves-ligth" 
+                      <!--<a href="/sucursales/{{$branch->id}}/corte"><button  type="button"
+                      class="btn btn-icon  waves-effect waves-light waves-ligth"
                       data-toggle="tooltip" data-original-title="Corte">
-                      <i class="icon md-money" aria-hidden="true"></i></button></a> 
+                      <i class="icon md-money" aria-hidden="true"></i></button></a>
                       END Botón -->
-                       
+
                       <!--Botón para ver corte de venta corte pendiente-->
-                      <a href="/sucursales/corte"><button  type="button" 
-                      class="btn btn-icon  waves-effect waves-light waves-ligth" 
+                      <a href="/sucursales/corte"><button  type="button"
+                      class="btn btn-icon  waves-effect waves-light waves-ligth"
                       data-toggle="tooltip" data-original-title="Corte">
-                      <i class="icon md-money" aria-hidden="true"></i></button></a> 
+                      <i class="icon md-money" aria-hidden="true"></i></button></a>
                       <!--END Botón -->
 
-                      <!-- Botón para ver corte de venta -->
-                      <a href="/sucursales/{{$branch->id}}/inventario"><button  type="button" 
-                      class="btn btn-icon btn-success  waves-effect waves-light waves-ligth" 
+                      <!-- Botón para ver corte de venta
+                      <a href="/sucursales/{{$branch->id}}/inventario"><button  type="button"
+                      class="btn btn-icon btn-success  waves-effect waves-light waves-ligth"
                       data-toggle="tooltip" data-original-title="Inventario">
-                      <i class="icon md-check" aria-hidden="true"></i></button></a> 
-                      <!--END Botón -->
-                    </td> 
+                      <i class="icon md-check" aria-hidden="true"></i></button></a>
+                      END Botón -->
+                    </td>
                   </tr>
                   @endforeach
               </tbody>
@@ -149,7 +149,7 @@ $(document).ready(function() {
       cancelButtonColor: '#3085d6',
       confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
-      if (result.value) 
+      if (result.value)
       {
         $.ajaxSetup({
          headers: {
@@ -166,7 +166,7 @@ $(document).ready(function() {
               'El registro ha sido eliminado.',
               'success'
             )
-          }, 
+          },
           error: function () {
             Swal.fire(
               'Eliminado',

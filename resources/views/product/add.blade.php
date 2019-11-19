@@ -59,7 +59,7 @@ ALTA PRODUCTO
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricecp" class="form-group form-material col-md-3 remove">
               <label>Precio Compra</label>
-              <input type="text"  class="form-control"  name="price_purchase">
+              <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase">
             </div> 
             <!-- END Input-->
             <div   class="col-md-3 form-material remove">
@@ -201,33 +201,54 @@ $(document).ready(function(){
  
   
   }
-$('#categorie_id').change(function(){
+
+// var categoryTypeproduct = {!! $categories !!};
+// var categoryId = $(this).val();
+// var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == categoryId)[0];
+
+// Init category config
+setTimeout(() => {
   var categoryTypeproduct = {!! $categories !!};
-
-  var id = $(this).val();
-  var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == id)[0];
   
-//console.log("categoryTypeproduct", categoryTypeproduct);
-    
-    //alert('entra');
-    if(categoryTypeproduct.type_product == 1){
-      //alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
-    $('.remove').css('display', 'none');
-    $('#pricepz').css('display', 'initial'); 
-    $('#pricecp').css('display', 'initial'); 
-
-    //$('.removeClass').removeClass('invisible');
-    //$('#s').toggle();
-    }else if(categoryTypeproduct.type_product == 2){
+  categoryTypeproduct = categoryTypeproduct[0];  
+  if(categoryTypeproduct.type_product == 1){
+      $('.remove').css('display', 'none');
+      $('#pricepz').css('display', 'initial'); 
+      $('#pricecp').css('display', 'initial'); 
+    } else if(categoryTypeproduct.type_product == 2){
       console.log('<p>agregar campos</p>');
-     //alert(JSON.stringify('pz'+categoryTypeproduct.type_product));
-     //console.log()
-    $('.remove').css('display', 'initial');  
-    $('#pricepz').css('display', 'none');
-    $('#pricecp').css('display', 'none');
-  
+      $('.remove').css('display', 'initial');  
+      $('#pricepz').css('display', 'none');
+      $('#pricecp').css('display', 'none');
+    }  
+}, 1000);
+
+$('#categorie_id').change(function(){
+    $('#pricepz').val(0);
+    $('#pricecp').val(0)
+
+
+    var categoryTypeproduct = {!! $categories !!};
+    var categoryId = $(this).val();
+    var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == categoryId)[0];
+    if(categoryTypeproduct.type_product == 1){
+      // PZA
+      $('.remove').css('display', 'none');
+      $('#pricepz').css('display', 'initial'); 
+      $('#pricecp').css('display', 'initial'); 
+      // set purchase price for Pza products
+      console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
+      console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
+      $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
+    } else if(categoryTypeproduct.type_product == 2){
+      // Gramos
+      $('.remove').css('display', 'initial');  
+      $('#pricepz').css('display', 'none');
+      $('#pricecp').css('display', 'none');
     }
 });
+
+
 var lines = {!! $lines !!};
 var line = lines[0];
 //console.log("lines", lines);
@@ -242,9 +263,15 @@ $('#line_id').change(function() {
 
 $('#multiplicador').keyup(function(){
   var total = $('#line_price').val() * $(this).val();
-  var discount = total - (total * (Number(line.discount_percentage) / 100))
+  // var discount = total - (total * (Number(line.discount_percentage) / 100))
+  var discount = total - Number(line.discount_percentage)
   $('#discount').val(discount);
   $('#total').val(total);
+
+  // set purchase price for Pza products
+  console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
+  console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
+  $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
 });
 
 </script>
