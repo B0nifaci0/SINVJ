@@ -33,6 +33,21 @@ ALTA GASTOS
           <form class="" action="/gastos" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}   
             <div class="row">
+            <!-- Select para Seleccionar sucursal-->
+            @if (Auth::user()->id =='1')  
+            <div class="form-group col-md-6">
+            <label class="form-control-label" for="inputBasicLastName"> Seleccione Sucursal:</label>
+              <select name="branch_id" class="form-control round">
+                @php  
+                    $branches = $user->shop->branches;
+                @endphp
+                  @foreach($branches as $branch)
+                    <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
+                  @endforeach
+              </select>
+            </div>           
+            @endif
+            <!-- END Select-->  
               <!-- Input para ingresar el nombre del gasto -->
               <div class="form-group form-material col-md-6">
                 <label class="form-control-label" for="inputBasicLastName"> Nombre del Gasto:</label>

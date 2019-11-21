@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Shop;
 use App\User;
+use App\Branch;
 use App\store_expenses as Expenses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +47,7 @@ class ControllerExpenses extends Controller
         $user = Auth::user();
         //$shop = $user->branch->shop;
         $shops = Auth::user()->shop()->get();
+        $branches = Auth::user()->branch()->get();
         //return $shops;
         return view('storeExpenses/add ',compact('shops','user')); 
     }
