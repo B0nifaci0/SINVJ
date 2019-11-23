@@ -229,7 +229,7 @@ LISTA PRODUCTO
 
                                         <td>${{$product->price }}</td>
                                         @if(Auth::user()->type_user == 1)
-                                        <td>{{$product->price_purchase}}</td>
+                                        <td>${{$product->price_purchase}}</td>
                                         <td>
                                           <!-- Botón para editar producto-->
                                           <a href="/productos/{{$product->id}}/edit"><button type="button"

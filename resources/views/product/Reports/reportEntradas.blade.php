@@ -93,7 +93,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td align="center">${{$products->sum('weigth')}}</td>
+                        <td align="center">{{$products->sum('weigth')}}</td>
                     </tr>
                 </tbody> 
                 <br>   
