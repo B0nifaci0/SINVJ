@@ -71,7 +71,7 @@ MODIFICACIÓ PRODUCTO
           <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
             <label>Categoria</label>
               <select id="categorie_id" name="category_id" class="form-control round">
-                @foreach($categories as $category)            
+                @foreach($categorys as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
                 @endforeach
               </select>

@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
 use App\Traits\S3ImageManager;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
