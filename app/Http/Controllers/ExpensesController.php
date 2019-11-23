@@ -85,7 +85,6 @@ class ExpensesController extends Controller
         $user = Auth::user();
         if($user->type_user == User::AA) {
             if($request->branch_id) {
-                return "entra 1";
                 $data['branch_id'] = $request->branch_id;
             } else {
                 $data['shop_id'] = $user->shop->id;

@@ -54,6 +54,7 @@ class TrasferUserController extends Controller
           $products = Product::join('branches', 'branches.id', 'products.branch_id')
           ->join('shops', 'shops.id', 'branches.shop_id')
           ->where('shops.id', $shop_id)
+          ->where('products.status_id', 2)
           ->select(
             'products.clave',
             //'products.name',

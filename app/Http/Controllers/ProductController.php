@@ -49,7 +49,7 @@ class ProductController extends Controller
           ->whereIn('branch_id', $branch_ids)
           ->where('status_id', 2)
           ->get();
-    	}
+        }
 
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
     foreach ($products as $product) {
