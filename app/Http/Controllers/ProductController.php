@@ -287,7 +287,7 @@ class ProductController extends Controller
          $product->weigth = $request->weigth;
          $product->observations = $request->observations;
          $product->price = $request->price;
-          $product->inventory = $request->inventory;
+        //$product->inventory = $request->inventory;
          $product->save();
 
       //return $request->all();
