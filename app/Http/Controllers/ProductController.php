@@ -303,8 +303,8 @@ class ProductController extends Controller
         $lines = Shop::find($line)->lines()->get();
         //return $lines;
         $status = Auth::user()->shop->id;
-        $statuses = Shop::find($status)->statuss()->get();
-      $pdf  = PDF::loadView('product.pdf', compact('user', 'categories','lines','shops','statuses','products'));
+        //$statuses = Shop::find($status)->statuss()->get();
+        $pdf  = PDF::loadView('product.pdf', compact('user', 'categories','lines','shops','statuses','products'));
       return $pdf->stream('Productos.pdf');
     }
 
@@ -317,13 +317,13 @@ class ProductController extends Controller
         $idshop = Auth::user()->shop->id;
          $user = Auth::user();
          $branch = Shop::find($idshop)->branches()->get();
-         $status = Shop::find($idshop)->statuss()->get();
+    	  $statuses = Status::all();
          $line = Shop::find($idshop)->lines()->get();
         $category = Auth::user()->shop->id;
         $categories = Shop::find($category)->categories()->get();
          //return $categories;
 
-      return view('product.Reports.reportproduct',compact('branch','user','status','line','categories'));
+      return view('product.Reports.reportproduct',compact('branch','user','statuses','line','categories'));
      }
 
 
@@ -331,7 +331,8 @@ class ProductController extends Controller
 
 /**Codigo para hacer las validaciones de los campos para realizar las consultas para el reporte */
       $idshop = Auth::user()->shop->id;
-      $status = Shop::find($idshop)->statuss()->get();
+      //$status = Shop::find($idshop)->statuss()->get();
+    	$status = Status::all();
       $line = Shop::find($idshop)->lines()->get();
       $category = Auth::user()->shop->id;
       $categories = Shop::find($category)->categories()->get();
@@ -381,11 +382,12 @@ class ProductController extends Controller
         $precio = 0;
         foreach($lines as $line){
           $precio = $line->purchase_price;
+          $discount = $line->discount;
         }
 
         $compra = $total * $precio;
         $utilidad = $cash - $compra;
-
+      
 /**Finalizan consultas de folio de la venta, la hora y el dia */
 
 /**Variable para retornar los archivos que podran ser descargados en pdf
@@ -394,12 +396,9 @@ class ProductController extends Controller
  */
 
       $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('products','branches','sales','hour','dates','total','cash','compra','utilidad'));
-      return $pdf->download('ReporteEstatus.pdf');
-
+      return $pdf->stream('ReporteEstatus.pdf');
+      }
 /**Termina el retorno del pdf */
-
-     }
-
      public function reportLineaG(Request $request){
       $branches = Branch::where("id","=",$request->branch_id)->get();
       $lines = Line::where("id","=",$request->id)->get();
@@ -505,21 +504,28 @@ class ProductController extends Controller
   }
 
   public function reportEstatusG(){
-
+##en desarrollo
     $branches= Auth::user()->shop->branches;
     $id_shop = Auth::user()->shop->id;
     $products = Shop::find($id_shop)->products()->get();
     $lines = Shop::find($id_shop)->lines()->get();
+    //return $lines;
     $categories = Shop::find($id_shop)->categories()->get();
     //return $categories;
-   // $productsg = Shop::where($id_shop)->products()->get();
+   $productsg = Shop::join('products','products.shop_id','shops.id')
+   ->join('categories','categories.id','products.category_id')
+   ->join('lines','lines.id','products.line_id')
+   ->join('statuss','statuss.id','products.status_id')
+   ->select('products.*', 'categories.name as name_category', 'lines.name as name_line','categories.type_product','statuss.name as name_status')
+    ->where('categories.type_product',2)
+    ->where('statuss.id',2)->get();
   //$products = Shop::find($id_shop)->products()->category()->get();
-  $products = DB::table('categories')
+  return $products;
+  /**$products = DB::table('categories')
             ->join('products', 'categories.id','products.category_id')
             ->join('products as product','type_product','type_product')
             ->orderby('products.id')
-            ->get();
-   return $products;
+            ->get();**/
    $hour = Carbon::now();
     $hour = date('H:i:s');
 
@@ -545,7 +551,7 @@ class ProductController extends Controller
       $utilidad = $cash - $compra;
 
 
-  $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('branches','categories','id_shop','lines','products','total','cash','precio','hour','dates','sales','compra','utilidad'));
+  $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('branches','categories','id_shop','lines','products','total','cash','precio','hour','dates','compra','utilidad'));
   return $pdf->stream('ReporteEstatusGeneral.pdf');
   }
 

@@ -60,7 +60,7 @@ Panel Principal
                       <button onclick="window.location.href='/tiendas'"
                         type="button" class="btn btn-sm small btn-floating toggler-left  btn-success waves-effect waves-light waves-round float-right"
 
-                        data-toggle="tooltip" data-original-title="Ver Más">
+                        data-toggle="tooltip" data-original-title="Ver Más" align="right">
                         <i class="icon md-eye" aria-hidden="true"></i>
                       </button>
                   </div>
@@ -69,7 +69,7 @@ Panel Principal
                         type="button" class="btn btn-sm small btn-floating
                         toggler-left  btn-primary waves-effect waves-light waves-round float-right"
                         data-toggle="tooltip" data-original-title="Editar Tienda">
-                        <i class="icon md-edit" aria-hidden="true"></i>
+                        <i class="icon md-edit" aria-hidden="true" align="right"></i>
                       </button>
                   </div>
               </div>

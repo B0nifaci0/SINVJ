@@ -20,7 +20,7 @@ MODIFICACIÓ PRODUCTO
             <ul>
               @foreach($errors->all() as $error)
                   <li>{{ $error }}</li>
-              @endforeach
+              @endforeach  
             </ul>
           </div>
       @endif
@@ -53,7 +53,7 @@ MODIFICACIÓ PRODUCTO
           <!-- Input para ingresar precio de la linea para el producto-->
           <div class="col-md-3 form-material">
             <label  class="control-label">Precio de la linea</label>
-              <input type="text" name="" id="line_price" class="form-control" readonly>
+              <input type="text" name="" id="line_price" class="form-control" readonly value="">
           </div>
           <!-- END Input--> 
           <!-- Input para ingresar Peso del producto-->
@@ -169,21 +169,102 @@ $(document).ready(function(){
 @endsection
 
 <!-- Función para obtener el precio de linea-->
+
+
 @section('precio-linea')
 <script type="text/javascript">
+//detecta el tipo de categoria y cambia el formulario
+  var categoryTypeproduct = {!! $categorys !!};
+
+  let defaul = categoryTypeproduct[0]
+    if(defaul.type_product == 1){
+      //alert(JSON.stringify('pz'+defaul.type_product));
+    $('.remove').css('display', 'none');
+    $('#pricepz').css('display', 'initial'); 
+    // $('#pricecp').css('display', 'initial');
+
+    //$('.removeClass').removeClass('invisible');
+    //$('#s').toggle();
+    }else if(defaul.type_product == 2){
+     //alert(JSON.stringify('pz'+defaul.type_product));
+     console.log()
+    $('.remove').css('display', 'initial');  
+    $('#pricepz').css('display', 'none');
+    // $('#pricecp').css('display', 'none');
+ 
+  
+  }
+  setTimeout(() => {
+  var categoryTypeproduct = {!! $categorys !!};
+  
+  categoryTypeproduct = categoryTypeproduct[0];  
+  if(categoryTypeproduct.type_product == 1){
+      $('.remove').css('display', 'none');
+      $('#pricepz').css('display', 'initial'); 
+      $('#pricecp').css('display', 'initial'); 
+    } else if(categoryTypeproduct.type_product == 2){
+      console.log('<p>agregar campos</p>');
+      $('.remove').css('display', 'initial');  
+      $('#pricepz').css('display', 'none');
+      $('#pricecp').css('display', 'none');
+    }  
+}, 1000);
+
+$('#categorie_id').change(function(){
+    $('#pricepz').val(0);
+    $('#pricecp').val(0)
+
+
+    var categoryTypeproduct = {!! $categorys !!};
+    var categoryId = $(this).val();
+    var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == categoryId)[0];
+    if(categoryTypeproduct.type_product == 1){
+      // PZA
+      $('.remove').css('display', 'none');
+      $('#pricepz').css('display', 'initial'); 
+      $('#pricecp').css('display', 'initial'); 
+      // set purchase price for Pza products
+      console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
+      console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
+      $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
+    } else if(categoryTypeproduct.type_product == 2){
+      // Gramos
+      $('.remove').css('display', 'initial');  
+      $('#pricepz').css('display', 'none');
+      $('#pricecp').css('display', 'none');
+    }
+});
 
 var lines = {!! $lines !!};
+var line = lines[0];
+$('#line_price').val(lines[0].sale_price);
 
 $('#line_id').change(function() {
   var id = $(this).val();
-  var line = lines.filter(l => l.id == id)[0];
-  $('#line_price').val(line.price);
-});
+  line = lines.filter(l => l.id == id)[0];
+  $('#line_price').val(line.sale_price);
+}); 
 
-$('#multiplicador').keyup(function() {
+$(document).ready(function(){
+alert('ready');
+$('#multiplicador').keyup(function(){
+  alert('multi');
   var total = $('#line_price').val() * $(this).val();
+  // var discount = total - (total * (Number(line.discount_percentage) / 100))
+  var discount = total - Number(line.discount_percentage)
+  $('#discount').val(discount);
   $('#total').val(total);
+
+  // set purchase price for Pza products
+  console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
+  console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
+  $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
+  });
 });
+setTimeout(() => {
+  alert('entra a set');
+  multiplicar();
+},2000);
 </script>
 @endsection
 <!-- END Función-->
@@ -191,12 +272,16 @@ $('#multiplicador').keyup(function() {
 (peso del producto por el precio de la linea)-->
 @section('calcular-precio')
 <script type="text/javascript">
-function multiplicar(){
+multiplicar(){
   m1 = document.getElementById("secondary").value;
   m2 = document.getElementById("multiplicador").value;
   r = m1*m2;
   document.getElementById("resultado").value = r;
-}
+  });
+setTimeout(() => {
+  alert('entra a set');
+  multiplicar();
+},2000);
 </script>
 @endsection
 <!-- END Función-->

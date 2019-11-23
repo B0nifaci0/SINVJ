@@ -181,6 +181,7 @@ $(document).ready(function(){
 <!-- Función para obtener el precio de linea-->
 @section('precio-linea')
 <script type="text/javascript">
+//detecta el tipo de categoria y depediento al tipo renderea el formulario
   var categoryTypeproduct = {!! $categories !!};
 
   let defaul = categoryTypeproduct[0]
