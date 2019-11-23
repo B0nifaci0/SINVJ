@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\State;
-use App\Product;
-use App\Category;
-use App\Shop;
+use PDF;
 use App\Line;
+use App\Sale;
+use App\Shop;
+use App\User;
+use App\State;
 use App\Branch;
 use App\Status;
-use App\User;
-use App\Sale;
-use PDF;
+use App\Product;
+use App\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Traits\S3ImageManager;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
-use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -144,7 +144,6 @@ class ProductController extends Controller
     }
   }
 }
-
     /**
      * Show the form for creating a new resource.
      *
