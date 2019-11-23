@@ -77,10 +77,10 @@
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td>
-                 <td>{{ $product->line->name}}</td> 
+                 <td>{{ ($product->line->name) ? $product->line->name : ''}}</td> 
                  <td>{{ $product->status->name }}</td>
                  <td>{{ $product->description }}</td>
-                 <td>{{ $product->weigth }} gr</td>
+                 <td>({{ $product->weigth) ? $product->line->name : ''}} gr</td>
                  <td>$ {{ $product->price }}</td> 
                  <td>{{ $product->observations }}</td>
                 </tr>

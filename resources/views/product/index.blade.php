@@ -54,7 +54,7 @@ LISTA PRODUCTO
                   <div class="container-fluid row col-md-12 col-xs-12 col-lg-12">
                     @if(Auth::user()->type_user == 1 )
                       <!-- Botón para Generar PDF de productos-->
-                      <div class="col-md-4 col-md-offset-2 col-xs-4 col-xs-offset-2 col-xs-4">
+                      <div class="col-md-6 col-md-offset-2 col-xs-4 col-xs-offset-2 col-xs-4">
                         <button onclick="window.location.href='productospdf'"
                           type="button" id='pdf01' name='pdf01'class=" btn btn-sm small btn-floating
                           toggler-left  btn-danger waves-effect waves-light waves-round float-right"
@@ -63,7 +63,7 @@ LISTA PRODUCTO
                         </button>
                       </div>
                       <!-- END Botón-->
-                      <!-- Botón para generar Excel-->
+                      <!-- Botón para generar Excel
                       <div class="col-md-4 col-md-offset-2  col-xs-4 col-xs-offset-2">
                         <button onclick="window.location.href='#'"
                           type="button" class=" btn btn-sm small btn-floating
@@ -72,9 +72,9 @@ LISTA PRODUCTO
                           <i class="icon fa-file-excel-o" aria-hidden="true"></i>
                         </button>
                       </div>
-                      <!-- END Botón-->
+                      END Botón-->
                       <!-- Botón para agregar productos-->
-                      <div class="col-md-4 col-md-offset-2  col-xs-4 col-xs-offset-2">
+                      <div class="col-md-6 col-md-offset-2  col-xs-4 col-xs-offset-2">
                         <button onclick="window.location.href='/productos/create'"
                           type="button" class=" btn btn-sm small btn-floating
                           toggler-left  btn-info waves-effect waves-light waves-round float-right"
