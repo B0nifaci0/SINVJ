@@ -85,9 +85,10 @@ class ExpensesController extends Controller
         $user = Auth::user();
         if($user->type_user == User::AA) {
             if($request->branch_id) {
+                return "entra 1";
                 $data['branch_id'] = $request->branch_id;
             } else {
-                $data['shoṕ_id'] = $user->shop->id;
+                $data['shop_id'] = $user->shop->id;
             }
         } else if($user->type_user == User::CO) {
             $data['branch_id'] = $user->branch->id;
@@ -96,7 +97,7 @@ class ExpensesController extends Controller
         $data['price'] = $request->price;
         $data['descripcion'] = $request->descripcion;
         $data['name'] = $request->name;
-        // return $data;
+        
         $expense = Expense::create($data);
 
         if($request->hasFile('image')) {

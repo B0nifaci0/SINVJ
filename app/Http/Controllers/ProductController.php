@@ -16,7 +16,6 @@ use App\Sale;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
 use App\Traits\S3ImageManager;
