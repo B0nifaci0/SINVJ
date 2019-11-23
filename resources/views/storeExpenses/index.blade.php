@@ -65,6 +65,7 @@ LISTA DE  GASTOS
                 <th>Descripcion</th>
                 <th>Precio</th>
                 <th>Imagen</th>
+                <th>Sucursal</th>
                 <th>Tienda</th>
                 <th>Opciones</th>
               </tr>
@@ -76,6 +77,7 @@ LISTA DE  GASTOS
                 <th>Descripcion</th>
                 <th>Precio</th>
                 <th>Imagen</th>
+                <th>Sucursal</th>
                 <th>Tienda</th>
                 <th>Opciones</th>
               </tr>
@@ -90,6 +92,7 @@ LISTA DE  GASTOS
                   <td>
                     <img width="100px" height="100px" src="{{ $expense->image }}">
                   </td>
+                  <td>{{$expense->branch ? $expense->branch->name : '' }}</td>
                   <td>{{$expense->shop ? $expense->shop->name : '' }}</td>
                   <td>  
                      <!-- Botón para editar gasto-->  

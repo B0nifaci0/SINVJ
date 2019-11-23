@@ -99,6 +99,7 @@ class LineController extends Controller
         $line->name = $request->name;
         $line->purchase_price = $request->purchase_price;
         $line->sale_price = $request->sale_price;
+        $line->discount_percentage = $request->discount_percentage;
 
         $line->save();
         return redirect('/lineas')->with('mesage-update', 'La Linea se ha modificado exitosamente!');

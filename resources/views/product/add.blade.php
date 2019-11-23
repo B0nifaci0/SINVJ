@@ -221,7 +221,7 @@ setTimeout(() => {
       $('#pricepz').css('display', 'none');
       $('#pricecp').css('display', 'none');
     }  
-}, 1000);
+}, 3000);
 
 $('#categorie_id').change(function(){
     $('#pricepz').val(0);

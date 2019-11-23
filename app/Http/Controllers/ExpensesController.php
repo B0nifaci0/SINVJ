@@ -36,6 +36,12 @@ class ExpensesController extends Controller
         $branches_ids = $brances->map(function($item){ return $item->id; });
         $expenses = Expense::whereIn('branch_id', $branches_ids)->get();
 
+        if($user->type_user == User::AA) {
+            $shop_expenses = Expense::where('shop_id', $user->shop->id)->get();            
+            $expenses = $expenses->merge($shop_expenses);
+        }
+
+
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
         foreach ($expenses as $e) {
@@ -83,7 +89,7 @@ class ExpensesController extends Controller
             } else {
                 $data['shoṕ_id'] = $user->shop->id;
             }
-        } else if($user == User::CO) {
+        } else if($user->type_user == User::CO) {
             $data['branch_id'] = $user->branch->id;
         }
         $data['user_id'] = Auth::user()->id;
@@ -141,22 +147,19 @@ class ExpensesController extends Controller
     public function update(Request $request, $id)
     {
         $expense = Expense::findOrFail($id);
+        if($request->hasFile('image')) {
+            $adapter = Storage::disk('s3')->getDriver()->getAdapter(); 
+            $image = file_get_contents($request->file('image')->path());
+            $base64Image = base64_encode($image);
+            $path = 'tickets';
+            $expense->image = $this->saveImages($base64Image, $path, $expense->id);
+        }
+        $expense->save();
 
-        if ($request->hasFile('image')){
-
-          // Borrar imagen anterior
-          Storage::delete("public/upload/expenses/{$expense->image}");
-
-          $filename = $request->image->getCLientOriginalName();
-          $timestamp = time();
-          $request->image->storeAs('public/upload/expenses', $timestamp . $filename);
-          $expense->image = $timestamp . $filename;
-      }
-
-         $expense->name = $request->name;
-         $expense->descripcion = $request->descripcion;
-         $expense->price = $request->price;
-         $expense->save();
+        $expense->name = $request->name;
+        $expense->descripcion = $request->descripcion;
+        $expense->price = $request->price;
+        $expense->save();
 
       //return $request->all();
       return redirect('/gastos')->with('mesage-update', 'Gasto actualizado  exitosamente!');

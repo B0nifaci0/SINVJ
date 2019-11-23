@@ -99,7 +99,9 @@ SUCURSAl
 						<h3 class="panel-title">Historial de pagos</h3>
 					</div>
 					<div class="col-md-3 mt-10">
-						<button id="newPayment" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Nuevo pago</button>					
+						@if($sale->total > $sale->partials->sum('amount'))
+							<button id="newPayment" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Nuevo pago</button>
+						@endif					
 					</div>
 				</div>
 		</header>
@@ -155,8 +157,8 @@ SUCURSAl
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Nuevo pago</h4>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+        	<h4 class="modal-title">Nuevo pago</h4>
       </div>
       <div class="modal-body">
 			<form action="/pagos" method="post" id="saleForm">

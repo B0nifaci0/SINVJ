@@ -26,7 +26,8 @@ class LineRequest extends FormRequest
          return [
             'name' => 'required|string',
             'purchase_price' => 'required|numeric',
-            'sale_price' => 'required|numeric', 
+            'sale_price' => 'required|numeric',
+            'discount_percentage' => 'required|between:0,50'
         ]; 
     }
 

@@ -40,7 +40,7 @@ class ShopRequest extends FormRequest
     public function aliases() {
         return [
             'description' => 'descripción',
-            'phone_number' => 'número telefónico',
+            'phone_number' => 'teléfono',
             'email' => 'correo electrónico'
         ];
     }

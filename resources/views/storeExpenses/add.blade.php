@@ -34,7 +34,7 @@ ALTA GASTOS
             {{ csrf_field() }}   
             <div class="row">
             <!-- Select para Seleccionar sucursal-->
-            @if (Auth::user()->id =='1')  
+            @if (Auth::user()->type_user =='1')  
             <div class="form-group col-md-6">
             <label class="form-control-label" for="inputBasicLastName"> Seleccione Sucursal:</label>
               <select name="branch_id" class="form-control round">

@@ -20,8 +20,8 @@ class CreateStoreExpensesTable extends Migration
             $table->integer('price');
             $table->string('image')->nullable();
 
-            $table->integer('shoṕ_id')->unsigned()->nullable();
-            $table->foreign('shoṕ_id')->references('id')->on('shops');
+            $table->integer('shop_id')->unsigned()->nullable();
+            $table->foreign('shop_id')->references('id')->on('shops');
             
             $table->integer('branch_id')->unsigned()->nullable();
             $table->foreign('branch_id')->references('id')->on('branches');
