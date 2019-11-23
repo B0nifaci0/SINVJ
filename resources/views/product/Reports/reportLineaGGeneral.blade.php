@@ -70,7 +70,7 @@
                
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->clave }}</td> 
+                 <td>{{ $product->clave }}</td>   
                  <td>{{ $product->description }}</td>
                  @if($product->category->type_product == 2)
                  <td>{{ $product->weigth }} gr</td>

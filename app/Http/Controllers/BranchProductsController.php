@@ -50,11 +50,10 @@ class BranchProductsController extends Controller
 
       return view('Branches/branchproduct', compact('branch','products','user','categories','lines','statuses'));
   }
-  public function edit($id)
-    {
+  public function edit($id)  
+    { 
         $user = Auth::user();
         $category = Auth::user()->shop->id;
-        $user = Auth::user();
         $line = Auth::user()->shop->id;
         $shops = Auth::user()->shop()->get();
         $categorys = Shop::find($category)->categories()->get();
@@ -62,7 +61,8 @@ class BranchProductsController extends Controller
         $branch = Auth::user()->shop->id;
         $branches = Shop::find($branch)->branches()->get();
         $status = Auth::user()->shop->id;
-        $statuses = Shop::find($status)->statuss()->get();
+        //$statuses = Shop::find($status)->statuss()->get();
+    	$statuses = Status::all();
         $product = Product::find($id);
 
       return view('Branches/editproduct', compact('product', 'categorys','lines','shops','branches','statuses','user'));
