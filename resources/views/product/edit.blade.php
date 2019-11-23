@@ -20,7 +20,7 @@ MODIFICACIÓ PRODUCTO
             <ul>
               @foreach($errors->all() as $error)
                   <li>{{ $error }}</li>
-              @endforeach
+              @endforeach  
             </ul>
           </div>
       @endif
@@ -53,7 +53,7 @@ MODIFICACIÓ PRODUCTO
           <!-- Input para ingresar precio de la linea para el producto-->
           <div class="col-md-3 form-material">
             <label  class="control-label">Precio de la linea</label>
-              <input type="text" name="" id="line_price" class="form-control" readonly>
+              <input type="text" name="" id="line_price" class="form-control" readonly value="">
           </div>
           <!-- END Input--> 
           <!-- Input para ingresar Peso del producto-->
@@ -71,7 +71,7 @@ MODIFICACIÓ PRODUCTO
           <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
             <label>Categoria</label>
               <select id="categorie_id" name="category_id" class="form-control round">
-                @foreach($categories as $category)            
+                @foreach($categorys as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
                 @endforeach
               </select>
@@ -170,9 +170,12 @@ $(document).ready(function(){
 @endsection
 
 <!-- Función para obtener el precio de linea-->
+
+
 @section('precio-linea')
 <script type="text/javascript">
-  var categoryTypeproduct = {!! $categories !!};
+//detecta el tipo de categoria y cambia el formulario
+  var categoryTypeproduct = {!! $categorys !!};
 
   let defaul = categoryTypeproduct[0]
     if(defaul.type_product == 1){
@@ -192,14 +195,8 @@ $(document).ready(function(){
  
   
   }
-
-// var categoryTypeproduct = {!! $categories !!};
-// var categoryId = $(this).val();
-// var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == categoryId)[0];
-
-// Init category config
-setTimeout(() => {
-  var categoryTypeproduct = {!! $categories !!};
+  setTimeout(() => {
+  var categoryTypeproduct = {!! $categorys !!};
   
   categoryTypeproduct = categoryTypeproduct[0];  
   if(categoryTypeproduct.type_product == 1){
@@ -219,7 +216,7 @@ $('#categorie_id').change(function(){
     $('#pricecp').val(0)
 
 
-    var categoryTypeproduct = {!! $categories !!};
+    var categoryTypeproduct = {!! $categorys !!};
     var categoryId = $(this).val();
     var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == categoryId)[0];
     if(categoryTypeproduct.type_product == 1){
@@ -252,7 +249,10 @@ $('#line_id').change(function() {
   $('#line_price').val(line.sale_price);
 }); 
 
+$(document).ready(function(){
+alert('ready');
 $('#multiplicador').keyup(function(){
+  alert('multi');
   var total = $('#line_price').val() * $(this).val();
   // var discount = total - (total * (Number(line.discount_percentage) / 100))
   var discount = total - Number(line.discount_percentage)
@@ -263,21 +263,29 @@ $('#multiplicador').keyup(function(){
   console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
   console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
   $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
+  });
 });
-
+setTimeout(() => {
+  alert('entra a set');
+  multiplicar();
+},2000);
 </script>
 @endsection
 <!-- END Función-->
 <!-- Función para calcular el  
 (peso del producto por el precio de la linea)-->
 @section('calcular-precio')
-<script type="text/javascript"> 
-function multiplicar(){
+<script type="text/javascript">
+multiplicar(){
   m1 = document.getElementById("secondary").value;
   m2 = document.getElementById("multiplicador").value;
   r = m1*m2;
   document.getElementById("resultado").value = r;
-}
+  });
+setTimeout(() => {
+  alert('entra a set');
+  multiplicar();
+},2000);
 </script>
 @endsection
 <!-- END Función-->
