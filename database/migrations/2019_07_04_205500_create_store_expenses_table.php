@@ -24,7 +24,7 @@ class CreateStoreExpensesTable extends Migration
             $table->foreign('shoṕ_id')->references('id')->on('shops');
             
             $table->integer('branch_id')->unsigned()->nullable();
-            $table->integer('branch_id')->references('id')->on('branch');
+            $table->foreign('branch_id')->references('id')->on('branches');
             
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');

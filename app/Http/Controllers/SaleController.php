@@ -75,6 +75,7 @@ class SaleController extends Controller
           ->with('category')
           ->with('status')
           ->get();
+        $branches = [$user->branch];
     } else {
       	$branches = Branch::where('shop_id', $user->shop->id)->get();
       	$branch_ids = $branches->map(function($item) {
