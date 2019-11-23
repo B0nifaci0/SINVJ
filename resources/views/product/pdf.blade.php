@@ -73,11 +73,11 @@
                  <td>{{ $product->id }}</td> 
                  <td>{{ $product->name }}</td>
                  <td>{{ $product->description }}</td>
-                 <td>{{ $product->weigth }}</td>
+                 <td>{{ ($product) ? $product->weigth: ""}}</td>
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->category->name }}</td>
-                 <td>{{ $product->line->name }}</td>
-                 <td>{{ $product->branch->name }}</td>
+                 <td>{{ ($product->line ? $product->line->name:"")}}</td>
+                 <td>{{ ($product->branch) ? $product->branch->name:""}}</td>
                  <td>{{ $product->status->name }}</td>
                 </tr>
                   @endforeach

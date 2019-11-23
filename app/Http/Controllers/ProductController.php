@@ -294,29 +294,25 @@ class ProductController extends Controller
 
 /**FUNCIONES DE REPORTES DE PDF */
     public function exportPdf(){
-        $product = Auth::user()->shop->id;
-        $products = Shop::find($product)->products()->get();
+        $shop_id = Auth::user()->shop->id;
+        $products = Shop::find($shop_id)->products()->get();
         //return $products;
         $user = Auth::user();
         //$categories = Category::all();
         $shops = Auth::user()->shop()->get();
         //return $shops;
-        $category = Auth::user()->shop->id;
-        $categories = Shop::find($category)->categories()->get();
-        $line = Auth::user()->shop->id;
-        $lines = Shop::find($line)->lines()->get();
+        $categories = Shop::find($shop_id)->categories()->get();
+        $lines = Shop::find($shop_id)->lines()->get();
         //return $lines;
-        $status = Auth::user()->shop->id;
-        //$statuses = Shop::find($status)->statuss()->get();
+        //$status = Auth::user()->shop->id;
+        $statuses = Status::all();
         $pdf  = PDF::loadView('product.pdf', compact('user', 'categories','lines','shops','statuses','products'));
       return $pdf->stream('Productos.pdf');
     }
-
     /**
      * Funcion para la vista del Reporte por Producto por Sucursal status
      *
      ***/
-
      public function reportProduct(){
         $idshop = Auth::user()->shop->id;
          $user = Auth::user();
