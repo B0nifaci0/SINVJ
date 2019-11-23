@@ -87,10 +87,10 @@ LISTA DE  GASTOS
                   <td>{{ $expense->name }}</td>
                   <td>{{ $expense->descripcion }}</td>
                   <td>$ {{$expense->price}}</td>
+                  <td>
+                    <img width="100px" height="100px" src="{{ $expense->image }}">
+                  </td>
                   <td>{{$expense->shop ? $expense->shop->name : '' }}</td>
-                <td>
-                  <img width="100px" height="100px" src="{{ $expense->image }}">
-                 </td>
                   <td>  
                      <!-- Botón para editar gasto-->  
                     <a href="/gastos/{{$expense->id}}/edit"><button type="button" 

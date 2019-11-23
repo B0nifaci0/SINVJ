@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Shop;
 use App\User;
 use App\Branch;
-use App\store_expenses as Expenses;
+use App\Expense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ExpensesRequest;
@@ -14,7 +14,7 @@ use App\Traits\S3ImageManager;
 use PDF;
 
 
-class ControllerExpenses extends Controller
+class ExpensesController extends Controller
 {
 
     use S3ImageManager;
@@ -34,7 +34,7 @@ class ControllerExpenses extends Controller
         $user = Auth::user();
         $brances = Branch::where('shop_id', $user->shop->id)->select('id')->get();
         $branches_ids = $brances->map(function($item){ return $item->id; });
-        $expenses = Expenses::whereIn('branch_id', $branches_ids)->get();
+        $expenses = Expense::whereIn('branch_id', $branches_ids)->get();
 
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
@@ -76,14 +76,23 @@ class ControllerExpenses extends Controller
      */
     public function store(ExpensesRequest $request)
     {
-        $expense = Expenses::create([
-            'user_id' => Auth::user()->id,
-            'price' => $request->price,
-            'descripcion' => $request->descripcion,
-            'name' => $request->name,
-            'branch_id' => $request->branch_id
-        ]);
-        // return $expense;
+        $user = Auth::user();
+        if($user->type_user == User::AA) {
+            if($request->branch_id) {
+                $data['branch_id'] = $request->branch_id;
+            } else {
+                $data['shoṕ_id'] = $user->shop->id;
+            }
+        } else if($user == User::CO) {
+            $data['branch_id'] = $user->branch->id;
+        }
+        $data['user_id'] = Auth::user()->id;
+        $data['price'] = $request->price;
+        $data['descripcion'] = $request->descripcion;
+        $data['name'] = $request->name;
+        // return $data;
+        $expense = Expense::create($data);
+
         if($request->hasFile('image')) {
             $adapter = Storage::disk('s3')->getDriver()->getAdapter(); 
             $image = file_get_contents($request->file('image')->path());
@@ -103,7 +112,7 @@ class ControllerExpenses extends Controller
      */
     public function show($id)
     {
-        return view('gastos.show', ['gastos' => Expenses::findOrFail($id)]);
+        return view('gastos.show', ['gastos' => Expense::findOrFail($id)]);
    
     }
 
@@ -116,7 +125,7 @@ class ControllerExpenses extends Controller
     public function edit($id)
     {
         $user = Auth::user();  
-        $expense = Expenses::find($id);
+        $expense = Expense::find($id);
         $shops = Auth::user()->shop()->get();
         return view('storeExpenses/edit ',compact('shops','expense','user'));
 
@@ -131,7 +140,7 @@ class ControllerExpenses extends Controller
      */
     public function update(Request $request, $id)
     {
-        $expense = Expenses::findOrFail($id);
+        $expense = Expense::findOrFail($id);
 
         if ($request->hasFile('image')){
 
@@ -161,11 +170,11 @@ class ControllerExpenses extends Controller
      */
     public function destroy($id)
     {
-        Expenses::destroy($id);
+        Expense::destroy($id);
     }
     
     public function exportPdf(){
-        $total = Expenses::sum('price');
+        $total = Expense::sum('price');
         $expense = Auth::user()->shop->id;
         $expenses = Shop::find($expense)->expenses()->get();
         $shops = Auth::user()->shop()->get();

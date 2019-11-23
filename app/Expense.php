@@ -11,7 +11,9 @@ class Expense extends Model
         'concept',
         'amount',
         'user_id',
-        'price'
+        'price',
+        'shoṕ_id',
+        'branch_id'
     ];
 
     public function user() {

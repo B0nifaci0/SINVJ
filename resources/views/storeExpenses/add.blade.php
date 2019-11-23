@@ -41,6 +41,7 @@ ALTA GASTOS
                 @php  
                     $branches = $user->shop->branches;
                 @endphp
+                  <option value="" required>Gasto de tienda (ninguna sucursal)</option>
                   @foreach($branches as $branch)
                     <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
                   @endforeach
