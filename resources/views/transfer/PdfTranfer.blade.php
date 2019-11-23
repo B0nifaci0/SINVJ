@@ -85,7 +85,7 @@
                 <p class="sucursalorigen">Sucursal  Origen................{{$transfer->lastBranch->name}}</p>
                 <p class="quienlomando">Envió................{{$transfer->user->name}}</p>
                 <p class="producto">{{ $transfer->product->clave }}</p>
-                <p class="pesolinea">{{ $transfer->product->weigth }}.{{ $transfer->product->line->name }}</p>
+                <p class="pesolinea">{{ $transfer->product->weigth }}.{{ $transfer->product->line ? $transfer->product->line->name : '' }}</p>
                 <p class="sucursaldestino">Sucursal Destino...............{{$transfer->newBranch->name}}</p>
                 <p class="quienrecibe">Recibió................{{$transfer->destinationUser->name}}</p>
                 <br>

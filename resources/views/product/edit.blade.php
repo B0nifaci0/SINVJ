@@ -268,7 +268,7 @@ $('#multiplicador').keyup(function(){
 setTimeout(() => {
   alert('entra a set');
   multiplicar();
-},2000);
+},5000);
 </script>
 @endsection
 <!-- END Función-->
@@ -282,10 +282,6 @@ multiplicar(){
   r = m1*m2;
   document.getElementById("resultado").value = r;
   });
-setTimeout(() => {
-  alert('entra a set');
-  multiplicar();
-},2000);
 </script>
 @endsection
 <!-- END Función-->

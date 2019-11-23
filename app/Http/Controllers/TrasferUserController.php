@@ -48,6 +48,8 @@ class TrasferUserController extends Controller
        {
         $user = Auth::user();
         $shop_id = $user->shop->id;
+        $branches = Branch::where('shop_id', '!=', $user->shop->id)->get();
+        $branch_ids = $branches->map(function($b) { return $b->id; });
         if($user->type_user == User::CO) {
           $products = Product::where('branch_id', $user->branch_id)->get();
         } else {
@@ -74,9 +76,9 @@ class TrasferUserController extends Controller
             ->get();
             //return $products;
         }
-        $users = User::where('id', '!=', $user->id)->get();
-       
-        $branches = Branch::all();
+        $users = User::where('id', '!=', $user->id)
+          ->whereIn('branch_id', $branch_ids)
+          ->get();
         return view('transfer/TrasferUser/add', compact('branches','users','products'));
        }
 

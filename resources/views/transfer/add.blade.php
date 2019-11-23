@@ -29,7 +29,7 @@ ALTA PRODUCTO
             <!-- Select para Seleccionar producto-->
             <div class="form-group form-material  col-md-3  col-md-offset-1 visible-md visible-lg">
               <label>Producto</label>
-              <select name="product_id" class="form-control " data-plugin="select2" data-placeholder="Seleccione Producto"
+              <select id="product" name="product_id" class="form-control " data-plugin="select2" data-placeholder="Seleccione Producto"
                 data-allow-clear="true">
                 <option></option>
                 <optgroup label="Productos">
@@ -55,7 +55,6 @@ ALTA PRODUCTO
             <div class="form-group  col-md-3 col-md-offset-1 visible-md visible-lg">
               <label>Recibe</label>
               <select id="usuarios_1" name="destination_user_id" class="form-control ">
-                <option value="" selected disabled>Selecciona Colaborador</option>
               </select>
             </div>
             <!-- END Select-->
@@ -77,16 +76,18 @@ ALTA PRODUCTO
 @section('branch-user')
 <script type="text/javascript">
 
+var products = {!! $products !!};
+var branches = {!! $branches !!};
+
 $(".sucursales").change(function(){
   var selector =  $(this).attr("alt");
   var id_sucursal = $(this).val();
   var url = '/sucursales/' + id_sucursal + '/usuarios';
   $.get(url, function(json){
     $('#usuarios_' + selector).empty();
+    $('#usuarios_' + selector).append('<option value="" selected disabled>Seleccione un colaborador</option>');
         $.each(json,function(i, user){
-          $('#usuarios_' + selector).append(
-              '<option value="" selected disabled>Seleccione un colaborador</option>'
-            + '<option value = '+ user.id +'>' + user.name +'</option>'
+          $('#usuarios_' + selector).append('<option value = '+ user.id +'>' + user.name +'</option>'
           );
         });
   });
@@ -113,6 +114,22 @@ $(".usuarios").change(function(){
       var selector = $(this).attr("alt");
       $("#id_user_" + selector).val(id_user);
     });
+
+    $('#product').change(function() {
+  var name = $(this).val();
+  var p = products.filter(p => p.name = name)[0];
+  console.log(p);
+  $('#branch').val(p.branchName)
+  $('#branch_id').val(p.branchId)
+  $('#product_id').val(p.branchId);
+
+  let brancehesList = branches.filter(b => b.id != p.branchId);
+
+  brancehesList.forEach(element => {
+    $('#branches').append(new Option(element.name, element.id, true, true));
+  });
+
+}); 
 
 </script>
 @endsection

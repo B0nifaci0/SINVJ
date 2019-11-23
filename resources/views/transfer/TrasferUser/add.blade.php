@@ -66,7 +66,11 @@ ALTA PRODUCTO
             <!-- Select para Seleccionar Quien lo recibe (Usuario)-->
             <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputUser">{{ __('Quien lo recibe') }}</label>
-              <select id="usuario_1" name="destination_user_id" class="form-control "></select>
+              <select id="usuario_1" name="destination_user_id" class="form-control ">
+                @foreach($users as $u)
+                <option value="{{ $u->id }}">{{$u->name}}</option>
+                @endforeach
+              </select>
             </div>
             <!-- END Select-->
             <br>
@@ -134,14 +138,14 @@ $('#product').change(function() {
   $('#branch').val(p.branchName)
   $('#branch_id').val(p.branchId)
   $('#product_id').val(p.branchId);
-
+  console.log(branches);
   let brancehesList = branches.filter(b => b.id != p.branchId);
 
   brancehesList.forEach(element => {
     $('#branches').append(new Option(element.name, element.id, true, true));
   });
 
-});
+}); 
 
 // $('#sucursales_1').change(function(){
 //   console.log($(this).val());

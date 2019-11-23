@@ -138,11 +138,10 @@ class ProductController extends Controller
 
             $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
 
-            $product->image = (string) $result->getUri();
-         //return $products;
-        return view('product/productCO/index', compact('user', 'categories','lines','shops','statuses','products'));
+            $product->image = (string) $result->getUri(); 
+      }
     }
-  }
+  return view('product/productCO/index', compact('user', 'categories','lines','shops','statuses','products'));
 }
     /**
      * Show the form for creating a new resource.

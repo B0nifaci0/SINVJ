@@ -98,10 +98,7 @@
                                                 <td>{{ $branchproduct->observations }}</td>
                                                 <td>{{ $branchproduct->price }}</td>    
                                                 <td>
-                                          @php
-                                            $image = route('images',"app/public/upload/products/$branchproduct->image")
-                                          @endphp
-                                          <img width="100px" height="100px" src="{{ $image }}">
+                                          <img width="100px" height="100px" src="{{ $branchproduct->image }}">
                                         </td>
                                         <td>{{ $branchproduct->category->name }}</td>
                                          <td>{{ $branchproduct->line->name }}</td>
@@ -179,10 +176,7 @@
                                         <td>{{ $branchproduct->category->name }}</td>
                                         <td>{{ $branchproduct->observations }}</td>
                                         <td>
-                                          @php
-                                            $image = route('images',"app/public/upload/products/$branchproduct->image")
-							            @endphp
-							            <img width="100px" height="100px" src="{{ $image }}">
+							            <img width="100px" height="100px" src="{{ $branchproduct->image }}">
                                         </td>                                      
                                         <td>{{ $branchproduct->status->name }}</td>
                                         <td>{{$branchproduct->pricepzt}}

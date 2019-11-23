@@ -76,7 +76,7 @@
                           <td>{{ $transfer->product->name }}</td>
                           <td>{{ $transfer->product->weigth }}</td>
                           <td>{{ $transfer->product->category->name }}</td>
-                          <td>{{ $transfer->product->line->name }}</td>
+                          <td>{{ $transfer->product->line ? $transfer->product->line->name : '' }}</td>
                           <td>{{$transfer->lastBranch->name}}</td>
                           <td>{{$transfer->user->name}}</td>
                           <td>{{$transfer->newBranch->name}}</td>

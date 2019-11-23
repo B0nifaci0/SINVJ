@@ -25,8 +25,9 @@ class TranferProductsController extends Controller
     public function index()
        {
         $user = Auth::user();
-        $trans = TransferProduct::all();
-          // return ['new_branch_id', $user->branch_id];
+        $trans = TransferProduct::where('user_id', $user->id)
+          ->orWhere('destination_user_id', $user->id)
+          ->with('user')->with('branch')->with('product')->get();
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
         //$statuses = Shop::find($status)->statuss()->get();
@@ -34,12 +35,13 @@ class TranferProductsController extends Controller
         $trans = Shop::find('users')->trans();
         return $trans;
         if($trans == 0){
-          return redirect('/traspasos/create');
+          return redirect('/traspasos/create');  
         }else{
         }*/
         
         //return $transs;
         $branches=Branch::all();
+        // return view('transfer/TrasferUser/index', compact('branches','trans','user'));
         return view('transfer/index', compact('branches','user','trans'));
         
        }
@@ -113,6 +115,7 @@ class TranferProductsController extends Controller
           $data = $request->all();
           $data['last_branch_id']  = $user->branch_id;
           $data['user_id'] = $user->id;
+          $data['status_product'] = null;
 
            $transfer_product = TransferProduct::create($data);
            return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
