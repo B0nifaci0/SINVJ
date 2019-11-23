@@ -95,8 +95,25 @@ class ProductController extends Controller
         $shops = Auth::user()->shop()->get();
         $categories = Shop::find($shop_id)->categories()->get();
         $lines = Shop::find($shop_id)->lines()->get();
-        $statuses = Shop::find($shop_id)->statuss()->get();
-          //return $products;
+        $statuses = Shop::all();
+        
+        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+        foreach ($products as $product) {
+          if($product->image) {
+            $path = 'products/' . $product->clave;
+          } else {
+            $path = 'dummy';
+          }
+    
+          $command = $adapter->getClient()->getCommand('GetObject', [
+            'Bucket' => $adapter->getBucket(),
+            'Key' => $adapter->getPathPrefix(). $path
+          ]);
+    
+          $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+    
+          $product->image = (string) $result->getUri();
+        }
         return view('product/index', compact('user', 'categories','lines','shops','statuses','products'));
     }
 /** Listar todos los  Porductos de la tienda  para los colaboradores /productosCO */

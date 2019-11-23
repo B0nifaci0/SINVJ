@@ -263,8 +263,8 @@ $('#line_id').change(function() {
 
 $('#multiplicador').keyup(function(){
   var total = $('#line_price').val() * $(this).val();
-  // var discount = total - (total * (Number(line.discount_percentage) / 100))
-  var discount = total - Number(line.discount_percentage)
+  var discount = total - (total * (Number(line.discount_percentage) / 100))
+  // var discount = total - Number(line.discount_percentage)
   $('#discount').val(discount);
   $('#total').val(total);
 
