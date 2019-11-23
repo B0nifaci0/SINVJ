@@ -10,17 +10,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ExpensesRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Traits\S3ImageManager;
 use PDF;
 
 
 class ControllerExpenses extends Controller
 {
+
+    use S3ImageManager;
+
     /*public function __construct(){
         $this->middleware('Authentication');
 
     }/*
 
-    /**
+    /** 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -28,19 +32,31 @@ class ControllerExpenses extends Controller
     public function index()
     {
         $user = Auth::user();
-        //return $user;
-        $shop_id = $user->shop->id;
-        //return $shop_id;
-        $expenses = Shop::find($shop_id)->expenses()->get();
-        //return $expenses;
-        //$shops = Auth::user()->shop()->get();
-        return view('storeExpenses/index', compact('expenses','shop_id','user'));
+        $brances = Branch::where('shop_id', $user->shop->id)->select('id')->get();
+        $branches_ids = $brances->map(function($item){ return $item->id; });
+        $expenses = Expenses::whereIn('branch_id', $branches_ids)->get();
+
+		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
+
+        foreach ($expenses as $e) {
+            if($e->image) {
+                $command = $adapter->getClient()->getCommand('GetObject', [
+                    'Bucket' => $adapter->getBucket(),
+                    'Key' => $adapter->getPathPrefix(). 'tickets/' . $e->id
+                ]);
+            
+                $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+            
+                $e->image = (string) $result->getUri();
+            }
+        }
+        return view('storeExpenses/index', compact('expenses', 'user'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function create()
     {
@@ -60,18 +76,24 @@ class ControllerExpenses extends Controller
      */
     public function store(ExpensesRequest $request)
     {
-        $expense = new Expenses($request->all());
-          if ($request->hasFile('image')){
-         $filename = $request->image->getCLientOriginalName();
-         $request->image->storeAs('public/upload/expenses',$filename);
-         $request->image = $filename;
-         return $expense;
-      }
+        $expense = Expenses::create([
+            'user_id' => Auth::user()->id,
+            'price' => $request->price,
+            'descripcion' => $request->descripcion,
+            'name' => $request->name,
+            'branch_id' => $request->branch_id
+        ]);
+        // return $expense;
+        if($request->hasFile('image')) {
+            $adapter = Storage::disk('s3')->getDriver()->getAdapter(); 
+            $image = file_get_contents($request->file('image')->path());
+            $base64Image = base64_encode($image);
+            $path = 'tickets';
+            $expense->image = $this->saveImages($base64Image, $path, $expense->id);
+        }
         $expense->save();
-        //return $expense;
         return redirect('/gastos')->with('success', true);
-    
-    } 
+    }
 
     /**
      * Display the specified resource.

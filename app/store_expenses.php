@@ -19,6 +19,7 @@ class store_expenses extends Model
           'price',
           'branch_id',
           'shop_id',
+          'user_id',
         ];
         
     public function shop(){

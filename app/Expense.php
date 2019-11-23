@@ -9,7 +9,9 @@ class Expense extends Model
 {
     protected $fillable = [
         'concept',
-        'amount'
+        'amount',
+        'user_id',
+        'price'
     ];
 
     public function user() {
