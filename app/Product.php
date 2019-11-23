@@ -24,7 +24,6 @@ class Product extends Model
       'line_id',
       'shop_id',
       'branch_id',
-      'inventory',
       'discarded_product',
       'discar_cause',
       'price_purchase',
