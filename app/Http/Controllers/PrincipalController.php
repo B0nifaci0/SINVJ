@@ -5,11 +5,12 @@ use App\Shop;
 use App\User;
 use App\Branch;
 use Illuminate\Support\Facades\Auth;
-
+use App\Traits\S3ImageManager;
 use Illuminate\Http\Request;
 
 class PrincipalController extends Controller
 {
+    use S3ImageManager;
     /**
      * Display a listing of the resource.
      *
@@ -19,11 +20,15 @@ class PrincipalController extends Controller
     {
         $shop = Auth::user()->shop; 
         $total = User::sum('salary');
-        //return $total;
-         $branch = Auth::user()->shop->id;
-         $user = Auth::user();
-         $branch = Shop::find($branch)->branches()->get();
-         $shops = Auth::user()->shop()->get();
+        $branch = Auth::user()->shop->id;
+        $user = Auth::user();
+        $branch = Shop::find($branch)->branches()->get();
+        $shops = Auth::user()->shop()->get();
+
+        if($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
+        
         return view ('Principal/principal',compact('branch','user','shop','shops'));
     }
 

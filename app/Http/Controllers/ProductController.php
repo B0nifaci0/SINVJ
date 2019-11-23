@@ -18,10 +18,12 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
-use Illuminate\Support\Facades\Storage;
+use App\Traits\S3ImageManager;
 
 class ProductController extends Controller
 {
+
+  use S3ImageManager;
 
 	public function __construct(){
 
@@ -49,18 +51,21 @@ class ProductController extends Controller
     	}
 
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
-
-		foreach ($products as $product) {
+    foreach ($products as $product) {
 			if($product->image) {
-				$command = $adapter->getClient()->getCommand('GetObject', [
-					'Bucket' => $adapter->getBucket(),
-					'Key' => $adapter->getPathPrefix(). 'products/' . $product->clave
-				]);
+        $path = 'products/' . $product->clave;
+      } else {
+        $path = 'dummy';
+      }
 
-				$result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+      $command = $adapter->getClient()->getCommand('GetObject', [
+        'Bucket' => $adapter->getBucket(),
+        'Key' => $adapter->getPathPrefix(). $path
+      ]);
 
-				$product->image = (string) $result->getUri();
-			}
+      $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+
+      $product->image = (string) $result->getUri();
 		}
 
     	$shops = Auth::user()->shop()->get();
@@ -72,7 +77,7 @@ class ProductController extends Controller
     	//return $lines;
     	$status = Auth::user()->shop->id;
     	$statuses = Status::all();
-		   //return $products;
+		  //  return $products;
     	return view('product/index', compact('user','categories','lines','shops','statuses','products'));
   }
 
@@ -193,7 +198,6 @@ class ProductController extends Controller
       // }
 
 		if($request->hasFile('image')) {
-
 			$adapter = Storage::disk('s3')->getDriver()->getAdapter();
 			$image = file_get_contents($request->file('image')->path());
 			$base64Image = base64_encode($image);
@@ -229,7 +233,8 @@ class ProductController extends Controller
         #$categories = Category::all();
         $line = Auth::user()->shop->id;
         $shops = Auth::user()->shop()->get();
-        $categorys = Shop::find($category)->categories()->get();
+        //return $shops;
+        $categories = Shop::find($category)->categories()->get();
         $lines = Shop::find($line)->lines()->get();
         $branch = Auth::user()->shop->id;
         $branches = Shop::find($branch)->branches()->get();
@@ -237,9 +242,9 @@ class ProductController extends Controller
         //$statuses = Shop::find($status)->statuss()->get();
 				$statuses = Status::all();
         $product = Product::find($id);
-        //return $product;
+        // return $product; 
 
-      return view('product/edit', compact('product', 'categorys','lines','shops','branches','statuses','user'));
+      return view('product/edit', compact('product', 'categories','lines','shops','branches','statuses','user'));
     }
 
     /**
@@ -253,16 +258,14 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        if ($request->hasFile('image')){
+        if($request->hasFile('image')) {
+          $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+          $image = file_get_contents($request->file('image')->path());
+          $base64Image = base64_encode($image);
+          $path = 'products';
+          $product->image = $this->saveImages($base64Image, $path, $product->clave);
+        }
 
-          // Borrar imagen anterior
-          Storage::delete("public/upload/products/{$product->image}");
-
-          $filename = $request->image->getCLientOriginalName();
-          $timestamp = time();
-          $request->image->storeAs('public/upload/products', $timestamp . $filename);
-          $product->image = $timestamp . $filename;
-      }
          $product->description = $request->description;
          $product->weigth = $request->weigth;
          $product->observations = $request->observations;
@@ -676,19 +679,4 @@ class ProductController extends Controller
    //return response()->json(['productos'=>$productos,'sumprice'=>$sumprice, 'utilida'=>$descuento, 'total'=>$total]);
   }
 
-	private function saveImages($base_64, $path, $name)
-	{
-		// Prepare image
-		$base_64 = str_replace('data:image/png;base64,', '', $base_64);
-		$base_64 = str_replace('data:image/jpg;base64,', '', $base_64);
-		$base_64 = str_replace('data:image/jpeg;base64,', '', $base_64);
-		$base_64 = str_replace(' ', '+', $base_64);
-
-		$image = base64_decode($base_64);
-
-
-		$path = $path . '/' . $name;
-		Storage::disk('s3')->put($path, $image);
-		return  $path;
-	}
 }

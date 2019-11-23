@@ -77,7 +77,7 @@ SUCURSAl
                             <td>{{ $item->clave }}</td>
                             <td>{{ $item->description }}</td>
                             <td>{{ $item->weigth }} g</td>
-                            <td>$ {{ $item->price }}</td>
+                            <td>$ {{ $item->final_price }}</td>
                         </tr>
                         @endforeach
                         <tr>
@@ -139,7 +139,7 @@ SUCURSAl
                         <tr>
                             <td colspan="2"></td>
                             <td><strong>$ {{ $sale->partials->sum('amount') }}</strong></td>
-                        </tr> 
+                        </tr>
                     </tbody>
                 </table>
 			</div>

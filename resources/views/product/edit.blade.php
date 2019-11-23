@@ -42,7 +42,7 @@ MODIFICACIÓ PRODUCTO
           </div>
           <!-- END Input--> 
           <!-- Select para Seleccionar linea-->
-          <div class="col-md-3">
+          <div class="col-md-3 remove">
             <label  class="control-label">Seleccione Linea</label>                
             <select id="line_id"   name="line_id"  class="form-control round">
               @foreach($lines as $line)            
@@ -70,14 +70,14 @@ MODIFICACIÓ PRODUCTO
           <!-- Select para Seleccionar categoria-->
           <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
             <label>Categoria</label>
-              <select  name="category_id" class="form-control round">
-                @foreach($categorys as $category)            
+              <select id="categorie_id" name="category_id" class="form-control round">
+                @foreach($categories as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
                 @endforeach
               </select>
           </div>
           <!-- END Select--> 
-          <div>
+          <div> 
               @foreach ($shops as $shop)
                 <input type="hidden" name="shop_id" value="{{$shop->id}}">
               @endforeach 
@@ -128,9 +128,11 @@ MODIFICACIÓ PRODUCTO
 </div>
 @endsection
 
+
 @section('disabled-submit')
 <script type="text/javascript">
 $(document).ready(function(){
+
   $("#categories").change(function(){
     if ($(this).val() == "" || $("#file").val() == "") {
       $("#submit").prop("disabled", true);
@@ -165,7 +167,6 @@ $(document).ready(function(){
 
 });
 </script>
-
 @endsection
 
 <!-- Función para obtener el precio de linea-->
@@ -235,8 +236,11 @@ $('#categorie_id').change(function(){
     }
 });
 
+
 var lines = {!! $lines !!};
 var line = lines[0];
+//console.log("lines", lines);
+
 $('#line_price').val(lines[0].sale_price);
 
 $('#line_id').change(function() {

@@ -42,13 +42,8 @@ Panel Principal
         <div class="panel">
           <div class="panel-heading bg-primary  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
             <div class="row">
-              <div class="col-md-3">
-                  @foreach ($shops as $shop)
-                  @php
-                  $image = route('images',"app/public/upload/shops/$shop->image")
-                  @endphp
-                  <img align = "left" width="90px" height="90px" src="{{ $image }}">
-                  @endforeach
+              <div class="col-md-3">   
+                  <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
               </div>
               <div class="col-md-6">
                   <h2 style="color:white">
