@@ -58,11 +58,8 @@ ALTA PRODUCTO
             <!-- Select para Seleccionar Sucursal Destino-->
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputBranch">{{ __('Destino') }}</label>
-              <select id="sucursales_1" class="form-control  sucursales1" name="new_branch_id" alt="1" >
+              <select id="branches" class="form-control  sucursales1" name="new_branch_id" alt="1" >
                 <option value="*">Seleccione Sucursal</option>
-                @foreach ($branches as $branch)
-                    <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
-                @endforeach
               </select>
             </div>
             <!-- END Select-->
@@ -91,6 +88,7 @@ ALTA PRODUCTO
 <script type="text/javascript">
 
 var products = {!! $products !!};
+var branches = {!! $branches !!};
 console.log("PPPP", products)
 
 
@@ -136,6 +134,13 @@ $('#product').change(function() {
   $('#branch').val(p.branchName)
   $('#branch_id').val(p.branchId)
   $('#product_id').val(p.branchId);
+
+  let brancehesList = branches.filter(b => b.id != p.branchId);
+
+  brancehesList.forEach(element => {
+    $('#branches').append(new Option(element.name, element.id, true, true));
+  });
+
 });
 
 // $('#sucursales_1').change(function(){

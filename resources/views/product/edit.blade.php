@@ -71,7 +71,7 @@ MODIFICACIÓ PRODUCTO
           <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
             <label>Categoria</label>
               <select id="categorie_id" name="category_id" class="form-control round">
-                @foreach($categorys as $category)            
+                @foreach($categories as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
                 @endforeach
               </select>
@@ -175,7 +175,7 @@ $(document).ready(function(){
 @section('precio-linea')
 <script type="text/javascript">
 //detecta el tipo de categoria y cambia el formulario
-  var categoryTypeproduct = {!! $categorys !!};
+  var categoryTypeproduct = {!! $categories !!};
 
   let defaul = categoryTypeproduct[0]
     if(defaul.type_product == 1){
@@ -196,7 +196,7 @@ $(document).ready(function(){
   
   }
   setTimeout(() => {
-  var categoryTypeproduct = {!! $categorys !!};
+  var categoryTypeproduct = {!! $categories !!};
   
   categoryTypeproduct = categoryTypeproduct[0];  
   if(categoryTypeproduct.type_product == 1){
@@ -216,7 +216,7 @@ $('#categorie_id').change(function(){
     $('#pricecp').val(0)
 
 
-    var categoryTypeproduct = {!! $categorys !!};
+    var categoryTypeproduct = {!! $categories !!};
     var categoryId = $(this).val();
     var categoryTypeproduct = categoryTypeproduct.filter(l => l.id == categoryId)[0];
     if(categoryTypeproduct.type_product == 1){
