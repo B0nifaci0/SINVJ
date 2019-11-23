@@ -58,7 +58,7 @@ class Shop extends Model
     }
     public function expenses(){
 
-      return $this->hasMany(store_expenses::class);
+      return $this->hasMany(Expense::class);
     }
   
 }

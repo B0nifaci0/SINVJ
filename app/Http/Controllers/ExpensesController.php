@@ -177,11 +177,19 @@ class ExpensesController extends Controller
     }
     
     public function exportPdf(){
+        $user = Auth::user();
+        
+        if($user->type_user == User::CO) {
+            $expenses = Expense::where('branch_id', $user->branch->id)->get();
+        } else {
+            $branches = $user->shop->branches;
+            $branches_ids = $branches->map(function($b) { return $b->id; });
+            $expenses = Expense::whereIn('branch_id', $branches_ids)->get();
+        }
+
         $total = Expense::sum('price');
-        $expense = Auth::user()->shop->id;
-        $expenses = Shop::find($expense)->expenses()->get();
-        $shops = Auth::user()->shop()->get();
-        $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('expenses', 'shops','total'));
+        $shop = Auth::user()->shop;
+        $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('expenses', 'shop','total'));
         //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
         //return $pdf->stream('gastos.pdf'); //solo visualizacion del archivo en la vista web
          return $pdf->download('gastos.pdf');

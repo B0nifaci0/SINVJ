@@ -72,8 +72,7 @@
                   @endforeach
               </tbody>
             </table>
-            <h4 style="color:green">Tienda: {{ $expense->shop->name }}</h4>
-            <h5 style="color:green">Fecha del reporte: {{ $expense->created_at->format('m-d-Y')}}</h5>
+            <h4 style="color:green">Tienda: {{ $shop->name }}</h4>
             <h3 style="color:darkred">Gasto Total = ${{$total}}</h3>
           </div>
           </div>
