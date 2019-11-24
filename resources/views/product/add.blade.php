@@ -181,6 +181,7 @@ $(document).ready(function(){
 <!-- Función para obtener el precio de linea-->
 @section('precio-linea')
 <script type="text/javascript">
+//detecta el tipo de categoria y depediento al tipo renderea el formulario
   var categoryTypeproduct = {!! $categories !!};
 
   let defaul = categoryTypeproduct[0]
@@ -221,7 +222,7 @@ setTimeout(() => {
       $('#pricepz').css('display', 'none');
       $('#pricecp').css('display', 'none');
     }  
-}, 1000);
+}, 3000);
 
 $('#categorie_id').change(function(){
     $('#pricepz').val(0);
@@ -263,8 +264,8 @@ $('#line_id').change(function() {
 
 $('#multiplicador').keyup(function(){
   var total = $('#line_price').val() * $(this).val();
-  // var discount = total - (total * (Number(line.discount_percentage) / 100))
-  var discount = total - Number(line.discount_percentage)
+  var discount = total - (total * (Number(line.discount_percentage) / 100))
+  // var discount = total - Number(line.discount_percentage)
   $('#discount').val(discount);
   $('#total').val(total);
 

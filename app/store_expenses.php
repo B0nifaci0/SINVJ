@@ -2,6 +2,7 @@
 
 namespace App;
 use App\Shop;
+use App\Branch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,7 +17,9 @@ class store_expenses extends Model
           'descripcion',
           'image',
           'price',
+          'branch_id',
           'shop_id',
+          'user_id',
         ];
         
     public function shop(){

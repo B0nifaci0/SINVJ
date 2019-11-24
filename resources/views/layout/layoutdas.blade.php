@@ -159,7 +159,7 @@
                 <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Perfil</a>
                 <a class="dropdown-item" href="/pagos" role="menuitem"><i class="icon  md-money" aria-hidden="true"></i> Pagos</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i>Cerrar Sesión</a>
+                <a class="dropdown-item" href="/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i>Cerrar Sesión</a>
               </div>
             </li>
             <!--Notifications-->

@@ -21,7 +21,7 @@ class Branch extends Model
         'phone_number',
         'shop_id',
         'state',
-        'password'
+        'password'  
     ];
 
     public function shop()

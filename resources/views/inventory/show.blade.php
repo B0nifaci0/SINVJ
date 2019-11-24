@@ -15,7 +15,7 @@ LISTA DE  LINEA
 <div class="panel-body">
     <div class="page-content">
       <!-- Panel Basic -->
-      <div class="panel">
+      <div class="panel">  
         <header class="panel-heading">
           <div class="panel-actions">
             <div class="row">
@@ -28,7 +28,7 @@ LISTA DE  LINEA
                     data-toggle="tooltip" data-original-title="Generar reporte PDF">
                     <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                   </button>
-                </div>
+                </div>  
                 <!-- END Botón-->
                 <!-- Botón para generar Excel de linea-->
                 <div class="col-md-4 col-md-offset-2">
@@ -58,9 +58,10 @@ LISTA DE  LINEA
         </header>
         <div class="panel-body">
         <!-- Tabla para listar inventarios-->
-          <table id='example'  class="table table-hover table-striped w-full" data-plugin="">
+          <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
               <tr>
+                <th>Clave</th>
                 <th>Producto</th>
                 <th>Status</th>
                 <th>Operaciones</th>
@@ -68,6 +69,7 @@ LISTA DE  LINEA
             </thead>
             <tfoot>
               <tr>
+                <th>Clave</th>
                 <th>Producto</th>
                 <th>Status</th>
                 <th>Opciones</th>
@@ -76,6 +78,7 @@ LISTA DE  LINEA
             <tbody>
               @foreach ($inventory->products as $item)
                 <tr id = "row{{ $inventory->id }}">
+                  <td>{{$item->clave}}</td>
                   <td>{{ $item->description }}</td>
                   <td>
                     @if( $item->status === null )
@@ -92,7 +95,7 @@ LISTA DE  LINEA
                         Listo
                         <i class="icon md-check"></i>
                       </button>
-                      <button class="btn btn-danger lost" alt="{{ $item->id }}">
+                      <button class="btn btn-warning lost" alt="{{ $item->id }}">
                         Dañado
                       </button>
                       <button class="btn btn-danger damaged" alt="{{ $item->id }}">

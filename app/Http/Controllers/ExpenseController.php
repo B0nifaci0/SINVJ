@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Expense;
 use Illuminate\Support\Facades\Auth;
 
+// BORRAR
 class ExpenseController extends Controller {
 
     public function index() {
@@ -14,4 +15,4 @@ class ExpenseController extends Controller {
         return view('expenses.index', compact('expenses'));
     }
 
-} 
+}

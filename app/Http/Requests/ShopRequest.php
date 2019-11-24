@@ -25,11 +25,23 @@ class ShopRequest extends FormRequest
     {
         return [
             'image' => 'image:mimes,png',
+            'description' => 'required',
+            'phone_number' => 'required',
+            'email' => 'required'
         ];
     }
+    
     public function messages(){
         return[
             'image.image' =>'La imagen  del producto  debe de ser .png',
+        ];
+    }
+
+    public function aliases() {
+        return [
+            'description' => 'descripción',
+            'phone_number' => 'teléfono',
+            'email' => 'correo electrónico'
         ];
     }
 }

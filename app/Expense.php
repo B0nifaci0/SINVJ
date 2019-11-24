@@ -9,7 +9,13 @@ class Expense extends Model
 {
     protected $fillable = [
         'concept',
-        'amount'
+        'amount',
+        'user_id',
+        'price',
+        'shop_id',
+        'branch_id',
+        'name',
+        'descripcion'
     ];
 
     public function user() {
@@ -18,5 +24,9 @@ class Expense extends Model
     public function branch()
     {
       return $this->belongsTo(Branch::class);
+    }
+
+    public function shop(){
+        return $this->belongsTo(Shop::class);
     }
 }

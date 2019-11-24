@@ -65,6 +65,7 @@ LISTA DE  GASTOS
                 <th>Descripcion</th>
                 <th>Precio</th>
                 <th>Imagen</th>
+                <th>Sucursal</th>
                 <th>Tienda</th>
                 <th>Opciones</th>
               </tr>
@@ -76,6 +77,7 @@ LISTA DE  GASTOS
                 <th>Descripcion</th>
                 <th>Precio</th>
                 <th>Imagen</th>
+                <th>Sucursal</th>
                 <th>Tienda</th>
                 <th>Opciones</th>
               </tr>
@@ -87,13 +89,11 @@ LISTA DE  GASTOS
                   <td>{{ $expense->name }}</td>
                   <td>{{ $expense->descripcion }}</td>
                   <td>$ {{$expense->price}}</td>
-                  <td>{{$expense->shop->name}}</td>
-                <td>
-                  @php
-                  $image = route('images',"app/public/upload/expenses/$expense->image")
-                  @endphp
-                  <img width="100px" height="100px" src="{{ $image }}">
-                 </td>
+                  <td>
+                    <img width="100px" height="100px" src="{{ $expense->image }}">
+                  </td>
+                  <td>{{$expense->branch ? $expense->branch->name : '' }}</td>
+                  <td>{{$expense->shop ? $expense->shop->name : '' }}</td>
                   <td>  
                      <!-- Botón para editar gasto-->  
                     <a href="/gastos/{{$expense->id}}/edit"><button type="button" 
