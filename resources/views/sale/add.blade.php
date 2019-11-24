@@ -326,7 +326,7 @@ $(function(){
 
 	console.log("------------------>overDiscount", overDiscount.length, overDiscountAuth);
 	if(overDiscount.length > 0 && overDiscountAuth) {
-		var message = `${overDiscount.length} produsto${(overDiscount.length == 1) ? '' : 's'} tiene un descuento superior al permitido.
+		var message = `${overDiscount.length} producto${(overDiscount.length == 1) ? '' : 's'} tiene un descuento superior al permitido.
 		Ingrese la contraseña de seguridad para continuar`;
 		Swal.fire({
 		title: message,

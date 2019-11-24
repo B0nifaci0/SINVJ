@@ -44,7 +44,9 @@ class InventoryController extends Controller
 
         $inventory->products = InventoryDetail::join('products', 'products.id', 'inventory_details.product_id')
         ->where('inventory_details.inventory_report_id', $inventory->id)
-        // ->whereNull('products.deleted_at')
+        ->select('inventory_details.id', 'inventory_details.status', 'inventory_details.product_id',
+            'products.clave', 'products.description'
+        )
         ->get();
         return view('inventory.show', compact('inventory'));
     }
@@ -69,20 +71,19 @@ class InventoryController extends Controller
             ]);
         }
 
-        return back();
+        return redirect('/inventarios');
     }
 
     public function check(Request $request) {
-        // return $request;
         if(!$request->status) {
             $inventory = InventoryDetail::find($request->inventory_id);
             $product = Product::find($inventory->product_id);
             $product->discar_cause = $request->discar_cause;
-            $product->save();
+            $product->save(); 
             $product->delete();
         }
 
         InventoryDetail::where('id', $request->inventory_id)->update(['status' => $request->status]);
-        return redirect('/inventarios');
+        return back();
     }
 }

@@ -95,23 +95,23 @@
       </div>
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <tr>
-          <th>TOTAL TARJETA</th>
+          <th>VENTA TOTAL (TARJETA + EFECTIVO)</th>
+          <td>$ {{$branch->total }} </td>
+        </tr>
+        <tr>
+          <th>TOTAL DE TARJETA</th>
           <td> $ {{$branch->tarjeta }} </td>
         </tr>
         <tr>
-          <th>TOTAL EFECTIVO</th>
+          <th>TOTAL DE EFECTIVO</th>
           <td>$ {{$branch->efectivo }} </td>
-        </tr>
-        <tr>
-          <th>TOTAL TARJETA-EFECTIVO</th>
-          <td>$ {{$branch->total }} </td>
         </tr>
         <tr>
           <th>GASTOS SUCURSAL</th>
           <td>$ {{$branch->total }} </td>
         </tr>
         <tr>
-          <th>TOTAL EFECTIVO-GASTOS</th>
+          <th>TOTAL (EFECTIVO - GASTOS)</th>
           <td>$ {{$branch->total }} </td>
         </tr>
       </table>
