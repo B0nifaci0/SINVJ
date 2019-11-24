@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Branch;
+use PDF;
+use App\Sale;
 use App\Shop;
 use App\User;
+use App\Branch;
+use App\Partial;
+use App\SaleDetails;
+use App\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\BranchRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use PDF;
-use Carbon\Carbon;
 
 class BranchController extends Controller
 {
@@ -166,14 +171,45 @@ class BranchController extends Controller
       return view('Branches/boxcut/reportes',compact('branches','user'));
     }
 
-    public function reportBox_cutDate(Request $request){
+    public function reportBox_cutDate($id){
+      
       $hour = Carbon::now();
       $hour = date('H:i:s');
       $dates = Carbon::now(); 
       $dates = $dates->format('d-m-Y');
-      //return $dates;
-            return view('Branches/boxcut/reportes.box_curt_Branch');
-      //$pdf  = PDF::loadView('Branches.boxcut.reportes.box_curt_Branch');
-      //return $pdf->stream('CorteSucursal.pdf',compact('dates'));
+      $branch = Branch::findOrFail($id);
+      $branch->hour = $hour;
+      $branch->date = $dates;
+      
+      //$branch->total =$total = Product::where('branch_id',$id)->where('status_id',1)->sum('price');
+
+
+      $branch->total = $total = DB::table('partials')
+      ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
+      ->join('products','sale_details.product_id', '=', 'products.id')
+      ->where('branch_id',$id)
+      //->where('craeted_at')
+      ->select('partials.amount')->distinct()->sum('amount');
+      $branch->tarjeta =$tarjeta  = DB::table('partials')
+      ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
+      ->join('products','sale_details.product_id', '=', 'products.id')
+      ->select('partials.amount')
+      ->where('branch_id',$id)
+      ->where('type',2)
+      ->distinct()->sum('amount');
+      $branch->efectivo =$efectivo  = DB::table('partials')
+      ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
+      ->join('products','sale_details.product_id', '=', 'products.id')
+      ->select('partials.amount')
+      ->where('branch_id',$id)
+      ->where('type',1)
+      ->distinct()->sum('amount');
+
+
+      //$pdf  = PDF::loadView('Branches.boxcut.reportes.box_curt_Branch', compact('branch')); 
+      //return $pdf->stream('venta.pdf');
+      //return view('Branches/boxcut/reportes.box_curt_Branch',compact('branch'));   
+      $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch'));  
+     return $pdf->stream('CorteSucursal.pdf');
     }
 }   
