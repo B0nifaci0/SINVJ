@@ -78,7 +78,7 @@
                  <td>{{ $product->description }}</td>
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->name_category }}</td>
-                 <td>{{ $product->price }}</td>
+                 <td>$ {{ $product->price }}</td>
                  <td>{{ $product->name_status }}</td>
                 <td class="sizedate">{{ $product->date_creation }}</td>
 
@@ -95,12 +95,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                   @foreach ($categories as $i => $categori)
+                @foreach ($totals as $i => $total)
                     <tr>
-                        <td>{{$ categori->name }}</td> 
-                        @foreach ($products1 as $i => $product1)
-                        <td align="center">{{ $product1->$total_price }}</td>
-                        @endforeach 
+                        <td>{{$total->name}}</td> 
+                        <td align="center">$ {{ $total->total }}</td>
                     </tr>
                     @endforeach 
                 </tbody> 

@@ -641,6 +641,7 @@ class ProductController extends Controller
    // $status = Shop::find($shop_id)->statuss()->get();
     //return $status;
     $lines = Shop::find($shop_id)->lines()->get();
+    //FUNCION PARA CALCULAR EL TOTAL DE GRAMOS POR LINEA
     foreach($lines as $line){
       $line->total_g = $products->where('line_id', $line->id)->sum('weigth');
     }
@@ -681,18 +682,17 @@ class ProductController extends Controller
     $branches= Auth::user()->shop->branches;
     $shop_id = Auth::user()->shop->id;
     #pasar fecha actual
-    //$category_type_product = category::find($shop_id)->get();
-   //return $category_type_product;
-   // $status = Shop::find($shop_id)->statuss()->get();
-    //$categories = Shop::find($shop_id)->categories()->get();
+    // FUNCION PARA SACAR LAS CATEGORIAS SIN REPETIRSE
     $categories = Shop::join('products','products.shop_id','shops.id')
     ->join('categories','categories.id','products.category_id')
     ->join('statuss','statuss.id','products.status_id')
     ->select('categories.name','categories.type_product')
+    ->distinct('categories.name')
     ->where('categories.type_product',1)
     ->where('statuss.id',2)
     ->get();
-    // return $categories;
+    //return $categories;
+    // FUNCION PARA SACAR LOS PRODUCTOS PERTENECIENTES A CATEGORIAS POR PIEZAS
     $products = Shop::join('products','products.shop_id','shops.id')
     ->join('categories','categories.id','products.category_id')
     ->join('statuss','statuss.id','products.status_id')
@@ -705,50 +705,17 @@ class ProductController extends Controller
     $hour = date('H:i:s');
     $dates = Carbon::now();
     $dates = $dates->format('d-m-Y');
-    //foreach($products as $product){
-    $products1 = Shop::join('products','products.shop_id','shops.id')
-    ->join('categories','categories.id','products.category_id')
-    ->join('statuss','statuss.id','products.status_id')
-    ->select('products.price','categories.type_product','categories.name')
-    ->where('categories.type_product',1)
-   // ->where('categories.name',$product->name_category)
-    ->where('statuss.id',2)
-    ->get();
-    //->sum('products.price');
-   // }
-
+      // FUNCION PARA CALCULAR LA SUMA TOTAL POR CATEGORIAS
    $totals = Category::join('products', 'products.category_id', 'categories.id')
     ->where('categories.shop_id', Auth::user()->shop->id)  
-
+    ->where('categories.type_product',1)  
     ->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as total'))
+    ->distinct('categories.name')
     ->groupBy('categories.id', 'categories.name')
     ->get();
-      // return $totals;
 
-    // return $products1;
-    //->sum('products.price')
-    /*foreach($products1 as $product1){
-      $product1->total_price = $categories->where('name',$product1->name)->sum($product1->price);
-    }+/
-   // return $product1->total_price;
-
-      /**foreach($products as $product){
-      $product->total_price_purchase = $product->price_purchase + $total;
-      }**/
-      //return $total_price_purchase;
-
-     // $total_sale_price = 0;
-     // $total_sale_price = $products1;
-
-     // return $total_sale_price;
-
-      //$compra = $total * $precio;
-      //$utilidad = $cash - $compra;
-
-      //return $total_sale_price;
-
-  $pdf  = PDF::loadView('product.Reports.reportEntradasGppz', compact('branches','categories','products','products1','hour','dates', 'totals'));
-  return $pdf->stream('R.EntradasGeneral_ppz.pdf');
+  $pdf  = PDF::loadView('product.Reports.reportEntradasPr_gppz', compact('branches','categories','products','hour','dates', 'totals'));
+  return $pdf->stream('R.EntradasGeneralPr_gppz.pdf');
   }
 
   //** función que genera el reporte  general de productos por pieza-entradas **//
