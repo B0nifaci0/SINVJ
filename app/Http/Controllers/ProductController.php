@@ -585,12 +585,13 @@ class ProductController extends Controller
     ->where('categories.type_product',2)
     ->where('statuss.id',2)->get();
   //return $products;
-    $status = Shop::find($shop_id)->statuss()->get();
+   // $status = Shop::find($shop_id)->statuss()->get();
     //return $status;
     $lines = Shop::find($shop_id)->lines()->get();
     foreach($lines as $line){
       $line->total_g = $products->where('line_id', $line->id)->sum('weigth');
     }
+    
 
       $hour = Carbon::now();
       $hour = date('H:i:s');
@@ -622,6 +623,126 @@ class ProductController extends Controller
   return $pdf->stream('R.EntradasGeneral_pgr.pdf');
   }
 
+  //** función que genera el reporte  general de productos por gramos */
+  public function reportEntradasPr_gpgr(Request $request){
+    $branches= Auth::user()->shop->branches;
+    $shop_id = Auth::user()->shop->id;
+    #pasar fecha actual
+    $category_type_product = category::find($shop_id)->get();
+   //return $category_type_product;
+    $products = Shop::join('products','products.shop_id','shops.id')
+   ->join('categories','categories.id','products.category_id')
+   ->join('lines','lines.id','products.line_id')
+   ->join('statuss','statuss.id','products.status_id')
+   ->select('products.*', 'categories.name as name_category', 'lines.name as name_line','categories.type_product','statuss.name as name_status')
+    ->where('categories.type_product',2)
+    ->where('statuss.id',2)->get();
+  //return $products;
+   // $status = Shop::find($shop_id)->statuss()->get();
+    //return $status;
+    $lines = Shop::find($shop_id)->lines()->get();
+    foreach($lines as $line){
+      $line->total_g = $products->where('line_id', $line->id)->sum('weigth');
+    }
+    //return $line->total_g;
+
+      $hour = Carbon::now();
+      $hour = date('H:i:s');
+
+      $dates = Carbon::now();
+      $dates = $dates->format('d-m-Y');
+
+    $total = 0;
+      foreach($products as $product){
+      $total = $product->weigth + $total;
+      }
+
+      $cash = 0;
+      foreach($products as $product){
+        $cash = $product->price + $cash;
+      }
+
+      $precio = 0;
+      foreach($lines as $line){
+        $precio = $line->purchase_price;
+      }
+
+      $compra = $total * $precio;
+      $utilidad = $cash - $compra;
+
+      //return $products;
+
+  $pdf  = PDF::loadView('product.Reports.reportEntradasPr_gpgr', compact('branches','lines','products','total','cash','precio','hour','dates','compra','utilidad'));
+  return $pdf->stream('R.EntradasGeneral_ppgr.pdf');
+  }
+
+  //** función que genera el reporte  general de productos por piezas */
+  public function reportEntradasPr_gppz(Request $request){
+    $branches= Auth::user()->shop->branches;
+    $shop_id = Auth::user()->shop->id;
+    #pasar fecha actual
+    //$category_type_product = category::find($shop_id)->get();
+   //return $category_type_product;
+   // $status = Shop::find($shop_id)->statuss()->get();
+    //$categories = Shop::find($shop_id)->categories()->get();
+    $categories = Shop::join('products','products.shop_id','shops.id')
+    ->join('categories','categories.id','products.category_id')
+    ->join('statuss','statuss.id','products.status_id')
+    ->select('categories.name','categories.type_product')
+    ->where('categories.type_product',1)
+    ->where('statuss.id',2)
+    ->get();
+    //return $categories;
+    $products = Shop::join('products','products.shop_id','shops.id')
+    ->join('categories','categories.id','products.category_id')
+    ->join('statuss','statuss.id','products.status_id')
+    ->select('products.*', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
+    ->where('categories.type_product',1)
+    ->where('statuss.id',2)
+    //->sum('products.price')
+    ->get();
+    $hour = Carbon::now();
+    $hour = date('H:i:s');
+    $dates = Carbon::now();
+    $dates = $dates->format('d-m-Y');
+    //foreach($products as $product){
+    $products1 = Shop::join('products','products.shop_id','shops.id')
+    ->join('categories','categories.id','products.category_id')
+    ->join('statuss','statuss.id','products.status_id')
+    ->select('products.price','categories.type_product','categories.name')
+    ->where('categories.type_product',1)
+   // ->where('categories.name',$product->name_category)
+    ->where('statuss.id',2)
+    ->get();
+    //->sum('products.price');
+   // }
+    //return $products1;
+    //->sum('products.price')
+   /* foreach($products1 as $product1){
+
+      $product1->total_price = $categories->where('name',$product1->name)->sum($product1->price);
+    }*/
+   // return $product1->total_price;
+
+      /**foreach($products as $product){
+      $product->total_price_purchase = $product->price_purchase + $total;
+      }**/
+      //return $total_price_purchase;
+
+     // $total_sale_price = 0;
+     // $total_sale_price = $products1;
+
+     // return $total_sale_price;
+
+      //$compra = $total * $precio;
+      //$utilidad = $cash - $compra;
+
+      //return $total_sale_price;
+
+  $pdf  = PDF::loadView('product.Reports.reportEntradasGppz', compact('branches','categories','products','products1','hour','dates'));
+  return $pdf->stream('R.EntradasGeneral_ppz.pdf');
+  }
+
   //** función que genera el reporte  general de productos por pieza-entradas **//
   public function reportEntradasP_pz(Request $request){
      $branches= Auth::user()->shop->branches;
@@ -642,16 +763,21 @@ class ProductController extends Controller
     $hour = date('H:i:s');
     $dates = Carbon::now();
     $dates = $dates->format('d-m-Y');
-    foreach($products as $product){
+   /* foreach($categories as $categorie){
 
-      $categorie->total_price_purchase = $categories->where('name', $product->name_category)->sum('pricepzt');
+      $categorie->total_sale_price = $products->where('name', $product->name_category)->sum('price');
     }
-    return $categorie->total_price_purchase;
+    return $categorie->total_sale_price_; */
 
       /**foreach($products as $product){
       $product->total_price_purchase = $product->price_purchase + $total;
       }**/
       //return $total_price_purchase;
+
+      foreach($categories as $categorie){
+        $categorie->total_s = $products->where('category_id', $categorie->id)->sum('price');
+      }
+      return $categorie->total_s;
 
       $total_sale_price = 0;
       foreach($products as $product){
