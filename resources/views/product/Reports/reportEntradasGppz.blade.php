@@ -93,10 +93,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                   @foreach ($categories as $i => $categori)
+                   @foreach ($totals as $i => $total)
                     <tr>
-                        <td>{{$categori->name}}</td> 
-                        <td align="center">0</td>
+                        <td>{{$total->name}}</td> 
+                        <td align="center">$ {{ $total->total }}</td>
                     </tr>
                     @endforeach 
                 </tbody> 

@@ -692,7 +692,7 @@ class ProductController extends Controller
     ->where('categories.type_product',1)
     ->where('statuss.id',2)
     ->get();
-    //return $categories;
+    // return $categories;
     $products = Shop::join('products','products.shop_id','shops.id')
     ->join('categories','categories.id','products.category_id')
     ->join('statuss','statuss.id','products.status_id')
@@ -716,12 +716,20 @@ class ProductController extends Controller
     ->get();
     //->sum('products.price');
    // }
-    //return $products1;
-    //->sum('products.price')
-   /* foreach($products1 as $product1){
 
+   $totals = Category::join('products', 'products.category_id', 'categories.id')
+    ->where('categories.shop_id', Auth::user()->shop->id)  
+
+    ->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as total'))
+    ->groupBy('categories.id', 'categories.name')
+    ->get();
+      // return $totals;
+
+    // return $products1;
+    //->sum('products.price')
+    /*foreach($products1 as $product1){
       $product1->total_price = $categories->where('name',$product1->name)->sum($product1->price);
-    }*/
+    }+/
    // return $product1->total_price;
 
       /**foreach($products as $product){
@@ -739,7 +747,7 @@ class ProductController extends Controller
 
       //return $total_sale_price;
 
-  $pdf  = PDF::loadView('product.Reports.reportEntradasGppz', compact('branches','categories','products','products1','hour','dates'));
+  $pdf  = PDF::loadView('product.Reports.reportEntradasGppz', compact('branches','categories','products','products1','hour','dates', 'totals'));
   return $pdf->stream('R.EntradasGeneral_ppz.pdf');
   }
 
