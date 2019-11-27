@@ -54,8 +54,8 @@
 <body>
 <div class="page-content">
     <div class="panel">
-    <h1 align="center">Reporte de Entrada de Productos</h1>
-        <h2 align="center">Todas las lineas</h2>
+    <h1 align="center">Reporte de Entrada de Productos por Pieza</h1>
+        <h2 align="center">Todas las Categorias</h2>
             <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
@@ -64,6 +64,7 @@
                  <th scope="col">Descripción</th>
                  <th scope="col">Observaciones</th>
                  <th scope="col">Categoria</th>
+                 <th scope="col">Precio Venta</th>
                  <th scope="col">Estatus</th>
                  <th scope="col">Fecha</th>
 
@@ -77,6 +78,7 @@
                  <td>{{ $product->description }}</td>
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->name_category }}</td>
+                 <td>$ {{ $product->price }}</td>
                  <td>{{ $product->name_status }}</td>
                 <td class="sizedate">{{ $product->date_creation }}</td>
 
@@ -93,7 +95,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                   @foreach ($totals as $i => $total)
+                @foreach ($totals as $i => $total)
                     <tr>
                         <td>{{$total->name}}</td> 
                         <td align="center">$ {{ $total->total }}</td>

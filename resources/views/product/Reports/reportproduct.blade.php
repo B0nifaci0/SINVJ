@@ -249,7 +249,11 @@ Panel Principal
                                     <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne"
                                         aria-controls="exampleTabsOne" role="tab">Productos Gr</a></li>
                                     <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
-                                        aria-controls="exampleTabsTwo" role="tab">Productos Pz</a></li>
+                                        aria-controls="exampleTabsTwo" role="tab">Productos GPGR</a></li>
+                                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsThree"
+                                        aria-controls="exampleTabsThree" role="tab">Productos Pz</a></li>
+                                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsFour"
+                                        aria-controls="exampleTabsFour" role="tab">Productos GPPZ</a></li>
                                   </ul>
                                     <div class="tab-content pt-20">
                                       <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
@@ -257,11 +261,11 @@ Panel Principal
                                           <div class="col-md-4 col-sm-12">
                                               <h4>Reporte Entradas Productos  Por Gramos </h4>
                                             </div>
-                                              @if(Auth::user()->type_user == 1 )
+                                              <!--@if(Auth::user()->type_user == 1 )
                                                 <div class="col-md-1 offset-md-7 col-sm-12">
                                                   <a class="btn btn-icon btn-danger waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Reporte General Productos Por Linea" href="/reportEntradasGpgr"><i class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
                                                 </div>
-                                                @endif
+                                                @endif-->
                                              </div>
                                               <form action="entradasproducto">
                                                 <div class="panel panel-bordered">
@@ -329,17 +333,72 @@ Panel Principal
                                               </div>
                                             </form>
                                           </div>
-                                    <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+                                          <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+                                      <form action="reportEntradasPrgpgr">
+                                        <div class="row">
+                                          <div class="col-md-4 col-sm-12">
+                                                <h4>Reporte Entradas Productos General Por Gramos</h4>
+                                          </div>
+                                           <!-- @if(Auth::user()->type_user == 1 )
+                                              <div class="col-md-1 offset-md-7 col-sm-12">
+                                                <a class="btn btn-icon btn-danger waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Reporte General Productos Por Linea" href="/reportEntradasGpgr"><i class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
+                                              </div>
+                                              @endif-->
+                                          </div>
+                                            <div class="panel panel-bordered">
+                                                <div class="panel-body row col-12">
+                                                  <div class="row col-12">
+                                                    <div class="col-3">
+                                                    <label>Seleccione Sucursal</label>
+                                                      <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
+                                                        <!-- <option value="*">Seleccione Sucursal</option> -->
+                                                      @php  
+                                                        $branches = $user->shop->branches;
+                                                      @endphp
+                                                        @foreach($branches as $branch)
+                                                      <option value="{{$branch->id}}" required>{{$branch->name}}</option>
+                                                      @endforeach
+                                                      </select>
+                                                      </div>
+                                                  <div class="input-group col-3">
+                                                      <div class="row container"><label>De la Fecha:</label></div>
+                                                        <div class="input-group">
+                                                          <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                              <i class="icon md-calendar" aria-hidden="true"></i>
+                                                            </span>
+                                                          </div>
+                                                          <input name="fecini" type="text" class="form-control fecini round" data-plugin="datepicker" required>
+                                                        </div>
+                                                      </div>
+                                                  <div class="input-group col-3">
+                                                      <div class="row container"><label>Hasta la Fecha:</label></div>
+                                                      <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                          <i class="icon md-calendar" aria-hidden="true"></i>
+                                                        </span>
+                                                      </div>
+                                                      <input name="fecter" type="text"   class="form-control round" data-plugin="datepicker" required>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                                <div class="input-group col-3 col-6 col-12">
+                                                  <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
+                                              </div>
+                                          </div>
+                                        </form>
+                                      </div>
+                                      <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
                                       <form action="entradasproducto">
                                         <div class="row">
                                           <div class="col-md-4 col-sm-12">
                                                 <h4>Reporte Entradas Productos Por Pieza</h4>
                                           </div>
-                                            @if(Auth::user()->type_user == 1 )
+                                           <!-- @if(Auth::user()->type_user == 1 )
                                               <div class="col-md-1 offset-md-7 col-sm-12">
                                                 <a class="btn btn-icon btn-danger waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Reporte General Productos Por Linea" href="/reportEntradasGpgr"><i class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
                                               </div>
-                                              @endif
+                                              @endif-->
                                           </div>
                                             <div class="panel panel-bordered">
                                                 <div class="panel-body row col-12">
@@ -369,6 +428,61 @@ Panel Principal
                                                             <option value="{{$categories->id}}" required>{{$categories->name}}</option>
                                                             @endif
                                                           @endforeach
+                                                      </select>
+                                                    </div>
+                                                  <div class="input-group col-3">
+                                                      <div class="row container"><label>De la Fecha:</label></div>
+                                                        <div class="input-group">
+                                                          <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                              <i class="icon md-calendar" aria-hidden="true"></i>
+                                                            </span>
+                                                          </div>
+                                                          <input name="fecini" type="text" class="form-control fecini round" data-plugin="datepicker" required>
+                                                        </div>
+                                                      </div>
+                                                  <div class="input-group col-3">
+                                                      <div class="row container"><label>Hasta la Fecha:</label></div>
+                                                      <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                          <i class="icon md-calendar" aria-hidden="true"></i>
+                                                        </span>
+                                                      </div>
+                                                      <input name="fecter" type="text"   class="form-control round" data-plugin="datepicker" required>
+                                                    </div>
+                                                </div>
+                                              </div>
+                                                <div class="input-group col-3 col-6 col-12">
+                                                  <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
+                                              </div>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    <div class="tab-pane" id="exampleTabsFour" role="tabpanel">
+                                      <form action="reportEntradasPrgppz">
+                                        <div class="row">
+                                          <div class="col-md-4 col-sm-12">
+                                                <h4>Reporte Entradas Productos General Por Pieza</h4>
+                                          </div>
+                                         <!--   @if(Auth::user()->type_user == 1 )
+                                              <div class="col-md-1 offset-md-7 col-sm-12">
+                                                <a class="btn btn-icon btn-danger waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Reporte General Productos Por Linea" href="/reportEntradasGpgr"><i class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
+                                              </div>
+                                              @endif -->
+                                          </div>
+                                            <div class="panel panel-bordered">
+                                                <div class="panel-body row col-12">
+                                                  <div class="row col-12">
+                                                  <div class="col-3">
+                                                    <label>Seleccione Sucursal</label>
+                                                      <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
+                                                        <!-- <option value="*">Seleccione Sucursal</option> -->
+                                                      @php  
+                                                        $branches = $user->shop->branches;
+                                                      @endphp
+                                                        @foreach($branches as $branch)
+                                                      <option value="{{$branch->id}}" required>{{$branch->name}}</option>
+                                                      @endforeach
                                                       </select>
                                                     </div>
                                                   <div class="input-group col-3">

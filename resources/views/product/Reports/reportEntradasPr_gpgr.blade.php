@@ -54,18 +54,20 @@
 <body>
 <div class="page-content">
     <div class="panel">
-    <h1 align="center">Reporte de Entrada de Productos</h1>
-        <h2 align="center">Todas las lineas</h2>
+    <h1 align="center">Reporte General De Entrada de Productos Por Gramos</h1>
+        <h2 align="center">Todas las lineas y Categorias de Gramos</h2>
             <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
 				 <th scope="col">Clave</th>
                  <th scope="col">Descripción</th>
+                 <th scope="col">Linea</th>
+                 <th scope="col">Peso</th>
                  <th scope="col">Observaciones</th>
                  <th scope="col">Categoria</th>
                  <th scope="col">Estatus</th>
-                 <th scope="col">Fecha</th>
+                 <th scope="col" >Fecha</th>
 
                 </tr>
               </thead>  
@@ -75,6 +77,8 @@
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td> 
                  <td>{{ $product->description }}</td>
+                 <td>{{ $product->name_line }}</td> 
+                 <td>{{ $product->weigth }} gr</td>
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->name_category }}</td>
                  <td>{{ $product->name_status }}</td>
@@ -87,18 +91,18 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                            <th scope="col">Categoria</th>
-                            <th scope="col">Total</th>
+                            <th scope="col">Linea</th>
+                            <th scope="col">Total De Gramos</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                   @foreach ($totals as $i => $total)
+                   @foreach ($lines as $i => $line)
                     <tr>
-                        <td>{{$total->name}}</td> 
-                        <td align="center">$ {{ $total->total }}</td>
+                        <td>{{$line->name}}</td> 
+                        <td align="center">{{$line->total_g}}</td>
                     </tr>
-                    @endforeach 
+                     @endforeach
                 </tbody> 
                 <br>   
             </table>

@@ -64,6 +64,7 @@
                  <th scope="col">Descripción</th>
                  <th scope="col">Linea</th>
                  <th scope="col">Peso</th>
+                 <th scope="col">Precio Venta</th>
                  <th scope="col">Observaciones</th>
                  <th scope="col">Categoria</th>
                  <th scope="col">Estatus</th>
@@ -77,8 +78,9 @@
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td> 
                  <td>{{ $product->description }}</td>
-                 <td>{{ $product->name_line}}</td> 
+                 <td>{{ $product->name_line }}</td> 
                  <td>{{ $product->weigth }} gr</td>
+                 <td>{{ $product->price }} $</td> 
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->name_category }}</td>
                  <td>{{ $product->name_status }}</td>
