@@ -51,13 +51,16 @@
 <body>
 <div class="page-content">
     <div class="panel">
-    <h2 align="center" style="color:blue">Gastos</h2>
+    <p align= "right">Fecha y Hora {{$date}} / {{$hour}} </p>
+    <h2 align="center" style="color:black">Reporte De Gastos {{ $shop->name}} </h2>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                   <th>Clave</th>
                   <th>Nombre</th>
                   <th>Descripcion</th>
+                  <th>Usuario</th>
+                  <th>Sucursal</th>
                   <th>Precio</th>
                 </tr>
               </thead>
@@ -67,13 +70,22 @@
                     <td>{{ $expense->id}}</td>
                     <td>{{ $expense->name }}</td>
                     <td>{{ $expense->descripcion }}</td>
+                    <td>{{ $expense->user->name}}</td>
+                    <td>{{ $expense->branch->name}}</td>
                     <td>$ {{ $expense->price }}</td>
                   </tr>
                   @endforeach
               </tbody>
             </table>
-            <h4 style="color:green">Tienda: {{ $shop->name }}</h4>
-            <h3 style="color:darkred">Gasto Total = ${{$total}}</h3>
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                <thead>
+                    <tr>
+                            <th scope="col">Total De Gastos</th>
+                            <th scope="col">${{$total}}</th>
+
+                    </tr>
+                </thead>
+            </table>
           </div>
           </div>
     </body>
