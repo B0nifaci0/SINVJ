@@ -54,8 +54,16 @@
 <body>
 <div class="page-content">
     <div class="panel">
+
+    <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
+             
+    <p align="right">Fecha: {{$dates}}</p>
+          
+    <p align="right">Hora: {{$hour}}</p>
+  
+  
     <h1 align="center">Reporte General De Entrada de Productos Por Gramos</h1>
-        <h2 align="center">Todas las lineas y Categorias de Gramos</h2>
+        <h2 align="center">Reporte de Entradas Por Lineas</h2>
             <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>

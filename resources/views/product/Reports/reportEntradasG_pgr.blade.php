@@ -54,6 +54,14 @@
 <body>
 <div class="page-content">
     <div class="panel">
+
+    <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
+             
+    <p align="right">Fecha: {{$dates}}</p>
+          
+    <p align="right">Hora: {{$hour}}</p>
+  
+  
     <h1 align="center">Reporte de Entrada de Productos</h1>
         <h2 align="center">Todas las lineas</h2>
             <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
