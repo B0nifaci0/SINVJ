@@ -337,13 +337,15 @@ Panel Principal
                                       
                                         <div class="row">
                                           <div class="col-md-4 col-sm-12">
-                                                <h4>Reporte Entradas Productos General Por Gramos</h4>
+                                                <h4>Reporte General Productos Por Gramos</h4>
                                           </div>
-                                           <!-- @if(Auth::user()->type_user == 1 )
+                                           <!--
+                                              @if(Auth::user()->type_user == 1 )
                                               <div class="col-md-1 offset-md-7 col-sm-12">
                                                 <a class="btn btn-icon btn-danger waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Reporte General Productos Por Linea" href="/reportEntradasGpgr"><i class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
                                               </div>
-                                              @endif-->
+                                              @endif
+                                              -->
                                           </div>
                                           <form action="reportEntradasPrgpgr">
                                           <div class="panel panel-bordered">
