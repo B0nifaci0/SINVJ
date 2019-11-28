@@ -101,6 +101,16 @@ LISTA DE  GASTOS
                       <i class="icon md-edit" aria-hidden="true"></i></button>
                     </a> 
                     <!-- END Botón--> 
+                     <!-- Botón para generar reporte PDF de Gastos-->
+                   <!--div class="col-md-6 col-md-offset-2"-->
+                   <button onclick="window.location.href='gastopdf'" 
+                   type="button" class=" btn btn-icon
+                    btn-danger waves-effect waves-light waves-round float-left"
+                    data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                   </button>
+                <!-- </div-->
+                <!-- END Botón-->
                     <!-- Botón para eliminar gasto-->
                     <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
                     data-toggle="tooltip" data-original-title="Borrar"

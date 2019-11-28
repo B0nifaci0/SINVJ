@@ -53,8 +53,10 @@
 <body>
 <div class="page-content">
     <div class="panel">
+    
+    <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
           
-              <p align="right">Fecha: {{$dates}} </p>
+    <p align="right">Fecha: {{$dates}} </p>
           
     <p align="right">Hora: {{$hour}}</p>
           

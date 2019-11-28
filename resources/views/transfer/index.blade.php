@@ -81,6 +81,7 @@ TRASFERENCIAS
                 <th>Quien recibio</th>
                 <th>Fecha</th>
                 <th>Status</th>
+                <th>Status</th>
                 <th>Opciones</th>
                 <th>Reporte</th>
               </tr>
@@ -99,6 +100,7 @@ TRASFERENCIAS
                 <th>Quien recibio</th>
                 <th>Fecha</th>
                 <th>Status</th>
+                <th>Estado</th>
                 <th>Opciones</th>
                 <th>Reporte</th>
               </tr> 
@@ -108,7 +110,7 @@ TRASFERENCIAS
                 <tr id = "row{{$transfer->id}}">
                   <td>{{ $transfer->id }}</td> 
                   <td>{{ $transfer->product->clave }}</td> 
-                  <td>{{ $transfer->product->description }}</td>
+                  <td>{{ $transfer->product->name }}</td>
                   <td>{{ $transfer->product->weigth }}</td>
                   <td>{{ $transfer->product->category->name }}</td>
                   <td>{{ $transfer->product->line ? $transfer->product->line->name : '' }}</td>
@@ -122,6 +124,15 @@ TRASFERENCIAS
                       Aceptado
                     @elseif($transfer->status_product === 0)
                       Rechazado
+                    @else
+                      Pendiente
+                    @endif
+                  </td>
+                  <td>
+                    @if($transfer->status_product === 1)
+                      Pagado
+                    @elseif($transfer->status_product === 0)
+                      No pagado
                     @else
                       Pendiente
                     @endif

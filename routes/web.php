@@ -268,6 +268,8 @@ Route::group(['middleware' => ['auth']],function () {
   Route::get('reportEstatusG', 'ProductController@reportEstatusG');
   Route::get('reportEntradasGpgr', 'ProductController@reportEntradasG_pgr');
   Route::get('reportEntradasPpz', 'ProductController@reportEntradasP_pz');
+  Route::get('reportEntradasPrgpgr', 'ProductController@reportEntradasPr_gpgr');
+  Route::get('reportEntradasPrgppz', 'ProductController@reportEntradasPr_gppz');
   Route::get('reportProductspzs', 'ProductController@reportProductpzs');
   
 });

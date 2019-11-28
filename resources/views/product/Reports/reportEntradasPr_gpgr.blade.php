@@ -46,64 +46,71 @@
        text-transform: uppercase;
        font-weight: 500; 
      }
+      .sizedate{
+       font-size: 12px!important;
+     }
    </style>
 </head>
- 
 <body>
 <div class="page-content">
     <div class="panel">
-    
+
     <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
+             
+    <p align="right">Fecha: {{$dates}}</p>
           
-              <p align="right">Fecha: {{$dates}}</p>
-          
-              <p align="right">Hora: {{$hour}}</p>
-          
-          
-    <h2 align="center">Reporte General De Productos Por  Estatus</h2>
-        <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+    <p align="right">Hora: {{$hour}}</p>
+  
+  
+    <h1 align="center">Reporte General De Entrada de Productos Por Gramos</h1>
+        <h2 align="center">Reporte de Entradas Por Lineas</h2>
+            <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-                <th scope="col">Clave</th>
-                <th scope="col">Categoria</th>
+				 <th scope="col">Clave</th>
+                 <th scope="col">Descripción</th>
                  <th scope="col">Linea</th>
-                 <th scope="col">Estatus</th>
-                 <th scope="col">Descripción</th> 
                  <th scope="col">Peso</th>
-                 <th scope="col">Precio</th>
                  <th scope="col">Observaciones</th>
+                 <th scope="col">Categoria</th>
+                 <th scope="col">Estatus</th>
+                 <th scope="col" >Fecha</th>
+
                 </tr>
               </thead>  
               <tbody>
               
-      @foreach ($productsg as $i => $product)
+      @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->clave }}</td>
-                 <td>{{ $product->name_category }}</td>
-                 <td>{{ ($product->name_line) ? $product->name_line : ''}}</td> 
-                 <td>{{ $product->name_status }}</td>
+                 <td>{{ $product->clave }}</td> 
                  <td>{{ $product->description }}</td>
-                 <td>{{ ($product->weigth) ? $product->weigth : ''}} gr</td>
-                 <td>$ {{ $product->price }}</td> 
+                 <td>{{ $product->name_line }}</td> 
+                 <td>{{ $product->weigth }} gr</td>
                  <td>{{ $product->observations }}</td>
+                 <td>{{ $product->name_category }}</td>
+                 <td>{{ $product->name_status }}</td>
+                <td class="sizedate">{{ $product->date_creation }}</td>
+
                 </tr>
                   @endforeach
               </tbody>
             </table>
-            <br>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                            <th scope="col">Total de Gramos</th>
-                            <th scope="col">Total precio Venta</th>
+                            <th scope="col">Linea</th>
+                            <th scope="col">Total De Gramos</th>
+
                     </tr>
                 </thead>
                 <tbody>
+                   @foreach ($lines as $i => $line)
                     <tr>
-                        <td align="center">{{$total}} gr</td>
-                        <td align="center">$ {{$cash}}</td>
+                        <td>{{$line->name}}</td> 
+                        <td align="center">{{$line->total_g}}</td>
                     </tr>
+                     @endforeach
                 </tbody> 
                 <br>   
             </table>

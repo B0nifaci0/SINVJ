@@ -51,16 +51,14 @@
 <body>
 <div class="page-content">
     <div class="panel">
-        <img 
-        align = "left"
-        width="100px"
-        height="100px"
-        src="https://images.vexels.com/media/users/3/151690/isolated/preview/be2ec10fa7ff133565ba9a4bc65aae6c-icono-de-trazo-de-piedra-preciosa-de-diamante-by-vexels.png"
-        alt="Logotipo"
-        >
-        <p align="right">Fecha: {{$dates}} </p>
+    
+    <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
+             
+    <p align="right">Fecha: {{$dates}}</p> 
           
-        <p align="right">Hora: {{$hour}}</p>
+    <p align="right">Hora: {{$hour}}</p>
+  
+  
     <h1 align="center">Reporte de Productos por Gramos y Dinero</h1>
         <h2 align="center">Todas las lineas</h2>
             <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>

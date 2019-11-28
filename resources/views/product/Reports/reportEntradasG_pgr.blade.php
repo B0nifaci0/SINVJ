@@ -54,6 +54,14 @@
 <body>
 <div class="page-content">
     <div class="panel">
+
+    <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
+             
+    <p align="right">Fecha: {{$dates}}</p>
+          
+    <p align="right">Hora: {{$hour}}</p>
+  
+  
     <h1 align="center">Reporte de Entrada de Productos</h1>
         <h2 align="center">Todas las lineas</h2>
             <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
@@ -64,6 +72,7 @@
                  <th scope="col">Descripción</th>
                  <th scope="col">Linea</th>
                  <th scope="col">Peso</th>
+                 <th scope="col">Precio Venta</th>
                  <th scope="col">Observaciones</th>
                  <th scope="col">Categoria</th>
                  <th scope="col">Estatus</th>
@@ -77,8 +86,9 @@
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td> 
                  <td>{{ $product->description }}</td>
-                 <td>{{ $product->name_line}}</td> 
+                 <td>{{ $product->name_line }}</td> 
                  <td>{{ $product->weigth }} gr</td>
+                 <td>{{ $product->price }} $</td> 
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->name_category }}</td>
                  <td>{{ $product->name_status }}</td>

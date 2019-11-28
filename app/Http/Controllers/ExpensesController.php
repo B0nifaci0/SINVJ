@@ -6,6 +6,7 @@ use App\Shop;
 use App\User;
 use App\Branch;
 use App\Expense;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ExpensesRequest;
@@ -186,13 +187,16 @@ class ExpensesController extends Controller
             $branches_ids = $branches->map(function($b) { return $b->id; });
             $expenses = Expense::whereIn('branch_id', $branches_ids)->get();
         }
-
+        $date= date("Y-m-d");
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
         $total = Expense::sum('price');
         $shop = Auth::user()->shop;
-        $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('expenses', 'shop','total'));
+        $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('hour','date','expenses', 'shop','total'));
         //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
         //return $pdf->stream('gastos.pdf'); //solo visualizacion del archivo en la vista web
-         return $pdf->download('gastos.pdf');
+        return $pdf->download('gastos.pdf');
+        //return $date;
       }
      
 }
