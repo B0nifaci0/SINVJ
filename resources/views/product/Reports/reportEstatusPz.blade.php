@@ -52,16 +52,9 @@
 <body>
 <div class="page-content">
     <div class="panel">
-        <img 
-        align = "left"
-        width="100px"
-        height="100px"
-        src="https://images.vexels.com/media/users/3/151690/isolated/preview/be2ec10fa7ff133565ba9a4bc65aae6c-icono-de-trazo-de-piedra-preciosa-de-diamante-by-vexels.png"
-        alt="Logotipo"
-        >
       <p align="right">Fecha: {{$dates}}</p>
       <p align="right">Hora: {{$hour}}</p>
-     <h2 align="center">Reporte de Productos por gr {{$estado->name}}s</h2>
+    <h2 align="center">Reporte de Productos por Pz {{$estado->name}}s</h2>
         <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
@@ -69,7 +62,6 @@
                  <th scope="col">Linea</th>
                  <th scope="col">Clave</th>
                  <th scope="col">Descripción</th>
-                 <th scope="col">Peso</th>
                  <th scope="col">Precio</th>
                  <th scope="col">Observaciones</th>
                  <th scope="col">Id Venta</th>
@@ -82,7 +74,6 @@
                  <td>{{ $product->line->name }}</td> 
                  <td>{{ $product->clave }}</td>
                  <td>{{ $product->description }}</td>
-                 <td>{{ $product->weigth }} gr</td>
                  <td>$ {{ $product->price }}</td> 
                  <td>{{ $product->observations }}</td>
                  @if ($product->status->name === 'Vendido')
@@ -96,14 +87,12 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                            <th scope="col">Total de Gramos</th>
                             <th scope="col">Total Precio Compra</th>
                             <th scope="col">Total precio Venta</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td align="center">{{$total}} gr</td>
                         <td align="center">$ {{$compra}}</td>
                         <td align="center">$ {{$cash}}</td>
                     </tr>

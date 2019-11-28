@@ -77,7 +77,7 @@
     }
   </style>
 </head>
-
+  
 <body>
   <div class="page-content">
     <div class="panel">
@@ -108,11 +108,11 @@
         </tr>
         <tr>
           <th>GASTOS SUCURSAL</th>
-          <td>$ {{$branch->total }} </td>
+          <td>$ {{$branch->gastos }} </td>
         </tr>
         <tr>
           <th>TOTAL EFECTIVO-GASTOS</th>
-          <td>$ {{$branch->total }} </td>
+          <td>$ {{$branch->total - $branch->gastos }} </td>
         </tr>
       </table>
     </div>

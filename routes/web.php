@@ -255,12 +255,13 @@ Route::group(['middleware' => ['auth']],function () {
   Route::post('/grupos/invitacion', 'ShopGroupsController@groupJoin');
 
   /**Reportes Rutas y Vistas */
-  Route::get('/reportes-productos','ProductController@reportProduct');
+  Route::get('/reportes-productos','ProductController@reportProduct');   
   Route::get('estatusproducto', 'ProductController@reportEstatus');
-  Route::get('gramoslinea', 'ProductController@reportLineaG');
+  Route::get('estatusproductoPz', 'ProductController@reportEstatusPz');
+  Route::get('gramoslinea', 'ProductController@reportes-productostLineaG');
   Route::get('entradasproducto', 'ProductController@reportEntradas');
-  Route::get('sucursales/{id}/sucursalcorte/','BranchController@reportBox_cutDate')->name('sucursalcorte');
-
+  Route::get('sucursales/sucursalcorte','BranchController@reportBox_cutDate')->name('sucursalcorte');
+  
   
 
   Route::get('gramoslineageneral', 'ProductController@reportLineaGGeneral');
