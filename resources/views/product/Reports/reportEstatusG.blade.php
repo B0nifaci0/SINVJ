@@ -60,15 +60,16 @@
               <p align="right">Hora: {{$hour}}</p>
           
           
-    <h2 align="center">Reporte de Productos Todos los Estatus</h2>
+    <h2 align="center">Reporte General De Productos Por  Estatus</h2>
         <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                 <th scope="col">Clave</th>
+                <th scope="col">Categoria</th>
                  <th scope="col">Linea</th>
                  <th scope="col">Estatus</th>
-                 <th scope="col">Descripción</th>
+                 <th scope="col">Descripción</th> 
                  <th scope="col">Peso</th>
                  <th scope="col">Precio</th>
                  <th scope="col">Observaciones</th>
@@ -76,13 +77,14 @@
               </thead>  
               <tbody>
               
-      @foreach ($products as $i => $product)
+      @foreach ($productsg as $i => $product)
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td>
-                 <td>{{ ($product->line->name) ? $product->line->name : ''}}</td> 
-                 <td>{{ $product->status->name }}</td>
+                 <td>{{ $product->name_category }}</td>
+                 <td>{{ ($product->name_line) ? $product->name_line : ''}}</td> 
+                 <td>{{ $product->name_status }}</td>
                  <td>{{ $product->description }}</td>
-                 <td>({{ $product->weigth) ? $product->line->name : ''}} gr</td>
+                 <td>{{ ($product->weigth) ? $product->weigth : ''}} gr</td>
                  <td>$ {{ $product->price }}</td> 
                  <td>{{ $product->observations }}</td>
                 </tr>

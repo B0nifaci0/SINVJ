@@ -550,7 +550,7 @@ class ProductController extends Controller
 
       }*/
     }
-
+//**  */
     public function reportLineaGGeneral(){
       $branches= Auth::user()->shop->branches;
       $product = Auth::user()->shop->id;
@@ -561,6 +561,10 @@ class ProductController extends Controller
       $products = Shop::find($product)->products()->where('status_id',2)->get();
       //return $products;
       $shop = Auth::user()->shop; 
+      $hour = Carbon::now();
+      $hour = date('H:i:s');
+        $dates = Carbon::now();
+        $dates = $dates->format('d-m-Y');
     $shops = Auth::user()->shop()->get();
 
     if($shop->image) {
@@ -582,15 +586,14 @@ class ProductController extends Controller
         }
 
 
-    $pdf  = PDF::loadView('product.Reports.reportLineaGGeneral', compact('shop','shops','branches','lines','products','total','cash','precio'));
+    $pdf  = PDF::loadView('product.Reports.reportLineaGGeneral', compact('shop','hour','dates','shops','branches','lines','products','total','cash','precio'));
     return $pdf->stream('ReporteLineasGeneral.pdf');
   }
-
-  public function reportEstatusG(){
+//** funcion para generar reporte general de todas las sucursales por productos gramos */
+  public function reportEstatusG(Request $request){
 ##en desarrollo
     $branches= Auth::user()->shop->branches;
     $id_shop = Auth::user()->shop->id;
-    $products = Shop::find($id_shop)->products()->get();
     $lines = Shop::find($id_shop)->lines()->get();
     //return $lines;
     $categories = Shop::find($id_shop)->categories()->get();
@@ -599,16 +602,12 @@ class ProductController extends Controller
    ->join('categories','categories.id','products.category_id')
    ->join('lines','lines.id','products.line_id')
    ->join('statuss','statuss.id','products.status_id')
-   ->select('products.*', 'categories.name as name_category', 'lines.name as name_line','categories.type_product','statuss.name as name_status')
+   ->select('products.*','categories.name as name_category','lines.name as name_line','categories.type_product','statuss.name as name_status')
     ->where('categories.type_product',2)
     ->where('statuss.id',2)->get();
   //$products = Shop::find($id_shop)->products()->category()->get();
- // return $products;
-  /**$products = DB::table('categories')
-            ->join('products', 'categories.id','products.category_id')
-            ->join('products as product','type_product','type_product')
-            ->orderby('products.id')
-            ->get();**/
+ //return $productsg;
+
    $hour = Carbon::now();
     $hour = date('H:i:s');
 
@@ -623,12 +622,12 @@ class ProductController extends Controller
     }
 
     $total = 0;
-      foreach($products as $product){
+      foreach($productsg as $product){
       $total = $product->weigth + $total;
       }
 
       $cash = 0;
-      foreach($products as $product){
+      foreach($productsg as $product){
         $cash = $product->price + $cash;
       }
 
@@ -641,7 +640,7 @@ class ProductController extends Controller
       $utilidad = $cash - $compra;
 
 
-  $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('shop','shops','branches','categories','id_shop','lines','products','total','cash','precio','hour','dates','compra','utilidad'));
+  $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('shop','shops','branches','categories','id_shop','lines','productsg','total','cash','precio','hour','dates','compra','utilidad'));
   return $pdf->stream('ReporteEstatusGeneral.pdf');
   }
 
@@ -816,10 +815,6 @@ class ProductController extends Controller
   public function reportEntradasP_pz(Request $request){
      $branches= Auth::user()->shop->branches;
     $shop_id = Auth::user()->shop->id;
-    #pasar fecha actual
-    //$category_type_product = category::find($shop_id)->get();
-   //return $category_type_product;
-   // $status = Shop::find($shop_id)->statuss()->get();
     $categories = Shop::find($shop_id)->categories()->get();
     $products = Shop::join('products','products.shop_id','shops.id')
     ->join('categories','categories.id','products.category_id')
@@ -838,16 +833,6 @@ class ProductController extends Controller
     $hour = date('H:i:s');
     $dates = Carbon::now();
     $dates = $dates->format('d-m-Y');
-   /* foreach($categories as $categorie){
-
-      $categorie->total_sale_price = $products->where('name', $product->name_category)->sum('price');
-    }
-    return $categorie->total_sale_price_; */
-
-      /**foreach($products as $product){
-      $product->total_price_purchase = $product->price_purchase + $total;
-      }**/
-      //return $total_price_purchase;
 
       foreach($categories as $categorie){
         $categorie->total_s = $products->where('category_id', $categorie->id)->sum('price');
