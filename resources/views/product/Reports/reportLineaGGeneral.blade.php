@@ -42,7 +42,7 @@
      }.sale-head h1,table thead tr th,table tfoot tr td{
        background-color: #f8f8f8;
      }tfoot{
-       color:#000;
+       color:#000;  
        text-transform: uppercase;
        font-weight: 500; 
      }
@@ -51,6 +51,14 @@
 <body>
 <div class="page-content">
     <div class="panel">
+    
+    <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
+             
+    <p align="right">Fecha: {{$dates}}</p> 
+          
+    <p align="right">Hora: {{$hour}}</p>
+  
+  
     <h1 align="center">Reporte de Productos por Gramos y Dinero</h1>
         <h2 align="center">Todas las lineas</h2>
             <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
@@ -69,7 +77,7 @@
               <tbody>
                
       @foreach ($products as $i => $product)
-                <tr id="row{{$product->id}}">
+                <tr>  
                  <td>{{ $product->clave }}</td>   
                  <td>{{ $product->description }}</td>
                  @if($product->category->type_product == 2)

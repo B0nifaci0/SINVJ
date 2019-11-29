@@ -12,7 +12,7 @@
         padding: 0;
      }.page-break {
        page-break-before:always;
-       width: auto;
+       width: auto;  
        margin: auto;
       }
     }   
@@ -52,6 +52,8 @@
 <body>
 <div class="page-content">
     <div class="panel">
+    
+    <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
           
               <p align="right">Fecha: {{$dates}}</p>
           
@@ -70,12 +72,7 @@
                  <th scope="col">Peso</th>
                  <th scope="col">Precio</th>
                  <th scope="col">Observaciones</th>
-                 @foreach ($products as $i => $product)
-                 @if($product->status->name === 'Vendido'){
-                  <th scope="col">Id Venta</th>
-                 }
-                 @endif
-                 @endforeach
+                 <th scope="col">Id Venta</th>
                 </tr>
               </thead>  
               <tbody>
