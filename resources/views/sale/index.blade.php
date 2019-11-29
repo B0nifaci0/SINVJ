@@ -33,7 +33,7 @@ LISTA DE  VENTAS
         <header class="panel-heading">
           <div class="panel-actions">
             <div class="row">
-              <!-- Botón para generar reporte PDF de ventas-->
+              <!-- Botón para generar reporte PDF de venta por registro-->
               <div class="col-md-4 col-md-offset-2">
                 <button onclick="window.location.href='ventaspdf'" 
                   type="button" class=" btn btn-sm small btn-floating 
