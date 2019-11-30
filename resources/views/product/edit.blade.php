@@ -30,77 +30,92 @@ MODIFICACIÓ PRODUCTO
         {{ method_field('PUT') }}
         <div class='row'>
           <!-- Input para ingresar clave del producto-->
-          <div class="form-group form-material col-md-4">
+          <div class="form-group form-material col-md-3">
               <label>Clave</label>
               <input type="text" class="form-control" name="clave"  value="{{$product->clave}}" required>
           </div>
           <!-- END Input-->
-          <!-- Input para ingresar descripcion-->
-          <div class="form-group form-material col-md-4 ">
-            <label>Descripcion</label>
-            <input type="text" class="form-control"value="{{$product->description}}" name="description">
-          </div>
-          <!-- END Input--> 
-          <!-- Select para Seleccionar linea-->
-          <div class="col-md-3 remove">
-            <label  class="control-label">Seleccione Linea</label>                
-            <select id="line_id"   name="line_id"  class="form-control round">
-              @foreach($lines as $line)            
-                <option value="{{ $line->id }}" required>{{ $line->name }}</option>
-              @endforeach
-            </select> 
-          </div><!-- END Select-->      
-          <!-- Input para ingresar precio de la linea para el producto-->
-          <div class="col-md-3 form-material">
-            <label  class="control-label">Precio de la linea</label>
-              <input type="text" name="" id="line_price" class="form-control" readonly value="">
-          </div>
-          <!-- END Input--> 
-          <!-- Input para ingresar Peso del producto-->
-          <div class="form-group form-material col-md-3">
-            <label>Peso</label>
-            <input type="text" id="multiplicador"  class="form-control" name="weigth" value="{{$product->weigth}}" > 
-          </div><!-- END Input--> 
-          <!-- Input para ingresar precio del producto-->
-          <div class="form-group form-material col-md-3">
-            <label>Precio del Producto</label>
+            <!-- Input para ingresar descripcion-->
+            <div class="form-group form-material col-md-3">
+              <label>Descripcion</label>
+              <input type="text" class="form-control" name="description"  value="{{$product->description}}" required>
+            </div>
+            <!-- END Input--> 
+            <!-- Select para Seleccionar linea-->
+            <div class="col-md-3 form-material remove"> 
+               <label  class="control-label">Seleccione Linea</label>
+              <select id="line_id"   name="line_id"  class="form-control round">
+                @foreach($lines as $line)            
+                  <option value="{{ $line->id }}" required>{{ $line->name }}</option>
+                @endforeach
+              </select> 
+            </div>            
+            <!-- END Select-->  
+
+            <!-- Input para ingresar precio del producto pz-->
+            <div id="pricepz" class="form-group form-material col-md-3">
+              <label>Precio del Producto</label>
+              <input type="text"  class="form-control"  name="price" value="{{ $product->price }}">
+            </div>
+
+            <!-- Input para ingresar precio del producto pz-->
+            <div id="pricecp" class="form-group form-material col-md-3 remove">
+              <label>Precio Compra</label>
+              <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{ $product->price_purchase }}">
+            </div> 
+            <!-- END Input-->
+            <div   class="col-md-3 form-material remove">
+              <label  class="control-label">Precio de la linea</label>
+              <input type="text" name="" id="line_price" class="form-control" readonly>
+            </div>
+            <!-- END Select-->  
+            <!-- Input para ingresar Peso del producto-->
+            <div class="form-group form-material col-md-3 remove">
+              <label>Peso</label>
+              <input type="text" id="multiplicador"  class="form-control" name="weigth" > 
+            </div>
+            <!-- END Input-->
+            <!-- Input para ingresar precio del producto-->
+            <div id="show" class="form-group form-material col-md-3 remove">
+              <label>Precio del Producto</label>
               <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
-          </div>
-          <!-- END Input-->   
-          <!-- Select para Seleccionar categoria-->
-          <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
-            <label>Categoria</label>
-              <select id="categorie_id" name="category_id" class="form-control round">
+            </div> 
+            <!-- END Input-->
+            <!-- Input para ingresar Tope de descuento -->
+            <div class="form-group form-material col-md-3 remove">
+              <label>Tope de descuento</label>
+              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount">
+            </div> 
+            <!-- END Input-->
+            <!-- Select para Seleccionar categoria--> 
+            <div class="col-md-3">
+              <label>Seleccione Categoria </label>
+              <select  id="categorie_id" name="category_id" class="form-control round">
                 @foreach($categories as $category)            
                   <option value="{{ $category->id }}" required>{{ $category->name }}</option>
+                  <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
                 @endforeach
               </select>
-          </div>
-          <!-- END Select--> 
-          <div> 
-              @foreach ($shops as $shop)
+            </div>
+            <!-- END Select--> 
+            <div>
+                @foreach ($shops as $shop)
                 <input type="hidden" name="shop_id" value="{{$shop->id}}">
-              @endforeach 
-          </div>
-          <!-- Select para Seleccionar sucursal-->  
-          <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
-            <label >Sucursal</label>
+                @endforeach 
+            </div>  
+            <!-- Select para Seleccionar sucursal--> 
+            <div class="col-md-3">
+              <label>Seleccione Sucursal</label>
               <select name="branch_id" class="form-control round">
-                @foreach($branches as $branch)
-                  <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
-                @endforeach
+                @php  
+                    $branches = $user->shop->branches;
+                @endphp
+                  @foreach($branches as $branch)
+                    <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
+                  @endforeach
               </select>
-          </div>
-          <!-- END Select-->
-          <!-- Select para Seleccionar status--><div class="col-md-4  col-md-offset-1 visible-md visible-lg">
-            <label >Status</label>
-            <select  name="status_id" class="form-control round">
-              @foreach($statuses as $status)            
-                <option value="{{ $status->id }}" required>{{ $status->name }}</option>>
-              @endforeach
-            </select> 
-          </div>
-          <!-- END Select-->
+            </div>
+            <!-- END Select--> 
           <!-- Input para ingresar Observaciones-->
           <div class="form-group form-material col-md-6">
             <label>Observaciones</label>
@@ -195,21 +210,6 @@ $(document).ready(function(){
  
   
   }
-  setTimeout(() => {
-  var categoryTypeproduct = {!! $categories !!};
-  
-  categoryTypeproduct = categoryTypeproduct[0];  
-  if(categoryTypeproduct.type_product == 1){
-      $('.remove').css('display', 'none');
-      $('#pricepz').css('display', 'initial'); 
-      $('#pricecp').css('display', 'initial'); 
-    } else if(categoryTypeproduct.type_product == 2){
-      console.log('<p>agregar campos</p>');
-      $('.remove').css('display', 'initial');  
-      $('#pricepz').css('display', 'none');
-      $('#pricecp').css('display', 'none');
-    }  
-}, 1000);
 
 $('#categorie_id').change(function(){
     $('#pricepz').val(0);
@@ -225,8 +225,6 @@ $('#categorie_id').change(function(){
       $('#pricepz').css('display', 'initial'); 
       $('#pricecp').css('display', 'initial'); 
       // set purchase price for Pza products
-      console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
-      console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
       $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
     } else if(categoryTypeproduct.type_product == 2){
       // Gramos
@@ -250,9 +248,39 @@ $('#line_id').change(function() {
 }); 
 
 $(document).ready(function(){
-alert('ready');
+// alert('ready');
+
+
+setTimeout(() => {
+  var total = $('#line_price').val() * Number($('#multiplicador').val());
+  // var discount = total - (total * (Number(line.discount_percentage) / 100))
+  var discount = total - Number(line.discount_percentage)
+  $('#discount').val(discount);
+  $('#total').val(total);
+
+
+
+    // $('#pricepz').val(0);
+    // $('#pricecp').val(0)
+
+    var categoryTypeproduct = {!! $categories !!};
+  
+  categoryTypeproduct = categoryTypeproduct[0];  
+  if(categoryTypeproduct.type_product == 1){
+      $('.remove').css('display', 'none');
+      $('#pricepz').css('display', 'initial'); 
+      $('#pricecp').css('display', 'initial'); 
+    } else if(categoryTypeproduct.type_product == 2){
+      console.log('<p>agregar campos</p>');
+      $('.remove').css('display', 'initial');  
+      $('#pricepz').css('display', 'none');
+      $('#pricecp').css('display', 'none');
+    }  
+
+}, 1000);
+
 $('#multiplicador').keyup(function(){
-  alert('multi');
+  // alert('multi');
   var total = $('#line_price').val() * $(this).val();
   // var discount = total - (total * (Number(line.discount_percentage) / 100))
   var discount = total - Number(line.discount_percentage)
@@ -265,10 +293,7 @@ $('#multiplicador').keyup(function(){
   $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
   });
 });
-setTimeout(() => {
-  alert('entra a set');
-  multiplicar();
-},5000);
+
 </script>
 @endsection
 <!-- END Función-->

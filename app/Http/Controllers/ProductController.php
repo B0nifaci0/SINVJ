@@ -246,20 +246,22 @@ class ProductController extends Controller
 
         $category = Auth::user()->shop->id;
         $user = Auth::user();
-        #$categories = Category::all();
         $line = Auth::user()->shop->id;
         $shops = Auth::user()->shop()->get();
         //return $shops;
-        $categories = Shop::find($category)->categories()->get();
+        $product = Product::find($id);
+        
+        $shop_categories = Category::where('shop_id', $category)->where('id', '!=', $product->category_id)->get();
+        $categories = Category::where('id', $product->category_id)->get();
+
+        $categories = $categories->merge($shop_categories);
+
         $lines = Shop::find($line)->lines()->get();
         $branch = Auth::user()->shop->id;
         $branches = Shop::find($branch)->branches()->get();
-        //$status = Auth::user()->shop->id;
-        //$statuses = Shop::find($status)->statuss()->get();
 				$statuses = Status::all();
-        $product = Product::find($id);
         // return $product; 
-
+      
       return view('product/edit', compact('product', 'categories','lines','shops','branches','statuses','user'));
     }
 
