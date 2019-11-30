@@ -72,8 +72,7 @@ class BranchController extends Controller
         } else */
           
         $branch = new Branch([
-          'name' => $request->name,
-          'password' => Hash::make($request->password)
+          'name' => $request->name
         ]);
         $branch->shop_id = Auth::user()->shop->id;
         $branch->save();
@@ -141,9 +140,6 @@ class BranchController extends Controller
 
             //return $request->all();
             return redirect('/sucursales')->with('mesage-update','La sucursal  se ha actualizado exitosamente!');
-
-
-
     }
 
     /**

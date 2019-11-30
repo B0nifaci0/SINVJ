@@ -18,7 +18,6 @@ class CreateBranchesTable extends Migration
             $table->string('name', 50);
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
-            $table->string('password')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

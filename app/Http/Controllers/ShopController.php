@@ -9,6 +9,7 @@ use App\Http\Requests\ShopRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\S3ImageManager;
+use Illuminate\Support\Facades\Hash;
 
 
 class ShopController extends Controller
@@ -62,13 +63,14 @@ class ShopController extends Controller
     if ($request->hasFile('image')){
       $filename = $request->image->getCLientOriginalName();
       $timestamp = time();
-       $request->image->storeAs('public/upload/shops',$timestamp . $filename);
+      $request->image->storeAs('public/upload/shops',$timestamp . $filename);
 
-       $shop = new Shop($request->all());
-       $shop->user_id = Auth::user()->id;
-       $shop->image = $timestamp . $filename;
-       $shop->save();
-       //return $shop;
+      $shop = new Shop($request->all());
+      $shop->password = Hash::make($request->password);
+      $shop->user_id = Auth::user()->id;
+      $shop->image = $timestamp . $filename;
+      $shop->save();
+      //return $shop;
     }
 
     //return $request->all();
@@ -124,6 +126,7 @@ class ShopController extends Controller
     	$shop->name = $request->name;
     	$shop->description = $request->description;
     	$shop->email = $request->email;
+    	$shop->password = Hash::make($request->password);
     	$shop->phone_number = $request->phone_number;
     	$shop->save();
     	return redirect('/principal')->with('mesage-update', 'La tienda se ha modificoo exitosamente!');;
