@@ -181,13 +181,40 @@ class BranchController extends Controller
       $branch->hour = $hour;
       $branch->date = $dates;
 
+      $fecini = Carbon::parse($request->fecini)->format('Y-m-d');
+      $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
 
-      $fecini = $fecter = date('Y-m-d');
-      $fecini = $request->fecini;
-      $fecter = $request->fecter;
-
-      
-      $branch->total  = DB::table('partials')
+      if($fecini == $fecter){
+        $branch->total  = DB::table('partials')
+      ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
+      ->join('products','sale_details.product_id', '=', 'products.id')
+      ->whereDate('partials.updated_at',$fecini)
+      ->where('branch_id','=',$request->branch_id)
+      ->select('partials.amount')->distinct()->sum('amount');
+      $branch->tarjeta  = DB::table('partials')
+      ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
+      ->join('products','sale_details.product_id', '=', 'products.id')
+      ->whereDate('partials.updated_at',$fecter)
+      ->select('partials.amount')
+      ->where('branch_id',$request->branch_id)
+      ->where('type',2)
+      ->distinct()->sum('amount');
+      $branch->efectivo = DB::table('partials')
+      ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
+      ->join('products','sale_details.product_id', '=', 'products.id')
+      ->whereDate('partials.updated_at',$fecini)
+      ->select('partials.amount')
+      ->where('branch_id',$request->branch_id)
+      ->where('type',1)
+      ->distinct()->sum('amount');
+      $branch->gastos = DB::table('expenses')
+      ->join('branches','expenses.branch_id','=', 'branches.id')
+      ->whereDate('expenses.updated_at',$fecter)
+      ->select('price')
+      ->where('branch_id',$request->branch_id)
+      ->sum('price');
+      }else{
+        $branch->total  = DB::table('partials')
       ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
       ->join('products','sale_details.product_id', '=', 'products.id')
       ->whereBetween('partials.updated_at',[$fecini,$fecter])
@@ -215,7 +242,7 @@ class BranchController extends Controller
       ->select('price')
       ->where('branch_id',$request->branch_id)
       ->sum('price');
-
+      }
       $branch->totalFin = $branch->efectivo - $branch->gastos;
       
       $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch'));  
