@@ -101,6 +101,10 @@ LISTA DE  LINEA
                       <button class="btn btn-danger damaged" alt="{{ $item->id }}">
                         Perdido
                       </button>
+                    @else
+                      <button class="btn btn-info restart" alt="{{ $item->id }}">
+                        Restaurar
+                      </button>
                     @endif
                   </td>
                 </tr>
@@ -185,6 +189,51 @@ $(document).ready(function() {
           $('#discar_cause').val(1);
           $('#form').submit();
         }
+      })
+    });
+
+    $(".restart").click(function() {
+      let id = $(this).attr("alt");
+
+      var message = "¿Desea restablecer este producto?";
+      Swal.fire({
+      title: message,
+      input: 'password',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      showLoaderOnConfirm: true,
+      preConfirm: (password) => {
+        return fetch(`/check-password`, {
+          method: 'POST',
+          body: JSON.stringify({password: password}),
+          headers:{
+              'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+          }
+        })
+        .then(response => {
+          if (!response.ok) {
+          throw new Error(response.statusText)
+          }
+          return response.json()
+        })
+        .catch(error => {
+          Swal.showValidationMessage(
+          `Contraseña incorrecta`
+          )
+        })
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+          if (result.value) {
+            $('#inventory_id').val(id);
+            $('#status').val(null);
+            $('#discar_cause').val(null);
+            $('#form').submit();
+          }
       })
     });
 });

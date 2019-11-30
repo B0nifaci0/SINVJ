@@ -14,6 +14,7 @@ class Shop extends Model
         'name',
         'image',
         'email',
+        'password',
         'phone_number',
         'user_id',
         'municipality_id',

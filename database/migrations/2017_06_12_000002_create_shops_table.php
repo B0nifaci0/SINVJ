@@ -19,8 +19,8 @@ class CreateShopsTable extends Migration
             $table->string('image')->default('NULL');
             $table->string('description')->default('NULL');
             $table->string('email')->default('NULL');
-            $table->string('password', 50)->nullable();
             $table->string('phone_number')->default('NULL');
+            $table->string('password')->nullable();
 
             $table->integer('shop_group_id')->unsigned()->nullable();
             $table->foreign('shop_group_id')->references('id')->on('shop_groups');
@@ -29,7 +29,7 @@ class CreateShopsTable extends Migration
             $table->foreign('municipality_id')->references('id')->on('municipalities');
             $table->integer('state_id')->unsigned();
             $table->foreign('state_id')->references('id')->on('states');
-            //funcion para crear la llave foranea//onDelete sirve para boorrar los articulos del usuario que se elimine en forma de4 cascada
+            
             $table->softDeletes();
             $table->timestamps();
         });
