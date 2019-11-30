@@ -193,11 +193,10 @@ class BranchController extends Controller
       ->whereBetween('partials.updated_at',[$fecini,$fecter])
       ->where('branch_id','=',$request->branch_id)
       ->select('partials.amount')->distinct()->sum('amount');
-      
-
       $branch->tarjeta  = DB::table('partials')
       ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
       ->join('products','sale_details.product_id', '=', 'products.id')
+      ->whereBetween('partials.updated_at',[$fecini,$fecter])
       ->select('partials.amount')
       ->where('branch_id',$request->branch_id)
       ->where('type',2)
@@ -205,15 +204,19 @@ class BranchController extends Controller
       $branch->efectivo = DB::table('partials')
       ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
       ->join('products','sale_details.product_id', '=', 'products.id')
+      ->whereBetween('partials.updated_at',[$fecini,$fecter])
       ->select('partials.amount')
       ->where('branch_id',$request->branch_id)
       ->where('type',1)
       ->distinct()->sum('amount');
       $branch->gastos = DB::table('expenses')
       ->join('branches','expenses.branch_id','=', 'branches.id')
+      ->whereBetween('expenses.updated_at',[$fecini,$fecter])
       ->select('price')
       ->where('branch_id',$request->branch_id)
       ->sum('price');
+
+      $branch->totalFin = $branch->efectivo - $branch->gastos;
       
       $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch'));  
      return $pdf->stream('CorteSucursal.pdf');

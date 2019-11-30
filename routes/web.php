@@ -267,6 +267,7 @@ Route::group(['middleware' => ['auth']],function () {
   
 
   Route::get('gramoslineageneral', 'ProductController@reportLineaGGeneral');
+  Route::get('gramoslinea', 'ProductController@reportLineaGramos');
   Route::get('reportEstatusG', 'ProductController@reportEstatusG');
   Route::get('reportEntradasGpgr', 'ProductController@reportEntradasG_pgr');
   Route::get('reportEntradasPpz', 'ProductController@reportEntradasP_pz');

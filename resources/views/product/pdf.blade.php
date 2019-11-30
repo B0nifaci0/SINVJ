@@ -55,8 +55,8 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-				         <th scope="col">Clave</th>
-                 <th scope="col">Nombre</th>
+				         <th scope="col">ID</th>
+                 <th scope="col">Clave</th>
                  <th scope="col">Descripción</th>
                  <th scope="col">Peso</th>
                  <th scope="col">Observaciónes</th>
@@ -71,7 +71,7 @@
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
                  <td>{{ $product->id }}</td> 
-                 <td>{{ $product->name }}</td>
+                 <td>{{ $product->clave }}</td>
                  <td>{{ $product->description }}</td>
                  <td>{{ ($product) ? $product->weigth: ""}}</td>
                  <td>{{ $product->observations }}</td>

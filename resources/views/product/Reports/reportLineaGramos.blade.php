@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- <head> 
+ <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <title>Reporte de Productos</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
@@ -48,53 +48,45 @@
      }
    </style>
 </head>
+ 
 <body>
 <div class="page-content">
     <div class="panel">
     
     <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
-             
-    <p align="right">Fecha: {{$dates}}</p> 
           
-    <p align="right">Hora: {{$hour}}</p>
-  
-  
-    <h1 align="center">Reporte de Productos por Gramos y Dinero</h1>
-        <h2 align="center">Todas las lineas</h2>
-            <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+              <p align="right">Fecha: {{$dates}}</p>
+          
+              <p align="right">Hora: {{$hour}}</p>
+          
+          
+    <h2 align="center">Reporte General De Productos Por  Estatus</h2>
+        <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-				        <th scope="col">Clave</th>
-                 <th scope="col">Descripción</th>
+                <th scope="col">Clave</th>
+                <th scope="col">Categoria</th>
+                 <th scope="col">Linea</th>
+                 <th scope="col">Estatus</th>
+                 <th scope="col">Descripción</th> 
                  <th scope="col">Peso</th>
                  <th scope="col">Precio</th>
                  <th scope="col">Observaciones</th>
-                 <th scope="col">Categoria</th>
-                 <th scope="col">Estatus</th>
                 </tr>
               </thead>  
               <tbody>
-               
-      @foreach ($products as $i => $product)
+              
+      @foreach ($productsg as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->clave }}</td>   
+                 <td>{{ $product->clave }}</td>
+                 <td>{{ $product->name_category }}</td>
+                 <td>{{ ($product->name_line) ? $product->name_line : ''}}</td> 
+                 <td>{{ $product->name_status }}</td>
                  <td>{{ $product->description }}</td>
-                 @if($product->category->type_product == 2)
-                 <td>{{ $product->weigth }} gr</td>
-                 @endif
-                @if($product->category->type_product ==  1)
-                 <td></td>
-                 @endif
-                @if($product->category->type_product == 2)
-                 <td>$ {{ $product->price }}</td>
-                @endif
-                @if($product->category->type_product ==  1)
-                 <td></td>
-                 @endif
+                 <td>{{ ($product->weigth) ? $product->weigth : ''}} gr</td>
+                 <td>$ {{ $product->price }}</td> 
                  <td>{{ $product->observations }}</td>
-                 <td>{{ $product->category->name }}</td>
-                 <td>{{ $product->status->name }}</td>
                 </tr>
                   @endforeach
               </tbody>
@@ -104,15 +96,16 @@
                 <thead>
                     <tr>
                             <th scope="col">Total de Gramos</th>
-                            <th scope="col">Total precio venta</th>
+                            <th scope="col">Total precio Venta</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{$total}} gr</td>
-                        <td>$ {{$cash}}</td>
+                        <td align="center">{{$total}} gr</td>
+                        <td align="center">$ {{$cash}}</td>
                     </tr>
-                </tbody>    
+                </tbody> 
+                <br>   
             </table>
           </div>
           </div>
