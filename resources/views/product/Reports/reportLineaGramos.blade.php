@@ -44,48 +44,70 @@
      }tfoot{
        color:#000;
        text-transform: uppercase;
-       font-weight: 500;
+       font-weight: 500; 
      }
    </style>
 </head>
+ 
 <body>
 <div class="page-content">
     <div class="panel">
-    <h2 align="center">Productos</h2>
+    
+    <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
+          
+              <p align="right">Fecha: {{$dates}}</p>
+          
+              <p align="right">Hora: {{$hour}}</p>
+          
+          
+    <h2 align="center">Reporte General De Productos Por  Estatus</h2>
+        <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-				         <th scope="col">ID</th>
-                 <th scope="col">Clave</th>
-                 <th scope="col">Descripción</th>
-                 <th scope="col">Peso</th>
-                 <th scope="col">Observaciónes</th>
-                 <th scope="col">Categoría</th>
+                <th scope="col">Clave</th>
+                <th scope="col">Categoria</th>
                  <th scope="col">Linea</th>
-                 <th scope="col">Sucursal</th>
-                 <th scope="col">Status</th>
+                 <th scope="col">Estatus</th>
+                 <th scope="col">Descripción</th> 
+                 <th scope="col">Peso</th>
+                 <th scope="col">Precio</th>
+                 <th scope="col">Observaciones</th>
                 </tr>
               </thead>  
               <tbody>
               
-      @foreach ($products as $i => $product)
+      @foreach ($productsg as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->id }}</td> 
                  <td>{{ $product->clave }}</td>
+                 <td>{{ $product->name_category }}</td>
+                 <td>{{ ($product->name_line) ? $product->name_line : ''}}</td> 
+                 <td>{{ $product->name_status }}</td>
                  <td>{{ $product->description }}</td>
-                 <td>{{ ($product) ? $product->weigth: ""}}</td>
+                 <td>{{ ($product->weigth) ? $product->weigth : ''}} gr</td>
+                 <td>$ {{ $product->price }}</td> 
                  <td>{{ $product->observations }}</td>
-                 <td>{{ $product->category->name }}</td>
-                 <td>{{ ($product->line ? $product->line->name:"")}}</td>
-                 <td>{{ ($product->branch) ? $product->branch->name:""}}</td>
-                 <td>{{ $product->status->name }}</td>
                 </tr>
                   @endforeach
               </tbody>
+            </table>
+            <br>
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                <thead>
+                    <tr>
+                            <th scope="col">Total de Gramos</th>
+                            <th scope="col">Total precio Venta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align="center">{{$total}} gr</td>
+                        <td align="center">$ {{$cash}}</td>
+                    </tr>
+                </tbody> 
+                <br>   
             </table>
           </div>
           </div>
     </body>
 </html>
-
-
