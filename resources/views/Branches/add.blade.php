@@ -43,20 +43,6 @@ ALTA SUCURSALES
                   <label class="form-control-label">Asigna una contraseña de seguridad para la sucursal</label>
                 </div>
               </div>
-              <div class="row">
-                <!-- Input Para ingresar Contraseña-->
-                <div class="form-group form-material col-md-6">
-                  <label class="form-control-label">Contraseña: </label>
-                  <input type="password" class="form-control" name="password"  required="required" />
-                </div>
-                <!-- END Input-->
-                <!-- Input Para ingresar Contraseña-->
-                <div class="form-group form-material col-md-6">
-                  <label class="form-control-label">Confirmar contraseña: </label>
-                  <input type="password" class="form-control" name="confirm_password"  required="required" />
-                </div>
-                <!-- END Input-->
-              </div>
               <!-- Botón Para guardar cambios--> 
               <div class="col-md-12 form-group">
                 <button type="submit" name="button" class="btn btn-primary">Guardar</button>
