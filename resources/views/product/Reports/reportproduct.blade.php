@@ -223,7 +223,7 @@ Panel Principal
                               class="icon fa-file-pdf-o" aria-hidden="true"></i></a>  
                         </div>
                       </div>
-                      <form action="reportLineaGGeneral">
+                      <form action="gramoslineageneral">
                         <div class=" col-12">
                           <div class="panel panel-bordered">
                             <div class="panel-body">
@@ -264,7 +264,7 @@ Panel Principal
                   </div>
                   <!-- Inicia TAB2 STATUS PRODUCT-->
                   <div class="tab-pane" id="producstatusTwo" role="tabpanel">
-                      <form action="reportLineaGGeneral">
+                      <form action="piezascategoriageneral">
                         <div class="panel panel-bordered">
                           <div class="row">
                             <div class="col-md-4 col-sm-12">
@@ -308,18 +308,20 @@ Panel Principal
                                   </select>
                                 </div>
                               </div>
-                            </div>
+                            
                           </div>
-                          <div class="input-group col-3 col-6 col-12">
+                          
+                        </div>
+                      
+                    </div>
+                    <div class="input-group col-3 col-6 col-12">
                             <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
                               reporte</button>
                           </div>
-                        </div>
-                      </form>
-                    </div>
                   <!-- Termina tab 2 de product status-->
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -337,176 +339,302 @@ Panel Principal
               <div class="example-wrap">
                 <div class="nav-tabs-horizontal" data-plugin="tabs">
                   <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab"
-                        href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">Productos Gr</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab"
-                        href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">Productos Pz</a></li>
-                  </ul>
-                  <div class="tab-content pt-20">
-                    <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
-                      <div class="row">
-                        <div class="col-md-4 col-sm-12">
-                          <h4>Reporte Entradas Productos Por Gramos </h4>
-                        </div>
-                        @if(Auth::user()->type_user == 1 )
-                        <div class="col-md-1 offset-md-7 col-sm-12">
-                          <a class="btn btn-icon btn-danger waves-effect waves-light waves-round" data-toggle="tooltip"
-                            data-original-title="Reporte General Productos Por Linea" href="/reportEntradasGpgr"><i
-                              class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
-                        </div>
-                        @endif
-                      </div>
-                      <form action="entradasproducto">
-                        <div class="panel panel-bordered">
-                          <div class="panel-body">
-                            <div class="row">
-                              <div class="col">
-                                <div class="col">
-                                  <label>Seleccione Sucursal</label>
-                                  <select id="sucursales_1" name="branch_id" alt="1"
-                                    class="form-control round sucursales">
-                                    <!-- <option value="*">Seleccione Sucursal</option> -->
-                                    @php
-                                    $branches = $user->shop->branches;
-                                    @endphp
-                                    @foreach($branches as $branch)
-                                    <option value="{{$branch->id}}" required>{{$branch->name}}</option>
-                                    @endforeach
-                                  </select>
-                                </div>
-                                <div class="col">
-                                  <label>Seleccione Linea</label>
-                                  <select id="" name="id" alt="1" class="form-control round sucursales">
-                                    <!-- <option value="">Selecciona Linea</option> -->
-                                    @php
-                                    $lines= $user->shop->lines;
-                                    @endphp
-                                    <!-- <option value="*">Tod@s</option> -->
-                                    @foreach($lines as $line)
-                                    <option value="{{$line->id}}" required>{{$line->name}}</option>
-                                    @endforeach
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="col">
-                                <div class="col">
-                                  <div class="input-group">
-                                    <div class="row container"><label>De la Fecha:</label></div>
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                          <i class="icon md-calendar" aria-hidden="true"></i>
-                                        </span>
+                  <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne"
+                                        aria-controls="exampleTabsOne" role="tab">Productos Gr</a></li>
+                                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
+                                        aria-controls="exampleTabsTwo" role="tab">Productos GPGR</a></li>
+                                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsThree"
+                                        aria-controls="exampleTabsThree" role="tab">Productos Pz</a></li>
+                                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsFour"
+                                        aria-controls="exampleTabsFour" role="tab">Productos GPPZ</a></li>
+                                  </ul>
+                                    <div class="tab-content pt-20">
+                                      <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
+                                        <div class="row">
+                                          <div class="col-md-4 col-sm-12">
+                                              <h4>Reporte Entradas Productos  Por Gramos </h4>
+                                            </div>
+                                              <!--@if(Auth::user()->type_user == 1 )
+                                                <div class="col-md-1 offset-md-7 col-sm-12">
+                                                  <a class="btn btn-icon btn-danger waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Reporte General Productos Por Linea" href="/reportEntradasGpgr"><i class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
+                                                </div>
+                                                @endif-->
+                                             </div>
+                                              <form action="entradasproducto">
+                                                <div class="panel panel-bordered">
+                                                    <div class="panel-body">
+                                                      <div class="row">
+                                                        <div class="col">
+                                                          <div class="col">
+                                                          <label>Seleccione Sucursal</label>
+                                                            <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">
+                                                              <!-- <option value="*">Seleccione Sucursal</option> -->
+                                                            @php  
+                                                              $branches = $user->shop->branches;
+                                                            @endphp
+                                                              @foreach($branches as $branch)
+                                                            <option value="{{$branch->id}}" required>{{$branch->name}}</option>
+                                                            @endforeach
+                                                            </select>
+                                                          </div>
+                                                        <div class="col">
+                                                          <label>Seleccione Linea</label>
+                                                            <select id=""  name="id" alt="1" class="form-control round sucursales">
+                                                                <!-- <option value="">Selecciona Linea</option> -->
+                                                              @php  
+                                                              $lines= $user->shop->lines;
+                                                            @endphp
+                                                              <!-- <option value="*">Tod@s</option> -->
+                                                            @foreach($lines as $line)
+                                                            <option value="{{$line->id}}" required>{{$line->name}}</option>
+                                                          @endforeach
+                                                            </select>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col">
+                                                          <div class="col">
+                                                            <div class="input-group">
+                                                              <div class="row container"><label>De la Fecha:</label></div>
+                                                                <div class="input-group">
+                                                                  <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                      <i class="icon md-calendar" aria-hidden="true"></i>
+                                                                    </span>
+                                                                  </div>
+                                                                  <input name="fecini" type="text" class="form-control fecini round" data-plugin="datepicker" required>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col">
+                                                            <div class="input-group">
+                                                              <div class="row container"><label>Hasta la Fecha:</label></div>
+                                                              <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                  <i class="icon md-calendar" aria-hidden="true"></i>
+                                                                </span>
+                                                              </div>
+                                                              <input name="fecter" type="text"   class="form-control round" data-plugin="datepicker" required>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                  <div class="input-group col-3 col-6 col-12">
+                                                    <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
+                                                  </div>
+                                              </div>
+                                            </form>
+                                          </div>
+                                          <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+                                      
+                                        <div class="row">
+                                          <div class="col-md-4 col-sm-12">
+                                                <h4>Reporte Entradas Productos General Por Gramos</h4>
+                                          </div>
+                                           <!-- @if(Auth::user()->type_user == 1 )
+                                              <div class="col-md-1 offset-md-7 col-sm-12">
+                                                <a class="btn btn-icon btn-danger waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Reporte General Productos Por Linea" href="/reportEntradasGpgr"><i class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
+                                              </div>
+                                              @endif-->
+                                          </div>
+                                          <form action="reportEntradasPrgpgr">
+                                          <div class="panel panel-bordered">
+                                                    <div class="panel-body">
+                                                  <div class="row">
+                                                    <div class="col-4">
+                                                    <label>Seleccione Sucursal</label>
+                                                      <select id="sucursales_1"  name="branch_id" alt="2" class="form-control round sucursales">
+                                                        <!-- <option value="*">Seleccione Sucursal</option> -->
+                                                      @php  
+                                                        $branches = $user->shop->branches;
+                                                      @endphp
+                                                        @foreach($branches as $branch)
+                                                      <option value="{{$branch->id}}" required>{{$branch->name}}</option>
+                                                      @endforeach
+                                                      </select>
+                                                      </div>
+                                                      
+                                                          <div class="col-4">
+                                                            <div class="input-group">
+                                                              <div class="row container"><label>De la Fecha:</label></div>
+                                                                <div class="input-group">
+                                                                  <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                      <i class="icon md-calendar" aria-hidden="true"></i>
+                                                                    </span>
+                                                                  </div>
+                                                                  <input name="fecini" type="text" class="form-control fecini round" data-plugin="datepicker" required>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-4">
+                                                            <div class="input-group">
+                                                              <div class="row container"><label>Hasta la Fecha:</label></div>
+                                                              <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                  <i class="icon md-calendar" aria-hidden="true"></i>
+                                                                </span>
+                                                              </div>
+                                                              <input name="fecter" type="text"   class="form-control round" data-plugin="datepicker" required>
+                                                            </div>
+                                                          </div>
+                                                          
+                                                          </div>
+                                              </div>
+                                                <div class="input-group col-3 col-6 col-12">
+                                                  <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
+                                              </div>
+                                          </div>
+                                        </form>
                                       </div>
-                                      <input name="fecini" type="text" class="form-control fecini round"
-                                        data-plugin="datepicker" required>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col">
-                                  <div class="input-group">
-                                    <div class="row container"><label>Hasta la Fecha:</label></div>
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text">
-                                        <i class="icon md-calendar" aria-hidden="true"></i>
-                                      </span>
-                                    </div>
-                                    <input name="fecter" type="text" class="form-control round" data-plugin="datepicker"
-                                      required>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="input-group col-3 col-6 col-12">
-                          <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
-                            reporte</button>
-                        </div>
-                    </div>
-                    </form>
-                  </div>
-                  <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-                    <form action="entradasproducto">
-                      <div class="row">
-                        <div class="col-md-4 col-sm-12">
-                          <h4>Reporte Entradas Productos Por Pieza</h4>
-                        </div>
-                        @if(Auth::user()->type_user == 1 )
-                        <div class="col-md-1 offset-md-7 col-sm-12">
-                          <a class="btn btn-icon btn-danger waves-effect waves-light waves-round" data-toggle="tooltip"
-                            data-original-title="Reporte General Productos Por Linea" href="/reportEntradasGpgr"><i
-                              class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
-                        </div>
-                        @endif
-                      </div>
-                      <div class="panel panel-bordered">
-                        <div class="panel-body row col-12">
-                          <div class="row col-12">
-                            <div class="col-3">
-                              <label>Seleccione Sucursal</label>
-                              <select id="sucursales_1" name="branch_id" alt="1" class="form-control round sucursales">
-                                <!-- <option value="*">Seleccione Sucursal</option> -->
-                                @php
-                                $branches = $user->shop->branches;
-                                @endphp
-                                @foreach($branches as $branch)
-                                <option value="{{$branch->id}}" required>{{$branch->name}}</option>
-                                @endforeach
-                              </select>
-                            </div>
-                            <div class="col-3">
-                              <label>Seleccione Categoria</label>
-                              @php
-                              $categories = $user->shop->categories;
-                              @endphp
-                              <select id="" name="category_id" alt="1" class="form-control round sucursales">
-                                <!-- <option value="">Selecciona Categoria</option>
+                                      <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
+                                      
+                                        <div class="row">
+                                          <div class="col-md-4 col-sm-12">
+                                                <h4>Reporte Entradas Productos Por Pieza</h4>
+                                          </div>
+                                           <!-- @if(Auth::user()->type_user == 1 )
+                                              <div class="col-md-1 offset-md-7 col-sm-12">
+                                                <a class="btn btn-icon btn-danger waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Reporte General Productos Por Linea" href="/reportEntradasGpgr"><i class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
+                                              </div>
+                                              @endif-->
+                                          </div>
+                                          <form action="reportEntradasPpz">
+                                          <div class="panel panel-bordered">
+                                                    <div class="panel-body">
+                                                      <div class="row">
+                                                        <div class="col">
+                                                          <div class="col">
+                                                    <label>Seleccione Sucursal</label>
+                                                      <select id="sucursales_1"  name="branch_id" alt="3" class="form-control round sucursales">
+                                                        <!-- <option value="*">Seleccione Sucursal</option> -->
+                                                      @php  
+                                                        $branches = $user->shop->branches;
+                                                      @endphp
+                                                        @foreach($branches as $branch)
+                                                      <option value="{{$branch->id}}" required>{{$branch->name}}</option>
+                                                      @endforeach
+                                                      </select>
+                                                      </div>
+                                                        <div class="col">
+                                                        <label>Seleccione Categoria</label>
+                                                        @php  
+                                                          $categories = $user->shop->categories;
+                                                        @endphp
+                                                        <select id=""  name="category_id" alt="1" class="form-control round sucursales">
+                                                          <!-- <option value="">Selecciona Categoria</option>
                                                           <option value="*">Tod@s</option> -->
-                                @foreach($categories as $categories)
-                                @if($categories->type_product == 1 )
-                                <option value="{{$categories->id}}" required>{{$categories->name}}</option>
-                                @endif
-                                @endforeach
-                              </select>
-                            </div>
-                            <div class="input-group col-3">
-                              <div class="row container"><label>De la Fecha:</label></div>
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <span class="input-group-text">
-                                    <i class="icon md-calendar" aria-hidden="true"></i>
-                                  </span>
+                                                          @foreach($categories as $categories)
+                                                            @if($categories->type_product == 1 )
+                                                            <option value="{{$categories->id}}" required>{{$categories->name}}</option>
+                                                            @endif
+                                                          @endforeach
+                                                      </select>
+                                                      </div>
+                                                        </div>
+                                                        <div class="col">
+                                                          <div class="col">
+                                                            <div class="input-group">
+                                                              <div class="row container"><label>De la Fecha:</label></div>
+                                                                <div class="input-group">
+                                                                  <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                      <i class="icon md-calendar" aria-hidden="true"></i>
+                                                                    </span>
+                                                                  </div>
+                                                                  <input name="fecini" type="text" class="form-control fecini round" data-plugin="datepicker" required>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col">
+                                                            <div class="input-group">
+                                                              <div class="row container"><label>Hasta la Fecha:</label></div>
+                                                              <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                  <i class="icon md-calendar" aria-hidden="true"></i>
+                                                                </span>
+                                                              </div>
+                                                              <input name="fecter" type="text"   class="form-control round" data-plugin="datepicker" required>
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                          </div>
+                                              </div>
+                                                <div class="input-group col-3 col-6 col-12">
+                                                  <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
+                                              </div>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    <div class="tab-pane" id="exampleTabsFour" role="tabpanel">
+                                      
+                                        <div class="row">
+                                          <div class="col-md-4 col-sm-12">
+                                                <h4>Reporte Entradas Productos General Por Pieza</h4>
+                                          </div>
+                                         <!--   @if(Auth::user()->type_user == 1 )
+                                              <div class="col-md-1 offset-md-7 col-sm-12">
+                                                <a class="btn btn-icon btn-danger waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Reporte General Productos Por Linea" href="/reportEntradasGpgr"><i class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
+                                              </div>
+                                              @endif -->
+                                          </div>
+                                          <form action="reportEntradasPrgppz">
+                                          <div class="panel panel-bordered">
+                                                    <div class="panel-body">
+                                                  <div class="row">
+                                                    <div class="col-4">
+                                                    <label>Seleccione Sucursal</label>
+                                                      <select id="sucursales_1"  name="branch_id" alt="2" class="form-control round sucursales">
+                                                        <!-- <option value="*">Seleccione Sucursal</option> -->
+                                                      @php  
+                                                        $branches = $user->shop->branches;
+                                                      @endphp
+                                                        @foreach($branches as $branch)
+                                                      <option value="{{$branch->id}}" required>{{$branch->name}}</option>
+                                                      @endforeach
+                                                      </select>
+                                                      </div>
+                                                      
+                                                          <div class="col-4">
+                                                            <div class="input-group">
+                                                              <div class="row container"><label>De la Fecha:</label></div>
+                                                                <div class="input-group">
+                                                                  <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                      <i class="icon md-calendar" aria-hidden="true"></i>
+                                                                    </span>
+                                                                  </div>
+                                                                  <input name="fecini" type="text" class="form-control fecini round" data-plugin="datepicker" required>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                            <div class="col-4">
+                                                            <div class="input-group">
+                                                              <div class="row container"><label>Hasta la Fecha:</label></div>
+                                                              <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                  <i class="icon md-calendar" aria-hidden="true"></i>
+                                                                </span>
+                                                              </div>
+                                                              <input name="fecter" type="text"   class="form-control round" data-plugin="datepicker" required>
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                          
+                                              </div>
+                                                <div class="input-group col-3 col-6 col-12">
+                                                  <button id="submit" type="submit" name="button" class="btn btn-primary">Generar reporte</button>
+                                              </div>
+                                          </div>
+                                        </form>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- End Example Tabs -->
                                 </div>
-                                <input name="fecini" type="text" class="form-control fecini round"
-                                  data-plugin="datepicker" required>
                               </div>
                             </div>
-                            <div class="input-group col-3">
-                              <div class="row container"><label>Hasta la Fecha:</label></div>
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                  <i class="icon md-calendar" aria-hidden="true"></i>
-                                </span>
-                              </div>
-                              <input name="fecter" type="text" class="form-control round" data-plugin="datepicker"
-                                required>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="input-group col-3 col-6 col-12">
-                          <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
-                            reporte</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <!-- End Example Tabs -->
-            </div>
-          </div>
-        </div>
         @if(Auth::user()->type_user == 1 )
         <div class="panel"> <!-- Pzs con descuento-->
           <div class="panel-heading bg-warning  text-center text-white" id="exampleHeadingDefaultFour" role="tab">

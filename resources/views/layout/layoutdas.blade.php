@@ -589,6 +589,14 @@
                     </ul>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
+                          <a class="animsition-link" href="/comisiones">
+                          <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                            <span class="site-menu-title">Comisiones</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
                         <a class="animsition-link" href="recibo">
                         <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
                           <span class="site-menu-title">Recibo de Nomina</span>

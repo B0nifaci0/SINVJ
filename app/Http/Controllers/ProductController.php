@@ -642,8 +642,27 @@ class ProductController extends Controller
       $products = Shop::find($product)->products()->get();
       $line = Auth::user()->shop->id;
       $lines = Shop::find($line)->lines()->get();
-      $category = Auth::user()->shop->categories;
-      $products = Shop::find($product)->products()->get();
+      // FUNCION PARA SACAR LAS CATEGORIAS SIN REPETIRSE
+    $categories = Shop::join('products','products.shop_id','shops.id')
+    ->join('categories','categories.id','products.category_id')
+    ->join('statuss','statuss.id','products.status_id')
+    ->select('categories.name','categories.type_product')
+    ->distinct('categories.name')
+    ->where('categories.type_product',1)
+    ->where('statuss.id',2)
+    ->get();
+     // FUNCION PARA SACAR LOS PRODUCTOS PERTENECIENTES A CATEGORIAS POR PIEZAS
+    $products = Shop::join('products','products.shop_id','shops.id')
+    ->join('categories','categories.id','products.category_id')
+    ->join('statuss','statuss.id','products.status_id')
+    ->join('branches','branches.id','products.branch_id')
+    ->join('lines','lines.id','products.line_id')
+    ->select('products.*', 'lines.name as name_line', 'branches.name as name_branch', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
+    ->where('categories.type_product',2)
+    ->where('statuss.id',2)
+    ->orderBy('name_branch', 'ASC')
+    ->orderBy('name_line', 'ASC')
+    ->get();
       //return $products;
       $shop = Auth::user()->shop; 
       $hour = Carbon::now();
@@ -655,25 +674,93 @@ class ProductController extends Controller
     if($shop->image) {
         $shop->image = $this->getS3URL($shop->image);
     }
-      $total = 0;
-        foreach($products as $product){
-        $total = $product->weigth + $total;
-        }
 
-        $cash = 0;
-        foreach($products as $product){
-          $cash = $product->price + $cash;
-        }
+    $totals = Shop::join('products','products.shop_id','shops.id')
+    ->join('categories','categories.id','products.category_id')
+    ->join('statuss','statuss.id','products.status_id')
+    ->join('lines','lines.id','products.line_id')
+    ->where('statuss.id',2)
+    //->where('lines.shop_id', Auth::user()->shop->id)  
+    ->where('categories.type_product',2)  
+    ->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as total_w'))
+    ->distinct('lines.name')
+    ->groupBy('lines.id', 'lines.name')
+    ->get();
+    $totals1 = Shop::join('products','products.shop_id','shops.id')
+    ->join('categories','categories.id','products.category_id')
+    ->join('statuss','statuss.id','products.status_id')
+    ->join('lines','lines.id','products.line_id')
+    ->where('statuss.id',2)
+    ->where('lines.shop_id', Auth::user()->shop->id)  
+    ->where('categories.type_product',2)  
+    ->select('lines.id', 'lines.name', DB::raw('SUM(products.price) as total_p'))
+    ->distinct('lines.name')
+    ->groupBy('lines.id', 'lines.name')
+    ->get();
+   // return $totals;
 
-        $precio = 0;
-        foreach($lines as $line){
-          $precio = $line->purchase_price;
-        }
-
-
-    $pdf  = PDF::loadView('product.Reports.reportLineaGGeneral', compact('shop','hour','dates','shops','branches','lines','products','total','cash','precio'));
+    $pdf  = PDF::loadView('product.Reports.reportLineaGGeneral', compact('shop','hour','dates','shops','branches','lines','products','totals','totals1'));
     return $pdf->stream('ReporteLineasGeneral.pdf');
   }
+
+  //**  */
+  public function reportCategoriaPGeneral(){
+
+    $hour = Carbon::now();
+    $hour = date('H:i:s');
+
+    $dates = Carbon::now();
+    $dates = $dates->format('d-m-Y');
+
+    $branches= Auth::user()->shop->branches;
+    $product = Auth::user()->shop->id;
+
+    $line = Auth::user()->shop->id;
+    $lines = Shop::find($line)->lines()->get();
+    // FUNCION PARA SACAR LAS CATEGORIAS SIN REPETIRSE
+    $categories = Shop::join('products','products.shop_id','shops.id')
+    ->join('categories','categories.id','products.category_id')
+    ->join('statuss','statuss.id','products.status_id')
+    ->select('categories.name','categories.type_product')
+    ->distinct('categories.name')
+    ->where('categories.type_product',1)
+    ->where('statuss.id',2)
+    ->get();
+    // FUNCION PARA SACAR LOS PRODUCTOS PERTENECIENTES A CATEGORIAS POR PIEZAS
+    $products = Shop::join('products','products.shop_id','shops.id')
+    ->join('categories','categories.id','products.category_id')
+    ->join('statuss','statuss.id','products.status_id')
+    ->join('branches','branches.id','products.branch_id')
+    ->select('products.*', 'branches.name as name_branch', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
+    ->where('categories.type_product',1)
+    ->where('statuss.id',2)
+    ->orderBy('name_branch', 'ASC')
+    ->get();
+    //return $products;
+    $shop = Auth::user()->shop; 
+    $hour = Carbon::now();
+    $hour = date('H:i:s');
+      $dates = Carbon::now();
+      $dates = $dates->format('d-m-Y');
+  $shops = Auth::user()->shop()->get();
+
+  if($shop->image) {
+      $shop->image = $this->getS3URL($shop->image);
+  }
+
+  $cash = Category::join('products', 'products.category_id', 'categories.id')
+    ->where('categories.shop_id', Auth::user()->shop->id)  
+    ->where('categories.type_product',1)  
+    ->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as total'))
+    ->distinct('categories.name')
+    ->groupBy('categories.id', 'categories.name')
+    ->get();
+  
+
+  $pdf  = PDF::loadView('product.Reports.reportCategoriaPGeneral', compact('categories','shop','hour','dates','shops','branches','lines','products','cash'));
+  return $pdf->stream('ReporteCategoriasPGeneral.pdf');
+}
+
 //** funcion para generar reporte general de todas las sucursales por productos gramos */
   public function reportEstatusG(Request $request){
 ##en desarrollo
@@ -863,7 +950,6 @@ class ProductController extends Controller
     ->where('categories.type_product',1)
     ->where('statuss.id',2)
     ->get();
-    //return $categories;
     // FUNCION PARA SACAR LOS PRODUCTOS PERTENECIENTES A CATEGORIAS POR PIEZAS
     $products = Shop::join('products','products.shop_id','shops.id')
     ->join('categories','categories.id','products.category_id')
@@ -871,7 +957,6 @@ class ProductController extends Controller
     ->select('products.*', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
     ->where('categories.type_product',1)
     ->where('statuss.id',2)
-    //->sum('products.price')
     ->get();
     $hour = Carbon::now();
     $hour = date('H:i:s');

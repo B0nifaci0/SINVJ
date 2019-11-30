@@ -72,7 +72,6 @@
                  <th scope="col">Peso</th>
                  <th scope="col">Precio</th>
                  <th scope="col">Observaciones</th>
-                 <th scope="col">Id Venta</th>
                 </tr>
               </thead>  
               <tbody>
@@ -85,9 +84,6 @@
                  <td>{{ $product->weigth }} gr</td>
                  <td>$ {{ $product->price }}</td> 
                  <td>{{ $product->observations }}</td>
-                 @if ($product->status->name === 'Vendido')
-                  <td>@foreach($sales as $sale){{$sale->id}} @endforeach</td>
-                 @endif
                 </tr>
                   @endforeach
               </tbody>
