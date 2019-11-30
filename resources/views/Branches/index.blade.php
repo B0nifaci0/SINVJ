@@ -48,6 +48,14 @@ LISTA DE  SUCURSALES
             <button onclick="window.location.href='/sucursales/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right " data-toggle="tooltip" data-original-title="Agregar">
              <i class="icon md-plus" aria-hidden="true"></i></button>
           </div>
+          <div class="col-md-4 col-md-offset-2">
+              <button onclick="window.location.href='sucursales/corte'"
+                type="button" class="btn btn-sm small btn-floating 
+                toggler-left  btn-secondary waves-effect waves-light waves-round float-right"
+                data-toggle="tooltip" data-original-title="Corte">
+                <i class="iicon md-money" aria-hidden="true"></i>
+              </button>
+          </div>
            @endif
         </div>
         <h3 class="panel-title">Sucursales</h3>
@@ -97,20 +105,7 @@ LISTA DE  SUCURSALES
                       <a href="/sucursales/{{$branch->id}}/producto"><button type="button"
                       class="btn btn-icon btn-warning waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Productos">
-                      <i class="icon md-label-heart" aria-hidden="true"></i></button></a>
-                      <!--END Botón -->
-                      <!-- Botón para ver corte de venta corte pendiente  -->
-                      <!--<a href="/sucursales/{{$branch->id}}/corte"><button  type="button"
-                      class="btn btn-icon  waves-effect waves-light waves-ligth"
-                      data-toggle="tooltip" data-original-title="Corte">
-                      <i class="icon md-money" aria-hidden="true"></i></button></a>
-                      END Botón -->
-
-                      <!--Botón para ver corte de venta corte pendiente-->
-                      <a href="/sucursales/corte"><button  type="button"
-                      class="btn btn-icon  waves-effect waves-light waves-ligth"
-                      data-toggle="tooltip" data-original-title="Corte">
-                      <i class="icon md-money" aria-hidden="true"></i></button></a>
+                      <i class="icon md-label-heart" aria-hidden="true"></i></button></a> 
                       <!--END Botón -->
 
                       <!-- Botón para ver corte de venta
