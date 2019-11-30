@@ -339,19 +339,19 @@ class ProductController extends Controller
     /**
      * Funcion para la vista del Reporte por Producto por Sucursal status
      *
-     ***/  
+     ***/
      public function reportProduct(){
         $idshop = Auth::user()->shop->id;
-        $user = Auth::user();
-        $branch = Shop::find($idshop)->branches()->get();
+         $user = Auth::user();
+         $branch = Shop::find($idshop)->branches()->get();
     	  $statuses = Status::all();
-        $line = Shop::find($idshop)->lines()->get();
+         $line = Shop::find($idshop)->lines()->get();
         $category = Auth::user()->shop->id;
         $categories = Shop::find($category)->categories()->get();
         $shop = Auth::user()->shop; 
-        $shops = Auth::user()->shop()->get(); 
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
+    $shops = Auth::user()->shop()->get();
+    $hour = Carbon::now();
+      $hour = date('H:i:s');
 
       $dates = Carbon::now();
       $dates = $dates->format('d-m-Y');
@@ -376,6 +376,7 @@ class ProductController extends Controller
       $category = Auth::user()->shop->id;
       $categories = Shop::find($category)->categories()->get();
 
+      $status = $request->estatus_id;
       $categories = $request->category_id;
       $line = $request->id;
 
@@ -393,9 +394,6 @@ class ProductController extends Controller
                           ->where("category_id","=",$request->category_id)
                           ->where("line_id","=",$request->id)
                           ->get();
-
-      $estado = Status::findOrFail($request->estatus_id);
-      
 
 /**Finaliza codigo de las consultas por campos seleccionados */
 
@@ -446,82 +444,6 @@ class ProductController extends Controller
       $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop','shops','products','branches','sales','hour','dates','total','cash','compra','utilidad'));
       return $pdf->stream('ReporteEstatus.pdf');
       }
-
-      public function reportEstatusPz(Request $request){
-
-        /**Codigo para hacer las validaciones de los campos para realizar las consultas para el reporte */
-              $idshop = Auth::user()->shop->id;
-              $status = Status::all();
-              $line = Shop::find($idshop)->lines()->get();
-              $category = Auth::user()->shop->id;
-              $categories = Shop::find($category)->categories()->get();
-        
-              $categories = $request->category_id;
-              $line = $request->id;
-        
-        
-              if($status == null || $categories == null || $line == null){
-              return redirect('/reportes-productos')->with('mesage-update', 'Seleccina alguna opcion de cada selector!');      }
-        
-        /**Termina codigo de validacion de campos */
-        
-        /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
-        
-              $branches = Branch::where("id","=",$request->branch_id)->get();
-              $products = Product::where("branch_id","=",$request->branch_id)
-                                  ->where("status_id","=",$request->estatus_id)
-                                  ->where("category_id","=",$request->category_id)
-                                  ->where("line_id","=",$request->id)
-                                  ->get();
-        
-              $estado = Status::findOrFail($request->estatus_id);
-              
-        
-        /**Finaliza codigo de las consultas por campos seleccionados */
-        
-        /**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
-              $sales = Sale::where("id","=","sale_id")->get();
-        
-              $hour = Carbon::now();
-              $hour = date('H:i:s');
-        
-              $dates = Carbon::now();
-              $dates = $dates->format('d-m-Y');
-        
-              $total = 0;
-              foreach($products as $product){
-              $total = $product->weigth + $total;
-              }
-        
-              $cash = 0;
-                foreach($products as $product){
-                  $cash = $product->price + $cash;
-                }
-        
-                $lines = Line::where("id","=",$request->id)->get();
-        
-                $precio = 0;
-                foreach($lines as $line){
-                  $precio = $line->purchase_price;
-                  $discount = $line->discount;
-                }
-        
-                $compra = $total * $precio;
-                $utilidad = $cash - $compra;
-              
-        /**Finalizan consultas de folio de la venta, la hora y el dia */
-        
-        /**Variable para retornar los archivos que podran ser descargados en pdf
-         * contiene las variables de las cuales se hicieron las consultas para poder
-         * hacer uso de la informacion de cada consulta
-         */
-        
-              $pdf  = PDF::loadView('product.Reports.reportEstatusPz', compact('products','branches','estado','sales','hour','dates','total','cash','compra','utilidad'));
-              return $pdf->stream('ReporteEstatus.pdf');
-              }
-
-
-
 /**Termina el retorno del pdf */
      public function reportLineaG(Request $request){
       $branches = Branch::where("id","=",$request->branch_id)->get();
@@ -630,20 +552,13 @@ class ProductController extends Controller
     }
 //**  */
     public function reportLineaGGeneral(){
-
-      $hour = Carbon::now();
-      $hour = date('H:i:s');
-  
-      $dates = Carbon::now();
-      $dates = $dates->format('d-m-Y');
-  
       $branches= Auth::user()->shop->branches;
       $product = Auth::user()->shop->id;
       $products = Shop::find($product)->products()->get();
       $line = Auth::user()->shop->id;
       $lines = Shop::find($line)->lines()->get();
       $category = Auth::user()->shop->categories;
-      $products = Shop::find($product)->products()->get();
+      $products = Shop::find($product)->products()->where('status_id',2)->get();
       //return $products;
       $shop = Auth::user()->shop; 
       $hour = Carbon::now();
@@ -688,7 +603,8 @@ class ProductController extends Controller
    ->join('lines','lines.id','products.line_id')
    ->join('statuss','statuss.id','products.status_id')
    ->select('products.*','categories.name as name_category','lines.name as name_line','categories.type_product','statuss.name as name_status')
-    ->where('categories.type_product',2)->get();
+    ->where('categories.type_product',2)
+    ->where('statuss.id',2)->get();
   //$products = Shop::find($id_shop)->products()->category()->get();
  //return $productsg;
 
@@ -966,50 +882,5 @@ class ProductController extends Controller
 
    //return response()->json(['productos'=>$productos,'sumprice'=>$sumprice, 'utilida'=>$descuento, 'total'=>$total]);
   }
-
-  public function reportLineaGramos(){
-
-    $hour = Carbon::now();
-    $hour = date('H:i:s');
-
-    $dates = Carbon::now();
-    $dates = $dates->format('d-m-Y');
-
-    $branches= Auth::user()->shop->branches;
-    $product = Auth::user()->shop->id;
-    $products = Shop::find($product)->products()->get();
-    $line = Auth::user()->shop->id;
-    $lines = Shop::find($line)->lines()->get();
-    $products = Shop::find($product)->products()->get();
-    //return $products;
-    $shop = Auth::user()->shop; 
-    $hour = Carbon::now();
-    $hour = date('H:i:s');
-    $dates = Carbon::now();
-    $dates = $dates->format('d-m-Y');
-    $shops = Auth::user()->shop()->get();
-
-  if($shop->image) {
-      $shop->image = $this->getS3URL($shop->image);
-  }
-    $total = 0;
-      foreach($products as $product){
-      $total = $product->weigth + $total;
-      }
-
-      $cash = 0;
-      foreach($products as $product){
-        $cash = $product->price + $cash;
-      }
-
-      $precio = 0;
-      foreach($lines as $line){
-        $precio = $line->purchase_price;
-      }
-
-
-  $pdf  = PDF::loadView('product.Reports.reportLineaGramos', compact('shop','hour','dates','shops','branches','lines','products','total','cash','precio'));
-  return $pdf->stream('reportLineaGramos.pdf');
-}
 
 }

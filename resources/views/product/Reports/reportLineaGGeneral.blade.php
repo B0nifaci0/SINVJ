@@ -42,7 +42,7 @@
      }.sale-head h1,table thead tr th,table tfoot tr td{
        background-color: #f8f8f8;
      }tfoot{
-       color:#000;  
+       color:#000;
        text-transform: uppercase;
        font-weight: 500; 
      }
@@ -77,7 +77,7 @@
               <tbody>
                
       @foreach ($products as $i => $product)
-                <tr>  
+                <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td>   
                  <td>{{ $product->description }}</td>
                  @if($product->category->type_product == 2)
