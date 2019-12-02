@@ -32,9 +32,9 @@ class StateController extends Controller
 	}
 	
 	public function checkPassword(Request $request) {
-		$branch = Auth::user()->shop->branches->first();
+		$shop = Auth::user()->shop;
 		
-		if(Hash::check($request->password, $branch->password)) {
+		if(Hash::check($request->password, $shop->password)) {
 			return response()->json([
 				'success' => true
 			], 200);

@@ -57,6 +57,19 @@ MODIFICACIÓN TIENDA
                     <input type="text" class="form-control" name="phone_number"  value="{{$shop->phone_number}}">
                     @endif
             </div>
+                <!-- Input Para ingresar Contraseña-->
+                <div class="form-group form-material col-md-6">
+                  <label class="form-control-label">Contraseña: </label>
+                  <input type="password" class="form-control" name="password"  required="required" />
+                </div>
+                <!-- END Input-->
+                <!-- Input Para ingresar Contraseña-->
+                <div class="form-group form-material col-md-6">
+                  <label class="form-control-label">Confirmar contraseña: </label>
+                  <input type="password" class="form-control" name="confirm_password"  required="required" />
+                </div>
+                <!-- END Input-->
+
             <div class="form-group form-material col-md-6">
               <label>Selecciona el logo de tu tienda</label>
               <br>

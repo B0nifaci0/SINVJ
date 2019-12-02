@@ -75,12 +75,17 @@ class InventoryController extends Controller
     }
 
     public function check(Request $request) {
-        if(!$request->status) {
-            $inventory = InventoryDetail::find($request->inventory_id);
+        $inventory = InventoryDetail::find($request->inventory_id);
+        if(!$request->status === null) {
             $product = Product::find($inventory->product_id);
             $product->discar_cause = $request->discar_cause;
-            $product->save(); 
+            $product->save();            
             $product->delete();
+        } else {
+            $product = Product::withTrashed()->where('id', $inventory->product_id)->first();
+            $product->discar_cause = null;            
+            $product->deleted_at = null;            
+            $product->save();
         }
 
         InventoryDetail::where('id', $request->inventory_id)->update(['status' => $request->status]);

@@ -199,4 +199,20 @@ class ExpensesController extends Controller
         //return $date;
       }
      
+   //  public function exportPdfall(){
+     //   $user = Auth::user();
+       // $shop = Auth::user()->shop;
+        //$expense = Expense::all();
+     //$pdf  = PDF::loadView('storeExpenses.PDFGasto', compact('expense','shop'));
+        //return $pdf->stream('gasto.pdf');
+      //}
+    
+    public function exportPdfall($id){
+        $branch = Auth::user()->branch;
+        $shop = Auth::user()->shop;
+        $expense = Expense::where("id","=",$id)->get();
+        $pdf = PDF::loadview('storeExpenses.PDFGasto', compact('expense','shop','branch'));
+        return  $pdf->stream('gasto.pdf');
+    }
 }
+  
