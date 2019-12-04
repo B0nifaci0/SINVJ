@@ -95,7 +95,8 @@ class InventoryController extends Controller
 
     public function check(Request $request) {
         $inventory = InventoryDetail::find($request->inventory_id);
-        if(!$request->status === null) {
+        // return [$request->status];
+        if(!$request->status) {
             $product = Product::find($inventory->product_id);
             $product->discar_cause = $request->discar_cause;
             $product->save();            
