@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
+ <head> 
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <title>Reporte de Productos</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
@@ -12,10 +12,10 @@
         padding: 0;
      }.page-break {
        page-break-before:always;
-       width: auto;  
+       width: auto;
        margin: auto;
       }
-    }   
+    }
     .page-break{
       width: 980px;
       margin: 0 auto;
@@ -42,39 +42,55 @@
      }.sale-head h1,table thead tr th,table tfoot tr td{
        background-color: #f8f8f8;
      }tfoot{
-       color:#000;
+       color:#000;  
        text-transform: uppercase;
        font-weight: 500; 
      }
    </style>
 </head>
- 
 <body>
 <div class="page-content">
     <div class="panel">
-      <p align="right">Fecha: {{$dates}}</p>
-      <p align="right">Hora: {{$hour}}</p>
-    <h2 align="center">Reporte de Productos por Pz {{$estado->name}}s</h2>
-        <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+    
+    <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
+             
+    <p align="right">Fecha: {{$dates}}</p> 
+          
+    <p align="right">Hora: {{$hour}}</p>
+  
+  
+    <h1 align="center">Reporte de Productos por Piezas y Dinero</h1>
+        <h2 align="center">Todas las Categorias</h2>
+            <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-                 <th scope="col">Linea</th>
-                 <th scope="col">Clave</th>
+			     <th scope="col">Clave</th>
                  <th scope="col">Descripción</th>
-                 <th scope="col">Precio</th>
+                 <th scope="col">Precio Compra</th>
+                 <th scope="col">Precio Venta</th>
                  <th scope="col">Observaciones</th>
+                 <th scope="col">Categoria</th>
+                 <th scope="col">Estatus</th>
+                 <th scope="col">Sucursal</th>
                 </tr>
               </thead>  
               <tbody>
-              
+               
       @foreach ($products as $i => $product)
-                <tr id="row{{$product->id}}">
-                 <td>{{ $product->line->name }}</td> 
-                 <td>{{ $product->clave }}</td>
+                <tr>  
+                
+                 <td>{{ $product->clave }}</td>   
                  <td>{{ $product->description }}</td>
-                 <td>$ {{ $product->price }}</td> 
+                
+                 <td>$ {{ $product->price_purchase }}</td>
+                 <td>$ {{ $product->price }}</td>
+                
                  <td>{{ $product->observations }}</td>
+                 <td>{{ $product->name_category }}</td>
+                 <td>{{ $product->name_status }}</td>
+                 <td>{{ $product->name_branch }}</td>
+                
                 </tr>
                   @endforeach
               </tbody>
@@ -83,28 +99,17 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                            <th scope="col">Total Precio Compra</th>
-                            <th scope="col">Total precio Venta</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Total Precio Venta</th>
                     </tr>
                 </thead>
                 <tbody>
+                @foreach ($cash as $i => $c)
                     <tr>
-                        <td align="center">$ {{$compra}}</td>
-                        <td align="center">$ {{$cash}}</td>
+                        <td>{{$c->name}}</td>
+                        <td>$ {{$c->total}}</td>
                     </tr>
-                </tbody> 
-                <br>   
-            </table>
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-                <thead>
-                    <tr>
-                            <th scope="col">Utilidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td align="center">$ {{$utilidad}}</td>
-                    </tr>
+                @endforeach 
                 </tbody>    
             </table>
           </div>

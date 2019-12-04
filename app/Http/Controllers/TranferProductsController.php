@@ -133,6 +133,7 @@ class TranferProductsController extends Controller
       $transfer->save(); 
       if($request->answer) {
         $product->branch_id = $transfer->new_branch_id;
+        $product->status_id = 3;
         $product->shop_id = $user->shop->id;
         $product->save();
       }
@@ -149,7 +150,7 @@ public function exportPdfall(){
     $trans = TransferProduct::all();
     $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans'));
     $pdf->setpaper('letter', 'landscape');
-    return $pdf->stream('Traspasos.pdf');
+    return $pdf->stream('Traspasos.pdf');  
   }
 
     public function exportPdf($id){

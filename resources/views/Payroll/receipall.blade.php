@@ -11,7 +11,7 @@
 }
 
 .titulo {
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     align-content: center;
 }
@@ -43,14 +43,16 @@
     align-content: center;
 }
 .recibi {
-    font-size: 12px;
+    font-size: 10px;
     text-align: center;
     align-content: center;
+    margin: 1%;
 }
 
 .ticket {
     width: 110px;
     max-width: 110px;
+    margin: 2%;
 }
 
 
@@ -78,8 +80,8 @@
                     <th><p class="recibi">Autorizo</p></th>
                     </tr>
                     <tr>
-                        <th><p class="recibi"> Nombre y Firma </p></th>
-                        <th><p class="recibi"> Nombre y Firma </p></th>
+                        <th><p class="recibi">  Nombre y Firma</p></th>
+                        <th><p class="recibi">Nombre y Firma </p></th>
                     </tr>  
                 </table>
                 @endforeach

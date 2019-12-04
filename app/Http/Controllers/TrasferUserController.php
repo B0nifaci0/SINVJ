@@ -59,7 +59,7 @@ class TrasferUserController extends Controller
           ->where('products.status_id', 2)
           ->select(
             'products.clave',
-            'products.name',
+            //'products.name',
             'products.description',
             'products.weigth',
             'products.observations',
