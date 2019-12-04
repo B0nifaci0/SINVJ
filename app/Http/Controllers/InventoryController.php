@@ -74,8 +74,11 @@ class InventoryController extends Controller
             return $b->id;
         });
         
+        $branch_id = $request->branch_id ? $request->branch_id : Auth::user()->branch_id;
+
         $inventory = InventoryReport::create([
-            'start_date' => Carbon::now()->format('Y-m-d')
+            'start_date' => Carbon::now()->format('Y-m-d'),
+            'branch_id' => $branch_id
         ]);
 
         $products = Product::whereIn('branch_id', $branches_ids)->get();
