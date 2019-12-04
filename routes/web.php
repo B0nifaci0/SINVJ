@@ -263,7 +263,7 @@ Route::group(['middleware' => ['auth']],function () {
 
   /**Reportes Rutas y Vistas */
   Route::get('/reportes-productos','ProductController@reportProduct');   
-  Route::get('estatusproducto', 'ProductController@reportEstatus');
+  Route::get('estatusproducto', 'ProductController@reportEstatus');  
   Route::get('estatusproductoPz', 'ProductController@reportEstatusPz');
   Route::get('gramoslinea', 'ProductController@reportes-productostLineaG');
   Route::get('entradasproducto', 'ProductController@reportEntradas');
