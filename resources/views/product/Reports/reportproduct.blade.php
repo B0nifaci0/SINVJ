@@ -366,7 +366,6 @@ Panel Principal
                           <div class="col-md-4 col-sm-12">
                             <h4>Reporte Productos por Linea </h4>
                           </div>
-
                         </div>
                         <form action="entradasproducto">
                           <div class="panel panel-bordered">
@@ -576,7 +575,6 @@ Panel Principal
                       </form>
                     </div>
                     <div class="tab-pane" id="exampleTabsFour" role="tabpanel">
-
                       <div class="row">
                         <div class="col-md-4 col-sm-12">
                           <h4>Reporte Entradas Productos General Por Pieza</h4>
@@ -792,6 +790,7 @@ Panel Principal
                                       required>
                                   </div>
                                 </div>
+                              </form>
                               </div>
                             </div>
                           </div>
@@ -803,13 +802,10 @@ Panel Principal
                       </form>
                     </div>
                     <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
-
                       <div class="row">
                         <div class="col-md-4 col-sm-12">
                           <h4>Reporte Entradas Productos Por Pieza</h4>
                         </div>
-
-
                       </div>
                       <form action="reportEntradasPpz">
                         <div class="panel panel-bordered">
@@ -1027,6 +1023,19 @@ Panel Principal
                             </div>
                           </div>
                         </div>
+                        <div class="input-group col-3">
+                          <div class="row container"><label>Hasta la Fecha:</label></div>
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="icon md-calendar" aria-hidden="true"></i>
+                            </span>
+                          </div>
+                          <input name="fecter" type="text" class="form-control round" data-plugin="datepicker" required>
+                        </div>
+                        <div class="form-material col-3">
+                          <label class="form-control-label" for="inputBasicFirstName">Descuento: </label>
+                          <input value="" type="text" name="descuento" id="" class="form-control" required>
+                        </div>
                       </div>
                       <div class="form-material col">
                         <label class="form-control-label" for="inputBasicFirstName">Descuento: </label>
@@ -1041,11 +1050,11 @@ Panel Principal
             </div>
             </form>
           </div>
+          @endif
         </div>
       </div>
     </div>
   </div>
-  @endif
 </div>
 </div>
 </div>
@@ -1057,7 +1066,5 @@ Panel Principal
 </div>
 </div>
 </div>
-
-
 <!-- Termina formulario de Prueba -->
 @endsection
