@@ -269,6 +269,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::get('estatusproductoPz', 'ProductController@reportEstatusPz');
   Route::get('gramoslinea', 'ProductController@reportes-productostLineaG');
   Route::get('entradasproducto', 'ProductController@reportEntradas');
+  Route::get('reportUtility','ProductController@reportUtility');
   Route::get('sucursales/sucursalcorte','BranchController@reportBox_cutDate')->name('sucursalcorte');
   
   

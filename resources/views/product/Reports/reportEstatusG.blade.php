@@ -122,13 +122,23 @@
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
           <tr>
-            <th scope="col">Total de Gramos</th>
+            @foreach ($productsg as $i => $product)
+            @if($product->type_product == 2 )
+            <th scope="col">Total de Gramos</th> 
+            @break 
+            @endif
+            @endforeach
             <th scope="col">Total precio Venta</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td align="center">{{$total}} gr</td>
+            @foreach ($productsg as $i => $product)
+            @if($product->type_product == 2 )
+            <td align="center">{{$total}} gr</td>  
+            @break
+            @endif
+            @endforeach
             <td align="center">$ {{$cash}}</td>
           </tr>
         </tbody>

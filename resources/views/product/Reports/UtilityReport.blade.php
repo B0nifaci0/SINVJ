@@ -58,7 +58,7 @@
         alt="Logotipo">
       <p align="right">Fecha: {{$dates}}</p>
       <p align="right">Hora: {{$hour}}</p>
-      <h2 align="center">Reporte de Productos {{$estado->name}}s por 
+      <h2 align="center">Reporte de Utilidad por 
           @foreach ($products as $i => $product)
           @if($product->category->type_product == 2 )
           Gr
@@ -72,51 +72,26 @@
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Categoria</th>
-            @foreach ($products as $i => $product)
-            @if($product->category->type_product == 2 )
-            <th>Linea</th>
-            <th>Peso</th>
-                @break;
-            @endif
-            @endforeach
             <th>Clave</th>
             <th>Descripción</th>
-            <th>Precio</th>
-            @if ($estado->name == 'Traspaso')
             <th>Sucursal</th>
-            <th>Quien lo mando</th>
-            <th>Destino</th>
-            <th>Quien recibio</th>
-            <th>Fecha</th>
-            @endif
+            <th>Precio Compra</th>
+            <th>Precio Venta</th>
+            <th>Utilidad</th>
           </tr>
         </thead>
         <tbody>
           @foreach ($products as $i => $product)
           <tr id="row{{$product->id}}">
-            <td>{{$product->id}}</td>
-            <td>{{ $product->category->name }}</td>
-            @if($product->category->type_product == 2 )
-            <td>{{ $product->line->name }}</td>
-            <td>{{ $product->weigth }} gr</td>
-            @endif
             <td>{{ $product->clave }}</td>
             <td>{{ $product->description }}</td>
-            <td>$ {{$product->price }}</td>
-            @if ($estado->name == 'Traspaso')
-            @foreach ($trans as $transfer)
-            @if ($product->id == $transfer->product_id)
-            <td>{{$transfer->lastBranch->name}}</td>
-            <td>{{$transfer->user->name}}</td>
-            <td>{{$transfer->newBranch->name}}</td>
-            <td>{{$transfer->destinationUser->name}}</td>
-            <td>{{$transfer->created_at->format('m-d-Y')}}</td>
-            @break;
-            @endif
+            <td>{{ $product->branch->name }}</td>
+            <td>$ {{$product->price_purchase}}</td>
+            @foreach ($lines as $line)
+          <td>{{$precio = $line->purchase_price;}}</td>
             @endforeach
-            @endif
+            <td>$ {{$product->price }}</td>
+            <td>$ {{$product->branch->type_product }}</td> <!--profit-->
           </tr>
           @endforeach
         </tbody>
@@ -125,25 +100,20 @@
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
           <tr>
-            @if($product->category->type_product == 2 )
-            <th scope="col">Total de Gramos</th>  
-            @endif
+            <th scope="col">Total de Gramos</th>
             <th scope="col">Total Precio Compra</th>
             <th scope="col">Total precio Venta</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            @if($product->category->type_product == 2 )
-            <td align="center">{{$total}} gr</td>  
-            @endif
+            <td align="center">{{$total}} gr</td>
             <td align="center">$ {{$compra}}</td>
             <td align="center">$ {{$cash}}</td>
           </tr>
         </tbody>
         <br>
       </table>
-      @if ($estado->name == 'Vendido')
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
           <tr>
@@ -156,7 +126,6 @@
           </tr>
         </tbody>
       </table>
-      @endif
     </div>
   </div>
 </body>

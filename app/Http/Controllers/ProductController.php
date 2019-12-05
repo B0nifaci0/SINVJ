@@ -1002,4 +1002,83 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
    //return response()->json(['productos'=>$productos,'sumprice'=>$sumprice, 'utilida'=>$descuento, 'total'=>$total]);
   }
 
+  public function reportUtility(Request $request){
+
+    /**Codigo para hacer las validaciones de los campos para realizar las consultas para el reporte */
+    $idshop = Auth::user()->shop->id;
+    //$status = Shop::find($idshop)->statuss()->get();
+    $status = Status::all();
+    $line = Shop::find($idshop)->lines()->get();
+    $category = Auth::user()->shop->id;
+    $categories = Shop::find($category)->categories()->get();
+
+    $status = $request->estatus_id;
+    $categories = $request->category_id;
+    $line = $request->id;
+          
+    
+    /**Termina codigo de validacion de campos */
+    
+    $fecini = Carbon::parse($request->fecini)->format('Y-m-d');
+    $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
+    
+    /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
+
+    $branches = Branch::where("id","=",$request->branch_id)->get();
+      $products = Product::where("branch_id","=",$request->branch_id)
+      ->where('products.updated_at','>=',$fecini,'AND','products.updated_at','<=',$fecter)
+      ->where("status_id","=",1)
+      ->get();
+  
+    /**Finaliza codigo de las consultas por campos seleccionados */
+    
+/**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
+$sales = Sale::where("id","=","sale_id")->get();
+
+$hour = Carbon::now();
+$hour = date('H:i:s');
+
+$dates = Carbon::now();
+$dates = $dates->format('d-m-Y');
+
+$total = 0;
+foreach($products as $product){
+$total = $product->weigth + $total;
+}
+
+$shop = Auth::user()->shop; 
+$shops = Auth::user()->shop()->get();
+
+if($shop->image) {
+  $shop->image = $this->getS3URL($shop->image);
+}
+
+$cash = 0;
+  foreach($products as $product){
+    $cash = $product->price + $cash;
+  }
+
+  $lines = Line::where("id","=",$request->id)->get();
+
+  $precio = 0;
+  foreach($lines as $line){
+    $precio = $line->purchase_price;
+    $discount = $line->discount;
+  }
+
+  $compra = $total * $precio;
+  $utilidad = $cash - $compra;
+          
+    /**Finalizan consultas de folio de la venta, la hora y el dia */
+    
+    /**Variable para retornar los archivos que podran ser descargados en pdf
+     * contiene las variables de las cuales se hicieron las consultas para poder
+     * hacer uso de la informacion de cada consulta
+     */
+    
+  $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop','shops','products','branches','sales','hour','dates','total','cash','compra','utilidad',));
+  return $pdf->stream('ReporteUtilidad.pdf');
+
+  } 
+
 }
