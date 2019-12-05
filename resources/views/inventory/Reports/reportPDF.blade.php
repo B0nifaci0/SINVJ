@@ -75,7 +75,9 @@
                 <tr>
                  <td>{{ $total->name_line }}</td> 
                  <td>{{ $total->total_w }} gr</td>
-                 <td>{{ $total->total_w }} gr</td>
+                 @foreach ($totals1 as $i => $total1)
+                 <td>{{ $total1->total_f }} gr</td>
+                 @endforeach 
                 </tr>
                 @endforeach 
               </tbody>
@@ -90,10 +92,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($totals as $i => $total)
+                @foreach ($g_faltantes as $i => $fal)
                 <tr>
-                 <td>{{ $total->name_line }}</td> 
-                 <td>{{ $total->total_w }} gr</td>
+                 <td>{{ $fal->name_line }}</td> 
+                 <td>{{ $fal->total_w }} gr</td>
                 </tr>
                 @endforeach 
                 </tbody>    
@@ -110,12 +112,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($totals as $i => $total)
+                @foreach ($prod_fal as $i => $prod)
                 <tr>
-                 <td>{{ $total->name_line }}</td> 
-                 <td>{{ $total->total_w }} gr</td>
-                 <td>{{ $total->total_w }} gr</td>
-                 <td>{{ $total->name_line }}</td> 
+                 <td>{{ $prod->id }}</td> 
+                 <td>{{ $prod->description }}</td>
+                 <td>{{ $prod->weigth }} gr</td>
+                 <td>{{ $prod->name_line }}</td> 
                 </tr>
                 @endforeach 
                 </tbody>    
@@ -145,17 +147,19 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
+                    <th scope="col">Clave</th>
                       <th scope="col">Categoria</th>
                       <th scope="col">Cantidad PZ</th>
                       <th scope="col">Total En Dinero</th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($cat_totals as $i => $totals)
+                @foreach ($p_faltantes as $i => $fal)
                     <tr>
-                      <td>{{$totals->cat_name}}</td>
-                      <td>{{$totals->type_product}} pzs</td>
-                      <td>$ {{$totals->total}}</td>
+                      <td>{{$fal->cat_id}}</td>
+                      <td>{{$fal->cat_name}}</td>
+                      <td>{{$fal->num_pz}} pzs</td>
+                      <td>$ {{$fal->total}}</td>
                     </tr>
                 @endforeach 
                 </tbody>    
@@ -171,11 +175,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($cat_totals as $i => $totals)
+                @foreach ($prod_faltantes as $i => $fal)
                     <tr>
-                      <td>{{$totals->cat_name}}</td>
-                      <td>{{$totals->type_product}} pzs</td>
-                      <td>$ {{$totals->total}}</td>
+                      <td>{{$fal->id}}</td>
+                      <td>{{$fal->cat_name}}</td>
+                      <td>$ {{$fal->price}}</td>
                     </tr>
                 @endforeach 
                 </tbody>    
