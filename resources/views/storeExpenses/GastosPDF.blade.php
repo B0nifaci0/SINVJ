@@ -50,9 +50,11 @@
 </head>
 <body>
 <div class="page-content">
+<img align="left" width="90px" height="90px" src="{{ $shop->image }}"><br>
     <div class="panel">
-    <p align= "right">Fecha y Hora {{$date}} / {{$hour}} </p>
-    <h2 align="center" style="color:black">Reporte De Gastos {{ $shop->name}} </h2>
+    <p align= "right">Fecha:{{$date}}</p>
+    <p align= "right">Hora:{{$hour}}</p>
+    <h2 align="center" style="color:black">Reporte General De Gastos {{ $shop->name}} </h2>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
@@ -61,6 +63,7 @@
                   <th>Descripcion</th>
                   <th>Usuario</th>
                   <th>Sucursal</th>
+                  <th>Fecha</th>
                   <th>Precio</th>
                 </tr>
               </thead>
@@ -71,22 +74,37 @@
                     <td>{{ $expense->name }}</td>
                     <td>{{ $expense->descripcion }}</td>
                     <td>{{ $expense->user->name}}</td>
-                    <td>{{ $expense->branch->name}}</td>
+                    <td>{{ ($expense->branch == null) ? $expense->shop->name : $expense->branch->name }}</td>
+                    <td>{{$expense->created_at}}</td>
                     <td>$ {{ $expense->price }}</td>
                   </tr>
                   @endforeach
               </tbody>
-            </table>
+            </table><br>
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                <thead>
+                    <tr>
+                            <th scope="col">Nombre Sucursal</th>
+                            <th scope="col">Total Gastado</th></tr>
+                        </thead>
+                      <tbody>
+                      @foreach($branches as $branch)
+                      <tr>
+                      <td align="center">{{$branch->name}}</td>
+                      <td align="center">${{$totals}}</td>
+                      </tr>
+                      @endforeach
+                      </tbody>
+                    </table><br>
+
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
                             <th scope="col">Total De Gastos</th>
-                            <th scope="col">${{$total}}</th>
-
-                    </tr>
-                </thead>
-            </table>
-          </div>
+                            <th scope="col">${{$totales}}</th></tr>
+                      </thead>
+                    </table>
+              </div>
           </div>
     </body>
 </html>

@@ -54,7 +54,7 @@
 <body>
 <div class="page-content">
     <div class="panel">
-    <h2 align="center">Lineas</h2>
+    <h2 align="center">Reporte de Lineas</h2>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
               <tr>
@@ -69,8 +69,8 @@
                   <tr id = "row{{ $line->id }}">
                     <td>{{ $line->id}}</td>
                     <td>{{ $line->name }}</td>
-                    <td>$ {{ $line->price }}</td>
-                    <td>    
+                    <td>$ {{ $line->sale_price }}</td> 
+                    <td>$ {{ $line->purchase_price }}</td>
                     </td>
                   </tr>
                     @endforeach

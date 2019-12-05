@@ -138,29 +138,27 @@ img {
     max-width: center;
     text-align: center;
 }
-@page {size: 7cm 150mm;
+@page {size: 8cm 170mm;
      }
    </style>
 
     <body>
+        <p align= "right">Fecha: {{$date}}</p>
+        <p align= "right">Hora: {{$hour}}</p>
         <div border="">
-        <img 
-            align = "left"
-            width="100px"
-            height="100px"
-            src="https://images.vexels.com/media/users/3/151690/isolated/preview/be2ec10fa7ff133565ba9a4bc65aae6c-icono-de-trazo-de-piedra-preciosa-de-diamante-by-vexels.png"
-            alt="Logotipo"
+        <img class="img-responsive " width="80px" height="80px" src="{{ $shop->image }}">
             
 
             <p class="centrado">¡COMPROBANTE DE GASTO!
                 <br align= "right">joyeriafina.com
-            </p><br>  
-            <br> 
+            </p> 
+            
+            
             <p><b>Tienda:</b> {{$shop->name}}</p><br>
             <table class="table-sm table-bordered">
             @foreach($expense as $expense)
             <tr>
-               <th> Sucursal:</th><td>{{$expense->branch->name}}</td>
+               <th> Sucursal:</th><td>{{ ($expense->branch == null) ? $expense->shop->name : $expense->branch->name }}</td>
             </tr>
             <tr>
                <th>Clave:</th><td>{{$expense->id}}</td>
@@ -176,7 +174,7 @@ img {
             </tr>
            @endforeach
            </table>
-            <br>
+          <br>
         </div>  
     </body>
 </html>
