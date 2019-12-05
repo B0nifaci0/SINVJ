@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
+ <head> 
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <title>Reporte de Productos</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
@@ -42,50 +42,35 @@
      }.sale-head h1,table thead tr th,table tfoot tr td{
        background-color: #f8f8f8;
      }tfoot{
-       color:#000;
+       color:#000;  
        text-transform: uppercase;
-       font-weight: 500;
+       font-weight: 500; 
      }
    </style>
 </head>
 <body>
 <div class="page-content">
     <div class="panel">
-    <h2 align="center">Productos</h2>
+    
+    <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
+             
+    <p align="right">Fecha: {{$dates}}</p> 
+          
+    <p align="right">Hora: {{$hour}}</p>
+  
+  
+    <h1 align="center">Reporte de Comisiones del Usuario</h1>
+            <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-				         <th scope="col">ID</th>
-                 <th scope="col">Clave</th>
-                 <th scope="col">Descripción</th>
-                 <th scope="col">Peso</th>
-                 <th scope="col">Observaciónes</th>
-                 <th scope="col">Categoría</th>
-                 <th scope="col">Linea</th>
-                 <th scope="col">Sucursal</th>
-                 <th scope="col">Status</th>
+				        <th scope="col-6">Nombre Del Colaborador</th>
+                 <th scope="col-6">Total</th>
                 </tr>
               </thead>  
-              <tbody>
-              
-      @foreach ($products as $i => $product)
-                <tr id="row{{$product->id}}">
-                 <td>{{ $product->id }}</td> 
-                 <td>{{ $product->clave }}</td>
-                 <td>{{ $product->description }}</td>
-                 <td>{{ ($product) ? $product->weigth: ""}}</td>
-                 <td>{{ $product->observations }}</td>
-                 <td>{{ $product->category->name }}</td>
-                 <td>{{ ($product->line ? $product->line->name:"")}}</td>
-                 <td>{{ ($product->branch) ? $product->branch->name:""}}</td>
-                 <td>{{ $product->status->name }}</td>
-                </tr>
-                  @endforeach
-              </tbody>
+      
             </table>
           </div>
           </div>
     </body>
 </html>
-
-

@@ -146,6 +146,10 @@ Route::get('recibopdf', 'UserController@receiptPDF');
 Route::get('recibospdf', 'UserController@receiptallPDF');
 
 Route::post('check-password', 'StateController@checkPassword');
+//Comisiones
+Route::get('/comisiones', 'SalesComissionsController@index');
+Route::get('comisionsucursal', 'SalesComissionsController@ComissionBranchPDF');
+Route::get('comisionusuario', 'SalesComissionsController@ComissionUserPDF');
 
 /*
 Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware', 'ProductBranchMiddleware','ShopMiddleware','StatusMiddleware']], function () {
@@ -181,7 +185,8 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
   //Ventas
   Route::resource('ventas', 'SaleController');
   Route::resource('inventarios', 'InventoryController');
-
+  Route::get('reportinventarios', 'InventoryController@reportInventarios');
+  Route::get('inventariospdf', 'InventoryController@inventariosPDF');
   Route::post('inventory/check', 'InventoryController@check'); 
 
   Route::get('productos', 'ProductController@index');
@@ -260,7 +265,7 @@ Route::group(['middleware' => ['auth']],function () {
 
   /**Reportes Rutas y Vistas */
   Route::get('/reportes-productos','ProductController@reportProduct');   
-  Route::get('estatusproducto', 'ProductController@reportEstatus');
+  Route::get('estatusproducto', 'ProductController@reportEstatus');  
   Route::get('estatusproductoPz', 'ProductController@reportEstatusPz');
   Route::get('gramoslinea', 'ProductController@reportes-productostLineaG');
   Route::get('entradasproducto', 'ProductController@reportEntradas');
@@ -269,6 +274,7 @@ Route::group(['middleware' => ['auth']],function () {
   
 
   Route::get('gramoslineageneral', 'ProductController@reportLineaGGeneral');
+  Route::get('piezascategoriageneral', 'ProductController@reportCategoriaPGeneral');
   Route::get('reportEstatusG', 'ProductController@reportEstatusG');
   Route::get('reportEntradasGpgr', 'ProductController@reportEntradasG_pgr');
   Route::get('reportEntradasPpz', 'ProductController@reportEntradasP_pz');

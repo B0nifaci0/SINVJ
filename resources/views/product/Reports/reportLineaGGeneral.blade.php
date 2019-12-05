@@ -42,7 +42,7 @@
      }.sale-head h1,table thead tr th,table tfoot tr td{
        background-color: #f8f8f8;
      }tfoot{
-       color:#000;  
+       color:#000;
        text-transform: uppercase;
        font-weight: 500; 
      }
@@ -67,34 +67,32 @@
                 <tr>
 				        <th scope="col">Clave</th>
                  <th scope="col">Descripción</th>
+                 <th scope="col">Linea</th>
                  <th scope="col">Peso</th>
                  <th scope="col">Precio</th>
                  <th scope="col">Observaciones</th>
                  <th scope="col">Categoria</th>
                  <th scope="col">Estatus</th>
+                 <th scope="col">Sucursal</th>
                 </tr>
               </thead>  
               <tbody>
                
       @foreach ($products as $i => $product)
-                <tr>  
+                <tr id="row{{$product->id}}">
                  <td>{{ $product->clave }}</td>   
                  <td>{{ $product->description }}</td>
-                 @if($product->category->type_product == 2)
+                 <td>{{ $product->name_line }}</td> 
+                 
                  <td>{{ $product->weigth }} gr</td>
-                 @endif
-                @if($product->category->type_product ==  1)
-                 <td></td>
-                 @endif
-                @if($product->category->type_product == 2)
+                
                  <td>$ {{ $product->price }}</td>
-                @endif
-                @if($product->category->type_product ==  1)
-                 <td></td>
-                 @endif
+                
                  <td>{{ $product->observations }}</td>
-                 <td>{{ $product->category->name }}</td>
-                 <td>{{ $product->status->name }}</td>
+                 <td>{{ $product->name_category }}</td>
+                 <td>{{ $product->name_status }}</td>
+                 <td>{{ $product->name_branch }}</td>
+                
                 </tr>
                   @endforeach
               </tbody>
@@ -103,15 +101,21 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
+                            <th scope="col">Linea</th>
                             <th scope="col">Total de Gramos</th>
-                            <th scope="col">Total precio venta</th>
+                            <th scope="col">Total Precio Venta</th>
                     </tr>
                 </thead>
                 <tbody>
+                @foreach ($totals as $i => $total)
+                @foreach ($totals1 as $i => $total1)
                     <tr>
-                        <td>{{$total}} gr</td>
-                        <td>$ {{$cash}}</td>
+                        <td>{{$total->name}}</td>
+                        <td>{{$total->total_w}} gr</td>
+                        <td>$ {{$total1->total_p}}</td>
                     </tr>
+                @endforeach 
+                @endforeach 
                 </tbody>    
             </table>
           </div>

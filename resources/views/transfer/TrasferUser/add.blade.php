@@ -39,14 +39,14 @@ ALTA PRODUCTO
                 @endforeach
                 </optgroup>
               </select>
-              <input type="text" name="product_id" id="product_id">
+              <input type="text" name="product_id" class="invisible" id="product_id">
             </div>
             <!-- END Select-->
             <!-- Select para Seleccionar Sucursal Origen-->
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputBranch">{{ __('Sucursal Origen') }}</label>
               <input type="text" class="form-control" id="branch" readonly>
-              <input type="text" class="form-control" name="branch_id" id="branch_id" readonly>
+              <input type="text" class="form-control invisible" name="branch_id" id="branch_id" readonly>
             </div>
             <!-- END Select-->
             <!-- Select para Seleccionar Quien recibe (Usuario)-->

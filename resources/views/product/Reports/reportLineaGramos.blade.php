@@ -12,10 +12,10 @@
         padding: 0;
      }.page-break {
        page-break-before:always;
-       width: auto;  
+       width: auto;
        margin: auto;
       }
-    }   
+    }
     .page-break{
       width: 980px;
       margin: 0 auto;
@@ -52,27 +52,39 @@
 <body>
 <div class="page-content">
     <div class="panel">
-      <p align="right">Fecha: {{$dates}}</p>
-      <p align="right">Hora: {{$hour}}</p>
-    <h2 align="center">Reporte de Productos por Pz {{$estado->name}}s</h2>
+    
+    <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
+          
+              <p align="right">Fecha: {{$dates}}</p>
+          
+              <p align="right">Hora: {{$hour}}</p>
+          
+          
+    <h2 align="center">Reporte General De Productos Por  Estatus</h2>
         <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
+                <th scope="col">Clave</th>
+                <th scope="col">Categoria</th>
                  <th scope="col">Linea</th>
-                 <th scope="col">Clave</th>
-                 <th scope="col">Descripción</th>
+                 <th scope="col">Estatus</th>
+                 <th scope="col">Descripción</th> 
+                 <th scope="col">Peso</th>
                  <th scope="col">Precio</th>
                  <th scope="col">Observaciones</th>
                 </tr>
               </thead>  
               <tbody>
               
-      @foreach ($products as $i => $product)
+      @foreach ($productsg as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->line->name }}</td> 
                  <td>{{ $product->clave }}</td>
+                 <td>{{ $product->name_category }}</td>
+                 <td>{{ ($product->name_line) ? $product->name_line : ''}}</td> 
+                 <td>{{ $product->name_status }}</td>
                  <td>{{ $product->description }}</td>
+                 <td>{{ ($product->weigth) ? $product->weigth : ''}} gr</td>
                  <td>$ {{ $product->price }}</td> 
                  <td>{{ $product->observations }}</td>
                 </tr>
@@ -83,29 +95,17 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                            <th scope="col">Total Precio Compra</th>
+                            <th scope="col">Total de Gramos</th>
                             <th scope="col">Total precio Venta</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td align="center">$ {{$compra}}</td>
+                        <td align="center">{{$total}} gr</td>
                         <td align="center">$ {{$cash}}</td>
                     </tr>
                 </tbody> 
                 <br>   
-            </table>
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-                <thead>
-                    <tr>
-                            <th scope="col">Utilidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td align="center">$ {{$utilidad}}</td>
-                    </tr>
-                </tbody>    
             </table>
           </div>
           </div>

@@ -123,6 +123,7 @@ class SaleController extends Controller
       $products = json_decode($request->products_list);
     	foreach ($products as $p) {
         $product = Product::find($p->id);
+        $product->price_purchase =0;
         SaleDetails::create([
     			'sale_id' => $sale->id,
     			'product_id' => $p->id,

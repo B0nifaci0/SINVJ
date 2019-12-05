@@ -465,12 +465,29 @@
                       </a>
                     </li>
 
-                    <li class="site-menu-item">
-                        <a class="animsition-link" href="/inventarios">
-                        <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
-                          <span class="site-menu-title">Inventarios</span>
-                      </a>
-                    </li>
+                    <li class="site-menu-item has-sub">
+                    <a  href="javascript:void(0)">
+                      <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                        <span class="site-menu-title">Inventarios</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/inventarios">
+                          <i  class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                            <span class="site-menu-title">Inventarios</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/reportinventarios">
+                          <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reporte de Inventarios</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/categorias">
@@ -584,6 +601,14 @@
                           <a class="animsition-link" href="/usuarios">
                           <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Usuarios</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/comisiones">
+                          <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                            <span class="site-menu-title">Comisiones</span>
                         </a>
                       </li>
                     </ul>
