@@ -112,7 +112,7 @@ LISTA DE  LINEA
                   <td>{{ $line->name }}</td>
                   <td>$ {{ $line->sale_price }}</td>
                   <!--discount_percentage descuenta dinero-->
-                  <td>$ {{ $line->discount_percentage }}</td>
+                  <td>% {{ $line->discount_percentage }}</td>
                   @if(Auth::user()->type_user == 1 )
                   <td>
                     <!-- Botón para editar linea-->

@@ -7,6 +7,7 @@
      </head>
    <style>
    {
+    font-size:8px;
     font-family: 'Times New Roman';
 }
 
@@ -82,12 +83,12 @@
         <div class="ticket" id = "{{$transfer->id}}">
                 <p class="titulo">TRASPASO</p>
                 <p class="hora">{{$transfer->created_at->format('m/d/Y H:i:s')}}</p> 
-                <p class="sucursalorigen">Sucursal  Origen................{{$transfer->lastBranch->name}}</p>
-                <p class="quienlomando">Envió................{{$transfer->user->name}}</p>
+                <p align="center">Sucursal  Origen...............{{$transfer->lastBranch->name}}</p>
+                <p align="center">Envió...............{{$transfer->user->name}}</p>
                 <p class="producto">{{ $transfer->product->clave }}</p>
-                <p class="pesolinea">{{ $transfer->product->weigth }}.{{ $transfer->product->line ? $transfer->product->line->name : '' }}</p>
-                <p class="sucursaldestino">Sucursal Destino...............{{$transfer->newBranch->name}}</p>
-                <p class="quienrecibe">Recibió................{{$transfer->destinationUser->name}}</p>
+                <p align="center">{{ $transfer->product->weigth }}.{{ $transfer->product->line ? $transfer->product->line->name : '' }}</p>
+                <p align="center">Sucursal Destino...............{{$transfer->newBranch->name}}</p>
+                <p align="center">Recibió...............{{$transfer->destinationUser->name}}</p>
                 <br>
                 <p class="firma">________________
                 <br>Firma</p> 

@@ -465,12 +465,29 @@
                       </a>
                     </li>
 
-                    <li class="site-menu-item">
-                        <a class="animsition-link" href="/inventarios">
-                        <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
-                          <span class="site-menu-title">Inventarios</span>
-                      </a>
-                    </li>
+                    <li class="site-menu-item has-sub">
+                    <a  href="javascript:void(0)">
+                      <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                        <span class="site-menu-title">Inventarios</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/inventarios">
+                          <i  class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                            <span class="site-menu-title">Inventarios</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/reportinventarios">
+                          <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reporte de Inventarios</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/categorias">
@@ -564,7 +581,7 @@
                     </ul>
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
-                        <a class="animsition-link" href="#">
+                        <a class="animsition-link" href="reportes-gastos">
                         <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
                           <span class="site-menu-title">Reporte de Gastos</span>
                       </a>
