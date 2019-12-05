@@ -51,15 +51,16 @@ Panel Principal
                   </h2>
               </div>
               <div class="row aling-right">
-                  <div class="col-md-3 col-md-offset-3">
-                      <button onclick="window.location.href='/tiendas'"
+                  <div class="col-md-6 col-md-offset-2">
+                  <div class= "mt-25" ></div>
+                      <button  onclick="window.location.href='/tiendas'"
                         type="button" class="btn btn-sm small btn-floating toggler-left  btn-success waves-effect waves-light waves-round float-right"
-
                         data-toggle="tooltip" data-original-title="Ver Más" align="right">
                         <i class="icon md-eye" aria-hidden="true"></i>
                       </button>
                   </div>
-                  <div class="col-md-3 col-md-offset-3">
+                  <div class="col-md-6 col-md-offset-2">
+                  <div class= "mt-25"></div>
                       <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
                         type="button" class="btn btn-sm small btn-floating
                         toggler-left  btn-primary waves-effect waves-light waves-round float-right"

@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Reporte de Ventas</title>
+   <title>Reporte de Gastos</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
@@ -44,41 +44,54 @@
      }tfoot{
        color:#000;
        text-transform: uppercase;
-       font-weight: 500;
+       font-weight: 500; 
+     }
+      .sizedate{
+       font-size: 12px!important;
      }
    </style>
 </head>
 <body>
 <div class="page-content">
     <div class="panel">
-    <h2 align="center">Reporte de Ventas</h2>
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+     
+   <img align="left" width="90px" height="90px" src="{{ $shop->image }}"><br>       
+   <p align="right">Fecha: {{$dates}}</p>
+          
+    <p align="right">Hora: {{$hour}}</p>
+  
+    <h1 align="center">Reporte Gastos @foreach($branches as $branch){{$branch->name}} @endforeach </h1>
+    <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                   <th>Clave</th>
-                  <th>Nombre del cliente</th>
-                  <th>Teléfono</th>
-                  <th>Cantidad de Productos</th>
-                  <th>Total a pagar</th>
+                  <th>Nombre</th>
+                  <th>Descripcion</th>
                   <th>Fecha</th>
+                  <th>Precio</th>
                 </tr>
-              </thead>  
+              </thead>
               <tbody>
-              @foreach ($sales as  $sale)
-                  <tr id ="row{{$sale->id}}">
-                    <td>{{ $sale->id}}</td>
-                    <td>{{ $sale->customer_name }}</td>
-                    <td>{{ $sale->telephone }}</td>
-                    <td>{{ $sale->items->count() }}</td>
-                    <td>${{ $sale->total }}</td>
-                    <td>{{ $sale->created_at->format('m-d-Y')}}</td>
-                  </tr>
-                  @endforeach
-              </tbody>
+              @foreach ($expenses as $i => $expense)
+                    <tr id="row{{$expense->id}}">
+                    <td>{{$expense->id}}</td>
+                    <td>{{$expense->name}}</td>
+                    <td>{{$expense->descripcion}}</td>
+                    <td>{{$expense->created_at}}</td>
+                    <td>{{$expense->price}}</td>
+                    </tr>
+                  </tbody><br>
+              @endforeach
+              <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                <thead>
+                    <tr>
+                            <th scope="col">Total De Gastos</th>
+                            <th scope="col">${{$totals}}</th>
+
+                    </tr>
+                </thead>
             </table>
           </div>
           </div>
     </body>
 </html>
-
-

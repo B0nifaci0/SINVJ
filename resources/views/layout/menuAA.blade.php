@@ -216,9 +216,9 @@
                     </ul>
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
-                        <a class="animsition-link" href="#">
+                        <a class="animsition-link" href="/reportes-gastos">
                         <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
-                          <span class="site-menu-title">Reporte de Gastos</span>
+                          <span class="site-menu-title">Reporte de fdghjGastos</span>
                       </a>
                     </li>
                     </ul>

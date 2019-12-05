@@ -131,10 +131,12 @@ Route::get('download', 'PrincipalController@download')->name('download');
 
 //Gastos
 Route::resource('gastos' , 'ExpensesController');
+Route::get('reportes-gastos', 'ExpensesController@reportExpense');
 //Gastos PDF
 //Route::get('gastopdf', 'ExpensesController@exportPdfall');
 Route::get('gastospdf', 'ExpensesController@exportPdf');
 Route::get('gastopdf/{id}', 'ExpensesController@exportPdfall')->name('gastopdf');
+Route::get('gastosucursal','ExpensesController@reportexpensebranch');
 //Nominas por usuario
 Route::get('nomina', 'UserController@indexNomina');
 Route::get('nominaspdf', 'UserController@nominasPdf');

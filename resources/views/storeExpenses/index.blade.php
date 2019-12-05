@@ -34,7 +34,7 @@ LISTA DE  GASTOS
       <div class="panel">
         <header class="panel-heading">
           <div class="row panel-actions">
-            <!-- Botón para generar PDF de gastos-->
+            <!-- Botón para generar PDF de gastos
             <div class="col-md-6 col-md-offset-2">
               <button onclick="window.location.href='gastospdf'" 
                 type="button" class=" btn btn-sm small btn-floating 
@@ -43,7 +43,7 @@ LISTA DE  GASTOS
                 <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
               </button>
             </div>
-            <!-- END Botón-->
+             END Botón-->
             <!-- Botón para crear gastos-->
             <div class="col-md-6 col-md-offset-2">
               <button onclick="window.location.href='/gastos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right"
