@@ -69,7 +69,7 @@ Panel Principal
                                     <!-- <option value="">Selecciona Estatus</option>
                                           <option value="*" name="todos">Tod@s</option> -->
                                     @foreach($statuses as $onestatus)
-                                    <option value="{{$onestatus->id}}" required>{{$onestatus->name}}</option>
+                                    <option value="{{$onestatus->id}}" required>{{$onestatus->name}}</option>  
                                     @endforeach
                                   </select>
                                   <label>Seleccione Categoria</label>
@@ -247,7 +247,6 @@ Panel Principal
                       </form>
                     </div>
                     <div class="tab-pane" id="exampleTabsFour" role="tabpanel">
-
                       <div class="row">
                         <div class="col-md-4 col-sm-12">
                           <h4>Reporte General Status Por Pieza </h4>
@@ -272,7 +271,6 @@ Panel Principal
                                 </div>
                               </div>
                               <div class="col-12 col-sm-6">
-
                                 <div class="input-group">
                                   <div class="row container"><label>Hasta la Fecha:</label></div>
                                   <div class="input-group-prepend">
@@ -334,12 +332,11 @@ Panel Principal
                           <div class="panel panel-bordered">
                             <div class="panel-body">
                               <div class="row">
-                                <div class="col">
-                                  <div class="col">
-                                    <label>Seleccione Sucursal</label>
-                                    <select id="sucursales_1" name="branch_id" alt="1"
-                                      class="form-control round sucursales">
-                                      <!-- <option value="*">Seleccione Sucursal</option> -->
+                                <div class="col-12 col-sm-6">
+                                  <label>Seleccione Sucursal</label>
+                                  <select id="sucursales_1" name="branch_id" alt="1"
+                                    class="form-control round sucursales">
+                                    <!-- <option value="*">Seleccione Sucursal</option> -->
                                       @php
                                       $branches = $user->shop->branches;
                                       @endphp
@@ -347,8 +344,6 @@ Panel Principal
                                       <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                       @endforeach
                                     </select>
-                                  </div>
-                                  <div class="col">
                                     <label>Seleccione Linea</label>
                                     <select id="" name="id" alt="1" class="form-control round sucursales">
                                       <!-- <option value="">Selecciona Linea</option> -->
@@ -360,10 +355,8 @@ Panel Principal
                                       <option value="{{$line->id}}" required>{{$line->name}}</option>
                                       @endforeach
                                     </select>
-                                  </div>
                                 </div>
-                                <div class="col">
-                                  <div class="col">
+                                <div class="col-12 col-sm-6">
                                     <div class="input-group">
                                       <div class="row container"><label>De la Fecha:</label></div>
                                       <div class="input-group">
@@ -376,8 +369,6 @@ Panel Principal
                                           data-plugin="datepicker" required>
                                       </div>
                                     </div>
-                                  </div>
-                                  <div class="col">
                                     <div class="input-group">
                                       <div class="row container"><label>Hasta la Fecha:</label></div>
                                       <div class="input-group-prepend">
@@ -388,7 +379,6 @@ Panel Principal
                                       <input name="fecter" type="text" class="form-control round"
                                         data-plugin="datepicker" required>
                                     </div>
-                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -410,7 +400,7 @@ Panel Principal
                         <div class="panel panel-bordered">
                           <div class="panel-body">
                             <div class="row">
-                              <div class="col">
+                              <div class="col-12 col-sm-6">
                                 <label>Seleccione Sucursal</label>
                                 <select id="sucursales_1" name="branch_id" alt="2"
                                   class="form-control round sucursales">
@@ -423,8 +413,7 @@ Panel Principal
                                   @endforeach
                                 </select>
                               </div>
-                              <div class="col">
-                                <div class="col">
+                              <div class="col-12 col-sm-6">
                                   <div class="input-group">
                                     <div class="row container"><label>De la Fecha:</label></div>
                                     <div class="input-group">
@@ -437,8 +426,6 @@ Panel Principal
                                         data-plugin="datepicker" required>
                                     </div>
                                   </div>
-                                </div>
-                                <div class="col">
                                   <div class="input-group">
                                     <div class="row container"><label>Hasta la Fecha:</label></div>
                                     <div class="input-group-prepend">
@@ -449,7 +436,6 @@ Panel Principal
                                     <input name="fecter" type="text" class="form-control round" data-plugin="datepicker"
                                       required>
                                   </div>
-                                </div>
                               </div>
                             </div>
                           </div>
@@ -470,8 +456,7 @@ Panel Principal
                         <div class="panel panel-bordered">
                           <div class="panel-body">
                             <div class="row">
-                              <div class="col">
-                                <div class="col">
+                              <div class="col-12 col-sm-6">
                                   <label>Seleccione Sucursal</label>
                                   <select id="sucursales_1" name="branch_id" alt="3"
                                     class="form-control round sucursales">
@@ -483,8 +468,6 @@ Panel Principal
                                     <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                     @endforeach
                                   </select>
-                                </div>
-                                <div class="col">
                                   <label>Seleccione Categoria</label>
                                   @php
                                   $categories = $user->shop->categories;
@@ -498,10 +481,8 @@ Panel Principal
                                     @endif
                                     @endforeach
                                   </select>
-                                </div>
                               </div>
-                              <div class="col">
-                                <div class="col">
+                              <div class="col-12 col-sm-6">
                                   <div class="input-group">
                                     <div class="row container"><label>De la Fecha:</label></div>
                                     <div class="input-group">
@@ -514,8 +495,6 @@ Panel Principal
                                         data-plugin="datepicker" required>
                                     </div>
                                   </div>
-                                </div>
-                                <div class="col">
                                   <div class="input-group">
                                     <div class="row container"><label>Hasta la Fecha:</label></div>
                                     <div class="input-group-prepend">
@@ -527,7 +506,6 @@ Panel Principal
                                       required>
                                   </div>
                                 </div>
-                              </div>
                             </div>
                           </div>
                           <div class="input-group col-3 col-6 col-12">
@@ -560,8 +538,7 @@ Panel Principal
                                   @endforeach
                                 </select>
                               </div>
-                              <div class="col">
-                                <div class="col">
+                              <div class="col-12 col-sm-6">
                                   <div class="input-group">
                                     <div class="row container"><label>De la Fecha:</label></div>
                                     <div class="input-group">
@@ -574,8 +551,6 @@ Panel Principal
                                         data-plugin="datepicker" required>
                                     </div>
                                   </div>
-                                </div>
-                                <div class="col">
                                   <div class="input-group">
                                     <div class="row container"><label>Hasta la Fecha:</label></div>
                                     <div class="input-group-prepend">
@@ -586,7 +561,6 @@ Panel Principal
                                     <input name="fecter" type="text" class="form-control round" data-plugin="datepicker"
                                       required>
                                   </div>
-                                </div>
                               </div>
                             </div>
                           </div>
@@ -637,8 +611,7 @@ Panel Principal
                           <div class="panel panel-bordered">
                             <div class="panel-body">
                               <div class="row">
-                                <div class="col">
-                                  <div class="col">
+                                <div class="col-12 col-sm-6">
                                     <label>Seleccione Sucursal</label>
                                     <select id="sucursales_1" name="branch_id" alt="1"
                                       class="form-control round sucursales">
@@ -650,8 +623,6 @@ Panel Principal
                                       <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                       @endforeach
                                     </select>
-                                  </div>
-                                  <div class="col">
                                     <label>Seleccione Linea</label>
                                     <select id="" name="id" alt="1" class="form-control round sucursales">
                                       <!-- <option value="">Selecciona Linea</option> -->
@@ -663,36 +634,31 @@ Panel Principal
                                       <option value="{{$line->id}}" required>{{$line->name}}</option>
                                       @endforeach
                                     </select>
-                                  </div>
-                                </div>
-                                <div class="col">
-                                  <div class="col">
+                                </div>   
+                              <div class="col-12 col-sm-6">
+                                  <div class="input-group">
+                                    <div class="row container"><label>De la Fecha:</label></div>
                                     <div class="input-group">
-                                      <div class="row container"><label>De la Fecha:</label></div>
-                                      <div class="input-group">
-                                        <div class="input-group-prepend">
-                                          <span class="input-group-text">
-                                            <i class="icon md-calendar" aria-hidden="true"></i>
-                                          </span>
-                                        </div>
-                                        <input name="fecini" type="text" class="form-control fecini round"
-                                          data-plugin="datepicker" required>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col">
-                                    <div class="input-group">
-                                      <div class="row container"><label>Hasta la Fecha:</label></div>
                                       <div class="input-group-prepend">
                                         <span class="input-group-text">
                                           <i class="icon md-calendar" aria-hidden="true"></i>
                                         </span>
                                       </div>
-                                      <input name="fecter" type="text" class="form-control round"
+                                      <input name="fecini" type="text" class="form-control fecini round"
                                         data-plugin="datepicker" required>
                                     </div>
                                   </div>
-                                </div>
+                                  <div class="input-group">
+                                    <div class="row  container"><label>Hasta la Fecha:</label></div>
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">
+                                        <i class="icon md-calendar" aria-hidden="true"></i>
+                                      </span>
+                                    </div>
+                                    <input name="fecter" type="text" class="form-control round" data-plugin="datepicker"
+                                      required>
+                                  </div>
+                              </div>
                               </div>
                             </div>
                           </div>
@@ -774,8 +740,7 @@ Panel Principal
                 <div class="panel panel-bordered">
                   <div class="panel-body">
                     <div class="row">
-                      <div class="col">
-                        <div class="col">
+                      <div class="col-12 col-sm-6">
                           <label>Seleccione Sucursal</label>
                           <select id="sucursales_1" name="branch_id" alt="3" class="form-control round sucursales">
                             <!-- <option value="*">Seleccione Sucursal</option> -->
@@ -786,50 +751,17 @@ Panel Principal
                             <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                             @endforeach
                           </select>
-                        </div>
-                        <div class="col">
                           <label>Seleccione Categoria</label>
                           @php
                           $categories = $user->shop->categories;
                           @endphp
                           <select id="" name="category_id" alt="1" class="form-control round sucursales">
-                            <!-- <option value="">Selecciona Categoria</option>
-                                                          <option value="*">Tod@s</option> -->
                             @foreach($categories as $categories)
                             @if($categories->type_product == 1 )
                             <option value="{{$categories->id}}" required>{{$categories->name}}</option>
                             @endif
                             @endforeach
                           </select>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="col">
-                          <div class="input-group">
-                            <div class="row container"><label>De la Fecha:</label></div>
-                            <div class="input-group">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                  <i class="icon md-calendar" aria-hidden="true"></i>
-                                </span>
-                              </div>
-                              <input name="fecini" type="text" class="form-control fecini round"
-                                data-plugin="datepicker" required>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col">
-                          <div class="input-group">
-                            <div class="row container"><label>Hasta la Fecha:</label></div>
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">
-                                <i class="icon md-calendar" aria-hidden="true"></i>
-                              </span>
-                            </div>
-                            <input name="fecter" type="text" class="form-control round" data-plugin="datepicker"
-                              required>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -936,8 +868,7 @@ Panel Principal
                   <div class="panel panel-bordered">
                     <div class="panel-body">
                       <div class="row">
-                        <div class="col">
-                          <div class="col">
+                        <div class="col-12 col-sm-6">
                             <label>Seleccione Sucursal</label>
                             <select id="sucursales_1" name="branch_id" alt="1" class="form-control round sucursales">
                               <!-- <option value="*">Seleccione Sucursal</option> -->
@@ -948,10 +879,8 @@ Panel Principal
                               <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                               @endforeach
                             </select>
-                          </div>
                         </div>
-                        <div class="col">
-                          <div class="col">
+                        <div class="col-12 col-sm-6">
                             <div class="input-group">
                               <div class="row container"><label>De la Fecha:</label></div>
                               <div class="input-group">
@@ -964,8 +893,6 @@ Panel Principal
                                   data-plugin="datepicker" required>
                               </div>
                             </div>
-                          </div>
-                          <div class="col">
                             <div class="input-group">
                               <div class="row container"><label>Hasta la Fecha:</label></div>
                               <div class="input-group-prepend">
@@ -976,7 +903,6 @@ Panel Principal
                               <input name="fecter" type="text" class="form-control round" data-plugin="datepicker"
                                 required>
                             </div>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -998,7 +924,7 @@ Panel Principal
                 <div class="panel panel-bordered">
                   <div class="panel-body">
                     <div class="row">
-                      <div class="col">
+                      <div class="col-12 col-sm-6">
                         <label>Seleccione Sucursal</label>
                         <select id="sucursales_1" name="branch_id" alt="2" class="form-control round sucursales">
                           <!-- <option value="*">Seleccione Sucursal</option> -->
@@ -1010,8 +936,7 @@ Panel Principal
                           @endforeach
                         </select>
                       </div>
-                      <div class="col">
-                        <div class="col">
+                      <div class="col-12 col-sm-6">
                           <div class="input-group">
                             <div class="row container"><label>De la Fecha:</label></div>
                             <div class="input-group">
@@ -1024,8 +949,6 @@ Panel Principal
                                 data-plugin="datepicker" required>
                             </div>
                           </div>
-                        </div>
-                        <div class="col">
                           <div class="input-group">
                             <div class="row container"><label>Hasta la Fecha:</label></div>
                             <div class="input-group-prepend">
@@ -1036,7 +959,6 @@ Panel Principal
                             <input name="fecter" type="text" class="form-control round" data-plugin="datepicker"
                               required>
                           </div>
-                        </div>
               </form>
             </div>
           </div>
