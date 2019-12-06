@@ -215,7 +215,7 @@ class BranchController extends Controller
       ->select('price')
       ->where('branch_id',$request->branch_id)
       ->sum('price');
-      $branch->totalFin = $branch->efectivo - $branch->gastos;  
+      $branch->totalFin = $branch->total - $branch->gastos;  
       $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch'));  
      return $pdf->stream('CorteSucursal.pdf');
     }
