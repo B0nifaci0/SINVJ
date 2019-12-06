@@ -24,6 +24,7 @@ class Line extends Model
 		'name',
 		'purchase_price',
 		'sale_price',
-		'discount_percentage'
+		'discount_percentage',
+		
 	];
 }

@@ -16,12 +16,12 @@ class Branch extends Model
     protected $fillable = [
         'name',
         'address',
-        'latitude',
-        'longitude',
         'phone_number',
         'shop_id',
-        'state',
-        'password'  
+        'name_legal_re',
+        'email',
+        'other',
+        'rfc',        
     ];
 
     public function shop()

@@ -66,7 +66,6 @@ LISTA DE  GASTOS
                 <th>Precio</th>
                 <th>Imagen</th>
                 <th>Sucursal</th>
-                <th>Tienda</th>
                 <th>Opciones</th>
               </tr>
             </thead>
@@ -78,7 +77,6 @@ LISTA DE  GASTOS
                 <th>Precio</th>
                 <th>Imagen</th>
                 <th>Sucursal</th>
-                <th>Tienda</th>
                 <th>Opciones</th>
               </tr>
             </tfoot>

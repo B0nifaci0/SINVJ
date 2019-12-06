@@ -16,6 +16,12 @@ class CreateBranchesTable extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 50);
+            $table->string('name_legal_re', 150);
+            $table->string('email', 255);
+            $table->string('other', 250);
+            $table->string('rfc', 250);
+            $table->int('phone_number', 10);
+            $table->string('address', 255);
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
             $table->softDeletes();
