@@ -65,6 +65,7 @@ class BranchController extends Controller
      */
     public function store(BranchRequest $request)
     {
+      //return $request;
        /*$branches= Auth::user()->shop->branches;
 
         if($name == $request->name){
@@ -72,7 +73,13 @@ class BranchController extends Controller
         } else */
           
         $branch = new Branch([
-          'name' => $request->name
+          'name' => $request->name,
+          'name_legal_re' => $request->name_legal_re,
+          'email' => $request->email,
+          'other' => $request->other,
+          'rfc' => $request->rfc,
+          'phone_number' => $request->phone_number,
+          'address' => $request->address
         ]);
         $branch->shop_id = Auth::user()->shop->id;
         $branch->save();
@@ -142,7 +149,7 @@ class BranchController extends Controller
             return redirect('/sucursales')->with('mesage-update','La sucursal  se ha actualizado exitosamente!');
     }
 
-    /**
+    /** 
      * Remove the specified resource from storage.
      *
      * @param  \App\Branch  $branch
@@ -208,7 +215,7 @@ class BranchController extends Controller
       ->select('price')
       ->where('branch_id',$request->branch_id)
       ->sum('price');
-      $branch->totalFin = $branch->efectivo - $branch->gastos;  
+      $branch->totalFin = $branch->total - $branch->gastos;  
       $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch'));  
      return $pdf->stream('CorteSucursal.pdf');
     }

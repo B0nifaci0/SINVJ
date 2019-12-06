@@ -111,7 +111,7 @@
           <td>$ {{$branch->gastos }} </td>
         </tr>
         <tr>
-          <th>TOTAL (EFECTIVO - GASTOS)</th>
+          <th>TOTAL - GASTOS</th>
           <td>$ {{$branch->totalFin }} </td>
         </tr>
       </table>

@@ -500,9 +500,16 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('shop','shops','products','branches','lines','total','cash','compra','utilidad'));
       return $pdf->stream('ReporteLineas.pdf');
     }
+
+
 //**Reporte de Entradas De Prosuctos Por Fechas */
     public function reportEntradas(Request $request){
 //return $request;
+
+      $hour = Carbon::now();
+      $hour = date('H:i:s');
+      $dates = Carbon::now();
+      $dates = $dates->format('d-m-Y');
       $fech1 = Carbon::parse($request->fecini)->format('Y-m-d');
       $fech2 = Carbon::parse($request->fecter)->format('Y-m-d');
 
