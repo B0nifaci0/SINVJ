@@ -55,14 +55,14 @@ LISTA DE  LINEA
                 </div>
                 <!-- END Botón-->
                 <!-- Botón para generar Excel de linea-->
-                <div class="col-md-4 col-md-offset-2">
+                <!--<div class="col-md-4 col-md-offset-2">
                   <button onclick="window.location.href='#'"
                     type="button" class="btn btn-sm small btn-floating 
                     toggler-left  btn-success waves-effect waves-light waves-round float-right"
                     data-toggle="tooltip" data-original-title="Generar reporte Excel">
                     <i class="icon fa-file-excel-o" aria-hidden="true"></i>
                   </button>
-                </div>
+                </div>-->
                 <!-- END Función-->
                 <!-- Botón para crear linea-->
                 <div class="col-md-4 col-md-offset-2">
