@@ -110,20 +110,22 @@ class SaleController extends Controller
     public function store(Request $request)
     {
       //  return $request;
+      $user = Auth::user();
       $sale = Sale::create([
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,
         'price' => $request->price,
         'customer_name' => $request->customer_name,
         'total' => $request->total_pay,
-        'branch_id' => 0,
+        'user_id' => $user->id,
+        'branch_id' => $user->branch_id,
         'client_id' => $request->client_id,
         'paid_out' => 0
       ]);
       $products = json_decode($request->products_list);
     	foreach ($products as $p) {
         $product = Product::find($p->id);
-        $product->price_purchase =0;
+        
         SaleDetails::create([
     			'sale_id' => $sale->id,
     			'product_id' => $p->id,
@@ -251,7 +253,7 @@ public function exportPdf($id) {
 	$sale->total = $sale->itemsSold->sum('final_price');
 	// return $sale;
 	$pdf  = PDF::loadView('sale.PDFVenta', compact('sale')); 
-  return $pdf->stream('venta.pdf');
+  return $pdf->stream('venta.pdf'); 
 }
 /**Reportes De Ventas */
 public function reporstSale(){

@@ -158,6 +158,11 @@ img {
             <br>
             <br>
             <p>Toluca de Lerdo #1006</p>
+            @if($sale->client)
+                <p>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>
+            @else
+                <p>{{ $sale->customer_name }}</p>
+            @endif
 
             <table class="table-sm table-bordered">
                     <thead>
