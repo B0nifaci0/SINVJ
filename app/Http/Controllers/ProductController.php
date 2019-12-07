@@ -13,6 +13,7 @@ use App\Status;
 use App\Product;
 use App\Category;
 use Carbon\Carbon;
+use App\SaleDetails;
 use App\TransferProduct;
 use Illuminate\Http\Request;
 use App\Traits\S3ImageManager;
@@ -404,6 +405,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       ->where("line_id","=",$request->id)
       ->get();
 
+      $detalle = SaleDetails::all();
 
       $estado = Status::findOrFail($request->estatus_id);
 
@@ -411,7 +413,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
 
 /**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
       $sales = Sale::where("id","=","sale_id")->get();
-
+     // $detalles = SaleDetail::where("sale_id",$sales->id);
       $hour = Carbon::now();
       $hour = date('H:i:s');
 
@@ -438,13 +440,17 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
         $lines = Line::where("id","=",$request->id)->get();
 
         $precio = 0;
-        foreach($lines as $line){
-          $precio = $line->purchase_price;
-          $discount = $line->discount;
+        $venta = 0;
+        foreach($products as $product){
+          $precio = $product->price_purchase + $precio; 
+          foreach ($detalle as $det)
+          if($det->product_id == $product->id){
+            $venta = $venta + $det->final_price;
+          }
         }
+        $compra = $precio;
 
-        $compra = $total * $precio;
-        $utilidad = $cash - $compra;
+        $utilidad = $compra - $venta;
       
 /**Finalizan consultas de folio de la venta, la hora y el dia */
 
@@ -453,7 +459,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
  * hacer uso de la informacion de cada consulta
  */
 
-      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop','shops','estado','products','branches','sales','hour','dates','total','cash','compra','utilidad','trans'));
+      $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop','shops','estado','products','branches','sales','hour','dates','total','cash','compra','utilidad','trans','detalle','venta'));
       return $pdf->stream('ReporteEstatus.pdf');
       }
 /**Termina el retorno del pdf */
@@ -1015,6 +1021,8 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
     $status = $request->estatus_id;
     $categories = $request->category_id;
     $line = $request->id;
+
+    $detalle = SaleDetails::all();  
           
     
     /**Termina codigo de validacion de campos */
@@ -1063,12 +1071,22 @@ $cash = 0;
   $precio = 0;
   foreach($lines as $line){
     $precio = $line->purchase_price;
-    $discount = $line->discount;
+    $discount = $line->discount;  
+  }
+  
+  $venta = 0;
+  foreach($products as $product){
+    $precio = $product->price_purchase + $precio; 
+    foreach ($detalle as $det)
+    if($det->product_id == $product->id){
+      $venta = $venta + $det->final_price;
+    }
   }
 
-  $compra = $total * $precio;
-  $utilidad = $cash - $compra;
-          
+  $compra = $precio;
+  $utilidad = $compra - $venta;
+
+            
     /**Finalizan consultas de folio de la venta, la hora y el dia */
     
     /**Variable para retornar los archivos que podran ser descargados en pdf
@@ -1076,7 +1094,7 @@ $cash = 0;
      * hacer uso de la informacion de cada consulta
      */
     
-  $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop','shops','products','branches','sales','hour','dates','total','cash','compra','utilidad',));
+  $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop','shops','products','branches','sales','hour','dates','total','cash','compra','utilidad','lines','venta'));
   return $pdf->stream('ReporteUtilidad.pdf');
 
   } 

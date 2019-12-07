@@ -679,7 +679,7 @@ Panel Principal
                         <div class="panel panel-bordered">
                           <div class="panel-body">
                             <div class="row">
-                              <div class="col">
+                              <div class="col-12 col-sm-6">
                                 <label>Seleccione Sucursal</label>
                                 <select id="sucursales_1" name="branch_id" alt="2"
                                   class="form-control round sucursales">
@@ -692,8 +692,7 @@ Panel Principal
                                   @endforeach
                                 </select>
                               </div>
-                              <div class="col">
-                                <div class="col">
+                              <div class="col-12 col-sm-6">
                                   <div class="input-group">
                                     <div class="row container"><label>De la Fecha:</label></div>
                                     <div class="input-group">
@@ -706,8 +705,6 @@ Panel Principal
                                         data-plugin="datepicker" required>
                                     </div>
                                   </div>
-                                </div>
-                                <div class="col">
                                   <div class="input-group">
                                     <div class="row container"><label>Hasta la Fecha:</label></div>
                                     <div class="input-group-prepend">
@@ -718,7 +715,7 @@ Panel Principal
                                     <input name="fecter" type="text" class="form-control round" data-plugin="datepicker"
                                       required>
                                   </div>
-                                </div>
+                                  
                       </form>
                     </div>
                   </div>
@@ -763,6 +760,30 @@ Panel Principal
                             @endforeach
                           </select>
                       </div>
+                      <div class="col-12 col-sm-6">
+                          <div class="input-group">
+                            <div class="row container"><label>De la Fecha:</label></div>
+                            <div class="input-group">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="icon md-calendar" aria-hidden="true"></i>
+                                </span>
+                              </div>
+                              <input name="fecini" type="text" class="form-control fecini round"
+                                data-plugin="datepicker" required>
+                            </div>
+                          </div>
+                          <div class="input-group">
+                            <div class="row container"><label>Hasta la Fecha:</label></div>
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="icon md-calendar" aria-hidden="true"></i>
+                              </span>
+                            </div>
+                            <input name="fecter" type="text" class="form-control round" data-plugin="datepicker"
+                              required>
+                          </div>
+                      </div>
                     </div>
                   </div>
                   <div class="input-group col-3 col-6 col-12">
@@ -795,8 +816,8 @@ Panel Principal
                           @endforeach
                         </select>
                       </div>
-                      <div class="col">
-                        <div class="col">
+                      
+                      <div class="col-12 col-sm-6">
                           <div class="input-group">
                             <div class="row container"><label>De la Fecha:</label></div>
                             <div class="input-group">
@@ -809,8 +830,6 @@ Panel Principal
                                 data-plugin="datepicker" required>
                             </div>
                           </div>
-                        </div>
-                        <div class="col">
                           <div class="input-group">
                             <div class="row container"><label>Hasta la Fecha:</label></div>
                             <div class="input-group-prepend">
@@ -821,7 +840,6 @@ Panel Principal
                             <input name="fecter" type="text" class="form-control round" data-plugin="datepicker"
                               required>
                           </div>
-                        </div>
                       </div>
                     </div>
                   </div>

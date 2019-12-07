@@ -67,19 +67,24 @@
           @endforeach
       </h2>
       <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+      <h4 align="center" >Linea: 
+        @foreach ($products as $i => $product)
+        @if($product->category->type_product == 2 )
+        {{ $product->line->name }}  
+        @endif
+        @break
+        @endforeach </h4>
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Clave</th>
             <th>Categoria</th>
             @foreach ($products as $i => $product)
             @if($product->category->type_product == 2 )
-            <th>Linea</th>
             <th>Peso</th>
                 @break;
             @endif
             @endforeach
-            <th>Clave</th>
             <th>Descripción</th>
             <th>Precio</th>
             @if ($estado->name == 'Traspaso')
@@ -94,15 +99,21 @@
         <tbody>
           @foreach ($products as $i => $product)
           <tr id="row{{$product->id}}">
-            <td>{{$product->id}}</td>
+              <td>{{ $product->clave }}</td>
             <td>{{ $product->category->name }}</td>
             @if($product->category->type_product == 2 )
-            <td>{{ $product->line->name }}</td>
             <td>{{ $product->weigth }} gr</td>
             @endif
-            <td>{{ $product->clave }}</td>
             <td>{{ $product->description }}</td>
+            @if ($estado->name != 'Vendido')
             <td>$ {{$product->price }}</td>
+            @else
+            @foreach ($detalle as $det)
+            @if($det->product_id == $product->id)
+            <td>$ {{$det->final_price}}</td> 
+            @endif 
+            @endforeach
+            @endif
             @if ($estado->name == 'Traspaso')
             @foreach ($trans as $transfer)
             @if ($product->id == $transfer->product_id)
@@ -125,11 +136,17 @@
           <tr>
               @foreach ($products as $product)
               @if($product->category->type_product == 2 )
-              <th scope="col">Total de Gramos</th>  
+              <th scope="col">Total de Gramos</th> 
+              @break   
               @endif             
               @endforeach 
             <th scope="col">Total Precio Compra</th>
+            @foreach ($products as $product)
+            @if ($estado->name == 'Vendido')
             <th scope="col">Total precio Venta</th>
+            @break
+            @endif
+            @endforeach
           </tr>
         </thead>
         <tbody>
@@ -137,10 +154,16 @@
             @foreach ($products as $product)
             @if($product->category->type_product == 2 )
             <td align="center">{{$total}} gr</td>  
+            @break
             @endif              
             @endforeach
             <td align="center">$ {{$compra}}</td>
-            <td align="center">$ {{$cash}}</td>
+            @foreach ($products as $product)
+            @if ($estado->name == 'Vendido')
+            <td align="center">$ {{$venta}}</td>
+            @break
+            @endif
+            @endforeach
           </tr>
         </tbody>
         <br>
