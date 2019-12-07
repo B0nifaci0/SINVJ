@@ -112,14 +112,9 @@ class InventoryController extends Controller
         return back();
     }
 
-    public function inventariosPDF(Request $request){
-      /*  $branch=$request->branch_id;
-        //return $branch;
-        $branches=Branch::select('name')
-        ->where('id',$branch)
-        ->get(); */
-        $branches= Auth::user()->shop->branches;
-        //return $branches;   
+    public function inventariosPDF($id){
+        $branches = Branch::find($id);  
+        //return $branches;
 
         $product = Auth::user()->shop->id;
         $products = Shop::find($product)->products()->get();
@@ -132,6 +127,19 @@ class InventoryController extends Controller
           $dates = Carbon::now();
           $dates = $dates->format('d-m-Y');
       $shops = Auth::user()->shop()->get();
+      
+      $inventory = InventoryReport::findOrFail($id);
+      //return $inventory;
+      $report = InventoryReport::join('branches','branches.id','inventory_reports.branch_id')
+      ->select('inventory_reports.*', 'branches.name as name_branch', 'branches.id as id_branch')
+      ->where('inventory_reports.id',$id)
+      ->get();
+
+      $ids = InventoryReport::join('branches','branches.id','inventory_reports.branch_id')
+      ->select('branches.id as id_branch')
+      ->where('inventory_reports.id',$id)
+      ->get();
+      //return $ids;
   
       //CONSULTA DE REPORTES DE INVENTARIOS
       $inventories = InventoryReport::join('branches','branches.id','inventory_reports.branch_id')
@@ -148,7 +156,7 @@ class InventoryController extends Controller
       ->withTrashed()
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
-     // ->where('products.branch_id',$branches)   
+     // ->where('products.branch_id',$ids)   
       ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.weigth) as total_w'))
       ->distinct('lines.name')
       ->groupBy('lines.id', 'lines.name')
@@ -164,7 +172,7 @@ class InventoryController extends Controller
       ->withTrashed()
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2)
-      //->where('products.branch_id',$branches)    
+      //->where('products.branch_id',$ids)    
       ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.weigth) as total_f'))
       ->where('products.discar_cause',NULL)  
       ->distinct('lines.name')
@@ -182,7 +190,7 @@ class InventoryController extends Controller
       ->withTrashed()
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
-     // ->where('products.branch_id',$branches)   
+     ////->where('products.branch_id',$ids)    
       ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.weigth) as total_w'))
       ->where('products.discar_cause',1)
       ->orWhere('products.discar_cause',2)  
@@ -201,7 +209,7 @@ class InventoryController extends Controller
       ->withTrashed()
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2)
-    //  ->where('products.branch_id',$branches) 
+    ////->where('products.branch_id',$ids)    
       ->select('products.*', 'lines.name as name_line')
       ->where('products.discar_cause',1)
       ->orWhere('products.discar_cause',2) 
@@ -214,7 +222,7 @@ class InventoryController extends Controller
       $cat_totals = Category::join('products', 'products.category_id', 'categories.id')
       ->where('categories.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',1)  
-     // ->where('products.branch_id',$branches)  
+     ////->where('products.branch_id',$ids)    
       ->select('categories.id', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
       ->distinct('categories.name')
       ->groupBy('categories.id','categories.name')
@@ -229,7 +237,7 @@ class InventoryController extends Controller
      ->withTrashed()
      ->where('categories.shop_id', Auth::user()->shop->id) 
      ->where('categories.type_product',1)  
-     ->where('products.branch_id',$branches)  
+    //->where('products.branch_id',$ids)    
      ->where('products.discar_cause',1)
      ->orWhere('products.discar_cause',2)  
      ->select('categories.id as cat_id', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
@@ -247,7 +255,7 @@ class InventoryController extends Controller
      ->withTrashed()
      ->where('categories.shop_id', Auth::user()->shop->id) 
      ->where('categories.type_product',1) 
-     ->where('products.branch_id',$branches)  
+     ->where('products.branch_id',$ids)     
      ->where('products.discar_cause',1)
      ->orWhere('products.discar_cause',2)  
      ->select('products.*','categories.id as id_cat', 'categories.name as cat_name')
@@ -259,7 +267,7 @@ class InventoryController extends Controller
         $shop->image = $this->getS3URL($shop->image);
     }
 
-      $pdf  = PDF::loadView('inventory.Reports.reportPDF', compact('branches','inventories','prod_faltantes','p_faltantes','prod_fal','g_faltantes','cat_totals','shop','hour','dates','shops','lines','totals','totals1'));
+      $pdf  = PDF::loadView('inventory.Reports.reportPDF', compact('report','branches','inventories','prod_faltantes','p_faltantes','prod_fal','g_faltantes','cat_totals','shop','hour','dates','shops','lines','totals','totals1'));
       return $pdf->stream('ReporteInventarios.pdf');
     }
 
@@ -280,30 +288,12 @@ class InventoryController extends Controller
       $dates = Carbon::now();
       $dates = $dates->format('d-m-Y');
 
+      
+
       //CONSULTA DE REPORTES DE INVENTARIOS
       $inventories = InventoryReport::join('branches','branches.id','inventory_reports.branch_id')
       ->select('inventory_reports.*', 'branches.name as name_branch', 'branches.id as branch_id')
       ->get();
-
-      //CONSULTAS PARA ADMINISTRADORES
-    //SUMA TOTAL DE GRAMOS
-      $gramos = Shop::join('products','products.shop_id','shops.id')
-      ->join('categories','categories.id','products.category_id')
-      ->join('statuss','statuss.id','products.status_id')
-      ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
-      ->withTrashed()
-      ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
-     // ->where('products.branch_id',$branches)   
-      ->select(DB::raw('SUM(products.weigth) as total_w'))
-      ->get();
-      //return $gramos;
-
-    //SUMA TOTAL DE VENTAS
-    $ventas = Sale::select(DB::raw('SUM(sales.total) as total_s'))
-    ->get();
-    //return $ventas;
 
     //CONSULTAS PARA COLABORADORES POR SUCURSAL
     //SUMA TOTAL DE GRAMOS POR SUCURSAL
@@ -331,7 +321,7 @@ class InventoryController extends Controller
     }
          //return $categories;
 
-      return view('inventory.Reports.reportinventory',compact('gramos_s','ventas','gramos','inventories','hour','dates','shop','shops','branch','user','statuses','line','categories'));
+      return view('inventory.Reports.reportinventory',compact('gramos_s','inventories','hour','dates','shop','shops','branch','user','statuses','line','categories'));
      }
 
 }

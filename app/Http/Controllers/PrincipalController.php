@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 use App\Shop;
 use App\User;
+use App\Sale;
+
 use App\Branch;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Traits\S3ImageManager;
 use Illuminate\Http\Request;
 
@@ -28,8 +31,30 @@ class PrincipalController extends Controller
         if($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
+
+        $branches= Auth::user()->shop->branches;
+
+        //CONSULTAS PARA ADMINISTRADORES
+       //SUMA TOTAL DE GRAMOS
+      $gramos = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->join('lines','lines.id','products.line_id')
+      ->withTrashed()
+      ->where('lines.shop_id', Auth::user()->shop->id)  
+      ->where('categories.type_product',2) 
+     // ->where('products.branch_id',$branch->id)
+      ->select(DB::raw('SUM(products.weigth) as total_w'))
+      ->get();
+      //return $gramos->total_w;
+
+       //SUMA TOTAL DE VENTAS
+       $ventas = Sale::select(DB::raw('SUM(sales.total) as total_s'))
+       ->get();
+       //return $ventas;
         
-        return view ('Principal/principal',compact('branch','user','shop','shops'));
+        return view ('Principal/principal',compact('branches','branch','user','shop','shops','gramos','ventas'));
     }
 
     public function exportPdf(){

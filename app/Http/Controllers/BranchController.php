@@ -13,12 +13,15 @@ use App\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Traits\S3ImageManager;
+use App\Category;
 use App\Http\Requests\BranchRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class BranchController extends Controller
 {
+  use S3ImageManager;
 
 
     /**
@@ -147,6 +150,68 @@ class BranchController extends Controller
 
             //return $request->all();
             return redirect('/sucursales')->with('mesage-update','La sucursal  se ha actualizado exitosamente!');
+    }
+
+    public function mostrar($id)
+    {
+      $shop = Auth::user()->shop; 
+      $branch = Auth::user()->shop->id;
+      $user = Auth::user();
+      $branch = Shop::find($branch)->branches()->get();
+      $shops = Auth::user()->shop()->get();
+
+      if($shop->image) {
+        $shop->image = $this->getS3URL($shop->image);
+      }
+
+      $branches= Auth::user()->shop->branches;
+
+      $branch = Branch::findOrFail($id);
+      //return $branch->id;
+      $total = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->join('lines','lines.id','products.line_id')
+      ->withTrashed()
+      ->where('lines.shop_id', Auth::user()->shop->id)  
+      ->where('categories.type_product',2) 
+      ->where('products.branch_id',$branch->id)   
+      ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.weigth) as total_w'))
+      ->distinct('lines.name')
+      ->groupBy('lines.id', 'lines.name')
+      ->orderBy('name_line', 'DESC')
+      ->get();
+      //return $total;
+
+      $total1 = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->join('lines','lines.id','products.line_id')
+      ->withTrashed()
+      ->where('lines.shop_id', Auth::user()->shop->id)  
+      ->where('categories.type_product',2) 
+      ->where('products.branch_id',$branch->id)   
+      ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.price) as total_p'))
+      ->distinct('lines.name')
+      ->groupBy('lines.id', 'lines.name')
+      ->orderBy('name_line', 'DESC')
+      ->get();
+      //return $total;
+
+      $category = Category::join('products', 'products.category_id', 'categories.id')
+      ->where('categories.shop_id', Auth::user()->shop->id)  
+      ->where('categories.type_product',1)  
+     ////->where('products.branch_id',$ids)    
+      ->select('categories.id', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
+      ->distinct('categories.name')
+      ->groupBy('categories.id','categories.name')
+      ->orderBy('cat_name', 'DESC')
+      ->get();
+      //return $category;
+
+      return view('Branches/mostrar', ['category' => $category ,'branch' => $branch, 'total' => $total, 'total1' => $total1, 'shop' => $shop]);
     }
 
     /** 

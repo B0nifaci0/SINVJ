@@ -75,7 +75,7 @@ LISTA DE  LINEA
                   <td>{{ $inventory->name_branch }}</td>
                   <td>
                   <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='inventariospdf'" 
+                  <button onclick="window.location.href='inventariospdf/{{$inventory->id}}'" 
                     type="button" class=" btn btn-sm small btn-floating 
                     toggler-left  btn-danger waves-effect waves-light waves-round float-right"
                     data-toggle="tooltip" data-original-title="Generar reporte PDF">

@@ -60,7 +60,7 @@
   
   
     <h1 align="center">Reporte de Inventarios
-          @foreach($branches as $branch){{$branch->name}} @endforeach</h1>
+          @foreach($report as $r) {{$r->name_branch}} @endforeach</h1>
           <h3 align="center">Productos Gramo</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>

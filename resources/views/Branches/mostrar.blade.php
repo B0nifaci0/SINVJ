@@ -1,6 +1,6 @@
 @extends('layout.layoutdas')
 @section('title')
-Panel Principal
+Panel Sucursales
 @endsection
 
 @section('nav')
@@ -98,88 +98,73 @@ Panel Principal
       </div>
 
       <div class="col-12">
-      <div class="panel-warning">
+      <div class="panel-danger">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Totales De Sucursales<h2>
+        <h2 class="panel-title" style="color:black">Lineas</h2>
         </div>
         <div>
 
+
+      @foreach($total as $t)
       <div class="col-4">
         <!-- Widget Linearea One-->
-        <div class="card card-shadow">
+        <div class="card card-shadow border-danger">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
-              <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Totales
-              </div>
-              <span class="float-right grey-700 font-size-30">@foreach($gramos as $g)  {{$g->total_w}} gr @endforeach</span>
+              <div class="grey-800 float-left py-10 card-header">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$t->name_line}}
+              </div><br>
+              <span class="float-right grey-700 font-size-16">Gramos:  {{$t->total_w}} gr
+              <br>@foreach($total1 as $t1) Venta:   $ {{$t1->total_p}}  @endforeach</span>
             </div>
             <div class="mb-20 grey-500">
               <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
-          </div>
-        </div>
-        <!-- End Widget Linearea One -->
-      </div>
-
-      <div class="col-4">
-        <!-- Widget Linearea One-->
-        <div class="card card-shadow">
-          <div class="card-block p-20 pt-10">
-            <div class="clearfix">
-              <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total De Dinero En Precio Venta
-              </div>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas as $v) $ {{$v->total_s}} @endforeach</span>
-            </div>
-            <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
-            </div>
-          <!--  <div class="ct-chart h-50"></div>   -->
-          </div>
-        </div>
-        <!-- End Widget Linearea One -->
-      </div>
-      </div>
-       </div>
-      </div>
-      </div>
-
-      <br>
-
-      <div class="col-12">
-      <div class="panel-success">
-      <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Sucursales</h2>
-        </div>
-        <div>
-
-      @foreach($branches as $branch)
-      <div class="col-4">
-        <!-- Widget Linearea One-->
-        <div class="card card-shadow">
-          <div class="card-block p-20 pt-10">
-            <div class="clearfix">
-              <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>  {{$branch->name}}
-              </div>
-              <span class="float-right grey-700 font-size-30"></span>
-            </div>
-            <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
-            </div>
-          <!--  <div class="ct-chart h-50"></div>   -->
-            <a href="/sucursales/{{$branch->id}}/mostrar" class="btn btn-primary">Detalles</a>
           </div>
         </div>
         <!-- End Widget Linearea One -->
       </div>
       @endforeach
       </div>
+      </div>
+      </div>
+      
+      <div class="col-12">
+      <div class="panel-dark">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Categorias</h2>
+        </div>
+        <div>
+
+      @foreach($category as $c)
+      
+      <div class="col-4">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10 card-body text-dark">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10 card-header">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$c->cat_name}}
+              </div><br>
+              <span class="float-right grey-700 font-size-16 card-text">Venta:  $ {{$c->total}}
+              <br>Piezas:   {{$c->num_pz}} pzs </span>
+            </div>
+            <div class="mb-20 grey-500">
+              <i class="icon md-long-arrow-up green-500 font-size-16 card-text"></i>                  15% Ventas
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+      @endforeach
+
+      </div>
        </div>
       </div>
       </div>
+      
 
       </div>
     </div>

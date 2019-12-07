@@ -186,7 +186,7 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
   Route::resource('ventas', 'SaleController');
   Route::resource('inventarios', 'InventoryController');
   Route::get('reportinventarios', 'InventoryController@reportInventarios');
-  Route::get('inventariospdf', 'InventoryController@inventariosPDF');
+  Route::get('inventariospdf/{id}', 'InventoryController@inventariosPDF');
   Route::post('inventory/check', 'InventoryController@check'); 
 
   Route::get('productos', 'ProductController@index');
@@ -213,6 +213,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::post('/sucursales', 'BranchController@store');
   Route::get('/sucursales/{id}/edit', 'BranchController@edit');
   Route::get('/sucursales/{id}/show', 'BranchController@show');
+  Route::get('/sucursales/{id}/mostrar', 'BranchController@mostrar');
   Route::put('/sucursales/{id}/update', 'BranchController@update')->name('sucursales.update');
   Route::delete('/sucursales/{id}','BranchController@destroy');
   Route::get('/sucursales/corte', 'BranchController@boxcut');
