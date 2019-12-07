@@ -59,6 +59,7 @@ Panel Principal
                         <i class="icon md-eye" aria-hidden="true"></i>
                       </button>
                   </div>
+                   @if(Auth::user()->type_user == 1 )
                   <div class="col-md-6 col-md-offset-2">
                   <div class= "mt-25"></div>
                       <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
@@ -68,6 +69,7 @@ Panel Principal
                         <i class="icon md-edit" aria-hidden="true" align="right"></i>
                       </button>
                   </div>
+                  @endif
               </div>
             </div>
           </div>
