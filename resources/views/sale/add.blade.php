@@ -143,7 +143,7 @@ ALTA VENTA
                 <input type="hidden" class="form-control" name="card_income" id="cardPayment"/>
 
                 <div class="form-group col-md-1">
-                  <a  id="submit" type="button" class="btn btn-primary">Terminar compra</a>
+                  <button  id="submit" type="button" class="btn btn-primary">Terminar compra</button>
                 </div>
                 <!-- END Botón-->
               </div>
