@@ -104,7 +104,8 @@ Panel Principal
         </div>
         <div>
 
-      <div class="col-4">
+        <div class="row">
+      <div class="col-sm-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -123,7 +124,8 @@ Panel Principal
         <!-- End Widget Linearea One -->
       </div>
 
-      <div class="col-4">
+      
+      <div class="col-sm-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -142,7 +144,9 @@ Panel Principal
         <!-- End Widget Linearea One -->
       </div>
       </div>
+      
        </div>
+      </div>
       </div>
       </div>
 
@@ -155,8 +159,10 @@ Panel Principal
         </div>
         <div>
 
+
+        <div class="row">
       @foreach($branches as $branch)
-      <div class="col-4">
+      <div class="col-sm-3">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -176,6 +182,7 @@ Panel Principal
         <!-- End Widget Linearea One -->
       </div>
       @endforeach
+      </div>
       </div>
        </div>
       </div>
