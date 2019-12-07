@@ -138,6 +138,8 @@ TRASFERENCIAS
                       <button class="btn btn-primary accept" alt="{{ $transfer->id }}">Aceptar</button>
                       <button class="btn btn-warning reject" alt="{{ $transfer->id }}">Rechazar</button>
                       @endif
+                    @else
+
                     @endif
                     <!-- END Botón-->
                   </td>
@@ -161,35 +163,22 @@ TRASFERENCIAS
     <!-- End Panel Basic -->
   </div>
   <form method="post" action="/traspasos/respuesta" id="form" class="d-none">
-   {{ csrf_field() }} 
-   <input type="text" name="transfer_id" id="transfer_id">
-   <input type="text" name="answer" id="answer">
+    {{ csrf_field() }} 
+    <input type="text" name="transfer_id" id="transfer_id">
+    <input type="text" name="answer" id="answer">
+  </form>
+
+  <form method="post" action="/inventory/check" id="payment-form" class="d-none">
+    {{ csrf_field() }}
+    <input type="text" name="inventory_id" id="inventory_id">
+    <input type="text" name="status" id="status">
+    <input type="text" name="discar_cause" id="discar_cause">
   </form>
 @endsection
 
 @section('traspaso')
 <script>
 $(document).ready(function(){
-
-  $(".paid").click(function() {
-      let id = $(this).attr("alt");
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha pagado este traspaso?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value) 
-        {
-          $('#inventory_id').val(id);
-          $('#status').val(1);
-          $('#form').submit();
-        }
-      })
-  });
 
   $('.accept').click(function() {
     var id = $(this).attr('alt');

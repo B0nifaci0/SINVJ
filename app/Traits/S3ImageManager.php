@@ -16,7 +16,7 @@ trait S3ImageManager {
 
 		$image = base64_decode($base_64);
 
-		$path = $path . '/' . $name;
+		$path = (env('S3_TEST') ? '_test/' : '') . $path . '/' . $name;
 		Storage::disk('s3')->put($path, $image);
 		return  $path;
     }
