@@ -88,9 +88,9 @@
             <td>{{ $product->branch->name }}</td>
             <td>$ {{$product->price_purchase}}</td>
             @foreach ($lines as $line)
-          <td>{{$precio = $line->purchase_price;}}</td>
+          <td>{{$precio = $line->purchase_price}}</td>
             @endforeach
-            <td>$ {{$product->price }}</td>
+            <td>$ {{$product->price }}</td>  
             <td>$ {{$product->branch->type_product }}</td> <!--profit-->
           </tr>
           @endforeach
@@ -107,8 +107,8 @@
         </thead>
         <tbody>
           <tr>
-            <td align="center">{{$total}} gr</td>
-            <td align="center">$ {{$compra}}</td>
+            <td align="center">{{$compra}} gr</td>
+            <td align="center">$ {{$venta}}</td>
             <td align="center">$ {{$cash}}</td>
           </tr>
         </tbody>

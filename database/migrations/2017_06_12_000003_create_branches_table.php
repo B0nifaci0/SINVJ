@@ -20,7 +20,7 @@ class CreateBranchesTable extends Migration
             $table->string('email', 255);
             $table->string('other', 250);
             $table->string('rfc', 250);
-            $table->int('phone_number', 10);
+            $table->integer('phone_number');
             $table->string('address', 255);
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
