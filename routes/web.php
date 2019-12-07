@@ -35,7 +35,6 @@ Route::group(['middleware' => ['auth']], function () {
 //Route::resource('tiendas', 'ShopController');
 
   
-});
 
 
 
@@ -151,6 +150,8 @@ Route::post('check-password', 'StateController@checkPassword');
 Route::get('/comisiones', 'SalesComissionsController@index');
 Route::get('comisionsucursal', 'SalesComissionsController@ComissionBranchPDF');
 Route::get('comisionusuario', 'SalesComissionsController@ComissionUserPDF');
+
+});
 
 /*
 Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware', 'ProductBranchMiddleware','ShopMiddleware','StatusMiddleware']], function () {
