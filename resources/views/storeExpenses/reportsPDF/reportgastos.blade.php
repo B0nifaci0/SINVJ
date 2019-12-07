@@ -31,8 +31,10 @@ Panel Principal
                   <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab"
                         href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">Gasto Sucursal</a></li>
+                        @if (Auth::user()->type_user =='1') 
                     <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab"
                         href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">Gasto Tienda</a></li>
+                        @endif
                   </ul>
                   <div class="tab-content pt-20">
                     <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
@@ -52,7 +54,7 @@ Panel Principal
                         <div class="panel panel-bordered">
                           <div class="panel-body">
                             <div class="row">
-                              
+                            @if (Auth::user()->type_user =='1') 
                                 <div class="col-sm-6 ">
                                   <label>Seleccione Sucursal</label>
                                   <select id="sucursales_1" name="branch_id" alt="1"
@@ -65,7 +67,8 @@ Panel Principal
                                     <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                     @endforeach
                                   </select>
-                                </div>                             
+                                </div> 
+                                @endif                           
                                 <div class="col-sm-3">
                                   <div class="input-group-3">
                                     <div class="row container"><label>De la Fecha:</label></div>
