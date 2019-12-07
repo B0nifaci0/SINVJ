@@ -39,7 +39,14 @@ class TrasferUserController extends Controller
         }*/
         
         //return $transs;
-        $branches=Branch::all();
+        if($user->shop->shop_group_id) {
+          $branches = Branch::where('shop_group_id', $user->shop->shop_group_id)
+          ->where('id', '!=', $user->branch->id)
+          ->get(); 
+        } else {
+          $branches = [];
+        }
+
         return view('transfer/TrasferUser/index', compact('branches','trans','user'));
         
        }
