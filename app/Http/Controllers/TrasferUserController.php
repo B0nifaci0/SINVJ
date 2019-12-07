@@ -38,14 +38,8 @@ class TrasferUserController extends Controller
         }else{
         }*/
         
-        //return $transs;
-        if($user->shop->shop_group_id) {
-          $branches = Branch::where('shop_group_id', $user->shop->shop_group_id)
-          ->where('id', '!=', $user->branch->id)
-          ->get(); 
-        } else {
-          $branches = [];
-        }
+        //return $transs; 
+
 
         return view('transfer/TrasferUser/index', compact('branches','trans','user'));
         
@@ -55,7 +49,15 @@ class TrasferUserController extends Controller
        {
         $user = Auth::user();
         $shop_id = $user->shop->id;
-        $branches = Branch::where('shop_id', '!=', $user->shop->id)->get();
+        
+        if($user->shop->shop_group_id) {
+          $branches = Branch::where('shop_group_id', $user->shop->shop_group_id)
+          ->where('id', '!=', $user->branch->id)
+          ->get(); 
+        } else {
+          $branches = collect([]);
+        }
+
         $branch_ids = $branches->map(function($b) { return $b->id; });
         if($user->type_user == User::CO) {
           $products = Product::where('branch_id', $user->branch_id)->get();
