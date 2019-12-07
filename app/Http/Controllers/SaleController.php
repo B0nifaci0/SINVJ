@@ -39,12 +39,12 @@ class SaleController extends Controller
       $products = Product::with('line')
         ->with('branch')
         ->with('category')
-        ->with('status')
+        ->with('status') 
         ->get();
     return view('sale/index', compact('sales','products','user','p'));
     }
 
-    public function indexCO()
+    public function indexCO() 
     {
       $user = Auth::user(); 
       $sales = Sale::all();
@@ -110,20 +110,22 @@ class SaleController extends Controller
     public function store(Request $request)
     {
       //  return $request;
+      $user = Auth::user();
       $sale = Sale::create([
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,
         'price' => $request->price,
         'customer_name' => $request->customer_name,
         'total' => $request->total_pay,
-        'branch_id' => 0,
+        'user_id' => $user->id,
+        'branch_id' => $user->branch_id,
         'client_id' => $request->client_id,
         'paid_out' => 0
       ]);
       $products = json_decode($request->products_list);
     	foreach ($products as $p) {
         $product = Product::find($p->id);
-       // $product->price_purchase = $request->;
+        
         SaleDetails::create([
     			'sale_id' => $sale->id,
     			'product_id' => $p->id,
@@ -238,21 +240,28 @@ public function exportPdfall(){
 //   return $pdf->stream('venta.pdf');
 // }
 
-public function exportPdf($id) {
+public function exportPdf( Request $request, $id) {
+  //return $request;
 	//   $user = Auth::user();  
 	//   $sales = Sale::all();
 	//   $sales = Sale::where("id","=",$id)->get(); 
 	//   $shops = Auth::user()->shop()->get();
 	//   $branches = Branch::where('shop_id', $user->shop->id)->get();
-	//return [$sales,$branches,$user,$shops];
+  //return [$sales,$branches,$user,$shops];
+  $user = Auth::user();
+  $shop_id = Auth::user()->shop->id;
+  $branch = Branch::find($id);
+  $shop = Auth::user()->shop()->get();
 
+  //return $shops;
 	$sale = Sale::with(['partials', 'client'])->findOrFail($id);
 	$sale->itemsSold = $sale->itemsSold();
 	$sale->total = $sale->itemsSold->sum('final_price');
-	// return $sale;
-	$pdf  = PDF::loadView('sale.PDFVenta', compact('sale')); 
+	return response()->json(['shop'=>$shop,'sucursal'=>$branch,'sale'=>$sale]);
+	$pdf  = PDF::loadView('sale.PDFVenta', compact('shop','sale','branch','shop_id')); 
   return $pdf->stream('venta.pdf');
-}
+ // return $branches;
+} 
 /**Reportes De Ventas */
 public function reporstSale(){
       $user = Auth::user();
