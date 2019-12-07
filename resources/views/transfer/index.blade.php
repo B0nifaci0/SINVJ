@@ -69,9 +69,7 @@ TRASFERENCIAS
           <table id='example'  class="table table-hover dataTable table-striped w-full">
             <thead>
               <tr>
-                <th>id</th>
-                <th>Clave Del Producto</th>
-                <th>Producto</th>
+                <th>Clave</th>
                 <th>Peso</th>
                 <th>Categoría</th>
                 <th>Linea</th>
@@ -80,17 +78,14 @@ TRASFERENCIAS
                 <th>Destino</th>
                 <th>Quien recibio</th>
                 <th>Fecha</th>
-                <th>Status</th>
-                <th>Status</th>
                 <th>Opciones</th>
+                <th>Status</th>
                 <th>Reporte</th>
               </tr>
             </thead>
             <tfoot>
               <tr>
-                <th>id</th>
-                <th>Clave Del Producto</th>
-                <th>Producto</th>
+                <th>Clave</th>
                 <th>Peso</th>
                 <th>Categoría</th>
                 <th>Linea</th>
@@ -99,18 +94,15 @@ TRASFERENCIAS
                 <th>Destino</th>
                 <th>Quien recibio</th>
                 <th>Fecha</th>
-                <th>Status</th>
-                <th>Estado</th>
                 <th>Opciones</th>
+                <th>Estado</th>
                 <th>Reporte</th>
               </tr> 
             </tfoot>  
             <tbody>
               @foreach  ($trans as $transfer)
                 <tr id = "row{{$transfer->id}}">
-                  <td>{{ $transfer->id }}</td> 
                   <td>{{ $transfer->product->clave }}</td> 
-                  <td>{{ $transfer->product->name }}</td>
                   <td>{{ $transfer->product->weigth }}</td>
                   <td>{{ $transfer->product->category->name }}</td>
                   <td>{{ $transfer->product->line ? $transfer->product->line->name : '' }}</td>
@@ -121,12 +113,12 @@ TRASFERENCIAS
                   <td>{{ $transfer->created_at->format('m-d-Y')}}</td>
                   <td>
                     @if($transfer->status_product === 1)
-                      Aceptado
+                    <td><span class="text-center badge badge-success">Aceptado</span></td>
                     @elseif($transfer->status_product === 0)
-                      Rechazado
+                    <td><span class="text-center badge badge-warning">Rechazado</span></td>
                     @else
-                      Pendiente
-                    @endif
+                    <td><span class="text-center badge badge-primary">Pendiente</span></td>
+                    @endif                    
                   </td>
                   <td>
                     @if($transfer->status_product === 1)

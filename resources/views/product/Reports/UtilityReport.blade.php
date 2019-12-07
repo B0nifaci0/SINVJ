@@ -76,8 +76,8 @@
             <th>Descripción</th>
             <th>Sucursal</th>
             <th>Precio Compra</th>
-            <th>Precio Venta</th>
             <th>Utilidad</th>
+            <th>Precio Venta</th>
           </tr>
         </thead>
         <tbody>
@@ -86,12 +86,18 @@
             <td>{{ $product->clave }}</td>
             <td>{{ $product->description }}</td>
             <td>{{ $product->branch->name }}</td>
+            @foreach ($detalle as $det)
+            @if($det->product_id == $product->id)
+            <td>$ {{$det->final_price}}</td> 
+            <td>${{$det->profit}}</td>  
+            @endif 
+            @endforeach   
             <td>$ {{$product->price_purchase}}</td>
             @foreach ($lines as $line)
           <td>{{$precio = $line->purchase_price}}</td>
             @endforeach
-            <td>$ {{$product->price }}</td>  
-            <td>$ {{$product->branch->type_product }}</td> <!--profit-->
+            <
+<!--profit-->
           </tr>
           @endforeach
         </tbody>

@@ -78,8 +78,8 @@ TRASFERENCIAS
                 <th>Destino</th>
                 <th>Quien recibio</th>
                 <th>Fecha</th>
-                <th>Status</th>
                 <th>Opciones</th>
+                <th>Status</th>
                 <th>Reporte</th>
               </tr>
             </thead>
@@ -94,8 +94,8 @@ TRASFERENCIAS
                 <th>Destino</th>
                 <th>Quien recibio</th>
                 <th>Fecha</th>
-                <th>Status</th>
                 <th>Opciones</th>
+                <th>Status</th>
                 <th>Reporte</th>
               </tr> 
             </tfoot>  

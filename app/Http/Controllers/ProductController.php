@@ -1094,7 +1094,7 @@ $cash = 0;
      * hacer uso de la informacion de cada consulta
      */
     
-  $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop','shops','products','branches','sales','hour','dates','total','cash','compra','utilidad','lines','venta'));
+  $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop','shops','products','branches','sales','hour','dates','total','cash','compra','utilidad','lines','venta','detalle'));
   return $pdf->stream('ReporteUtilidad.pdf');
 
   } 
