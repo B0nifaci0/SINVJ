@@ -50,9 +50,10 @@ class TrasferUserController extends Controller
         $shop_id = $user->shop->id;
         
         if($user->shop->shop_group_id) {
-          $branches = Branch::where('shop_group_id', $user->shop->shop_group_id)
-          ->where('id', '!=', $user->branch->id)
-          ->get(); 
+          $branches = Branch::where('id', '!=', $user->branch->id)
+          ->where('shop_group_id', $user->shop->shop_group_id)
+          ->orWhere('shop_id', $user->shop->id)
+          ->get();
         } else {
           $branches = collect([]);
         }
