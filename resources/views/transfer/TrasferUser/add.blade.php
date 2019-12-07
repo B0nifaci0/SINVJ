@@ -22,7 +22,7 @@ ALTA PRODUCTO
             </ul>
           </div>
         @endif
-        <h2 align="center">Nuevo Traspaso Sucursales</h2>
+        <h2 align="center">Nuevo Traspaso Sucursales ({{$shop_id}})</h2>
         <br>  
         <form class="" action="/traspasosAA" method="POST">
           {{ csrf_field() }} 
