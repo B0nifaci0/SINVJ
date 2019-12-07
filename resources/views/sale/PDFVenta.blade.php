@@ -146,19 +146,20 @@ img {
         <div border="">
         <img 
             align = "left"
-            width="100px"
-            height="100px"
+            width="90px"
+            height="90px"
             src="https://images.vexels.com/media/users/3/151690/isolated/preview/be2ec10fa7ff133565ba9a4bc65aae6c-icono-de-trazo-de-piedra-preciosa-de-diamante-by-vexels.png"
             alt="Logotipo"
-            >
-
-            <p class="centrado">¡GRACIAS POR SU COMPRA!
-                <br>joyeriafina.com
-            </p>
-            <br>
-            <br>
-            <p>Toluca de Lerdo #1006</p>
-
+            ></p>
+            <p>
+            {{$branch->name}}<br>
+            {{$branch->name_legal_re}}<br>
+            {{$branch->rfc}}<br>
+            {{$branch->email}}</p><br>
+            <p>{{$branch->address}}
+            tel:{{$branch->phone_number}}</p>
+            
+            
             <table class="table-sm table-bordered">
                     <thead>
                         <tr>
@@ -184,9 +185,8 @@ img {
                     </tbody>
             </table>
             <br>
-            <br>
             @if(count($sale->partials) > 0)
-                <p>Abonos a la cuenta</p>
+                <p class="centrado">Abonos a la cuenta</p>
 
                 <table class="table-sm table-bordered">
                         <thead>
@@ -216,5 +216,10 @@ img {
                 </table>
             @endif
         </div>
+        <br>
+        <br>
+        <p class="centrado">¡GRACIAS POR SU COMPRA!</p>
+        <br>
+        <p class="centrado">¡ESTE NO ES UN COMPROBANTE FISCAL!</p>
     </body>
 </html>

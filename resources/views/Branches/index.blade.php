@@ -67,7 +67,11 @@ LISTA DE  SUCURSALES
                 <tr>
                  <!-- <th>Id</th> -->
                   <th>Nombre</th>
-                 <!-- <th>Tienda</th> -->
+                  <th>Representate Legal</th>
+                  <th>RFC</th>
+                  <th>Correo</th>
+                  <th>Telefono</th>
+                  <th>Direccion</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
@@ -75,7 +79,11 @@ LISTA DE  SUCURSALES
               <tr>
                   <!-- <th>Id</th> -->
                   <th>Nombre</th>
-                  <!-- <th>Tienda</th> -->
+                  <th>Representate Legal</th>
+                  <th>RFC</th>
+                  <th>Correo</th>
+                  <th>Telefono</th>
+                  <th >Direccion</th>
                   <th>Opciones</th>
                 </tr>
               </tfoot>
@@ -84,6 +92,11 @@ LISTA DE  SUCURSALES
                   <tr id = "row{{$branch->id}}">
                     <!-- <td>{{$branch->id}}</td>  -->
                     <td>{{$branch->name }}</td>
+                    <td>{{$branch->name_legal_re}}</td>
+                    <td>{{$branch->rfc}}</td>
+                    <td>{{$branch->email}}</td>
+                    <td>{{$branch->phone_number}}</td>
+                    <td>{{$branch->address}}</td>
                       <!-- <td>{{$branch->shop->name }}</td> -->
                     <td>
                     @if(Auth::user()->type_user == 1 )
