@@ -141,7 +141,7 @@ $('#product').change(function() {
   console.log(branches);
   let brancehesList = branches.filter(b => b.id != p.branchId);
 
-  $('#branches' + selector).empty();
+  $('#branches').empty();
   brancehesList.forEach(element => { 
     $('#branches').append(new Option(element.name, element.id, true, true));
   });
