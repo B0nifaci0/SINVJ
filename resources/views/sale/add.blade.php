@@ -285,6 +285,10 @@ $(function(){
         NORMAL: 1,
         WHOLESALERS: 2
     }
+    
+    setInterval(() => {
+      console.log("------------------>overDiscount", overDiscount.length, overDiscountAuth);
+    }, 3000);
 
     $('#user-type').change(function() {
         let type = $(this).val();
@@ -308,7 +312,7 @@ $(function(){
 		overDiscount = [];
 		console.log("selectedProducts", selectedProducts);
 
-		if(overDiscountAuth === null) {
+		if(!overDiscountAuth) {
 			selectedProducts.forEach(element => {
 				var product = products.filter(p => p.id == element.id);
 				var selectedPrice = Number($(`#finalPrice${element.id}`).val());
@@ -317,15 +321,14 @@ $(function(){
 
 				if(selectedPrice < product.discount) {
 				overDiscount.push(product)
-				overDiscountAuth = true;
+  				overDiscountAuth = false;
 				}
 			
 				var priceLinit = Number(products.filter(p => p.id == element.id)[0])
 			});
 		}
 
-	console.log("------------------>overDiscount", overDiscount.length, overDiscountAuth);
-	if(overDiscount.length > 0 && overDiscountAuth) {
+	if(overDiscount.length > 0 && !overDiscountAuth) {
 		var message = `${overDiscount.length} producto${(overDiscount.length == 1) ? '' : 's'} tiene un descuento superior al permitido.
 		Ingrese la contraseña de seguridad para continuar`;
 		Swal.fire({
@@ -364,7 +367,7 @@ $(function(){
     			Swal.fire({
     			  title: `La contraseña es correcta`
     			})
-    		  overDiscountAuth = false;
+    		  overDiscountAuth = true;
 			  console.log("overDiscountAuth", overDiscountAuth);
     		}
 		})
