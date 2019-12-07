@@ -11,6 +11,7 @@ use App\User;
 use App\State;
 use App\Category;
 use App\Line;
+use Carbon\Carbon;
 use PDF;
 use DB;
 use Auth;
@@ -143,6 +144,13 @@ class TranferProductsController extends Controller
     } else {
       return redirect('/traspasos');
     }
+  }
+
+  public function payTransfer(Request $request) {
+    $transfer = TransferProduct::find($request->transfer_id);
+    $transfer->paid_at = Carbon::now()->format('Y-m-d');
+    $transfer->save();
+    return back();
   }
 
   

@@ -70,6 +70,7 @@ Route::get('productosCO', 'ProductController@indexCo');
 Route::get('sucursalproductoCO', 'ProductController@indexCOP');
 
 Route::post('traspasos/respuesta', 'TranferProductsController@answerTransferRequest');
+Route::post('traspasos/pagar', 'TranferProductsController@payTransfer');
 
 //Excel
 //Route::resource('excel','ExcelController');

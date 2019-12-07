@@ -18,7 +18,8 @@ class TransferProduct extends Model
           'new_branch_id',
           'product_id',
           'destination_user_id',
-          'status_product'
+          'status_product',
+          'paid_at'
         ];
 
         public function product()
