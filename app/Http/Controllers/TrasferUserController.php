@@ -63,7 +63,7 @@ class TrasferUserController extends Controller
           $branches = Branch::where('shop_id', $user->shop->id)
           ->get();
         }
-
+        
           $branch_ids = $branches->map(function($b) { return $b->id; });
 
 
@@ -96,7 +96,7 @@ class TrasferUserController extends Controller
         $users = User::where('id', '!=', $user->id)
           ->whereIn('branch_id', $branch_ids)
           ->get();
-        return view('transfer/TrasferUser/add', compact('branches','users','products'));
+        return view('transfer/TrasferUser/add', compact('branches','users','products', 'shop_id'));
        }
 
   public function store(Request $request)
