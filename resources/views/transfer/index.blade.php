@@ -69,9 +69,7 @@ TRASFERENCIAS
           <table id='example'  class="table table-hover dataTable table-striped w-full">
             <thead>
               <tr>
-                <th>id</th>
-                <th>Clave Del Producto</th>
-                <th>Producto</th>
+                <th>Clave</th>
                 <th>Peso</th>
                 <th>Categoría</th>
                 <th>Linea</th>
@@ -80,17 +78,14 @@ TRASFERENCIAS
                 <th>Destino</th>
                 <th>Quien recibio</th>
                 <th>Fecha</th>
-                <th>Status</th>
-                <th>Status</th>
                 <th>Opciones</th>
+                <th>Status</th>
                 <th>Reporte</th>
               </tr>
             </thead>
             <tfoot>
               <tr>
-                <th>id</th>
-                <th>Clave Del Producto</th>
-                <th>Producto</th>
+                <th>Clave</th>
                 <th>Peso</th>
                 <th>Categoría</th>
                 <th>Linea</th>
@@ -99,18 +94,15 @@ TRASFERENCIAS
                 <th>Destino</th>
                 <th>Quien recibio</th>
                 <th>Fecha</th>
-                <th>Status</th>
-                <th>Estado</th>
                 <th>Opciones</th>
+                <th>Estado</th>
                 <th>Reporte</th>
               </tr> 
             </tfoot>  
             <tbody>
               @foreach  ($trans as $transfer)
                 <tr id = "row{{$transfer->id}}">
-                  <td>{{ $transfer->id }}</td> 
                   <td>{{ $transfer->product->clave }}</td> 
-                  <td>{{ $transfer->product->name }}</td>
                   <td>{{ $transfer->product->weigth }}</td>
                   <td>{{ $transfer->product->category->name }}</td>
                   <td>{{ $transfer->product->line ? $transfer->product->line->name : '' }}</td>
@@ -121,12 +113,12 @@ TRASFERENCIAS
                   <td>{{ $transfer->created_at->format('m-d-Y')}}</td>
                   <td>
                     @if($transfer->status_product === 1)
-                      Aceptado
+                    <td><span class="text-center badge badge-success">Aceptado</span></td>
                     @elseif($transfer->status_product === 0)
-                      Rechazado
+                    <td><span class="text-center badge badge-warning">Rechazado</span></td>
                     @else
-                      Pendiente
-                    @endif
+                    <td><span class="text-center badge badge-primary">Pendiente</span></td>
+                    @endif                    
                   </td>
                   <td>
                     @if($transfer->status_product === 1)
@@ -146,6 +138,8 @@ TRASFERENCIAS
                       <button class="btn btn-primary accept" alt="{{ $transfer->id }}">Aceptar</button>
                       <button class="btn btn-warning reject" alt="{{ $transfer->id }}">Rechazar</button>
                       @endif
+                    @else
+
                     @endif
                     <!-- END Botón-->
                   </td>
@@ -169,35 +163,22 @@ TRASFERENCIAS
     <!-- End Panel Basic -->
   </div>
   <form method="post" action="/traspasos/respuesta" id="form" class="d-none">
-   {{ csrf_field() }} 
-   <input type="text" name="transfer_id" id="transfer_id">
-   <input type="text" name="answer" id="answer">
+    {{ csrf_field() }} 
+    <input type="text" name="transfer_id" id="transfer_id">
+    <input type="text" name="answer" id="answer">
+  </form>
+
+  <form method="post" action="/inventory/check" id="payment-form" class="d-none">
+    {{ csrf_field() }}
+    <input type="text" name="inventory_id" id="inventory_id">
+    <input type="text" name="status" id="status">
+    <input type="text" name="discar_cause" id="discar_cause">
   </form>
 @endsection
 
 @section('traspaso')
 <script>
 $(document).ready(function(){
-
-  $(".paid").click(function() {
-      let id = $(this).attr("alt");
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha pagado este traspaso?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value) 
-        {
-          $('#inventory_id').val(id);
-          $('#status').val(1);
-          $('#form').submit();
-        }
-      })
-  });
 
   $('.accept').click(function() {
     var id = $(this).attr('alt');

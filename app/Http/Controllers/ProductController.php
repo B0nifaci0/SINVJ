@@ -220,7 +220,7 @@ class ProductController extends Controller
 			$image = file_get_contents($request->file('image')->path());
 			$base64Image = base64_encode($image);
 			$path = 'products';
-			$product->image = $this->saveImages($base64Image, $path, $product->clave);
+      $product->image = $this->saveImages($base64Image, $path, $product->clave);;
 		}
       $product->save();
       return redirect('/productos')->with('mesage', 'El Producto  se ha agregado exitosamente!');
@@ -1094,7 +1094,7 @@ $cash = 0;
      * hacer uso de la informacion de cada consulta
      */
     
-  $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop','shops','products','branches','sales','hour','dates','total','cash','compra','utilidad','lines','venta'));
+  $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop','shops','products','branches','sales','hour','dates','total','cash','compra','utilidad','lines','venta','detalle'));
   return $pdf->stream('ReporteUtilidad.pdf');
 
   } 

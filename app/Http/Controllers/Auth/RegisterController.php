@@ -80,7 +80,7 @@ class RegisterController extends Controller
         $shop= Shop::create([
             'name' => $data['name_shop'],
             'municipality_id' => $data['municipality_id'],
-            'state_id' => $data['state_id'],
+            'state_id' => $data['state_id']
         ]);
         /*$branch = Branch::create([
             'name' => $data['name_branch'],
