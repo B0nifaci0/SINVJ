@@ -25,7 +25,7 @@
                 <li class="site-menu-item active">
                   <a class="animsition-link" href="/principal">
                     <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
-                    <span class="site-menu-title">InicioJEJ</span>
+                    <span class="site-menu-title">InicioJgh</span>
                   </a>
                 </li>
                 <li class="site-menu-item has-sub">

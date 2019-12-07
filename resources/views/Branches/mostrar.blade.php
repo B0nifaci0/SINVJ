@@ -104,9 +104,9 @@ Panel Sucursales
         </div>
         <div>
 
-
+        <div class="row">
       @foreach($total as $t)
-      <div class="col-4">
+      <div class="col-sm-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-danger">
           <div class="card-block p-20 pt-10">
@@ -129,6 +129,7 @@ Panel Sucursales
       </div>
       </div>
       </div>
+      </div>
       
       <div class="col-12">
       <div class="panel-dark">
@@ -137,9 +138,10 @@ Panel Sucursales
         </div>
         <div>
 
+        <div class="row">
       @foreach($category as $c)
       
-      <div class="col-4">
+      <div class="col-sm-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10 card-body text-dark">
@@ -159,7 +161,7 @@ Panel Sucursales
         <!-- End Widget Linearea One -->
       </div>
       @endforeach
-
+      </div>
       </div>
        </div>
       </div>

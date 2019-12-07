@@ -141,8 +141,9 @@ ALTA VENTA
                 <input type="hidden" class="form-control" name="products_list" id="productsList"/>
                 <input type="hidden" class="form-control" name="cash_income" id="cashPayment"/>
                 <input type="hidden" class="form-control" name="card_income" id="cardPayment"/>
-                <div class="form-group col-md-4" >
-                  <a  id="submit" type="button" class="btn btn-primary text-white">Terminar compra</a>
+
+                <div class="form-group col-md-1">
+                  <a  id="submit" type="button" class="btn btn-primary text-with">Terminar compra</a>
                 </div>
                 <!-- END Botón-->
               </div>

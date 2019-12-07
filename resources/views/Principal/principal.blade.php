@@ -104,7 +104,8 @@ Panel Principal
         </div>
         <div>
 
-      <div class="col-4">
+        <div class="row">
+      <div class="col-sm-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -123,7 +124,8 @@ Panel Principal
         <!-- End Widget Linearea One -->
       </div>
 
-      <div class="col-4">
+      
+      <div class="col-sm-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -131,7 +133,7 @@ Panel Principal
               <div class="grey-800 float-left py-10">
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total De Dinero En Precio Venta
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas as $v) $ {{$v->total_s}} @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@foreach($ventas as $v) $ {{$v->total_p}} @endforeach</span>
             </div>
             <div class="mb-20 grey-500">
               <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
@@ -142,7 +144,9 @@ Panel Principal
         <!-- End Widget Linearea One -->
       </div>
       </div>
+      
        </div>
+      </div>
       </div>
       </div>
 
@@ -155,8 +159,10 @@ Panel Principal
         </div>
         <div>
 
+
+        <div class="row">
       @foreach($branches as $branch)
-      <div class="col-4">
+      <div class="col-sm-3">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -176,6 +182,7 @@ Panel Principal
         <!-- End Widget Linearea One -->
       </div>
       @endforeach
+      </div>
       </div>
        </div>
       </div>

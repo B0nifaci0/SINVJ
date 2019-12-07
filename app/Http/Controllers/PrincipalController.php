@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Shop;
 use App\User;
 use App\Sale;
-
+use App\Status;
 use App\Branch;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +42,7 @@ class PrincipalController extends Controller
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
       ->withTrashed()
+      ->where('products.status_id',2)
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
      // ->where('products.branch_id',$branch->id)
@@ -50,7 +51,17 @@ class PrincipalController extends Controller
       //return $gramos->total_w;
 
        //SUMA TOTAL DE VENTAS
-       $ventas = Sale::select(DB::raw('SUM(sales.total) as total_s'))
+       $ventas = Shop::join('products','products.shop_id','shops.id')
+       ->join('categories','categories.id','products.category_id')
+       ->join('statuss','statuss.id','products.status_id')
+       ->join('branches','branches.id','products.branch_id')
+       ->join('lines','lines.id','products.line_id')
+       ->withTrashed()
+       ->where('products.status_id',2)
+       ->where('lines.shop_id', Auth::user()->shop->id)  
+       ->where('categories.type_product',2) 
+      // ->where('products.branch_id',$branch->id)
+       ->select(DB::raw('SUM(products.price) as total_p'))
        ->get();
        //return $ventas;
         
