@@ -159,7 +159,21 @@ img {
             <p>{{$branch->address}}
             tel:{{$branch->phone_number}}</p>
             
-            
+             
+    
+
+            <p class="centrado">¡GRACIAS POR SU COMPRA!
+                <br>joyeriafina.com
+            </p>
+            <br>
+            <br>
+            <p>Toluca de Lerdo #1006</p>
+            @if($sale->client)
+                <p>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>
+            @else
+                <p>{{ $sale->customer_name }}</p>
+            @endif
+
             <table class="table-sm table-bordered">
                     <thead>
                         <tr>
@@ -214,8 +228,8 @@ img {
                             </tr>
                         </tbody>
                 </table>
-            @endif
-        </div>
+            @endif 
+        </div> 
         <br>
         <br>
         <p class="centrado">¡GRACIAS POR SU COMPRA!</p>

@@ -26,6 +26,7 @@ class CreateTransferProductsTable extends Migration
             $table->integer('destination_user_id')->unsigned();
             $table->foreign('destination_user_id')->references('id')->on('users');
             $table->boolean('status_product')->nullable();
+            $table->date('paid_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

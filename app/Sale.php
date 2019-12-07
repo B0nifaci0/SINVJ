@@ -21,6 +21,7 @@ class Sale extends Model
         'telephone',
         'total',
         'client_id',
+        'user_id',
         'paid_out'
     ];
 

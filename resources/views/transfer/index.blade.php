@@ -179,7 +179,26 @@ TRASFERENCIAS
 <script>
 $(document).ready(function(){
 
-  console.log("entra");
+  $(".paid").click(function() {
+      let id = $(this).attr("alt");
+      Swal.fire({
+        title: 'Confirmación',
+        text: "¿Se ha pagado este traspaso?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#4caf50' ,
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.value) 
+        {
+          $('#inventory_id').val(id);
+          $('#status').val(1);
+          $('#form').submit();
+        }
+      })
+  });
+
   $('.accept').click(function() {
     var id = $(this).attr('alt');
     $('#transfer_id').val(id);
