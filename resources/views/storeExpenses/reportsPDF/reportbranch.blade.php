@@ -82,6 +82,9 @@
                     </tr>
                   </tbody><br>
               @endforeach
+              <br>
+              <br>
+              <br>
               <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>

@@ -130,7 +130,7 @@ ALTA VENTA
               <br>
               <div class="row">
                 <!-- Botón para mostar el Modal de Tipos de pago-->
-                <div class="col-md-2 form-group">
+                <div class="col-md-4 form-group">
                   <button class="btn btn-success"  data-target="#exampleTabs" data-toggle="modal"type="button">$ Registro de pago</button>
                 </div>
                 <!-- END Botón-->
@@ -143,7 +143,7 @@ ALTA VENTA
                 <input type="hidden" class="form-control" name="card_income" id="cardPayment"/>
 
                 <div class="form-group col-md-1">
-                  <a  id="submit" type="button" class="btn btn-primary">Terminar compra</a>
+                  <a  id="submit" type="button" class="btn btn-primary text-with">Terminar compra</a>
                 </div>
                 <!-- END Botón-->
               </div>
