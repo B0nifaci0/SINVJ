@@ -58,13 +58,16 @@ class UserController extends Controller
         //return $shops;
         // Consulta para obtener la sucursal de acuerdo a la tienda del usuario
 
-        if($user->shop->shop_group_id) {
-          $branches = Branch::where('shop_group_id', $user->shop->shop_group_id)
-          ->where('id', '!=', $user->branch->id)
-          ->get(); 
-        } else {
-          $branches = collect([]);
-        }
+        // BORRAR
+        // if($user->shop->shop_group_id) {
+          // $branches = Branch::where('shop_group_id', $user->shop->shop_group_id)
+          // ->where('id', '!=', $user->branch->id)
+          // ->get(); 
+        // } else {
+          // $branches = collect([]);
+        // }
+
+        $branches = Branch::where('shop_id', $user->shop->id)->get();
 
         //return $branches;
         return view('User/add', compact('shops','branches','user'));
