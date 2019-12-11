@@ -24,6 +24,11 @@ Route::resource('usuario', 'Auth\RegisterController');
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('tiendas','ShopController');
 
+//Estados
+Route::resource('estados', 'StateController');
+
+// Definicion de recursos anidados
+Route::resource('estados.municipios', 'StateMunicipalityController');
 
 
 Route::group(['middleware' => ['auth']], function () {
@@ -111,12 +116,6 @@ Route::get('imagenes/{path}',function($path){
 
 //Municipios
 Route::resource('municipios', 'MunicipalityController');
-
-//Estados
-Route::resource('estados', 'StateController');
-
-// Definicion de recursos anidados
-Route::resource('estados.municipios', 'StateMunicipalityController');
 
 Route::resource('sucursales.usuarios', 'BranchUserController');
 
