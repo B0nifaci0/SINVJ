@@ -358,7 +358,7 @@
           </ul>
           <!-- End Navbar Toolbar Right -->
           <div class="navbar-brand navbar-brand-center">
-            <a href="index.html">
+            <a href="/principal">
             <img class="navbar-brand-logo navbar-brand-logo-normal" src={{{url('/images/logo.png')}}} title="Centro Joyero">
               <img class="navbar-brand-logo navbar-brand-logo-special" src="../assets/images/logo-colored.png"
                 title="Centro Joyero">
