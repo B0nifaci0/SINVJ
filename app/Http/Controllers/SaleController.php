@@ -109,7 +109,7 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-      //  return $request;
+      // return $request;
       $user = Auth::user();
       $sale = Sale::create([
         'customer_name' => $request->customer_name,

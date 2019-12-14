@@ -145,6 +145,12 @@ class BranchController extends Controller
             $branch = Branch::findOrFail($id);
             //return $request->longitude;
             $branch->name =$request->name;
+            $branch->name_legal_re =$request->name_legal_re;
+            $branch->email =$request->email;
+            $branch->other =$request->other;
+            $branch->address =$request->address;
+            $branch->rfc =$request->rfc;
+            $branch->phone_number =$request->phone_number;
             $branch->shop_id = Auth::user()->shop->id;
             $branch->save();
 
