@@ -99,14 +99,16 @@ Panel Principal
         </div>
       </div>
 
+      @if(Auth::user()->type_user == 1 )
       <div class="col-12">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Totales De Sucursales<h2>
+        <h2 class="panel-title" style="color:white">Totales De Todas Las Sucursales<h2>
         </div>
         <div>
 
-      <div class="col-4">
+        <div class="row">
+      <div class="col-sm-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -125,15 +127,16 @@ Panel Principal
         <!-- End Widget Linearea One -->
       </div>
 
-      <div class="col-4">
+      
+      <div class="col-sm-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total De Dinero En Precio Venta
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total $
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas as $v) $ {{$v->total_s}} @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@foreach($ventas as $v) $ {{$v->total_p}} @endforeach</span>
             </div>
             <div class="mb-20 grey-500">
               <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
@@ -144,21 +147,64 @@ Panel Principal
         <!-- End Widget Linearea One -->
       </div>
       </div>
+      
        </div>
       </div>
       </div>
+      </div>
+
+      @endif
+
+      @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
+      <div class="col-12">
+      <div class="panel-warning">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Totales De La Sucursal  @foreach($branches_col as $branch) {{$branch->name}} @endforeach<h2>
+        </div>
+        <div>
+
+        <div class="row">
+      <div class="col-sm-4">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Totales
+              </div>
+              <span class="float-right grey-700 font-size-30">@foreach($gramos_col as $g)  {{$g->total_w}} gr @endforeach</span>
+            </div>
+            <div class="mb-20 grey-500">
+              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+
+      
+       </div>
+      </div>
+      </div>
+      </div>
+
+      @endif
 
       <br>
 
       <div class="col-12">
       <div class="panel-success">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Sucursales</h2>
+        
+
+    @if(Auth::user()->type_user == 1 )
+    <h2 class="panel-title" style="color:white">Sucursales Disponibles</h2>
         </div>
         <div>
-
       @foreach($branches as $branch)
-      <div class="col-4">
+      <div class="row">
+      <div class="col-sm-3">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -177,7 +223,41 @@ Panel Principal
         </div>
         <!-- End Widget Linearea One -->
       </div>
+      </div>
+      </div>
       @endforeach
+    @endif
+
+    @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
+    <h2 class="panel-title" style="color:white">Sucursal A La Que Pertenece</h2>
+        </div>
+        <div>
+      @foreach($branches_col as $branch)
+      <div class="row">
+      <div class="col-sm-3">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>  {{$branch->name}}
+              </div>
+              <span class="float-right grey-700 font-size-30"></span>
+            </div>
+            <div class="mb-20 grey-500">
+              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+            <a href="/sucursales/{{$branch->id}}/mostrar" class="btn btn-primary">Detalles</a>
+          </div>
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+      </div>
+      @endforeach
+    @endif
+
+    
       </div>
        </div>
       </div>

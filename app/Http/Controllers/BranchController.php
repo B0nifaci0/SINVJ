@@ -167,16 +167,19 @@ class BranchController extends Controller
       $branches= Auth::user()->shop->branches;
 
       $branch = Branch::findOrFail($id);
-      //return $branch->id;
+      $ids = $branch->id;
+      //return $ids;
+      //return Auth::user()->shop->id;
       $total = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
       ->withTrashed()
+      ->where('products.status_id',2)
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
-      ->where('products.branch_id',$branch->id)   
+      ->where('products.branch_id',$ids)   
       ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.weigth) as total_w'))
       ->distinct('lines.name')
       ->groupBy('lines.id', 'lines.name')
@@ -192,7 +195,8 @@ class BranchController extends Controller
       ->withTrashed()
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
-      ->where('products.branch_id',$branch->id)   
+      ->where('products.branch_id',$ids) 
+      ->where('products.status_id',2)
       ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.price) as total_p'))
       ->distinct('lines.name')
       ->groupBy('lines.id', 'lines.name')
@@ -200,16 +204,21 @@ class BranchController extends Controller
       ->get();
       //return $total;
 
-      $category = Category::join('products', 'products.category_id', 'categories.id')
-      ->where('categories.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',1)  
-     ////->where('products.branch_id',$ids)    
+      $category = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->withTrashed()
+      ->where('categories.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',1)
+      ->where('products.branch_id',$ids)
+      ->where('products.status_id',2)
       ->select('categories.id', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
       ->distinct('categories.name')
       ->groupBy('categories.id','categories.name')
       ->orderBy('cat_name', 'DESC')
       ->get();
-      //return $category;
+     // return $category;
 
       return view('Branches/mostrar', ['category' => $category ,'branch' => $branch, 'total' => $total, 'total1' => $total1, 'shop' => $shop]);
     }

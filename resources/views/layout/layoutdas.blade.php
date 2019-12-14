@@ -604,14 +604,33 @@
                         </a>
                       </li>
                     </ul>
+
                     <ul class="site-menu-sub">
+                      <li class="site-menu-item has-sub">
+                      <a href="javascript:void(0)">
+                        <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                          <span class="site-menu-title">Comisiones</span>
+                          <span class="site-menu-arrow"></span>
+                        </a>
+                        <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/comisiones">
-                          <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                          <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
                             <span class="site-menu-title">Comisiones</span>
                         </a>
                       </li>
                     </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/reportcomission">
+                          <i class="site-menu-icon icon fa-file-pdf-o" aria-hidden="true"></i>
+                            <span class="site-menu-title">Reportes De Comisiones</span>
+                        </a>
+                      </li>
+                    </ul>
+                      </li>
+                    </ul>
+                  
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                         <a class="animsition-link" href="recibo">
@@ -786,7 +805,7 @@
               @if(Auth::user()->type_user == 3)
               <ul class="site-menu" data-plugin="menu">
                   <li class="site-menu-item active">
-                    <a class="animsition-link" href="/sucursal">
+                    <a class="animsition-link" href="/principal">
                       <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
                       <span class="site-menu-title">Inicio</span>
                     </a>
@@ -882,7 +901,7 @@
                     </ul>
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
-                        <a class="animsition-link" href="#">
+                        <a class="animsition-link" href="/reportes-gastos">
                         <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
                           <span class="site-menu-title">Reporte de Gastos</span>
                       </a>

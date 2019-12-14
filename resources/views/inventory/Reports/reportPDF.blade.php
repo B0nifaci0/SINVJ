@@ -2,7 +2,7 @@
 <html lang="en">
  <head> 
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Reporte de Productos</title>
+   <title>Reporte de Inventarios</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
@@ -71,11 +71,11 @@
                 </tr>
               </thead>  
               <tbody>
-                @foreach ($totals as $i => $total)
+                @foreach ($totals as $total)
                 <tr>
                  <td>{{ $total->name_line }}</td> 
                  <td>{{ $total->total_w }} gr</td>
-                 @foreach ($totals1 as $i => $total1)
+                 @foreach ($totals1 as $j => $total1)
                  <td>{{ $total1->total_f }} gr</td>
                  @endforeach 
                 </tr>
@@ -92,7 +92,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($g_faltantes as $i => $fal)
+                @foreach ($g_faltantes as $fal)
                 <tr>
                  <td>{{ $fal->name_line }}</td> 
                  <td>{{ $fal->total_w }} gr</td>
@@ -112,7 +112,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($prod_fal as $i => $prod)
+                @foreach ($prod_fal as $prod)
                 <tr>
                  <td>{{ $prod->id }}</td> 
                  <td>{{ $prod->description }}</td>
@@ -133,7 +133,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($cat_totals as $i => $totals)
+                @foreach ($cat_totals as $totals)
                     <tr>
                       <td>{{$totals->cat_name}}</td>
                       <td>{{$totals->num_pz}} pzs</td>
@@ -154,7 +154,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($p_faltantes as $i => $fal)
+                @foreach ($p_faltantes as $fal)
                     <tr>
                       <td>{{$fal->cat_id}}</td>
                       <td>{{$fal->cat_name}}</td>
@@ -175,7 +175,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($prod_faltantes as $i => $fal)
+                @foreach ($prod_faltantes as $fal)
                     <tr>
                       <td>{{$fal->id}}</td>
                       <td>{{$fal->cat_name}}</td>

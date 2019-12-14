@@ -66,7 +66,7 @@ TRASFERENCIAS
         </header>
         <div class="panel-body">
           <!-- Tabla para Listar Traspasos-->
-          <table id='example'  class="table table-hover dataTable table-striped w-full">
+          <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
               <tr>
                 <th>Clave</th>

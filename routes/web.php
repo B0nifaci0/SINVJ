@@ -149,6 +149,7 @@ Route::get('recibospdf', 'UserController@receiptallPDF');
 Route::post('check-password', 'StateController@checkPassword');
 //Comisiones
 Route::get('/comisiones', 'SalesComissionsController@index');
+Route::get('/reportcomission', 'SalesComissionsController@reportcomission');
 Route::get('comisionsucursal', 'SalesComissionsController@ComissionBranchPDF');
 Route::get('comisionusuario', 'SalesComissionsController@ComissionUserPDF');
 

@@ -91,7 +91,6 @@ LISTA DE  GASTOS
                     <img width="100px" height="100px" src="{{ $expense->image }}">
                   </td>
                   <td>{{$expense->branch ? $expense->branch->name : '' }}</td>
-                  <td>{{$expense->shop ? $expense->shop->name : '' }}</td>
                   <td>  
                      <!-- Botón para editar gasto-->  
                     <a href="/gastos/{{$expense->id}}/edit"><button type="button" 
