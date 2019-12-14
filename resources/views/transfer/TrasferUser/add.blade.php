@@ -94,7 +94,7 @@ ALTA PRODUCTO
 var products = {!! $products !!};
 var branches = {!! $branches !!};
 console.log("PPPP", products)
-
+ 
 
 $(".sucursales").change(function(){
   var selector =  $(this).attr("alt");

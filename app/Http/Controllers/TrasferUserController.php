@@ -75,6 +75,7 @@ class TrasferUserController extends Controller
           ->where('shops.id', $shop_id)
           ->where('products.status_id', 2)
           ->select(
+            'products.id',
             'products.clave',
             //'products.name',
             'products.description',
@@ -102,7 +103,6 @@ class TrasferUserController extends Controller
   public function store(Request $request)
   {
     $user = Auth::user();
-    
     $transfer_product = new TransferProduct([
       'user_id' => $user->id,
       'last_branch_id' => $request->branch_id,
