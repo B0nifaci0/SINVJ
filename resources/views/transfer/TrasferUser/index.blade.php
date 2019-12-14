@@ -131,10 +131,14 @@ TRASFERENCIAS
                       @endif
                     @else
                       @if(!$transfer->paid_at)
-                          <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagar</button>
+                        @if(Auth::user()->id == $transfer->user_id)
+                          <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
                         @else
-                          Pagado
+                          Por pagar
                         @endif
+                      @else
+                        Pagado
+                      @endif
                     @endif
                     <!-- END Botón-->
                   </td>
