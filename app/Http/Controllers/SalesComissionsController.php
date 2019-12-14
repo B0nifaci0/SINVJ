@@ -77,6 +77,8 @@ class SalesComissionsController extends Controller
           $dates = $dates->format('d-m-Y');
       $shops = Auth::user()->shop()->get();
 
+
+
       $sales = Sale::join('users','users.id','sales.user_id')
       ->select(DB::raw('SUM(sales.total * 0.01) as ventas'))
       ->where('sales.branch_id',$branch)
@@ -93,6 +95,7 @@ class SalesComissionsController extends Controller
         $branches = Branch::select('*')
         ->where('id',$branch)
         ->get();
+        //return $branches;
         $user = $request->user;
         $shop = Auth::user()->shop; 
         $hour = Carbon::now();
@@ -103,6 +106,16 @@ class SalesComissionsController extends Controller
           $dates = Carbon::now();
           $dates = $dates->format('d-m-Y');
       $shops = Auth::user()->shop()->get();
+
+        $comission = User::where('id',$user)
+        ->select(DB::raw('SUM(comision / 100) as comissions'))
+        ->sum('comision','/','100');
+        //return $comission;
+
+        //$number1 = (int)$comission;
+
+        //return $number1;
+
         $sales = Sale::join('users','users.id','sales.user_id')
         ->select('users.name as username',DB::raw('SUM(sales.total * 0.01) as ventas'))
         ->where('sales.branch_id',$branch)
@@ -110,9 +123,9 @@ class SalesComissionsController extends Controller
         ->distinct('users.name')
         ->groupBy('users.id', 'users.name')
         ->get();
-       // return $sales;
+        //return $sales;
   
-      $pdf  = PDF::loadView('User.Comission.ComisionUserPDF', compact('branches','sales','user','branch','shop','hour','dates','shops'));
+      $pdf  = PDF::loadView('User.Comission.ComisionUserPDF', compact('dates','branches','sales','user','branch','shop','hour','dates','shops'));
       return $pdf->stream('ReporteComisionUsuario.pdf');
     }
 

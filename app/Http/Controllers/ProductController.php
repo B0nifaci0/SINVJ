@@ -13,7 +13,7 @@ use App\Status;
 use App\Product;
 use App\Category;
 use Carbon\Carbon;
-use App\SaleDetails;
+use App\SaleDetails; 
 use App\TransferProduct;
 use Illuminate\Http\Request;
 use App\Traits\S3ImageManager;
@@ -61,14 +61,7 @@ class ProductController extends Controller
         $path = 'dummy';
       }
 
-      $command = $adapter->getClient()->getCommand('GetObject', [
-        'Bucket' => $adapter->getBucket(),
-        'Key' => $adapter->getPathPrefix(). $path
-      ]);
-
-      $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
-
-      $product->image = (string) $result->getUri();
+      $product->image = $this->getS3URL($path);
 		}
 
     	$shops = Auth::user()->shop()->get();
@@ -79,9 +72,91 @@ class ProductController extends Controller
     	$lines = Shop::find($line)->lines()->get();
     	//return $lines;
     	$status = Auth::user()->shop->id;
-    	$statuses = Status::all();
+      $statuses = Status::all();
+      $title = 'Productos De Tienda';      
 		  //  return $products;
-    	return view('product/index', compact('user','categories','lines','shops','statuses','products'));
+    	return view('product/index', compact('user','categories','lines','shops','statuses','products', 'title'));
+  }
+
+  public function reportProductSeparated() {
+    $user = Auth::user();
+    $shop_id = $user->shop->id;
+
+    if($user->type_user == User::CO) {
+      $products = Product::where([
+        'products.branch_id' => $user->branch_id,
+        'status_id' => 1
+        ])
+        ->where('sales.paid_out', '>=', 'total')
+        ->select(
+          'id',
+          'clave',
+          'description',
+          'weigth',
+          'observations',
+          'price',
+          'price_purchase',
+          'discount',
+          'discar_cause',
+          'image',
+          'category_id',
+          'line_id',
+          'shop_id',
+          'products.branch_id',
+          'date_creation',
+          'products.user_id',
+          'sold_at',
+          'discarded_at',
+          'status_id'
+        )
+        ->get();
+    } else {
+      $branches = Branch::where('shop_id', $user->shop->id)->get();
+      $branch_ids = $branches->map(function($item) {
+        return $item->id;
+      });
+      $products = Shop::find($shop_id)
+        ->products()
+        ->join('sale_details', 'sale_details.product_id', 'products.id')
+        ->join('sales', 'sales.id', 'sale_details.sale_id')
+        ->where('sales.paid_out', '>=', 'total')
+        ->whereIn('products.branch_id', $branch_ids)
+        ->where('status_id', 1)
+        ->select(
+          'products.id',
+          'clave',
+          'description',
+          'weigth',
+          'observations',
+          'price',
+          'price_purchase',
+          'discount',
+          'discar_cause',
+          'image',
+          'category_id',
+          'line_id',
+          'shop_id',
+          'products.branch_id',
+          'date_creation',
+          'products.user_id',
+          'sold_at',
+          'discarded_at',
+          'status_id'
+        )
+        ->get();
+      }
+      $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+
+      foreach ($products as $product) {
+        if($product->image) {
+          $path = 'products/' . $product->clave;
+        } else {
+          $path = 'dummy';
+        }
+        $product->image = $product->image = $this->getS3URL($path);
+      }
+      $title = 'Productos apartados';
+    	return view('product/index', compact('products', 'title'));
   }
 
   /** Función para listar los productos de  sucursal /productoCO */
@@ -368,8 +443,7 @@ class ProductController extends Controller
 
       return view('product.Reports.reportproduct',compact('hour','dates','shop','shops','branch','user','statuses','line','categories'));
      }
-
-
+     
      public function reportEstatus(Request $request){
 
 /**Codigo para hacer las validaciones de los campos para realizar las consultas para el reporte */

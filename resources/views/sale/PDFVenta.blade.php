@@ -180,7 +180,7 @@ img {
                             <td>{{ $item->clave }}</td>
                             <td>{{ $item->description }}</td>
                             <td>{{ $item->weigth }} g</td>
-                            <td>$ {{ $item->price }}</td>
+                            <td>$ {{ $item->final_price }}</td>
                         </tr>
                         @endforeach
                         <tr>

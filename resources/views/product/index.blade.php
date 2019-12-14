@@ -46,7 +46,7 @@ LISTA PRODUCTO
     <div class="panel">
       <div class="panel-body">
         <div class="example-wrap">
-          <h1 class="text-center panel-title">Productos De Tienda</h1>
+          <h1 class="text-center panel-title">{{ $title }}</h1>
 
           <div class="panel-actions">
 
@@ -138,11 +138,10 @@ LISTA PRODUCTO
                         @if(Auth::user()->type_user == 1)
                         <td>
                           <!-- Botón para editar producto-->
-                          <a href="/productos/{{$product->id}}/edit"><button type="button"
+                          <a type="button" href="/productos/{{$product->id}}/edit"
                               class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
                               data-original-title="Editar">
-                              <i class="icon md-edit" aria-hidden="true"></i></button>
-                          </a>
+                              <i class="icon md-edit" aria-hidden="true"></i></a>
                           <!-- END Botón-->
                           <!-- Botón para eliminar producto -->
                           <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
@@ -165,8 +164,8 @@ LISTA PRODUCTO
             <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
               <div class="page-content panel-body container-fluid">
                 <!-- Tabla para listar productos-->
-                <table id="product_table_pz" class="table table-hover dataTable table-striped w-full"
-                  data-plugin="dataTable">
+                <table id="product_table_pz" class="table table-hover dataTable table-striped w-full table-responsive"
+                    data-plugin="dataTable">
                   <thead>
                     {{ csrf_field() }}
                     <tr>
@@ -219,11 +218,10 @@ LISTA PRODUCTO
                       <td>${{$product->price_purchase}}</td>
                       <td>
                         <!-- Botón para editar producto-->
-                        <a href="/productos/{{$product->id}}/edit"><button type="button"
+                        <a type="button" href="/productos/{{$product->id}}/edit"
                             class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
                             data-original-title="Editar">
-                            <i class="icon md-edit" aria-hidden="true"></i></button>
-                        </a>
+                            <i class="icon md-edit" aria-hidden="true"></i></a>
                         <!-- END Botón-->
                         <!-- Botón para eliminar producto -->
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
@@ -252,11 +250,7 @@ LISTA PRODUCTO
   @section('barcode-product')
   <script>
     $(document).ready(function () {
-      $('#example').dataTable({
-        "language": {
-          "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-        }
-      });
+      
     });
   </script>
   @endsection

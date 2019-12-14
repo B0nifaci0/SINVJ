@@ -61,18 +61,6 @@ class ClientController extends Controller
         return redirect('/mayoristas')->with('mesage', 'El cliente se ha creado correctamente');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Display the specified resource.
      *
@@ -102,10 +90,23 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
+        $client = Client::find($id);
+        $client_branch_id = $client->branch_id;
         $user = Auth::user();
-        $client = Client::findOrFail($id);
-        $branches = Auth::user()->shop->branches;
-        return view('clients.form', compact('client','branches'));
+        if($user->shop) {
+            $branches = $user->shop->branches;
+            $selected_branch = $branches->filter(function ($value, $key) use ($client_branch_id) {
+                return $value->id == $client_branch_id;
+            })->first();
+
+            
+            $branches = $branches->reject(function ($value, $key) use ($client_branch_id) {
+                return $value->id == $client_branch_id;
+            });
+            $branches->prepend($selected_branch);
+            // return $branches;
+        }
+        return view('clients.form', compact('client', 'branches'));;
     }
 
     /**
@@ -117,12 +118,14 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $client = Client::findOrFail($id);
-            $client->name =$request->name;
-            $client->first_lastname =$request->first_lastname;
-            $client->second_lastname =$request->second_lastname;
-            $client->phone_number =$request->phone_number;
-            $client->branch_id = $request->branch_id;
+        $client = Client::find($id);
+        $client->fill($request->only(
+            'name',
+            'first_lastname',
+            'second_lastname',
+            'phone_number',
+            'branch_id'
+        ));
         $client->save();
         return redirect('/mayoristas')->with('mesage-update', 'El cliente se ha actualizado correctamente');
     }

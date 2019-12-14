@@ -267,7 +267,8 @@ Route::group(['middleware' => ['auth']],function () {
   Route::post('/grupos/invitacion', 'ShopGroupsController@groupJoin');
 
   /**Reportes Rutas y Vistas */
-  Route::get('/reportes-productos','ProductController@reportProduct');   
+  Route::get('/reportes-productos','ProductController@reportProduct');
+  Route::get('/reportes-productos-apartados','ProductController@reportProductSeparated');
   Route::get('estatusproducto', 'ProductController@reportEstatus');  
   Route::get('estatusproductoPz', 'ProductController@reportEstatusPz');
   Route::get('gramoslinea', 'ProductController@reportes-productostLineaG');

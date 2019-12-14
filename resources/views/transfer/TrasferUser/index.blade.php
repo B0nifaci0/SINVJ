@@ -66,7 +66,7 @@ TRASFERENCIAS
         </header>
         <div class="panel-body">
           <!-- Tabla para Listar Traspasos-->
-          <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+          <table id='transfer'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
               <tr>
                 <th>Clave</th>
@@ -78,8 +78,8 @@ TRASFERENCIAS
                 <th>Destino</th>
                 <th>Quien recibio</th>
                 <th>Fecha</th>
-                <th>Opciones</th>
                 <th>Status</th>
+                <th>Opciones</th>
                 <th>Reporte</th>
               </tr>
             </thead>
@@ -94,8 +94,8 @@ TRASFERENCIAS
                 <th>Destino</th>
                 <th>Quien recibio</th>
                 <th>Fecha</th>
-                <th>Opciones</th>
                 <th>Status</th>
+                <th>Opciones</th>
                 <th>Reporte</th>
               </tr> 
             </tfoot>  
@@ -113,11 +113,11 @@ TRASFERENCIAS
                   <td>{{$transfer->created_at->format('m-d-Y')}}</td>
                   <td>
                     @if($transfer->status_product === 1)
-                    <td><span class="text-center badge badge-success">Aceptado</span></td>
+                    <span class="text-center badge badge-success">Aceptado</span>
                     @elseif($transfer->status_product === 0)
-                    <td><span class="text-center badge badge-warning">Rechazado</span></td> 
+                    <span class="text-center badge badge-warning">Rechazado</span>
                     @else
-                    <td><span class="text-center badge badge-primary">Pendiente</span></td>
+                    <span class="text-center badge badge-primary">Pendiente</span>
                     @endif
                   </td>
                   <td>
