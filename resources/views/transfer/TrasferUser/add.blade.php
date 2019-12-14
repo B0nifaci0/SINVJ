@@ -137,7 +137,7 @@ $('#product').change(function() {
   console.log(p);
   $('#branch').val(p.branchName)
   $('#branch_id').val(p.branchId)
-  $('#product_id').val(p.branchId);
+  $('#product_id').val(p.id);
   console.log(branches);
   let brancehesList = branches.filter(b => b.id != p.branchId);
 
