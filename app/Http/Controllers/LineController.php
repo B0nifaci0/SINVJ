@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Line;
+use App\Shop;
+use App\Product;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\LineRequest;
 use App\User;
@@ -30,6 +33,7 @@ class LineController extends Controller
         //Muestra los las lineas que pertenecen a esa tienda midiante la variable $lines
         $lines = Auth::user()->shop->lines;
         //return $lines;
+
       return view('line/index', compact('lines','user'));
       }
 
@@ -113,7 +117,18 @@ class LineController extends Controller
      */
     public function destroy($id)
     {
+    $exist = Product::where('line_id', $id)->get()->count();
+    if($exist > 0){
+        return response()->json([
+        'success' => false
+        ]);
+    } else {
         Line::destroy($id);
+        return response()->json([
+        'success'=> true
+     ]); 
+    }
+        
    //return redirect('/lineas')->with('mesage-delete', 'La Linea  se ha eliminado exitosamente!');
     }
 // Funcion para gener pdf!!
