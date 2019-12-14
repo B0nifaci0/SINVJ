@@ -127,7 +127,7 @@ class ClientController extends Controller
             'branch_id'
         ));
         $client->save();
-        return redirect('/mayoristas')->with('mesage', 'El cliente se ha actualizado correctamente');
+        return redirect('/mayoristas')->with('mesage-update', 'El cliente se ha actualizado correctamente');
     }
 
     /**
@@ -136,8 +136,8 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy($id)
     {
-        //
+        Expense::destroy($id);
     }
 }

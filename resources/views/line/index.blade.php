@@ -116,11 +116,11 @@ LISTA DE  LINEA
                   @if(Auth::user()->type_user == 1 )
                   <td>
                     <!-- Botón para editar linea-->
-                    <a href="/lineas/{{$line->id}}/edit"><button type="button"
+                    <a type="button" href="/lineas/{{$line->id}}/edit"
                       class="btn btn-icon btn-info waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Editar">
-                      <i class="icon md-edit" aria-hidden="true"></i></button>
-                    </a>
+                      <i class="icon md-edit" aria-hidden="true"></i></a>
+                    
                     <!-- END Botón-->
                     <!-- Botónpara eliminar linea-->
                     <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
@@ -196,21 +196,32 @@ $(document).ready(function() {
         $.ajax({
           url:  '/lineas/' + id,
           method: 'DELETE',
-          success: function () {
-            $("#row" + id).remove();
-            Swal.fire(
-              'Eliminado',
-              'El registro ha sido eliminado.',
-              'success'
-            )
-          },
-          error: function () {
-            Swal.fire(
-              'Eliminado',
-              'El registro no ha sido eliminado.'+ id,
-              'error'
-            )
+
+          success: function (response) {
+            if(response.success) {
+              $("#row" + id).remove();
+              Swal.fire(
+                'Eliminado',
+                'El registro ha sido eliminado.',
+                'success'
+              )
+            }else{
+                Swal.fire(
+                  'No Eliminado',
+                  'El registro no ha sido eliminado por que tiene productos activos',
+                  'error'
+                )
+            }
+  
+          }, 
+          error: function(error){
+              Swal.fire(
+                  'No Eliminado',
+                  'El registro no ha sido eliminado por que tiene productos activos',
+                  'error'
+                )
           }
+
         })
       }
     })

@@ -167,21 +167,23 @@ $(document).ready(function() {
         $.ajax({
           url:  '/sucursales/' + id,
           method: 'DELETE',
-          success: function () {
+          success: function (response) {
+            if(response.success){
             $("#row" + id).remove();
             Swal.fire(
               'Eliminado',
               'El registro ha sido eliminado.',
               'success'
             )
-          },
-          error: function () {
-            Swal.fire(
-              'Eliminado',
-              'El registro no ha sido eliminado.'+ id,
-              'error'
-            )
-          }
+            }else{
+              Swal.fire(
+                  'Eliminado',
+                  'La sucursal no puede ser eliminado porque tiene productos activos',
+                  'error'
+                )
+         } 
+        
+        }
         })
       }
     })

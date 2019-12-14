@@ -104,7 +104,6 @@
           <i class="icon md-more" aria-hidden="true"></i>
         </button>
         <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
-          <img class="navbar-brand-logo" src={{{url('/images/logo.png')}}}>
           <span class="navbar-brand-text hidden-xs-down">SINVJ</span>
         </div>
         <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search"
@@ -156,8 +155,10 @@
                 </span>
               </a>
               <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Perfil</a>
+               <!-- <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Perfil</a>-->
+                @if(Auth::user()->type_user == 1)
                 <a class="dropdown-item" href="/pagos" role="menuitem"><i class="icon  md-money" aria-hidden="true"></i> Pagos</a>
+                @endif
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i>Cerrar Sesión</a>
               </div>
@@ -359,16 +360,13 @@
           <!-- End Navbar Toolbar Right -->
           <div class="navbar-brand navbar-brand-center">
             <a href="/principal">
-            <img class="navbar-brand-logo navbar-brand-logo-normal" src={{{url('/images/logo.png')}}} title="Centro Joyero">
-              <img class="navbar-brand-logo navbar-brand-logo-special" src="../assets/images/logo-colored.png"
-                title="Centro Joyero">
             </a>
           </div>
         </div>
         <!-- End Navbar Collapse -->
 
         <!-- Site Navbar Seach -->
-        <div class="collapse navbar-search-overlap" id="site-navbar-search">
+        <!--<div class="collapse navbar-search-overlap" id="site-navbar-search">
           <form role="search">
             <div class="form-group">
               <div class="input-search">
@@ -379,7 +377,7 @@
               </div>
             </div>
           </form>
-        </div>
+        </div>-->
         <!-- End Site Navbar Seach -->
       </div>
     </nav>
@@ -773,14 +771,14 @@
                         </a>
                       </li>
 
-
+                      @if(Auth::user()->type_user == 1)
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/pagos">
                           <i class="site-menu-icon md-money" aria-hidden="true"></i>
                             <span class="site-menu-title">Pagos</span>
                         </a>
                       </li>
-
+                      @endif
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/traspasos">
                           <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
