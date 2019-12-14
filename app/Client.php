@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Sale;
+use App\Branch;
 use App\Product;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +19,10 @@ class Client extends Model
 
     public function sales() {
         return $this->hasMany(Sale::class);
+    }
+
+    public function branch() {
+        return $this->belongsTo(Branch::class);
     }
 
     public function getFullNameAttribute() {

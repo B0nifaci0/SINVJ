@@ -61,6 +61,7 @@ LISTA DE  SUCURSALES
                   <th>Primer apellido</th>
                   <th>Segundo apellido</th>
                   <th>Teléfono</th>
+                  <th>Sucursal</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
@@ -70,6 +71,7 @@ LISTA DE  SUCURSALES
                   <th>Primer apellido</th>
                   <th>Segundo apellido</th>
                   <th>Teléfono</th>
+                  <th>Sucursal</th>
                   <th>Opciones</th>
                 </tr>
               </tfoot>
@@ -80,6 +82,7 @@ LISTA DE  SUCURSALES
                     <td>{{$client->first_lastname }}</td>
                     <td>{{$client->second_lastname }}</td>
                     <td>{{$client->phone_number }}</td>
+                    <td>{{$client->branch ? $client->branch->name : 'Sin sucursal' }}</td>
                     <td>
                         <!-- Botón para ver productos por sucursal-->
                         <a href="/mayoristas/{{ $client->id }}" type="button" 

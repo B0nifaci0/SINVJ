@@ -107,7 +107,7 @@ TRASFERENCIAS
                 <tr id = "row{{$transfer->id}}">
                   <td>{{ $transfer->id }}</td> 
                   <td>{{ $transfer->product->clave }}</td> 
-                  <td>{{ $transfer->product ? $transfer->product->name : 'Sin product' }}</td>
+                  <td>{{ $transfer->product ? $transfer->product->description : 'Sin product' }}</td>
                   <td>{{ $transfer->product->weigth }}</td>
                   <td>{{ $transfer->product->category ? $transfer->product->category->name : 'Sin category' }}</td>
                   <td>{{ $transfer->product->line ? $transfer->product->line->name : 'Sin line' }}</td>
