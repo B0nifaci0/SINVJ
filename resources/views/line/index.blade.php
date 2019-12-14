@@ -196,21 +196,32 @@ $(document).ready(function() {
         $.ajax({
           url:  '/lineas/' + id,
           method: 'DELETE',
-          success: function () {
-            $("#row" + id).remove();
-            Swal.fire(
-              'Eliminado',
-              'El registro ha sido eliminado.',
-              'success'
-            )
-          },
-          error: function () {
-            Swal.fire(
-              'Eliminado',
-              'El registro no ha sido eliminado.'+ id,
-              'error'
-            )
+
+          success: function (response) {
+            if(response.success) {
+              $("#row" + id).remove();
+              Swal.fire(
+                'Eliminado',
+                'El registro ha sido eliminado.',
+                'success'
+              )
+            }else{
+                Swal.fire(
+                  'No Eliminado',
+                  'El registro no ha sido eliminado por que tiene productos activos',
+                  'error'
+                )
+            }
+  
+          }, 
+          error: function(error){
+              Swal.fire(
+                  'No Eliminado',
+                  'El registro no ha sido eliminado por que tiene productos activos',
+                  'error'
+                )
           }
+
         })
       }
     })
