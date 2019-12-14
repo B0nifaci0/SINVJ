@@ -42,11 +42,6 @@ Panel Principal
                           <div class="col-md-4 col-sm-12">
                             <h4>Reporte Comisiones De Usuarios Por Sucursal </h4>
                           </div>
-                          <div class="col-md-1 offset-md-7 col-sm-12">
-                            <a class="btn btn-icon btn-danger waves-effect waves-light waves-round"
-                              data-toggle="tooltip" data-original-title="Reporte General P.GR" href="/reportComisionS"><i
-                                class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
-                          </div>
                         </div>
                         <form action="comisionusuario">
                           <div class="panel panel-bordered">
@@ -61,9 +56,11 @@ Panel Principal
                                  @endforeach
                                 </select>
                               </div>
+
                               <div class="col-6">
                                 <label class="floating-label" for="inputUser">{{ __('Usuario') }}</label>
                                 <select id="usuario_1" name="user" class="form-control ">
+
                                </select>
                              </div>
                               </div>
@@ -80,11 +77,6 @@ Panel Principal
                         <div class="row">
                           <div class="col-md-4 col-sm-12">
                             <h4>Reporte Comisiones General De Usuarios Por Sucursal </h4>
-                          </div>
-                          <div class="col-md-1 offset-md-7 col-sm-12">
-                            <a class="btn btn-icon btn-danger waves-effect waves-light waves-round"
-                              data-toggle="tooltip" data-original-title="Reporte General P.GR" href="/reportComisionS"><i
-                                class="icon fa-file-pdf-o" aria-hidden="true"></i></a>
                           </div>
                         </div>
                         <form action="comisionsucursal">

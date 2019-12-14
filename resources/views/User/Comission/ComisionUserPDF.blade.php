@@ -60,14 +60,23 @@
   
   
     <h1 align="center">Reporte de Comisiones del Usuario</h1>
-            <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+            <h3 align="center" style="color:red">@foreach($branches as $b){{$b->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
 				        <th scope="col-6">Nombre Del Colaborador</th>
                  <th scope="col-6">Total</th>
                 </tr>
-              </thead>  
+              </thead>
+
+              <tbody>
+                @foreach ($sales as $sale)
+                    <tr>
+                      <td>{{$sale->username}}</td>
+                      <td>$ {{$sale->ventas}}</td>
+\                    </tr>
+                @endforeach 
+              </tbody>   
       
             </table>
           </div>

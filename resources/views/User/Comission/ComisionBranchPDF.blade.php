@@ -67,7 +67,18 @@
 				        <th scope="col-6">Sucursal</th>
                  <th scope="col-6">Total</th>
                 </tr>
-              </thead>  
+              </thead>
+
+              <tbody>
+                @foreach ($sales as $sale)
+                    <tr>
+                    @foreach ($branches as $branch)
+                      <td>{{$branch->name}}</td>
+                      @endforeach 
+                      <td>$ {{$sale->ventas}}</td>
+\                    </tr>
+                @endforeach 
+              </tbody>   
       
             </table>
           </div>

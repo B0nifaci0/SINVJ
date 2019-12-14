@@ -33,6 +33,11 @@ class PrincipalController extends Controller
         }
 
         $branches= Auth::user()->shop->branches;
+        $ids = $user->branch_id;
+        $branches_col = Branch::select('*')
+        ->where('id',$ids)
+        ->get();
+        //return $branches_col;
 
         //CONSULTAS PARA ADMINISTRADORES
        //SUMA TOTAL DE GRAMOS
@@ -64,8 +69,26 @@ class PrincipalController extends Controller
        ->select(DB::raw('SUM(products.price) as total_p'))
        ->get();
        //return $ventas;
+
         
-        return view ('Principal/principal',compact('branches','branch','user','shop','shops','gramos','ventas'));
+
+        //CONSULTAS PARA SUB ADIMINISTRADORES Y COLABORADORES
+       //SUMA TOTAL DE GRAMOS
+      $gramos_col = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->join('lines','lines.id','products.line_id')
+      ->withTrashed()
+      ->where('products.status_id',2)
+      ->where('lines.shop_id', Auth::user()->shop->id)  
+      ->where('categories.type_product',2) 
+      ->where('products.branch_id',$ids)
+      ->select(DB::raw('SUM(products.weigth) as total_w'))
+      ->get();
+      //return $gramos->total_w;
+        
+        return view ('Principal/principal',compact('branches_col','gramos_col','branches','branch','user','shop','shops','gramos','ventas'));
     }
 
     public function exportPdf(){
