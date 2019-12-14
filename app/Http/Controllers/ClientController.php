@@ -102,8 +102,10 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $client = Client::find($id);
-        return view('clients.form', compact('client'));;
+        $user = Auth::user();
+        $client = Client::findOrFail($id);
+        $branches = Auth::user()->shop->branches;
+        return view('clients.form', compact('client','branches'));
     }
 
     /**
@@ -115,15 +117,14 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $client = Client::find($id);
-        $client->fill($request->only(
-            'name',
-            'first_lastname',
-            'second_lastname',
-            'phone_number'
-        ));
+        $client = Client::findOrFail($id);
+            $client->name =$request->name;
+            $client->first_lastname =$request->first_lastname;
+            $client->second_lastname =$request->second_lastname;
+            $client->phone_number =$request->phone_number;
+            $client->branch_id = $request->branch_id;
         $client->save();
-        return redirect('/mayoristas')->with('mesage', 'El cliente se ha actualizado correctamente');
+        return redirect('/mayoristas')->with('mesage-update', 'El cliente se ha actualizado correctamente');
     }
 
     /**
@@ -132,8 +133,8 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy($id)
     {
-        //
+        Expense::destroy($id);
     }
 }
