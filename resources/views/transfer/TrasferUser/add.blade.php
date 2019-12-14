@@ -22,7 +22,7 @@ ALTA PRODUCTO
             </ul>
           </div>
         @endif
-        <h2 align="center">Nuevo Traspaso Sucursales</h2>
+        <h2 align="center">Nuevo Traspaso Sucursales ({{$shop_id}})</h2>
         <br>  
         <form class="" action="/traspasosAA" method="POST">
           {{ csrf_field() }} 
@@ -141,7 +141,8 @@ $('#product').change(function() {
   console.log(branches);
   let brancehesList = branches.filter(b => b.id != p.branchId);
 
-  brancehesList.forEach(element => {
+  $('#branches').empty();
+  brancehesList.forEach(element => { 
     $('#branches').append(new Option(element.name, element.id, true, true));
   });
 

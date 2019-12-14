@@ -118,7 +118,7 @@ class SaleController extends Controller
         'customer_name' => $request->customer_name,
         'total' => $request->total_pay,
         'user_id' => $user->id,
-        'branch_id' => $user->branch_id,
+        'branch_id' => $user->branch_id ? $user->branch_id : null,
         'client_id' => $request->client_id,
         'paid_out' => 0
       ]);

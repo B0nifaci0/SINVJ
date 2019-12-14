@@ -61,6 +61,16 @@ ALTA BITACORAS
                 </div>
             </div>
             <div class="row">
+                <div class="form-group form-material col-md-6">
+                    <label class="form-control-label" for="inputShop">Sucursal</label>
+                    <select name="branch_id" id="" class="form-control">
+                        @foreach($branches as $branch)
+                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12 form-group">
                     <button type="submit" name="button" class="btn btn-info">Guardar</button>
                 </div>
