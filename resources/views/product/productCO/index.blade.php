@@ -67,7 +67,7 @@ LISTA PRODUCTO
                   <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                     <div class="page-content panel-body container-fluid">
                       <!-- Tabla para listar productos-->
-                            <table id="product_table_gr"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                            <table id="example"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                               <thead>
                               {{ csrf_field() }}
                                 <tr>  
@@ -146,7 +146,7 @@ LISTA PRODUCTO
               </div>
               <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
                 <div class="page-content panel-body container-fluid">
-                  <table id="product_table_pz"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                  <table id="example"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                           <thead>
                           {{ csrf_field() }}
                             <tr>  

@@ -130,7 +130,7 @@ ALTA VENTA
               <br>
               <div class="row">
                 <!-- Botón para mostar el Modal de Tipos de pago-->
-                <div class="col-md-2 form-group">
+                <div class="col-md-4 form-group">
                   <button class="btn btn-success"  data-target="#exampleTabs" data-toggle="modal"type="button">$ Registro de pago</button>
                 </div>
                 <!-- END Botón-->

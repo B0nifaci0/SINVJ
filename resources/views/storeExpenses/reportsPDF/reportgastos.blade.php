@@ -54,7 +54,7 @@ Panel Principal
                         <div class="panel panel-bordered">
                           <div class="panel-body">
                             <div class="row">
-                            @if (Auth::user()->type_user =='1') 
+                           
                                 <div class="col-sm-6 ">
                                   <label>Seleccione Sucursal</label>
                                   <select id="sucursales_1" name="branch_id" alt="1"
@@ -68,7 +68,7 @@ Panel Principal
                                     @endforeach
                                   </select>
                                 </div> 
-                                @endif                           
+                                                         
                                 <div class="col-sm-3">
                                   <div class="input-group-3">
                                     <div class="row container"><label>De la Fecha:</label></div>
