@@ -14,7 +14,8 @@ class Client extends Model
         'first_lastname',
         'second_lastname',
         'phone_number',
-        'shop_id'
+        'shop_id',
+        'branch_id'
     ];
 
     public function sales() {
