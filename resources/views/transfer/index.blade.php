@@ -60,103 +60,110 @@ TRASFERENCIAS
             </div>
             <!-- END Botón-->
             </div>
+          </div>
+          <h3 class="panel-title">Traspasos</h3>
+        </header>
+        <div class="panel-body">
+          <!-- Tabla para Listar Traspasos-->
+          <table id='example'  class="table table-hover dataTable table-striped w-full">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>Clave Del Producto</th>
+                <th>Producto</th>
+                <th>Peso</th>
+                <th>Categoría</th>
+                <th>Linea</th>
+                <th>Sucursal</th>
+                <th>Quien lo mando</th>
+                <th>Destino</th>
+                <th>Quien recibio</th>
+                <th>Fecha</th>
+                <th>Status</th>
+                <th>Opciones</th>
+                <th>Reporte</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>id</th>
+                <th>Clave Del Producto</th>
+                <th>Producto</th>
+                <th>Peso</th>
+                <th>Categoría</th>
+                <th>Linea</th>
+                <th>Sucursal</th>
+                <th>Quien lo mando</th>
+                <th>Destino</th>
+                <th>Quien recibio</th>
+                <th>Fecha</th>
+                <th>Status</th>
+                <th>Opciones</th>
+                <th>Reporte</th>
+              </tr> 
+            </tfoot>  
+            <tbody>
+              @foreach  ($trans as $transfer)
+                <tr id = "row{{$transfer->id}}">
+                  <td>{{ $transfer->id }}</td> 
+                  <td>{{ $transfer->product->clave }}</td> 
+                  <td>{{ $transfer->product ? $transfer->product->description : 'Sin product' }}</td>
+                  <td>{{ $transfer->product->weigth }}</td>
+                  <td>{{ $transfer->product->category ? $transfer->product->category->name : 'Sin category' }}</td>
+                  <td>{{ $transfer->product->line ? $transfer->product->line->name : 'Sin line' }}</td>
+                  <td>{{ $transfer->lastBranch ? $transfer->lastBranch->name : 'Sin lastBranch'}}</td>
+                  <td>{{ $transfer->user ? $transfer->user->name : 'Sin user'}}</td>
+                  <td>{{ $transfer->newBranch ? $transfer->newBranch->name : 'Sin newBranch'}}</td>
+                  <td>{{ $transfer->destinationUser ? $transfer->destinationUser->name : 'Sin destinationUser'}}</td>
+                  <td>{{ $transfer->created_at->format('m-d-Y')}}</td>
+                  <td>
+                    @if($transfer->status_product === 1)
+                      Aceptado
+                    @elseif($transfer->status_product === 0)
+                      Rechazado
+                    @else
+                      Pendiente
+                    @endif
+                  </td>
+                  <td>
+                    <!-- Botón para Aceptar o Rechazar Traspaso -->
+                    @if($transfer->status_product === null)
+                      @if(Auth::user()->id == $transfer->user_id)
+                        <button class="btn btn-warning cancel" alt="{{ $transfer->id }}">Cancelar</button>
+                      @else
+                      <button class="btn btn-primary accept" alt="{{ $transfer->id }}">Aceptar</button>
+                      <button class="btn btn-warning reject" alt="{{ $transfer->id }}">Rechazar</button>
+                      @endif
+                    @else
+                      @if(!$transfer->paid_at)
+                        @if(Auth::user()->id == $transfer->user_id)
+                          <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
+                        @else
+                          Por pagar
+                        @endif
+                      @else
+                        Pagado
+                      @endif
+                    @endif
+                    <!-- END Botón-->
+                  </td>
+                  <td>  
+                    <!-- Botón para generar Traspaso por (ID)-->  
+                    <a href="traspasopdf/{{$transfer->id}}"<button type="button" 
+                      class="btn btn-icon btn-danger waves-effect waves-light"
+                      data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                      <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                    </a> 
+                    <!-- END Botón-->               
+                  </td>
+                </tr>  
+              @endforeach
+            </tbody>
+          </table>
+          <!-- END Tabla-->
         </div>
-        <h3 class="panel-title">Traspasos</h3>
       </header>
-      <div class="panel-body">
-        <!-- Tabla para Listar Traspasos-->
-        <table id='example' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-          <thead>
-            <tr>
-              <th>Clave</th>
-              <th>Peso</th>
-              <th>Categoría</th>
-              <th>Linea</th>
-              <th>Sucursal</th>
-              <th>Quien lo mando</th>
-              <th>Destino</th>
-              <th>Quien recibio</th>
-              <th>Fecha</th>
-              <th>Opciones</th>
-              <th>Status</th>
-              <th>Reporte</th>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-              <th>Clave</th>
-              <th>Peso</th>
-              <th>Categoría</th>
-              <th>Linea</th>
-              <th>Sucursal</th>
-              <th>Quien lo mando</th>
-              <th>Destino</th>
-              <th>Quien recibio</th>
-              <th>Fecha</th>
-              <th>Opciones</th>
-              <th>Estado</th>
-              <th>Reporte</th>
-            </tr>
-          </tfoot>
-          <tbody>
-            @foreach ($trans as $transfer)
-            <tr id="row{{$transfer->id}}">
-              <td>{{ $transfer->product->clave }}</td>
-              <td>{{ $transfer->product->weigth }}</td>
-              <td>{{ $transfer->product->category->name }}</td>
-              <td>{{ $transfer->product->line ? $transfer->product->line->name : '' }}</td>
-              <td>{{ $transfer->lastBranch->name}}</td>
-              <td>{{ $transfer->user->name}}</td>
-              <td>{{ $transfer->newBranch->name}}</td>
-              <td>{{ $transfer->destinationUser->name}}</td>
-              <td>{{ $transfer->created_at->format('m-d-Y')}}</td>
-              <td>
-                @if($transfer->status_product === 1)
-              <td><span class="text-center badge badge-success">Aceptado</span></td>
-              @elseif($transfer->status_product === 0)
-              <td><span class="text-center badge badge-warning">Rechazado</span></td>
-              @else
-              <td><span class="text-center badge badge-primary">Pendiente</span></td>
-              @endif
-              </td>
-              <td>
-                @if($transfer->status_product === 1)
-                Pagado
-                @elseif($transfer->status_product === 0)
-                No pagado
-                @else
-                Pendiente
-                @endif
-              </td>
-              <td>
-                <!-- Botón para Aceptar o Rechazar Traspaso -->
-                @if($transfer->status_product === null)
-                @if(Auth::user()->id == $transfer->user_id)
-                <button class="btn btn-warning cancel" alt="{{ $transfer->id }}">Cancelar</button>
-                @else
-                <button class="btn btn-primary accept" alt="{{ $transfer->id }}">Aceptar</button>
-                <button class="btn btn-warning reject" alt="{{ $transfer->id }}">Rechazar</button>
-                @endif
-                @else
-
-                @endif
-                <!-- END Botón-->
-              </td>
-              <td>
-                <!-- Botón para generar Traspaso por (ID)-->
-                <a href="traspasopdf/{{$transfer->id}}" <button type="button"
-                  class="btn btn-icon btn-danger waves-effect waves-light" data-toggle="tooltip"
-                  data-original-title="Generar reporte PDF">
-                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
-                </a>
-                <!-- END Botón-->
-              </td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-        <!-- END Tabla-->
-      </div>
+      
     </div>
   </div>
   <!-- End Panel Basic -->
@@ -167,6 +174,10 @@ TRASFERENCIAS
   <input type="text" name="answer" id="answer">
 </form>
 
+  <form method="post" action="/traspasos/pagar" id="payment-form" class="d-none">
+    {{ csrf_field() }}
+    <input type="text" name="transfer_id" id="inventory_id">
+  </form> 
 <form method="post" action="/inventory/check" id="payment-form" class="d-none">
   {{ csrf_field() }}
   <input type="text" name="inventory_id" id="inventory_id">
@@ -179,12 +190,31 @@ TRASFERENCIAS
 <script>
   $(document).ready(function () {
 
-    $('.accept').click(function () {
-      var id = $(this).attr('alt');
-      $('#transfer_id').val(id);
-      $('#answer').val(1);
-      $('#form').submit();
-    })
+  $(".paid").click(function() {
+      let id = $(this).attr("alt");
+      Swal.fire({
+        title: 'Confirmación',
+        text: "¿Se ha pagado este traspaso?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#4caf50' ,
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => { 
+        if (result.value) 
+        {
+          $('#inventory_id').val(id);
+          $('#payment-form').submit();
+        }
+      })
+  });
+
+  $('.accept').click(function() {
+    var id = $(this).attr('alt');
+    $('#transfer_id').val(id);
+    $('#answer').val(1);
+    $('#form').submit();
+  })
 
     $('.cancel').click(function () {
       var id = $(this).attr('alt');

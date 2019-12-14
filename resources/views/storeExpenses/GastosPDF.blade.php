@@ -73,7 +73,7 @@
                     <td>{{ $expense->id}}</td>
                     <td>{{ $expense->name }}</td>
                     <td>{{ $expense->descripcion }}</td>
-                    <td>{{ $expense->user->name}}</td>
+                    <td>{{ $expense->user ? $expense->user->name : ''}}</td>
                     <td>{{ ($expense->branch == null) ? $expense->shop->name : $expense->branch->name }}</td>
                     <td>{{$expense->created_at}}</td>
                     <td>$ {{ $expense->price }}</td>

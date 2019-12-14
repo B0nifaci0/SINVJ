@@ -24,6 +24,10 @@ class Branch extends Model
         'rfc',        
     ];
 
+    protected $hidden = [
+		'password',
+	];
+
     public function shop()
     {
     	return $this->belongsTo(Shop::class);

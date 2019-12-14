@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Branch;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ClientRequest;
 use Illuminate\Http\Request;
@@ -16,10 +17,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::with('sales')->get();
-        // foreach ($clients as $client) {
-        //     // $items = 
-        // }
+        $user = Auth::user();
+        $query = Client::with(['sales', 'branch'])
+            ->where('shop_id', $user->shop->id);
+        $clients = $query->get();
         return view('clients.index', compact('clients'));
     }
 
@@ -30,8 +31,12 @@ class ClientController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
         $client = null;
-        return view('clients.form', compact('client'));
+        if($user->shop) {
+            $branches = $user->shop->branches;
+        }
+        return view('clients.form', compact('client', 'branches'));
     }
 
 
@@ -50,7 +55,8 @@ class ClientController extends Controller
             'first_lastname' => $request->first_lastname,
             'second_lastname' => $request->second_lastname,
             'phone_number' => $request->phone_number,
-            'shop_id' => $user->shop->id
+            'shop_id' => $user->shop->id,
+            'bransh_id' => $request->bransh_id
         ]);
         return redirect('/mayoristas')->with('mesage', 'El cliente se ha creado correctamente');
     }

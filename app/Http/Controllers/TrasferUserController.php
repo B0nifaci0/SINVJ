@@ -38,9 +38,9 @@ class TrasferUserController extends Controller
         }else{
         }*/
         
-        //return $transs;
-        $branches=Branch::all();
-        return view('transfer/TrasferUser/index', compact('branches','trans','user'));
+        //return $transs; 
+
+        return view('transfer/TrasferUser/index', compact('trans','user'));
         
        }
 
@@ -48,8 +48,25 @@ class TrasferUserController extends Controller
        {
         $user = Auth::user();
         $shop_id = $user->shop->id;
-        $branches = Branch::where('shop_id', '!=', $user->shop->id)->get();
-        $branch_ids = $branches->map(function($b) { return $b->id; });
+
+        // if($user->branch && $user->branch->id) {
+        //   $branch_ids = [$user->branch->id];
+        // } else {
+        //   $branch_ids = $user->shop->branches->map(function($b) { return $b->id; });
+        // }
+
+        if($user->shop && $user->shop->shop_group_id) {
+          $shop_ids = Shop::where('shop_group_id', $user->shop->shop_group_id)->get()->map(function($item) { return $item->id;  });
+          $branches = Branch::whereIn('shop_id', $shop_ids)
+          ->get();
+        } else {
+          $branches = Branch::where('shop_id', $user->shop->id)
+          ->get();
+        }
+        
+          $branch_ids = $branches->map(function($b) { return $b->id; });
+
+
         if($user->type_user == User::CO) {
           $products = Product::where('branch_id', $user->branch_id)->get();
         } else {
@@ -79,7 +96,7 @@ class TrasferUserController extends Controller
         $users = User::where('id', '!=', $user->id)
           ->whereIn('branch_id', $branch_ids)
           ->get();
-        return view('transfer/TrasferUser/add', compact('branches','users','products'));
+        return view('transfer/TrasferUser/add', compact('branches','users','products', 'shop_id'));
        }
 
   public function store(Request $request)
