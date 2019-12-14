@@ -29,29 +29,7 @@ GRUPOS
         <header class="panel-heading">
             <div class="panel-actions">
                 <div class="row">
-                    <!--
-                    <div class="col-md-4 col-md-offset-2">
-                        <button onclick="window.location.href='productospdf'" 
-                        type="button" class=" btn btn-sm small btn-floating 
-                        toggler-left  btn-danger waves-effect waves-light waves-round float-right"
-                        data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="col-md-4 col-md-offset-2">
-                        <button onclick="window.location.href='#'" 
-                        type="button" class=" btn btn-sm small btn-floating 
-                        toggler-left  btn-success waves-effect waves-light waves-round float-right"
-                        data-toggle="tooltip" data-original-title="Generar reporte Excel">
-                        <i class="icon fa-file-excel-o" aria-hidden="true"></i></button>
-                    </div>
-                    -->
-                    <div class="col-md-4 col-md-offset-2">
-                        <a href="/grupos/crear" class="btn btn-sm small btn-floating 
-                            toggler-left  btn-info waves-effect waves-light waves-round float-right"
-                            data-toggle="tooltip" data-original-title="Agregar">
-                            <i class="icon md-plus" aria-hidden="true"></i>
-                        </a>
-                    </div>
+         
                 </div>
             </div>
             <h3 class="panel-title">Grupos de tiendas </h3>

@@ -61,18 +61,6 @@ class ClientController extends Controller
         return redirect('/mayoristas')->with('mesage', 'El cliente se ha creado correctamente');
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Display the specified resource.
      *
@@ -103,7 +91,22 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client = Client::find($id);
-        return view('clients.form', compact('client'));;
+        $client_branch_id = $client->branch_id;
+        $user = Auth::user();
+        if($user->shop) {
+            $branches = $user->shop->branches;
+            $selected_branch = $branches->filter(function ($value, $key) use ($client_branch_id) {
+                return $value->id == $client_branch_id;
+            })->first();
+
+            
+            $branches = $branches->reject(function ($value, $key) use ($client_branch_id) {
+                return $value->id == $client_branch_id;
+            });
+            $branches->prepend($selected_branch);
+            // return $branches;
+        }
+        return view('clients.form', compact('client', 'branches'));;
     }
 
     /**
@@ -120,7 +123,8 @@ class ClientController extends Controller
             'name',
             'first_lastname',
             'second_lastname',
-            'phone_number'
+            'phone_number',
+            'branch_id'
         ));
         $client->save();
         return redirect('/mayoristas')->with('mesage', 'El cliente se ha actualizado correctamente');

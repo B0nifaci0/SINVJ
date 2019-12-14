@@ -37,7 +37,7 @@ ALTA GASTOS
             @if (Auth::user()->type_user =='1')  
             <div class="form-group col-md-6">
             <label class="form-control-label" for="inputBasicLastName"> Seleccione Sucursal:</label>
-              <select name="branch_id" class="form-control round">
+              <select name="branch_id" class="form-control round" required>
                 @php  
                     $branches = $user->shop->branches;
                 @endphp
@@ -66,7 +66,7 @@ ALTA GASTOS
                 <label>Selecciona imagen de comprobante</label>
                 <br>
                 <label for="image" class="btn btn-primary">Explorar</label>
-                <input type="file" name="image" id="image" class="hidden">
+                <input type="file" name="image" id="image" class="hidden" required>
               </div>
               <!-- END Select--> 
               <!-- Input para Ingresar el precio-->

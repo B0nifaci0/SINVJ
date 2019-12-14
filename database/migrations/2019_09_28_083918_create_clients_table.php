@@ -21,6 +21,8 @@ class CreateClientsTable extends Migration
             $table->string('phone_number');
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops');
+            $table->integer('branch_id')->unsigned();
+            $table->foreign('branch_id')->references('id')->on('branches');
             $table->softDeletes();
             $table->timestamps();
         });

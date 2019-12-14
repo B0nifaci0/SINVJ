@@ -6,6 +6,8 @@ use App\Category;
 use categories;
 use Alert;
 use App\User;
+use App\Product;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoriesRequest;
 use Illuminate\Support\Facades\Auth;
@@ -118,7 +120,17 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-      Category::destroy($id);
-      // return redirect('/categorias')->with('mesage-delete', 'La categoria  se ha eliminado exitosamente!');
+      $exist = Product::where('category_id', $id)->get()->count();
+      //return $exist;
+      if($exist > 0){
+        return response()->json([
+          'success' => false
+          ]);
+        }else{
+          Category::destroy($id);
+           return response()->json([
+          'success'=> true
+          ]); 
     }
+ }
 }
