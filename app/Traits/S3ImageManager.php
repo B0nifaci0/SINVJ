@@ -24,11 +24,13 @@ trait S3ImageManager {
     private function getS3URL($path) {
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
+		$path = (env('S3_TEST') ? '_test/' : '') . $path;
+
         $command = $adapter->getClient()->getCommand('GetObject', [
             'Bucket' => $adapter->getBucket(),
             'Key' => $adapter->getPathPrefix(). $path
-        ]);
-    
+		]);
+		
         $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
     
         return (string) $result->getUri();

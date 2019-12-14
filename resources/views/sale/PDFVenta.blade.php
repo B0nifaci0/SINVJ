@@ -138,7 +138,7 @@ img {
     max-width: center;
     text-align: center;
 }
-@page {size: 8cm 190mm;
+@page {size: 8cm 220mm;
      }
    </style>
 
@@ -158,9 +158,9 @@ img {
             {{$branch->email}}</p><br>
             <p>{{$branch->address}}
             tel:{{$branch->phone_number}}</p>
-        
+            <p><b>Tipo de venta:</b>{{ ($sale->client) ? 'Mayorista' : 'General' }}</p>
             @if($sale->client)
-                <p>Cliente:{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>
+                <p><b>Cliente:</b>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>
             @else
                 <p>{{ $sale->customer_name }}</p>
             @endif
@@ -180,7 +180,7 @@ img {
                             <td>{{ $item->clave }}</td>
                             <td>{{ $item->description }}</td>
                             <td>{{ $item->weigth }} g</td>
-                            <td>$ {{ $item->price }}</td>
+                            <td>$ {{ $item->final_price }}</td>
                         </tr>
                         @endforeach
                         <tr>

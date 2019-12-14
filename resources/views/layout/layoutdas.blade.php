@@ -451,12 +451,18 @@
                     </ul>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
+                          <a class="animsition-link" href="/reportes-productos-apartados">
+                          <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
+                            <span class="site-menu-title">Productos apartados</span>
+                        </a>
+                      </li>
+                      <li class="site-menu-item">
                           <a class="animsition-link" href="/reportes-productos">
                           <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
                             <span class="site-menu-title">Reporte de Productos</span>
                         </a>
+                      </li>
                     </ul>
-                  </li>
 
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/sucursales">

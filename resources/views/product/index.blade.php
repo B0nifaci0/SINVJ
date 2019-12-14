@@ -46,7 +46,7 @@ LISTA PRODUCTO
     <div class="panel">
       <div class="panel-body">
         <div class="example-wrap">
-          <h1 class="text-center panel-title">Productos De Tienda</h1>
+          <h1 class="text-center panel-title">{{ $title }}</h1>
 
           <div class="panel-actions">
 
@@ -165,8 +165,8 @@ LISTA PRODUCTO
             <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
               <div class="page-content panel-body container-fluid">
                 <!-- Tabla para listar productos-->
-                <table id="product_table_pz" class="table table-hover dataTable table-striped w-full"
-                  data-plugin="dataTable">
+                <table id="product_table_pz" class="table table-hover dataTable table-striped w-full table-responsive"
+                    data-plugin="dataTable">
                   <thead>
                     {{ csrf_field() }}
                     <tr>
@@ -252,11 +252,7 @@ LISTA PRODUCTO
   @section('barcode-product')
   <script>
     $(document).ready(function () {
-      $('#example').dataTable({
-        "language": {
-          "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-        }
-      });
+      
     });
   </script>
   @endsection
