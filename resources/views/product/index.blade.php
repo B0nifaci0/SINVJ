@@ -138,11 +138,10 @@ LISTA PRODUCTO
                         @if(Auth::user()->type_user == 1)
                         <td>
                           <!-- Botón para editar producto-->
-                          <a href="/productos/{{$product->id}}/edit"><button type="button"
+                          <a type="button" href="/productos/{{$product->id}}/edit"
                               class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
                               data-original-title="Editar">
-                              <i class="icon md-edit" aria-hidden="true"></i></button>
-                          </a>
+                              <i class="icon md-edit" aria-hidden="true"></i></a>
                           <!-- END Botón-->
                           <!-- Botón para eliminar producto -->
                           <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
@@ -219,11 +218,10 @@ LISTA PRODUCTO
                       <td>${{$product->price_purchase}}</td>
                       <td>
                         <!-- Botón para editar producto-->
-                        <a href="/productos/{{$product->id}}/edit"><button type="button"
+                        <a type="button" href="/productos/{{$product->id}}/edit"
                             class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
                             data-original-title="Editar">
-                            <i class="icon md-edit" aria-hidden="true"></i></button>
-                        </a>
+                            <i class="icon md-edit" aria-hidden="true"></i></a>
                         <!-- END Botón-->
                         <!-- Botón para eliminar producto -->
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"

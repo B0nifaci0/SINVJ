@@ -91,11 +91,11 @@ LISTA DE  CATEGORIA
                 @if(Auth::user()->type_user == 1 )
                 <td>
                   <!-- Botón Para editar categoria--> 
-                  <a href="/categorias/{{$category->id}}/edit"><button type="button" 
+                  <a type="button" href="/categorias/{{$category->id}}/edit"
                     class="btn btn-icon btn-info waves-effect waves-light waves-round"
                     data-toggle="tooltip" data-original-title="Editar">
-                    <i class="icon md-edit" aria-hidden="true"></i></button>
-                  </a>
+                    <i class="icon md-edit" aria-hidden="true"></i></a>
+                  
                   <!-- END Botón-->
                   <!-- Botón Para eliminar categoria-->  
                   <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
