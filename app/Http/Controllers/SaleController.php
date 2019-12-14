@@ -65,7 +65,11 @@ class SaleController extends Controller
     {
       $user = Auth::user();
 
+    if($user->branch) {
+      $clients = Client::where('branch_id', $user->branch->id)->get();
+    } else {
       $clients = Client::where('shop_id', $user->shop->id)->get();
+    }
 
     if($user->branch) {
       	$branch_id = $user->branch->id;
@@ -109,7 +113,6 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-      //  return $request;
       $user = Auth::user();
       $sale = Sale::create([
         'customer_name' => $request->customer_name,
@@ -122,10 +125,11 @@ class SaleController extends Controller
         'client_id' => $request->client_id,
         'paid_out' => 0
       ]);
+      
       $products = json_decode($request->products_list);
-    	foreach ($products as $p) {
+      
+      foreach ($products as $p) {
         $product = Product::find($p->id);
-        
         SaleDetails::create([
     			'sale_id' => $sale->id,
     			'product_id' => $p->id,
