@@ -154,8 +154,11 @@ class TranferProductsController extends Controller
   }
 
   
-public function exportPdfall(){ 
-    $trans = TransferProduct::all();
+public function exportPdfall(){
+    $user = Auth::user();
+    $trans = TransferProduct::where('user_id', $user->id)
+    ->orWhere('destination_user_id', $user->id)
+    ->with('user')->with('branch')->get();
     $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans'));
     $pdf->setpaper('letter', 'landscape');
     return $pdf->stream('Traspasos.pdf');  

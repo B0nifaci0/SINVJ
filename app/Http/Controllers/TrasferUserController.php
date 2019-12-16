@@ -117,7 +117,10 @@ class TrasferUserController extends Controller
   }
  
   public function exportPdf(){ 
-    $trans = TrasferUser::all();
+    // $trans = TrasferUser::all();
+    $trans = TransferProduct::where('user_id', $user->id)
+    ->orWhere('destination_user_id', $user->id)
+    ->with('user')->with('branch')->get();
     $pdf  = PDF::loadView('transfer.TrasferUser.PdfTranferUser', compact('trans'));
     return $pdf->download('Traspasos.pdf');
   }

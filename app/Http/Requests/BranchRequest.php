@@ -25,6 +25,10 @@ class BranchRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'email' => 'required',
+            'rfc' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required'
         ];
     }
     public function messages(){
