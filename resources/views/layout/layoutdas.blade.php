@@ -48,11 +48,14 @@
     <link rel="stylesheet" href={{{url('global/fonts/font-awesome/font-awesome.css')}}}>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-        <link rel="stylesheet" href="{{{url('/global/css/bootstrap-extend.min.css')}}}">
-  <link rel="stylesheet" href="{{{url('dashboard-assets/assets/global/css/bootstrap.min.css')}}}">
+    <link rel="stylesheet" href="{{{url('/global/css/bootstrap-extend.min.css')}}}">
+    <link rel="stylesheet" href="{{{url('dashboard-assets/assets/global/css/bootstrap.min.css')}}}">
+    <link rel="stylesheet" href="{{{url('dashboard-assets/assets/global/css/bootstrap.min.css')}}}">
 
     <!--<script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>-->
-
+    <!--Ligbox-->
+    <link rel="stylesheet" href="{{{url('assets/examples/css/advanced/lightbox.css')}}}">
+    <link rel="stylesheet" href="{{{url('global/vendor/magnific-popup/magnific-popup.css')}}}">
 
     <!--DATA TABLES CSS-->
     <link rel="stylesheet" href={{{url('global/vendor/datatables.net-bs4/dataTables.bootstrap4.css')}}}>
@@ -942,7 +945,6 @@
   @yield('js')
     <!-- Core  -->
       <script src="{{{url('/global/vendor/jquery/jquery.js')}}}"></script>
-
     <script src={{{url('global/vendor/babel-external-helpers/babel-external-helpers.js')}}}></script>
     <script src={{{url('global/vendor/jquery/jquery.min.js')}}}></script>
     <script src={{{url('global/vendor/popper-js/umd/popper.min.js')}}}></script>
@@ -1044,10 +1046,12 @@
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
     <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
-      <script src={{{url('global/vendor/tooltip/tooltip-popover.js')}}}></script>
-  <script src="{{{url('global/js/components/material.js')}}}"></script>
-  <script src="{{{url('global/vendor/bootstrap/bootstrap.js')}}}"></script>
-
+    <script src={{{url('global/vendor/tooltip/tooltip-popover.js')}}}></script>
+    <script src="{{{url('global/js/components/material.js')}}}"></script>
+    <script src="{{{url('global/vendor/bootstrap/bootstrap.js')}}}"></script>
+    <script src={{{url('assets/examples/js/advanced/lightbox.js')}}}></script>
+    <script src={{{url('global/js/Plugin/magnific-popup.js')}}}></script>
+    <script src={{{url('global/vendor/magnific-popup/jquery.magnific-popup.js')}}}></script>
 
 
     @section('delete-categorias')

@@ -129,8 +129,11 @@ LISTA PRODUCTO
                         <td>{{ $product->weigth }}</td>
                         <td>{{ $product->observations }}</td>
                         <td>
-                          <img width="100px" height="100px" src="{{ $product->image }}">
-                        </td>
+                          <a class="inline-block" href="{{ $product->image }}" data-plugin="magnificPopup"
+                          data-close-btn-inside="false" data-fixed-contentPos="true"
+                          data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
+                          <img class="img-fluid" src="{{ $product->image }}" alt="..." width="220"
+                          />                        </td>
                         <td>{{ ($product->category) ? $product->category->name: '' }}</td>
                         <td>{{ ($product->branch) ? $product->branch->name: '' }}</td>
                         <td>{{ ($product->status) ? $product->status->name: '' }}</td>
@@ -208,7 +211,11 @@ LISTA PRODUCTO
                       <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                       <td>{{ $product->observations }}</td>
                       <td>
-                        <img width="100px" height="100px" src="{{ $product->image }}">
+                        <a class="inline-block" href="{{ $product->image }}" data-plugin="magnificPopup"
+                          data-close-btn-inside="false" data-fixed-contentPos="true"
+                          data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
+                          <img class="img-fluid" src="{{ $product->image }}" alt="..." width="220"
+                          />
                       </td>
                       <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                       <td>{{ ($product->status) ? $product->status->name : '' }}</td>
