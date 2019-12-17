@@ -27,8 +27,6 @@ class ShopRequest extends FormRequest
             'image' => 'image:mimes,png',
             'description' => 'required|string',
             'phone_number' => 'required|numeric|regex:/^[0-9]{10}$/',
-            'municipality_id' => 'required|numeric',
-            'state_id' => 'required|numeric',
             'email' => 'required|email'
         ];
     }
@@ -38,8 +36,6 @@ class ShopRequest extends FormRequest
             'image.image' =>'La imagen  del producto  debe de ser .png',
             'description' => 'La descripcion es requerida',
             'phone_number' => 'El telefono es requerido y debe ser igual a 10',
-            'municipality_id' => 'El municipio es requerido',
-            'state_id' => 'El estado es requerido',
             'email' => 'El correo es requerido'
         ];
     }
