@@ -109,6 +109,7 @@ ALTA VENTA
                       <th>Linea</th>
                       <th>Sucursal</th>
                       <th>Precio de linea</th>
+                      <th>Precio mínimo</th>
                       <th>Precio final</th>
                       <th>Eliminar</th>
                     </tr>
@@ -431,6 +432,7 @@ $(function(){
     <td>${product.line ? product.line.name : '' }</td>
     <td>${product.branch.name}</td>
     <td>$ ${product.price}</td>
+    <td>$ ${product.discount}</td>
     <td><input class="finalPrice" id="finalPrice${product.id}" alt="${product.id}" type="text" value="${product.price}"/></td>
     <td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button></div></td>
   </tr>`;

@@ -254,16 +254,16 @@ public function exportPdf( Request $request, $id) {
 	//   $branches = Branch::where('shop_id', $user->shop->id)->get();
   //return [$sales,$branches,$user,$shops];
   $user = Auth::user();
-  $shop_id = Auth::user()->shop->id;
-  $branch = Branch::find($id);
+  $shop_id = Auth::user()->shop->id; 
   $shop = Auth::user()->shop()->get();
-
-  //return $shops;
+ 
+  //return $shops; 
 	$sale = Sale::with(['partials', 'client'])->findOrFail($id);
 	$sale->itemsSold = $sale->itemsSold();
 	$sale->total = $sale->itemsSold->sum('final_price');
-	//return response()->json(['shop'=>$shop,'sucursal'=>$branch,'sale'=>$sale]);
-	$pdf  = PDF::loadView('sale.PDFVenta', compact('shop','sale','branch','shop_id')); 
+
+  $branch = Branch::find($sale->branch_id);
+  $pdf  = PDF::loadView('sale.PDFVenta', compact('shop','sale','branch','shop_id')); 
   return $pdf->stream('venta.pdf');
  // return $branches;
 } 

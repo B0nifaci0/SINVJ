@@ -152,12 +152,12 @@ img {
             alt="Logotipo"
             ></p>
             <p>
-            {{$branch->name}}<br>
-            {{$branch->name_legal_re}}<br>
-            {{$branch->rfc}}<br>
-            {{$branch->email}}</p><br>
-            <p>{{$branch->address}}
-            tel:{{$branch->phone_number}}</p>
+            {{$branch ? $branch->name : ''}}<br>
+            {{$branch ? $branch->name_legal_re : ''}}<br>
+            {{$branch ? $branch->rfc : ''}}<br> 
+            {{$branch ? $branch->email : ''}}</p><br>
+            <p>{{$branch ? $branch->address : ''}}
+            Tel:{{$branch ? $branch->phone_number : ''}}</p>
             <p><b>Tipo de venta:</b>{{ ($sale->client) ? 'Mayorista' : 'General' }}</p>
             @if($sale->client)
                 <p><b>Cliente:</b>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>

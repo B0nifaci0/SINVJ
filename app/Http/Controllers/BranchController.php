@@ -237,8 +237,20 @@ class BranchController extends Controller
      */
     public function destroy($id)
     {
-        Branch::destroy($id);
+        //Branch::destroy($id);
         // return redirect('/sucursales')->with('mesage', 'La sucursal  se ha eliminado exitosamente!');
+        $exist =  Product::where('branch_id', $id)->get()->count();
+        //return $exist;
+        if($exist > 0){
+          return response()->json([
+            'success' => false
+          ]);
+        }else{
+          Branch::destroy($id);
+          return response()->json([
+            'success'=>true
+          ]);
+        }
     }
 
     public function users($id)
