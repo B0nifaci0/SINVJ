@@ -35,10 +35,9 @@ class LineRequest extends FormRequest
       public function messages(){
         return[
             'name.required' => 'El nombre es requerido y con solo 15 caracteres',
-            'purchase_price.required' => 'El precio es requerido',
-            'sale_price' => 'El precio es requerido',
-
-            
+            'purchase_price.required' => 'El precio compra es requerido',
+            'sale_price' => 'El precio venta es requerido',
+            'discount_percentage' => 'El porcentaje de descuento es requerido',
         ];
     }
 }

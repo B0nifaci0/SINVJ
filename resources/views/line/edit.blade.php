@@ -30,11 +30,11 @@ EDITAR LINEA
         <div class="row">
         <div class="form-group form-material col-md-4">
                <label class="form-control-label" for="inputBasicLastName"> Nombre Linea:</label>
-               <input type="text" class="form-control"value="{{$line->name}}" name="name"> 
+               <input type="text" class="form-control"value="{{$line->name}}" required="required" name="name"> 
                </div> 
       <div class="form-group form-material col-md-4">
                <label class="form-control-label" for="inputBasicLastName">Precio Compra:</label>
-               <input type="text" class="form-control"value="{{$line->purchase_price}}" name="purchase_price"> 
+               <input type="text" class="form-control"value="{{$line->purchase_price}}" required="required" name="purchase_price"> 
       </div>
             <div class="form-group form-material col-md-4">
                <label class="form-control-label" for="inputBasicLastName">Precio venta:</label>
