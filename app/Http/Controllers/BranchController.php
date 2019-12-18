@@ -140,7 +140,7 @@ class BranchController extends Controller
      * @param  \App\Branch  $branch
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BranchRequest $request, $id)
     {
             $branch = Branch::findOrFail($id);
             //return $request->longitude;

@@ -48,6 +48,7 @@ class ProductController extends Controller
         });
         $products = Shop::find($shop_id)
           ->products()
+          ->with('line')
           ->whereIn('branch_id', $branch_ids)
           ->where('status_id', 2)
           ->get();
@@ -349,7 +350,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductValidate $request, $id)
     {
         $product = Product::findOrFail($id);
 

@@ -65,10 +65,11 @@ ALTA BITACORAS
                     <label class="form-control-label" for="inputShop">Sucursal</label>
                     <select name="branch_id" id="" class="form-control">
                         @foreach($branches as $branch)
-                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                        <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
                         @endforeach
                     </select>
                 </div>
+               </div> 
             </div>
             <div class="row">
                 <div class="col-md-12 form-group">
