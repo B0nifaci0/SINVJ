@@ -140,7 +140,9 @@ LISTA PRODUCTO
                         <td>{{ ($product->category) ? $product->category->name: '' }}</td>
                         <td>{{ ($product->line) ? $product->line->name : '' }}</td>
                         <td>{{ ($product->branch) ? $product->branch->name: '' }}</td>
-                        <td>{{ ($product->status) ? $product->status->name: '' }}</td>
+                        @if($product->status)
+                        <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                        @endif
                         <td>${{$product->price }}</td>
                         @if(Auth::user()->type_user == 1)
                         <td>
@@ -222,8 +224,9 @@ LISTA PRODUCTO
                           />
                       </td>
                       <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
-                      <td>{{ ($product->status) ? $product->status->name : '' }}</td>
-
+                      @if($product->status)
+                      <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                      @endif
                       <td>${{$product->price }}</td>
                       @if(Auth::user()->type_user == 1)
                       <td>${{$product->price_purchase}}</td>
