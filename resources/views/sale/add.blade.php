@@ -108,8 +108,8 @@ ALTA VENTA
                       <th>Categoría</th>
                       <th>Linea</th>
                       <th>Sucursal</th>
-                      <th>Precio de linea</th>
-                      <th>Precio mínimo</th>
+                      <th>Precio Max</th>
+                      <th>Precio Min</th>
                       <th>Precio final</th>
                       <th>Eliminar</th>
                     </tr>
