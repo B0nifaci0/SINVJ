@@ -115,7 +115,7 @@ LISTA PRODUCTO
                                   <a class="inline-block" href="{{ $product->image }}" data-plugin="magnificPopup"
                                   data-close-btn-inside="false" data-fixed-contentPos="true"
                                   data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
-                                  <img class="img-fluid" src="{{ $product->image }}" alt="..." width="220"
+                                  <img class="img-fluid" src="{{ $product->image }}" alt="..." width="150"
                                   />
                                 </td>
                                 <td>{{ ($product->category) ? $product->category->name : '' }}</td>
@@ -195,7 +195,7 @@ LISTA PRODUCTO
                                 <a class="inline-block" href="{{ $product->image }}" data-plugin="magnificPopup"
                                 data-close-btn-inside="false" data-fixed-contentPos="true"
                                 data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
-                                <img class="img-fluid" src="{{ $product->image }}" alt="..." width="220"
+                                <img class="img-fluid" src="{{ $product->image }}" alt="..." width="150"
                                 />
                               </td>                                      
                               <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>

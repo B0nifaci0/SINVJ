@@ -282,6 +282,13 @@ class ProductController extends Controller
           $data['weigth'] = null;
 
         }
+        if($category->type_product == 1 && !$data['pricepzt']){
+          return back()->withErrors(['msg', 'El precio por pieza es requerido']);
+
+        }
+        elseif($category->type_product == 2 && !$data['weigth']){
+            return back()->withErrors(['msg', 'El peso es requerido']);
+        }
 
         $product = new Product($data);
         $product->date_creation= $date;

@@ -69,7 +69,7 @@ ALTA PRODUCTO
             <!-- END Select-->  
             <!-- Input para ingresar Peso del producto-->
             <div class="form-group form-material col-md-3 remove">
-              <label>Peso</label>
+              <label>Gramos</label>
               <input type="text" id="multiplicador"  class="form-control" name="weigth" > 
             </div>
             <!-- END Input-->
@@ -227,7 +227,6 @@ setTimeout(() => {
 $('#categorie_id').change(function(){
     $('#pricepz').val(0);
     $('#pricecp').val(0)
-
 
     var categoryTypeproduct = {!! $categories !!};
     var categoryId = $(this).val();
