@@ -96,6 +96,7 @@ LISTA PRODUCTO
                         <th>Observaciónes</th>
                         <th>Imagen</th>
                         <th>Categoría</th>
+                        <th>Linea</th>
                         <th>Sucursal</th>
                         <th>Status</th>
                         <th>precio</th>
@@ -112,6 +113,7 @@ LISTA PRODUCTO
                         <th>Observaciónes</th>
                         <th>Imagen</th>
                         <th>Categoría</th>
+                        <th></th>
                         <th>Sucursal</th>
                         <th>Status</th>
                         <th>Precio</th>
@@ -132,6 +134,7 @@ LISTA PRODUCTO
                           <img width="100px" height="100px" src="{{ $product->image }}">
                         </td>
                         <td>{{ ($product->category) ? $product->category->name: '' }}</td>
+                        <td>{{ ($product->line) ? $product->line->name : '' }}</td>
                         <td>{{ ($product->branch) ? $product->branch->name: '' }}</td>
                         <td>{{ ($product->status) ? $product->status->name: '' }}</td>
                         <td>${{$product->price }}</td>

@@ -24,10 +24,10 @@ class ClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'first_lastname' => 'required',
-            'second_lastname' => 'required',
-            'phone_number' => 'required',
+            'name' => 'required|string|max:30',
+            'first_lastname' => 'required|string|max:30',
+            'second_lastname' => 'required|string|max:30',
+            'phone_number' =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
         ];
     }
 }
