@@ -103,56 +103,45 @@ Panel Principal
       <div class="col-12">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Totales De Todas Las Sucursales<h2>
+        <h2 class="panel-title" style="color:white">Totales De Todas Las Sucursales</h2>
         </div>
-        <div>
-
         <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Totales
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Existentes
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($gramos as $g)  {{$g->total_w}} gr @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@foreach($gramos as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
             </div>
-            <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+      
+      <div class="col-sm-6">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Existentes
+              </div>
+              <span class="float-right grey-700 font-size-30">@foreach($ventas as $v) @if($v->total_p) $ {{number_format($v->total_p,2)}} @else $ 0 @endif @endforeach</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
         </div>
         <!-- End Widget Linearea One -->
       </div>
-
-      
-      <div class="col-sm-4">
-        <!-- Widget Linearea One-->
-        <div class="card card-shadow">
-          <div class="card-block p-20 pt-10">
-            <div class="clearfix">
-              <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total $
-              </div>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas as $v) $ {{$v->total_p}} @endforeach</span>
-            </div>
-            <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
-            </div>
-          <!--  <div class="ct-chart h-50"></div>   -->
-          </div>
-        </div>
-        <!-- End Widget Linearea One -->
-      </div>
-      </div>
-      
        </div>
       </div>
       </div>
       </div>
-
       @endif
 
       @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
@@ -164,20 +153,16 @@ Panel Principal
         <div>
 
         <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-12">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Totales
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Existentes
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($gramos_col as $g)  {{$g->total_w}} gr @endforeach</span>
-            </div>
-            <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
-            </div>
-          <!--  <div class="ct-chart h-50"></div>   -->
+              <span class="float-right grey-700 font-size-30">@foreach($gramos_col as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
+            </div>          <!--  <div class="ct-chart h-50"></div>   -->
           </div>
         </div>
         <!-- End Widget Linearea One -->
@@ -201,9 +186,9 @@ Panel Principal
     @if(Auth::user()->type_user == 1 )
     <h2 class="panel-title" style="color:white">Sucursales Disponibles</h2>
         </div>
-        <div>
+        <div class="row">
       @foreach($branches as $branch)
-      <div class="row">
+      
       <div class="col-sm-3">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
@@ -214,18 +199,16 @@ Panel Principal
               </div>
               <span class="float-right grey-700 font-size-30"></span>
             </div>
-            <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
-            </div>
           <!--  <div class="ct-chart h-50"></div>   -->
-            <a href="/sucursales/{{$branch->id}}/mostrar" class="btn btn-primary">Detalles</a>
+            <a href="/sucursales/{{$branch->id}}/mostrar" class="btn btn-primary">Ver Más</a>
           </div>
         </div>
         <!-- End Widget Linearea One -->
       </div>
-      </div>
-      </div>
+      
       @endforeach
+      </div>
+      </div>
     @endif
 
     @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
@@ -244,11 +227,8 @@ Panel Principal
               </div>
               <span class="float-right grey-700 font-size-30"></span>
             </div>
-            <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
-            </div>
           <!--  <div class="ct-chart h-50"></div>   -->
-            <a href="/sucursales/{{$branch->id}}/mostrar" class="btn btn-primary">Detalles</a>
+            <a href="/sucursales/{{$branch->id}}/mostrar" class="btn btn-primary">Ver Más</a>
           </div>
         </div>
         <!-- End Widget Linearea One -->

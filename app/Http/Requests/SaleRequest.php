@@ -23,11 +23,21 @@ class SaleRequest extends FormRequest
      */
     public function rules()
     {
-        //
+        return [
+            'customer_name' => 'required|string|max:100',
+            'telephone' => 'required|numeric|regex:/^[0-9]{10}$/',
+            'total' => 'required|numeric|gt:paid_out',
+            'paid_out' => 'required|numeric'
+        ];
     }
 
 
       public function messages(){
-        //
+        return[
+            'customer_name.required' => 'El nombre del cliente es requerido',
+            'telephone.required' => 'El telefono es requerido y debe de contener 10 numeros',
+            'total' => 'El total a pagar es requerido',
+            'paid_out' => 'El dinero recibido es requerido y debe ser menor que el total a pagar',
+        ];
     }
 }

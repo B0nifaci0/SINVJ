@@ -25,15 +25,18 @@ class ShopRequest extends FormRequest
     {
         return [
             'image' => 'image:mimes,png',
-            'description' => 'required',
-            'phone_number' => 'required',
-            'email' => 'required'
+            'description' => 'required|string',
+            'phone_number' => 'required|numeric|regex:/^[0-9]{10}$/',
+            'email' => 'required|email'
         ];
     }
     
     public function messages(){
         return[
             'image.image' =>'La imagen  del producto  debe de ser .png',
+            'description' => 'La descripcion es requerida',
+            'phone_number' => 'El telefono es requerido y debe ser igual a 10',
+            'email' => 'El correo es requerido'
         ];
     }
 

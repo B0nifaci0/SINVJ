@@ -47,7 +47,7 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
         $user = Auth::user();
         $client = Client::create([
@@ -56,7 +56,7 @@ class ClientController extends Controller
             'second_lastname' => $request->second_lastname,
             'phone_number' => $request->phone_number,
             'shop_id' => $user->shop->id,
-            'bransh_id' => $request->bransh_id
+            'branch_id' => $request->branch_id
         ]);
         return redirect('/mayoristas')->with('mesage', 'El cliente se ha creado correctamente');
     }
@@ -116,7 +116,7 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ClientRequest $request, $id)
     {
         $client = Client::find($id);
         $client->fill($request->only(
@@ -138,6 +138,6 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        Expense::destroy($id);
+        Client::destroy($id);
     }
 }

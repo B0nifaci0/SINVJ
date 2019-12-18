@@ -26,19 +26,18 @@ class LineRequest extends FormRequest
          return [
             'name' => 'required|string',
             'purchase_price' => 'required|numeric',
-            'sale_price' => 'required|numeric',
+            'sale_price' => 'required|numeric|gt:purchase_price',
             'discount_percentage' => 'required|between:0,50'
-        ]; 
+        ];
     }
 
 
       public function messages(){
         return[
-            'name.required' => 'El nombre es requerido y con solo 15 caracteres',
-            'purchase_price.required' => 'El precio es requerido',
-            'sale_price' => 'El precio es requerido',
-
-            
+            'name.required' => 'El nombre es requerido',
+            'purchase_price.required' => 'El precio compra es requerido',
+            'sale_price' => 'El precio venta es requerido',
+            'discount_percentage' => 'El porcentaje de descuento es requerido',
         ];
     }
 }

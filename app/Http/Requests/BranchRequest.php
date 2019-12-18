@@ -24,11 +24,11 @@ class BranchRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'email' => 'required',
-            'rfc' => 'required',
-            'phone_number' => 'required',
-            'address' => 'required'
+            'name' => 'required|string|max:25',
+            'rfc'  => 'required|string|min:10|max:13',
+            'email' => 'required|email:branches',
+            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'address' => 'required|string|min:5|max:70',
         ];
     }
     public function messages(){

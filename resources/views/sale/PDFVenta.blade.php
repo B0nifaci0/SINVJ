@@ -144,13 +144,8 @@ img {
 
     <body>
         <div border="">
-        <img 
-            align = "left"
-            width="90px"
-            height="90px"
-            src="https://images.vexels.com/media/users/3/151690/isolated/preview/be2ec10fa7ff133565ba9a4bc65aae6c-icono-de-trazo-de-piedra-preciosa-de-diamante-by-vexels.png"
-            alt="Logotipo"
-            ></p>
+     
+            <img align="left" width="90px" height="90px" src="{{$shop->image}}"></p>
             <p>
             {{$branch ? $branch->name : ''}}<br>
             {{$branch ? $branch->name_legal_re : ''}}<br>
@@ -191,7 +186,11 @@ img {
             </table>
             <br>
             @if(count($sale->partials) > 0)
+                @if($sale->paid_out == $sale->total)
+                <p class="centrado">Detalles de pago</p>                
+                @else
                 <p class="centrado">Abonos a la cuenta</p>
+                @endif
 
                 <table class="table-sm table-bordered">
                         <thead>

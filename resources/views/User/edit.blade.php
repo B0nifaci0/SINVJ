@@ -35,25 +35,25 @@ EDITAR USUARIOS
             <!-- Input para editar Nombre-->
             <div class="form-group form-material col-md-6">
               <label>Nombre:</label>
-              <input type="text" class="form-control" value="{{$users->name}}" name="name" required> 
+              <input type="text" class="form-control" value="{{$users->name}}" name="name" required="required"> 
             </div>
             <!-- END Input-->
             <!-- Input para editar Correo Electronico-->
             <div class="form-group form-material col-md-6">
               <label>Correo electronico:</label>
-              <input type="text" class="form-control" value="{{$users->email}}" name="email" required>
+              <input type="text" class="form-control" value="{{$users->email}}" name="email" required="required">
             </div>
             <!-- END Input-->
             <!-- Input para editar Contraseña-->
             <div class="form-group form-material col-md-6">
               <label>Contraseña:</label>
-              <input type="password" class="form-control" value="" name="password" required>
+              <input type="password" class="form-control" value="" name="password" required="required">
             </div>
             <!-- END Input-->
             <!-- Input para editar Contraseña-->
             <div class="form-group form-material col-md-6">
               <label>Confirmar contraseña:</label>
-              <input type="password" class="form-control" value="" name="password_confirm" required>
+              <input type="password" class="form-control" value="" name="password_confirm" required="required">
             </div>
             <!-- END Input-->
             <div>
@@ -64,7 +64,7 @@ EDITAR USUARIOS
              <!-- Select para Seleccionar Sucursal-->
             <div class="col-md-offset-1 visible-md visible-lg col-md-6">
                 <label class="form-control-label" for="inputBranch">Seleccione una Sucursal</label>
-                <select id="branches" class="form-control round sucursales" name="branch_id" >
+                <select id="branches" class="form-control round sucursales" name="branch_id" required="required">
                 <option value=" ">Seleccione Sucursal</option>
                   @foreach ($branches as $branch)
                     <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
@@ -75,7 +75,7 @@ EDITAR USUARIOS
              <!-- Select para Seleccionar Tipo de Usuario-->
             <div class="col-md-6  visible-md visible-lg">
               <label>Tipo de Usuario</label>
-              <select id="type_user" class="form-control round type_user" name="type_user" required >
+              <select id="type_user" class="form-control round type_user" name="type_user" required="required" >
                 <option value="*">Seleccione Tipo de Usuario</option>
                 <option value="2" name='type_user'>Sub-Administrador</option>
                 <option value="3" name='type_usyer'>Colaborador</option>
@@ -85,7 +85,7 @@ EDITAR USUARIOS
              <!-- Input para editar salario-->
             <div class="form-group form-material col-md-6">
               <label class="form-control-label" for="inputBasicFirstName">Salario : </label>
-              <input type="text" name="salary" class="form-control"  value="{{$users->salary}}" placeholder="$ 1000">
+              <input type="text" name="salary" class="form-control"  value="{{$users->salary}}" placeholder="$ 1000" required="required">
             </div>
             <!-- END Input-->
             <br>

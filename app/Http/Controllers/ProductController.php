@@ -48,6 +48,7 @@ class ProductController extends Controller
         });
         $products = Shop::find($shop_id)
           ->products()
+          ->with('line')
           ->whereIn('branch_id', $branch_ids)
           ->where('status_id', 2)
           ->get();
@@ -281,6 +282,13 @@ class ProductController extends Controller
           $data['weigth'] = null;
 
         }
+        if($category->type_product == 1 && !$data['pricepzt']){
+          return back()->withErrors(['msg', 'El precio por pieza es requerido']);
+
+        }
+        elseif($category->type_product == 2 && !$data['weigth']){
+            return back()->withErrors(['msg', 'El peso es requerido']);
+        }
 
         $product = new Product($data);
         $product->date_creation= $date;
@@ -349,7 +357,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductValidate $request, $id)
     {
         $product = Product::findOrFail($id);
 
