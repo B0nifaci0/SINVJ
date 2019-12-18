@@ -185,9 +185,9 @@ class BranchController extends Controller
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.branch_id',$ids)   
-      ->select('lines.id', 'lines.name as name_line', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
+      ->select('lines.id', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
       ->distinct('lines.name')
-      ->groupBy('lines.id', 'lines.name', 'lines.discount_percentage')
+      ->groupBy('lines.id', 'lines.name', 'lines.discount_percentage', 'lines.sale_price')
       ->orderBy('name_line', 'DESC')
       ->get();
      // return $total;
