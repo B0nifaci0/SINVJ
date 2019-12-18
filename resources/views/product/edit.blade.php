@@ -32,13 +32,13 @@ MODIFICACIÓ PRODUCTO
           <!-- Input para ingresar clave del producto-->
           <div class="form-group form-material col-md-3">
               <label>Clave</label>
-              <input type="text" class="form-control" name="clave"  value="{{$product->clave}}" required>
+              <input type="text" class="form-control" name="clave"  value="{{($product->clave) ? $product->clave: old('clave')}}" required>
           </div>
           <!-- END Input-->
             <!-- Input para ingresar descripcion-->
             <div class="form-group form-material col-md-3">
               <label>Descripcion</label>
-              <input type="text" class="form-control" name="description"  value="{{$product->description}}" required>
+              <input type="text" class="form-control" name="description"  value="{{($product->description) ? $product->description: old('description')}}" required>
             </div>
             <!-- END Input--> 
             <!-- Select para Seleccionar linea-->
@@ -46,7 +46,7 @@ MODIFICACIÓ PRODUCTO
                <label  class="control-label">Seleccione Linea</label>
               <select id="line_id"   name="line_id"  class="form-control round">
                 @foreach($lines as $line)            
-                  <option value="{{ $line->id }}" required>{{ $line->name }}</option>
+                  <option value="{{ $line->id }}" required>{{($line->name) ? $line->name :old('$line->name')}}</option>
                 @endforeach
               </select> 
             </div>            
@@ -55,13 +55,13 @@ MODIFICACIÓ PRODUCTO
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
-              <input type="text"  class="form-control"  name="price" value="{{ $product->price }}">
+              <input type="text"  class="form-control"  name="price" value="{{($product->price) ? $product->price: old('$product->price')}}">
             </div>
 
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricecp" class="form-group form-material col-md-3 remove">
               <label>Precio Compra</label>
-              <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{ $product->price_purchase }}">
+              <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{($product->price_purchase) ? $product->price_purchase :old('$product->price_purchase')}}">
             </div> 
             <!-- END Input-->
             <div   class="col-md-3 form-material remove">
@@ -71,8 +71,8 @@ MODIFICACIÓ PRODUCTO
             <!-- END Select-->  
             <!-- Input para ingresar Peso del producto-->
             <div class="form-group form-material col-md-3 remove">
-              <label>Peso</label>
-              <input type="text" id="multiplicador"  class="form-control" name="weigth" > 
+              <label>Gramos</label>
+              <input type="text" id="multiplicador"  class="form-control" name="weigth" value="{{($product->weigth) ? $product->weigth :old('$product->weigth')}}"> 
             </div>
             <!-- END Input-->
             <!-- Input para ingresar precio del producto-->

@@ -134,12 +134,15 @@ LISTA PRODUCTO
                           <a class="inline-block" href="{{ $product->image }}" data-plugin="magnificPopup"
                           data-close-btn-inside="false" data-fixed-contentPos="true"
                           data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
-                          <img class="img-fluid" src="{{ $product->image }}" alt="..." width="220"
-                          />                        </td>
+                          <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150"
+                          />
+                        </td>
                         <td>{{ ($product->category) ? $product->category->name: '' }}</td>
                         <td>{{ ($product->line) ? $product->line->name : '' }}</td>
                         <td>{{ ($product->branch) ? $product->branch->name: '' }}</td>
-                        <td>{{ ($product->status) ? $product->status->name: '' }}</td>
+                        @if($product->status)
+                        <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                        @endif
                         <td>${{$product->price }}</td>
                         @if(Auth::user()->type_user == 1)
                         <td>
@@ -217,12 +220,13 @@ LISTA PRODUCTO
                         <a class="inline-block" href="{{ $product->image }}" data-plugin="magnificPopup"
                           data-close-btn-inside="false" data-fixed-contentPos="true"
                           data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
-                          <img class="img-fluid" src="{{ $product->image }}" alt="..." width="220"
+                          <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150"
                           />
                       </td>
                       <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
-                      <td>{{ ($product->status) ? $product->status->name : '' }}</td>
-
+                      @if($product->status)
+                      <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                      @endif
                       <td>${{$product->price }}</td>
                       @if(Auth::user()->type_user == 1)
                       <td>${{$product->price_purchase}}</td>

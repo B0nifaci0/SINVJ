@@ -107,8 +107,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->name = $request->name;
         $category->type_product = $request->type_product;
-
-        $category->save();
+        $category->save();  
         return redirect('/categorias')->with('mesage-update', 'La categoria se ha modificado exitosamente!');
     }
 

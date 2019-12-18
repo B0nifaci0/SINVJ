@@ -30,7 +30,7 @@ class ProductValidate extends FormRequest
             //'weigth'=> 'required_if:product,is:true',
             //'weigth' => 'required|numeric|max:200',
             'image' => 'image',
-            'pricepzt' => 'required|numeric',
+            //'pricepzt' => 'required|numeric',
             'price_purchase' => 'required|numeric',
             //'category_id' => 'required',
             //'category_id' => 'required_if:product,is:true',
