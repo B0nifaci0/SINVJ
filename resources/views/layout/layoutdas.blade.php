@@ -135,13 +135,15 @@
                 <span class="sr-only">Toggle fullscreen</span>
               </a>
             </li>
-            <!--Buscar-->
+            <!--Buscar
             <li class="nav-item hidden-float">
               <a class="nav-link icon md-search" data-toggle="collapse" href="#" data-target="#site-navbar-search"
                 role="button">
                 <span class="sr-only">Toggle Search</span>
               </a>
             </li>
+
+            -->
 
           </ul>
           <!-- End Navbar Toolbar -->

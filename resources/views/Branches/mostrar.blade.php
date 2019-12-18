@@ -120,6 +120,9 @@ Panel Sucursales
             <div class="mb-20 grey-500">
               <i class="icon md-long-arrow-down red-500 font-size-16"></i>                 - {{$t->descuento}} % De Descuento
             </div>
+            <div class="mb-20 grey-500">
+              <i class="icon md-long-arrow-up green-500 font-size-16"></i>               Precio De Linea: $ {{$t->precio_linea}}
+            </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
         </div>
