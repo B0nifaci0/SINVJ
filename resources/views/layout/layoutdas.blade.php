@@ -948,7 +948,6 @@
     <script src={{{url('global/vendor/babel-external-helpers/babel-external-helpers.js')}}}></script>
     <script src={{{url('global/vendor/jquery/jquery.min.js')}}}></script>
     <script src={{{url('global/vendor/popper-js/umd/popper.min.js')}}}></script>
-    <script src={{{url('global/vendor/bootstrap/bootstrap.js')}}}></script>
     <script src={{{url('global/vendor/animsition/animsition.js')}}}></script>
     <script src={{{url('global/vendor/mousewheel/jquery.mousewheel.js')}}}></script>
     <script src={{{url('global/vendor/asscrollbar/jquery-asScrollbar.js')}}}></script>
