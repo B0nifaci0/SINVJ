@@ -49,9 +49,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <link rel="stylesheet" href="{{{url('/global/css/bootstrap-extend.min.css')}}}">
-    <link rel="stylesheet" href="{{{url('dashboard-assets/assets/global/css/bootstrap.min.css')}}}">
-    <link rel="stylesheet" href="{{{url('dashboard-assets/assets/global/css/bootstrap.min.css')}}}">
-
+    
     <!--<script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>-->
     <!--Ligbox-->
     <link rel="stylesheet" href="{{{url('assets/examples/css/advanced/lightbox.css')}}}">
