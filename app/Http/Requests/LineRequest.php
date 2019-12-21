@@ -24,10 +24,10 @@ class LineRequest extends FormRequest
     public function rules()
     {
          return [
-            'name' => 'required|string',
+            'name' => 'required|string|max:15',
             'purchase_price' => 'required|numeric',
             'sale_price' => 'required|numeric|gt:purchase_price',
-            'discount_percentage' => 'required|between:0,50'
+            'discount_percentage' => 'required|between:0,50|numeric'
         ];
     }
 
