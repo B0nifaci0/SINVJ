@@ -177,9 +177,9 @@ $(document).ready(function() {
             )
             }else{
               Swal.fire(
-                  'Eliminado',
-                  'La sucursal no puede ser eliminado porque tiene usuarios activos',
-                  'error'
+                  'error',
+
+                  response.message
                 )
          } 
         

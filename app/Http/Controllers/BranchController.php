@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\S3ImageManager;
 use App\Category;
+use App\Expense;
+use App\TransferProduct;
 use App\Http\Requests\BranchRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -221,12 +223,35 @@ class BranchController extends Controller
         //Branch::destroy($id);
         // return redirect('/sucursales')->with('mesage', 'La sucursal  se ha eliminado exitosamente!');
         //METODO NO SE PUEDE ELIMINAR SI LA SUCURSAL TIENE PRODUCTOS
-        $exist =  User::where('branch_id', $id)->get()->count();
+        $exist =  Product::where('branch_id', $id)->get()->count();
         //return $exist;
         if($exist > 0){
           return response()->json([
-            'success' => false
+            'success' => false,
+            'message' => 'La sucursal no puede ser eliminada, porque tiene productos existentes', 
           ]);
+        }
+        $existe = User::where('branch_id', $id)->get()->count();
+        //return $existe;
+        if($existe > 0){
+          return response()->json([
+            'success' => false,
+            'message' => 'La sucursal no puede ser eliminada, porque tiene usuarios asignados',
+          ]);
+        $have = TransferProduct::where('branch_id', $id)->get()->count();
+        if($have > 0){
+          return response()->json([
+            'success' => false,
+            'message' => 'La sucursal no puede ser eliminda, porque tiene transferencias activas',
+          ]);
+        }
+        $has = Expense::where('branch_id', $id)->get()->count();
+        if($has > 0){
+          return response()->json([
+            'success' => false,
+            'message' => 'La sucursal no puede ser eliminada, porque tiene gastos existentes',
+          ]);
+        }
         }else{
           Branch::destroy($id);
           return response()->json([
