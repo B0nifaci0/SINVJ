@@ -29,7 +29,7 @@
 
 .producto {
     font-weight: bold;
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     align-content: center;
 }

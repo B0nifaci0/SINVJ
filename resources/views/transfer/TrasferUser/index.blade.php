@@ -134,10 +134,10 @@ TRASFERENCIAS
                         @if(Auth::user()->id == $transfer->user_id)
                           <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
                         @else
-                          Por pagar
+                        <span class="text-center badge badge-warning">Por pagar</span>
                         @endif
                       @else
-                        Pagado
+                        <span class="text-center badge badge-success">Pagado</span>
                       @endif
                     @endif
                     <!-- END Botón-->
