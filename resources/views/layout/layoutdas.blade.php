@@ -841,7 +841,7 @@
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/sucursalproductoCO">
                           <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
-                            <span class="site-menu-title">Productos Tienda</span>
+                            <span class="site-menu-title">Mis Productos</span>
                         </a>
                       </li>
                     </ul>

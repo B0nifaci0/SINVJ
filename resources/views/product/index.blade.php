@@ -46,7 +46,7 @@ LISTA PRODUCTO
     <div class="panel">
       <div class="panel-body">
         <div class="example-wrap">
-          <h1 class="text-center panel-title">{{ $title }}</h1>
+          <h1 class="text-center panel-title">Productos De Tienda</h1>
 
           <div class="panel-actions">
 
