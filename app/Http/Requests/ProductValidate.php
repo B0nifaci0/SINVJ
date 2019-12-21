@@ -32,6 +32,7 @@ class ProductValidate extends FormRequest
             'image' => 'image',
             //'pricepzt' => 'required|numeric',
             'price_purchase' => 'required|numeric',
+            'price' => 'required|numeric',
             //'category_id' => 'required',
             //'category_id' => 'required_if:product,is:true',
             'line_id' => 'required',

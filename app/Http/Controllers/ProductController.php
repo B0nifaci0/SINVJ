@@ -40,7 +40,7 @@ class ProductController extends Controller
     		$products = Product::where([
           'branch_id' => $user->branch_id,
           'status_id' => 2
-          ])->get();
+          ])->orderBy('description','asc')->get();
     	} else {
       	$branches = Branch::where('shop_id', $user->shop->id)->get();
       	$branch_ids = $branches->map(function($item) {
@@ -166,7 +166,7 @@ class ProductController extends Controller
         $user = Auth::user();
         $shop_id = $user->shop->id;
         if($user->type_user == User::CO) {
-          $products = Product::where('branch_id', $user->branch_id)->get();
+          $products = Product::where('branch_id', $user->branch_id)->orderBy('description','asc')->get();
         } else {
           $products = Shop::find($shop_id)->products()->get();
         }
@@ -485,6 +485,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       ->where("status_id","=",$request->estatus_id)
       ->where("category_id","=",$request->category_id)
       ->where("line_id","=",$request->id)
+      ->orderBy('description','asc')
       ->get();
 
       $detalle = SaleDetails::all();
@@ -551,6 +552,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       //return $lines;
       $products = Product::where("branch_id","=",$request->branch_id)
                           ->where("line_id","=",$request->id)
+                          ->orderBy('description','asc')
                           ->get();
 
       $hour = Carbon::now();
@@ -624,6 +626,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       ->where("line_id","=",$request->id)
       ->where('date_creation','=',$fech1)
       ->where('date_creation','=',$fech2)
+      ->orderBy('description','asc')
       ->get();
       //return $products;
       $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('shop','shops','products','branches','lines','hour','dates'));
@@ -636,6 +639,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
         $products = Product::where("branch_id","=",$request->branch_id)
         ->where("line_id","=",$request->id)
         ->whereBetween('date_creation',[$fech1,$fech2])
+        ->orderBy('description','asc')
         ->get();
         //return $products;
         $shop = Auth::user()->shop; 
