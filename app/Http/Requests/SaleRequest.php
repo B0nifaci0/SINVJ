@@ -24,10 +24,8 @@ class SaleRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_name' => 'required|string|max:100',
-            'telephone' => 'required|numeric|regex:/^[0-9]{10}$/',
-            'total' => 'required|numeric|gt:paid_out',
-            'paid_out' => 'required|numeric'
+            'customer_name' => 'required|string|max:50|min:3',
+            'telephone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
         ];
     }
 

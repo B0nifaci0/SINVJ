@@ -35,7 +35,7 @@ return [
     'email'                => ':attribute no es un correo válido',
     'exists'               => ':attribute es inválido.',
     'filled'               => 'El campo :attribute es obligatorio.',
-    'image'                => ':attribute debe ser una imagen.',
+    'image'                => 'el formato para la imagen no es valid debe ser .jpg .png',
     'in'                   => ':attribute es inválido.',
     'in_array'             => 'El campo :attribute no existe en :other.',
     'integer'              => ':attribute debe ser un número entero.',
