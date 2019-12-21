@@ -146,7 +146,7 @@ img {
         <p align= "right">Fecha: {{$date}}</p>
         <p align= "right">Hora: {{$hour}}</p>
         <div border="">
-        <img class="img-responsive " width="80px" height="80px" src="{{ $shop->image }}">
+        <img class="img-responsive " width="70px" height="70px" src="{{ $shop->image }}">
             
 
             <p class="centrado">¡COMPROBANTE DE GASTO!

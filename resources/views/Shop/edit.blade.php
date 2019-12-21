@@ -36,25 +36,25 @@ MODIFICACIÓN TIENDA
             <div class="form-group form-material col-md-6">
                     <label>Descripcion</label>
                     @if($shop->description == "NULL")
-                    <input type="text" class="form-control" name="description"  value=" ">
+                    <input type="text" class="form-control" name="description"  value=" " required="required">
                     @elseif($shop->description != "NULL")
-                    <input type="text" class="form-control" name="description"  value="{{$shop->description}}">
+                    <input type="text" class="form-control" name="description"  value="{{$shop->description}}" required="required">
                     @endif
             </div>
             <div class="form-group form-material col-md-6">
                     <label>Correo</label>
                     @if($shop->email == "NULL")
-                    <input type="text" class="form-control" name="email"  value=" ">
+                    <input type="text" class="form-control" name="email"  value=" " required="required">
                     @elseif($shop->email != "NULL")
-                    <input type="text" class="form-control" name="email"  value="{{$shop->email}}">
+                    <input type="text" class="form-control" name="email"  value="{{$shop->email}}" required="required">
                     @endif
             </div>
             <div class="form-group form-material col-md-6">
                     <label>Telefono</label>
                     @if($shop->phone_number == "NULL")
-                    <input type="text" class="form-control" name="phone_number"  value=" ">
+                    <input type="text" class="form-control" name="phone_number"  value=" " required="required">
                     @elseif($shop->phone_number != "NULL")
-                    <input type="text" class="form-control" name="phone_number"  value="{{$shop->phone_number}}">
+                    <input type="text" class="form-control" name="phone_number"  value="{{$shop->phone_number}}" required="required">
                     @endif
             </div>
                 <!-- Input Para ingresar Contraseña-->

@@ -98,7 +98,7 @@ Panel Sucursales
       </div>
 
       <div class="col-12">
-      <div class="panel-danger">
+      <div class="panel-success">
       <div class="panel-heading">
         <h2 class="panel-title" style="color:black">Lineas</h2>
         </div>
@@ -108,18 +108,22 @@ Panel Sucursales
       @foreach($total as $t)
       <div class="col-sm-4">
         <!-- Widget Linearea One-->
-        <div class="card card-shadow border-danger">
+        <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10 card-header">
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$t->name_line}}
               </div><br>
-              <span class="float-right grey-700 font-size-16">Gramos:  {{$t->total_w}} gr
-              <br>@foreach($total1 as $t1) Venta:   $ {{$t1->total_p}}  @endforeach</span>
+              <span class="float-right grey-700 font-size-16">@if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2) Gramos:  {{$t->total_w}} gr @else Gramos:  {{$t->total_w}} gr = $ {{number_format($t->total_line_p,2)}}
+              <br>Con Descuento: $ {{number_format($t->total_discount,2)}} </span>
             </div>
             <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>                  15% Ventas
+              <i class="icon md-long-arrow-down red-500 font-size-16"></i>                 - {{$t->descuento}} % De Descuento
             </div>
+            <div class="mb-20 grey-500">
+              <i class="icon md-long-arrow-up green-500 font-size-16"></i>               Precio De Linea: $ {{$t->precio_linea}}
+            </div>
+            @endif
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
         </div>
@@ -132,9 +136,9 @@ Panel Sucursales
       </div>
       
       <div class="col-12">
-      <div class="panel-dark">
+      <div class="panel-success">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Categorias</h2>
+        <h2 class="panel-title" style="color:black">Categorias</h2>
         </div>
         <div>
 
@@ -151,9 +155,6 @@ Panel Sucursales
               </div><br>
               <span class="float-right grey-700 font-size-16 card-text">Venta:  $ {{$c->total}}
               <br>Piezas:   {{$c->num_pz}} pzs </span>
-            </div>
-            <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16 card-text"></i>                  15% Ventas
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>

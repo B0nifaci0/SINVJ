@@ -29,7 +29,7 @@
 
 .producto {
     font-weight: bold;
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     align-content: center;
 }
@@ -79,6 +79,7 @@
    </style>
 
 <body>
+<img class="img-responsive " width="90px" height="90px" src="{{ $shop->image }}">
         @foreach ($trans as $transfer)
         <div class="ticket" id = "{{$transfer->id}}">
                 <p class="titulo">TRASPASO</p>

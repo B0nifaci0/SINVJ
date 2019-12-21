@@ -10,14 +10,18 @@ use App\Client;
 use App\User;
 use App\Branch;
 use App\Partial;
-use PDF;
-use DB;
+use App\Shop;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaleRequest;
+use Illuminate\Support\Facades\Storage;
+use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\Auth;
-
+use PDF;
+use DB;
 class SaleController extends Controller
 { 
+  use S3ImageManager;
     public function __construct()
       {
           //$this->middleware('Authentication');
@@ -230,8 +234,17 @@ class SaleController extends Controller
    
 }
 public function exportPdfall(){ 
+  $user = Auth::user();
+        $date= date("Y-m-d");
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+        $branches = $user->shop->branches;
+        $shop = Auth::user()->shop;
+        if($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
   $sales = Sale::all();
-  $pdf  = PDF::loadView('sale.PDFVentas', compact('sales'));
+  $pdf  = PDF::loadView('sale.PDFVentas', compact('sales','date','hour','shop','branches'));
   return $pdf->stream('venta.pdf');
 }
 
@@ -253,17 +266,18 @@ public function exportPdf( Request $request, $id) {
 	//   $shops = Auth::user()->shop()->get();
 	//   $branches = Branch::where('shop_id', $user->shop->id)->get();
   //return [$sales,$branches,$user,$shops];
-  $user = Auth::user();
-  $shop_id = Auth::user()->shop->id; 
-  $shop = Auth::user()->shop()->get();
- 
-  //return $shops; 
+ $shop = Auth::user()->shop; 
+  $shops = Auth::user()->shop()->get();
+  
+      if($shop->image) {
+          $shop->image = $this->getS3URL($shop->image);
+      }
 	$sale = Sale::with(['partials', 'client'])->findOrFail($id);
 	$sale->itemsSold = $sale->itemsSold();
 	$sale->total = $sale->itemsSold->sum('final_price');
 
   $branch = Branch::find($sale->branch_id);
-  $pdf  = PDF::loadView('sale.PDFVenta', compact('shop','sale','branch','shop_id')); 
+  $pdf  = PDF::loadView('sale.PDFVenta', compact('shop','sale','branch')); 
   return $pdf->stream('venta.pdf');
  // return $branches;
 } 

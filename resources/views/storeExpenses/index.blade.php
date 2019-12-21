@@ -171,7 +171,11 @@ LISTA DE  GASTOS
                   <td>{{ $expense->descripcion }}</td>
                   <td>$ {{$expense->price}}</td>
                   <td>
-                    <img class="clickme" width="100px" height="100px" src="{{ $expense->image }}">
+                        <a class="inline-block" href="{{ $expense->image }}" data-plugin="magnificPopup"
+                          data-close-btn-inside="false" data-fixed-contentPos="true"
+                          data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
+                          <img class="img-fluid" src="{{ $expense->image }}" alt="..." width="200" height="150"
+                          />
                   </td>
                   <td>{{$expense->branch ? $expense->branch->name : '' }}</td>
                   <td>  
@@ -208,18 +212,7 @@ LISTA DE  GASTOS
     </div>
   </div>
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
 
-  <!-- The Close Button -->
-  <span class="closeimage">&times;</span>
-
-  <!-- Modal Content (The Image) -->
-  <img class="modal-content" id="img01">
-
-  <!-- Modal Caption (Image Text) -->
-  <div id="caption"></div>
-</div>
 @endsection
 <!-- Función Sweet Alert para eliminar gasto-->
 @section('delete-gastos')

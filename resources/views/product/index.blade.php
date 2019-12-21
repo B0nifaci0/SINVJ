@@ -46,7 +46,7 @@ LISTA PRODUCTO
     <div class="panel">
       <div class="panel-body">
         <div class="example-wrap">
-          <h1 class="text-center panel-title">{{ $title }}</h1>
+          <h1 class="text-center panel-title">Productos De Tienda</h1>
 
           <div class="panel-actions">
 
@@ -96,6 +96,7 @@ LISTA PRODUCTO
                         <th>Observaciónes</th>
                         <th>Imagen</th>
                         <th>Categoría</th>
+                        <th>Linea</th>
                         <th>Sucursal</th>
                         <th>Status</th>
                         <th>precio</th>
@@ -112,6 +113,7 @@ LISTA PRODUCTO
                         <th>Observaciónes</th>
                         <th>Imagen</th>
                         <th>Categoría</th>
+                        <th></th>
                         <th>Sucursal</th>
                         <th>Status</th>
                         <th>Precio</th>
@@ -129,11 +131,18 @@ LISTA PRODUCTO
                         <td>{{ $product->weigth }}</td>
                         <td>{{ $product->observations }}</td>
                         <td>
-                          <img width="100px" height="100px" src="{{ $product->image }}">
+                          <a class="inline-block" href="{{ $product->image }}" data-plugin="magnificPopup"
+                          data-close-btn-inside="false" data-fixed-contentPos="true"
+                          data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
+                          <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150"
+                          />
                         </td>
                         <td>{{ ($product->category) ? $product->category->name: '' }}</td>
+                        <td>{{ ($product->line) ? $product->line->name : '' }}</td>
                         <td>{{ ($product->branch) ? $product->branch->name: '' }}</td>
-                        <td>{{ ($product->status) ? $product->status->name: '' }}</td>
+                        @if($product->status)
+                        <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                        @endif
                         <td>${{$product->price }}</td>
                         @if(Auth::user()->type_user == 1)
                         <td>
@@ -208,11 +217,16 @@ LISTA PRODUCTO
                       <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                       <td>{{ $product->observations }}</td>
                       <td>
-                        <img width="100px" height="100px" src="{{ $product->image }}">
+                        <a class="inline-block" href="{{ $product->image }}" data-plugin="magnificPopup"
+                          data-close-btn-inside="false" data-fixed-contentPos="true"
+                          data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
+                          <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150"
+                          />
                       </td>
                       <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
-                      <td>{{ ($product->status) ? $product->status->name : '' }}</td>
-
+                      @if($product->status)
+                      <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                      @endif
                       <td>${{$product->price }}</td>
                       @if(Auth::user()->type_user == 1)
                       <td>${{$product->price_purchase}}</td>
@@ -225,7 +239,8 @@ LISTA PRODUCTO
                         <!-- END Botón-->
                         <!-- Botón para eliminar producto -->
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                          alt="{{$product->id}}" role="button" data-toggle="tooltip" data-original-title="Borrar">
+                          alt="{{$product->id}}" role="button"
+                          data-toggle="tooltip" data-original-title="Borrar">
                           <i class="icon md-delete" aria-hidden="true"></i>
                         </button>
                         <!-- END Botón-->

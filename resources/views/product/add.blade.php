@@ -53,13 +53,13 @@ ALTA PRODUCTO
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
-              <input type="text"  class="form-control"  name="pricepzt">
+              <input type="text"  class="form-control"  name="pricepzt" value="{{old('pricepzt')}}">
             </div>
 
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricecp" class="form-group form-material col-md-3 remove">
               <label>Precio Compra</label>
-              <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase">
+              <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{old('price_purchase')}}">
             </div> 
             <!-- END Input-->
             <div   class="col-md-3 form-material remove">
@@ -69,7 +69,7 @@ ALTA PRODUCTO
             <!-- END Select-->  
             <!-- Input para ingresar Peso del producto-->
             <div class="form-group form-material col-md-3 remove">
-              <label>Peso</label>
+              <label>Gramos</label>
               <input type="text" id="multiplicador"  class="form-control" name="weigth" > 
             </div>
             <!-- END Input-->
@@ -117,7 +117,7 @@ ALTA PRODUCTO
             <!-- Input para ingresar Observaciones-->
             <div class="form-group form-material col-md-3">
               <label>Observaciones</label>
-              <input type="text" class="form-control" name="observations"  value="{{old('observations')}}" required>
+              <input type="text" class="form-control" name="observations"  value="{{old('observations')}}">
             </div>
             <!-- END Input--> 
             <!-- Input para Seleccionar Imagen del producto-->
@@ -227,7 +227,6 @@ setTimeout(() => {
 $('#categorie_id').change(function(){
     $('#pricepz').val(0);
     $('#pricecp').val(0)
-
 
     var categoryTypeproduct = {!! $categories !!};
     var categoryId = $(this).val();

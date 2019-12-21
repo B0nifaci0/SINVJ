@@ -47,7 +47,7 @@ ALTA VENTA
                             <!-- Input para Ingresar Nombre del cliente-->
                             <div class="form-group form-material">
                                 <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente: </label>
-                                <input type="text" class="form-control" name="customer_name" placeholder="Fernando Bonifacio" />
+                                <input type="text" class="form-control" required="required" name="customer_name" value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
                             </div>
                             <!-- END Input-->
                         </div>
@@ -55,7 +55,7 @@ ALTA VENTA
                             <!-- Input para Ingresar telefono del cliente-->
                             <div class="form-group form-material">
                                 <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-                                <input type="text" class="form-control" name="telephone" value="{{old('telephone')}}" placeholder="7225674569" />
+                                <input type="text" class="form-control" required="required" name="telephone" value="{{old('telephone')}}" placeholder="7225674569" />
                             </div>
                             <!-- END Input-->
                         </div>
@@ -108,8 +108,8 @@ ALTA VENTA
                       <th>Categoría</th>
                       <th>Linea</th>
                       <th>Sucursal</th>
-                      <th>Precio de linea</th>
-                      <th>Precio mínimo</th>
+                      <th>Precio Max</th>
+                      <th>Precio Min</th>
                       <th>Precio final</th>
                       <th>Eliminar</th>
                     </tr>
