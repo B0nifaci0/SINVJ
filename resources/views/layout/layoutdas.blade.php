@@ -28,15 +28,13 @@
 
 
     <!-- Plugins -->
-        <!--<link rel="stylesheet" href={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}}>-->
-    <link rel="stylesheet" href={{{url('global/vendor/animsition/animsition.css')}}}>
+     <link rel="stylesheet" href={{{url('global/vendor/animsition/animsition.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/asscrollable/asScrollable.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/switchery/switchery.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/intro-js/introjs.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/slidepanel/slidePanel.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/flag-icon-css/flag-icon.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/waves/waves.css')}}}>
-    <link rel="stylesheet" href={{{url('global/vendor/chartist/chartist.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/jvectormap/jquery-jvectormap.css')}}}>
     <link rel="stylesheet" href={{{url('assets/examples/css/dashboard/v1.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.css')}}}>
@@ -944,7 +942,6 @@
 <section>-->
   @yield('js')
     <!-- Core  -->
-      <script src="{{{url('/global/vendor/jquery/jquery.js')}}}"></script>
     <script src={{{url('global/vendor/babel-external-helpers/babel-external-helpers.js')}}}></script>
     <script src={{{url('global/vendor/jquery/jquery.min.js')}}}></script>
     <script src={{{url('global/vendor/popper-js/umd/popper.min.js')}}}></script>
@@ -955,13 +952,11 @@
     <script src={{{url('global/vendor/waves/waves.js')}}}></script>
 
     <!-- Plugins -->
-    <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
-    <script src={{{url('global/vendor/switchery/switchery.js')}}}></script>
+ <script src={{{url('global/vendor/switchery/switchery.js')}}}></script>
     <script src={{{url('global/vendor/intro-js/intro.js')}}}></script>
     <script src={{{url('global/vendor/screenfull/screenfull.js')}}}></script>
     <script src={{{url('global/vendor/slidepanel/jquery-slidePanel.js')}}}></script>
-    <script src={{{url('global/vendor/chartist/chartist.min.js')}}}></script>
-    <!--<script src={{{url('global/vendor/jvectormap/jquery-jvectormap.min.js')}}}></script>-->
+     <!--<script src={{{url('global/vendor/jvectormap/jquery-jvectormap.min.js')}}}></script>-->
     <!--<script src={{{url('global/vendor/jvectormap/maps/jquery-jvectormap-world-mill-en.js')}}}></script>-->
     <script src={{{url('global/vendor/matchheight/jquery.matchHeight-min.js')}}}></script>
     <script src={{{url('global/vendor/peity/jquery.peity.min.js')}}}></script>
@@ -1005,7 +1000,6 @@
     <script src={{{url('global/js/Plugin/jvectormap.js')}}}></script>
     <script src={{{url('global/js/Plugin/peity.js')}}}></script>
     <script src={{{url('global/js/Plugin/select2.js')}}}></script>
-    <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
     <script src={{{url('global/js/Plugin/dropify.js')}}}></script>
     <!--<script src={{{url('assets/examples/js/forms/uploads.js')}}}></script>-->
 
@@ -1036,7 +1030,6 @@
     <script src={{{url('global/js/Plugin/jvectormap.js')}}}></script>
     <script src={{{url('global/js/Plugin/peity.js')}}}></script>
 
-    <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
     <script src={{{url('global/js/Plugin/icheck.js')}}}></script>
 
     <!-- datatable -->
@@ -1044,12 +1037,8 @@
     <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-    <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
-    <script src={{{url('global/vendor/tooltip/tooltip-popover.js')}}}></script>
-    <script src="{{{url('global/js/components/material.js')}}}"></script>
-    <script src="{{{url('global/vendor/bootstrap/bootstrap.js')}}}"></script>
-    <script src={{{url('assets/examples/js/advanced/lightbox.js')}}}></script>
-    <script src={{{url('global/js/Plugin/magnific-popup.js')}}}></script>
+     <script src="{{{url('global/vendor/bootstrap/bootstrap.js')}}}"></script>
+     <script src={{{url('global/js/Plugin/magnific-popup.js')}}}></script>
     <script src={{{url('global/vendor/magnific-popup/jquery.magnific-popup.js')}}}></script>
 
 
