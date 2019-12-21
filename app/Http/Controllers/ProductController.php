@@ -297,12 +297,24 @@ class ProductController extends Controller
           $data['weigth'] = null;
 
         }
-        if($category->type_product == 1 && !$data['pricepzt']){
-          return back()->withErrors(['msg', 'El precio por pieza es requerido']);
 
+        $categories = Auth::user()->shop->categories()->get();
+        $client_category_id = $request->category_id;
+
+        $selected_category = $categories->filter(function ($value, $key) use ($client_category_id) {
+            return $value->id == $client_category_id;
+        })->first();
+
+        $categories = $categories->reject(function ($value, $key) use ($client_category_id) {
+            return $value->id == $client_category_id;
+        });
+        $categories->prepend($selected_category);
+        
+        if($category->type_product == 1 && (!$data['pricepzt']) || !is_numeric($data['pricepzt'])){
+          return back()->with('categories', $categories)->withErrors(['msg', 'El precio por pieza es requerido y debe ser numerico']);
         }
-        elseif($category->type_product == 2 && !$data['weigth']){
-            return back()->withErrors(['msg', 'El peso es requerido']);
+        elseif($category->type_product == 2 && (!$data['weigth']) || !is_numeric($data['weigth'])){
+            return back()->with('categories', $categories)->withErrors(['msg', 'El peso es requerido y debe ser numerico']);
         }
 
         $product = new Product($data);
