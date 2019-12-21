@@ -220,7 +220,8 @@ class BranchController extends Controller
     {
         //Branch::destroy($id);
         // return redirect('/sucursales')->with('mesage', 'La sucursal  se ha eliminado exitosamente!');
-        $exist =  Product::where('branch_id', $id)->get()->count();
+        //METODO NO SE PUEDE ELIMINAR SI LA SUCURSAL TIENE PRODUCTOS
+        $exist =  User::where('branch_id', $id)->get()->count();
         //return $exist;
         if($exist > 0){
           return response()->json([
@@ -233,7 +234,6 @@ class BranchController extends Controller
           ]);
         }
     }
-
     public function users($id)
     {
     	///echo "dfsd";

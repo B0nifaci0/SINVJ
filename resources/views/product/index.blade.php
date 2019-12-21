@@ -239,7 +239,8 @@ LISTA PRODUCTO
                         <!-- END Botón-->
                         <!-- Botón para eliminar producto -->
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                          alt="{{$product->id}}" role="button" data-toggle="tooltip" data-original-title="Borrar">
+                          alt="{{$product->id}}" role="button"
+                          data-toggle="tooltip" data-original-title="Borrar">
                           <i class="icon md-delete" aria-hidden="true"></i>
                         </button>
                         <!-- END Botón-->

@@ -28,7 +28,7 @@ class BranchRequest extends FormRequest
             'rfc'  => 'required|string|min:10|max:13',
             'email' => 'required|email:branches',
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'address' => 'required|string|min:5|max:70',
+            'address' => 'required|string|min:5|max:100',
         ];
     }
     public function messages(){

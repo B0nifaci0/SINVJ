@@ -178,7 +178,7 @@ $(document).ready(function() {
             }else{
               Swal.fire(
                   'Eliminado',
-                  'La sucursal no puede ser eliminado porque tiene productos activos',
+                  'La sucursal no puede ser eliminado porque tiene usuarios activos',
                   'error'
                 )
          } 

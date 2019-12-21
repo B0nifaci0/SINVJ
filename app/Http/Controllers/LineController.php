@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Line;
 use App\Shop;
 use App\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\LineRequest;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\S3ImageManager;
 use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -18,6 +20,8 @@ use  App\Exports\LinesExport;
 
 class LineController extends Controller
 {
+    use S3ImageManager;
+    
     public function __construct()
     {
         //$this->middleware('Authentication');
@@ -133,9 +137,16 @@ class LineController extends Controller
     }
 // Funcion para gener pdf!!
     public function exportPdf(){ 
+        $date= date("Y-m-d");
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+        $shop = Auth::user()->shop;
+        if($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
         $lines = Line::all();
-        $pdf  = PDF::loadView('line.pdf', compact('lines'));
-        return $pdf->download('lineas.pdf');
+        $pdf  = PDF::loadView('line.pdf', compact('lines','date','hour','shop'));
+        return $pdf->stream('lineas.pdf');
     }
 
     // Funcion para gener excel!!

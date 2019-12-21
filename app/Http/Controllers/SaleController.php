@@ -11,6 +11,7 @@ use App\User;
 use App\Branch;
 use App\Partial;
 use App\Shop;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\SaleRequest;
 use Illuminate\Support\Facades\Storage;
@@ -233,8 +234,17 @@ class SaleController extends Controller
    
 }
 public function exportPdfall(){ 
+  $user = Auth::user();
+        $date= date("Y-m-d");
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+        $branches = $user->shop->branches;
+        $shop = Auth::user()->shop;
+        if($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
   $sales = Sale::all();
-  $pdf  = PDF::loadView('sale.PDFVentas', compact('sales'));
+  $pdf  = PDF::loadView('sale.PDFVentas', compact('sales','date','hour','shop','branches'));
   return $pdf->stream('venta.pdf');
 }
 

@@ -15,12 +15,14 @@ use Carbon\Carbon;
 use PDF;
 use DB;
 use Auth;
+use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\Storage;
 
 
 
 class TranferProductsController extends Controller
 {
+  use S3ImageManager;
     public function __construct(){
     }
     public function index()
@@ -155,16 +157,30 @@ class TranferProductsController extends Controller
 
   
 public function exportPdfall(){ 
+  $user = Auth::user();
+        $date= date("Y-m-d");
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+        $branches = $user->shop->branches;
+        $shop = Auth::user()->shop;
+        if($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
     $trans = TransferProduct::all();
-    $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans'));
+    $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans','date','hour','shop'));
     $pdf->setpaper('letter', 'landscape');
     return $pdf->stream('Traspasos.pdf');  
   }
 
     public function exportPdf($id){
      // return $id;
+     $user = Auth::user();
+     $shop = Auth::user()->shop;
+        if($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
     $trans = TransferProduct::where("id","=",$id)->get();
-    $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));
+    $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans','shop'));
     return $pdf->stream('Traspaso.pdf');
   }
 
