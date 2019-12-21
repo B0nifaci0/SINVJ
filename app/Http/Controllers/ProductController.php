@@ -41,7 +41,7 @@ class ProductController extends Controller
     		$products = Product::where([
           'branch_id' => $user->branch_id,
           'status_id' => 2
-          ])->orderBy('description','asc')->get();
+          ])->orderBy('clave','asc')->get();
     	} else {
       	$branches = Branch::where('shop_id', $user->shop->id)->get();
       	$branch_ids = $branches->map(function($item) {
@@ -512,7 +512,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       ->where("status_id","=",$request->estatus_id)
       ->where("category_id","=",$request->category_id)
       ->where("line_id","=",$request->id)
-      ->orderBy('description','asc')
+      ->orderBy('clave','asc')
       ->get();
 
       $detalle = SaleDetails::all();
@@ -579,7 +579,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       //return $lines;
       $products = Product::where("branch_id","=",$request->branch_id)
                           ->where("line_id","=",$request->id)
-                          ->orderBy('description','asc')
+                          ->orderBy('clave','asc')
                           ->get();
 
       $hour = Carbon::now();
@@ -653,7 +653,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       ->where("line_id","=",$request->id)
       ->where('date_creation','=',$fech1)
       ->where('date_creation','=',$fech2)
-      ->orderBy('description','asc')
+      ->orderBy('clave','asc')
       ->get();
       //return $products;
       $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('shop','shops','products','branches','lines','hour','dates'));
@@ -666,7 +666,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
         $products = Product::where("branch_id","=",$request->branch_id)
         ->where("line_id","=",$request->id)
         ->whereBetween('date_creation',[$fech1,$fech2])
-        ->orderBy('description','asc')
+        ->orderBy('clave','asc')
         ->get();
         //return $products;
         $shop = Auth::user()->shop; 
@@ -734,24 +734,12 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
     ->join('statuss','statuss.id','products.status_id')
     ->join('lines','lines.id','products.line_id')
     ->where('statuss.id',2)
-    //->where('lines.shop_id', Auth::user()->shop->id)  
-    ->where('categories.type_product',2)  
-    ->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as total_w'))
-    ->distinct('lines.name')
-    ->groupBy('lines.id', 'lines.name')
-    ->get();
-    $totals1 = Shop::join('products','products.shop_id','shops.id')
-    ->join('categories','categories.id','products.category_id')
-    ->join('statuss','statuss.id','products.status_id')
-    ->join('lines','lines.id','products.line_id')
-    ->where('statuss.id',2)
     ->where('lines.shop_id', Auth::user()->shop->id)  
     ->where('categories.type_product',2)  
-    ->select('lines.id', 'lines.name', DB::raw('SUM(products.price) as total_p'))
+    ->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as total_w, SUM(products.price) as total_p'))
     ->distinct('lines.name')
     ->groupBy('lines.id', 'lines.name')
     ->get();
-   // return $totals;
 
     $pdf  = PDF::loadView('product.Reports.reportLineaGGeneral', compact('shop','hour','dates','shops','branches','lines','products','totals','totals1'));
     return $pdf->stream('ReporteLineasGeneral.pdf');
