@@ -108,13 +108,11 @@
                 </thead>
                 <tbody>
                 @foreach ($totals as $i => $total)
-                @foreach ($totals1 as $i => $total1)
                     <tr>
                         <td>{{$total->name}}</td>
                         <td>{{$total->total_w}} gr</td>
-                        <td>$ {{$total1->total_p}}</td>
+                        <td>$ {{$total->total_p}}</td>
                     </tr>
-                @endforeach 
                 @endforeach 
                 </tbody>    
             </table>

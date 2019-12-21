@@ -106,6 +106,23 @@ Panel Sucursales
 
         <div class="row">
       @foreach($total as $t)
+      @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
+      <div class="col-sm-3">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow border-success">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10 card-header">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$t->name_line}}
+              </div><br>
+              <span class="float-right grey-700 font-size-16">Gramos:  {{$t->total_w}} gr </span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+      @else
       <div class="col-sm-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-success">
@@ -114,7 +131,7 @@ Panel Sucursales
               <div class="grey-800 float-left py-10 card-header">
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$t->name_line}}
               </div><br>
-              <span class="float-right grey-700 font-size-16">@if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2) Gramos:  {{$t->total_w}} gr @else Gramos:  {{$t->total_w}} gr = $ {{number_format($t->total_line_p,2)}}
+              <span class="float-right grey-700 font-size-16">Gramos:  {{$t->total_w}} gr = $ {{number_format($t->total_line_p,2)}}
               <br>Con Descuento: $ {{number_format($t->total_discount,2)}} </span>
             </div>
             <div class="mb-20 grey-500">
@@ -123,12 +140,12 @@ Panel Sucursales
             <div class="mb-20 grey-500">
               <i class="icon md-long-arrow-up green-500 font-size-16"></i>               Precio De Linea: $ {{$t->precio_linea}}
             </div>
-            @endif
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
         </div>
         <!-- End Widget Linearea One -->
       </div>
+      @endif
       @endforeach
       </div>
       </div>
@@ -145,7 +162,7 @@ Panel Sucursales
         <div class="row">
       @foreach($category as $c)
       
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10 card-body text-dark">
