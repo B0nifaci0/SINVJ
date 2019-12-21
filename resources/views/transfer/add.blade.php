@@ -22,7 +22,7 @@ ALTA PRODUCTO
             </ul>
           </div>
         @endif
-        <center><h3>Nuevo Traspaso</h3></center>
+        <center><h3>Nuevo Traspasossss</h3></center>
         <form class="" action="/traspasos" method="POST">
           {{ csrf_field() }} 
           <div class='row'>
@@ -34,7 +34,7 @@ ALTA PRODUCTO
                 <option></option>
                 <optgroup label="Productos">
                   @foreach($products as $product)
-                  <option value="{{ $product->id }}" required>{{$product->id}}-{{ $product->description }}</option>
+                  <option value="{{ $product->id }}" required>{{$product->clave}}-{{ $product->description }}</option>
                   @endforeach
                 </optgroup>
               </select>

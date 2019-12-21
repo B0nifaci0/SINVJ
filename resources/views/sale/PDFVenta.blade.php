@@ -144,13 +144,8 @@ img {
 
     <body>
         <div border="">
-        <img 
-            align = "left"
-            width="90px"
-            height="90px"
-            <img align="left" width="90px" height="90px" src="{{ $shop->image }}">
-            alt="Logotipo"
-            ></p>
+     
+            <img align="left" width="90px" height="90px" src="{{$shop->image}}"></p>
             <p>
             {{$branch ? $branch->name : ''}}<br>
             {{$branch ? $branch->name_legal_re : ''}}<br>

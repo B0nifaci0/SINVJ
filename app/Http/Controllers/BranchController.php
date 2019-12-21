@@ -77,7 +77,7 @@ class BranchController extends Controller
           
         $branch = new Branch([
           'name' => $request->name,
-          'name_legal_re' => $request->name_legal_re,
+         // 'name_legal_re' => $request->name_legal_re,
           'email' => $request->email,
           'other' => $request->other,
           'rfc' => $request->rfc,

@@ -68,7 +68,6 @@ TRASFERENCIAS
           <table id='example'  class="table table-hover dataTable table-striped w-full">
             <thead>
               <tr>
-                <th>id</th>
                 <th>Clave Del Producto</th>
                 <th>Producto</th>
                 <th>Peso</th>
@@ -86,7 +85,6 @@ TRASFERENCIAS
             </thead>
             <tfoot>
               <tr>
-                <th>id</th>
                 <th>Clave Del Producto</th>
                 <th>Producto</th>
                 <th>Peso</th>
@@ -105,7 +103,6 @@ TRASFERENCIAS
             <tbody>
               @foreach  ($trans as $transfer)
                 <tr id = "row{{$transfer->id}}">
-                  <td>{{ $transfer->id }}</td> 
                   <td>{{ $transfer->product->clave }}</td> 
                   <td>{{ $transfer->product ? $transfer->product->description : 'Sin product' }}</td>
                   <td>{{ $transfer->product->weigth }}</td>
@@ -117,12 +114,12 @@ TRASFERENCIAS
                   <td>{{ $transfer->destinationUser ? $transfer->destinationUser->name : 'Sin destinationUser'}}</td>
                   <td>{{ $transfer->created_at->format('m-d-Y')}}</td>
                   <td>
-                    @if($transfer->status_product === 1)
-                      Aceptado
+                    @if($transfer->status_product === 1) 
+                      <span class="text-center badge badge-success">Aceptado</span>
                     @elseif($transfer->status_product === 0)
-                      Rechazado
+                      <span class="text-center badge badge-warning">Rechazado</span>
                     @else
-                      Pendiente
+                      <span class="text-center badge badge-primary">Pendiente</span>
                     @endif
                   </td>
                   <td>
@@ -139,14 +136,14 @@ TRASFERENCIAS
                         @if(Auth::user()->id == $transfer->user_id)
                           <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
                         @else
-                          Por pagar
+                        <span class="text-center badge badge-warning">Por pagar</span>
                         @endif
                       @else
-                        Pagado
+                        <span class="text-center badge badge-success">Pagado</span>
                       @endif
                     @endif
                     <!-- END Botón-->
-                  </td>
+                  </<span>
                   <td>  
                     <!-- Botón para generar Traspaso por (ID)-->  
                     <a href="traspasopdf/{{$transfer->id}}"<button type="button" 

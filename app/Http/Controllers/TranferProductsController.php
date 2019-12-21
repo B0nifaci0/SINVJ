@@ -165,7 +165,7 @@ public function exportPdfall(){
      // return $id;
     $trans = TransferProduct::where("id","=",$id)->get();
     $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));
-    return $pdf->stream('Traspaso.pdf');
+    return $pdf->stream('Traspaso.pdf');  
   }
 
 }

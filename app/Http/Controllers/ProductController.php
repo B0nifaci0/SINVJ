@@ -12,6 +12,7 @@ use App\Branch;
 use App\Status;
 use App\Product;
 use App\Category;
+use App\ShopGroup;
 use Carbon\Carbon;
 use App\SaleDetails; 
 use App\TransferProduct;
@@ -74,9 +75,9 @@ class ProductController extends Controller
     	//return $lines;
     	$status = Auth::user()->shop->id;
       $statuses = Status::all();
-      $title = 'Productos De Tienda';      
+     // $title = 'Productos De Tienda';      
 		  //  return $products;
-    	return view('product/index', compact('user','categories','lines','shops','statuses','products', 'title'));
+    	return view('product/index', compact('user','categories','lines','shops','statuses','products'));
   }
 
   public function reportProductSeparated() {
@@ -200,11 +201,25 @@ class ProductController extends Controller
         $user = Auth::user();
         $shop_id = $user->shop->id;
         $shops = Auth::user()->shop()->get();
+        foreach($shops as $shop){
+          $grupo = $shop->shop_group_id;
+        }
+
         $categories = Shop::find($shop_id)->categories()->get();
         $lines = Shop::find($shop_id)->lines()->get();
         //$statuses = Shop::find($shop_id)->statuss()->get();
         $statuses = Status::all();
-        $products = Shop::find($shop_id)->products()->get();
+        
+        //$shop_group_id ==
+        if($grupo==null){
+          $products = Shop::find($shop_id)->products()->get();
+        }else{
+          //$products = ShopGroup::shop()->get();
+          $products = Product::join('shops', 'shops.id','=', 'products.shop_id')->where('shops.shop_group_id',$grupo)->get();
+
+        }
+        //return $products;
+        
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
         foreach ($products as $product) {
