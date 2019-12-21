@@ -75,7 +75,7 @@ ALTA USUARIOS
                 <select id="branches" class="form-control round sucursales" name="branch_id" required="required">
                 <option value=" ">Seleccione Sucursal</option>
                   @foreach ($branches as $branch)
-                    <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
+                    <option value="{{$branch->id}}">{{$branch->name}}</option>
                   @endforeach
                 </select>
             </div> 
