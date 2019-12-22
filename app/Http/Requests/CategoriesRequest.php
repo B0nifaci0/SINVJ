@@ -24,7 +24,7 @@ class CategoriesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:15|regex:/^[A-Z,a-z,á,é,í,ó,ú, ]*$/',
+            'name' => 'required|string|max:15|regex:/^[0-9,A-Z,a-z,á,é,í,ó,ú, ]*$/',
         ];
     }
     public function messages(){
