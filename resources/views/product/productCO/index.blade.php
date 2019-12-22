@@ -15,7 +15,7 @@ LISTA PRODUCTO
   <div class="panel">
     <div class="panel-body">
       <div class="example-wrap">
-        <h1 class="text-center panel-title">Productos De Tienda </h1>
+        <h1 class="text-center panel-title">Productos De Tienda hjghhgjh</h1>
         <div class="panel-actions">
           <div class="container-fluid row col-md-12 col-xs-12 col-lg-12">
             @if(Auth::user()->type_user == 1 )

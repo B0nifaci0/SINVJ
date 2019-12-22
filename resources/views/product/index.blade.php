@@ -46,8 +46,7 @@ LISTA PRODUCTO
     <div class="panel">
       <div class="panel-body">
         <div class="example-wrap">
-          <h1 class="text-center panel-title">Productos De Tienda</h1>
-
+        <h1 class="text-center panel-title">Productos De Thjkjhkhkjhjk</h1>
           <div class="panel-actions">
 
             <div class="container-fluid row col-md-12 col-xs-12 col-lg-12">
@@ -263,22 +262,17 @@ LISTA PRODUCTO
   <!-- End Panel Basic -->
   @endsection
   @section('barcode-product')
-  <script>
-    $(document).ready(function () {
-      
-    });
-  </script>
+  
   @endsection
 
   <!-- Función Sweet Alert para eliminar producto-->
   @section('delete-productos')
   <script type="text/javascript">
-    $('#s').tooltip('update');
 
-    console.log("a")
-    $(document).ready(function () {
-      console.log("b")
-      $(".delete").click(function () {
+  $(document).ready(function () {
+  setTimeout(() => {
+    console.log("config datatable")
+    $('#product_table_gr').on('click', '.delete', function(){
         var id = $(this).attr("alt");
         console.log(id);
         Swal.fire({
@@ -300,12 +294,18 @@ LISTA PRODUCTO
               url: '/productos/' + id,
               method: 'DELETE',
               success: function () {
-                $("#row" + id).remove();
+                $("#row" + id).remove();   
                 Swal.fire(
                   'Eliminado',
                   'El registro ha sido eliminado.',
                   'success'
                 )
+                //Destroy the old Datatable
+                $('#product_table_gr').DataTable().clear().destroy();
+
+                //Create new Datatable
+                $('#product_table_gr').DataTable()
+
               },
               error: function () {
                 Swal.fire(
@@ -317,9 +317,9 @@ LISTA PRODUCTO
             })
           }
         })
-
       });
-    });
+  },500)
+  });
   </script>
   @endsection
   <!-- END Función-->
