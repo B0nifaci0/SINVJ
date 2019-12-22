@@ -13,8 +13,9 @@ class BranchUserController extends Controller
 	// Controlador de recursos anidados
     public function index($id)
     {
-        $users = User::where('branch_id', $id)->get();
-        $shop = Shop::find($id);
+        $branch = Branch::find($id);
+        $users = User::where('branch_id', $branch->id)->get();
+        $shop = Shop::find($branch->shop_id);
         $admin = User::where('shop_id', $shop->id)->first();
         $users->push($admin);
 
