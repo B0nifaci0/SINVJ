@@ -112,7 +112,7 @@ Panel Principal
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Existentes
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos
               </div>
               <span class="float-right grey-700 font-size-30">@foreach($gramos as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
             </div>
@@ -129,7 +129,7 @@ Panel Principal
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Existentes
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos
               </div>
               <span class="float-right grey-700 font-size-30">@foreach($ventas as $v) @if($v->total_p) $ {{number_format($v->total_p,2)}} @else $ 0 @endif @endforeach</span>
             </div>
@@ -138,6 +138,70 @@ Panel Principal
         </div>
         <!-- End Widget Linearea One -->
       </div>
+
+      <div class="col-sm-4">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Existentes
+                <br><br><br>
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Existentes
+              </div>
+              <span class="float-right grey-700 font-size-30">@foreach($gramos_e as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
+              <br><br><br>
+              <span class="float-right grey-700 font-size-30">@foreach($ventas_e as $g) @if($g->total_p) $ {{number_format($g->total_p,2)}} @else $ 0 @endif @endforeach</span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+
+      <div class="col-sm-4">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Traspasados
+                <br><br><br>
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Traspasados
+              </div>
+              <span class="float-right grey-700 font-size-30">@foreach($gramos_t as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
+              <br><br><br>
+              <span class="float-right grey-700 font-size-30">@foreach($ventas_t as $g) @if($g->total_p) $ {{number_format($g->total_p,2)}} @else $ 0 @endif @endforeach</span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+
+      <div class="col-sm-4">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Dañados
+                <br><br><br>
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Dañados
+              </div>
+              <span class="float-right grey-700 font-size-30">@foreach($gramos_d as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
+              <br><br><br>
+              <span class="float-right grey-700 font-size-30">@foreach($ventas_d as $g) @if($g->total_p) $ {{number_format($g->total_p,2)}} @else $ 0 @endif @endforeach</span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+
        </div>
       </div>
       </div>
@@ -159,9 +223,21 @@ Panel Principal
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos
+                <br><br>
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Existentes
+                <br><br>
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Traspasados
+                <br><br>
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Dañados
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($gramos_col as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@foreach($gramos_col as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach
+              <br>
+              @foreach($gramos_cole as $g) @if($g->total_we) {{$g->total_we}} gr @else 0 gr @endif @endforeach
+              <br>
+              @foreach($gramos_colt as $g) @if($g->total_wt) {{$g->total_wt}} gr @else 0 gr @endif @endforeach
+              <br>
+              @foreach($gramos_cold as $g) @if($g->total_wd) {{$g->total_wd}} gr @else 0 gr @endif @endforeach</span>
             </div>          <!--  <div class="ct-chart h-50"></div>   -->
           </div>
         </div>
