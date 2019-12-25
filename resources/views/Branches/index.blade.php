@@ -41,25 +41,31 @@ LISTA DE  SUCURSALES
   <div class="page-content">
         <!-- Panel Basic -->
     <div class="panel">
-      <header class="panel-heading">
-        <div class="panel-actions">
-          @if(Auth::user()->type_user == 1 )
-          <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/sucursales/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right " data-toggle="tooltip" data-original-title="Agregar">
-             <i class="icon md-plus" aria-hidden="true"></i></button>
-          </div>
-          <div class="col-md-4 col-md-offset-2">
-              <button onclick="window.location.href='sucursales/corte'"
-                type="button" class="btn btn-sm small btn-floating 
+        <div class="panel-body">
+            <div class="example-wrap">
+              <h1 class="text-center panel-title">Sucursales</h1>
+              <div class="panel-actions float-right">
+                <div class="container-fluid row float-right">
+                  @if(Auth::user()->type_user == 1 )
+                  <!-- Botón para Generar PDF de productos-->
+                  <div class="col-6">
+                    <button onclick="window.location.href='sucursales/corte'"
+                type="button" class="btn btn-sm small btn-floating
                 toggler-left  btn-secondary waves-effect waves-light waves-round float-right"
                 data-toggle="tooltip" data-original-title="Corte">
                 <i class="iicon md-money" aria-hidden="true"></i>
               </button>
+                  </div>
+                  <div class="col-6">
+                    <button onclick="window.location.href='/sucursales/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip" data-original-title="Agregar">
+                        <i class="icon md-plus" aria-hidden="true"></i></button>
+                  </div>
+                  <!-- END Botón-->
+                  @endif
+                </div>
+              </div>
+            </div>
           </div>
-           @endif
-        </div>
-        <h3 class="panel-title">Sucursales</h3>
-      </header>
       <div class="panel-body">
             <!-- Tabla para listar sucursales-->
             <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
@@ -118,7 +124,7 @@ LISTA DE  SUCURSALES
                       <a href="/sucursales/{{$branch->id}}/producto"><button type="button"
                       class="btn btn-icon btn-warning waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Productos">
-                      <i class="icon md-label-heart" aria-hidden="true"></i></button></a> 
+                      <i class="icon md-label-heart" aria-hidden="true"></i></button></a>
                       <!--END Botón -->
 
                       <!-- Botón para ver corte de venta
@@ -181,8 +187,8 @@ $(document).ready(function() {
 
                   response.message
                 )
-         } 
-        
+         }
+
         }
         })
       }

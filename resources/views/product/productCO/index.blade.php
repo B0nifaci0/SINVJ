@@ -14,43 +14,33 @@ LISTA PRODUCTO
   <!-- Panel Basic -->
   <div class="panel">
     <div class="panel-body">
-      <div class="example-wrap">
-        <h1 class="text-center panel-title">Productos De Tienda </h1>
-        <div class="panel-actions">
-          <div class="container-fluid row col-md-12 col-xs-12 col-lg-12">
-            @if(Auth::user()->type_user == 1 )
-            <!-- Botón para Generar PDF de productos-->
-            <div class="col-md-4 col-md-offset-2 col-xs-4 col-xs-offset-2 col-xs-4">
-              <button onclick="window.location.href='productospdf'" type="button" id='pdf01' name='pdf01' class=" btn btn-sm small btn-floating 
+        <div class="example-wrap">
+          <h1 class="text-center panel-title">Productos De Tienda</h1>
+          <div class="panel-actions float-right">
+            <div class="container-fluid row float-right">
+              @if(Auth::user()->type_user == 1 )
+              <!-- Botón para Generar PDF de productos-->
+              <div class="col-6">
+                <button onclick="window.location.href='productospdf'" type="button" id='pdf01' name='pdf01' class=" btn btn-sm small btn-floating
                           toggler-left  btn-danger waves-effect waves-light waves-round float-right"
                 data-toggle="tooltip" data-original-title="Generar reporte PDF">
                 <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
               </button>
-            </div>
-            <!-- END Botón-->
-            <!-- Botón para generar Excel-->
-            <div class="col-md-4 col-md-offset-2  col-xs-4 col-xs-offset-2">
-              <button onclick="window.location.href='#'" type="button" class=" btn btn-sm small btn-floating 
-                          toggler-left  btn-success waves-effect waves-light waves-round float-right"
-                data-toggle="tooltip" data-original-title="Generar reporte Excel">
-                <i class="icon fa-file-excel-o" aria-hidden="true"></i>
-              </button>
-            </div>
-            <!-- END Botón-->
-            <!-- Botón para agregar productos-->
-            <div class="col-md-4 col-md-offset-2  col-xs-4 col-xs-offset-2">
-              <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating 
-                          toggler-left  btn-info waves-effect waves-light waves-round float-right"
+              </div>
+              <div class="col-6">
+                <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating
+                          toggler-left  btn-info waves-effect waves-light waves-round float-left"
                 data-toggle="tooltip" data-original-title="Agregar">
                 <i class="icon md-plus" aria-hidden="true"></i>
               </button>
+              </div>
+              <!-- END Botón-->
+              @endif
             </div>
-            <!-- END Botón-->
-            @endif
           </div>
         </div>
       </div>
-    </div>
+
     <div class="col-xl-12 col-md-12 col-sl">
       <div class="example-wrap">
         <div class="nav-tabs-horizontal" data-plugin="tabs">
