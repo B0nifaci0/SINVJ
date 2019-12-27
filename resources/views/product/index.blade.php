@@ -46,22 +46,21 @@ LISTA PRODUCTO
     <div class="panel">
       <div class="panel-body">
         <div class="example-wrap">
-        <h1 class="text-center panel-title">Productos De Thjkjhkhkjhjk</h1>
-          <div class="panel-actions">
-
-            <div class="container-fluid row col-md-12 col-xs-12 col-lg-12">
+          <h1 class="text-center panel-title">Productos De Tienda</h1>
+          <div class="panel-actions float-right">
+            <div class="container-fluid row float-right">
               @if(Auth::user()->type_user == 1 )
               <!-- Botón para Generar PDF de productos-->
-              <div class="col-md-6 col-md-offset-2 col-xs-4 col-xs-offset-2 col-xs-4">
+              <div class="col-6">
                 <button onclick="window.location.href='productospdf'" type="button" id='pdf01' name='pdf01' class=" btn btn-sm small btn-floating
-                          toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                 btn-danger waves-effect waves-light waves-round float-right"
                   data-toggle="tooltip" data-original-title="Generar reporte PDF">
                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                 </button>
               </div>
-              <div class="col-md-6 col-md-offset-2  col-xs-4 col-xs-offset-2">
+              <div class="col-6">
                 <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating
-                          toggler-left  btn-info waves-effect waves-light waves-round float-right"
+                 btn-info waves-effect waves-light waves-round float-left"
                   data-toggle="tooltip" data-original-title="Agregar">
                   <i class="icon md-plus" aria-hidden="true"></i>
                 </button>
@@ -262,7 +261,11 @@ LISTA PRODUCTO
   <!-- End Panel Basic -->
   @endsection
   @section('barcode-product')
-  
+  <script>
+    $(document).ready(function () {
+
+    });
+  </script>
   @endsection
 
   <!-- Función Sweet Alert para eliminar producto-->
@@ -323,3 +326,4 @@ LISTA PRODUCTO
   </script>
   @endsection
   <!-- END Función-->
+ 
