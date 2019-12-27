@@ -38,31 +38,32 @@ TRASFERENCIAS
   <div class="page-content">
     <!-- Panel Basic -->
     <div class="panel">
-      <header class="panel-heading">
-        <div class="panel-actions">
-          <div class="row">
-            <!-- Botón para generar PDF de traspaso-->
-            <div class="col-md-6 col-md-offset-2">
-              <button onclick="window.location.href='traspasospdf'" type="button" class=" btn btn-sm small btn-floating 
+        <div class="panel-body">
+            <div class="example-wrap">
+              <h1 class="text-center panel-title">Traspasos</h1>
+              <div class="panel-actions float-right">
+                <div class="container-fluid row float-right">
+
+                  <!-- Botón para Generar PDF de productos-->
+                  <div class="col-6">
+                    <button onclick="window.location.href='traspasospdf'" type="button" class=" btn btn-sm small btn-floating
                   toggler-left  btn-danger waves-effect waves-light waves-round float-right" data-toggle="tooltip"
                 data-original-title="Generar reporte PDF">
                 <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
               </button>
-            </div>
-            <!-- END Botón-->
-            <!-- Botón para crear traspaso-->
-            <div class="col-md-6 col-md-offset-2">
-              <button onclick="window.location.href='/traspasos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left 
-                  btn-info waves-effect waves-light waves-round float-right " data-toggle="tooltip"
+                  </div>
+                  <div class="col-6">
+                    <button onclick="window.location.href='/traspasos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left
+                  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip"
                 data-original-title="Agregar">
                 <i class="icon md-plus" aria-hidden="true"></i>
               </button>
-            </div>
-            <!-- END Botón-->
+                  </div>
+                  <!-- END Botón-->
+                </div>
+              </div>
             </div>
           </div>
-          <h3 class="panel-title">Traspasos</h3>
-        </header>
         <div class="panel-body">
           <!-- Tabla para Listar Traspasos-->
           <table id='example'  class="table table-hover dataTable table-striped w-full">
@@ -98,12 +99,12 @@ TRASFERENCIAS
                 <th>Status</th>
                 <th>Opciones</th>
                 <th>Reporte</th>
-              </tr> 
-            </tfoot>  
+              </tr>
+            </tfoot>
             <tbody>
               @foreach  ($trans as $transfer)
                 <tr id = "row{{$transfer->id}}">
-                  <td>{{ $transfer->product->clave }}</td> 
+                  <td>{{ $transfer->product->clave }}</td>
                   <td>{{ $transfer->product ? $transfer->product->description : 'Sin product' }}</td>
                   <td>{{ $transfer->product->weigth }}</td>
                   <td>{{ $transfer->product->category ? $transfer->product->category->name : 'Sin category' }}</td>
@@ -114,7 +115,7 @@ TRASFERENCIAS
                   <td>{{ $transfer->destinationUser ? $transfer->destinationUser->name : 'Sin destinationUser'}}</td>
                   <td>{{ $transfer->created_at->format('m-d-Y')}}</td>
                   <td>
-                    @if($transfer->status_product === 1) 
+                    @if($transfer->status_product === 1)
                       <span class="text-center badge badge-success">Aceptado</span>
                     @elseif($transfer->status_product === 0)
                       <span class="text-center badge badge-warning">Rechazado</span>
@@ -144,23 +145,23 @@ TRASFERENCIAS
                     @endif
                     <!-- END Botón-->
                   </<span>
-                  <td>  
-                    <!-- Botón para generar Traspaso por (ID)-->  
-                    <a href="traspasopdf/{{$transfer->id}}"<button type="button" 
+                  <td>
+                    <!-- Botón para generar Traspaso por (ID)-->
+                    <a href="traspasopdf/{{$transfer->id}}"<button type="button"
                       class="btn btn-icon btn-danger waves-effect waves-light"
                       data-toggle="tooltip" data-original-title="Generar reporte PDF">
                       <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
-                    </a> 
-                    <!-- END Botón-->               
+                    </a>
+                    <!-- END Botón-->
                   </td>
-                </tr>  
+                </tr>
               @endforeach
             </tbody>
           </table>
           <!-- END Tabla-->
         </div>
       </header>
-      
+
     </div>
   </div>
   <!-- End Panel Basic -->
@@ -174,7 +175,7 @@ TRASFERENCIAS
   <form method="post" action="/traspasos/pagar" id="payment-form" class="d-none">
     {{ csrf_field() }}
     <input type="text" name="transfer_id" id="inventory_id">
-  </form> 
+  </form>
 <form method="post" action="/inventory/check" id="payment-form" class="d-none">
   {{ csrf_field() }}
   <input type="text" name="inventory_id" id="inventory_id">
@@ -197,8 +198,8 @@ TRASFERENCIAS
         confirmButtonColor: '#4caf50' ,
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si'
-      }).then((result) => { 
-        if (result.value) 
+      }).then((result) => {
+        if (result.value)
         {
           $('#inventory_id').val(id);
           $('#payment-form').submit();

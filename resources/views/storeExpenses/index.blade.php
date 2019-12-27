@@ -94,12 +94,12 @@ LISTA DE  GASTOS
 </style>
 
   <div class="panel-body">
-    @if (session('mesage'))	
+    @if (session('mesage'))
       <div class="alert alert-success">
         <strong>{{ session('mesage') }}</strong>
       </div>
     @endif
-    @if (session('mesage-update'))	
+    @if (session('mesage-update'))
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage-update') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -107,37 +107,33 @@ LISTA DE  GASTOS
         </button>
       </div>
     @endif
-    @if (session('mesage-delete'))	
+    @if (session('mesage-delete'))
       <div class="alert alert-danger">
         <strong>{{ session('mesage-delete') }}</strong>
       </div>
-    @endif    
+    @endif
     <div class="page-content">
       <!-- Panel Basic -->
       <div class="panel">
-        <header class="panel-heading">
-          <div class="row panel-actions">
-            <!-- Botón para generar PDF de gastos
-            <div class="col-md-6 col-md-offset-2">
-              <button onclick="window.location.href='gastospdf'" 
-                type="button" class=" btn btn-sm small btn-floating 
-                toggler-left  btn-danger waves-effect waves-light waves-round float-right"
-                data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
-              </button>
-            </div>
-             END Botón-->
-            <!-- Botón para crear gastos-->
-            <div class="col-md-6 col-md-offset-2">
-              <button onclick="window.location.href='/gastos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right"
+        <div class="panel-body">
+            <div class="example-wrap">
+              <h1 class="text-center panel-title">Gastos</h1>
+              <div class="panel-actions float-right">
+                <div class="container-fluid row float-right">
+                  @if(Auth::user()->type_user == 1 )
+                  <!-- Botón para Generar PDF de productos-->
+                  <div class="col-6">
+                    <button onclick="window.location.href='/gastos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left"
               data-toggle="tooltip" data-original-title="Agregar">
                 <i class="icon md-plus" aria-hidden="true"></i>
               </button>
+                  </div>
+                                    <!-- END Botón-->
+                  @endif
+                </div>
+              </div>
             </div>
-            <!-- END Botón-->
           </div>
-          <h3 class="panel-title">Gastos</h3>
-        </header>
         <div class="panel-body">
         <!-- Tabla para listar gastos-->
           <table id='example' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
@@ -178,16 +174,16 @@ LISTA DE  GASTOS
                           />
                   </td>
                   <td>{{$expense->branch ? $expense->branch->name : '' }}</td>
-                  <td>  
-                     <!-- Botón para editar gasto-->  
-                    <a href="/gastos/{{$expense->id}}/edit"><button type="button" 
+                  <td>
+                     <!-- Botón para editar gasto-->
+                    <a href="/gastos/{{$expense->id}}/edit"><button type="button"
                       class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></button>
-                    </a> 
-                    <!-- END Botón--> 
+                    </a>
+                    <!-- END Botón-->
                      <!-- Botón para generar ticket PDF de Gastos-->
                    <!--div class="col-md-6 col-md-offset-2"-->
-                   <a href="gastopdf/{{$expense->id}}"><button type="button" 
+                   <a href="gastopdf/{{$expense->id}}"><button type="button"
                         class="btn btn-icon btn-danger waves-effect waves-light"
                         data-toggle="tooltip" data-original-title="Generar Ticket">
                         <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
@@ -198,9 +194,9 @@ LISTA DE  GASTOS
                     <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
                     data-toggle="tooltip" data-original-title="Borrar"
                       alt="{{$expense->id}}" role="button">
-                      <i class="icon md-delete" aria-hidden="true"></i> 
-                    </button> 
-                    <!-- END Botón-->    
+                      <i class="icon md-delete" aria-hidden="true"></i>
+                    </button>
+                    <!-- END Botón-->
                   </td>
                 </tr>
               @endforeach
@@ -234,7 +230,7 @@ $(document).ready(function() {
       modal.style.display = "block";
       modalImg.src = this.src;
       captionText.innerHTML = this.alt;
-    
+
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("closeimage")[0];
 
@@ -274,7 +270,7 @@ $(document).ready(function() {
               'El registro ha sido eliminado.',
               'success'
             )
-          }, 
+          },
           error: function () {
             Swal.fire(
               'Eliminado',

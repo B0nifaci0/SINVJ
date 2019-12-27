@@ -105,7 +105,7 @@ Panel Sucursales
         <div>
 
         <div class="row">
-      @foreach($total as $t)
+      @foreach($total as $t => $row)
       @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
       <div class="col-sm-3">
         <!-- Widget Linearea One-->
@@ -113,9 +113,9 @@ Panel Sucursales
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10 card-header">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$t->name_line}}
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$row->name_line}}
               </div><br>
-              <span class="float-right grey-700 font-size-16">Gramos:  {{$t->total_w}} gr </span>
+              <span class="float-right grey-700 font-size-16">Gramos:  {{$row->total_w}} gr </span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -129,16 +129,16 @@ Panel Sucursales
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10 card-header">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$t->name_line}}
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$row->name_line}}
               </div><br>
-              <span class="float-right grey-700 font-size-16">Gramos:  {{$t->total_w}} gr = $ {{number_format($t->total_line_p,2)}}
-              <br>Con Descuento: $ {{number_format($t->total_discount,2)}} </span>
+              <span class="float-right grey-700 font-size-16">Gramos:  {{$row->total_w}} gr = $ {{number_format($row->total_line_p,2)}}
+              <br>Con Descuento: $ {{number_format($row->total_discount,2)}} </span>
             </div>
             <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-down red-500 font-size-16"></i>                 - {{$t->descuento}} % De Descuento
+              <i class="icon md-long-arrow-down red-500 font-size-16"></i>                 - {{$row->descuento}} % De Descuento
             </div>
             <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>               Precio De Linea: $ {{$t->precio_linea}}
+              <i class="icon md-long-arrow-up green-500 font-size-16"></i>               Precio De Linea: $ {{$row->precio_linea}}
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -147,7 +147,75 @@ Panel Sucursales
       </div>
       @endif
       @endforeach
+
+      
+     
       </div>
+
+      <div class="row">
+
+      @foreach($total_e as $t)
+      @if($t->total_we)
+      <div class="col-sm-4">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow border-success">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10 card-header">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Totales Existentes
+              </div><br>
+              <span class="float-right grey-700 font-size-16">Gramos Totales: {{$t->total_we}} gr </span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+      @endif
+      @endforeach
+
+      @foreach($total_t as $t)
+      @if($t->total_wt)
+      <div class="col-sm-4">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow border-success">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10 card-header">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Totales Traspasados
+              </div><br>
+              <span class="float-right grey-700 font-size-16">Gramos Totales: {{$t->total_wt}} gr </span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+      @endif
+      @endforeach
+
+      @foreach($total_d as $t)
+      @if($t->total_wd)
+      <div class="col-sm-4">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow border-success">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10 card-header">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Totales Dañados
+              </div><br>
+              <span class="float-right grey-700 font-size-16">Gramos Totales: {{$t->total_wd}} gr </span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+      @endif
+      @endforeach
+
+      </div>
+
       </div>
       </div>
       </div>
@@ -160,8 +228,8 @@ Panel Sucursales
         <div>
 
         <div class="row">
-      @foreach($category as $c)
-      
+
+      @foreach($category as $k => $c)
       <div class="col-sm-3">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
@@ -170,8 +238,8 @@ Panel Sucursales
               <div class="grey-800 float-left py-10 card-header">
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$c->cat_name}}
               </div><br>
-              <span class="float-right grey-700 font-size-16 card-text">Venta:  $ {{$c->total}}
-              <br>Piezas:   {{$c->num_pz}} pzs </span>
+              <span class="float-right grey-700 font-size-16 card-text"> @if(Auth::user()->type_user == 1) Venta:  $ {{$c->total}} @endif
+              <br>Piezas Totales: {{$c->num_pz}} pzs </span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -179,7 +247,73 @@ Panel Sucursales
         <!-- End Widget Linearea One -->
       </div>
       @endforeach
+
       </div>
+
+      <div class="row">
+
+      @foreach($cat_e as $c)
+      @if($c->num_pzex)
+      <div class="col-sm-4">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10 card-body text-dark">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10 card-header">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total De Piezas Existentes
+              </div><br>
+              <span class="float-right grey-700 font-size-16 card-text"> Piezas Totales: {{$c->num_pzex}} pzs </span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+      @endif
+      @endforeach
+
+      @foreach($cat_t as $c)
+      @if($c->num_pzt)
+      <div class="col-sm-4">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10 card-body text-dark">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10 card-header">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total De Piezas Traspasadas
+              </div><br>
+              <span class="float-right grey-700 font-size-16 card-text"> Piezas Totales: {{$c->num_pzt}} pzs </span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+      @endif
+      @endforeach
+
+      @foreach($cat_d as $c)
+      @if($c->num_pzd)
+      <div class="col-sm-4">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10 card-body text-dark">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10 card-header">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total De Piezas Dañadas
+              </div><br>
+              <span class="float-right grey-700 font-size-16 card-text"> Piezas Totales: {{$c->num_pzd}} pzs </span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+        </div>
+        <!-- End Widget Linearea One -->
+      </div>
+      @endif
+      @endforeach
+
+      </div>
+
       </div>
        </div>
       </div>

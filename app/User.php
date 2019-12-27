@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use App\TranferProducts;
+use App\TranferProduct;
 use App\Shop;
 use App\Branch;
 use Illuminate\Notifications\Notifiable;
@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
-{ 
+{
 
   // Tipos de usuario
   //AA = application administrator
@@ -20,7 +20,7 @@ class User extends Authenticatable
   const CO = '3';
 
 
-  // Tipos de suscripcion 
+  // Tipos de suscripcion
   const FREE = '0';
   const PREMIUM = '1';
   const PRO = '2';
@@ -70,7 +70,7 @@ class User extends Authenticatable
 
 	public function trans()
 	{
-		return $this->hasMany(TranferProducts::class);
+		return $this->hasMany(TransferProduct::class);
 	}
 
 }
