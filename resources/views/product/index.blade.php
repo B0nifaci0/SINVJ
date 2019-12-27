@@ -83,23 +83,22 @@ LISTA PRODUCTO
             <div class="tab-content">
               <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                 <div class="page-content panel-body container-fluid">
-                  <table id="product_table_gr" class="table table-hover dataTable table-striped w-full"
-                    data-plugin="dataTable">
+                  <table id="product_table_gr" class=" display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                       {{ csrf_field() }}
                       <tr>
-                        <th>Clave</th>
-                        <th>Descripción</th>
-                        <th>Peso</th>
-                        <th>Observaciónes</th>
-                        <th>Imagen</th>
-                        <th>Categoría</th>
-                        <th>Linea</th>
-                        <th>Sucursal</th>
-                        <th>Status</th>
-                        <th>precio</th>
+                        <th data-toggle="true">Clave</th>
+                        <th data-hide="phone, tablet">Descripción</th>
+                        <th data-hide="phone, tablet">Peso</th>
+                        <th data-hide="phone, tablet">Observaciónes</th>
+                        <th data-hide="phone, tablet">Imagen</th>
+                        <th data-hide="phone, tablet">Categoría</th>
+                        <th data-hide="phone, tablet">Linea</th>
+                        <th data-hide="phone, tablet">Sucursal</th>
+                        <th data-hide="phone, tablet">Status</th>
+                        <th data-hide="phone, tablet">precio</th>
                         @if(Auth::user()->type_user == 1 )
-                        <th>Opciones</th>
+                        <th data-hide="phone, tablet">Opciones</th>
                         @endif
                       </tr>
                     </thead>
@@ -171,22 +170,21 @@ LISTA PRODUCTO
             <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
               <div class="page-content panel-body container-fluid">
                 <!-- Tabla para listar productos-->
-                <table id="product_table_pz" class="table table-hover dataTable table-striped w-full table-responsive"
-                    data-plugin="dataTable">
+                <table id="product_table_pz" class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                   <thead>
                     {{ csrf_field() }}
                     <tr>
-                      <th>Clave</th>
-                      <th>Descripción</th>
-                      <th>Categoría</th>
-                      <th>Observaciónes</th>
-                      <th>Imagen</th>
-                      <th>Sucursal</th>
-                      <th>Status</th>
-                      <th>Precio Venta</th>
+                      <th data-toggle="true">Clave</th>
+                      <th data-hide="phone, tablet">Descripción</th>
+                      <th data-hide="phone, tablet">Categoría</th>
+                      <th data-hide="phone, tablet">Observaciónes</th>
+                      <th data-hide="phone, tablet">Imagen</th>
+                      <th data-hide="phone, tablet">Sucursal</th>
+                      <th data-hide="phone, tablet">Status</th>
+                      <th data-hide="phone, tablet">Precio Venta</th>
                       @if(Auth::user()->type_user == 1 )
-                      <th>Precio Compra</th>
-                      <th>Opciones</th>
+                      <th data-hide="phone, tablet">Precio Compra</th>
+                      <th data-hide="phone, tablet">Opciones</th>
                       @endif
                     </tr>
                   </thead>
@@ -258,20 +256,32 @@ LISTA PRODUCTO
       <!-- End Example Tabs -->
     </div>
   </div>
+</div>
   <!-- End Panel Basic -->
   @endsection
   @section('barcode-product')
-  <script>
-    $(document).ready(function () {
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#product_table_gr').DataTable({
+            responsive: true,
 
+        });
+        $('#product_table_pz').DataTable({
+            responsive: true,
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+              .columns.adjust()
+              .responsive.recalc();
+        });    
     });
-  </script>
+    </script>
   @endsection
 
   <!-- Función Sweet Alert para eliminar producto-->
   @section('delete-productos')
   <script type="text/javascript">
-
   $(document).ready(function () {
   setTimeout(() => {
     console.log("config datatable")
@@ -303,11 +313,8 @@ LISTA PRODUCTO
                   'El registro ha sido eliminado.',
                   'success'
                 )
-                //Destroy the old Datatable
-                $('#product_table_gr').DataTable().clear().destroy();
-
                 //Create new Datatable
-                $('#product_table_gr').DataTable()
+                $('#product_table_gr').DataTable().destroy();
 
               },
               error: function () {

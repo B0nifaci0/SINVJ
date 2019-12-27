@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Traits\S3ImageManager;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class PrincipalController extends Controller
 {
@@ -48,6 +50,7 @@ class PrincipalController extends Controller
       ->join('lines','lines.id','products.line_id')
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
+      ->where('products.deleted_at', NULL)
       ->select(DB::raw('SUM(products.weigth) as total_w'))
       ->orWhere('products.status_id',2)
       ->Where('products.status_id',3)
@@ -61,10 +64,12 @@ class PrincipalController extends Controller
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
       ->where('products.status_id',2)
+      ->where('products.deleted_at', NULL)
       ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
+      ->where('categories.type_product',2)
       ->select(DB::raw('SUM(products.weigth) as total_w'))
       ->get();
+      //return $gramos_e;
 
       //SUMA TOTAL DE GRAMOS TRASPASADOS
       $gramos_t = Shop::join('products','products.shop_id','shops.id')
@@ -73,8 +78,9 @@ class PrincipalController extends Controller
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
       ->where('products.status_id',3)
+      ->where('products.deleted_at', NULL)
       ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
+      ->where('categories.type_product',2)
       ->select(DB::raw('SUM(products.weigth) as total_w'))
       ->get();
 
@@ -85,6 +91,7 @@ class PrincipalController extends Controller
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
       ->where('products.status_id',4)
+      ->where('products.deleted_at', NULL)
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->select(DB::raw('SUM(products.weigth) as total_w'))
@@ -98,6 +105,7 @@ class PrincipalController extends Controller
        ->join('lines','lines.id','products.line_id')
        ->where('lines.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',2) 
+       ->where('products.deleted_at', NULL)
        ->select(DB::raw('SUM(products.price) as total_p'))
        ->orWhere('products.status_id',2)
       ->Where('products.status_id',3)
@@ -111,6 +119,7 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->join('lines','lines.id','products.line_id')
        ->where('products.status_id',2)
+       ->where('products.deleted_at', NULL)
        ->where('lines.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',2) 
        ->select(DB::raw('SUM(products.price) as total_p'))
@@ -123,6 +132,7 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->join('lines','lines.id','products.line_id')
        ->where('products.status_id',3)
+       ->where('products.deleted_at', NULL)
        ->where('lines.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',2) 
        ->select(DB::raw('SUM(products.price) as total_p'))
@@ -135,6 +145,7 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->join('lines','lines.id','products.line_id')
        ->where('products.status_id',4)
+       ->where('products.deleted_at', NULL)
        ->where('lines.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',2) 
        ->select(DB::raw('SUM(products.price) as total_p'))
@@ -150,6 +161,7 @@ class PrincipalController extends Controller
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.branch_id',$ids)
+      ->where('products.deleted_at', NULL)
       ->select(DB::raw('SUM(products.weigth) as total_w'))
       ->orWhere('products.status_id',2)
       ->Where('products.status_id',3)
@@ -163,6 +175,7 @@ class PrincipalController extends Controller
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
       ->where('products.status_id',2)
+      ->where('products.deleted_at', NULL)
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.branch_id',$ids)
@@ -177,7 +190,8 @@ class PrincipalController extends Controller
       ->join('lines','lines.id','products.line_id')
       ->where('products.status_id',3)
       ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
+      ->where('categories.type_product',2)
+      ->where('products.deleted_at', NULL)
       ->where('products.branch_id',$ids)
       ->select(DB::raw('SUM(products.weigth) as total_wt'))
       ->get();
@@ -192,6 +206,7 @@ class PrincipalController extends Controller
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.branch_id',$ids)
+      ->where('products.deleted_at', NULL)
       ->select(DB::raw('SUM(products.weigth) as total_wd'))
       ->get();
         
