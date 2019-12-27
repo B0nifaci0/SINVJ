@@ -22,6 +22,7 @@ class CreateSalesTable extends Migration
             $table->integer('user_id')->nullable();
             $table->double('total');
             $table->double('paid_out');
+            $table->integer('folio');
             $table->softDeletes();
             $table->timestamps();
         });

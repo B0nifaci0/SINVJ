@@ -119,6 +119,9 @@ class SaleController extends Controller
     {
       // return $request;
       $user = Auth::user();
+      $folio = Sale::where('branch_id', $user->branch_id)->select('id')->get()->count();
+      $folio++;
+      
       $sale = Sale::create([
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,
@@ -128,7 +131,8 @@ class SaleController extends Controller
         'user_id' => $user->id,
         'branch_id' => $user->branch_id ? $user->branch_id : null,
         'client_id' => $request->user_type == 2 ? $request->client_id : null,
-        'paid_out' => 0
+        'paid_out' => 0,
+        'folio' => $folio
       ]);
       
       $products = json_decode($request->products_list);
@@ -266,6 +270,7 @@ public function exportPdf( Request $request, $id) {
 	//   $shops = Auth::user()->shop()->get();
 	//   $branches = Branch::where('shop_id', $user->shop->id)->get();
   //return [$sales,$branches,$user,$shops];
+  $folio;
  $shop = Auth::user()->shop; 
   $shops = Auth::user()->shop()->get();
   
@@ -275,6 +280,7 @@ public function exportPdf( Request $request, $id) {
 	$sale = Sale::with(['partials', 'client'])->findOrFail($id);
 	$sale->itemsSold = $sale->itemsSold();
 	$sale->total = $sale->itemsSold->sum('final_price');
+ 
 
   $branch = Branch::find($sale->branch_id);
   $pdf  = PDF::loadView('sale.PDFVenta', compact('shop','sale','branch')); 
