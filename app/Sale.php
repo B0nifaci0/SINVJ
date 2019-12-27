@@ -22,7 +22,8 @@ class Sale extends Model
         'total',
         'client_id',
         'user_id',
-        'paid_out'
+        'paid_out',
+        'folio',
     ];
 
     public function client() {

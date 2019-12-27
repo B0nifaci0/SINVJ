@@ -7,7 +7,7 @@
      </head>
    <style>
    {
-    font-size: 8px;
+    font-size: 5px;
     font-family: 'Times New Roman';
 }
 
@@ -138,21 +138,22 @@ img {
     max-width: center;
     text-align: center;
 }
-@page {size: 8cm 220mm;
+@page {size: 8cm 230mm;
      }
    </style>
 
     <body>
         <div border="">
-     
-            <img align="left" width="90px" height="90px" src="{{$shop->image}}"></p>
-            <p>
-            {{$branch ? $branch->name : ''}}<br>
+        <p align="right">{{$sale->created_at}}</p>
+        <!--<h3 align="center">{{$shop->name}}</h3>-->
+        <img align="left" width="100px" height="100px" src="{{$shop->image}}">
+                <p> {{$branch ? $branch->name : ''}}<br>
             {{$branch ? $branch->name_legal_re : ''}}<br>
             {{$branch ? $branch->rfc : ''}}<br> 
-            {{$branch ? $branch->email : ''}}</p><br>
-            <p>{{$branch ? $branch->address : ''}}
+            {{$branch ? $branch->email : ''}}<br>
+            <p align="left">{{$branch ? $branch->address : ''}}<br>
             Tel:{{$branch ? $branch->phone_number : ''}}</p>
+            <p align="left"><b>Folio:</b>{{$sale->folio}}</p>
             <p><b>Tipo de venta:</b>{{ ($sale->client) ? 'Mayorista' : 'General' }}</p>
             @if($sale->client)
                 <p><b>Cliente:</b>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>
