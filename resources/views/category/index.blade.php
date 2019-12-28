@@ -10,7 +10,7 @@ LISTA DE  CATEGORIA
 @endsection
 @section('content')
 <div class="panel-body">
-  @if (session('mesage'))	
+  @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
       <strong>{{ session('mesage') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -18,7 +18,7 @@ LISTA DE  CATEGORIA
       </button>
   </div>
   @endif
-  @if (session('mesage-update'))	
+  @if (session('mesage-update'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
       <strong>{{ session('mesage-update') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -26,34 +26,38 @@ LISTA DE  CATEGORIA
       </button>
     </div>
   @endif
-  @if (session('mesage-delete'))	
+  @if (session('mesage-delete'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>{{ session('mesage-delete') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
       </button>
     </div>
-  @endif    
+  @endif
   <div class="page-content">
     <!-- Panel Basic -->
     <div class="panel">
-        <header class="panel-heading">
-          <div class="panel-actions">
-            @if(Auth::user()->type_user == 1 )
-            <div class="col-md-14 col-md-offset-2">
-              <!-- Botón Para editar categorias-->
-              <button onclick="window.location.href='/categorias/create'" type="button"
-                class=" btn btn-sm small btn-floating  toggler-left 
-                btn-info waves-effect waves-light waves-round float-right "
+        <div class="panel-body">
+            <div class="example-wrap">
+              <h1 class="text-center panel-title">Categorias</h1>
+              <div class="panel-actions float-right">
+                <div class="container-fluid row float-right">
+                  @if(Auth::user()->type_user == 1 )
+                  <!-- Botón para Generar PDF de productos-->
+                  <div class="col-6">
+                    <button onclick="window.location.href='/categorias/create'" type="button"
+                class=" btn btn-sm small btn-floating  toggler-left
+                btn-info waves-effect waves-light waves-round float-left "
                 data-toggle="tooltip" data-original-title="Agregar">
                 <i class="icon md-plus" aria-hidden="true"></i>
               </button>
-              <!-- END Botón-->
+                  </div>
+                  <!-- END Botón-->
+                  @endif
+                </div>
+              </div>
             </div>
-            @endif
           </div>
-            <h3 class="panel-title">Categorías</h3>
-        </header>
         <div class="panel-body">
         <!-- Tabla listar las categorias-->
           <table id='categorias'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
@@ -90,20 +94,20 @@ LISTA DE  CATEGORIA
                 @endif
                 @if(Auth::user()->type_user == 1 )
                 <td>
-                  <!-- Botón Para editar categoria--> 
+                  <!-- Botón Para editar categoria-->
                   <a type="button" href="/categorias/{{$category->id}}/edit"
                     class="btn btn-icon btn-info waves-effect waves-light waves-round"
                     data-toggle="tooltip" data-original-title="Editar">
                     <i class="icon md-edit" aria-hidden="true"></i></a>
-                  
+
                   <!-- END Botón-->
-                  <!-- Botón Para eliminar categoria-->  
+                  <!-- Botón Para eliminar categoria-->
                   <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                    alt="{{$category->id}}" role="button" 
+                    alt="{{$category->id}}" role="button"
                     data-toggle="tooltip" data-original-title="Borrar">
                     <i class="icon md-delete" aria-hidden="true"></i>
                   </button>
-                  <!-- END Botón--> 
+                  <!-- END Botón-->
                 </td>
                 @endif
               </tr>
@@ -163,8 +167,8 @@ $(document).ready(function() {
                   'error'
                 )
             }
-  
-          }, 
+
+          },
           error: function(error){
               Swal.fire(
                   'error',

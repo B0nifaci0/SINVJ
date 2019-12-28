@@ -76,24 +76,33 @@ ALTA PRODUCTO
             <!-- Input para ingresar precio del producto-->
             <div id="show" class="form-group form-material col-md-3 remove">
               <label>Precio del Producto</label>
-              <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
+              <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price" value="{{old('price')}}">
             </div> 
             <!-- END Input-->
             <!-- Input para ingresar Tope de descuento -->
             <div class="form-group form-material col-md-3 remove">
-              <label>Tope de descuento</label>
-              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount">
+              <label>Precio con descuento</label>
+              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount" value="{{old('max_discount')}}">
             </div> 
             <!-- END Input-->
             <!-- Select para Seleccionar categoria--> 
             <div class="col-md-3">
               <label>Seleccione Categoria </label>
-              <select  id="categorie_id" name="category_id" class="form-control round">
-                @foreach($categories as $category)            
-                  <option value="{{ $category->id }}" required>{{ $category->name }}</option>
-                  <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-                @endforeach
-              </select>
+              @if(null !== session('categories')){
+                <select id="categorie_id" name="category_id" class="form-control round">
+                  @foreach(session('categories') as $category)            
+                    <option value="{{ $category->id }}" required>{{ $category->name }}</option>
+                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
+                  @endforeach
+                </select>
+              @else
+                <select  id="categorie_id" name="category_id" class="form-control round">
+                  @foreach($categories as $category)            
+                    <option value="{{ $category->id }}" required>{{ $category->name }}</option>
+                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
+                  @endforeach
+                </select>
+              @endif
             </div>
             <!-- END Select--> 
             <div>
@@ -226,7 +235,7 @@ setTimeout(() => {
 
 $('#categorie_id').change(function(){
     $('#pricepz').val(0);
-    $('#pricecp').val(0)
+    $('#pricecp').val(0);
 
     var categoryTypeproduct = {!! $categories !!};
     var categoryId = $(this).val();
@@ -239,7 +248,13 @@ $('#categorie_id').change(function(){
       // set purchase price for Pza products
       console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
       console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
-      $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
+
+        console.log(!Number($('#line_price').val()) , !Number($('#multiplicador').val()))
+      if(!Number($('#line_price').val()) || !Number($('#multiplicador').val())) {
+        $('#pricePurchase').val(0);
+      } else {
+        $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
+      }
     } else if(categoryTypeproduct.type_product == 2){
       // Gramos
       $('.remove').css('display', 'initial');  
@@ -263,6 +278,10 @@ $('#line_id').change(function() {
 
 $('#multiplicador').keyup(function(){
   var total = $('#line_price').val() * $(this).val();
+        if(!Number($('#line_price').val()) || !Number($('#multiplicador').val())) {
+        $('#total').val(0);
+        return;
+      }
   var discount = total - (total * (Number(line.discount_percentage) / 100))
   // var discount = total - Number(line.discount_percentage)
   $('#discount').val(discount);
