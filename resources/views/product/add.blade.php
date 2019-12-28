@@ -62,6 +62,12 @@ ALTA PRODUCTO
               <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{old('price_purchase')}}">
             </div> 
             <!-- END Input-->
+            <!-- Input para ingresar precio con descuento-->
+            <div id="discountpz" class="form-group form-material col-md-3 remove">
+              <label>Precio con descuentopz</label>
+              <input type="text"  class="form-control"  name="max_discountpz" value="{{old('max_discountpz')}}">
+            </div> 
+            <!-- END Input-->
             <div   class="col-md-3 form-material remove">
               <label  class="control-label">Precio de la linea</label>
               <input type="text" name="" id="line_price" class="form-control" readonly>
@@ -81,7 +87,7 @@ ALTA PRODUCTO
             <!-- END Input-->
             <!-- Input para ingresar Tope de descuento -->
             <div class="form-group form-material col-md-3 remove">
-              <label>Precio con descuento</label>
+              <label>Precio con descuentogr</label>
               <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount" value="{{old('max_discount')}}">
             </div> 
             <!-- END Input-->
@@ -198,6 +204,7 @@ $(document).ready(function(){
       //alert(JSON.stringify('pz'+defaul.type_product));
     $('.remove').css('display', 'none');
     $('#pricepz').css('display', 'initial'); 
+    $('#discountpz').css('display', 'initial'); 
     // $('#pricecp').css('display', 'initial');
 
     //$('.removeClass').removeClass('invisible');
@@ -207,6 +214,7 @@ $(document).ready(function(){
      console.log()
     $('.remove').css('display', 'initial');  
     $('#pricepz').css('display', 'none');
+    $('#discountpz').css('display', 'none');
     // $('#pricecp').css('display', 'none');
  
   
@@ -225,17 +233,20 @@ setTimeout(() => {
       $('.remove').css('display', 'none');
       $('#pricepz').css('display', 'initial'); 
       $('#pricecp').css('display', 'initial'); 
+      $('#discountpz').css('display', 'initial'); 
     } else if(categoryTypeproduct.type_product == 2){
       console.log('<p>agregar campos</p>');
       $('.remove').css('display', 'initial');  
       $('#pricepz').css('display', 'none');
       $('#pricecp').css('display', 'none');
+      $('#discountpz').css('display', 'none');
     }  
 }, 3000);
 
 $('#categorie_id').change(function(){
     $('#pricepz').val(0);
     $('#pricecp').val(0);
+    $('#discountpz').val(0);
 
     var categoryTypeproduct = {!! $categories !!};
     var categoryId = $(this).val();
@@ -245,6 +256,8 @@ $('#categorie_id').change(function(){
       $('.remove').css('display', 'none');
       $('#pricepz').css('display', 'initial'); 
       $('#pricecp').css('display', 'initial'); 
+      $('#discountpz').css('display', 'initial'); 
+
       // set purchase price for Pza products
       console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
       console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
@@ -260,6 +273,7 @@ $('#categorie_id').change(function(){
       $('.remove').css('display', 'initial');  
       $('#pricepz').css('display', 'none');
       $('#pricecp').css('display', 'none');
+      $('#discountpz').css('display', 'none');
     }
 });
 
