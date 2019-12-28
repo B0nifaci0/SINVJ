@@ -142,7 +142,7 @@ Panel Principal
               <div class="grey-800 float-left py-10">
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Dinero
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas as $v) @if($v->total_p) $ {{number_format($v->total_p,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($ventas) $ {{number_format($ventas,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -164,9 +164,9 @@ Panel Principal
                 <br><br><br>
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Existentes
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($gramos_e as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($gramos_existentes) {{$gramos_existentes}} gr @else 0 gr @endif</span>
               <br><br><br>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas_e as $g) @if($g->total_p) $ {{number_format($g->total_p,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($ventas_e) $ {{number_format($ventas_e,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -185,9 +185,9 @@ Panel Principal
                 <br><br><br>
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Traspasados
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($gramos_t as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($gramos_traspasado) {{$gramos_traspasado}} gr @else 0 gr @endif</span>
               <br><br><br>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas_t as $g) @if($g->total_p) $ {{number_format($g->total_p,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($ventas_t) $ {{number_format($ventas_t,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -206,9 +206,9 @@ Panel Principal
                 <br><br><br>
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Dañados
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($gramos_d as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($gramos_dañados) {{$gramos_dañados}} gr @else 0 gr @endif</span>
               <br><br><br>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas_d as $g) @if($g->total_p) $ {{number_format($g->total_p,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($ventas_d) $ {{number_format($ventas_d,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -235,7 +235,7 @@ Panel Principal
               <div class="grey-800 float-left py-10">
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($piezas as $p) @if($p->total_pzs) {{$p->total_pzs}} pzs @else 0 pzs @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($piezas) {{$piezas}} pzs @else 0 pzs @endif </span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -263,7 +263,7 @@ Panel Principal
               <div class="grey-800 float-left py-10">
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Dinero
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($pieza_vent as $v) @if($v->vent) $ {{number_format($v->vent,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($pieza_vent) $ {{number_format($pieza_vent,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -285,9 +285,9 @@ Panel Principal
                 <br><br><br>
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Por Pieza Existentes
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($piezas_e as $p) @if($p->total_pzse) {{$p->total_pzse}} pzs @else 0 pzs @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($piezas_e) {{$piezas_e}} pzs @else 0 pzs @endif</span>
               <br><br><br>
-              <span class="float-right grey-700 font-size-30">@foreach($pieza_vente as $v) @if($v->vent_e) $ {{number_format($v->vent_e,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($pieza_vente) $ {{number_format($pieza_vente,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -306,9 +306,9 @@ Panel Principal
                 <br><br><br>
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Por Pieza Traspasados
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($piezas_t as $p) @if($p->total_pzst) {{$p->total_pzst}} gr @else 0 pzs @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($piezas_t) {{$piezas_t}} gr @else 0 pzs @endif</span>
               <br><br><br>
-              <span class="float-right grey-700 font-size-30">@foreach($pieza_ventt as $v) @if($v->vent_t) $ {{number_format($v->vent_t,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($pieza_ventt) $ {{number_format($pieza_ventt,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -327,9 +327,9 @@ Panel Principal
                 <br><br><br>
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Por Pieza Dañados
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($piezas_d as $p) @if($p->total_pzsd) {{$p->total_pzsd}} pzs @else 0 pzs @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($piezas_d) {{$piezas_d}} pzs @else 0 pzs @endif</span>
               <br><br><br>
-              <span class="float-right grey-700 font-size-30">@foreach($pieza_ventd as $v) @if($v->vent_d) $ {{number_format($v->vent_d,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($pieza_ventd) $ {{number_format($pieza_ventd,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -364,13 +364,13 @@ Panel Principal
                 <br><br>
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Dañados
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($gramos_col as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach
+              <span class="float-right grey-700 font-size-30">@if($gramos_col) {{$gramos_col}} gr @else 0 gr @endif
               <br>
-              @foreach($gramos_cole as $g) @if($g->total_we) {{$g->total_we}} gr @else 0 gr @endif @endforeach
+              @if($gramos_cole) {{$gramos_cole}} gr @else 0 gr @endif
               <br>
-              @foreach($gramos_colt as $g) @if($g->total_wt) {{$g->total_wt}} gr @else 0 gr @endif @endforeach
+              @if($gramos_colt) {{$gramos_colt}} gr @else 0 gr @endif
               <br>
-              @foreach($gramos_cold as $g) @if($g->total_wd) {{$g->total_wd}} gr @else 0 gr @endif @endforeach</span>
+              @if($gramos_cold) {{$gramos_cold}} gr @else 0 gr @endif</span>
             </div>          <!--  <div class="ct-chart h-50"></div>   -->
           </div>
         </div>
@@ -401,13 +401,13 @@ Panel Principal
                 <br><br>
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Piezas Dañados
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($piezas_col as $p) @if($p->total_p) {{$p->total_p}} pzs @else 0 pzs @endif @endforeach
+              <span class="float-right grey-700 font-size-30">@if($piezas_col) {{$piezas_col}} pzs @else 0 pzs @endif
               <br>
-              @foreach($piezas_cole as $p) @if($p->total_pe) {{$p->total_pe}} pzs @else 0 pzs @endif @endforeach
+              @if($piezas_cole) {{$piezas_cole}} pzs @else 0 pzs @endif
               <br>
-              @foreach($piezas_colt as $p) @if($p->total_pt) {{$p->total_pt}} pzs @else 0 pzs @endif @endforeach
+              @if($piezas_colt) {{$piezas_colt}} pzs @else 0 pzs @endif
               <br>
-              @foreach($piezas_cold as $p) @if($p->total_pd) {{$p->total_pd}} pzs @else 0 pzs @endif @endforeach</span>
+              @if($piezas_cold) {{$piezas_cold}} pzs @else 0 pzs @endif</span>
             </div>          <!--  <div class="ct-chart h-50"></div>   -->
           </div>
         </div>
