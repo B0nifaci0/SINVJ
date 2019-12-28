@@ -163,9 +163,9 @@ class BranchController extends Controller
     public function mostrar($id)
     {
       $shop = Auth::user()->shop; 
-      $branch = Auth::user()->shop->id;
+      $id_shop = Auth::user()->shop->id;
       $user = Auth::user();
-      $branch = Shop::find($branch)->branches()->get();
+      $branch = Shop::find($id_shop)->branches()->get();
       $shops = Auth::user()->shop()->get();
 
       if($shop->image) {
@@ -184,19 +184,37 @@ class BranchController extends Controller
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
-      ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
-      ->where('products.branch_id',$ids)   
-      ->where('products.deleted_at', NULL)
+      ->where('products.branch_id',$ids)
+      ->where('lines.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',2)
       ->select('lines.id as ids', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
       ->orWhere('products.status_id',2)
-      ->Where('products.status_id',3)
+      ->where('products.status_id',3)
       ->orWhere('products.status_id',4)
       ->distinct('lines.name')
       ->orderBy('name_line','ASC')
       ->groupBy('lines.id', 'lines.name', 'lines.discount_percentage', 'lines.sale_price')
       ->get();
-      //return $total;
+
+      $total_gramos_tras = Shop::join('products','products.shop_id','shops.id')
+      ->join('transfer_products','transfer_products.product_id','products.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->join('lines','lines.id','products.line_id')
+      ->where('products.branch_id',$ids)
+      ->where('lines.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',2)
+      ->where('transfer_products.status_product',null)
+      ->select('lines.id as ids', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
+      ->distinct('lines.name')
+      ->orderBy('name_line','ASC')
+      ->groupBy('lines.id', 'lines.name', 'lines.discount_percentage', 'lines.sale_price')
+      ->get();
+
+      //return $total_gramos_tras;
+
+      
 
       //SUMA TOTAL DE PRECIOS Y GRAMOS POR LINEAS EXISTENTES
       $total_e = Shop::join('products','products.shop_id','shops.id')
@@ -219,12 +237,12 @@ class BranchController extends Controller
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
+      ->where('categories.type_product',2)
+      ->where('products.branch_id',$ids)
       ->where('products.status_id',3)
-      ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
-      ->where('products.branch_id',$ids)   
-      ->where('products.deleted_at', NULL)
       ->select(DB::raw('SUM(products.weigth) as total_wt'))
+      ->where('lines.shop_id', $id_shop)  
+      ->where('products.deleted_at', NULL)
       ->get();
       //return $total_t;
 
@@ -301,7 +319,7 @@ class BranchController extends Controller
       ->select(DB::raw('count(products.id) as num_pzd'))
       ->get();
 
-      return view('Branches/mostrar', ['cat_d' => $cat_d,'cat_t' => $cat_t,'cat_e' => $cat_e,'total_e'=> $total_e,'total_d'=> $total_d,'category' => $category , 'total_t'=> $total_t,'branch' => $branch, 'total' => $total, 'shop' => $shop]);
+      return view('Branches/mostrar', ['cat_d' => $cat_d,'cat_t' => $cat_t,'cat_e' => $cat_e,'total_e'=> $total_e,'total_d'=> $total_d,'category' => $category , 'total_t'=> $total_t,'branch' => $id_shop, 'total' => $total, 'shop' => $shop]);
     }
 
     /** 
