@@ -310,12 +310,12 @@ class ProductController extends Controller
         });
         $categories->prepend($selected_category);
         
-        if($category->type_product == 1 && (!$data['pricepzt']) || !is_numeric($data['pricepzt'])){
+        /**if($category->type_product == 1 && (!$data['pricepzt']) || !is_numeric($data['pricepzt'])){
           return back()->with('categories', $categories)->withErrors(['msg', 'El precio por pieza es requerido y debe ser numerico']);
         }
         elseif($category->type_product == 2 && (!$data['weigth']) || !is_numeric($data['weigth'])){
             return back()->with('categories', $categories)->withErrors(['msg', 'El peso es requerido y debe ser numerico']);
-        }
+        }*/
 
         $product = new Product($data);
         $product->date_creation= $date;

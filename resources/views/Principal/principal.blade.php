@@ -114,7 +114,7 @@ Panel Principal
               <div class="grey-800 float-left py-10">
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($gramos as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($total) {{$total}} gr @else 0 gr @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
