@@ -216,7 +216,6 @@ class BranchController extends Controller
       ->orderBy('name_line','ASC')
       ->groupBy('products.id','products.status_id','lines.id', 'lines.name', 'lines.discount_percentage', 'lines.sale_price')
       ->get();
-      return $total;
 
       $total_gramos_tras = Shop::join('products','products.shop_id','shops.id')
       ->join('transfer_products','transfer_products.product_id','products.id')
