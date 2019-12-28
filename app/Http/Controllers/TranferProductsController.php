@@ -95,6 +95,7 @@ class TranferProductsController extends Controller
           ->get();
         } else {
           $branches = Branch::where('shop_id', $user->shop->id)
+          // ->where('id', '!=', $user->branch_id)
           ->get();
         }
         
@@ -104,11 +105,6 @@ class TranferProductsController extends Controller
         $users = User::where('id', '!=', $user->id)->get(); // Retorna los usuarios que pertenecen a la tienda y no estan logueados
         //return $users;
         $products = Product::where('branch_id', $user->branch_id)->get(); //Retorna todos los productos de la tienda solo si el usuario tiene
-        // un  type_user direfente de 0
-        //$products = Product::all();
-        //return $products;
-        $branches = Branch::where('id', '!=', $user->branch_id)->get(); 
-        //return $branches;
         return view('transfer/add', compact('branches','users','products','user'));
        }
 

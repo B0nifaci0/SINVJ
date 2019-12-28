@@ -281,7 +281,6 @@ public function exportPdf( Request $request, $id) {
 	$sale->itemsSold = $sale->itemsSold();
 	$sale->total = $sale->itemsSold->sum('final_price');
  
-
   $branch = Branch::find($sale->branch_id);
   $pdf  = PDF::loadView('sale.PDFVenta', compact('shop','sale','branch')); 
   return $pdf->stream('venta.pdf');

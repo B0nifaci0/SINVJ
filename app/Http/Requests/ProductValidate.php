@@ -26,13 +26,13 @@ class ProductValidate extends FormRequest
         return [
             'clave' => 'required|string|max:50',
             //'name' => 'required|alpha|unique:products,name',
-            'description' => 'required|string|max:25',
+            'description' => 'required|string|max:15',
             //'weigth'=> 'required_if:product,is:true',
             //'weigth' => 'required|numeric|max:200',
             'image' => 'image',
             //'pricepzt' => 'required|numeric',
             //'price_purchase' => 'required|numeric',
-            'price' => 'required|numeric',
+            //'price' => 'required|numeric',
             //'category_id' => 'required',
             //'category_id' => 'required_if:product,is:true',
             'line_id' => 'required',
@@ -47,7 +47,7 @@ class ProductValidate extends FormRequest
         'description' => 'descripción', //This will replace any instance of 'username' in validation messages with 'email'
         'image' => 'imagen', //This will replace any instance of 'username' in validation messages with 'email'
         //'price_purchase' => 'precio compra', //This will replace any instance of 'username' in validation messages with 'email'
-        'price' => 'precio del producto', //This will replace any instance of 'username' in validation messages with 'email'
+        //'price' => 'precio del producto', //This will replace any instance of 'username' in validation messages with 'email'
         //'weigth' => 'precio del producto', //This will replace any instance of 'username' in validation messages with 'email'
         //'anyinput' => 'Nice Name',
     ];
