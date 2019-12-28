@@ -92,7 +92,6 @@ class TrasferUserController extends Controller
             'branches.id as branchId'
             )
             ->get();
-            //return $products;
         }
         $users = User::where('id', '!=', $user->id)
           ->whereIn('branch_id', $branch_ids)

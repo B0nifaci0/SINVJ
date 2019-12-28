@@ -89,11 +89,16 @@ class TranferProductsController extends Controller
         $users = User::where('id', '!=', $user->id)->get();
         $products = Product::where('branch_id', $user->branch_id)->get();
         
-        $branches = Branch::where('branches.id', '!=', $user->branch_id)
-          ->join('shops', 'shops.id', 'branches.shop_id')
-          ->where('shops.id', $shop->id)
-          ->select('branches.id', 'branches.name')
+        if($user->shop && $user->shop->shop_group_id) {
+          $shop_ids = Shop::where('shop_group_id', $user->shop->shop_group_id)->get()->map(function($item) { return $item->id;  });
+          $branches = Branch::whereIn('shop_id', $shop_ids)
           ->get();
+        } else {
+          $branches = Branch::where('shop_id', $user->shop->id)
+          ->get();
+        }
+        
+        $branch_ids = $branches->map(function($b) { return $b->id; });
         
         $user = Auth::user(); //Retorna el usuario con el que se encuentra logueado 
         $users = User::where('id', '!=', $user->id)->get(); // Retorna los usuarios que pertenecen a la tienda y no estan logueados
