@@ -178,6 +178,26 @@ class BranchController extends Controller
       $ids = $branch->id;
       //return $ids;
       //return Auth::user()->shop->id;
+
+      $total_tras = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->join('lines','lines.id','products.line_id')
+      ->where('products.branch_id',$ids)
+      ->where('lines.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',2)
+      ->where('products.deleted_at',null)
+      ->select('products.id','products.status_id','lines.id as ids', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
+      ->orWhere('products.status_id',2)
+      ->where('products.status_id',3)
+      ->orWhere('products.status_id',4)
+      ->distinct('lines.name')
+      ->orderBy('name_line','ASC')
+      ->groupBy('products.id','products.status_id','lines.id', 'lines.name', 'lines.discount_percentage', 'lines.sale_price')
+      ->get();
+
+
       //SUMA TOTAL DE PRECIOS Y GRAMOS POR LINEAS
       $total = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
@@ -187,13 +207,14 @@ class BranchController extends Controller
       ->where('products.branch_id',$ids)
       ->where('lines.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
-      ->select('lines.id as ids', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
+      ->where('products.deleted_at',null)
+      ->select('products.id','products.status_id','lines.id as ids', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
       ->orWhere('products.status_id',2)
       ->where('products.status_id',3)
       ->orWhere('products.status_id',4)
       ->distinct('lines.name')
       ->orderBy('name_line','ASC')
-      ->groupBy('lines.id', 'lines.name', 'lines.discount_percentage', 'lines.sale_price')
+      ->groupBy('products.id','products.status_id','lines.id', 'lines.name', 'lines.discount_percentage', 'lines.sale_price')
       ->get();
 
       $total_gramos_tras = Shop::join('products','products.shop_id','shops.id')
