@@ -114,43 +114,30 @@ class PrincipalController extends Controller
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
       ->where('products.deleted_at', NULL)
-      ->where('lines.shop_id', Auth::user()->shop->id) 
-      ->where('categories.shop_id', Auth::user()->shop->id)   
+      ->where('products.status_id',3)
+      ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
       ->select(DB::raw('SUM(products.weigth) as total_w'))
-      ->where('products.status_id',3)
       ->get();
+             //return $gramos_t;
+
 
       //SUMA TOTAL DE GRAMOS DAÑADOS
       $gramos_d = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
       ->where('products.deleted_at', NULL)
-      ->where('lines.shop_id', Auth::user()->shop->id)
-      ->where('categories.shop_id', Auth::user()->shop->id)     
-      ->where('categories.type_product',2) 
-      ->select(DB::raw('SUM(products.weigth) as total_w'))
       ->where('products.status_id',4)
+      ->where('products.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',2)
+      ->select(DB::raw('SUM(products.weigth) as total_w'))
       ->get();
+        //return $gramos_d;
+
 
        //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS
-       $ventas = Shop::join('products','products.shop_id','shops.id')
-       ->join('categories','categories.id','products.category_id')
-       ->join('statuss','statuss.id','products.status_id')
-       ->join('branches','branches.id','products.branch_id')
-       ->join('lines','lines.id','products.line_id')
-       ->where('lines.shop_id', Auth::user()->shop->id)  
-       ->where('categories.type_product',2) 
-       ->where('products.deleted_at', NULL)
-       ->select(DB::raw('SUM(products.price) as total_p'))
-       ->orWhere('products.status_id',2)
-       ->Where('products.status_id',3)
-       ->orWhere('products.status_id',4)
-       ->get();
 
         //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS EXISTENTES
        $ventas_e = Shop::join('products','products.shop_id','shops.id')
@@ -162,34 +149,31 @@ class PrincipalController extends Controller
        ->where('products.deleted_at', NULL)
        ->where('lines.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',2) 
-       ->select(DB::raw('SUM(products.price) as total_p'))
-       ->get();
+       ->sum('products.price');
 
        //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS TRASPASADOS
        $ventas_t = Shop::join('products','products.shop_id','shops.id')
        ->join('categories','categories.id','products.category_id')
        ->join('statuss','statuss.id','products.status_id')
        ->join('branches','branches.id','products.branch_id')
-       ->join('lines','lines.id','products.line_id')
        ->where('products.status_id',3)
        ->where('products.deleted_at', NULL)
-       ->where('lines.shop_id', Auth::user()->shop->id)  
+       ->where('products.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',2) 
-       ->select(DB::raw('SUM(products.price) as total_p'))
-       ->get();
+       ->sum('products.price');
 
        //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS DAÑADOS
        $ventas_d = Shop::join('products','products.shop_id','shops.id')
        ->join('categories','categories.id','products.category_id')
        ->join('statuss','statuss.id','products.status_id')
        ->join('branches','branches.id','products.branch_id')
-       ->join('lines','lines.id','products.line_id')
        ->where('products.status_id',4)
        ->where('products.deleted_at', NULL)
-       ->where('lines.shop_id', Auth::user()->shop->id)  
+       ->where('products.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',2) 
-       ->select(DB::raw('SUM(products.price) as total_p'))
-       ->get();
+       ->sum('products.price');
+
+       $ventas = $ventas_e + $ventas_t + $ventas_d;
 
     //CONSULTAS PARA SUB-ADIMINISTRADORES Y COLABORADORES
        //SUMA TOTAL DE GRAMOS
