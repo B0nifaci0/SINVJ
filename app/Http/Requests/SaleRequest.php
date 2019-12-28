@@ -24,8 +24,8 @@ class SaleRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_name' => 'required|string|max:50|min:3',
-            'telephone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            //'customer_name' => 'required|string|max:50|min:3',
+            //'telephone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
         ];
     }
 

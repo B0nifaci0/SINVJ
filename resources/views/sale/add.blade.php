@@ -37,6 +37,7 @@ ALTA VENTA
                     <select name="user_type" id="user-type" class="form-control">
                         <option value="1">Venta normal</option>
                         <option value="2">Venta a mayorista</option>
+                        <option value="3">Venta Apartado</option>
                     </select>
                 </div>
             </div>
