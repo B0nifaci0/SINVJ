@@ -187,6 +187,7 @@ class BranchController extends Controller
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.branch_id',$ids)   
+      ->where('products.deleted_at', NULL)
       ->select('lines.id as ids', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
       ->orWhere('products.status_id',2)
       ->Where('products.status_id',3)
@@ -207,6 +208,7 @@ class BranchController extends Controller
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.branch_id',$ids)   
+      ->where('products.deleted_at', NULL)
       ->select(DB::raw('SUM(products.weigth) as total_we'))
       ->get();
       //return $total_e;
@@ -221,6 +223,7 @@ class BranchController extends Controller
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.branch_id',$ids)   
+      ->where('products.deleted_at', NULL)
       ->select(DB::raw('SUM(products.weigth) as total_wt'))
       ->get();
       //return $total_t;
@@ -235,6 +238,7 @@ class BranchController extends Controller
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.branch_id',$ids)   
+      ->where('products.deleted_at', NULL)
       ->select(DB::raw('SUM(products.weigth) as total_wd'))
       ->get();
       //return $total_d;
@@ -247,6 +251,7 @@ class BranchController extends Controller
       ->where('categories.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
+      ->where('products.deleted_at', NULL)
       ->select('categories.id', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
       ->orWhere('products.status_id',2)
       ->Where('products.status_id',3)
@@ -265,6 +270,7 @@ class BranchController extends Controller
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
       ->where('products.status_id',2)
+      ->where('products.deleted_at', NULL)
       ->select(DB::raw('count(products.id) as num_pzex'))
       ->get();
       //return $cat_e;
@@ -278,6 +284,7 @@ class BranchController extends Controller
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
       ->where('products.status_id',3)
+      ->where('products.deleted_at', NULL)
       ->select(DB::raw('count(products.id) as num_pzt'))
       ->get();
 
@@ -290,6 +297,7 @@ class BranchController extends Controller
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
       ->where('products.status_id',4)
+      ->where('products.deleted_at', NULL)
       ->select(DB::raw('count(products.id) as num_pzd'))
       ->get();
 
