@@ -22,7 +22,7 @@ ALTA PRODUCTO
             </ul>
           </div>
         @endif
-        <h2 align="center">Nuevo Traspaso Sucursales ({{$shop_id}})</h2>
+        <h2 align="center">Nuevo Traspaso Sucursales</h2>
         <br>  
         <form class="" action="/traspasosAA" method="POST">
           {{ csrf_field() }} 
@@ -49,12 +49,7 @@ ALTA PRODUCTO
               <input type="text" class="form-control invisible" name="branch_id" id="branch_id" readonly>
             </div>
             <!-- END Select-->
-            <!-- Select para Seleccionar Quien recibe (Usuario)-->
-            <!-- <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
-              <label class="floating-label" for="inputUser">{{ __('Quien lo manda') }}</label>
-              <select id="usuarios_1" name="user_id" class="form-control "></select>
-            </div> -->
-            <!-- END Select-->
+
             <!-- Select para Seleccionar Sucursal Destino-->
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputBranch">{{ __('Destino') }}</label>
