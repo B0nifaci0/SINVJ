@@ -715,6 +715,16 @@
                         <span class="site-menu-title">Productos</span>
                       <span class="site-menu-arrow"></span>
                     </a>
+                    <!-- Mis Productos-->
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/sucursalproductoCO">
+                          <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mis Productos</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <!-- END Mis Productos-->
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/productos">
@@ -788,13 +798,34 @@
                         </a>
                       </li>
                       @endif
-                      <li class="site-menu-item">
+                      <!-- <li class="site-menu-item">
                           <a class="animsition-link" href="/traspasos">
                           <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
                             <span class="site-menu-title">Traspasos</span>
                         </a>
-                      </li>
-
+                      </li>-->
+                      <li class="site-menu-item has-sub">
+                    <a  href="javascript:void(0)">
+                      <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
+                        <span class="site-menu-title">Traspasos</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/traspasosAA">
+                          <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mis Traspasos</span>
+                        </a>
+                        </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/traspasos/create">
+                          <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
+                            <span class="site-menu-title">Nuevo transpaso</span>
+                        </a>
+                        </li>
+                    </ul>
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/gastos">
                           <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>

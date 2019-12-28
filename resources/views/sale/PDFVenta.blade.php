@@ -7,7 +7,7 @@
      </head>
    <style>
    {
-    font-size: 5px;
+    font-size: 2px;
     font-family: 'Times New Roman';
 }
 
@@ -87,20 +87,20 @@ td.vendedor1{
 }
 
 th.clave{
-    width: 80px;
-    max-width: 80px;
+    width: 60px;
+    max-width: 60px;
     text-align: left;
 }
 
 th.producto{
-    width: 80px;
-    max-width: 80px;
+    width: 60px;
+    max-width: 60px;
     text-align: left;
 }
 
 th.precio{
-    width: 80px;
-    max-width: 80px;
+    width: 50px;
+    max-width: 50px;
     text-align: left;
 }
 
@@ -138,7 +138,7 @@ img {
     max-width: center;
     text-align: center;
 }
-@page {size: 8cm 230mm;
+@page {size: 8.3cm 230mm;
      }
    </style>
 
@@ -146,11 +146,11 @@ img {
         <div border="">
         <p align="right">{{$sale->created_at}}</p>
         <!--<h3 align="center">{{$shop->name}}</h3>-->
-        <img align="left" width="100px" height="100px" src="{{$shop->image}}">
-                <p> {{$branch ? $branch->name : ''}}<br>
-            {{$branch ? $branch->name_legal_re : ''}}<br>
-            {{$branch ? $branch->rfc : ''}}<br> 
-            {{$branch ? $branch->email : ''}}<br>
+        <img align="left" width="150px" height="90px" src="{{$shop->image}}">
+            <p>{{ $branch->name }}<br><p>
+            {{ $branch->name_legal_re }}<br>
+            {{ $branch->rfc }} </p>
+            <p>{{ $branch->email }}</p>
             <p align="left">{{$branch ? $branch->address : ''}}<br>
             Tel:{{$branch ? $branch->phone_number : ''}}</p>
             <p align="left"><b>Folio:</b>{{$sale->folio}}</p>

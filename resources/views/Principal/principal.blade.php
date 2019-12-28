@@ -142,7 +142,7 @@ Panel Principal
               <div class="grey-800 float-left py-10">
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Dinero
               </div>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas as $v) @if($v->total_p) $ {{number_format($v->total_p,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($ventas) $ {{number_format($ventas,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -166,7 +166,7 @@ Panel Principal
               </div>
               <span class="float-right grey-700 font-size-30">@foreach($gramos_e as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
               <br><br><br>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas_e as $g) @if($g->total_p) $ {{number_format($g->total_p,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($ventas_e) $ {{number_format($ventas_e,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -187,7 +187,7 @@ Panel Principal
               </div>
               <span class="float-right grey-700 font-size-30">@foreach($gramos_t as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
               <br><br><br>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas_t as $g) @if($g->total_p) $ {{number_format($g->total_p,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($ventas_t) $ {{number_format($ventas_t,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -208,7 +208,7 @@ Panel Principal
               </div>
               <span class="float-right grey-700 font-size-30">@foreach($gramos_d as $g) @if($g->total_w) {{$g->total_w}} gr @else 0 gr @endif @endforeach</span>
               <br><br><br>
-              <span class="float-right grey-700 font-size-30">@foreach($ventas_d as $g) @if($g->total_p) $ {{number_format($g->total_p,2)}} @else $ 0 @endif @endforeach</span>
+              <span class="float-right grey-700 font-size-30">@if($ventas_d) $ {{number_format($ventas_d,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
