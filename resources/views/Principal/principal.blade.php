@@ -100,13 +100,22 @@ Panel Principal
       </div>
 
       @if(Auth::user()->type_user == 1 )
-      <div class="col-6">
+      <div class="container" style="background-color:white"><br>
+      <div class="row">
+      <div class="col-12">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Gramos</h2>
+        <h2 class="panel-title" style="color:white">Informacion De Productos Por Gramos De Todas Las Sucursales</h2>
+      </div><br>
+</div>
+</div>
+      <div class="col-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Por Gramos De Todas Las Sucursales</h2>
       </div>
       <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -122,19 +131,19 @@ Panel Principal
         </div>
         <!-- End Widget Linearea One -->
       </div>
-
+      
       </div>
       </div>
       </div>
 
       <div class="col-6">
-      <div class="panel-warning">
+      <div class="panel-primary">
       <div class="panel-heading">
         <h2 class="panel-title" style="color:white">Total De Productos Por Gramo</h2>
       </div>
       <div class="row">
       
-      <div class="col-sm-12">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -154,18 +163,47 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Gramos Existentes</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Existentes
-                <br><br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Existentes
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Existentes
               </div>
               <span class="float-right grey-700 font-size-30">@if($gramos_existentes) {{$gramos_existentes}} gr @else 0 gr @endif</span>
-              <br><br><br>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+        
+      </div>
+      </div>
+      </div>
+
+      <div class="col-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Existentes</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Dinero (Existentes)
+              </div>
               <span class="float-right grey-700 font-size-30">@if($ventas_e) $ {{number_format($ventas_e,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
@@ -173,20 +211,49 @@ Panel Principal
           
         </div>
         <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Gramos Traspasados</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Traspasados
-                <br><br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Traspasados
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Traspasados              </div>
+              <span class="float-right grey-700 font-size-30">@if($gramos_traspasado) {{$gramos_traspasado}} gr @else 0 gr @endif</span>            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Traspasados</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Dinero (Traspasados)
               </div>
-              <span class="float-right grey-700 font-size-30">@if($gramos_traspasado) {{$gramos_traspasado}} gr @else 0 gr @endif</span>
-              <br><br><br>
               <span class="float-right grey-700 font-size-30">@if($ventas_t) $ {{number_format($ventas_t,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
@@ -194,20 +261,51 @@ Panel Principal
           
         </div>
         <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Gramos Dañados</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Dañados
-                <br><br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Dañados
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Dañados
               </div>
               <span class="float-right grey-700 font-size-30">@if($gramos_dañados) {{$gramos_dañados}} gr @else 0 gr @endif</span>
-              <br><br><br>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Dañados</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Dinero (Dañados)
+              </div>
               <span class="float-right grey-700 font-size-30">@if($ventas_d) $ {{number_format($ventas_d,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
@@ -215,25 +313,42 @@ Panel Principal
           
         </div>
         <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
+      </div> 
+
+      </div>
       </div>
 
       </div>
+      </div>
+      </div>
+      </div>
 
-      <div class="row"> 
       
+      <div class="container" style="background-color:white"><br>
+      <div class="row">
+      <div class="col-12">
+      <div class="bg-primary">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Informacion De Productos Por Piezas De Todas Las Sucursales</h2>
+      </div><br>
+</div>
+</div>
       <div class="col-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Piezas</h2>
+        <h2 class="panel-title" style="color:white">Total De Productos Por Piezas De Todas Las Sucursales</h2>
       </div>
       <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas
+              <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas
               </div>
               <span class="float-right grey-700 font-size-30">@if($piezas) {{$piezas}} pzs @else 0 pzs @endif </span>
             </div>
@@ -243,7 +358,7 @@ Panel Principal
         </div>
         <!-- End Widget Linearea One -->
       </div>
-
+      
       </div>
       </div>
       </div>
@@ -251,11 +366,11 @@ Panel Principal
       <div class="col-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Productos Por Pieza</h2>
+        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas</h2>
       </div>
       <div class="row">
       
-      <div class="col-sm-12">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -275,18 +390,47 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-6">
+      <div class="panel-warning">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Piezas Existentes</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Piezas Existentes
-                <br><br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Por Pieza Existentes
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas Existentes
               </div>
               <span class="float-right grey-700 font-size-30">@if($piezas_e) {{$piezas_e}} pzs @else 0 pzs @endif</span>
-              <br><br><br>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+        
+      </div>
+      </div>
+      </div>
+
+      <div class="col-6">
+      <div class="panel-warning">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas Existentes</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Dinero (Existentes)
+              </div>
               <span class="float-right grey-700 font-size-30">@if($pieza_vente) $ {{number_format($pieza_vente,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
@@ -294,20 +438,49 @@ Panel Principal
           
         </div>
         <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-6">
+      <div class="panel-warning">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Piezas Traspasadas</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Piezas Traspasadas
-                <br><br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Por Pieza Traspasados
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas Traspasadas              </div>
+                <span class="float-right grey-700 font-size-30">@if($piezas_t) {{$piezas_t}} gr @else 0 pzs @endif</span>          </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-6">
+      <div class="panel-warning">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas Traspasadas</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Dinero (Traspasados)
               </div>
-              <span class="float-right grey-700 font-size-30">@if($piezas_t) {{$piezas_t}} gr @else 0 pzs @endif</span>
-              <br><br><br>
               <span class="float-right grey-700 font-size-30">@if($pieza_ventt) $ {{number_format($pieza_ventt,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
@@ -315,20 +488,51 @@ Panel Principal
           
         </div>
         <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
       </div>
 
-      <div class="col-sm-4">
+      <div class="col-6">
+      <div class="panel-warning">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Piezas Dañadas</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Piezas Dañadas
-                <br><br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Productos Por Pieza Dañados
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas Dañadas
               </div>
               <span class="float-right grey-700 font-size-30">@if($piezas_d) {{$piezas_d}} pzs @else 0 pzs @endif</span>
-              <br><br><br>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-6">
+      <div class="panel-warning">
+      <div class="panel-heading">
+        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas Dañadas</h2>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Dinero (Dañados)
+              </div>
               <span class="float-right grey-700 font-size-30">@if($pieza_ventd) $ {{number_format($pieza_ventd,2)}} @else $ 0 @endif</span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
@@ -336,10 +540,19 @@ Panel Principal
           
         </div>
         <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
+      </div> 
+
+      </div>
       </div>
 
       </div>
       </div>
+      </div>
+      </div>
+
 
       @endif
 
