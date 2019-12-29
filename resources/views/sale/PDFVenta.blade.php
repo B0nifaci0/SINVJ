@@ -7,136 +7,8 @@
      </head>
    <style>
    {
-    font-size: 2px;
+    font-size: 1px;
     font-family: 'Times New Roman';
-}
-
-td,
-th,
-tr,
-table {
-    border-collapse: collapse;
-}
-
-td.sucursal{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.nota{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.fecha{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.hora{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.cliente {
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.vendedor {
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-
-
-td.sucursal1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-td.nota1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-td.fecha1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-td.hora1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-
-td.cliente1{
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-td.vendedor1{
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-th.clave{
-    width: 60px;
-    max-width: 60px;
-    text-align: left;
-}
-
-th.producto{
-    width: 60px;
-    max-width: 60px;
-    text-align: left;
-}
-
-th.precio{
-    width: 50px;
-    max-width: 50px;
-    text-align: left;
-}
-
-td.clave1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-td.producto1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-td.precio1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-
-.centrado {
-    text-align: center;
-    align-content: center;
-}
-
-.ticket {
-    width: 200px;
-    max-width: 200px;
-}
-
-img {
-    width: center ;
-    max-width: center;
-    text-align: center;
 }
 @page {size: 8.3cm 230mm;
      }
@@ -146,7 +18,7 @@ img {
         <div border="">
         <p align="right">{{$sale->created_at}}</p>
         <!--<h3 align="center">{{$shop->name}}</h3>-->
-        <img align="left" width="150px" height="90px" src="{{$shop->image}}">
+        <img align="left" width="100px" height="100px" src="{{$shop->image}}">
             <p>{{ $branch->name }}<br><p>
             {{ $branch->name_legal_re }}<br>
             {{ $branch->rfc }} </p>
