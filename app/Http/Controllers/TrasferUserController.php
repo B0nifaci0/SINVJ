@@ -23,10 +23,9 @@ class TrasferUserController extends Controller
 {
     public function index()
        {
-        $user = Auth::user();
-        $trans = TransferProduct::where('user_id', $user->id)
-          ->orWhere('destination_user_id', $user->id)
-          ->with('user')->with('branch')->get();
+        
+        $trans = TransferProduct::all();
+        //return $trans;
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
         //$statuses = Shop::find($status)->statuss()->get();
@@ -39,8 +38,8 @@ class TrasferUserController extends Controller
         }*/
         
         //return $transs; 
-
-        return view('transfer/TrasferUser/index', compact('trans','user'));
+        
+        return view('transfer/TrasferUser/index', compact('trans'));
         
        }
 

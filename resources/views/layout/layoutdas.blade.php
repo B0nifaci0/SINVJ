@@ -570,6 +570,14 @@
                     </ul>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
+                          <a class="animsition-link" href="/traspasosAA/create">
+                          <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                            <span class="site-menu-title">Nuevo transpaso</span>
+                        </a>
+                        </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
                           <a class="animsition-link" href="#">
                           <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
                             <span class="site-menu-title">Reporte de traspasos por sucursal</span>
@@ -821,7 +829,7 @@
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/traspasos/create">
-                          <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
+                          <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
                             <span class="site-menu-title">Nuevo transpaso</span>
                         </a>
                         </li>
@@ -926,6 +934,14 @@
                             <span class="site-menu-title">Mis Traspasos</span>
                         </a>
                       </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/traspasos/create">
+                          <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                            <span class="site-menu-title">Nuevo transpaso</span>
+                        </a>
+                        </li>
                     </ul>
                     <!-- END Mis Taspasos-->
                     <!-- END Taspasos-->

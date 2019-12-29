@@ -37,7 +37,6 @@ ALTA VENTA
                     <select name="user_type" id="user-type" class="form-control">
                         <option value="1">Venta normal</option>
                         <option value="2">Venta a mayorista</option>
-                        <option value="3">Venta Apartado</option>
                     </select>
                 </div>
             </div>
@@ -426,7 +425,7 @@ $(function(){
 
   selectedProducts.push(product);
   var _tr = `<tr id="raw-${product.id}">
-    <td>${product.id}</td>
+    <td>${product.clave}</td>
     <td>${product.description}</td>
     <td>${product.weigth}</td>
     <td>${product.category.name}</td>
