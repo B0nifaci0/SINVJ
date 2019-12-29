@@ -266,7 +266,7 @@ class ProductController extends Controller
      */
     public function store(ProductValidate $request)
     {
-      // return $request;
+      //return $request;
       $date= date("Y-m-d");
       $branches= Auth::user()->shop->branches;
       $user = Auth::user();
@@ -295,6 +295,7 @@ class ProductController extends Controller
         if($category->type_product == 1) {
           $data['line_id'] = null;
           $data['weigth'] = null;
+          $data['discount'] = $request->max_discountpz ? $request->max_discountpz : 0;
 
         }
 
