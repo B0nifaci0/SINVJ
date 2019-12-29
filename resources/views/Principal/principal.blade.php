@@ -43,13 +43,13 @@ Panel Principal
           <div class="panel-heading bg-primary  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
             <div class="row">
               <div class="col-md-3">   
-                  <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
+                  <img align = "center" width="225px" height="150px" src="{{ $shop->image }}">
               </div>
-              <div class="col-md-6">
+              <!--<div class="col-md-6">
                   <h2 style="color:white">
-                      {{$shop->name}}
+                     {{$shop->name}}
                   </h2>
-              </div>
+              </div>-->
               <div class="row aling-right">
                   <div class="col-md-6 col-md-offset-2">
                   <div class= "mt-25" ></div>

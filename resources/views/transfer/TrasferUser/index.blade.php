@@ -75,9 +75,9 @@ TRASFERENCIAS
                 <th>Peso</th>
                 <th>Categoría</th>
                 <th>Linea</th>
-                <th>Sucursal</th>
+                <th>S.Origen</th>
                 <th>Quien lo mando</th>
-                <th>Destino</th>
+                <th>S.Destino</th>
                 <th>Quien recibio</th>
                 <th>Fecha</th>
                 <th>Status</th>
@@ -91,9 +91,9 @@ TRASFERENCIAS
                 <th>Peso</th>
                 <th>Categoría</th>
                 <th>Linea</th>
-                <th>Sucursal</th>
+                <th>S.Origen</th>
                 <th>Quien lo mando</th>
-                <th>Destino</th>
+                <th>S.Destino</th>
                 <th>Quien recibio</th>
                 <th>Fecha</th>
                 <th>Status</th>

@@ -50,7 +50,7 @@ class TranferProductsController extends Controller
        }
        public function indexAA()
        {
-         
+        
         $user = Auth::user();
         $trans = TransferProduct::all();
         
