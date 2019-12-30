@@ -35,7 +35,7 @@ ALTA PRODUCTO
                 <option></option>
                 <optgroup label="Productos">
                 @foreach($products as $product)
-                <option value="{{ $product->description }}" required>{{$product->clave}}-{{ $product->description }}</option>
+                <option value="{{ $product->description }}">{{$product->clave}}-{{ $product->description }}</option>
                 @endforeach
                 </optgroup>
               </select>
@@ -125,10 +125,13 @@ $(".usuarios").change(function(){
       $("#id_user_" + selector).val(id_user);
 });
 
+setInterval(() => {
+  console.log($('#product_id').val());
+}, 2500);
 
 $('#product').change(function() {
   var name = $(this).val();
-  var p = products.filter(p => p.name = name)[0];
+  var p = products.filter(p => p.description == name)[0];
   console.log(p);
   $('#branch').val(p.branchName)
   $('#branch_id').val(p.branchId)

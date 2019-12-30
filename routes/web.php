@@ -75,7 +75,7 @@ Route::get('sucursalproductoCO', 'ProductController@indexCOP');
 
 Route::post('traspasos/respuesta', 'TranferProductsController@answerTransferRequest');
 Route::post('traspasos/pagar', 'TranferProductsController@payTransfer');
-
+Route::post('traspasos/cancelar', 'TranferProductsController@giveBack');
 //Excel
 //Route::resource('excel','ExcelController');
 
