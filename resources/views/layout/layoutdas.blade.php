@@ -434,6 +434,22 @@
                     <span class="site-menu-arrow"></span>
                   </a>
                   <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/tiendas">
+                          <i class="site-menu-icon fa-eye" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mi tienda</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/tiendas/{{$shop->id}}/edit">
+                          <i class="site-menu-icon fa-pencil" aria-hidden="true"></i>
+                            <span class="site-menu-title">Editar tienda</span>
+                        </a>
+                      </li>
+                    </ul>
+                  <ul class="site-menu-sub">
                   <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
                       <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
@@ -480,14 +496,14 @@
 
                     <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
-                      <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                      <i class="site-menu-icon fa-list" aria-hidden="true"></i>
                         <span class="site-menu-title">Inventarios</span>
                       <span class="site-menu-arrow"></span>
                     </a>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/inventarios">
-                          <i  class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                          <i  class="site-menu-icon fa-list-alt" aria-hidden="true"></i>
                             <span class="site-menu-title">Inventarios</span>
                         </a>
                       </li>
@@ -717,6 +733,14 @@
                       <span class="site-menu-arrow"></span>
                     </a>
                     <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/tiendas">
+                          <i class="site-menu-icon fa-eye" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mi tienda</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="site-menu-sub">
                   <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
                       <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
@@ -862,6 +886,14 @@
                       <span class="site-menu-title">Inicio</span>
                     </a>
                   </li>
+                  <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/tiendas">
+                          <i class="site-menu-icon fa-eye" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mi tienda</span>
+                        </a>
+                      </li>
+                    </ul>
                     <!-- Productos-->
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
