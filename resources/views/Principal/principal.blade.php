@@ -112,7 +112,7 @@ Panel Principal
       <div class="col-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Por Gramos De Todas Las Sucursales</h2>
+        <h2 class="panel-title" style="color:white">Total De Gramos en Productos</h2>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -139,7 +139,7 @@ Panel Principal
       <div class="col-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Productos Por Gramo</h2>
+        <h2 class="panel-title" style="color:white">Total De Dinero En Productos Por Gramo</h2>
       </div>
       <div class="row">
       
