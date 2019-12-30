@@ -100,6 +100,8 @@ class TrasferUserController extends Controller
 
   public function store(Request $request)
   {
+    $product = Product::find($request->product_id);
+
     $user = Auth::user();
     $transfer_product = new TransferProduct([
       'user_id' => $user->id,
@@ -109,8 +111,11 @@ class TrasferUserController extends Controller
       'destination_user_id' => $request->destination_user_id,
       'status_product' => null
     ]);
-    //return $transfer_product;
     $transfer_product->save();
+    
+		$product->status_id = 3;
+		$product->save();
+      
     return redirect('/traspasosAA')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
   }
  

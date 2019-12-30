@@ -135,11 +135,12 @@ TRASFERENCIAS
                       @if(!$transfer->paid_at)
                         @if(Auth::user()->id == $transfer->user_id)
                           <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
+                          <button class="btn btn-danger give-back" alt="{{ $transfer->id }}">Devolver</button>
                         @else
                         <span class="text-center badge badge-warning">Por pagar</span>
                         @endif
                       @else
-                        <span class="text-center badge badge-success">Pagado</span>
+                        <!-- <span class="text-center badge badge-success">Pagado</span> -->
                       @endif
                     @endif
                     <!-- END Botón-->
@@ -167,6 +168,11 @@ TRASFERENCIAS
     {{ csrf_field() }}
     <input type="text" name="transfer_id" id="transfer_id">
     <input type="text" name="answer" id="answer">
+  </form> 
+
+  <form method="post" action="/traspasos/cancelar" id="give-back" class="d-none">
+    {{ csrf_field() }}
+    <input type="text" name="transfer_id" id="inventory_id">
   </form>
 
   <form method="post" action="/traspasos/pagar" id="payment-form" class="d-none">
@@ -194,6 +200,25 @@ $(document).ready(function(){
         {
           $('#inventory_id').val(id);
           $('#payment-form').submit();
+        }
+      })
+  });
+
+  $(".give-back").click(function() {
+      let id = $(this).attr("alt");
+      Swal.fire({
+        title: 'Confirmación',
+        text: "¿Se ha devuelto este producto?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#4caf50' ,
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.value)
+        {
+          $('#inventory_id').val(id);
+          $('#give-back').submit();
         }
       })
   });

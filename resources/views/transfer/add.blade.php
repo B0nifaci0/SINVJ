@@ -114,8 +114,8 @@ $(".usuarios").change(function(){
     });
 
     $('#product').change(function() {
-  var name = $(this).val();
-  var p = products.filter(p => p.name = name)[0];
+  var id = $(this).val();
+  var p = products.filter(p => p.id == id)[0];
   console.log(p);
   $('#branch').val(p.branchName)
   $('#branch_id').val(p.branchId)
@@ -135,13 +135,12 @@ $(".usuarios").change(function(){
 <!-- END Función-->
 @section('traspaso')
 <script type="text/javascript">
-$('.accept').click(function({
+$('.accept').click(function(){
   var id = $(this).attr('alt');
   $('#t_product_id').val(id);
   $('#status').val(1)
 
   $('#form').submit();
-});  
 });
 </script> 
 @endsection
