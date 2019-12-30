@@ -100,7 +100,7 @@ Panel Principal
       </div>
 
       @if(Auth::user()->type_user == 1 )
-      <div class="container" style="background-color:white"><br>
+      <div class="container" style="background-color:white">
       <div class="row">
       <div class="col-12">
       <div class="panel-warning">
@@ -327,7 +327,7 @@ Panel Principal
       </div>
 
       
-      <div class="container" style="background-color:white"><br>
+      <div class="container" style="background-color:white">
       <div class="row">
       <div class="col-12">
       <div class="bg-primary">
