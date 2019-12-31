@@ -56,7 +56,7 @@
       <img align="left" width="90px" height="90px" src="{{ $shop->image }}">
       <p align="right">Fecha: {{$dates}}</p>
       <p align="right">Hora: {{$hour}}</p>
-      <h2 align="center">Reporte de Productos {{$estado->name}}s por 
+      <h2 align="center">Reporte {{$estado->name}}s por 
           @foreach ($products as $i => $product)
           @if($product->category->type_product == 2 )
           Gr
@@ -87,6 +87,7 @@
             @endforeach
             <th>Descripción</th>
             <th>Precio</th>
+            <th>Fecha alta</th>
             @if ($estado->name == 'Traspaso')
             <th>Sucursal</th>
             <th>Quien lo mando</th>
@@ -114,6 +115,7 @@
             @endif 
             @endforeach
             @endif
+          <td>{{date_format($product->created_at, 'd/m/y')}}</td>
             @if ($estado->name == 'Traspaso')
             @foreach ($trans as $transfer)
             @if ($product->id == $transfer->product_id)

@@ -267,18 +267,27 @@ Route::group(['middleware' => ['auth']],function () {
   Route::post('/grupos/invitacion', 'ShopGroupsController@groupJoin');
 
   /**Reportes Rutas y Vistas */
-  Route::get('/reportes-productos','ProductController@reportProduct');
+    
+  Route::get('reportes-productos','ProductController@reportProduct');
+  Route::get('reportEstatus', 'ProductController@reportEstatus');
+  Route::get('reportEstatusG', 'ProductController@reportEstatusG');
+  Route::get('reportLinea', 'ProductController@reportLinea');
+  Route::get('reportLineaG', 'ProductController@reportLineaG');
+  Route::get('reportPzG', 'ProductController@reportCategoriaGeneral');  
+  Route::get('reportPz', 'ProductController@reportPz');
+
+
+
   Route::get('/reportes-productos-apartados','ProductController@reportProductSeparated');
-  Route::get('estatusproducto', 'ProductController@reportEstatus');  
-  Route::get('estatusproductoPz', 'ProductController@reportEstatusPz');
-  Route::get('gramoslinea', 'ProductController@reportes-productostLineaG');
+
+
   Route::get('entradasproducto', 'ProductController@reportEntradas');
   Route::get('reportUtility','ProductController@reportUtility');
   Route::get('sucursales/sucursalcorte','BranchController@reportBox_cutDate')->name('sucursalcorte');
 
-  Route::get('gramoslineageneral', 'ProductController@reportLineaGGeneral');
+  
   Route::get('piezascategoriageneral', 'ProductController@reportCategoriaPGeneral');
-  Route::get('reportEstatusG', 'ProductController@reportEstatusG');
+
   Route::get('reportEntradasGpgr', 'ProductController@reportEntradasG_pgr');
   Route::get('reportEntradasPpz', 'ProductController@reportEntradasP_pz');
   Route::get('reportEntradasPrgpgr', 'ProductController@reportEntradasPr_gpgr');
