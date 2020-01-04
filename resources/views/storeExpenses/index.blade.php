@@ -136,7 +136,7 @@ LISTA DE  GASTOS
           </div>
         <div class="panel-body">
         <!-- Tabla para listar gastos-->
-          <table id='example' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+          <table id='table_expenses' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
               <tr>
                 <th>Clave</th>
@@ -161,7 +161,7 @@ LISTA DE  GASTOS
             </tfoot>
             <tbody>
               @foreach ($expenses as $expense)
-                <tr id = "row{{ $expense->id }}">
+                <tr id = "row{{ $expense->id }}" class="row{{ $expense->id }}">
                   <td>{{ $expense->id}}</td>
                   <td>{{ $expense->name }}</td>
                   <td>{{ $expense->descripcion }}</td>
@@ -175,18 +175,18 @@ LISTA DE  GASTOS
                   </td>
                   <td>{{$expense->branch ? $expense->branch->name : '' }}</td>
                   <td>
-                     <!-- Botón para editar gasto-->
-                    <a href="/gastos/{{$expense->id}}/edit"><button type="button"
-                      class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip" data-original-title="Editar">
-                      <i class="icon md-edit" aria-hidden="true"></i></button>
-                    </a>
-                    <!-- END Botón-->
+                  <!-- Botón para editar producto-->
+                  <a type="button" href="/gastos/{{$expense->id}}/edit"
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
+                      data-original-title="Editar">
+                      <i class="icon md-edit" aria-hidden="true"></i></a>
+                  <!-- END Botón-->
+                
                      <!-- Botón para generar ticket PDF de Gastos-->
                    <!--div class="col-md-6 col-md-offset-2"-->
-                   <a href="gastopdf/{{$expense->id}}"><button type="button"
-                        class="btn btn-icon btn-danger waves-effect waves-light"
-                        data-toggle="tooltip" data-original-title="Generar Ticket">
-                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                   <a class="btn btn-icon btn-danger waves-effect waves-light"
+                        data-toggle="tooltip" data-original-title="Generar Ticket" href="gastopdf/{{$expense->id}}">
+                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                       </a>
                 <!-- </div-->
                 <!-- END Botón-->
@@ -210,14 +210,30 @@ LISTA DE  GASTOS
 
 
 @endsection
+  @section('barcode-product')
+  <script type="text/javascript">
+  //inicializa la tabla para resposnive
+    $(document).ready(function(){
+        $('#table_expenses').DataTable({
+            retrieve: true,
+            //  responsive: true,
+            //paging: false,
+            //searching: false
+        });
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+              .columns.adjust()
+              .responsive.recalc();
+        });    
+    });
+    </script>
+  @endsection
 <!-- Función Sweet Alert para eliminar gasto-->
 @section('delete-gastos')
 <script type="text/javascript">
 
 $(document).ready(function() {
-
   // Modal script
-
   $('.clickme').click(function() {
     // Get the modal
     var modal = document.getElementById("myModal");
@@ -241,8 +257,9 @@ $(document).ready(function() {
   })
 
 
-  console.log("b")
-  $(".delete").click(function() {
+ setTimeout(() => {
+   console.log("b")
+  $("#table_expenses").on('click','.delete',function() {
     var id = $(this).attr("alt");
     console.log(id);
     Swal.fire({
@@ -264,7 +281,10 @@ $(document).ready(function() {
           url:  '/gastos/' + id,
           method: 'DELETE',
           success: function () {
-            $("#row" + id).remove();
+            $('#table_expenses').DataTable()
+            .rows('.row' + id)
+            .remove()
+            .draw();
             Swal.fire(
               'Eliminado',
               'El registro ha sido eliminado.',
@@ -281,8 +301,8 @@ $(document).ready(function() {
         })
       }
     })
-
-  });
+   });
+ },500)
 });
 
 </script>
@@ -291,5 +311,4 @@ $(document).ready(function() {
 @section('footer')
 @endsection
 
-@section('barcode-product')
-@endsection
+

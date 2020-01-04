@@ -68,7 +68,7 @@ LISTA DE  SUCURSALES
           </div>
       <div class="panel-body">
             <!-- Tabla para listar sucursales-->
-            <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table id='branchs'  class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                  <!-- <th>Id</th> -->
@@ -95,7 +95,7 @@ LISTA DE  SUCURSALES
               </tfoot>
               <tbody>
                   @foreach ($branches as $branch)
-                  <tr id = "row{{$branch->id}}">
+                  <tr id = "row{{$branch->id}}" class="row{{$branch->id}}">
                     <!-- <td>{{$branch->id}}</td>  -->
                     <td>{{$branch->name }}</td>
                     <td>{{$branch->name_legal_re}}</td>
@@ -145,13 +145,28 @@ LISTA DE  SUCURSALES
     </div>
   <!-- End Panel Basic -->
 @endsection
+ @section('barcode-product')
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#branchs').DataTable({
+            retrieve: true,
+            //responsive: true,
+            //paging: false,
+            //searching: false
+        });
+ 
+    });
+    </script>
+  @endsection
 <!-- Función Sweet Alert para eliminar sucursal-->
 @section('delete-sucursales')
 <script type="text/javascript">
-console.log("a")
+//console.log("a")
 $(document).ready(function() {
-  console.log("b")
-  $(".delete").click(function() {
+  //console.log("b")
+setTimeout(()=>{
+      console.log("cdededee")
+  $("#branchs").on('click','.delete',function () {
     var id = $(this).attr("alt");
     console.log(id);
     Swal.fire({
@@ -167,39 +182,38 @@ $(document).ready(function() {
       {
         $.ajaxSetup({
          headers: {
-             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-          }
-        });
+           'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+           }
+         });
         $.ajax({
           url:  '/sucursales/' + id,
           method: 'DELETE',
-          success: function (response) {
-            if(response.success){
-            $("#row" + id).remove();
-            Swal.fire(
-              'Eliminado',
-              'El registro ha sido eliminado.',
-              'success'
-            )
-            }else{
+            success: function (response) {
+              if(response.success){
+              $("#branchs").DataTable()
+              .rows('.row' + id)
+              .remove()
+              .draw();
               Swal.fire(
-                  'error',
-
-                  response.message
-                )
-         }
-
-        }
-        })
-      }
-    })
-
+                'Eliminado',
+                'El registro ha sido eliminado.',
+                'success'
+                );
+              }else{
+                Swal.fire(
+                    'error',
+                    response.message
+                  )
+                 }
+                }
+              })
+           }
+       })
+     });
+    },500)
   });
-});
-
 </script>
 @endsection
 <!--END Función-->
 
-@section('barcode-product')
-@endsection
+
