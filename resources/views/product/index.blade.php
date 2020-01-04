@@ -265,11 +265,16 @@ LISTA PRODUCTO
   <script type="text/javascript">
     $(document).ready(function(){
         $('#product_table_gr').DataTable({
+            retrieve: true,
             responsive: true,
-
+            //paging: false,
+            //searching: false
         });
         $('#product_table_pz').DataTable({
-            responsive: true,
+            retrieve: true,
+            //responsive: true,
+            //paging: false,
+            //searching: false
         });
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -314,10 +319,67 @@ LISTA PRODUCTO
                   'Eliminado',
                   'El registro ha sido eliminado.',
                   'success'
-                )
+                ),
                 //Create new Datatable
                 $('#product_table_gr').DataTable().destroy();
-
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust()
+                    .responsive.recalc();
+                }); 
+                  setTimeout(function(){
+                      location.reload();
+                    },100); 
+              },
+              error: function () {
+                Swal.fire(
+                  'Eliminado',
+                  'El registro no ha sido eliminado.' + id,
+                  'error'
+                )
+              }
+            })
+          }
+        })
+      });
+      $('#product_table_pz').on('click', '.delete', function(){
+        var id = $(this).attr("alt");
+        console.log(id);
+        Swal.fire({
+          title: 'Confirmación',
+          text: "¿Seguro que desea eliminar este registro?",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Borralo!'
+        }).then((result) => {
+          if (result.value) {
+            $.ajaxSetup({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+            });
+            $.ajax({
+              url: '/productos/' + id,
+              method: 'DELETE',
+              success: function () {
+                $("#row" + id).remove();   
+                Swal.fire(
+                  'Eliminado',
+                  'El registro ha sido eliminado.',
+                  'success'
+                ),
+                 //Create new Datatable
+                $('#product_table_pz').DataTable().destroy();
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust()
+                    .responsive.recalc();
+                });
+                setTimeout(function(){
+                  location.reload();
+                },100);
               },
               error: function () {
                 Swal.fire(
