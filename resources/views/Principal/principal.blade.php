@@ -105,14 +105,14 @@ Panel Principal
       <div class="col-12">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Informacion De Productos Por Gramos De Todas Las Sucursales</h2>
+       <center> <h2 class="panel-title" style="color:white">Informacion De Productos Por Gramos De Todas Las Sucursales</h2> </center>
       </div><br>
 </div>
 </div>
       <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Gramos en Productos</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Gramos</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -139,7 +139,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero En Productos Por Gramo</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Dinero Por Gramo</h2> </center>
       </div>
       <div class="row">
       
@@ -166,7 +166,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Gramos Existentes</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Gramos Existentes</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -193,7 +193,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Existentes</h2>
+      <center> <h2 class="panel-title" style="color:white">Total en Productos Existentes</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -219,7 +219,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Gramos Traspasados</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Gramos Traspasados</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -243,7 +243,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Traspasados</h2>
+      <center> <h2 class="panel-title" style="color:white">Total en Productos Traspasados</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -269,7 +269,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Gramos Dañados</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Gramos Dañados</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -295,7 +295,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Dañados</h2>
+      <center> <h2 class="panel-title" style="color:white">Total en Productos Dañados</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -332,14 +332,14 @@ Panel Principal
       <div class="col-12">
       <div class="bg-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Informacion De Productos Por Piezas De Todas Las Sucursales</h2>
-      </div><br><br>
-</div>
+      <center> <h2 class="panel-title" style="color:white">Informacion De Productos Por Piezas De Todas Las Sucursales</h2> </center>
+      </div>
+</div><br>
 </div>
       <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Productos Por Piezas</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Productos Por Piezas</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -366,7 +366,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas</h2>
+      <center> <h2 class="panel-title" style="color:white">Total En Piezas</h2> </center>
       </div>
       <div class="row">
       
@@ -393,7 +393,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Piezas Existentes</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Piezas Existentes</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -420,7 +420,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas Existentes</h2>
+      <center> <h2 class="panel-title" style="color:white">Total En Piezas Existentes</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -446,7 +446,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Piezas Traspasadas</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Piezas Traspasadas</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -470,7 +470,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas Traspasadas</h2>
+      <center> <h2 class="panel-title" style="color:white">Total En Piezas Traspasadas</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -496,7 +496,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Piezas Dañadas</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Piezas Dañadas</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -522,7 +522,7 @@ Panel Principal
       <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas Dañadas</h2>
+      <center> <h2 class="panel-title" style="color:white">Total En Piezas Dañadas</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
