@@ -390,7 +390,7 @@
   <div class="site-menubar">
       <div class="site-menubar-header">
         <div class="cover overlay">
-          <img class="cover-image" src="../assets/examples/images/dashboard-header.jpg"
+          <img class="cover-image" src="/assets/examples/images/dashboard-header.jpg"
             alt="...">
           <div class="overlay-panel vertical-align overlay-background">
             <div class="vertical-align-middle">
