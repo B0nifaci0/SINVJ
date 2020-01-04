@@ -271,7 +271,9 @@ public function exportPdf( Request $request, $id) {
 	//   $branches = Branch::where('shop_id', $user->shop->id)->get();
   //return [$sales,$branches,$user,$shops];
   $user = Auth::user();
+  
   $folio;
+
  $shop = Auth::user()->shop; 
   $shops = Auth::user()->shop()->get();
   

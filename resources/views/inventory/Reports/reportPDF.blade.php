@@ -3,7 +3,7 @@
  <head> 
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <title>Reporte de Inventarios</title>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
      html,body{
@@ -71,13 +71,11 @@
                 </tr>
               </thead>  
               <tbody>
-                @foreach ($totals as $total)
+                @foreach ($totals as $k => $total)
                 <tr>
                  <td>{{ $total->name_line }}</td> 
                  <td>{{ $total->total_w }} gr</td>
-                 @foreach ($totals1 as $j => $total1)
-                 <td>{{ $total1->total_f }} gr</td>
-                 @endforeach 
+                 <td>{{ $totals1[$k]->total_f }} gr</td>
                 </tr>
                 @endforeach 
               </tbody>
@@ -114,7 +112,7 @@
                 <tbody>
                 @foreach ($prod_fal as $prod)
                 <tr>
-                 <td>{{ $prod->id }}</td> 
+                 <td>{{ $prod->clave }}</td> 
                  <td>{{ $prod->description }}</td>
                  <td>{{ $prod->weigth }} gr</td>
                  <td>{{ $prod->name_line }}</td> 
@@ -177,7 +175,7 @@
                 <tbody>
                 @foreach ($prod_faltantes as $fal)
                     <tr>
-                      <td>{{$fal->id}}</td>
+                      <td>{{$fal->clave}}</td>
                       <td>{{$fal->cat_name}}</td>
                       <td>$ {{$fal->price}}</td>
                     </tr>

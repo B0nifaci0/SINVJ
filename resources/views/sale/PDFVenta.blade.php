@@ -16,17 +16,15 @@
 
     <body>
         <div border="">
-        <p align="right">{{$sale->created_at}}</p>
-        <!--<h3 align="center">{{$shop->name}}</h3>-->
-        <img align="left" width="100px" height="100px" src="{{$shop->image}}">
-            <p>{{ $branch->name }}<br>
+        <img align="right" width="200px" height="100px" src="{{$shop->image}}"><br>
+         <p align="center">{{$sale->created_at}}</p>
+            <p align="center">Suc:{{ $branch->name }},
             {{ $branch->name_legal_re }}<br>
-            {{ $branch->rfc }} </p>
-            <p>{{ $branch->email }}</p>
-            <p align="left">{{$branch ? $branch->address : ''}}<br>
+            RFC:{{ $branch->rfc }} <br>
+            Email:{{ $branch->email }}<br>
+            <p align="center"> Direccion:{{$branch ? $branch->address : ''}}<br>
             Tel:{{$branch ? $branch->phone_number : ''}}</p>
             <p align="left"><b>Folio:</b>{{$sale->folio}}</p>
-            <p align="left">Atendido por: {{ $user->branch_id }}</p>
             <p><b>Tipo de venta:</b>{{ ($sale->client) ? 'Mayorista' : 'General' }}</p>
             @if($sale->client)
                 <p><b>Cliente:</b>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>

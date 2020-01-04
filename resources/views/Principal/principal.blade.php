@@ -557,7 +557,7 @@ Panel Principal
       @endif
 
       @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
         <h2 class="panel-title" style="color:white">Gramos De La Sucursal @foreach($branches_col as $branch) {{$branch->name}} @endforeach</h2>
@@ -594,7 +594,7 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
         <h2 class="panel-title" style="color:white">Piezas De La Sucursal @foreach($branches_col as $branch) {{$branch->name}} @endforeach</h2>

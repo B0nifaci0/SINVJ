@@ -128,17 +128,26 @@ Panel Sucursales
         <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
-              <div class="grey-800 float-left py-10 card-header">
+            <center>
+              <div class="grey-800 float-left py-10 card-header col-sm-12">
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$row->name_line}}
-              </div><br>
-              <span class="float-right grey-700 font-size-16">Gramos:  {{$row->total_w}} gr = $ {{number_format($row->total_line_p,2)}}
-              <br>Con Descuento: $ {{number_format($row->total_discount,2)}} </span>
+              </div>
+              </center><br>
+              <span class="grey-700 font-size-16">Gramos:  {{$row->total_w}} gr = $ {{number_format($row->total_line_p,2)}}
+              <br>Con Descuento: $ {{number_format($row->total_discount,2)}}
+              <br> <br>
+               <strong class="text-center badge badge-success col-sm-4"> Existente: {{$row->total_exis}} gr</strong>
+               <strong class="text-center badge badge-primary col-sm-4"> Traspasado: {{$row->total_tras}} gr</strong>
+               <strong class="text-center badge badge-warning col-sm-3"> Dañado: {{$row->total_damage}} gr</strong> 
+               </span>
+            </div><br>
+            <div class="row">
+            <div class="mb-20 grey-500 col-sm-6">
+              <i class="icon md-long-arrow-down red-500 font-size-10"></i>                 - {{$row->descuento}} % De Descuento
             </div>
-            <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-down red-500 font-size-16"></i>                 - {{$row->descuento}} % De Descuento
+            <div class="mb-20 grey-500 col-sm-6">
+              <i class="icon md-long-arrow-up green-500 font-size-10"></i>               Precio De Linea: $ {{$row->precio_linea}}
             </div>
-            <div class="mb-20 grey-500">
-              <i class="icon md-long-arrow-up green-500 font-size-16"></i>               Precio De Linea: $ {{$row->precio_linea}}
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
@@ -224,22 +233,31 @@ Panel Sucursales
         <div class="row">
 
       @foreach($category as $k => $c)
-      <div class="col-sm-3">
+
+      <div class="col-sm-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10 card-body text-dark">
             <div class="clearfix">
-              <div class="grey-800 float-left py-10 card-header">
+            <center>
+              <div class="grey-800 float-left py-10 card-header col-sm-12">
                 <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>{{$c->cat_name}}
-              </div><br>
-              <span class="float-right grey-700 font-size-16 card-text"> @if(Auth::user()->type_user == 1) Venta:  $ {{$c->total}} @endif
-              <br>Piezas Totales: {{$c->num_pz}} pzs </span>
+              </div>
+              </center><br>
+              <span class="grey-700 font-size-16">@if(Auth::user()->type_user == 1) Venta:  $ {{$c->total}} @endif
+              <br>Piezas Totales: {{$c->num_pz}} pzs
+              <br> <br>
+               <strong class="text-center badge badge-success"> Existente: {{$c->total_exis}} pzs </strong>
+               <strong class="text-center badge badge-primary"> Traspasado: {{$c->total_tras}} pzs </strong>
+               <strong class="text-center badge badge-warning"> Dañado: {{$c->total_damage}} pzs </strong>
+               </span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
           </div>
         </div>
         <!-- End Widget Linearea One -->
       </div>
+
       @endforeach
 
       </div>
