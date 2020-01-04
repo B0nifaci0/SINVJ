@@ -98,7 +98,18 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                                  <td>{{$product->category->name}}</td>
                                                  <th>{{$product->branch->name}}</th>
                                                  <td>{{$product->line->name}}</td>
-                                                 <td>{{$product->status->name}}</td>
+                                                 <td>@if($product->status_id == 1)
+                        <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
+                        @endif
+                        @if($product->status_id == 2)
+                        <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
+                        @endif
+                        @if($product->status_id == 3)
+                        <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                        @endif
+                        @if($product->status_id == 4)
+                        <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
+                        @endif</td>
                                                  <td>${{$product->price}}</td>
 
                                         @if(Auth::user()->type_user == 1)

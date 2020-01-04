@@ -441,14 +441,6 @@
                         </a>
                       </li>
                     </ul>
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="/tiendas/{{$shop->id}}/edit">
-                          <i class="site-menu-icon fa-pencil" aria-hidden="true"></i>
-                            <span class="site-menu-title">Editar tienda</span>
-                        </a>
-                      </li>
-                    </ul>
                   <ul class="site-menu-sub">
                   <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
