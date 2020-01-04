@@ -94,7 +94,7 @@ LISTA DE  VENTAS
                         {{$sale->customer_name}}
                       @endif
                     </td>
-                    <td>{{ ($sale->client) ? 'Mayorista' : 'General/Apartado' }}</td>
+                    <td>{{ ($sale->client) ? 'Mayorista' : 'General' }}</td>
                     <td>{{ $sale->telephone }}</td>
                     <td>{{ $sale->items->count() }}</td>
                     <td>$ {{ $sale->total }}</td>
