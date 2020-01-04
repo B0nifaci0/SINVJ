@@ -6,8 +6,8 @@
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
      </head>
    <style>
-   {
-    font-size: 1px;
+ .cuerpo{
+    font-size: 10px;
     font-family: 'Times New Roman';
 }
 @page {size: 8.3cm 250mm;
@@ -18,16 +18,16 @@
         <div border="">
         <img align="right" width="200px" height="100px" src="{{$shop->image}}"><br>
          <p align="center">{{$sale->created_at}}</p>
-            <p align="center">Suc:{{ $branch->name }},
+            <p align="center">Suc:{{$branch->name}},
             {{ $branch->name_legal_re }}<br>
             RFC:{{ $branch->rfc }} <br>
             Email:{{ $branch->email }}<br>
             <p align="center"> Direccion:{{$branch ? $branch->address : ''}}<br>
             Tel:{{$branch ? $branch->phone_number : ''}}</p>
             <p align="left"><b>Folio:</b>{{$sale->folio}}</p>
-            <p><b>Tipo de venta:</b>{{ ($sale->client) ? 'Mayorista' : 'General' }}</p>
+            <p><b>Tipo de venta: </b>{{ ($sale->client) ? 'Mayorista' : 'General' }}</p>
             @if($sale->client)
-                <p><b>Cliente:</b>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>
+                <p><b>Cliente: </b>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>
             @else
                 <p>{{ $sale->customer_name }}</p>
             @endif
@@ -44,20 +44,20 @@
                     <tbody>
                         @foreach($sale->itemsSold as $item)
                         <tr>
-                            <td>{{ $item->clave }}</td>
-                            <td>{{ $item->description }}</td>
-                            <td>{{ $item->weigth }} g</td>
-                            <td>$ {{ $item->final_price }}</td>
+                            <td class='cuerpo'>{{ $item->clave }}</td>
+                            <td class='cuerpo'>{{ $item->description }}</td>
+                            <td class='cuerpo'>{{ $item->weigth }} g</td>
+                            <td class='cuerpo'>$ {{ $item->final_price }}</td>
                         </tr>
                         @endforeach
                         <tr>
                             <td colspan="3"></td>
-                            <td><strong>$ {{ $sale->total }}</strong></td>
+                            <td><strong>Total$ {{ $sale->total }}</strong></td>
                         </tr> 
                     </tbody>
             </table>
             <br>
-            @if(count($sale->partials) > 0)
+            @if($sale->partials->sum('amount') < $sale->total || $sale->partials->count() > 1)
                 <p class="centrado">Abonos a la cuenta</p>
 
                 <table class="table-sm table-bordered">
@@ -91,6 +91,6 @@
         <br>
         <p align="center">¡GRACIAS POR SU COMPRA!</p>
         <p align="center">¡ESTE NO ES UN COMPROBANTE FISCAL!</p>
-        <p align="justify">Si requiere factura favor de enviar sus datos fiscales al correo: <b>{{$branch->email}}</p>
+        <p  class="cuerpo" align="justify">Si requiere factura favor de enviar sus datos fiscales al correo: <b>{{$branch->email}}</p>
     </body>
 </html>

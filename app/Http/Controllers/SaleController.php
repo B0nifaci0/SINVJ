@@ -13,6 +13,7 @@ use App\Partial;
 use App\Shop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Requests\SaleRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\S3ImageManager;
@@ -123,6 +124,7 @@ class SaleController extends Controller
       $folio++;
       
       $sale = Sale::create([
+        'customer_name'=>Rule::requiredif($request->user_type == 1),
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,
         'price' => $request->price,
@@ -137,7 +139,14 @@ class SaleController extends Controller
       
       $products = json_decode($request->products_list);
       
-      foreach ($products as $p) {
+      foreach ($products as $i => $p) {
+        if(!$sale->branch_id && $i == 0) {
+          $pranch_product = Product::find($p->id);
+          $sale->branch_id = $pranch_product->branch_id;
+          $sale->save();
+          // Sale::where('id', $sale->id)->update([ 'branch_id' => $pranch_product->branch_id ]);
+        }
+
         $product = Product::find($p->id);
         SaleDetails::create([
     			'sale_id' => $sale->id,
@@ -271,20 +280,18 @@ public function exportPdf( Request $request, $id) {
 	//   $branches = Branch::where('shop_id', $user->shop->id)->get();
   //return [$sales,$branches,$user,$shops];
   $user = Auth::user();
-  
   $folio;
-
- $shop = Auth::user()->shop; 
+  $shop = Auth::user()->shop; 
   $shops = Auth::user()->shop()->get();
-  
       if($shop->image) {
           $shop->image = $this->getS3URL($shop->image);
       }
 	$sale = Sale::with(['partials', 'client'])->findOrFail($id);
 	$sale->itemsSold = $sale->itemsSold();
-	$sale->total = $sale->itemsSold->sum('final_price');
- 
+  $sale->total = $sale->itemsSold->sum('final_price');
   $branch = Branch::find($sale->branch_id);
+  $prueba = response()->json(['shop'=>$shop,'sucursal'=>$branch,'sale'=>$sale]);
+  //return $prueba;
   $pdf  = PDF::loadView('sale.PDFVenta', compact('shop','sale','branch','user')); 
   return $pdf->stream('venta.pdf');
  // return $branches;

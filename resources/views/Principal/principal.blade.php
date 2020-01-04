@@ -557,10 +557,11 @@ Panel Principal
       @endif
 
       @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
+      <div class="row">
       <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Gramos De La Sucursal @foreach($branches_col as $branch) {{$branch->name}} @endforeach</h2>
+        <h2 class="panel-title" style="color:white">Gramos De LA Sucursal @foreach($branches_col as $branch) {{$branch->name}} @endforeach</h2>
       </div>
       <div class="row">
       <div class="col-sm-12">
@@ -631,6 +632,7 @@ Panel Principal
       </div>
       </div>
 
+      </div>
       </div>
       </div>
 

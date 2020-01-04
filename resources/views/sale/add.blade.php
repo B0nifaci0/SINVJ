@@ -39,7 +39,7 @@ ALTA VENTA
                         <option value="2">Venta a mayorista</option>
                     </select>
                 </div>
-            </div>
+            </div> 
             <div class="row">
                 <div id="wholesalers" class="col-md-7">
                     <div class="row">
