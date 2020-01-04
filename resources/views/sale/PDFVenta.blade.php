@@ -10,20 +10,19 @@
     font-size: 1px;
     font-family: 'Times New Roman';
 }
-@page {size: 8.3cm 230mm;
+@page {size: 8.3cm 250mm;
      }
    </style>
 
     <body>
         <div border="">
-        <p align="right">{{$sale->created_at}}</p>
-        <!--<h3 align="center">{{$shop->name}}</h3>-->
-        <img align="left" width="100px" height="100px" src="{{$shop->image}}">
-            <p>{{ $branch->name }}<br><p>
+        <img align="right" width="200px" height="100px" src="{{$shop->image}}"><br>
+         <p align="center">{{$sale->created_at}}</p>
+            <p align="center">Suc:{{ $branch->name }},
             {{ $branch->name_legal_re }}<br>
-            {{ $branch->rfc }} </p>
-            <p>{{ $branch->email }}</p>
-            <p align="left">{{$branch ? $branch->address : ''}}<br>
+            RFC:{{ $branch->rfc }} <br>
+            Email:{{ $branch->email }}<br>
+            <p align="center"> Direccion:{{$branch ? $branch->address : ''}}<br>
             Tel:{{$branch ? $branch->phone_number : ''}}</p>
             <p align="left"><b>Folio:</b>{{$sale->folio}}</p>
             <p><b>Tipo de venta:</b>{{ ($sale->client) ? 'Mayorista' : 'General' }}</p>
@@ -90,8 +89,8 @@
             @endif 
         </div> 
         <br>
-        <p class="centrado">¡GRACIAS POR SU COMPRA!</p>
-        <br>
-        <p class="centrado">¡ESTE NO ES UN COMPROBANTE FISCAL!</p>
+        <p align="center">¡GRACIAS POR SU COMPRA!</p>
+        <p align="center">¡ESTE NO ES UN COMPROBANTE FISCAL!</p>
+        <p align="justify">Si requiere factura favor de enviar sus datos fiscales al correo: <b>{{$branch->email}}</p>
     </body>
 </html>

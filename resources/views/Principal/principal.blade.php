@@ -42,6 +42,16 @@ Panel Principal
         <div class="panel">
           <div class="panel-heading bg-white  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
             <div class="row">
+            @if(Auth::user()->type_user == 1 )
+                  <div class="col-md-12">
+                      <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
+                        type="button" class="btn btn-lg 
+                        toggler-left  btn-primary waves-effect waves-light waves-round float-right"
+                        data-toggle="tooltip" data-original-title="Editar Tienda">
+                        <i class="icon md-edit" aria-hidden="true" align="right"></i>
+                      </button>
+                  </div>
+                  @endif
               <div class="col-md-12">   
                   <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
               </div>
@@ -59,18 +69,8 @@ Panel Principal
                         <i class="icon md-eye" aria-hidden="true"></i>
                       </button>
                   </div>-->
-                  <!--@if(Auth::user()->type_user == 1 )
-                  <div class="col-md-6 col-md-offset-2">
-                  <div class= "mt-25"></div>
-                      <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
-                        type="button" class="btn btn-sm small btn-floating
-                        toggler-left  btn-primary waves-effect waves-light waves-round float-right"
-                        data-toggle="tooltip" data-original-title="Editar Tienda">
-                        <i class="icon md-edit" aria-hidden="true" align="right"></i>
-                      </button>
-                  </div>
-                  @endif
-              </div>-->
+                  
+              </div>
             </div>
           </div>
           <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo" aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">
