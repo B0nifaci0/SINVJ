@@ -270,6 +270,7 @@ public function exportPdf( Request $request, $id) {
 	//   $shops = Auth::user()->shop()->get();
 	//   $branches = Branch::where('shop_id', $user->shop->id)->get();
   //return [$sales,$branches,$user,$shops];
+  $user = Auth::user();
   $folio;
  $shop = Auth::user()->shop; 
   $shops = Auth::user()->shop()->get();
@@ -282,7 +283,7 @@ public function exportPdf( Request $request, $id) {
 	$sale->total = $sale->itemsSold->sum('final_price');
  
   $branch = Branch::find($sale->branch_id);
-  $pdf  = PDF::loadView('sale.PDFVenta', compact('shop','sale','branch')); 
+  $pdf  = PDF::loadView('sale.PDFVenta', compact('shop','sale','branch','user')); 
   return $pdf->stream('venta.pdf');
  // return $branches;
 } 

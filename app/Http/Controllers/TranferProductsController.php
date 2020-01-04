@@ -104,7 +104,8 @@ class TranferProductsController extends Controller
         $user = Auth::user(); //Retorna el usuario con el que se encuentra logueado 
         $users = User::where('id', '!=', $user->id)->get(); // Retorna los usuarios que pertenecen a la tienda y no estan logueados
         //return $users;
-        $products = Product::where('branch_id', $user->branch_id)->get(); //Retorna todos los productos de la tienda solo si el usuario tiene
+        $products = Product::where('branch_id', $user->branch_id)
+        ->get(); //Retorna todos los productos de la tienda solo si el usuario tiene
         return view('transfer/add', compact('branches','users','products','user'));
        }
 
@@ -113,16 +114,21 @@ class TranferProductsController extends Controller
        return view('transfer.show');
        }
 
-       public function store(Request $request)
-       {
-          $user = Auth::user();
-          $data = $request->all();
-          $data['last_branch_id']  = $user->branch_id;
-          $data['user_id'] = $user->id;
-          $data['status_product'] = null;
+	public function store(Request $request)
+    {
+    	$user = Auth::user();
+    	$data = $request->all();
+    	$data['last_branch_id']  = $user->branch_id;
+    	$data['user_id'] = $user->id;
+    	$data['status_product'] = null;
 
-           $transfer_product = TransferProduct::create($data);
-           return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
+    	$transfer_product = TransferProduct::create($data);
+
+    	$product = Product::find($request->product_id);
+		$product->status_id = 3;
+		$product->save();
+
+    	return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
     }
 
   public function answerTransferRequest(Request $request) {
@@ -137,7 +143,7 @@ class TranferProductsController extends Controller
       $transfer->save(); 
       if($request->answer) {
         $product->branch_id = $transfer->new_branch_id;
-        $product->status_id = 3;
+        $product->status_id = 2;
         $product->shop_id = $user->shop->id;
         $product->save();
       }
@@ -156,6 +162,16 @@ class TranferProductsController extends Controller
     return back();
   }
 
+  public function giveBack(Request $request) {
+	$transfer = TransferProduct::find($request->transfer_id);
+	
+	$product = Product::where('id', $transfer->product_id)->first();
+	$product->branch_id = $transfer->last_branch_id;
+	$product->save();
+    $transfer->delete();
+	
+    return back();
+  }
   
 public function exportPdfall(){ 
   $user = Auth::user();

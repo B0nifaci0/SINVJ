@@ -40,36 +40,36 @@ Panel Principal
     <div class="row" data-plugin="matchHeight" data-by-row="true">
       <div class="col-md-12">
         <div class="panel">
-          <div class="panel-heading bg-primary  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
+          <div class="panel-heading bg-white  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
             <div class="row">
-              <div class="col-md-3">   
-                  <img align = "center" width="225px" height="150px" src="{{ $shop->image }}">
-              </div>
-              <!--<div class="col-md-6">
-                  <h2 style="color:white">
-                     {{$shop->name}}
-                  </h2>
-              </div>-->
-              <div class="row aling-right">
-                  <div class="col-md-6 col-md-offset-2">
-                  <div class= "mt-25" ></div>
-                      <button  onclick="window.location.href='/tiendas'"
-                        type="button" class="btn btn-sm small btn-floating toggler-left  btn-success waves-effect waves-light waves-round float-right"
-                        data-toggle="tooltip" data-original-title="Ver Más" align="right">
-                        <i class="icon md-eye" aria-hidden="true"></i>
-                      </button>
-                  </div>
-                   @if(Auth::user()->type_user == 1 )
-                  <div class="col-md-6 col-md-offset-2">
-                  <div class= "mt-25"></div>
+            @if(Auth::user()->type_user == 1 )
+                  <div class="col-md-12">
                       <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
-                        type="button" class="btn btn-sm small btn-floating
+                        type="button" class="btn btn-lg 
                         toggler-left  btn-primary waves-effect waves-light waves-round float-right"
                         data-toggle="tooltip" data-original-title="Editar Tienda">
                         <i class="icon md-edit" aria-hidden="true" align="right"></i>
                       </button>
                   </div>
                   @endif
+              <div class="col-md-12">   
+                  <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
+              </div>
+              <!--<div class="col-md-6">
+                  <h2 style="color:white">
+                     {{$shop->name}}
+                  </h2>
+              </div>-->
+              <!--<div class="row aling-right">
+                  <div class="col-md-6 col-md-offset-2">
+                  <div class= "mt-25" ></div>
+                      <button align="right" onclick="window.location.href='/tiendas'"
+                        type="button" class="btn btn-sm small btn-floating toggler-left  btn-success waves-effect waves-light waves-round float-right"
+                        data-toggle="tooltip" data-original-title="Ver Más" >
+                        <i class="icon md-eye" aria-hidden="true"></i>
+                      </button>
+                  </div>-->
+                  
               </div>
             </div>
           </div>
@@ -100,19 +100,19 @@ Panel Principal
       </div>
 
       @if(Auth::user()->type_user == 1 )
-      <div class="container" style="background-color:white"><br>
+      <div class="container" style="background-color:white">
       <div class="row">
       <div class="col-12">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Informacion De Productos Por Gramos De Todas Las Sucursales</h2>
+       <center> <h2 class="panel-title" style="color:white">Informacion De Productos Por Gramos De Todas Las Sucursales</h2> </center>
       </div><br>
 </div>
 </div>
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Por Gramos De Todas Las Sucursales</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Gramos</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -136,10 +136,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Productos Por Gramo</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Dinero Por Gramo</h2> </center>
       </div>
       <div class="row">
       
@@ -163,10 +163,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Gramos Existentes</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Gramos Existentes</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -190,10 +190,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Existentes</h2>
+      <center> <h2 class="panel-title" style="color:white">Total en Productos Existentes</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -216,10 +216,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Gramos Traspasados</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Gramos Traspasados</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -240,10 +240,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Traspasados</h2>
+      <center> <h2 class="panel-title" style="color:white">Total en Productos Traspasados</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -266,10 +266,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Gramos Dañados</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Gramos Dañados</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -292,10 +292,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero en Productos Dañados</h2>
+      <center> <h2 class="panel-title" style="color:white">Total en Productos Dañados</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -327,19 +327,19 @@ Panel Principal
       </div>
 
       
-      <div class="container" style="background-color:white"><br>
+      <div class="container" style="background-color:white">
       <div class="row">
       <div class="col-12">
       <div class="bg-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Informacion De Productos Por Piezas De Todas Las Sucursales</h2>
-      </div><br>
+      <center> <h2 class="panel-title" style="color:white">Informacion De Productos Por Piezas De Todas Las Sucursales</h2> </center>
+      </div>
+</div><br>
 </div>
-</div>
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Productos Por Piezas De Todas Las Sucursales</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Productos Por Piezas</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -363,10 +363,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas</h2>
+      <center> <h2 class="panel-title" style="color:white">Total En Piezas</h2> </center>
       </div>
       <div class="row">
       
@@ -390,10 +390,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Piezas Existentes</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Piezas Existentes</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -417,10 +417,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas Existentes</h2>
+      <center> <h2 class="panel-title" style="color:white">Total En Piezas Existentes</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -443,10 +443,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Piezas Traspasadas</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Piezas Traspasadas</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -467,10 +467,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas Traspasadas</h2>
+      <center> <h2 class="panel-title" style="color:white">Total En Piezas Traspasadas</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -493,10 +493,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Piezas Dañadas</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Piezas Dañadas</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
@@ -519,10 +519,10 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-6">
+      <div class="col-sm-6">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Total De Dinero En Piezas Dañadas</h2>
+      <center> <h2 class="panel-title" style="color:white">Total En Piezas Dañadas</h2> </center>
       </div>
       <div class="row">
       <div class="col-sm">
