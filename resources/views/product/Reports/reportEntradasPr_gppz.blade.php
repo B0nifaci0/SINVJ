@@ -75,6 +75,7 @@
                  <th scope="col">Precio Venta</th>
                  <th scope="col">Estatus</th>
                  <th scope="col">Fecha</th>
+                 <th>Sucursal</th>
 
                 </tr>
               </thead>  
@@ -89,7 +90,7 @@
                  <td>$ {{ $product->price }}</td>
                  <td>{{ $product->name_status }}</td>
                 <td class="sizedate">{{ $product->date_creation }}</td>
-
+                 <td>{{ $product->name_branch }}</td>
                 </tr>
                   @endforeach
               </tbody>

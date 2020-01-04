@@ -40,26 +40,26 @@ Panel Principal
     <div class="row" data-plugin="matchHeight" data-by-row="true">
       <div class="col-md-12">
         <div class="panel">
-          <div class="panel-heading bg-primary  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
+          <div class="panel-heading bg-white  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
             <div class="row">
-              <div class="col-md-3">   
-                  <img align = "center" width="225px" height="150px" src="{{ $shop->image }}">
+              <div class="col-md-12">   
+                  <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
               </div>
               <!--<div class="col-md-6">
                   <h2 style="color:white">
                      {{$shop->name}}
                   </h2>
               </div>-->
-              <div class="row aling-right">
+              <!--<div class="row aling-right">
                   <div class="col-md-6 col-md-offset-2">
                   <div class= "mt-25" ></div>
-                      <button  onclick="window.location.href='/tiendas'"
+                      <button align="right" onclick="window.location.href='/tiendas'"
                         type="button" class="btn btn-sm small btn-floating toggler-left  btn-success waves-effect waves-light waves-round float-right"
-                        data-toggle="tooltip" data-original-title="Ver Más" align="right">
+                        data-toggle="tooltip" data-original-title="Ver Más" >
                         <i class="icon md-eye" aria-hidden="true"></i>
                       </button>
-                  </div>
-                   @if(Auth::user()->type_user == 1 )
+                  </div>-->
+                  <!--@if(Auth::user()->type_user == 1 )
                   <div class="col-md-6 col-md-offset-2">
                   <div class= "mt-25"></div>
                       <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
@@ -70,7 +70,7 @@ Panel Principal
                       </button>
                   </div>
                   @endif
-              </div>
+              </div>-->
             </div>
           </div>
           <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo" aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">

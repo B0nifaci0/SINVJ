@@ -496,10 +496,6 @@ class ProductController extends Controller
 
       $trans = TransferProduct::all();
 
-
-      if($status == null || $categories == null){
-      return redirect('/reportes-productos')->with('mesage-update', 'Seleccina alguna opcion de cada selector!');      }
-
 /**Termina codigo de validacion de campos */
 
 $fecini = Carbon::parse($request->fecini)->format('Y-m-d');
@@ -509,7 +505,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
 
       $branches = Branch::where("id","=",$request->branch_id)->get();
       $products = Product::where("branch_id","=",$request->branch_id)
-      ->where('products.updated_at','>=',$fecini,'AND','products.updated_at','<=',$fecter)
+      ->whereBetween('products.updated_at',[$fecini,$fecter])
       ->where("status_id","=",$request->estatus_id)
       ->where("category_id","=",$request->category_id)
       ->where("line_id","=",$request->id)
@@ -574,15 +570,14 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       return $pdf->stream('ReporteEstatus.pdf');
       }
 /**Termina el retorno del pdf */
-     public function reportLineaG(Request $request){
+     public function reportLinea(Request $request){
       $branches = Branch::where("id","=",$request->branch_id)->get();
       $lines = Line::where("id","=",$request->id)->get();
-      //return $lines;
       $products = Product::where("branch_id","=",$request->branch_id)
                           ->where("line_id","=",$request->id)
                           ->orderBy('clave','asc')
                           ->get();
-
+     // return $products;
       $hour = Carbon::now();
       $hour = date('H:i:s');
                     
@@ -615,7 +610,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
         $utilidad = $cash - $compra;
 
 
-      $pdf  = PDF::loadView('product.Reports.reportLineaG', compact('shop','shops','products','branches','lines','total','cash','compra','utilidad'));
+      $pdf  = PDF::loadView('product.Reports.reportLinea', compact('shop','shops','products','branches','lines','total','cash','compra','utilidad','dates','hour'));
       return $pdf->stream('ReporteLineas.pdf');
     }
 
@@ -691,63 +686,62 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       }*/
     }
 //**  */
-    public function reportLineaGGeneral(){
+    public function reportLineaG(){
       $branches= Auth::user()->shop->branches;
       $product = Auth::user()->shop->id;
       $products = Shop::find($product)->products()->get();
       $line = Auth::user()->shop->id;
       $lines = Shop::find($line)->lines()->get();
       // FUNCION PARA SACAR LAS CATEGORIAS SIN REPETIRSE
-    $categories = Shop::join('products','products.shop_id','shops.id')
-    ->join('categories','categories.id','products.category_id')
-    ->join('statuss','statuss.id','products.status_id')
-    ->select('categories.name','categories.type_product')
-    ->distinct('categories.name')
-    ->where('categories.type_product',1)
-    ->where('statuss.id',2)
-    ->get();
-     // FUNCION PARA SACAR LOS PRODUCTOS PERTENECIENTES A CATEGORIAS POR PIEZAS
-    $products = Shop::join('products','products.shop_id','shops.id')
-    ->join('categories','categories.id','products.category_id')
-    ->join('statuss','statuss.id','products.status_id')
-    ->join('branches','branches.id','products.branch_id')
-    ->join('lines','lines.id','products.line_id')
-    ->select('products.*', 'lines.name as name_line', 'branches.name as name_branch', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
-    ->where('categories.type_product',2)
-    ->where('statuss.id',2)
-    ->orderBy('name_branch', 'ASC')
-    ->orderBy('name_line', 'ASC')
-    ->get();
+      $categories = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->select('categories.name','categories.type_product')
+      ->distinct('categories.name')
+      ->where('categories.type_product',1)
+      ->get();
+       // FUNCION PARA SACAR LOS PRODUCTOS PERTENECIENTES A CATEGORIAS POR GRAMO
+      $products = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->join('lines','lines.id','products.line_id')
+      ->select('products.*', 'lines.name as name_line', 'branches.name as name_branch', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
+      ->where('categories.type_product',2)
+      ->orderBy('products.clave', 'ASC')
+      ->orderBy('name_branch', 'ASC')
+      ->orderBy('name_line', 'ASC')
+      ->get();
       //return $products;
       $shop = Auth::user()->shop; 
       $hour = Carbon::now();
       $hour = date('H:i:s');
         $dates = Carbon::now();
         $dates = $dates->format('d-m-Y');
-    $shops = Auth::user()->shop()->get();
+      $shops = Auth::user()->shop()->get();
 
-    if($shop->image) {
+      if($shop->image) {
         $shop->image = $this->getS3URL($shop->image);
-    }
+      }
 
-    $totals = Shop::join('products','products.shop_id','shops.id')
-    ->join('categories','categories.id','products.category_id')
-    ->join('statuss','statuss.id','products.status_id')
-    ->join('lines','lines.id','products.line_id')
-    ->where('statuss.id',2)
-    ->where('lines.shop_id', Auth::user()->shop->id)  
-    ->where('categories.type_product',2)  
-    ->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as total_w, SUM(products.price) as total_p'))
-    ->distinct('lines.name')
-    ->groupBy('lines.id', 'lines.name')
-    ->get();
+      $totals = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('lines','lines.id','products.line_id')
+      ->where('statuss.id',2)
+      ->where('lines.shop_id', Auth::user()->shop->id)  
+      ->where('categories.type_product',2)  
+      ->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as total_w, SUM(products.price) as total_p'))
+      ->distinct('lines.name')
+      ->groupBy('lines.id', 'lines.name')
+      ->get();
 
-    $pdf  = PDF::loadView('product.Reports.reportLineaGGeneral', compact('shop','hour','dates','shops','branches','lines','products','totals','totals1'));
-    return $pdf->stream('ReporteLineasGeneral.pdf');
+      $pdf  = PDF::loadView('product.Reports.reportLineaGeneral', compact('shop','hour','dates','shops','branches','lines','products','totals'));
+      return $pdf->stream('ReporteLineasGeneral.pdf');
   }
 
   //**  */
-  public function reportCategoriaPGeneral(){
+  public function reportCategoriaGeneral(){
 
     $hour = Carbon::now();
     $hour = date('H:i:s');
@@ -767,7 +761,6 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
     ->select('categories.name','categories.type_product')
     ->distinct('categories.name')
     ->where('categories.type_product',1)
-    ->where('statuss.id',2)
     ->get();
     // FUNCION PARA SACAR LOS PRODUCTOS PERTENECIENTES A CATEGORIAS POR PIEZAS
     $products = Shop::join('products','products.shop_id','shops.id')
@@ -776,7 +769,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
     ->join('branches','branches.id','products.branch_id')
     ->select('products.*', 'branches.name as name_branch', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
     ->where('categories.type_product',1)
-    ->where('statuss.id',2)
+    ->orderBy('products.clave', 'ASC')
     ->orderBy('name_branch', 'ASC')
     ->get();
     //return $products;
@@ -800,7 +793,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
     ->get();
   
 
-  $pdf  = PDF::loadView('product.Reports.reportCategoriaPGeneral', compact('categories','shop','hour','dates','shops','branches','lines','products','cash'));
+  $pdf  = PDF::loadView('product.Reports.reportCategoriaGeneral', compact('categories','shop','hour','dates','shops','branches','lines','products','cash'));
   return $pdf->stream('ReporteCategoriasPGeneral.pdf');
 }
 
@@ -824,7 +817,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       ->where('products.updated_at','>=',$fecini,'AND','products.updated_at','<=',$fecter)
       ->select('products.*','categories.name as name_category','lines.name as name_line','categories.type_product','statuss.name as name_status')
        ->where('categories.type_product',$request->cat)
-       ->OrderBy('statuss.id','desc')
+       ->OrderBy('products.clave','asc')
        ->get();
     }else{
       $productsg = Shop::join('products','products.shop_id','shops.id')
@@ -833,7 +826,8 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       ->where('products.updated_at','>=',$fecini,'AND','products.updated_at','<=',$fecter)
       ->select('products.*','categories.name as name_category','categories.type_product','statuss.name as name_status')
        ->where('categories.type_product',$request->cat)
-       ->OrderBy('statuss.id','desc')->get();
+       ->OrderBy('products.clave','asc')
+       ->get();
     }
 
     
@@ -869,7 +863,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
       $utilidad = $cash - $compra;
 
 
-  $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('shop','shops','branches','categories','id_shop','lines','productsg','total','cash','precio','hour','dates','compra','utilidad','categoria'));
+  $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('shop','shops','branches','categories','id_shop','lines','productsg','total','cash','precio','hour','dates','compra','utilidad','categoria','categoria'));
   return $pdf->stream('ReporteEstatusGeneral.pdf');
   }
 
@@ -944,8 +938,7 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
    ->join('lines','lines.id','products.line_id')
    ->join('statuss','statuss.id','products.status_id')
    ->select('products.*', 'categories.name as name_category', 'lines.name as name_line','categories.type_product','statuss.name as name_status')
-    ->where('categories.type_product',2)
-    ->where('statuss.id',2)->get();
+    ->where('categories.type_product',2)->get();
   //return $products;
    // $status = Shop::find($shop_id)->statuss()->get();
     //return $status;
@@ -1005,15 +998,14 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
     ->select('categories.name','categories.type_product')
     ->distinct('categories.name')
     ->where('categories.type_product',1)
-    ->where('statuss.id',2)
     ->get();
     // FUNCION PARA SACAR LOS PRODUCTOS PERTENECIENTES A CATEGORIAS POR PIEZAS
     $products = Shop::join('products','products.shop_id','shops.id')
     ->join('categories','categories.id','products.category_id')
     ->join('statuss','statuss.id','products.status_id')
-    ->select('products.*', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
+    ->join('branches','branches.id','products.branch_id')
+    ->select('products.*', 'categories.name as name_category','categories.type_product','statuss.name as name_status','branches.name as name_branch')
     ->where('categories.type_product',1)
-    ->where('statuss.id',2)
     ->get();
     $hour = Carbon::now();
     $hour = date('H:i:s');
@@ -1121,11 +1113,8 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
     $categories = Shop::find($category)->categories()->get();
 
     $status = $request->estatus_id;
-    $categories = $request->category_id;
+    $categoria = $request->category_id;
     $line = $request->id;
-
-    $detalle = SaleDetails::all();  
-          
     
     /**Termina codigo de validacion de campos */
     
@@ -1136,37 +1125,42 @@ $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
 
     $branches = Branch::where("id","=",$request->branch_id)->get();
       $products = Product::where("branch_id","=",$request->branch_id)
+      ->join('categories','categories.id','products.category_id')
+      ->join('sale_details','sale_details.product_id','products.id')
+      ->select('products.*','categories.type_product as tipo','sale_details.product_id as id_product','sale_details.final_price as final_price','sale_details.profit as profit')
       ->where('products.updated_at','>=',$fecini,'AND','products.updated_at','<=',$fecter)
+      ->where('categories.type_product',$request->cat)
       ->where("status_id","=",1)
       ->get();
+
   
     /**Finaliza codigo de las consultas por campos seleccionados */
     
 /**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
-$sales = Sale::where("id","=","sale_id")->get();
+  $sales = Sale::where("id","=","sale_id")->get();
 
-$hour = Carbon::now();
-$hour = date('H:i:s');
+  $hour = Carbon::now();
+  $hour = date('H:i:s');
 
-$dates = Carbon::now();
-$dates = $dates->format('d-m-Y');
+  $dates = Carbon::now();
+  $dates = $dates->format('d-m-Y');
 
-$total = 0;
-foreach($products as $product){
-$total = $product->weigth + $total;
-}
-
-$shop = Auth::user()->shop; 
-$shops = Auth::user()->shop()->get();
-
-if($shop->image) {
-  $shop->image = $this->getS3URL($shop->image);
-}
-
-$cash = 0;
+  $total = 0;
   foreach($products as $product){
-    $cash = $product->price + $cash;
+  $total = $product->weigth + $total;
   }
+
+  $shop = Auth::user()->shop; 
+  $shops = Auth::user()->shop()->get();
+
+  if($shop->image) {
+    $shop->image = $this->getS3URL($shop->image);
+  }
+
+  $cash = 0;
+    foreach($products as $product){
+      $cash = $product->price + $cash;
+    }
 
   $lines = Line::where("id","=",$request->id)->get();
 
@@ -1179,14 +1173,11 @@ $cash = 0;
   $venta = 0;
   foreach($products as $product){
     $precio = $product->price_purchase + $precio; 
-    foreach ($detalle as $det)
-    if($det->product_id == $product->id){
-      $venta = $venta + $det->final_price;
-    }
+      $venta = $venta + $product->final_price;
   }
 
   $compra = $precio;
-  $utilidad = $compra - $venta;
+  $utilidad = $venta - $compra;
 
             
     /**Finalizan consultas de folio de la venta, la hora y el dia */
@@ -1196,9 +1187,43 @@ $cash = 0;
      * hacer uso de la informacion de cada consulta
      */
     
-  $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop','shops','products','branches','sales','hour','dates','total','cash','compra','utilidad','lines','venta','detalle'));
+  $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop','shops','products','branches','sales','hour','dates','total','cash','compra','utilidad','lines','venta','categoria'));
   return $pdf->stream('ReporteUtilidad.pdf');
 
-  } 
+  }  
+
+  public function reportPz(Request $request){
+    $branches = Branch::where("id","=",$request->branch_id)->get();
+    $categories = Category::where("id","=",$request->category_id)->get();
+    //return $categories;
+    $products = Product::where("branch_id","=",$request->branch_id)
+                        ->where("category_id","=",$request->category_id)
+                        ->orderBy('clave','asc')
+                        ->get();
+    //return $products;
+    $hour = Carbon::now();
+    $hour = date('H:i:s');
+                  
+    $dates = Carbon::now();
+    $dates = $dates->format('d-m-Y');
+
+    $shop = Auth::user()->shop; 
+    $shops = Auth::user()->shop()->get();
+
+  if($shop->image) {
+      $shop->image = $this->getS3URL($shop->image);
+  }
+  $cash = Category::join('products', 'products.category_id', 'categories.id')
+  ->where('categories.shop_id', Auth::user()->shop->id)  
+  ->where('categories.type_product',$request->cat)
+  ->where('categories.id',$request->category_id)
+  ->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as total'))
+  
+  ->groupBy('categories.id', 'categories.name')
+  ->get();
+
+    $pdf  = PDF::loadView('product.Reports.reportCategoria', compact('shop','shops','products','branches','dates','hour','cash'));
+    return $pdf->stream('ReporteLineas.pdf');
+  }
 
 }
