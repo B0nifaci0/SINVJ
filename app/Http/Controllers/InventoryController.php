@@ -20,13 +20,14 @@ use App\Category;
 use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductValidate;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InventoryController extends Controller
 {
 
     use S3ImageManager;
+    use SoftDeletes;
 
     public function index() {
         $inventories = InventoryReport::all();
@@ -113,9 +114,9 @@ class InventoryController extends Controller
     }
 
     public function inventariosPDF($id){
-        $branches = Branch::find($id);  
-        $id_branch = $branches->id;
-        //return $id_branch;
+        
+        $id_branch = InventoryReport::where('id',$id)->sum('branch_id');  
+       //return $id_branch;
 
         $product = Auth::user()->shop->id;
         $products = Shop::find($product)->products()->get();
@@ -158,16 +159,15 @@ class InventoryController extends Controller
 
       $totals1 = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
-      ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
+      ->join('inventory_details','inventory_details.product_id','products.id')
       ->withTrashed()
-      ->where('products.status_id',2)
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
-      ->where('products.branch_id',$id_branch)  
+      ->where('products.branch_id',$id_branch)
+      ->where('products.discar_cause',null)   
       ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.weigth) as total_f'))
-      ->where('products.discar_cause',NULL)  
       ->distinct('lines.name')
       ->groupBy('lines.id', 'lines.name')
       ->orderBy('name_line', 'DESC')
@@ -177,21 +177,20 @@ class InventoryController extends Controller
       //PRODUCTOS GRAMOS FALTANTES
       $g_faltantes = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
-      ->join('statuss','statuss.id','products.status_id')
+      ->join('inventory_details','inventory_details.product_id','products.id')
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
       ->withTrashed()
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
-     ->where('products.branch_id',$id_branch)    
+      ->where('products.branch_id',$id_branch)    
+      ->where('inventory_details.status',0)  
       ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.weigth) as total_w'))
-      ->where('products.discar_cause',1)
-      ->orWhere('products.discar_cause',2)  
       ->distinct('lines.name')
       ->groupBy('lines.id', 'lines.name')
       ->orderBy('name_line', 'DESC')
       ->get();
-      //  return $g_faltantes;
+     // return $g_faltantes;
 
       //DESCRIPCION DE PRODUCTOS GRAMOS FALTANTES
       $prod_fal = Shop::join('products','products.shop_id','shops.id')
@@ -199,13 +198,13 @@ class InventoryController extends Controller
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
+      ->join('inventory_details','inventory_details.product_id','products.id')
       ->withTrashed()
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2)
-    ->where('products.branch_id',$id_branch)    
+      ->where('products.branch_id',$id_branch)
+      ->where('inventory_details.status',0)      
       ->select('products.*', 'lines.name as name_line')
-      ->where('products.discar_cause',1)
-      ->orWhere('products.discar_cause',2) 
       ->orderBy('name_line', 'DESC') 
       ->get();
       //return $prod_fal;
@@ -230,12 +229,12 @@ class InventoryController extends Controller
      $p_faltantes = Shop::join('products','products.shop_id','shops.id')
      ->join('categories','categories.id','products.category_id')
      ->join('branches','branches.id','products.branch_id')
+     ->join('inventory_details','inventory_details.product_id','products.id')
      ->withTrashed()
      ->where('categories.shop_id', Auth::user()->shop->id) 
      ->where('categories.type_product',1)  
     ->where('products.branch_id',$id_branch)    
-     ->where('products.discar_cause',1)
-     ->orWhere('products.discar_cause',2)  
+    ->where('inventory_details.status',0)  
      ->select('categories.id as cat_id', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
      ->distinct('categories.name')
      ->groupBy('categories.id', 'categories.name')
@@ -248,13 +247,13 @@ class InventoryController extends Controller
      ->join('categories','categories.id','products.category_id')
      ->join('statuss','statuss.id','products.status_id')
      ->join('branches','branches.id','products.branch_id')
+     ->join('inventory_details','inventory_details.product_id','products.id')
      ->withTrashed()
      ->where('categories.shop_id', Auth::user()->shop->id) 
      ->where('categories.type_product',1) 
      ->where('products.branch_id',$id_branch)     
-     ->where('products.discar_cause',1)
-     ->orWhere('products.discar_cause',2)  
-     ->select('products.*','categories.id as id_cat', 'categories.name as cat_name')
+     ->where('inventory_details.status',0)   
+     ->select('products.clave','products.price','categories.id as id_cat', 'categories.name as cat_name')
      ->orderBy('cat_name', 'DESC')
      ->get();
      //  return $prod_faltantes;
@@ -263,7 +262,7 @@ class InventoryController extends Controller
         $shop->image = $this->getS3URL($shop->image);
     }
 
-      $pdf  = PDF::loadView('inventory.Reports.reportPDF', compact('report','branches','prod_faltantes','p_faltantes','prod_fal','g_faltantes','cat_totals','shop','hour','dates','shops','lines','totals','totals1'));
+      $pdf  = PDF::loadView('inventory.Reports.reportPDF', compact('totals1','report','prod_faltantes','p_faltantes','prod_fal','g_faltantes','cat_totals','shop','hour','dates','shops','lines','totals'));
       return $pdf->stream('ReporteInventarios.pdf');
     }
 

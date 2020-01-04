@@ -124,7 +124,7 @@ LISTA PRODUCTO
                     <tbody>
                       @foreach ($products as $i => $product)
                       @if($product->category->type_product == 2 )
-                      <tr id="row{{$product->id}}">
+                      <tr id="row{{$product->id}}" class="row{{$product->id}}">
                         <td>{{ $product->clave }}</td>
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->weigth }}</td>
@@ -139,17 +139,8 @@ LISTA PRODUCTO
                         <td>{{ ($product->category) ? $product->category->name: '' }}</td>
                         <td>{{ ($product->line) ? $product->line->name : '' }}</td>
                         <td>{{ ($product->branch) ? $product->branch->name: '' }}</td>
-                        @if($product->status_id == 1)
-                        <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 2)
-                        <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 3)
+                        @if($product->status)
                         <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 4)
-                        <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
                         @endif
                         <td>${{$product->price }}</td>
                         @if(Auth::user()->type_user == 1)
@@ -218,7 +209,7 @@ LISTA PRODUCTO
                   <tbody>
                     @foreach ($products as $i => $product)
                     @if($product->category->type_product == 1 )
-                    <tr id="row{{$product->id}}">
+                    <tr id="row{{$product->id}}" class="row{{$product->id}}">
                       <td>{{$product->clave}}</td>
                       <td>{{ $product->description }}</td>
                       <td>{{ ($product->category) ? $product->category->name : '' }}</td>
@@ -231,18 +222,9 @@ LISTA PRODUCTO
                           />
                       </td>
                       <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
-                      @if($product->status_id == 1)
-                        <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 2)
-                        <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 3)
-                        <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 4)
-                        <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
-                        @endif
+                      @if($product->status)
+                      <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                      @endif
                       <td>${{$product->price }}</td>
                       @if(Auth::user()->type_user == 1)
                       <td>${{$product->price_purchase}}</td>
@@ -281,10 +263,11 @@ LISTA PRODUCTO
   @endsection
   @section('barcode-product')
   <script type="text/javascript">
+  //inicializa la tabla para resposnive
     $(document).ready(function(){
         $('#product_table_gr').DataTable({
             retrieve: true,
-            responsive: true,
+            //  responsive: true,
             //paging: false,
             //searching: false
         });
@@ -331,23 +314,16 @@ LISTA PRODUCTO
             $.ajax({
               url: '/productos/' + id,
               method: 'DELETE',
-              success: function () {
-                $("#row" + id).remove();   
+               success: function () {
+                $('#product_table_gr').DataTable()
+                .rows('.row' + id)
+                .remove()
+                .draw();
                 Swal.fire(
                   'Eliminado',
                   'El registro ha sido eliminado.',
                   'success'
-                ),
-                //Create new Datatable
-                $('#product_table_gr').DataTable().destroy();
-                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                $($.fn.dataTable.tables(true)).DataTable()
-                    .columns.adjust()
-                    .responsive.recalc();
-                }); 
-                  setTimeout(function(){
-                      location.reload();
-                    },100); 
+                );
               },
               error: function () {
                 Swal.fire(
@@ -382,22 +358,15 @@ LISTA PRODUCTO
               url: '/productos/' + id,
               method: 'DELETE',
               success: function () {
-                $("#row" + id).remove();   
+                $('#product_table_pz').DataTable()
+                .rows('.row' + id)
+                .remove()
+                .draw();
                 Swal.fire(
                   'Eliminado',
                   'El registro ha sido eliminado.',
                   'success'
-                ),
-                 //Create new Datatable
-                $('#product_table_pz').DataTable().destroy();
-                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                $($.fn.dataTable.tables(true)).DataTable()
-                    .columns.adjust()
-                    .responsive.recalc();
-                });
-                setTimeout(function(){
-                  location.reload();
-                },100);
+                );
               },
               error: function () {
                 Swal.fire(
