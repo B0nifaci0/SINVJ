@@ -32,7 +32,6 @@ class BranchProductsController extends Controller
       $lines = Shop::find($shop_id)->lines()->get();
     	$statuses = Status::all();
       $products = Product::withTrashed()->where('branch_id','=',$id)->where('deleted_at','=',NULL)->get();
-      
       $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
       foreach ($products as $product) {

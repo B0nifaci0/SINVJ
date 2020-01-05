@@ -76,6 +76,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                         <th>Observaciónes</th>
                                         <th>Imagen</th>
                                         <th>Categoría</th>
+                                        <th>Sucursal</th>
                                         <th>Linea</th>
                                         <th>Status</th>
                                         <th>Precio</th>
@@ -98,7 +99,18 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                                  <td>{{$product->category->name}}</td>
                                                  <th>{{$product->branch->name}}</th>
                                                  <td>{{$product->line->name}}</td>
-                                                 <td>{{$product->status->name}}</td>
+                                                 @if($product->status_id == 1)
+                                                  <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
+                                                 @endif
+                                                 @if($product->status_id == 2)
+                                                 <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
+                                                 @endif
+                                                 @if($product->status_id == 3)
+                                                 <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                                                 @endif
+                                                 @if($product->status_id == 4)
+                                                 <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
+                                                 @endif
                                                  <td>${{$product->price}}</td>
 
                                         @if(Auth::user()->type_user == 1)
@@ -140,7 +152,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                           <th>Observaciónes</th>
                                           <th>Imagen</th>
                                           <th>Status</th>
-                                         <th>Precio </th>
+                                         <th>Precio venta</th>
                                           @if(Auth::user()->type_user == 1 )
                                             <th>Precio Compra</th>
                                             <th>Opciones</th>
@@ -152,10 +164,11 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                         <th>Clave</th>
                                         <th>Descripción</th>
                                         <th>Categoría</th>
+                                        <th>Sucursal</th>
                                         <th>Observaciónes</th>
                                         <th>Imagen</th>
                                         <th>Status</th>
-                                        <th>Precio</th>
+                                        <th>Precio venta</th>
                                         @if(Auth::user()->type_user == 1 )
                                         <th>Precio Compra</th>
                                         <th>Opciones</th>
@@ -174,8 +187,20 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                         <td>
                                         <img width="100px" height="100px" src="{{ $product->image }}">
                                         </td>
-                                        <td>{{$branchproduct->status->name}}</td>
-                                        <td>{{$branchproduct->pricepzt}}
+                                        @if($product->status_id == 1)
+                                          <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
+                                        @endif
+                                        @if($product->status_id == 2)
+                                          <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
+                                        @endif
+                                        @if($product->status_id == 3)
+                                          <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                                        @endif
+                                        @if($product->status_id == 4)
+                                          <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
+                                        @endif
+                                        
+                                        <td>${{$product->price}}
                                         @if(Auth::user()->type_user == 1)
                                         <td>{{$branchproduct->price_purchase}}
                                         <td>
