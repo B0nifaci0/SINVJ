@@ -202,7 +202,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                         
                                         <td>${{$product->price}}
                                         @if(Auth::user()->type_user == 1)
-                                        <td>{{$branchproduct->price_purchase}}
+                                        <td>${{$branchproduct->price_purchase}}
                                         <td>
                                             <!-- Botón Para editar producto por sucursal-->
                                             <a href="/sucursalproducto/{{$branchproduct->id}}/edit"><button type="button"
