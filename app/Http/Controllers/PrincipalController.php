@@ -47,11 +47,10 @@ class PrincipalController extends Controller
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
-      ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.shop_id', Auth::user()->shop->id)  
+      ->where('products.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.deleted_at', NULL)
+      ->where('products.status_id',2)
       ->select('products.weigth as total_ex' ,'products.status_id as existente', DB::raw('SUM(products.weigth) as total_ex'))
       ->where('products.status_id',2)
       ->sum('products.weigth');
