@@ -140,9 +140,7 @@ TRASFERENCIAS
                         <span class="text-center badge badge-warning">Por pagar</span>
                         @endif
                       @else
-                        @if(Auth::user()->id == $transfer->user_id)
                           <span class="text-center badge badge-success">Pagado</span>
-                        @endif
                       @endif
                     @endif
                     <!-- END Botón-->
