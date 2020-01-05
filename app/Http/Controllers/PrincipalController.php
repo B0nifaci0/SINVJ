@@ -70,7 +70,7 @@ class PrincipalController extends Controller
       ->where('products.status_id',3)
       ->sum('products.weigth');
 
-      //SUMA TOTAL DE GRAMOS DAÑADOS
+      //SUMA TOTAL DE GRAMOS DAÑADOS 
       $gramos_dañados = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
