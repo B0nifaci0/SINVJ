@@ -49,9 +49,8 @@ class ProductController extends Controller
       	$branch_ids = $branches->map(function($item) {
       	  return $item->id;
         });
-        $products = Shop::find($shop_id)
-          ->products()
-          ->with('line')
+        $products = Product::with('line')
+          ->where('shop_id', $shop_id)
           ->whereNull('products.deleted_at')
           ->whereIn('branch_id', $branch_ids)
           ->whereIn('status_id', [2, 3])
