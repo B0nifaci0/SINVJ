@@ -140,7 +140,7 @@ TRASFERENCIAS
                         <span class="text-center badge badge-warning">Por pagar</span>
                         @endif
                       @else
-                        <!-- <span class="text-center badge badge-success">Pagado</span> -->
+                          <span class="text-center badge badge-success">Pagado</span>
                       @endif
                     @endif
                     <!-- END Botón-->
@@ -166,18 +166,18 @@ TRASFERENCIAS
   </div>
   <form method="post" action="/traspasos/respuesta" id="form" class="d-none">
     {{ csrf_field() }}
-    <input type="text" name="transfer_id" id="transfer_id">
+    <input type="text" name="transfer_id" id="transfer_id_r">
     <input type="text" name="answer" id="answer">
   </form> 
 
   <form method="post" action="/traspasos/cancelar" id="give-back" class="d-none">
     {{ csrf_field() }}
-    <input type="text" name="transfer_id" id="inventory_id">
+    <input type="text" name="transfer_id" id="transfer_id_gb">
   </form>
 
   <form method="post" action="/traspasos/pagar" id="payment-form" class="d-none">
     {{ csrf_field() }}
-    <input type="text" name="transfer_id" id="inventory_id">
+    <input type="text" name="transfer_id" id="transfer_id_p">
   </form>
 @endsection
 
@@ -187,6 +187,7 @@ $(document).ready(function(){
 
   $(".paid").click(function() {
       let id = $(this).attr("alt");
+      console.log("es:", id)
       Swal.fire({
         title: 'Confirmación',
         text: "¿Se ha pagado este traspaso?",
@@ -198,7 +199,7 @@ $(document).ready(function(){
       }).then((result) => {
         if (result.value)
         {
-          $('#inventory_id').val(id);
+          $('#transfer_id_p').val(id);
           $('#payment-form').submit();
         }
       })
@@ -217,7 +218,7 @@ $(document).ready(function(){
       }).then((result) => {
         if (result.value)
         {
-          $('#inventory_id').val(id);
+          $('#transfer_id_gb').val(id);
           $('#give-back').submit();
         }
       })
@@ -225,21 +226,21 @@ $(document).ready(function(){
 
   $('.accept').click(function() {
     var id = $(this).attr('alt');
-    $('#transfer_id').val(id);
+    $('#transfer_id_r').val(id);
     $('#answer').val(1);
     $('#form').submit();
   })
 
   $('.cancel').click(function() {
     var id = $(this).attr('alt');
-      $('#transfer_id').val(id);
+      $('#transfer_id_r').val(id);
       $('#answer').val(null);
       $('#form').submit();
   })
 
   $('.reject').click(function() {
     var id = $(this).attr('alt');
-      $('#transfer_id').val(id);
+      $('#transfer_id_r').val(id);
       $('#answer').val(0);
       $('#form').submit();
   })

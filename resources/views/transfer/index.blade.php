@@ -141,7 +141,7 @@ TRASFERENCIAS
                         <span class="text-center badge badge-warning">Por pagar</span>
                         @endif
                       @else
-                        <!-- <span class="text-center badge badge-success">Pagado</span> -->
+                        <span class="text-center badge badge-success">Pagado</span>
                       @endif
                     @endif
                     <!-- END Botón-->
