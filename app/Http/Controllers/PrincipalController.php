@@ -47,11 +47,10 @@ class PrincipalController extends Controller
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
-      ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.shop_id', Auth::user()->shop->id)  
+      ->where('products.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.deleted_at', NULL)
+      ->where('products.status_id',2)
       ->select('products.weigth as total_ex' ,'products.status_id as existente', DB::raw('SUM(products.weigth) as total_ex'))
       ->where('products.status_id',2)
       ->sum('products.weigth');
@@ -61,9 +60,7 @@ class PrincipalController extends Controller
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
-      ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.shop_id', Auth::user()->shop->id)  
+      ->where('products.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.deleted_at', NULL)
       ->select('products.weigth as total_ex' ,'products.status_id as trapasado', DB::raw('SUM(products.weigth) as total_traspasado'))
@@ -76,9 +73,7 @@ class PrincipalController extends Controller
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
-      ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.shop_id', Auth::user()->shop->id)  
+      ->where('products.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.deleted_at', NULL)
       ->select('products.weigth as total_dañados' ,'products.status_id as dañados',)
@@ -103,10 +98,9 @@ class PrincipalController extends Controller
        ->join('categories','categories.id','products.category_id')
        ->join('statuss','statuss.id','products.status_id')
        ->join('branches','branches.id','products.branch_id')
-       ->join('lines','lines.id','products.line_id')
        ->where('products.status_id',2)
        ->where('products.deleted_at', NULL)
-       ->where('lines.shop_id', Auth::user()->shop->id)  
+       ->where('products.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',2) 
        ->sum('products.price');
 
@@ -142,10 +136,9 @@ class PrincipalController extends Controller
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
       ->where('products.status_id',2)
       ->where('products.deleted_at', NULL)
-      ->where('lines.shop_id', Auth::user()->shop->id)  
+      ->where('products.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.branch_id',$ids)
       ->sum('products.weigth');
@@ -155,9 +148,8 @@ class PrincipalController extends Controller
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
       ->where('products.status_id',3)
-      ->where('lines.shop_id', Auth::user()->shop->id)  
+      ->where('products.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2)
       ->where('products.deleted_at', NULL)
       ->where('products.branch_id',$ids)
@@ -168,9 +160,8 @@ class PrincipalController extends Controller
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
       ->where('products.status_id',4)
-      ->where('lines.shop_id', Auth::user()->shop->id)  
+      ->where('products.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.branch_id',$ids)
       ->where('products.deleted_at', NULL)
@@ -187,7 +178,7 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->where('products.deleted_at', NULL)
        ->where('categories.type_product',1)
-       ->where('categories.shop_id', Auth::user()->shop->id) 
+       ->where('products.shop_id', Auth::user()->shop->id)  
        ->where('products.status_id',2) 
        ->count('products.id');
  
@@ -198,7 +189,7 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',3)
        ->where('products.deleted_at', NULL)
-       ->where('categories.shop_id', Auth::user()->shop->id) 
+       ->where('products.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',1)
        ->count('products.id');
  
@@ -209,7 +200,7 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',4)
        ->where('products.deleted_at', NULL)
-       ->where('categories.shop_id', Auth::user()->shop->id) 
+       ->where('products.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',1)  
        ->count('products.id');
 
@@ -224,7 +215,7 @@ class PrincipalController extends Controller
         ->join('branches','branches.id','products.branch_id')
         ->where('products.status_id',2)
         ->where('products.deleted_at', NULL)
-        ->where('categories.shop_id', Auth::user()->shop->id)
+        ->where('products.shop_id', Auth::user()->shop->id)  
         ->where('categories.type_product',1) 
         ->sum('products.price');
  
@@ -235,7 +226,7 @@ class PrincipalController extends Controller
         ->join('branches','branches.id','products.branch_id')
         ->where('products.status_id',3)
         ->where('products.deleted_at', NULL)
-        ->where('categories.shop_id', Auth::user()->shop->id)
+        ->where('products.shop_id', Auth::user()->shop->id)  
         ->where('categories.type_product',1) 
         ->sum('products.price');
  
@@ -246,7 +237,7 @@ class PrincipalController extends Controller
         ->join('branches','branches.id','products.branch_id')
         ->where('products.status_id',4)
         ->where('products.deleted_at', NULL)
-        ->where('categories.shop_id', Auth::user()->shop->id)
+        ->where('products.shop_id', Auth::user()->shop->id)  
         ->where('categories.type_product',1) 
         ->sum('products.price');
 
@@ -262,7 +253,7 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',2)
        ->where('products.deleted_at', NULL)
-       ->where('categories.shop_id', Auth::user()->shop->id) 
+       ->where('products.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',1) 
        ->where('products.branch_id',$ids)
        ->count('products.id');
@@ -273,7 +264,7 @@ class PrincipalController extends Controller
        ->join('statuss','statuss.id','products.status_id')
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',3)
-       ->where('categories.shop_id', Auth::user()->shop->id)
+       ->where('products.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',1)
        ->where('products.deleted_at', NULL)
        ->where('products.branch_id',$ids)
@@ -285,7 +276,7 @@ class PrincipalController extends Controller
        ->join('statuss','statuss.id','products.status_id')
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',4)
-       ->where('categories.shop_id', Auth::user()->shop->id) 
+       ->where('products.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',1) 
        ->where('products.branch_id',$ids)
        ->where('products.deleted_at', NULL)
