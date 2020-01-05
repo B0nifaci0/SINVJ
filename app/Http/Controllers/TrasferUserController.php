@@ -24,7 +24,13 @@ class TrasferUserController extends Controller
     public function index()
        {
         
-        $trans = TransferProduct::all();
+        // $trans = TransferProduct::all();
+        $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function($u) {
+          return $u->id;
+        });
+        $trans = TransferProduct::whereIn('user_id', $usersIds)
+        ->whereIn('destination_user_id', $usersIds)
+        ->with('user')->with('branch')->with('product')->get();
         //return $trans;
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
@@ -36,7 +42,7 @@ class TrasferUserController extends Controller
           return redirect('/traspasos/create');
         }else{
         }*/
-        
+         
         //return $transs; 
         
         return view('transfer/TrasferUser/index', compact('trans'));
