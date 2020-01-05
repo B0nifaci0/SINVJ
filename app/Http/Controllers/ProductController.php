@@ -42,7 +42,7 @@ class ProductController extends Controller
           'branch_id' => $user->branch_id,
           'status_id' => 2
           ])
-          ->whereNotNull('deleted_at')
+          ->whereNotNull('products.deleted_at')
           ->orderBy('clave','asc')->get();
     	} else {
       	$branches = Branch::where('shop_id', $user->shop->id)->get();
@@ -52,7 +52,7 @@ class ProductController extends Controller
         $products = Shop::find($shop_id)
           ->products()
           ->with('line')
-          ->whereNotNull('deleted_at')
+          ->whereNotNull('products.deleted_at')
           ->whereIn('branch_id', $branch_ids)
           ->whereIn('status_id', [2, 3])
           ->get();
