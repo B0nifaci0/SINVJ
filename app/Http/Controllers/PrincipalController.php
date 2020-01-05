@@ -69,6 +69,7 @@ class PrincipalController extends Controller
       ->select('products.weigth as total_ex' ,'products.status_id as trapasado', DB::raw('SUM(products.weigth) as total_traspasado'))
       ->where('products.status_id',3)
       ->sum('products.weigth');
+      //return $gramos_traspasado;
 
       //SUMA TOTAL DE GRAMOS DAÑADOS 
       $gramos_dañados = Shop::join('products','products.shop_id','shops.id')
