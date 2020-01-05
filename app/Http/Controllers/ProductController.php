@@ -51,7 +51,7 @@ class ProductController extends Controller
           ->products()
           ->with('line')
           ->whereIn('branch_id', $branch_ids)
-          ->where('status_id', 2)
+          ->whereIn('status_id', [2, 3])
           ->get();
         }
 
