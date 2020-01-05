@@ -28,8 +28,11 @@ class TranferProductsController extends Controller
     public function index()
        {
         $user = Auth::user();
+
         $trans = TransferProduct::where('user_id', $user->id)
           ->orWhere('destination_user_id', $user->id)
+          ->orWhere('last_branch_id', $user->branch->id)
+          ->orWhere('new_branch_id', $user->branch->id)
           ->with('user')->with('branch')->with('product')->get();
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
