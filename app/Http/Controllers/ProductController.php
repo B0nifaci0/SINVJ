@@ -41,7 +41,9 @@ class ProductController extends Controller
     		$products = Product::where([
           'branch_id' => $user->branch_id,
           'status_id' => 2
-          ])->orderBy('clave','asc')->get();
+          ])
+          ->whereNotNull('deleted_at')
+          ->orderBy('clave','asc')->get();
     	} else {
       	$branches = Branch::where('shop_id', $user->shop->id)->get();
       	$branch_ids = $branches->map(function($item) {
@@ -50,6 +52,7 @@ class ProductController extends Controller
         $products = Shop::find($shop_id)
           ->products()
           ->with('line')
+          ->whereNotNull('deleted_at')
           ->whereIn('branch_id', $branch_ids)
           ->whereIn('status_id', [2, 3])
           ->get();
