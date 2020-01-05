@@ -143,7 +143,7 @@ class TranferProductsController extends Controller
       $transfer->save(); 
       if($request->answer) {
         $product->branch_id = $transfer->new_branch_id;
-        $product->status_id = 2;
+        // $product->status_id = 2;
         $product->shop_id = $user->shop->id;
         $product->save();
       }
@@ -166,7 +166,8 @@ class TranferProductsController extends Controller
 	$transfer = TransferProduct::find($request->transfer_id);
 	
 	$product = Product::where('id', $transfer->product_id)->first();
-	$product->branch_id = $transfer->last_branch_id;
+  $product->branch_id = $transfer->last_branch_id;
+  $product->status_id = 2;
 	$product->save();
     $transfer->delete();
 	
