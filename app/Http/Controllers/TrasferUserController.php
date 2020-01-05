@@ -119,8 +119,8 @@ class TrasferUserController extends Controller
     ]);
     $transfer_product->save();
     
-		$product->status_id = 3;
-		$product->save();
+		// $product->status_id = 3;
+		// $product->save();
       
     return redirect('/traspasosAA')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
   }

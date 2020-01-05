@@ -125,8 +125,8 @@ class TranferProductsController extends Controller
     	$transfer_product = TransferProduct::create($data);
 
     	$product = Product::find($request->product_id);
-		$product->status_id = 3;
-		$product->save();
+		  // $product->status_id = 3;
+		  // $product->save();
 
     	return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
     }
@@ -144,6 +144,7 @@ class TranferProductsController extends Controller
       if($request->answer) {
         $product->branch_id = $transfer->new_branch_id;
         // $product->status_id = 2;
+	    	$product->status_id = 3;
         $product->shop_id = $user->shop->id;
         $product->save();
       }
