@@ -557,81 +557,249 @@ Panel Principal
       @endif
 
       @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
+
+      <div class="container" style="background-color:white">
       <div class="row">
-      <div class="col-sm-6">
+      <div class="col-12">
       <div class="panel-warning">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Gramos De LA Sucursal @foreach($branches_col as $branch) {{$branch->name}} @endforeach</h2>
+       <center> <h2 class="panel-title" style="color:white">Informacion De Productos Por Gramos De La Sucursal @foreach($branches_col as $branch) {{$branch->name}} @endforeach</h2> </center>
+      </div><br>
+</div>
+</div>
+      <div class="col-sm-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+      <center> <h2 class="panel-title" style="color:white">Total de Gramos</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos
-                <br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Existentes
-                <br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Traspasados
-                <br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Gramos Dañados
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos
               </div>
-              <span class="float-right grey-700 font-size-30">@if($gramos_col) {{$gramos_col}} gr @else 0 gr @endif
-              <br>
-              @if($gramos_cole) {{$gramos_cole}} gr @else 0 gr @endif
-              <br>
-              @if($gramos_colt) {{$gramos_colt}} gr @else 0 gr @endif
-              <br>
-              @if($gramos_cold) {{$gramos_cold}} gr @else 0 gr @endif</span>
-            </div>          <!--  <div class="ct-chart h-50"></div>   -->
+              <span class="float-right grey-700 font-size-30">@if($gramos_col) {{$gramos_col}} gr @else 0 gr @endif</span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
           </div>
+          
         </div>
         <!-- End Widget Linearea One -->
       </div>
-
+      
       </div>
       </div>
       </div>
 
       <div class="col-sm-6">
-      <div class="panel-warning">
+      <div class="panel-primary">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:white">Piezas De La Sucursal @foreach($branches_col as $branch) {{$branch->name}} @endforeach</h2>
+      <center> <h2 class="panel-title" style="color:white">Total De Gramos Existentes</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
             <div class="clearfix">
               <div class="grey-800 float-left py-10">
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Piezas
-                <br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Piezas Existentes
-                <br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Piezas Traspasados
-                <br><br>
-                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Total de Piezas Dañados
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Existentes
               </div>
-              <span class="float-right grey-700 font-size-30">@if($piezas_col) {{$piezas_col}} pzs @else 0 pzs @endif
-              <br>
-              @if($piezas_cole) {{$piezas_cole}} pzs @else 0 pzs @endif
-              <br>
-              @if($piezas_colt) {{$piezas_colt}} pzs @else 0 pzs @endif
-              <br>
-              @if($piezas_cold) {{$piezas_cold}} pzs @else 0 pzs @endif</span>
-            </div>          <!--  <div class="ct-chart h-50"></div>   -->
+              <span class="float-right grey-700 font-size-30">@if($gramos_cole) {{$gramos_cole}} gr @else 0 gr @endif</span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
           </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+        
+      </div>
+      </div>
+      </div>
+
+      <div class="col-sm-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+      <center> <h2 class="panel-title" style="color:white">Total De Gramos Traspasados</h2> </center>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Traspasados              
+              </div>
+              <span class="float-right grey-700 font-size-30">@if($gramos_colt) {{$gramos_colt}} gr @else 0 gr @endif</span>            
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-sm-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+      <center> <h2 class="panel-title" style="color:white">Total De Gramos Dañados</h2> </center>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Dañados
+              </div>
+              <span class="float-right grey-700 font-size-30">@if($gramos_cold) {{$gramos_cold}} gr @else 0 gr @endif</span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
+      </div>
+
+      </div>
+      </div>
+
+      </div>
+      </div>
+      </div>
+      </div>
+
+      <div class="container" style="background-color:white">
+      <div class="row">
+      <div class="col-12">
+      <div class="panel-warning">
+      <div class="panel-heading">
+       <center> <h2 class="panel-title" style="color:white">Informacion De Productos Por Pieza De La Sucursal @foreach($branches_col as $branch) {{$branch->name}} @endforeach</h2> </center>
+      </div><br>
+</div>
+</div>
+      <div class="col-sm-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+      <center> <h2 class="panel-title" style="color:white">Total de Piezas</h2> </center>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas
+              </div>
+              <span class="float-right grey-700 font-size-30">@if($piezas_col) {{$piezas_col}} pzs @else 0 pzs @endif</span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
         </div>
         <!-- End Widget Linearea One -->
       </div>
-
+      
       </div>
       </div>
       </div>
 
+      <div class="col-sm-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+      <center> <h2 class="panel-title" style="color:white">Total De Piezas Existentes</h2> </center>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas (Existentes)
+              </div>
+              <span class="float-right grey-700 font-size-30">@if($piezas_cole) {{$piezas_cole}} pzs @else 0 pzs @endif</span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+        
+      </div>
+      </div>
+      </div>
+
+      <div class="col-sm-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+      <center> <h2 class="panel-title" style="color:white">Total De Piezas Traspasadas</h2> </center>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas (Traspasadas)              
+              </div>
+              <span class="float-right grey-700 font-size-30">@if($piezas_colt) {{$piezas_colt}} pzs @else 0 pzs @endif</span>            
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <div class="col-sm-6">
+      <div class="panel-primary">
+      <div class="panel-heading">
+      <center> <h2 class="panel-title" style="color:white">Total De Piezas Dañadas</h2> </center>
+      </div>
+      <div class="row">
+      <div class="col-sm">
+        <!-- Widget Linearea One-->
+        <div class="card card-shadow">
+          <div class="card-block p-20 pt-10">
+            <div class="clearfix">
+              <div class="grey-800 float-left py-10">
+                <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas (Dañadas)
+              </div>
+              <span class="float-right grey-700 font-size-30">@if($piezas_cold) {{$piezas_cold}} pzs @else 0 pzs @endif</span>
+            </div>
+          <!--  <div class="ct-chart h-50"></div>   -->
+          </div>
+          
+        </div>
+        <!-- End Widget Linearea One -->
+        </div>
+      </div>
+      </div>
+      </div>
+
+      </div>
+      </div>
+
+      </div>
       </div>
       </div>
       </div>
