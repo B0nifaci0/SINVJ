@@ -478,25 +478,39 @@
                         </a>
                       </li>
                     </ul>
-
+                    <li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon icon fa-map-marker" aria-hidden="true"></i>
+                        <span class="site-menu-title">Sucursales</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/sucursales">
-                        <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
-                          <span class="site-menu-title">Sucursales</span>
+                        <i  class="site-menu-icon icon  md-pin-drop"  aria-hidden="true"></i>
+                          <span class="site-menu-title">Mis Sucursales</span>
                       </a>
                     </li>
-
+                    </ul>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/sucursales/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar Sucursal</span>
+                      </a>
+                    </li>
+                    </ul>
                     <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
-                      <i class="site-menu-icon fa-list" aria-hidden="true"></i>
+                      <i class="site-menu-icon fa-list-alt" aria-hidden="true"></i>
                         <span class="site-menu-title">Inventarios</span>
                       <span class="site-menu-arrow"></span>
                     </a>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/inventarios">
-                          <i  class="site-menu-icon fa-list-alt" aria-hidden="true"></i>
-                            <span class="site-menu-title">Inventarios</span>
+                          <i  class="site-menu-icon fa-list" aria-hidden="true"></i>
+                            <span class="site-menu-title">Lista Inventarios</span>
                         </a>
                       </li>
                     </ul>
@@ -509,20 +523,70 @@
                       </li>
                     </ul>
                   </li>
-
+                  <!--<li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
+                        <span class="site-menu-title">Categorias</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>-->
+                    <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/categorias">
-                        <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
-                          <span class="site-menu-title">Categorias</span>
+                        <i class="site-menu-icon fa-pie-chart" aria-hidden="true"></i>
+                          <span class="site-menu-title">Mis Categorias</span>
                       </a>
                     </li>
+                    </ul>
+                    <!--<ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/categorias/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar categoria</span>
+                      </a>
+                    </li>
+                    </ul>-->
+                    <!--<li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon fa-align-left" aria-hidden="true"></i>
+                        <span class="site-menu-title">Lineas</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>-->
+                    <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/lineas">
                         <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
-                          <span class="site-menu-title">Lineas</span>
+                          <span class="site-menu-title">Mis lineas</span>
                       </a>
                     </li>
-
+                    </ul>
+                   <!-- <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/lineas/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar linea</span>
+                      </a>
+                    </li>
+                    </ul>-->
+                    <!--<li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
+                        <span class="site-menu-title">Lineas</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/lineas">
+                        <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
+                          <span class="site-menu-title"> Mis Lineas</span>
+                      </a>
+                    </li>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/lineas/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar linea</span>
+                      </a>
+                    </li>
+                    </ul>-->
                     <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
                       <i class="site-menu-icon fa-shopping-basket" aria-hidden="true"></i>
@@ -593,7 +657,6 @@
                       </li>
                     </ul>
                   </li>
-
                     <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
                       <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
@@ -603,8 +666,16 @@
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/gastos">
-                        <i  class="site-menu-icon icon fa-book"  aria-hidden="true"></i>
+                        <i  class="site-menu-icon icon fa-usd"  aria-hidden="true"></i>
                           <span class="site-menu-title">Mis Gastos</span>
+                      </a>
+                    </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/gastos/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar gasto</span>
                       </a>
                     </li>
                     </ul>
@@ -633,7 +704,14 @@
                         </a>
                       </li>
                     </ul>
-
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/usuarios/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar Usuario</span>
+                      </a>
+                    </li>
+                    </ul>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item has-sub">
                       <a href="javascript:void(0)">
@@ -681,6 +759,14 @@
                             <span class="site-menu-title">Mayoristas</span>
                         </a>
                       </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/mayoristas/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Crear Nuevo Cliente</span>
+                      </a>
+                    </li>
                     </ul>
                   </li>
                   <li class="site-menu-item has-sub">
@@ -771,6 +857,7 @@
                         </a>
                         </li>
                     </ul>
+                    
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/sucursales">
                           <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>

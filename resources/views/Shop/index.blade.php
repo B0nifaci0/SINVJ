@@ -83,11 +83,8 @@ LISTA TIENDAS
                           <td>{{$shop->phone_number}}</td>
                           @endif
                           <td>
-                              @php
-                              $image = route('images',"app/public/upload/shops/$shop->image")
-                              @endphp
-                              <img width="100px" height="100px" src="{{ $image }}">
-                            </td>
+                            <img width="150px" height="150px" src="{{ $shop_img->image }}">
+                          </td>
                     </tr>
                     @endforeach
                 </tbody>

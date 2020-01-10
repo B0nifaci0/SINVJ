@@ -120,7 +120,6 @@ LISTA DE  GASTOS
               <h1 class="text-center panel-title">Gastos</h1>
               <div class="panel-actions float-right">
                 <div class="container-fluid row float-right">
-                  @if(Auth::user()->type_user == 1 )
                   <!-- Botón para Generar PDF de productos-->
                   <div class="col-6">
                     <button onclick="window.location.href='/gastos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left"
@@ -128,8 +127,7 @@ LISTA DE  GASTOS
                 <i class="icon md-plus" aria-hidden="true"></i>
               </button>
                   </div>
-                                    <!-- END Botón-->
-                  @endif
+                  <!-- END Botón-->
                 </div>
               </div>
             </div>

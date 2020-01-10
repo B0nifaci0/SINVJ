@@ -40,36 +40,22 @@ Panel Sucursales
     <div class="row" data-plugin="matchHeight" data-by-row="true">
       <div class="col-md-12">
         <div class="panel">
-          <div class="panel-heading bg-primary  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
+          <div class="panel-heading bg-white  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
             <div class="row">
-              <div class="col-md-3">   
-                  <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
-              </div>
-              <div class="col-md-6">
-                  <h2 style="color:white">
-                      {{$shop->name}}
-                  </h2>
-              </div>
-              <div class="row aling-right">
-                  <div class="col-md-6 col-md-offset-2">
-                  <div class= "mt-25" ></div>
-                      <button  onclick="window.location.href='/tiendas'"
-                        type="button" class="btn btn-sm small btn-floating toggler-left  btn-success waves-effect waves-light waves-round float-right"
-                        data-toggle="tooltip" data-original-title="Ver Más" align="right">
-                        <i class="icon md-eye" aria-hidden="true"></i>
-                      </button>
-                  </div>
-                  <div class="col-md-6 col-md-offset-2">
-                  <div class= "mt-25"></div>
+            @if(Auth::user()->type_user == 1 )
+                  <div class="col-md-12">
                       <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
-                        type="button" class="btn btn-sm small btn-floating
+                        type="button" class="btn btn-lg 
                         toggler-left  btn-primary waves-effect waves-light waves-round float-right"
                         data-toggle="tooltip" data-original-title="Editar Tienda">
                         <i class="icon md-edit" aria-hidden="true" align="right"></i>
                       </button>
                   </div>
+                  @endif
+              <div class="col-md-12">   
+                  <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
               </div>
-            </div>
+              </div>
           </div>
           <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo" aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">
             <div class="panel-body">

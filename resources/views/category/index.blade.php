@@ -43,7 +43,7 @@ LISTA DE  CATEGORIA
               <div class="panel-actions float-right">
                 <div class="container-fluid row float-right">
                   @if(Auth::user()->type_user == 1 )
-                  <!-- Botón para Generar PDF de productos-->
+                  <!-- Botón para Generar PDF de productos
                   <div class="col-6">
                     <button onclick="window.location.href='/categorias/create'" type="button"
                 class=" btn btn-sm small btn-floating  toggler-left
@@ -52,7 +52,7 @@ LISTA DE  CATEGORIA
                 <i class="icon md-plus" aria-hidden="true"></i>
               </button>
                   </div>
-                  <!-- END Botón-->
+                   END Botón-->
                   @endif
                 </div>
               </div>

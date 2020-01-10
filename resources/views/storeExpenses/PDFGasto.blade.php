@@ -147,13 +147,7 @@ img {
         <p align= "right">Hora: {{$hour}}</p>
         <div border="">
         <img class="img-responsive " width="70px" height="70px" src="{{ $shop->image }}">
-            
-
-            <p class="centrado">¡COMPROBANTE DE GASTO!
-                <br align= "right">joyeriafina.com
-            </p> 
-            
-            
+             
             <p><b>Tienda:</b> {{$shop->name}}</p><br>
             <table class="table-sm table-bordered">
             @foreach($expense as $expense)

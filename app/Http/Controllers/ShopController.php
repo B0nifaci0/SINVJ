@@ -14,10 +14,7 @@ use Illuminate\Support\Facades\Hash;
 
 class ShopController extends Controller
 {
-
-	use S3ImageManager;
-
-
+  use S3ImageManager;
   public function __construct()
     {
         $this->middleware('Authentication');
@@ -31,13 +28,17 @@ class ShopController extends Controller
   {
 
     $user = Auth::user();
+    $shop_img = Auth::user()->shop;
     $shops = Auth::user()->shop()->get();
-
+    if($shop_img->image) {
+      $shop_img->image = $this->getS3URL($shop_img->image);
+    }
+    //return $shop;
     /**
      * Checar para hacer la comparacion entre el null para hacer el remplazo de informacion
      */
 
-    return view('Shop/index ', compact('shops','user'));
+    return view('Shop/index ', compact('shops','user','shop_img'));
   }
 
   /**
