@@ -713,6 +713,8 @@ $fecter = Carbon::parse($request->fecter)->addDay();
       ->join('lines','lines.id','products.line_id')
       ->select('products.*', 'lines.name as name_line', 'branches.name as name_branch', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
       ->where('categories.type_product',2)
+      ->where('products.deleted_at',NULL)
+      ->where('products.status_id',2)
       ->orderBy('products.clave', 'ASC')
       ->orderBy('name_branch', 'ASC')
       ->orderBy('name_line', 'ASC')
@@ -733,7 +735,8 @@ $fecter = Carbon::parse($request->fecter)->addDay();
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('lines','lines.id','products.line_id')
-      ->where('statuss.id',2)
+      ->where('products.deleted_at',NULL)
+      ->where('products.status_id',2)
       ->where('lines.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
       ->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as total_w, SUM(products.price) as total_p'))
@@ -885,8 +888,9 @@ $fecter = Carbon::parse($request->fecter)->addDay();
    ->join('lines','lines.id','products.line_id')
    ->join('statuss','statuss.id','products.status_id')
    ->select('products.*', 'categories.name as name_category', 'lines.name as name_line','categories.type_product','statuss.name as name_status')
-    ->where('categories.type_product',2)
-    ->where('statuss.id',2)->get();
+   ->where('categories.type_product',2)
+   ->where('products.deleted_at',NULL)
+   ->where('products.status_id',2)->get();
   //return $products;
    // $status = Shop::find($shop_id)->statuss()->get();
     //return $status;
@@ -944,7 +948,9 @@ $fecter = Carbon::parse($request->fecter)->addDay();
    ->join('lines','lines.id','products.line_id')
    ->join('statuss','statuss.id','products.status_id')
    ->select('products.*', 'categories.name as name_category', 'lines.name as name_line','categories.type_product','statuss.name as name_status')
-    ->where('categories.type_product',2)->get();
+   ->where('categories.type_product',2)
+   ->where('products.deleted_at',NULL)
+   ->where('products.status_id',2)->get();
   //return $products;
    // $status = Shop::find($shop_id)->statuss()->get();
     //return $status;
@@ -1012,6 +1018,8 @@ $fecter = Carbon::parse($request->fecter)->addDay();
     ->join('branches','branches.id','products.branch_id')
     ->select('products.*', 'categories.name as name_category','categories.type_product','statuss.name as name_status','branches.name as name_branch')
     ->where('categories.type_product',1)
+    ->where('products.deleted_at',NULL)
+    ->where('products.status_id',2)
     ->get();
     $hour = Carbon::now();
     $hour = date('H:i:s');
@@ -1046,7 +1054,8 @@ $fecter = Carbon::parse($request->fecter)->addDay();
     ->join('statuss','statuss.id','products.status_id')
     ->select('products.*', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
     ->where('categories.type_product',1)
-    ->where('statuss.id',2)->get();
+    ->where('products.deleted_at',NULL)
+    ->where('products.status_id',2)->get();
     $shop = Auth::user()->shop;
     $shops = Auth::user()->shop()->get();
 

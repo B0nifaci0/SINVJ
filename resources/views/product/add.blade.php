@@ -13,6 +13,11 @@ ALTA PRODUCTO
 <div class="page-content">
   <div class="panel">
     <div class="panel-body">
+      @if (session('mesage'))
+        <div class="alert alert-success">
+          <strong>{{ session('mesage') }}</strong>
+        </div>
+      @endif
       @if($errors->count() > 0)
         <div class="alert alert-danger" role="alert">
           <ul>

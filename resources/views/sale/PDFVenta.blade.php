@@ -7,7 +7,7 @@
      </head>
    <style>
  .cuerpo{
-    font-size: 10px;
+    font-size: 12px;
     font-family: 'Times New Roman';
 }
 @page {size: 8.3cm 250mm;
@@ -51,8 +51,8 @@
                         </tr>
                         @endforeach
                         <tr>
-                            <td colspan="3"></td>
-                            <td><strong>Total$ {{ $sale->total }}</strong></td>
+                            <td colspan="3">Total a pagar</td>
+                            <td><strong> ${{ $sale->total }}</strong></td>
                         </tr> 
                     </tbody>
             </table>
@@ -91,6 +91,6 @@
         <br>
         <p align="center">¡GRACIAS POR SU COMPRA!</p>
         <p align="center">¡ESTE NO ES UN COMPROBANTE FISCAL!</p>
-        <p  class="cuerpo" align="justify">Si requiere factura favor de enviar sus datos fiscales al correo: <b>{{$branch->email}}</p>
+        <p align="justify">Si requiere factura favor de enviar sus datos fiscales al correo: <b>{{$branch->email}}</p>
     </body>
 </html>
