@@ -57,14 +57,16 @@ class InventoryController extends Controller
     }
 
     public function show($id) {
+        $branch = InventoryReport::where('id', $id)->select('branch_id')->sum('branch_id');
         $inventory = InventoryReport::where('id', $id)->first();
-
         $inventory->products = InventoryDetail::join('products', 'products.id', 'inventory_details.product_id')
         ->where('inventory_details.inventory_report_id', $inventory->id)
+        ->where('products.branch_id',$branch)
         ->select('inventory_details.id', 'inventory_details.status', 'inventory_details.product_id',
             'products.clave', 'products.description'
         )
         ->get();
+        //return $inventory->products;
         return view('inventory.show', compact('inventory'));
     }
 
@@ -98,7 +100,7 @@ class InventoryController extends Controller
         $inventory = InventoryDetail::find($request->inventory_id);
         // return [$request->status];
         if(!$request->status) {
-            $product = Product::find($inventory->product_id);
+            $product = Product::withTrashed()->where('id', $inventory->product_id)->first();
             $product->discar_cause = $request->discar_cause;
             $product->save();            
             $product->delete();
@@ -123,11 +125,11 @@ class InventoryController extends Controller
         $line = Auth::user()->shop->id;
         $lines = Shop::find($line)->lines()->get();
        
-        $shop = Auth::user()->shop; 
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
-          $dates = Carbon::now();
-          $dates = $dates->format('d-m-Y');
+        $shop = Auth::user()->shop;
+
+        $dates = InventoryReport::where('id',$id)->select('created_at as fecha')->get();
+        //return $dates;
+
       $shops = Auth::user()->shop()->get();
       
       $inventory = InventoryReport::findOrFail($id);
@@ -139,58 +141,55 @@ class InventoryController extends Controller
       ->get();
 
   //CONSULTAS PARA PRODUCTOS POR GRAMOS
-        //PRODUCTOS GRAMO
-      $totals = Shop::join('products','products.shop_id','shops.id')
+        //CONSULTA PARA OBTENER EL TOTAL DE GRAMOS POR LINEA DE LA SUCURSAL
+      $gramos_totales = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
+      ->join('inventory_details','inventory_details.product_id','products.id')
       ->withTrashed()
       ->where('products.status_id',2)
       ->where('lines.shop_id', Auth::user()->shop->id)  
+      ->where('products.shop_id', Auth::user()->shop->id) 
       ->where('categories.type_product',2) 
-      ->where('products.branch_id',$id_branch)   
-      ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.weigth) as total_w'))
+      ->where('products.branch_id',$id_branch)
+      ->where('inventory_details.inventory_report_id',$id)
+      ->orWhere('inventory_details.status',NULL)
+      ->Where('inventory_details.status',0)
+      ->orWhere('inventory_details.status',1)
+      ->select('lines.id as ids', 'lines.name as name_line', DB::raw('SUM(products.weigth) as total_w'))
       ->distinct('lines.name')
       ->groupBy('lines.id', 'lines.name')
       ->orderBy('name_line', 'DESC')
       ->get();
       //return $totals;
 
-      $totals1 = Shop::join('products','products.shop_id','shops.id')
-      ->join('categories','categories.id','products.category_id')
-      ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
-      ->join('inventory_details','inventory_details.product_id','products.id')
-      ->withTrashed()
-      ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
-      ->where('products.branch_id',$id_branch)
-      ->where('products.discar_cause',null)   
-      ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.weigth) as total_f'))
-      ->distinct('lines.name')
-      ->groupBy('lines.id', 'lines.name')
-      ->orderBy('name_line', 'DESC')
-      ->get();
-     // return $totals1;
+      foreach($gramos_totales as $g)
+      {
+          //CONSULTA PARA OBTENER GRAMOS FALTANTES POR LINEA
+          $g->gramos_fal = Shop::join('products','products.shop_id','shops.id')
+          ->join('categories','categories.id','products.category_id')
+          ->join('statuss','statuss.id','products.status_id')
+          ->join('branches','branches.id','products.branch_id')
+          ->join('lines','lines.id','products.line_id')
+          ->join('inventory_details','inventory_details.product_id','products.id')
+          ->where('products.branch_id',$id_branch)
+          ->where('lines.shop_id', Auth::user()->shop->id)
+          ->where('products.shop_id', Auth::user()->shop->id) 
+          ->where('categories.type_product',2)
+          ->where('products.status_id', 2)
+          ->where('products.line_id', $g->ids)
+          ->Where('inventory_details.status',0) 
+          ->where('inventory_details.inventory_report_id',$id)
+          ->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
+          ->get()
+          ->sum('weigth');
 
-      //PRODUCTOS GRAMOS FALTANTES
-      $g_faltantes = Shop::join('products','products.shop_id','shops.id')
-      ->join('categories','categories.id','products.category_id')
-      ->join('inventory_details','inventory_details.product_id','products.id')
-      ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
-      ->withTrashed()
-      ->where('lines.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
-      ->where('products.branch_id',$id_branch)    
-      ->where('inventory_details.status',0)  
-      ->select('lines.id', 'lines.name as name_line', DB::raw('SUM(products.weigth) as total_w'))
-      ->distinct('lines.name')
-      ->groupBy('lines.id', 'lines.name')
-      ->orderBy('name_line', 'DESC')
-      ->get();
-     // return $g_faltantes;
+            //OPERACION PARA OBTENER LOS GRAMOS EXISTENTES POR LINEA
+          $g->gramos_ex = $g->total_w - $g->gramos_fal;
+      }
+      //return $gramos_totales;
 
       //DESCRIPCION DE PRODUCTOS GRAMOS FALTANTES
       $prod_fal = Shop::join('products','products.shop_id','shops.id')
@@ -203,21 +202,94 @@ class InventoryController extends Controller
       ->where('lines.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2)
       ->where('products.branch_id',$id_branch)
-      ->where('inventory_details.status',0)      
-      ->select('products.*', 'lines.name as name_line')
+      ->where('inventory_details.status',0)  
+      ->where('inventory_details.inventory_report_id',$id)    
+      ->select('products.weigth','products.description','products.clave', 'lines.name as name_line', DB::raw('SUM(products.price) as money'))
+      ->distinct('products.clave')
+      ->groupBy('products.weigth','products.description','products.clave','lines.name')
       ->orderBy('name_line', 'DESC') 
       ->get();
       //return $prod_fal;
+
+       //CONSULTA PARA OBTENER EL TOTAL DE GRAMOS POR LINEA DE LA SUCURSAL
+       $totales_g = Shop::join('products','products.shop_id','shops.id')
+       ->join('categories','categories.id','products.category_id')
+       ->join('statuss','statuss.id','products.status_id')
+       ->join('branches','branches.id','products.branch_id')
+       ->join('lines','lines.id','products.line_id')
+       ->join('inventory_details','inventory_details.product_id','products.id')
+       ->withTrashed()
+       ->where('products.status_id',2)
+       ->where('lines.shop_id', Auth::user()->shop->id)  
+       ->where('products.shop_id', Auth::user()->shop->id) 
+       ->where('categories.type_product',2) 
+       ->where('products.branch_id',$id_branch)
+       ->where('inventory_details.inventory_report_id',$id)
+       ->orWhere('inventory_details.status',NULL)
+       ->Where('inventory_details.status',0)
+       ->orWhere('inventory_details.status',1)
+       ->select(DB::raw('SUM(products.weigth) as gramos, SUM(products.price) as dinero'))
+       ->get();
+       //return $totales_g;
+ 
+       foreach($totales_g as $g)
+       {
+           //CONSULTA PARA OBTENER GRAMOS FALTANTES POR LINEA
+           $g->faltantes = Shop::join('products','products.shop_id','shops.id')
+           ->join('categories','categories.id','products.category_id')
+           ->join('statuss','statuss.id','products.status_id')
+           ->join('branches','branches.id','products.branch_id')
+           ->join('lines','lines.id','products.line_id')
+           ->join('inventory_details','inventory_details.product_id','products.id')
+           ->where('products.branch_id',$id_branch)
+           ->where('lines.shop_id', Auth::user()->shop->id)
+           ->where('products.shop_id', Auth::user()->shop->id) 
+           ->where('categories.type_product',2)
+           ->where('products.status_id', 2)
+           ->Where('inventory_details.status',0) 
+           ->where('inventory_details.inventory_report_id',$id)
+           ->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
+           ->get()
+           ->sum('weigth');
+
+           $g->dinero_fal = Shop::join('products','products.shop_id','shops.id')
+           ->join('categories','categories.id','products.category_id')
+           ->join('statuss','statuss.id','products.status_id')
+           ->join('branches','branches.id','products.branch_id')
+           ->join('lines','lines.id','products.line_id')
+           ->join('inventory_details','inventory_details.product_id','products.id')
+           ->where('products.branch_id',$id_branch)
+           ->where('lines.shop_id', Auth::user()->shop->id)
+           ->where('products.shop_id', Auth::user()->shop->id) 
+           ->where('categories.type_product',2)
+           ->where('products.status_id', 2)
+           ->where('inventory_details.status',0) 
+           ->where('inventory_details.inventory_report_id',$id)
+           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
+           ->get()
+           ->sum('price');
+           //return $totales_g;
+ 
+             //OPERACION PARA OBTENER LOS GRAMOS EXISTENTES
+           $g->existentes = $g->gramos - $g->faltantes;
+
+            //OPERACION PARA OBTENER EL DINERO TOTAL EN PRODUCTOS POR GRAMOS EXISTENTES
+           $g->dinero_exis = $g->dinero - $g->dinero_fal;
+       }
+       //return $totales_g;
 
     // CONSULTAS PARA PRODUCTOS POR PIEZA
        //PRODUCTOS PIEZA
       $cat_totals = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
       ->join('branches','branches.id','products.branch_id')
+      ->join('inventory_details','inventory_details.product_id','products.id')
       ->withTrashed()
       ->where('categories.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',1)  
-      ->where('products.branch_id',$id_branch)    
+      ->where('products.branch_id',$id_branch)   
+      ->where('inventory_details.inventory_report_id',$id)
+      ->Where('inventory_details.status',1)
       ->select('categories.id', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
       ->distinct('categories.name')
       ->groupBy('categories.id','categories.name')
@@ -233,11 +305,12 @@ class InventoryController extends Controller
      ->withTrashed()
      ->where('categories.shop_id', Auth::user()->shop->id) 
      ->where('categories.type_product',1)  
-    ->where('products.branch_id',$id_branch)    
-    ->where('inventory_details.status',0)  
-     ->select('categories.id as cat_id', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
+     ->where('products.branch_id',$id_branch)    
+     ->where('inventory_details.status',0)  
+     ->where('inventory_details.inventory_report_id',$id)
+     ->select('categories.id as cat_id', 'products.description as descripcion', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
      ->distinct('categories.name')
-     ->groupBy('categories.id', 'categories.name')
+     ->groupBy('categories.id', 'categories.name','products.description')
      ->orderBy('cat_name', 'DESC')
      ->get();
       // return $p_faltantes;
@@ -253,16 +326,77 @@ class InventoryController extends Controller
      ->where('categories.type_product',1) 
      ->where('products.branch_id',$id_branch)     
      ->where('inventory_details.status',0)   
+     ->where('inventory_details.inventory_report_id',$id)
      ->select('products.clave','products.price','categories.id as id_cat', 'categories.name as cat_name')
      ->orderBy('cat_name', 'DESC')
      ->get();
      //  return $prod_faltantes;
 
+     //CONSULTA PARA OBTENER LOS TOTALES DE PRODUCTOS POR PIEZAS DE LA SUCURSAL
+     $totales_p = Shop::join('products','products.shop_id','shops.id')
+     ->join('categories','categories.id','products.category_id')
+     ->join('statuss','statuss.id','products.status_id')
+     ->join('branches','branches.id','products.branch_id')
+     ->join('inventory_details','inventory_details.product_id','products.id')
+     ->withTrashed()
+     ->where('products.status_id',2)
+     ->where('products.shop_id', Auth::user()->shop->id) 
+     ->where('categories.type_product',1) 
+     ->where('products.branch_id',$id_branch)
+     ->where('inventory_details.inventory_report_id',$id)
+     ->orWhere('inventory_details.status',NULL)
+     ->Where('inventory_details.status',0)
+     ->orWhere('inventory_details.status',1)
+     ->select(DB::raw('COUNT(products.id) as piezas, SUM(products.price) as dinero'))
+     ->get();
+     //return $totales_g;
+
+     foreach($totales_p as $p)
+     {
+         //CONSULTA PARA OBTENER PIEZAS FALTANTES DE LA SUCURSAL
+         $p->faltantes = Shop::join('products','products.shop_id','shops.id')
+         ->join('categories','categories.id','products.category_id')
+         ->join('statuss','statuss.id','products.status_id')
+         ->join('branches','branches.id','products.branch_id')
+         ->join('inventory_details','inventory_details.product_id','products.id')
+         ->where('products.branch_id',$id_branch)
+         ->where('products.shop_id', Auth::user()->shop->id) 
+         ->where('categories.type_product',2)
+         ->where('products.status_id', 2)
+         ->Where('inventory_details.status',0) 
+         ->where('inventory_details.inventory_report_id',$id)
+         ->get()
+         ->count('id');
+
+         $p->dinero_fal = Shop::join('products','products.shop_id','shops.id')
+         ->join('categories','categories.id','products.category_id')
+         ->join('statuss','statuss.id','products.status_id')
+         ->join('branches','branches.id','products.branch_id')
+         ->join('lines','lines.id','products.line_id')
+         ->join('inventory_details','inventory_details.product_id','products.id')
+         ->where('products.branch_id',$id_branch)
+         ->where('lines.shop_id', Auth::user()->shop->id)
+         ->where('products.shop_id', Auth::user()->shop->id) 
+         ->where('categories.type_product',2)
+         ->where('products.status_id', 2)
+         ->where('inventory_details.status',0) 
+         ->where('inventory_details.inventory_report_id',$id)
+         ->get()
+         ->sum('price');
+         //return $totales_g;
+
+           //OPERACION PARA OBTENER LOS GRAMOS EXISTENTES
+         $p->existentes = $p->piezas - $p->faltantes;
+
+          //OPERACION PARA OBTENER EL DINERO TOTAL EN PRODUCTOS POR GRAMOS EXISTENTES
+         $p->dinero_exis = $p->dinero - $p->dinero_fal;
+     }
+     //return $totales_g;
+
      if($shop->image) {
         $shop->image = $this->getS3URL($shop->image);
     }
-
-      $pdf  = PDF::loadView('inventory.Reports.reportPDF', compact('totals1','report','prod_faltantes','p_faltantes','prod_fal','g_faltantes','cat_totals','shop','hour','dates','shops','lines','totals'));
+      $pdf  = PDF::loadView('inventory.Reports.reportPDF', compact('totales_p','totales_g','report','prod_faltantes','p_faltantes','prod_fal','cat_totals','shop','dates','shops','lines','gramos_totales'));
       return $pdf->stream('ReporteInventarios.pdf');
     }
 

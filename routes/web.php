@@ -91,6 +91,9 @@ Route::get('homepdf', 'HomeController@exportPdf');
 //Usuarios Activo
 Route::get('/usuarios/activo/{id}', 'UserController@soft');
 
+
+Route::group(['middleware' => ['auth','CategoryMiddleware','LineMiddleware']],function(){
+
 //Sucursales Producto
 Route::resource('sucursales.producto', 'BranchProductsController');
 Route::put('sucursalproducto.update', 'BranchProductsController@update')->name('sucursalproducto.update');
@@ -98,6 +101,8 @@ Route::get('sucursalproducto/{id}/edit', 'BranchProductsController@edit');
 Route::get('sucursales/{id}/inventario', 'BranchProductsController@inventory'); 
 Route::get('sucursal', 'BranchController@indexCo');
 //Route::get('sucursalespdf{id}', 'TestController@exportPdf')->name('sucursalespdf');
+
+});
 
 //Sucursal Producto PDF
 Route::get('sucursales/{id}/sucursalespdf', 'BranchProductsController@exportPdf');
@@ -182,7 +187,7 @@ Route::resource('tiendas','ShopController');
 });
 */
 //PRODUCTS
-Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware']],function(){
+Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware','InventoryMiddleware']],function(){
 
   //Ventas
   Route::resource('ventas', 'SaleController');
@@ -219,8 +224,6 @@ Route::group(['middleware' => ['auth']],function () {
   Route::put('/sucursales/{id}/update', 'BranchController@update')->name('sucursales.update');
   Route::delete('/sucursales/{id}','BranchController@destroy');
   Route::get('/sucursales/corte', 'BranchController@boxcut');
-  
-
 
   //LINEAS
   Route::get('lineas/create', 'LineController@create');

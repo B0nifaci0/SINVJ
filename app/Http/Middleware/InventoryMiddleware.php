@@ -20,7 +20,7 @@ class InventoryMiddleware
     {
          
        if (Auth::user()->shop->branches->count() == 0 ){
-           return redirect('/productos/create')->with('mesage', 'Primero debes configurar los productos de tu Sucursal!');
+           return redirect('/sucursales/create')->with('mesage', 'Primero debes crear una Sucursal!');
        }
     return $next($request);
 
