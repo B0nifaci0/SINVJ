@@ -259,7 +259,7 @@ $(document).ready(function(){
       $('#form').submit();
   })
 
-    $('#tranfer').on('click', '.reject', function(){
+   $('#transfer').on('click', '.reject', function(){
     var id = $(this).attr('alt');
       $('#transfer_id_r').val(id);
       $('#answer').val(0);

@@ -10,52 +10,43 @@ LISTA DE  LINEA
 @endsection
 @section('menu')
 
-@endsection 
+@endsection
 @section('content')
 <div class="panel-body">
     <div class="page-content">
       <!-- Panel Basic -->
-      <div class="panel">  
-        <header class="panel-heading">
-          <div class="panel-actions">
-            <div class="row">
-              @if(Auth::user()->type_user == 1 )
-                <!-- Botón para generar PDF de linea-->
-                <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='inventariospdf'" 
-                    type="button" class=" btn btn-sm small btn-floating 
-                    toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+      <div class="panel">
+        <div class="panel-body">
+            <div class="example-wrap">
+              <h1 class="text-center panel-title">Inventarios</h1>
+              <div class="panel-actions float-right">
+                <div class="container-fluid row float-right">
+                  @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
+                  <!-- Botón para Generar PDF de productos-->
+                  @if(Auth::user()->type_user == 1)
+                 <!-- <div class="col-6">
+                    <button onclick="window.location.href='inventariospdf'"
+                    type="button" class=" btn btn-sm small btn-floating
+                    btn-danger waves-effect waves-light waves-round float-right"
                     data-toggle="tooltip" data-original-title="Generar reporte PDF">
                     <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                   </button>
-                </div>  
-                <!-- END Botón-->
-                <!-- Botón para generar Excel de linea-->
-                <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='#'" 
-                    type="button" class=" btn btn-sm small btn-floating 
-                    toggler-left  btn-success waves-effect waves-light waves-round float-right"
-                    data-toggle="tooltip" data-original-title="Generar reporte Excel">
-                    <i class="icon fa-file-excel-o" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <!-- END Función--><!-- Función Sweet Alert para eliminar linea-->
-<!-- END Función-->
-                <!-- Botón para crear linea-->
-                <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='/inventarios/create'" 
-                    type="button" class=" btn btn-sm small btn-floating 
-                    toggler-left  btn-info waves-effect waves-light waves-round float-right"
+                  </div> -->
+                  @endif
+                  <div class="col-6=">
+                    <button onclick="window.location.href='/inventarios/create'"
+                    type="button" class=" btn btn-sm small btn-floating
+                    btn-info waves-effect waves-light waves-round float-left"
                     data-toggle="tooltip" data-original-title="Agregar">
                     <i class="icon md-plus" aria-hidden="true"></i>
                   </button>
+                  </div>
+                  <!-- END Botón-->
+                  @endif
                 </div>
-                <!-- END Botón-->
-              @endif
+              </div>
             </div>
           </div>
-          <h3 class="panel-title">Inventarios</h3>
-        </header>
         <div class="panel-body">
         <!-- Tabla para listar inventarios-->
           <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
@@ -125,7 +116,7 @@ LISTA DE  LINEA
 @endsection
 
 @section('delete-categorias')
-<script type="text/javascript"> 
+<script type="text/javascript">
 $(document).ready(function() {
   $(".exist").click(function() {
       let id = $(this).attr("alt");
@@ -139,7 +130,7 @@ $(document).ready(function() {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si'
       }).then((result) => {
-        if (result.value) 
+        if (result.value)
         {
           $('#inventory_id').val(id);
           $('#status').val(1);
@@ -160,7 +151,7 @@ $(document).ready(function() {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si'
       }).then((result) => {
-        if (result.value) 
+        if (result.value)
         {
           $('#inventory_id').val(id);
           $('#status').val(0);
@@ -182,7 +173,7 @@ $(document).ready(function() {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si'
       }).then((result) => {
-        if (result.value) 
+        if (result.value)
         {
           $('#inventory_id').val(id);
           $('#status').val(0);
@@ -239,4 +230,3 @@ $(document).ready(function() {
 });
 </script>
 @endsection
- 
