@@ -84,7 +84,7 @@
       <img align="left" width="90px" height="90px" src="{{ $shop->image }}">
       <p align="right">Fecha: {{$dates}}</p>
       <p align="right">Hora: {{$hour}}</p>
-    <h2 align="center">Reporte General Por Estatus por 
+    <h2 align="center">Reporte General Estatus por
       @if($categoria == 1)
       Pz
       @else
@@ -132,8 +132,8 @@
           <tr>
             @foreach ($productsg as $i => $product)
             @if($product->type_product == 2 )
-            <th scope="col">Total de Gramos</th> 
-            @break 
+            <th scope="col">Total de Gramos</th>
+            @break
             @endif
             @endforeach
             <th scope="col">Total precio Venta</th>
@@ -143,7 +143,7 @@
           <tr>
             @foreach ($productsg as $i => $product)
             @if($product->type_product == 2 )
-            <td align="center">{{$total}} gr</td>  
+            <td align="center">{{$total}} gr</td>
             @break
             @endif
             @endforeach

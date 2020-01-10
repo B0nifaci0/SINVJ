@@ -168,7 +168,7 @@ TRASFERENCIAS
     {{ csrf_field() }}
     <input type="text" name="transfer_id" id="transfer_id_r">
     <input type="text" name="answer" id="answer">
-  </form> 
+  </form>
 
   <form method="post" action="/traspasos/cancelar" id="give-back" class="d-none">
     {{ csrf_field() }}
@@ -179,6 +179,27 @@ TRASFERENCIAS
     {{ csrf_field() }}
     <input type="text" name="transfer_id" id="transfer_id_p">
   </form>
+@endsection
+
+
+@section('barcode-product')
+<script type="text/javascript">
+//inicializa la tabla para resposnive
+  $(document).ready(function(){
+      $('#transfer').DataTable({
+          retrieve: true,
+          //  responsive: true,
+          //paging: false,
+          //searching: false
+      });
+
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust()
+            .responsive.recalc();
+      });
+  });
+  </script>
 @endsection
 
 @section('traspaso')
@@ -224,21 +245,21 @@ $(document).ready(function(){
       })
   });
 
-  $('.accept').click(function() {
+    $('#transfer').on('click', '.accept', function(){
     var id = $(this).attr('alt');
     $('#transfer_id_r').val(id);
     $('#answer').val(1);
     $('#form').submit();
   })
 
-  $('.cancel').click(function() {
+  $('#transfer').on('click', '.cancel', function(){
     var id = $(this).attr('alt');
       $('#transfer_id_r').val(id);
       $('#answer').val(null);
       $('#form').submit();
   })
 
-  $('.reject').click(function() {
+    $('#tranfer').on('click', '.reject', function(){
     var id = $(this).attr('alt');
       $('#transfer_id_r').val(id);
       $('#answer').val(0);

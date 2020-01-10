@@ -66,9 +66,9 @@ LISTA DE  CATEGORIA
                 <th>Clave</th>
                 <th>Nombre</th>
                 <th>Tipo de Producto</th>
-                @if(Auth::user()->type_user == 1 )
+                <!--@if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif
+                @endif -->
               </tr>
             </thead>
             <tfoot>
@@ -76,9 +76,9 @@ LISTA DE  CATEGORIA
                 <th>Clave</th>
                 <th>Nombre</th>
                 <th>T.Porducto</th>
-                @if(Auth::user()->type_user == 1 )
+                <!--@if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif
+                @endif -->
               </tr>
             </tfoot>
             <tbody>
@@ -92,24 +92,21 @@ LISTA DE  CATEGORIA
                 @if($category->type_product == 2 )
                     <td><span class="text-center badge badge-primary">Gramos</span></td>
                 @endif
-                @if(Auth::user()->type_user == 1 )
+                <!--@if(Auth::user()->type_user == 1 )
                 <td>
-                  <!-- Botón Para editar categoria-->
                   <a type="button" href="/categorias/{{$category->id}}/edit"
-                    class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                    class="btn btn-icon btn-info waves-effect waves-light waves-round invisible"
                     data-toggle="tooltip" data-original-title="Editar">
                     <i class="icon md-edit" aria-hidden="true"></i></a>
 
-                  <!-- END Botón-->
-                  <!-- Botón Para eliminar categoria-->
-                  <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                  <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete invisible"
                     alt="{{$category->id}}" role="button"
                     data-toggle="tooltip" data-original-title="Borrar">
                     <i class="icon md-delete" aria-hidden="true"></i>
                   </button>
-                  <!-- END Botón-->
                 </td>
                 @endif
+                -->
               </tr>
               @endforeach
             </tbody>
@@ -123,10 +120,26 @@ LISTA DE  CATEGORIA
 
 @endsection
 
+@section('barcode-product')
+  <script type="text/javascript">
+  //inicializa la tabla para resposnive
+    $(document).ready(function(){
+        $('#categorias').DataTable({
+            retrieve: true,
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+              .columns.adjust()
+              .responsive.recalc();
+        });
+    });
+    </script>
+  @endsection
 
 
-<!-- Función Sweet Alert para eliminar categoria-->
-@section('delete-categorias')
+<!-- Función Sweet Alert para eliminar linea-->
+@section('delete-lineas')
 <script type="text/javascript">
 console.log("a")
 $(document).ready(function() {
@@ -144,14 +157,15 @@ $(document).ready(function() {
       confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
       if (result.value) {
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-           }
-      });
+        $.ajaxSetup({
+         headers: {
+             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+          }
+        });
         $.ajax({
-          url:  'categorias/' + id,
+          url:  '/categorias/' + id,
           method: 'DELETE',
+
           success: function (response) {
             if(response.success) {
               $("#row" + id).remove();
@@ -162,7 +176,7 @@ $(document).ready(function() {
               )
             }else{
                 Swal.fire(
-                  'Eliminado',
+                  'No Eliminado',
                   'El registro no ha sido eliminado por que tiene productos activos',
                   'error'
                 )
@@ -171,11 +185,12 @@ $(document).ready(function() {
           },
           error: function(error){
               Swal.fire(
-                  'error',
-                  'Error de conexión',
+                  'No Eliminado',
+                  'El registro no ha sido eliminado por que tiene productos activos',
                   'error'
                 )
           }
+
         })
       }
     })
@@ -184,11 +199,4 @@ $(document).ready(function() {
 });
 
 </script>
-@endsection
-<!-- END Función-->
-
-
-
-@section('barcode-product')
-
 @endsection

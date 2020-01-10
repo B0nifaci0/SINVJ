@@ -28,8 +28,9 @@ class CategoryController extends Controller
         $user = Auth::user();
         /*return $users;
         $shop = Auth::user()->shop;
-        return $shop; */   
-        $categories = Auth::user()->shop->categories;
+        return $shop; */
+        //$categories = Auth::user()->shop->categories;
+        $categories = Category::where('shop_id','=',NULL)->get();
         //Lista el array de datos de categorias almacenados en la variable $categories
         //return $categories;
         return view('category/index', compact('categories','user'));
@@ -42,7 +43,7 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request  $request)
-    { 
+    {
        $user = Auth::user();
         return view('category/add', compact('user'));
     }
@@ -65,7 +66,7 @@ class CategoryController extends Controller
 
 
         return redirect('/categorias')->with('mesage', 'la categoria se ha agregado exitosamente!');
-   
+
     }
 
     /**
@@ -107,7 +108,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->name = $request->name;
         $category->type_product = $request->type_product;
-        $category->save();  
+        $category->save();
         return redirect('/categorias')->with('mesage-update', 'La categoria se ha modificado exitosamente!');
     }
 
@@ -129,7 +130,7 @@ class CategoryController extends Controller
           Category::destroy($id);
            return response()->json([
           'success'=> true
-          ]); 
+          ]);
     }
  }
 }
