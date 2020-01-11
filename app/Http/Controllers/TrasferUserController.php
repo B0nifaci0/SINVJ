@@ -28,9 +28,15 @@ class TrasferUserController extends Controller
         $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function($u) {
           return $u->id;
         });
-        $trans = TransferProduct::whereIn('user_id', $usersIds)
-        ->whereIn('destination_user_id', $usersIds)
-        ->with('user')->with('branch')->with('product')->get();
+        $trans1 = TransferProduct::whereIn('user_id', $usersIds)
+        ->with('user')->with('branch')->with('product')
+        ->get();
+
+        $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
+        ->with('user')->with('branch')->with('product')
+        ->get();
+
+        $trans = $trans1->merge($trans2);
         //return $trans;
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
@@ -126,7 +132,10 @@ class TrasferUserController extends Controller
   }
  
   public function exportPdf(){ 
-    $trans = TrasferUser::all();
+    // $trans = TrasferUser::all();
+    $trans = TransferProduct::where('user_id', $user->id)
+    ->orWhere('destination_user_id', $user->id)
+    ->with('user')->with('branch')->get();
     $pdf  = PDF::loadView('transfer.TrasferUser.PdfTranferUser', compact('trans'));
     return $pdf->download('Traspasos.pdf');
   }

@@ -50,6 +50,10 @@ class ShopGroupsController extends Controller
             'password' => $request->password
         ])->first();
 
+        if(!$shopGroup) {
+            return redirect('/grupos')->with('mesage', "El grupo que buscas no existe");
+        }
+
         $shop = $user->shop;
         $shop->shop_group_id = $shopGroup->id;
         $shop->save();

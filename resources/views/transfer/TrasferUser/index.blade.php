@@ -133,14 +133,18 @@ TRASFERENCIAS
                       @endif
                     @else
                       @if(!$transfer->paid_at)
-                        @if(Auth::user()->id == $transfer->user_id)
+                        @if(Auth::user()->id == $transfer->user_id && $transfer->status_product == 1)
                           <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
                           <button class="btn btn-danger give-back" alt="{{ $transfer->id }}">Devolver</button>
                         @else
-                        <span class="text-center badge badge-warning">Por pagar</span>
+                          @if($transfer->status_product === null)
+                            <span class="text-center badge badge-success">Pendiente</span>
+                          @elseif($transfer->status_product == 0)
+                            <span class="text-center badge badge-warning">No se paga</span>
+                          @endif
                         @endif
                       @else
-                          <span class="text-center badge badge-success">Pagado</span>
+                        <span class="text-center badge badge-success">Pagado</span>
                       @endif
                     @endif
                     <!-- END Botón-->
@@ -164,7 +168,7 @@ TRASFERENCIAS
     </div>
   <!-- End Panel Basic -->
   </div>
-<!--
+
   <form method="post" action="/traspasos/respuesta" id="form" class="d-none">
     {{ csrf_field() }}
     <input type="text" name="transfer_id" id="transfer_id_r">
@@ -180,7 +184,7 @@ TRASFERENCIAS
     {{ csrf_field() }}
     <input type="text" name="transfer_id" id="transfer_id_p">
   </form>
--->
+
 @endsection
 
 

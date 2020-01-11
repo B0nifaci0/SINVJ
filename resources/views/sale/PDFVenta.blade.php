@@ -59,6 +59,7 @@
             <br>
             @if($sale->partials->sum('amount') < $sale->total || $sale->partials->count() > 1)
                 <p class="centrado">Abonos a la cuenta</p>
+                @endif
 
                 <table class="table-sm table-bordered">
                         <thead>

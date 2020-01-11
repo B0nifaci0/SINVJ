@@ -188,7 +188,11 @@ public function exportPdfall(){
         if($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
-    $trans = TransferProduct::all();
+    // $trans = TransferProduct::all();
+    $trans = TransferProduct::where('user_id', $user->id)
+    ->orWhere('destination_user_id', $user->id)
+    ->with('user')->with('branch')->get();
+    
     $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans','date','hour','shop'));
     $pdf->setpaper('letter', 'landscape');
     return $pdf->stream('Traspasos.pdf');  
