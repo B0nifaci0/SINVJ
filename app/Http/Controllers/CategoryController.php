@@ -7,14 +7,18 @@ use categories;
 use Alert;
 use App\User;
 use App\Product;
+use Carbon\Carbon;
+use PDF;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoriesRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\S3ImageManager;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CategoryController extends Controller
 {
+  use S3ImageManager;
     /*public function __construct(){
       $this->middleware('Authentication');
     }/*
@@ -133,4 +137,17 @@ class CategoryController extends Controller
           ]);
     }
  }
+ public function exportPdf(){
+  $date= date("Y-m-d");
+  $hour = Carbon::now();
+  $hour = date('H:i:s');
+  $shop = Auth::user()->shop;
+  if($shop->image) {
+      $shop->image = $this->getS3URL($shop->image);
+  }
+  $category = Category::where('shop_id','=',NULL)->get();
+  $pdf  = PDF::loadView('category.pdf', compact('category','date','hour','shop'));
+  return $pdf->stream('categorias.pdf');
 }
+}
+  

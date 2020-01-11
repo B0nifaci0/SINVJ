@@ -145,7 +145,7 @@ class LineController extends Controller
         if($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
-        $lines = Line::all();
+        $lines = Line::where('shop_id','=',NULL)->get();
         $pdf  = PDF::loadView('line.pdf', compact('lines','date','hour','shop'));
         return $pdf->stream('lineas.pdf');
     }

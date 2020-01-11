@@ -163,6 +163,7 @@ class BranchController extends Controller
     public function mostrar($id)
     {
       $shop = Auth::user()->shop; 
+      $branches_col = Branch::select('*');
       $id_shop = Auth::user()->shop->id;
       $user = Auth::user();
       $branch = Shop::find($id_shop)->branches()->get();
@@ -451,7 +452,7 @@ class BranchController extends Controller
       ->select(DB::raw('count(products.id) as num_pzd'))
       ->get();
 
-      return view('Branches/mostrar', ['cat_d' => $cat_d,'cat_t' => $cat_t,'cat_e' => $cat_e,'total_e'=> $total_e,'total_d'=> $total_d,'category' => $category , 'total_t'=> $total_t,'branch' => $id_shop, 'total' => $total, 'shop' => $shop]);
+      return view('Branches/mostrar', ['cat_d' => $cat_d,'cat_t' => $cat_t,'cat_e' => $cat_e,'total_e'=> $total_e,'total_d'=> $total_d,'category' => $category , 'total_t'=> $total_t,'branch' => $id_shop, 'total' => $total, 'shop' => $shop],compact('branches_col','branch'));
     }
 
     /** 
