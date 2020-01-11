@@ -8,7 +8,7 @@
   <style>
       @media print {
         html,body{
-           font-size: 9.5pt;  
+           font-size: 9.5pt;
            margin: 0;
            padding: 0;
         }.page-break {
@@ -56,21 +56,21 @@
       <img align="left" width="90px" height="90px" src="{{ $shop->image }}">
       <p align="right">Fecha: {{$dates}}</p>
       <p align="right">Hora: {{$hour}}</p>
-      <h2 align="center">Reporte {{$estado->name}}s por 
+      <h2 align="center">Reporte {{$estado->name}}s por
           @foreach ($products as $i => $product)
           @if($product->category->type_product == 2 )
           Gr
           @else
-          Pz    
+          Pz
           @endif
           @break;
           @endforeach
       </h2>
-      <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
-      <h4 align="center" >Linea: 
+      <h3 align="center" style="color:red"> @if($estado->name == 'Traspaso') Destino: @endif @foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+      <h4 align="center" >Linea:
         @foreach ($products as $i => $product)
         @if($product->category->type_product == 2 )
-        {{ $product->line->name }}  
+        {{ $product->line->name }}
         @endif
         @break
         @endforeach </h4>
@@ -89,9 +89,8 @@
             <th>Precio</th>
             <th>Fecha alta</th>
             @if ($estado->name == 'Traspaso')
-            <th>Sucursal</th>
+            <th>Sucursal Origen</th>
             <th>Quien lo mando</th>
-            <th>Destino</th>
             <th>Quien recibio</th>
             <th>Fecha</th>
             @endif
@@ -111,8 +110,8 @@
             @else
             @foreach ($detalle as $det)
             @if($det->product_id == $product->id)
-            <td>$ {{$det->final_price}}</td> 
-            @endif 
+            <td>$ {{$det->final_price}}</td>
+            @endif
             @endforeach
             @endif
           <td>{{date_format($product->created_at, 'd/m/y')}}</td>
@@ -121,7 +120,6 @@
             @if ($product->id == $transfer->product_id)
             <td>{{$transfer->lastBranch->name}}</td>
             <td>{{$transfer->user->name}}</td>
-            <td>{{$transfer->newBranch->name}}</td>
             <td>{{$transfer->destinationUser->name}}</td>
             <td>{{$transfer->created_at->format('m-d-Y')}}</td>
             @break;
@@ -138,10 +136,10 @@
           <tr>
               @foreach ($products as $product)
               @if($product->category->type_product == 2 )
-              <th scope="col">Total de Gramos</th> 
-              @break   
-              @endif             
-              @endforeach 
+              <th scope="col">Total de Gramos</th>
+              @break
+              @endif
+              @endforeach
             <th scope="col">Total Precio Compra</th>
             @foreach ($products as $product)
             @if ($estado->name == 'Vendido')
@@ -155,9 +153,9 @@
           <tr>
             @foreach ($products as $product)
             @if($product->category->type_product == 2 )
-            <td align="center">{{$total}} gr</td>  
+            <td align="center">{{$total}} gr</td>
             @break
-            @endif              
+            @endif
             @endforeach
             <td align="center">$ {{$compra}}</td>
             @foreach ($products as $product)

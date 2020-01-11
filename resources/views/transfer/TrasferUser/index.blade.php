@@ -164,6 +164,7 @@ TRASFERENCIAS
     </div>
   <!-- End Panel Basic -->
   </div>
+<!--
   <form method="post" action="/traspasos/respuesta" id="form" class="d-none">
     {{ csrf_field() }}
     <input type="text" name="transfer_id" id="transfer_id_r">
@@ -179,6 +180,7 @@ TRASFERENCIAS
     {{ csrf_field() }}
     <input type="text" name="transfer_id" id="transfer_id_p">
   </form>
+-->
 @endsection
 
 
@@ -259,7 +261,7 @@ $(document).ready(function(){
       $('#form').submit();
   })
 
-    $('#tranfer').on('click', '.reject', function(){
+   $('#transfer').on('click', '.reject', function(){
     var id = $(this).attr('alt');
       $('#transfer_id_r').val(id);
       $('#answer').val(0);

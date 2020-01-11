@@ -462,11 +462,13 @@ class ProductController extends Controller
      public function reportProduct(){
         $idshop = Auth::user()->shop->id;
          $user = Auth::user();
-         $branch = Shop::find($idshop)->branches()->get();
+         $tienda = Shop::find($idshop)->branches()->get();
     	  $statuses = Status::all();
-         $line = Shop::find($idshop)->lines()->get();
+         //$line = Shop::find($idshop)->lines()->get();
+         $line = Line::where('shop_id',NULL)->get();
         $category = Auth::user()->shop->id;
-        $categories = Shop::find($category)->categories()->get();
+        //$categories = Shop::find($category)->categories()->get();
+        $categorias = Category::where('shop_id',NULL)->get();
         $shop = Auth::user()->shop;
     $shops = Auth::user()->shop()->get();
     $hour = Carbon::now();
@@ -481,7 +483,7 @@ class ProductController extends Controller
     }
          //return $categories;
 
-      return view('product.Reports.reportproduct',compact('hour','dates','shop','shops','branch','user','statuses','line','categories'));
+      return view('product.Reports.reportproduct',compact('hour','dates','shop','shops','tienda','user','statuses','line','categorias'));
      }
 
      public function reportEstatus(Request $request){
@@ -494,10 +496,6 @@ class ProductController extends Controller
       $category = Auth::user()->shop->id;
       $categories = Shop::find($category)->categories()->get();
 
-      $status = $request->estatus_id;
-      $categories = $request->category_id;
-      $line = $request->id;
-
       $trans = TransferProduct::all();
 
 /**Termina codigo de validacion de campos */
@@ -507,15 +505,25 @@ $fecter = Carbon::parse($request->fecter)->addDay();
 
 /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
 
-      $branches = Branch::where("id","=",$request->branch_id)->get();
-      $products = Product::where("branch_id","=",$request->branch_id)
+        if($request->estatus_id == 3){
+      $products = Product::join('transfer_products','transfer_products.product_id','products.id')
+      ->where("products.branch_id",$request->branch_id)
       ->whereBetween('products.updated_at',[$fecini,$fecter])
-      ->where("status_id","=",$request->estatus_id)
-      ->where("category_id","=",$request->category_id)
+      ->where("products.status_id",$request->estatus_id)
+      ->where("products.category_id",$request->category_id)
+      ->where("products.line_id","=",$request->id)
+      ->orderBy('products.clave','asc')
+      ->get();
+        }
+      $branches = Branch::where("id",$request->branch_id)->get();
+      $products = Product::where("branch_id",$request->branch_id)
+      ->whereBetween('products.updated_at',[$fecini,$fecter])
+      ->where("status_id",$request->estatus_id)
+      ->where("category_id",$request->category_id)
       ->where("line_id","=",$request->id)
-      ->orWhereNull('deleted_at')
       ->orderBy('clave','asc')
       ->get();
+
 
       $detalle = SaleDetails::all();
 
@@ -577,9 +585,12 @@ $fecter = Carbon::parse($request->fecter)->addDay();
 /**Termina el retorno del pdf */
      public function reportLinea(Request $request){
       $branches = Branch::where("id","=",$request->branch_id)->get();
+      $fecini = Carbon::parse($request->fecini)->subDay();
+      $fecter = Carbon::parse($request->fecter)->addDay();
       $lines = Line::where("id","=",$request->id)->get();
       $products = Product::where("branch_id","=",$request->branch_id)
                           ->where("line_id","=",$request->id)
+                          ->whereBetween('products.updated_at',[$fecini,$fecter])
                           ->orderBy('clave','asc')
                           ->get();
      // return $products;
@@ -628,8 +639,11 @@ $fecter = Carbon::parse($request->fecter)->addDay();
       $hour = date('H:i:s');
       $dates = Carbon::now();
       $dates = $dates->format('d-m-Y');
-      $fech1 = Carbon::parse($request->fecini)->format('Y-m-d');
-      $fech2 = Carbon::parse($request->fecter)->format('Y-m-d');
+
+
+      $fecini = Carbon::parse($request->fecini)->subDay();
+      $fecter = Carbon::parse($request->fecter)->addDay();
+
 
       $dates = Carbon::now();
       $dates = $dates->format('d-m-Y');
@@ -640,33 +654,19 @@ $fecter = Carbon::parse($request->fecter)->addDay();
       /**
        * Checar este if para la validacion de la fecha de un rango de 1 a 1
        */
-      if($fech1 == $fech2){
+
         $branches = Branch::where("id","=",$request->branch_id)->get();
         $lines = Line::where("id","=",$request->id)->get();
         //$categories = Category::where("id","=",$request->id)->get();
         $shop = Auth::user()->shop;
     $shops = Auth::user()->shop()->get();
 
-    if($shop->image) {
-      $shop->image = $this->getS3URL($shop->image);
-    }
-      $products = Product::where("branch_id","=",$request->branch_id)
-      ->where("line_id","=",$request->id)
-      ->where('date_creation','=',$fech1)
-      ->where('date_creation','=',$fech2)
-      ->orderBy('clave','asc')
-      ->get();
-      //return $products;
-      $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('shop','shops','products','branches','lines','hour','dates'));
-      return $pdf->stream('ReporteEntradas.pdf');
-
-      }elseif($fech1 != $fech2){
         $branches = Branch::where("id","=",$request->branch_id)->get();
         $lines = Line::where("id","=",$request->id)->get();
         //$categories = Category::where("id","=",$request->id)->get();
         $products = Product::where("branch_id","=",$request->branch_id)
         ->where("line_id","=",$request->id)
-        ->whereBetween('date_creation',[$fech1,$fech2])
+        ->whereBetween('products.updated_at',[$fecini,$fecter])
         ->orderBy('clave','asc')
         ->get();
         //return $products;
@@ -679,28 +679,22 @@ $fecter = Carbon::parse($request->fecter)->addDay();
       $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('shop','shops','products','branches','lines','hour','dates'));
       return $pdf->stream('ReporteEntradas.pdf');
 
-      }/**elseif($fech1 == $fech2){
-        $branches = Branch::where("id","=",$request->branch_id)->get();
-        $lines = Line::where("id","=",$request->id)->get();
-        $products = Product::where("branch_id","=",$request->branch_id)
-                            ->where("line_id","=",$request->id)
-                            ->whereBetween('created_at', [$fech1 , $fech2])
-                            ->get();
-                    return $products;
 
-      }*/
     }
 //**  */
-    public function reportLineaG(){
+    public function reportLineaG(Request $request){
       $branches= Auth::user()->shop->branches;
       $product = Auth::user()->shop->id;
       $products = Shop::find($product)->products()->get();
       $line = Auth::user()->shop->id;
       $lines = Shop::find($line)->lines()->get();
+      $fecini = Carbon::parse($request->fecini)->subDay();
+      $fecter = Carbon::parse($request->fecter)->addDay();
       // FUNCION PARA SACAR LAS CATEGORIAS SIN REPETIRSE
       $categories = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
+      ->whereBetween('products.updated_at',[$fecini,$fecter])
       ->select('categories.name','categories.type_product')
       ->distinct('categories.name')
       ->where('categories.type_product',1)
@@ -712,6 +706,7 @@ $fecter = Carbon::parse($request->fecter)->addDay();
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
       ->select('products.*', 'lines.name as name_line', 'branches.name as name_branch', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
+      ->whereBetween('products.updated_at',[$fecini,$fecter])
       ->where('categories.type_product',2)
       ->where('products.deleted_at',NULL)
       ->where('products.status_id',2)
@@ -825,16 +820,17 @@ $fecter = Carbon::parse($request->fecter)->addDay();
       ->whereBetween('products.updated_at',[$fecini,$fecter])
       ->select('products.*','categories.name as name_category','lines.name as name_line','categories.type_product','statuss.name as name_status')
        ->where('categories.type_product',$request->cat)
-       //->orWhereNull('products.deleted_at')
+       ->where('products.deleted_at',NULL)
        ->OrderBy('products.clave','asc')
        ->get();
     }else{
       $productsg = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
-      ->where('products.updated_at','>=',$fecini,'AND','products.updated_at','<=',$fecter)
+      ->whereBetween('products.updated_at',[$fecini,$fecter])
       ->select('products.*','categories.name as name_category','categories.type_product','statuss.name as name_status')
        ->where('categories.type_product',$request->cat)
+       ->where('products.deleted_at',NULL)
        ->OrderBy('products.clave','asc')
        ->get();
     }
@@ -881,6 +877,8 @@ $fecter = Carbon::parse($request->fecter)->addDay();
     $branches= Auth::user()->shop->branches;
     $shop_id = Auth::user()->shop->id;
     #pasar fecha actual
+    $fecini = Carbon::parse($request->fecini)->subDay();
+    $fecter = Carbon::parse($request->fecter)->addDay();
     $category_type_product = category::find($shop_id)->get();
    //return $category_type_product;
     $products = Shop::join('products','products.shop_id','shops.id')
@@ -888,6 +886,7 @@ $fecter = Carbon::parse($request->fecter)->addDay();
    ->join('lines','lines.id','products.line_id')
    ->join('statuss','statuss.id','products.status_id')
    ->select('products.*', 'categories.name as name_category', 'lines.name as name_line','categories.type_product','statuss.name as name_status')
+   ->whereBetween('products.updated_at',[$fecini,$fecter])
    ->where('categories.type_product',2)
    ->where('products.deleted_at',NULL)
    ->where('products.status_id',2)->get();
@@ -941,13 +940,17 @@ $fecter = Carbon::parse($request->fecter)->addDay();
 
     $shop_id = Auth::user()->shop->id;
     #pasar fecha actual
-    $category_type_product = category::find($shop_id)->get();
+
+$fecini = Carbon::parse($request->fecini)->subDay();
+$fecter = Carbon::parse($request->fecter)->addDay();
+
    //return $category_type_product;
     $products = Shop::join('products','products.shop_id','shops.id')
    ->join('categories','categories.id','products.category_id')
    ->join('lines','lines.id','products.line_id')
    ->join('statuss','statuss.id','products.status_id')
    ->select('products.*', 'categories.name as name_category', 'lines.name as name_line','categories.type_product','statuss.name as name_status')
+   ->whereBetween('products.updated_at',[$fecini,$fecter])
    ->where('categories.type_product',2)
    ->where('products.deleted_at',NULL)
    ->where('products.status_id',2)->get();
@@ -1048,11 +1051,14 @@ $fecter = Carbon::parse($request->fecter)->addDay();
   public function reportEntradasP_pz(Request $request){
      $branches= Auth::user()->shop->branches;
     $shop_id = Auth::user()->shop->id;
+    $fecini = Carbon::parse($request->fecini)->subDay();
+    $fecter = Carbon::parse($request->fecter)->addDay();
     $categories = Shop::find($shop_id)->categories()->get();
     $products = Shop::join('products','products.shop_id','shops.id')
     ->join('categories','categories.id','products.category_id')
     ->join('statuss','statuss.id','products.status_id')
     ->select('products.*', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
+    ->whereBetween('products.updated_at',[$fecini,$fecter])
     ->where('categories.type_product',1)
     ->where('products.deleted_at',NULL)
     ->where('products.status_id',2)->get();
@@ -1133,8 +1139,8 @@ $fecter = Carbon::parse($request->fecter)->addDay();
 
     /**Termina codigo de validacion de campos */
 
-    $fecini = Carbon::parse($request->fecini)->format('Y-m-d');
-    $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
+    $fecini = Carbon::parse($request->fecini)->subDay();
+    $fecter = Carbon::parse($request->fecter)->addDay();
 
     /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
 
@@ -1143,7 +1149,7 @@ $fecter = Carbon::parse($request->fecter)->addDay();
       ->join('categories','categories.id','products.category_id')
       ->join('sale_details','sale_details.product_id','products.id')
       ->select('products.*','categories.type_product as tipo','sale_details.product_id as id_product','sale_details.final_price as final_price','sale_details.profit as profit')
-      ->where('products.updated_at','>=',$fecini,'AND','products.updated_at','<=',$fecter)
+      ->whereBetween('products.updated_at',[$fecini,$fecter])
       ->where('categories.type_product',$request->cat)
       ->where("status_id","=",1)
       ->get();
@@ -1211,11 +1217,16 @@ $fecter = Carbon::parse($request->fecter)->addDay();
     $branches = Branch::where("id","=",$request->branch_id)->get();
     $categories = Category::where("id","=",$request->category_id)->get();
     //return $categories;
+
+$fecini = Carbon::parse($request->fecini)->subDay();
+$fecter = Carbon::parse($request->fecter)->addDay();
+
     $products = Product::where("branch_id","=",$request->branch_id)
-                        ->where("category_id","=",$request->category_id)
+                        ->whereBetween('products.updated_at',[$fecini,$fecter])
+                        ->where("products.category_id",$request->category_id)
                         ->orderBy('clave','asc')
                         ->get();
-    //return $products;
+
     $hour = Carbon::now();
     $hour = date('H:i:s');
 

@@ -199,7 +199,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                         @if($product->status_id == 4)
                                           <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
                                         @endif
-                                        
+
                                         <td>${{$product->price}}
                                         @if(Auth::user()->type_user == 1)
                                         <td>${{$branchproduct->price_purchase}}
@@ -235,57 +235,127 @@ LISTA DE PRODUCTOS POR SUCURSAL
     </div>
   </div>
 @endsection
-@section('barcode-product')
 
+@section('barcode-product')
+<script type="text/javascript">
+//inicializa la tabla para resposnive
+  $(document).ready(function(){
+      $('#product_table_gr').DataTable({
+          retrieve: true,
+          //  responsive: true,
+          //paging: false,
+          //searching: false
+      });
+      $('#product_table_pz').DataTable({
+          retrieve: true,
+          //responsive: true,
+          //paging: false,
+          //searching: false
+      });
+
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust()
+            .responsive.recalc();
+      });
+  });
+  </script>
 @endsection
 
-<!-- Función Sweet Alert Para eliminar producto por sucursal -->
+<!-- Función Sweet Alert para eliminar producto-->
 @section('delete-productos')
 <script type="text/javascript">
-console.log("a")
-$(document).ready(function() {
-  console.log("b")
-  $(".delete").click(function() {
-    var id = $(this).attr("alt");
-    console.log(id);
-    Swal.fire({
-      title: 'Confirmación',
-      text: "¿Seguro que desea eliminar este registro?",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33' ,
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Si, Borralo!'
-    }).then((result) => {
-      if (result.value) {
-        $.ajax({
-           headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          url:  '/sucursales/' + id,
-          method: 'DELETE',
-          success: function () {
-            $("#row" + id).remove();
-            Swal.fire(
-              'Eliminado',
-              'El registro ha sido eliminado.',
-              'success'
-            )
-          },
-          error: function () {
-            Swal.fire(
-              'Eliminado',
-              'El registro no ha sido eliminado.'+ id,
-              'error'
-            )
-          }
-        })
-      }
-    })
-
-  });
+$(document).ready(function () {
+setTimeout(() => {
+  console.log("config datatable")
+  $('#product_table_gr').on('click', '.delete', function(){
+      var id = $(this).attr("alt");
+      console.log(id);
+      Swal.fire({
+        title: 'Confirmación',
+        text: "¿Seguro que desea eliminar este registro?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Borralo!'
+      }).then((result) => {
+        if (result.value) {
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+          });
+          $.ajax({
+            url: '/sucursales/' + id + '/producto/',
+            method: 'DELETE',
+             success: function () {
+              $('#product_table_gr').DataTable()
+              .rows('.row' + id)
+              .remove()
+              .draw();
+              Swal.fire(
+                'Eliminado',
+                'El registro ha sido eliminado.',
+                'success'
+              );
+            },
+            error: function () {
+              Swal.fire(
+                'Eliminado',
+                'El registro no ha sido eliminado.' + id,
+                'error'
+              )
+            }
+          })
+        }
+      })
+    });
+    $('#product_table_pz').on('click', '.delete', function(){
+      var id = $(this).attr("alt");
+      console.log(id);
+      Swal.fire({
+        title: 'Confirmación',
+        text: "¿Seguro que desea eliminar este registro?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Borralo!'
+      }).then((result) => {
+        if (result.value) {
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+          });
+          $.ajax({
+            url: '/sucursales/' + id + '/producto/',
+            method: 'DELETE',
+            success: function () {
+              $('#product_table_pz').DataTable()
+              .rows('.row' + id)
+              .remove()
+              .draw();
+              Swal.fire(
+                'Eliminado',
+                'El registro ha sido eliminado.',
+                'success'
+              );
+            },
+            error: function () {
+              Swal.fire(
+                'Eliminado',
+                'El registro no ha sido eliminado.' + id,
+                'error'
+              )
+            }
+          })
+        }
+      })
+    });
+},500)
 });
-
 </script>
 @endsection
-<!--END Función-->
+<!-- END Función-->

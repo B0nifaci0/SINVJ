@@ -246,6 +246,12 @@ TRASFERENCIAS
       $('#answer').val(0);
       $('#form').submit();
     })
+    $('.reject').click(function () {
+      var id = $(this).attr('alt');
+      $('#transfer_id').val(id);
+      $('#answer').val(null);
+      $('#form').submit();
+    })
   });
 
 </script>
