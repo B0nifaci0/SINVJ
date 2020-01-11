@@ -211,16 +211,16 @@ class ProductController extends Controller
         $lines = Shop::find($shop_id)->lines()->get();
         //$statuses = Shop::find($shop_id)->statuss()->get();
         $statuses = Status::all();
+ 
+        // if($grupo==null){
+          // $products = Shop::find($shop_id)->products()->get();
+        // }else{
+          // $products = Product::join('shops', 'shops.id','=', 'products.shop_id')->where('shops.shop_group_id',$grupo)->get();
+        // }
 
-        //$shop_group_id ==
-        if($grupo==null){
-          $products = Shop::find($shop_id)->products()->get();
-        }else{
-          //$products = ShopGroup::shop()->get();
-          $products = Product::join('shops', 'shops.id','=', 'products.shop_id')->where('shops.shop_group_id',$grupo)->get();
-
-        }
-        //return $products;
+        $products = Product::join('shops', 'shops.id','=', 'products.shop_id')
+        ->where('branch_id', $user->branch->id)
+        ->get();
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
