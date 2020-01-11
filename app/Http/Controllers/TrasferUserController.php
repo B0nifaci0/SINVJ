@@ -25,7 +25,7 @@ class TrasferUserController extends Controller
        {
         
         // $trans = TransferProduct::all();
-        $usersIds = User::where('sshop_id', Auth::user()->shop->id)->get()->map(function($u) {
+        $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function($u) {
           return $u->id;
         });
         $trans1 = TransferProduct::whereIn('user_id', $usersIds)
