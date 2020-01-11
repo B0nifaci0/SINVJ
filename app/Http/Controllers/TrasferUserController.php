@@ -29,12 +29,10 @@ class TrasferUserController extends Controller
           return $u->id;
         });
         $trans1 = TransferProduct::whereIn('user_id', $usersIds)
-        ->whereIn('destination_user_id', $usersIds)
         ->with('user')->with('branch')->with('product')
         ->get();
 
-        $trans2 = TransferProduct::whereIn('user_id', $usersIds)
-        ->whereIn('destination_user_id', $usersIds)
+        $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
         ->with('user')->with('branch')->with('product')
         ->get();
 
