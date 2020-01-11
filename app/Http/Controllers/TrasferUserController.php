@@ -25,12 +25,20 @@ class TrasferUserController extends Controller
        {
         
         // $trans = TransferProduct::all();
-        $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function($u) {
+        $usersIds = User::where('sshop_id', Auth::user()->shop->id)->get()->map(function($u) {
           return $u->id;
         });
-        $trans = TransferProduct::whereIn('user_id', $usersIds)
+        $trans1 = TransferProduct::whereIn('user_id', $usersIds)
         ->whereIn('destination_user_id', $usersIds)
-        ->with('user')->with('branch')->with('product')->get();
+        ->with('user')->with('branch')->with('product')
+        ->get();
+
+        $trans2 = TransferProduct::whereIn('user_id', $usersIds)
+        ->whereIn('destination_user_id', $usersIds)
+        ->with('user')->with('branch')->with('product')
+        ->get();
+
+        $trans = $trans1->merge($trans2);
         //return $trans;
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
