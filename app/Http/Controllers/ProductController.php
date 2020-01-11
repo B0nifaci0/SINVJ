@@ -169,9 +169,23 @@ class ProductController extends Controller
         $user = Auth::user();
         $shop_id = $user->shop->id;
         if($user->type_user == User::CO) {
-          $products = Product::where('branch_id', $user->branch_id)->orderBy('description','asc')->get();
+          $products = Product::where('branch_id', $user->branch_id)
+            ->where([
+              'branch_id' => $user->branch_id,
+              'status_id' => 2
+            ])
+            ->whereNull('products.deleted_at')
+            ->orderBy('clave','asc')
+            ->get();
         } else {
-          $products = Shop::find($shop_id)->products()->get();
+          $products = Product::where('branch_id', $user->branch_id)
+            ->where([
+              'branch_id' => $user->branch_id,
+              'status_id' => 2
+            ])
+            ->whereNull('products.deleted_at')
+            ->orderBy('clave','asc')
+            ->get();
         }
         $shops = Auth::user()->shop()->get();
         $categories = Shop::find($shop_id)->categories()->get();
