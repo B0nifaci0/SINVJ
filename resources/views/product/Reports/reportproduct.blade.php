@@ -57,10 +57,7 @@ Panel Principal
                                   <select id="sucursales_1" name="branch_id" alt="1"
                                     class="form-control round sucursales">
                                     <!-- <option value="*">Seleccione Sucursal</option> -->
-                                    @php
-                                    $branches = $user->shop->branches;
-                                    @endphp
-                                    @foreach($branches as $branch)
+                                    @foreach($tienda as $branch)
                                     <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                     @endforeach
                                   </select>
@@ -74,7 +71,7 @@ Panel Principal
                                   </select>
                                   <label>Seleccione Categoria</label>
                                   <select id="" name="category_id" alt="1" class="form-control round sucursales">
-                                    @foreach($categories as $categories)
+                                    @foreach($categorias as $categories)
                                     @if($categories->type_product == 2 )
                                     <option value="{{$categories->id}}" required>{{$categories->name}}</option>
                                     @endif
@@ -137,10 +134,8 @@ Panel Principal
                                 <select id="sucursales_1" name="branch_id" alt="1"
                                   class="form-control round sucursales">
                                   <!-- <option value="*">Seleccione Sucursal</option> -->
-                                  @php
-                                  $branches = $user->shop->branches;
-                                  @endphp
-                                  @foreach($branches as $branch)
+
+                                  @foreach($tienda as $branch)
                                   <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                   @endforeach
                                 </select>
@@ -153,12 +148,9 @@ Panel Principal
                                   @endforeach
                                 </select>
                                 <label>Seleccione Categoria</label>
-                                @php
-                                $categories = $user->shop->categories;
-                                @endphp
                                 <select id="" name="category_id" alt="1" class="form-control round sucursales">
-                                  @foreach($categories as $categories)
-                                  @if($categories->type_product == 1 )
+                                  @foreach($categorias as $categories)
+                                  @if($categories->type_product == 1  )
                                   <option value="{{$categories->id}}" required>{{$categories->name}}</option>
                                   @endif
                                   @endforeach
@@ -337,10 +329,8 @@ Panel Principal
                                   <select id="sucursales_1" name="branch_id" alt="1"
                                     class="form-control round sucursales">
                                     <!-- <option value="*">Seleccione Sucursal</option> -->
-                                    @php
-                                    $branches = $user->shop->branches;
-                                    @endphp
-                                    @foreach($branches as $branch)
+
+                                    @foreach($tienda as $branch)
                                     <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                     @endforeach
                                   </select>
@@ -438,7 +428,7 @@ Panel Principal
                     <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
                       <div class="row">
                         <div class="col-md-4 col-sm-12">
-                          <h4>Reporte Entradas Productos Por Pieza</h4>
+                          <h4>Reporte Productos Por Pieza</h4>
                         </div>
                       </div>
                       <form action="reportPz">
@@ -450,19 +440,13 @@ Panel Principal
                                 <select id="sucursales_1" name="branch_id" alt="3"
                                   class="form-control round sucursales">
                                   <!-- <option value="*">Seleccione Sucursal</option> -->
-                                  @php
-                                  $branches = $user->shop->branches;
-                                  @endphp
-                                  @foreach($branches as $branch)
+                                  @foreach($tienda as $branch)
                                   <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                   @endforeach
                                 </select>
                                 <label>Seleccione Categoria</label>
                                 <select id="" name="category_id" alt="1" class="form-control round sucursales">
-                                  @php
-                                  $categories = $user->shop->categories;
-                                  @endphp
-                                  @foreach($categories as $category)
+                                  @foreach($categorias as $category)
                                   @if($category->type_product == 1 )
                                   <option value="{{$category->id}}" required>{{$category->name}}</option>
                                   @endif
@@ -592,19 +576,15 @@ Panel Principal
                                   <select id="sucursales_1" name="branch_id" alt="1"
                                     class="form-control round sucursales">
                                     <!-- <option value="*">Seleccione Sucursal</option> -->
-                                    @php
-                                    $branches = $user->shop->branches;
-                                    @endphp
-                                    @foreach($branches as $branch)
+
+                                    @foreach($tienda as $branch)
                                     <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                     @endforeach
                                   </select>
                                   <label>Seleccione Linea</label>
                                   <select id="" name="id" alt="1" class="form-control round sucursales">
                                     <!-- <option value="">Selecciona Linea</option> -->
-                                    @php
-                                    $lines= $user->shop->lines;
-                                    @endphp
+
                                     <!-- <option value="*">Tod@s</option> -->
                                     @foreach($lines as $line)
                                     <option value="{{$line->id}}" required>{{$line->name}}</option>
@@ -705,19 +685,13 @@ Panel Principal
                         <label>Seleccione Sucursal</label>
                         <select id="sucursales_1" name="branch_id" alt="3" class="form-control round sucursales">
                           <!-- <option value="*">Seleccione Sucursal</option> -->
-                          @php
-                          $branches = $user->shop->branches;
-                          @endphp
-                          @foreach($branches as $branch)
+                          @foreach($tienda as $branch)
                           <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                           @endforeach
                         </select>
                         <label>Seleccione Categoria</label>
-                        @php
-                        $categories = $user->shop->categories;
-                        @endphp
                         <select id="" name="category_id" alt="1" class="form-control round sucursales">
-                          @foreach($categories as $categories)
+                          @foreach($categorias as $categories)
                           @if($categories->type_product == 1 )
                           <option value="{{$categories->id}}" required>{{$categories->name}}</option>
                           @endif
@@ -841,10 +815,7 @@ Panel Principal
                           <label>Seleccione Sucursal</label>
                           <select id="sucursales_1" name="branch_id" alt="1" class="form-control round sucursales">
                             <!-- <option value="*">Seleccione Sucursal</option> -->
-                            @php
-                            $branches = $user->shop->branches;
-                            @endphp
-                            @foreach($branches as $branch)
+                            @foreach($tienda as $branch)
                             <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                             @endforeach
                           </select>
@@ -899,10 +870,8 @@ Panel Principal
                         <label>Seleccione Sucursal</label>
                         <select id="sucursales_1" name="branch_id" alt="2" class="form-control round sucursales">
                           <!-- <option value="*">Seleccione Sucursal</option> -->
-                          @php
-                          $branches = $user->shop->branches;
-                          @endphp
-                          @foreach($branches as $branch)
+
+                          @foreach($tienda as $branch)
                           <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                           @endforeach
                         </select>
