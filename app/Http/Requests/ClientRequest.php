@@ -24,9 +24,9 @@ class ClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:30',
-            'first_lastname' => 'required|string|max:30',
-            'second_lastname' => 'required|string|max:30',
+            'name' => 'required|string|max:30|regex:/^[A-Z,a-z,á,é,í,ó,ú, ]*$/',
+            'first_lastname' => 'required|string|max:30|regex:/^[A-Z,a-z,á,é,í,ó,ú, ]*$/',
+            'second_lastname' => 'required|string|max:30|regex:/^[A-Z,a-z,á,é,í,ó,ú, ]*$/',
             'phone_number' =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
         ];
     }

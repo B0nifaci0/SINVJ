@@ -65,7 +65,9 @@ class Kernel extends HttpKernel
         'BranchMiddleware' => \App\Http\Middleware\BranchMiddleware::class,
         'ProductBranchMiddleware' => \App\Http\Middleware\ProductBranchMiddleware::class,
         'Authentication' => \App\Http\Middleware\Authentication::class,
+        'InventoryMiddleware' => \App\Http\Middleware\InventoryMiddleware::class,
         'ProductMiddleware' => \App\Http\Middleware\ProductMiddleware::class,
+        'ProductsBranchesMiddleware' => \App\Http\Middleware\ProductsBranchesMiddleware::class,
         'LineMiddleware' => \App\Http\Middleware\LineMiddleware::class,
         'admin' => \App\Http\Middleware\admin::class,
 

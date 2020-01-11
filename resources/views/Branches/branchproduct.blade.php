@@ -76,6 +76,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                         <th>Observaciónes</th>
                                         <th>Imagen</th>
                                         <th>Categoría</th>
+                                        <th>Sucursal</th>
                                         <th>Linea</th>
                                         <th>Status</th>
                                         <th>Precio</th>
@@ -98,7 +99,18 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                                  <td>{{$product->category->name}}</td>
                                                  <th>{{$product->branch->name}}</th>
                                                  <td>{{$product->line->name}}</td>
-                                                 <td>{{$product->status->name}}</td>
+                                                 @if($product->status_id == 1)
+                                                  <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
+                                                 @endif
+                                                 @if($product->status_id == 2)
+                                                 <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
+                                                 @endif
+                                                 @if($product->status_id == 3)
+                                                 <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                                                 @endif
+                                                 @if($product->status_id == 4)
+                                                 <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
+                                                 @endif
                                                  <td>${{$product->price}}</td>
 
                                         @if(Auth::user()->type_user == 1)
@@ -140,7 +152,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                           <th>Observaciónes</th>
                                           <th>Imagen</th>
                                           <th>Status</th>
-                                         <th>Precio </th>
+                                         <th>Precio venta</th>
                                           @if(Auth::user()->type_user == 1 )
                                             <th>Precio Compra</th>
                                             <th>Opciones</th>
@@ -152,10 +164,11 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                         <th>Clave</th>
                                         <th>Descripción</th>
                                         <th>Categoría</th>
+                                        <th>Sucursal</th>
                                         <th>Observaciónes</th>
                                         <th>Imagen</th>
                                         <th>Status</th>
-                                        <th>Precio</th>
+                                        <th>Precio venta</th>
                                         @if(Auth::user()->type_user == 1 )
                                         <th>Precio Compra</th>
                                         <th>Opciones</th>
@@ -174,10 +187,22 @@ LISTA DE PRODUCTOS POR SUCURSAL
                                         <td>
                                         <img width="100px" height="100px" src="{{ $product->image }}">
                                         </td>
-                                        <td>{{$branchproduct->status->name}}</td>
-                                        <td>{{$branchproduct->pricepzt}}
+                                        @if($product->status_id == 1)
+                                          <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
+                                        @endif
+                                        @if($product->status_id == 2)
+                                          <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
+                                        @endif
+                                        @if($product->status_id == 3)
+                                          <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                                        @endif
+                                        @if($product->status_id == 4)
+                                          <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
+                                        @endif
+
+                                        <td>${{$product->price}}
                                         @if(Auth::user()->type_user == 1)
-                                        <td>{{$branchproduct->price_purchase}}
+                                        <td>${{$branchproduct->price_purchase}}
                                         <td>
                                             <!-- Botón Para editar producto por sucursal-->
                                             <a href="/sucursalproducto/{{$branchproduct->id}}/edit"><button type="button"
@@ -210,65 +235,127 @@ LISTA DE PRODUCTOS POR SUCURSAL
     </div>
   </div>
 @endsection
+
 @section('barcode-product')
-<script>
-$(document).ready(function() {
-        $('#example').dataTable( {
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-            }
-        });
-    });
-    </script>
+<script type="text/javascript">
+//inicializa la tabla para resposnive
+  $(document).ready(function(){
+      $('#product_table_gr').DataTable({
+          retrieve: true,
+          //  responsive: true,
+          //paging: false,
+          //searching: false
+      });
+      $('#product_table_pz').DataTable({
+          retrieve: true,
+          //responsive: true,
+          //paging: false,
+          //searching: false
+      });
+
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust()
+            .responsive.recalc();
+      });
+  });
+  </script>
 @endsection
 
-<!-- Función Sweet Alert Para eliminar producto por sucursal -->
+<!-- Función Sweet Alert para eliminar producto-->
 @section('delete-productos')
 <script type="text/javascript">
-console.log("a")
-$(document).ready(function() {
-  console.log("b")
-  $(".delete").click(function() {
-    var id = $(this).attr("alt");
-    console.log(id);
-    Swal.fire({
-      title: 'Confirmación',
-      text: "¿Seguro que desea eliminar este registro?",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33' ,
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Si, Borralo!'
-    }).then((result) => {
-      if (result.value) {
-        $.ajax({
-           headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          url:  '/sucursales/' + id,
-          method: 'DELETE',
-          success: function () {
-            $("#row" + id).remove();
-            Swal.fire(
-              'Eliminado',
-              'El registro ha sido eliminado.',
-              'success'
-            )
-          },
-          error: function () {
-            Swal.fire(
-              'Eliminado',
-              'El registro no ha sido eliminado.'+ id,
-              'error'
-            )
-          }
-        })
-      }
-    })
-
-  });
+$(document).ready(function () {
+setTimeout(() => {
+  console.log("config datatable")
+  $('#product_table_gr').on('click', '.delete', function(){
+      var id = $(this).attr("alt");
+      console.log(id);
+      Swal.fire({
+        title: 'Confirmación',
+        text: "¿Seguro que desea eliminar este registro?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Borralo!'
+      }).then((result) => {
+        if (result.value) {
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+          });
+          $.ajax({
+            url: '/sucursales/' + id + '/producto/',
+            method: 'DELETE',
+             success: function () {
+              $('#product_table_gr').DataTable()
+              .rows('.row' + id)
+              .remove()
+              .draw();
+              Swal.fire(
+                'Eliminado',
+                'El registro ha sido eliminado.',
+                'success'
+              );
+            },
+            error: function () {
+              Swal.fire(
+                'Eliminado',
+                'El registro no ha sido eliminado.' + id,
+                'error'
+              )
+            }
+          })
+        }
+      })
+    });
+    $('#product_table_pz').on('click', '.delete', function(){
+      var id = $(this).attr("alt");
+      console.log(id);
+      Swal.fire({
+        title: 'Confirmación',
+        text: "¿Seguro que desea eliminar este registro?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Borralo!'
+      }).then((result) => {
+        if (result.value) {
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+          });
+          $.ajax({
+            url: '/sucursales/' + id + '/producto/',
+            method: 'DELETE',
+            success: function () {
+              $('#product_table_pz').DataTable()
+              .rows('.row' + id)
+              .remove()
+              .draw();
+              Swal.fire(
+                'Eliminado',
+                'El registro ha sido eliminado.',
+                'success'
+              );
+            },
+            error: function () {
+              Swal.fire(
+                'Eliminado',
+                'El registro no ha sido eliminado.' + id,
+                'error'
+              )
+            }
+          })
+        }
+      })
+    });
+},500)
 });
-
 </script>
 @endsection
-<!--END Función-->
+<!-- END Función-->

@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Line;
 use App\Shop;
 use App\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\LineRequest;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\S3ImageManager;
 use PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -18,12 +20,14 @@ use  App\Exports\LinesExport;
 
 class LineController extends Controller
 {
+    use S3ImageManager;
+
     public function __construct()
     {
         //$this->middleware('Authentication');
     }
     /**
-     * Display a listing of the resource. 
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,7 +35,8 @@ class LineController extends Controller
     {
         $user = Auth::User();
         //Muestra los las lineas que pertenecen a esa tienda midiante la variable $lines
-        $lines = Auth::user()->shop->lines;
+        //$lines = Auth::user()->shop->lines;
+        $lines = Line::where('shop_id','=',NULL)->get();
         //return $lines;
 
       return view('line/index', compact('lines','user'));
@@ -55,9 +60,9 @@ class LineController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(LineRequest $request)
-    {   
+    {
         //$nombre = $request->input("name");
-        //return $nombre; 
+        //return $nombre;
         $line = new Line($request->all());
         $line->shop_id = Auth::user()->shop->id;
         $line->save();
@@ -72,7 +77,7 @@ class LineController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
+    {
         return view('line.show', ['line' => Line::findOrFail($id)]);
     }
 
@@ -126,20 +131,27 @@ class LineController extends Controller
         Line::destroy($id);
         return response()->json([
         'success'=> true
-     ]); 
+     ]);
     }
-        
+
    //return redirect('/lineas')->with('mesage-delete', 'La Linea  se ha eliminado exitosamente!');
     }
 // Funcion para gener pdf!!
-    public function exportPdf(){ 
-        $lines = Line::all();
-        $pdf  = PDF::loadView('line.pdf', compact('lines'));
-        return $pdf->download('lineas.pdf');
+    public function exportPdf(){
+        $date= date("Y-m-d");
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+        $shop = Auth::user()->shop;
+        if($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
+        $lines = Line::where('shop_id',NULL)->get();
+        $pdf  = PDF::loadView('line.pdf', compact('lines','date','hour','shop'));
+        return $pdf->stream('lineas.pdf');
     }
 
     // Funcion para gener excel!!
-    public function exportExcel(){ 
+    public function exportExcel(){
      return Excel::download( new LinesExport, 'line.xlsx');
     }
 }

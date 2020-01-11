@@ -35,11 +35,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('test', 'BranchController@test');
 
 
-  
+
 //Tiendas
 //Route::resource('tiendas', 'ShopController');
 
-  
+
 
 
 
@@ -60,7 +60,7 @@ Route::get('traspasopdf/{id}', 'TranferProductsController@exportPdf')->name('tra
 //Ventas CO
 Route::get('ventasCO', 'SaleController@indexCO');
 
-//Pagos 
+//Pagos
 Route::resource('pagos', 'PaymentsController');
 //Productos
 Route::get('productospdf', 'ProductController@exportPdf');
@@ -75,7 +75,7 @@ Route::get('sucursalproductoCO', 'ProductController@indexCOP');
 
 Route::post('traspasos/respuesta', 'TranferProductsController@answerTransferRequest');
 Route::post('traspasos/pagar', 'TranferProductsController@payTransfer');
-
+Route::post('traspasos/cancelar', 'TranferProductsController@giveBack');
 //Excel
 //Route::resource('excel','ExcelController');
 
@@ -84,20 +84,25 @@ Route::get('productossucursalreporte/{id}','BranchProductsExcelController@index'
 
 //Usuarios Excel
 //Route::resource('usuariosexcel','UserExcelController');
-  
+
 //Reporte
 Route::get('homepdf', 'HomeController@exportPdf');
 
 //Usuarios Activo
 Route::get('/usuarios/activo/{id}', 'UserController@soft');
 
+
+Route::group(['middleware' => ['auth','CategoryMiddleware','LineMiddleware']],function(){
+
 //Sucursales Producto
 Route::resource('sucursales.producto', 'BranchProductsController');
 Route::put('sucursalproducto.update', 'BranchProductsController@update')->name('sucursalproducto.update');
 Route::get('sucursalproducto/{id}/edit', 'BranchProductsController@edit');
-Route::get('sucursales/{id}/inventario', 'BranchProductsController@inventory'); 
+Route::get('sucursales/{id}/inventario', 'BranchProductsController@inventory');
 Route::get('sucursal', 'BranchController@indexCo');
 //Route::get('sucursalespdf{id}', 'TestController@exportPdf')->name('sucursalespdf');
+
+});
 
 //Sucursal Producto PDF
 Route::get('sucursales/{id}/sucursalespdf', 'BranchProductsController@exportPdf');
@@ -177,19 +182,19 @@ Route::resource('productos',  'ProductController');
 
 //Shop
 Route::resource('tiendas','ShopController');
-  
+
 
 });
 */
 //PRODUCTS
-Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware']],function(){
+Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','LineMiddleware','InventoryMiddleware']],function(){
 
   //Ventas
   Route::resource('ventas', 'SaleController');
   Route::resource('inventarios', 'InventoryController');
   Route::get('reportinventarios', 'InventoryController@reportInventarios');
   Route::get('inventariospdf/{id}', 'InventoryController@inventariosPDF');
-  Route::post('inventory/check', 'InventoryController@check'); 
+  Route::post('inventory/check', 'InventoryController@check');
 
   Route::get('productos', 'ProductController@index');
   Route::get('productos/create', 'ProductController@create');
@@ -219,8 +224,6 @@ Route::group(['middleware' => ['auth']],function () {
   Route::put('/sucursales/{id}/update', 'BranchController@update')->name('sucursales.update');
   Route::delete('/sucursales/{id}','BranchController@destroy');
   Route::get('/sucursales/corte', 'BranchController@boxcut');
-  
-
 
   //LINEAS
   Route::get('lineas/create', 'LineController@create');
@@ -232,6 +235,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::delete('/lineas/{id}','LineController@destroy');
 
   //CATEGORIAS
+  Route::get('categoriaspdf', 'CategoryController@exportPdf');
   Route::get('categorias/create', 'CategoryController@create');
   Route::get('/categorias', 'CategoryController@index');
   Route::post('/categorias', 'CategoryController@store');
@@ -243,13 +247,13 @@ Route::group(['middleware' => ['auth']],function () {
   //ESTATUS
   Route::get('status/create', 'StatusController@create');
   Route::get('/status', 'StatusController@index');
-  Route::post('/status', 'StatusController@store');  
+  Route::post('/status', 'StatusController@store');
   Route::get('/status/{id}/edit', 'StatusController@edit');
   Route::get('/status/{id}/show', 'StatusController@show');
   Route::put('/status/{id}/update', 'StatusController@update')->name('status.update');
   Route::delete('/status/{id}','StatusController@destroy');
- 
- 
+
+
   //USUARIOS
   Route::get('usuarios/create', 'UserController@create');
   Route::get('/usuarios', 'UserController@index');
@@ -267,26 +271,36 @@ Route::group(['middleware' => ['auth']],function () {
   Route::post('/grupos/invitacion', 'ShopGroupsController@groupJoin');
 
   /**Reportes Rutas y Vistas */
-  Route::get('/reportes-productos','ProductController@reportProduct');
+
+  Route::get('reportes-productos','ProductController@reportProduct');
+  Route::get('reportEstatus', 'ProductController@reportEstatus');
+  Route::get('reportEstatusG', 'ProductController@reportEstatusG');
+  Route::get('reportLinea', 'ProductController@reportLinea');
+  Route::get('reportLineaG', 'ProductController@reportLineaG');
+  Route::get('reportPzG', 'ProductController@reportCategoriaGeneral');
+  Route::get('reportPz', 'ProductController@reportPz');
+
+
+
   Route::get('/reportes-productos-apartados','ProductController@reportProductSeparated');
-  Route::get('estatusproducto', 'ProductController@reportEstatus');  
-  Route::get('estatusproductoPz', 'ProductController@reportEstatusPz');
-  Route::get('gramoslinea', 'ProductController@reportes-productostLineaG');
+
+
   Route::get('entradasproducto', 'ProductController@reportEntradas');
+  Route::get('reportEntradasPrgpgr', 'ProductController@reportEntradasPr_gpgr');
+  Route::get('reportEntradasPpz', 'ProductController@reportEntradasP_pz');
+  Route::get('reportEntradasGpgr', 'ProductController@reportEntradasG_pgr');
+
   Route::get('reportUtility','ProductController@reportUtility');
   Route::get('sucursales/sucursalcorte','BranchController@reportBox_cutDate')->name('sucursalcorte');
-  
-  
 
-  Route::get('gramoslineageneral', 'ProductController@reportLineaGGeneral');
+
   Route::get('piezascategoriageneral', 'ProductController@reportCategoriaPGeneral');
-  Route::get('reportEstatusG', 'ProductController@reportEstatusG');
-  Route::get('reportEntradasGpgr', 'ProductController@reportEntradasG_pgr');
-  Route::get('reportEntradasPpz', 'ProductController@reportEntradasP_pz');
-  Route::get('reportEntradasPrgpgr', 'ProductController@reportEntradasPr_gpgr');
+
+
+
+
   Route::get('reportEntradasPrgppz', 'ProductController@reportEntradasPr_gppz');
   Route::get('reportProductspzs', 'ProductController@reportProductpzs');
-  
+
 });
 
- 

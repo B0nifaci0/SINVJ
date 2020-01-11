@@ -22,7 +22,7 @@ ALTA PRODUCTO
             </ul>
           </div>
         @endif
-        <h2 align="center">Nuevo Traspaso Sucursales ({{$shop_id}})</h2>
+        <h2 align="center">Nuevo Traspaso Sucursales</h2>
         <br>  
         <form class="" action="/traspasosAA" method="POST">
           {{ csrf_field() }} 
@@ -35,7 +35,7 @@ ALTA PRODUCTO
                 <option></option>
                 <optgroup label="Productos">
                 @foreach($products as $product)
-                <option value="{{ $product->description }}" required>{{$product->clave}}-{{ $product->description }}</option>
+                <option value="{{ $product->description }}">{{$product->clave}}-{{ $product->description }}</option>
                 @endforeach
                 </optgroup>
               </select>
@@ -49,12 +49,7 @@ ALTA PRODUCTO
               <input type="text" class="form-control invisible" name="branch_id" id="branch_id" readonly>
             </div>
             <!-- END Select-->
-            <!-- Select para Seleccionar Quien recibe (Usuario)-->
-            <!-- <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
-              <label class="floating-label" for="inputUser">{{ __('Quien lo manda') }}</label>
-              <select id="usuarios_1" name="user_id" class="form-control "></select>
-            </div> -->
-            <!-- END Select-->
+
             <!-- Select para Seleccionar Sucursal Destino-->
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputBranch">{{ __('Destino') }}</label>
@@ -130,10 +125,13 @@ $(".usuarios").change(function(){
       $("#id_user_" + selector).val(id_user);
 });
 
+setInterval(() => {
+  console.log($('#product_id').val());
+}, 2500);
 
 $('#product').change(function() {
   var name = $(this).val();
-  var p = products.filter(p => p.name = name)[0];
+  var p = products.filter(p => p.description == name)[0];
   console.log(p);
   $('#branch').val(p.branchName)
   $('#branch_id').val(p.branchId)

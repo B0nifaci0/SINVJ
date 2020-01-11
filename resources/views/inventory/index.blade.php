@@ -10,10 +10,10 @@ LISTA DE Inventarios
 @endsection
 @section('menu')
 
-@endsection 
+@endsection
 @section('content')
 <div class="panel-body">
-    @if (session('mesage'))	
+    @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>{{ session('mesage') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -21,7 +21,7 @@ LISTA DE Inventarios
         </button>
     </div>
     @endif
-    @if (session('mesage-update'))	
+    @if (session('mesage-update'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
        <strong>{{ session('mesage-update') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -29,46 +29,46 @@ LISTA DE Inventarios
       </button>
     </div>
     @endif
-    @if (session('mesage-delete'))	
+    @if (session('mesage-delete'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage-delete') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
        <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    @endif    
+    @endif
     <div class="page-content">
       <!-- Panel Basic -->
       <div class="panel">
-        <header class="panel-heading">
-          <div class="panel-actions">
-            <div class="row">
-              @if(Auth::user()->type_user == 1 )
-                <!-- Botón para generar PDF de linea-->
-                <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='inventariospdf'" 
-                    type="button" class=" btn btn-sm small btn-floating 
+        <div class="panel-body">
+            <div class="example-wrap">
+              <h1 class="text-center panel-title">Inventarios</h1>
+              <div class="panel-actions float-right">
+                <div class="container-fluid row float-right">
+                  @if(Auth::user()->type_user == 1 )
+                  <!-- Botón para Generar PDF de productos-->
+                  <div class="col-6">
+                    <button onclick="window.location.href='inventariospdf'"
+                    type="button" class=" btn btn-sm small btn-floating
                     toggler-left  btn-danger waves-effect waves-light waves-round float-right"
                     data-toggle="tooltip" data-original-title="Generar reporte PDF">
                     <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                   </button>
-                </div>
-                <!-- END Botón-->
-                <!-- Botón para crear linea-->
-                <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='/inventarios/create'" 
-                    type="button" class=" btn btn-sm small btn-floating 
-                    toggler-left  btn-info waves-effect waves-light waves-round float-right"
+                  </div>
+                  <div class="col-6">
+                    <button onclick="window.location.href='/inventarios/create'"
+                    type="button" class=" btn btn-sm small btn-floating
+                    toggler-left  btn-info waves-effect waves-light waves-round float-left"
                     data-toggle="tooltip" data-original-title="Agregar">
                     <i class="icon md-plus" aria-hidden="true"></i>
                   </button>
+                  </div>
+                  <!-- END Botón-->
+                  @endif
                 </div>
-                <!-- END Botón-->
-              @endif
+              </div>
             </div>
           </div>
-          <h3 class="panel-title">Inventarios</h3>
-        </header>
         <div class="panel-body">
         <!-- Tabla para listar inventarios-->
           <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
@@ -113,7 +113,7 @@ LISTA DE Inventarios
 @section('edit-inventarios')
 <script type="text/javascript">
 $(document).ready(function(){
-  setTimeout(function () {  
+  setTimeout(function () {
     $(".edit").click(function() {
     var id = $(this).attr("alt");
       swal.fire({
@@ -131,8 +131,8 @@ $(document).ready(function(){
           console.log('entraalif');
               window.location.href = '/inventarios/' + id + '/edit';
             }
-      }); 
-    });},1000); 
+      });
+    });},1000);
   });
 </script>
 @endsection-->
@@ -165,13 +165,13 @@ $(document).ready(function() {
           url:  '/inventarios/' + id,
           method: 'DELETE',
           success: function () {
-            $("#row" + id).remove();  
+            $("#row" + id).remove();
             Swal.fire(
               'Eliminado',
               'El registro ha sido eliminado.',
               'success'
             )
-          }, 
+          },
           error: function () {
             Swal.fire(
               'Eliminado',

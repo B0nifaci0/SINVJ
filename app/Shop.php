@@ -62,5 +62,10 @@ class Shop extends Model
 
       return $this->hasMany(Expense::class);
     }
+    public function groups(){
+
+      return $this->hasMany(ShopGroup::class);
+    }
+  
   
 }

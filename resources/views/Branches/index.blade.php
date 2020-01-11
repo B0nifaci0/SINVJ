@@ -41,28 +41,34 @@ LISTA DE  SUCURSALES
   <div class="page-content">
         <!-- Panel Basic -->
     <div class="panel">
-      <header class="panel-heading">
-        <div class="panel-actions">
-          @if(Auth::user()->type_user == 1 )
-          <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/sucursales/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right " data-toggle="tooltip" data-original-title="Agregar">
-             <i class="icon md-plus" aria-hidden="true"></i></button>
-          </div>
-          <div class="col-md-4 col-md-offset-2">
-              <button onclick="window.location.href='sucursales/corte'"
-                type="button" class="btn btn-sm small btn-floating 
+        <div class="panel-body">
+            <div class="example-wrap">
+              <h1 class="text-center panel-title">Sucursales</h1>
+              <div class="panel-actions float-right">
+                <div class="container-fluid row float-right">
+                  @if(Auth::user()->type_user == 1 )
+                  <!-- Botón para Generar PDF de productos-->
+                  <div class="col-6">
+                    <button onclick="window.location.href='sucursales/corte'"
+                type="button" class="btn btn-sm small btn-floating
                 toggler-left  btn-secondary waves-effect waves-light waves-round float-right"
                 data-toggle="tooltip" data-original-title="Corte">
                 <i class="iicon md-money" aria-hidden="true"></i>
               </button>
+                  </div>
+                  <div class="col-6">
+                    <button onclick="window.location.href='/sucursales/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip" data-original-title="Agregar">
+                        <i class="icon md-plus" aria-hidden="true"></i></button>
+                  </div>
+                  <!-- END Botón-->
+                  @endif
+                </div>
+              </div>
+            </div>
           </div>
-           @endif
-        </div>
-        <h3 class="panel-title">Sucursales</h3>
-      </header>
       <div class="panel-body">
             <!-- Tabla para listar sucursales-->
-            <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table id='branchs'  class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                  <!-- <th>Id</th> -->
@@ -89,7 +95,7 @@ LISTA DE  SUCURSALES
               </tfoot>
               <tbody>
                   @foreach ($branches as $branch)
-                  <tr id = "row{{$branch->id}}">
+                  <tr id = "row{{$branch->id}}" class="row{{$branch->id}}">
                     <!-- <td>{{$branch->id}}</td>  -->
                     <td>{{$branch->name }}</td>
                     <td>{{$branch->name_legal_re}}</td>
@@ -118,7 +124,7 @@ LISTA DE  SUCURSALES
                       <a href="/sucursales/{{$branch->id}}/producto"><button type="button"
                       class="btn btn-icon btn-warning waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Productos">
-                      <i class="icon md-label-heart" aria-hidden="true"></i></button></a> 
+                      <i class="icon md-label-heart" aria-hidden="true"></i></button></a>
                       <!--END Botón -->
 
                       <!-- Botón para ver corte de venta
@@ -139,13 +145,28 @@ LISTA DE  SUCURSALES
     </div>
   <!-- End Panel Basic -->
 @endsection
+ @section('barcode-product')
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#branchs').DataTable({
+            retrieve: true,
+            //responsive: true,
+            //paging: false,
+            //searching: false
+        });
+ 
+    });
+    </script>
+  @endsection
 <!-- Función Sweet Alert para eliminar sucursal-->
 @section('delete-sucursales')
 <script type="text/javascript">
-console.log("a")
+//console.log("a")
 $(document).ready(function() {
-  console.log("b")
-  $(".delete").click(function() {
+  //console.log("b")
+setTimeout(()=>{
+      console.log("cdededee")
+  $("#branchs").on('click','.delete',function () {
     var id = $(this).attr("alt");
     console.log(id);
     Swal.fire({
@@ -161,39 +182,38 @@ $(document).ready(function() {
       {
         $.ajaxSetup({
          headers: {
-             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-          }
-        });
+           'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+           }
+         });
         $.ajax({
           url:  '/sucursales/' + id,
           method: 'DELETE',
-          success: function (response) {
-            if(response.success){
-            $("#row" + id).remove();
-            Swal.fire(
-              'Eliminado',
-              'El registro ha sido eliminado.',
-              'success'
-            )
-            }else{
+            success: function (response) {
+              if(response.success){
+              $("#branchs").DataTable()
+              .rows('.row' + id)
+              .remove()
+              .draw();
               Swal.fire(
-                  'Eliminado',
-                  'La sucursal no puede ser eliminado porque tiene productos activos',
-                  'error'
-                )
-         } 
-        
-        }
-        })
-      }
-    })
-
+                'Eliminado',
+                'El registro ha sido eliminado.',
+                'success'
+                );
+              }else{
+                Swal.fire(
+                    'error',
+                    response.message
+                  )
+                 }
+                }
+              })
+           }
+       })
+     });
+    },500)
   });
-});
-
 </script>
 @endsection
 <!--END Función-->
 
-@section('barcode-product')
-@endsection
+

@@ -40,45 +40,35 @@ LISTA DE  LINEA
     <div class="page-content">
       <!-- Panel Basic -->
       <div class="panel">
-        <header class="panel-heading">
-          <div class="panel-actions">
-            <div class="row">
-              @if(Auth::user()->type_user == 1 )
-                <!-- Botón para generar PDF de linea-->
-                <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='lineaspdf'"
+        <div class="panel-body">
+            <div class="example-wrap">
+              <h1 class="text-center panel-title">Lineas</h1>
+              <div class="panel-actions float-right">
+                <div class="container-fluid row float-right">
+                  @if(Auth::user()->type_user == 1 )
+                  <!-- Botón para Generar PDF de productos-->
+                  <div class="col-6">
+                    <button onclick="window.location.href='lineaspdf'"
                     type="button" class=" btn btn-sm small btn-floating
                     toggler-left  btn-danger waves-effect waves-light waves-round float-right"
                     data-toggle="tooltip" data-original-title="Generar reporte PDF">
                     <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                   </button>
-                </div>
-                <!-- END Botón-->
-                <!-- Botón para generar Excel de linea-->
-                <!--<div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='#'"
-                    type="button" class="btn btn-sm small btn-floating 
-                    toggler-left  btn-success waves-effect waves-light waves-round float-right"
-                    data-toggle="tooltip" data-original-title="Generar reporte Excel">
-                    <i class="icon fa-file-excel-o" aria-hidden="true"></i>
-                  </button>
-                </div>-->
-                <!-- END Función-->
-                <!-- Botón para crear linea-->
-                <div class="col-md-4 col-md-offset-2">
-                  <button onclick="window.location.href='/lineas/create'"
+                  </div>
+                  <!--<div class="col-6">
+                    <button onclick="window.location.href='/lineas/create'"
                     type="button" class=" btn btn-sm small btn-floating
-                    toggler-left  btn-info waves-effect waves-light waves-round float-right"
+                    toggler-left  btn-info waves-effect waves-light waves-round float-left"
                     data-toggle="tooltip" data-original-title="Agregar">
                     <i class="icon md-plus" aria-hidden="true"></i>
                   </button>
+                  </div>-->
+                  <!-- END Botón-->
+                  @endif
                 </div>
-                <!-- END Botón-->
-              @endif
+              </div>
             </div>
           </div>
-          <h3 class="panel-title">Lineas</h3>
-        </header>
         <div class="panel-body">
 
         <!-- Tabla para listar lineas-->
@@ -87,22 +77,24 @@ LISTA DE  LINEA
               <tr>
                 <th>Clave</th>
                 <th>Nombre</th>
-                <th>Precio</th>
+                <th>Precio compra</th>
+                <th>Precio venta</th>
                 <th>Descuento</th>
-                @if(Auth::user()->type_user == 1 )
+                <!--@if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif
+                @endif -->
               </tr>
             </thead>
             <tfoot>
               <tr>
                 <th>Clave</th>
                 <th>Nombre</th>
-                <th>Precio</th>
+                <th>Precio compra</th>
+                <th>Precio venta</th>
                 <th>Descuento</th>
-                @if(Auth::user()->type_user == 1 )
+                <!--@if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif
+                @endif -->
               </tr>
             </tfoot>
             <tbody>
@@ -110,27 +102,26 @@ LISTA DE  LINEA
                 <tr id = "row{{ $line->id }}">
                   <td>{{ $line->id}}</td>
                   <td>{{ $line->name }}</td>
+                  <td>$ {{$line->purchase_price}}</td>
                   <td>$ {{ $line->sale_price }}</td>
                   <!--discount_percentage descuenta dinero-->
                   <td>% {{ $line->discount_percentage }}</td>
+                  <!--
                   @if(Auth::user()->type_user == 1 )
                   <td>
-                    <!-- Botón para editar linea-->
                     <a type="button" href="/lineas/{{$line->id}}/edit"
                       class="btn btn-icon btn-info waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></a>
-                    
-                    <!-- END Botón-->
-                    <!-- Botónpara eliminar linea-->
+
                     <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
                       alt="{{$line->id}}" role="button"
                       data-toggle="tooltip" data-original-title="Borrar">
                       <i class="icon md-delete" aria-hidden="true"></i>
                     </button>
-                    <!-- END Botón-->
                   </td>
                   @endif
+                  -->
                 </tr>
               @endforeach
             </tbody>
@@ -212,8 +203,8 @@ $(document).ready(function() {
                   'error'
                 )
             }
-  
-          }, 
+
+          },
           error: function(error){
               Swal.fire(
                   'No Eliminado',

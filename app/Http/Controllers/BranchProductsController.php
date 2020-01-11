@@ -31,8 +31,8 @@ class BranchProductsController extends Controller
       $categories = Shop::find($shop_id)->categories()->get();
       $lines = Shop::find($shop_id)->lines()->get();
     	$statuses = Status::all();
-      $products = Product::withTrashed()->where('branch_id','=',$id)->get();
-      
+      $products = Product::withTrashed()->where('branch_id','=',$id)->where('deleted_at','=',NULL)->get();
+      $num_products = Product::withTrashed()->where('branch_id','=',$id)->where('deleted_at','=',NULL)->count();
       $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
       foreach ($products as $product) {
@@ -48,7 +48,16 @@ class BranchProductsController extends Controller
         }
       }
 
-      return view('Branches/branchproduct', compact('branch','products','user','categories','lines','statuses'));
+      if($num_products == 0)
+      {
+        return redirect('/productos/create')->with('mesage', 'Primero debes crear productos de esta Sucursal!');
+      }
+      else 
+      {
+        return view('Branches/branchproduct', compact('branch','products','user','categories','lines','statuses'));
+      }
+
+      
   }
   public function edit($id)  
     { 

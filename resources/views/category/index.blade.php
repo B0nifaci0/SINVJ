@@ -10,7 +10,7 @@ LISTA DE  CATEGORIA
 @endsection
 @section('content')
 <div class="panel-body">
-  @if (session('mesage'))	
+  @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
       <strong>{{ session('mesage') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -18,7 +18,7 @@ LISTA DE  CATEGORIA
       </button>
   </div>
   @endif
-  @if (session('mesage-update'))	
+  @if (session('mesage-update'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
       <strong>{{ session('mesage-update') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -26,34 +26,47 @@ LISTA DE  CATEGORIA
       </button>
     </div>
   @endif
-  @if (session('mesage-delete'))	
+  @if (session('mesage-delete'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>{{ session('mesage-delete') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
       </button>
     </div>
-  @endif    
+  @endif
   <div class="page-content">
     <!-- Panel Basic -->
     <div class="panel">
-        <header class="panel-heading">
-          <div class="panel-actions">
-            @if(Auth::user()->type_user == 1 )
-            <div class="col-md-14 col-md-offset-2">
-              <!-- Botón Para editar categorias-->
-              <button onclick="window.location.href='/categorias/create'" type="button"
-                class=" btn btn-sm small btn-floating  toggler-left 
-                btn-info waves-effect waves-light waves-round float-right "
+        <div class="panel-body">
+            <div class="example-wrap">
+              <h1 class="text-center panel-title">Categorias</h1>
+              <div class="panel-actions float-right">
+                <div class="container-fluid row float-right">
+                  @if(Auth::user()->type_user == 1 )
+                  <!-- Botón para Generar PDF de productos-->
+                  <div class="col-6">
+                    <button onclick="window.location.href='categoriaspdf'"
+                    type="button" class=" btn btn-sm small btn-floating
+                    toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                    data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                  </button>
+                  </div>
+                  <!-- Botón para Generar PDF de productos
+                  <div class="col-6">
+                    <button onclick="window.location.href='/categorias/create'" type="button"
+                class=" btn btn-sm small btn-floating  toggler-left
+                btn-info waves-effect waves-light waves-round float-left "
                 data-toggle="tooltip" data-original-title="Agregar">
                 <i class="icon md-plus" aria-hidden="true"></i>
               </button>
-              <!-- END Botón-->
+                  </div>
+                   END Botón-->
+                  @endif
+                </div>
+              </div>
             </div>
-            @endif
           </div>
-            <h3 class="panel-title">Categorías</h3>
-        </header>
         <div class="panel-body">
         <!-- Tabla listar las categorias-->
           <table id='categorias'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
@@ -62,9 +75,9 @@ LISTA DE  CATEGORIA
                 <th>Clave</th>
                 <th>Nombre</th>
                 <th>Tipo de Producto</th>
-                @if(Auth::user()->type_user == 1 )
+                <!--@if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif
+                @endif -->
               </tr>
             </thead>
             <tfoot>
@@ -72,9 +85,9 @@ LISTA DE  CATEGORIA
                 <th>Clave</th>
                 <th>Nombre</th>
                 <th>T.Porducto</th>
-                @if(Auth::user()->type_user == 1 )
+                <!--@if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif
+                @endif -->
               </tr>
             </tfoot>
             <tbody>
@@ -88,24 +101,21 @@ LISTA DE  CATEGORIA
                 @if($category->type_product == 2 )
                     <td><span class="text-center badge badge-primary">Gramos</span></td>
                 @endif
-                @if(Auth::user()->type_user == 1 )
+                <!--@if(Auth::user()->type_user == 1 )
                 <td>
-                  <!-- Botón Para editar categoria--> 
                   <a type="button" href="/categorias/{{$category->id}}/edit"
-                    class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                    class="btn btn-icon btn-info waves-effect waves-light waves-round invisible"
                     data-toggle="tooltip" data-original-title="Editar">
                     <i class="icon md-edit" aria-hidden="true"></i></a>
-                  
-                  <!-- END Botón-->
-                  <!-- Botón Para eliminar categoria-->  
-                  <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                    alt="{{$category->id}}" role="button" 
+
+                  <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete invisible"
+                    alt="{{$category->id}}" role="button"
                     data-toggle="tooltip" data-original-title="Borrar">
                     <i class="icon md-delete" aria-hidden="true"></i>
                   </button>
-                  <!-- END Botón--> 
                 </td>
                 @endif
+                -->
               </tr>
               @endforeach
             </tbody>
@@ -119,10 +129,26 @@ LISTA DE  CATEGORIA
 
 @endsection
 
+@section('barcode-product')
+  <script type="text/javascript">
+  //inicializa la tabla para resposnive
+    $(document).ready(function(){
+        $('#categorias').DataTable({
+            retrieve: true,
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+              .columns.adjust()
+              .responsive.recalc();
+        });
+    });
+    </script>
+  @endsection
 
 
-<!-- Función Sweet Alert para eliminar categoria-->
-@section('delete-categorias')
+<!-- Función Sweet Alert para eliminar linea-->
+@section('delete-lineas')
 <script type="text/javascript">
 console.log("a")
 $(document).ready(function() {
@@ -140,14 +166,15 @@ $(document).ready(function() {
       confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
       if (result.value) {
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-           }
-      });
+        $.ajaxSetup({
+         headers: {
+             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+          }
+        });
         $.ajax({
-          url:  'categorias/' + id,
+          url:  '/categorias/' + id,
           method: 'DELETE',
+
           success: function (response) {
             if(response.success) {
               $("#row" + id).remove();
@@ -158,20 +185,21 @@ $(document).ready(function() {
               )
             }else{
                 Swal.fire(
-                  'Eliminado',
+                  'No Eliminado',
                   'El registro no ha sido eliminado por que tiene productos activos',
                   'error'
                 )
             }
-  
-          }, 
+
+          },
           error: function(error){
               Swal.fire(
-                  'error',
-                  'Error de conexión',
+                  'No Eliminado',
+                  'El registro no ha sido eliminado por que tiene productos activos',
                   'error'
                 )
           }
+
         })
       }
     })
@@ -180,11 +208,4 @@ $(document).ready(function() {
 });
 
 </script>
-@endsection
-<!-- END Función-->
-
-
-
-@section('barcode-product')
-
 @endsection

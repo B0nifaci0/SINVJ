@@ -174,7 +174,7 @@ class ExpensesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {  
         Expense::destroy($id);
     }
     

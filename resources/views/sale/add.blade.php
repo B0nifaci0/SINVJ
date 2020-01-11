@@ -39,7 +39,7 @@ ALTA VENTA
                         <option value="2">Venta a mayorista</option>
                     </select>
                 </div>
-            </div>
+            </div> 
             <div class="row">
                 <div id="wholesalers" class="col-md-7">
                     <div class="row">
@@ -144,7 +144,7 @@ ALTA VENTA
                 <input type="hidden" class="form-control" name="card_income" id="cardPayment"/>
 
                 <div class="form-group col-md-1">
-                  <a  id="submit" type="button" class="btn btn-primary text-with">Terminar compra</a>
+                  <a  id="submit" type="button" class="btn btn-primary text-white">Terminar compra</a>
                 </div>
                 <!-- END Botón-->
               </div>
@@ -425,7 +425,7 @@ $(function(){
 
   selectedProducts.push(product);
   var _tr = `<tr id="raw-${product.id}">
-    <td>${product.id}</td>
+    <td>${product.clave}</td>
     <td>${product.description}</td>
     <td>${product.weigth}</td>
     <td>${product.category.name}</td>

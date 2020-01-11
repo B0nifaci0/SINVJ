@@ -3,7 +3,7 @@
  <head> 
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <title>Reporte de Inventarios</title>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
      html,body{
@@ -54,76 +54,77 @@
     
     <img align = "left" width="90px" height="90px" src="{{ $shop->image }}">
              
-    <p align="right">Fecha: {{$dates}}</p> 
-          
-    <p align="right">Hora: {{$hour}}</p>
+    <p align="right">@foreach($dates as $d) Fecha: {{$d->fecha}}  @endforeach</p> 
+
   
   
     <h1 align="center">Reporte de Inventarios
           @foreach($report as $r) {{$r->name_branch}} @endforeach</h1>
-          <h3 align="center">Productos Gramo</h3>
+          <h3 align="center">Inventario Por Líneas</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-                 <th scope="col">Linea</th>
+                 <th scope="col">Línea</th>
                  <th scope="col">Total De Gramos</th>
-                 <th scope="col">Total De Gramos Existente</th>
+                 <th scope="col">Total De Gramos Existentes</th>
+                 <th scope="col">Total De Gramos Faltantes</th>
+                 <th scope="col">Total De Dinero Faltante</th>
                 </tr>
               </thead>  
               <tbody>
-                @foreach ($totals as $total)
+                @foreach ($gramos_totales as $g)
                 <tr>
-                 <td>{{ $total->name_line }}</td> 
-                 <td>{{ $total->total_w }} gr</td>
-                 @foreach ($totals1 as $j => $total1)
-                 <td>{{ $total1->total_f }} gr</td>
-                 @endforeach 
+                 <td>{{ $g->name_line }}</td> 
+                 <td>{{ $g->total_w }} gr</td>
+                 <td>{{ $g->gramos_ex }} gr</td>
+                 <td>{{ $g->gramos_fal }} gr</td>
+                 <td>$ {{ $g->dinero_fal }}</td>
                 </tr>
                 @endforeach 
+                @foreach ($totales_g as $totals)
+                <tr>
+                 <td>Total</td>  
+                 <td>{{$totals->gramos}} gr</td> 
+                 <td>{{$totals->existentes}} gr</td>
+                 <td>{{$totals->faltantes}} gr</td>   
+                 <td>$ {{$totals->dinero_fal}}</td>          
+                </tr>
+                @endforeach
               </tbody>
             </table>
             <br>
-            <h3 align="center">Gramos Faltantes</h3>
+            <h3 align="center">Productos Faltantes Por Gramo</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
                       <th scope="col">Linea</th>
-                      <th scope="col">Total de Gramos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach ($g_faltantes as $fal)
-                <tr>
-                 <td>{{ $fal->name_line }}</td> 
-                 <td>{{ $fal->total_w }} gr</td>
-                </tr>
-                @endforeach 
-                </tbody>    
-            </table>
-            <br>
-            <h3 align="center">Descripcion De Productos Gramos Faltantes</h3>
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-                <thead>
-                    <tr>
                       <th scope="col">Clave Del Producto</th>
                       <th scope="col">Descripcion</th>
                       <th scope="col">Peso</th>
-                      <th scope="col">Linea</th>
+                      <th scope="col">Total De Dinero Faltante</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach ($prod_fal as $prod)
                 <tr>
-                 <td>{{ $prod->id }}</td> 
+                 <td>{{ $prod->name_line }}</td> 
+                 <td>{{ $prod->clave }}</td> 
                  <td>{{ $prod->description }}</td>
                  <td>{{ $prod->weigth }} gr</td>
-                 <td>{{ $prod->name_line }}</td> 
+                 <td>$ {{ $prod->money }}</td>
+                </tr>
+                @endforeach 
+                @foreach ($totales_g as $totals)
+                <tr>
+                 <td colspan="3">Total</td> 
+                 <td>{{$totals->faltantes}} gr</td>   
+                 <td>$ {{$totals->dinero_fal}}</td>  
                 </tr>
                 @endforeach 
                 </tbody>    
             </table>
             <br>
-            <h3 align="center">Productos Pieza</h3>
+            <h3 align="center">Productos Existentes Por Pieza</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
@@ -140,6 +141,13 @@
                       <td>$ {{$totals->total}}</td>
                     </tr>
                 @endforeach 
+                @foreach ($totales_piezas as $p)
+                  <tr>
+                    <td>Total</td>
+                    <td>{{$p->exist}} pzs</td>
+                      <td>$ {{$p->din_exis}}</td>
+                  </tr>
+                @endforeach 
                 </tbody>    
             </table>
             <br>
@@ -147,25 +155,32 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                    <th scope="col">Clave</th>
                       <th scope="col">Categoria</th>
-                      <th scope="col">Cantidad PZ</th>
-                      <th scope="col">Total En Dinero</th>
+                      <th scope="col">Descripcion</th>
+                      <th scope="col">Cantidad PZ Faltantes</th>
+                      <th scope="col">Total En Dinero Faltante</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach ($p_faltantes as $fal)
                     <tr>
-                      <td>{{$fal->cat_id}}</td>
                       <td>{{$fal->cat_name}}</td>
+                      <td>{{$fal->descripcion}}</td>
                       <td>{{$fal->num_pz}} pzs</td>
                       <td>$ {{$fal->total}}</td>
+                    </tr>
+                @endforeach 
+                @foreach ($totales_piezas as $p)
+                    <tr>
+                      <td colspan="2">Total</td>
+                      <td>{{$p->falt}} pzs</td>
+                      <td>$ {{$p->din_falt}}</td>
                     </tr>
                 @endforeach 
                 </tbody>    
             </table>
             <br>
-            <h3 align="center">Descripcion De Productos Faltantes Por Pieza</h3>
+            <h3 align="center">Descripcion De Productos Faltantes Por PZ</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
@@ -177,9 +192,15 @@
                 <tbody>
                 @foreach ($prod_faltantes as $fal)
                     <tr>
-                      <td>{{$fal->id}}</td>
+                      <td>{{$fal->clave}}</td>
                       <td>{{$fal->cat_name}}</td>
                       <td>$ {{$fal->price}}</td>
+                    </tr>
+                @endforeach 
+                @foreach ($totales_piezas as $p)
+                    <tr>
+                      <td colspan="2">Total</td>
+                      <td>$ {{$p->din_falt}}</td>
                     </tr>
                 @endforeach 
                 </tbody>    

@@ -131,7 +131,7 @@ $(".usuarios").change(function(){
 
 $('#product').change(function() {
   var name = $(this).val();
-  var p = products.filter(p => p.name = name)[0];
+  var p = products.filter(p => p.description == name)[0];
   console.log(p);
   $('#branch').val(p.branchName)
   $('#branch_id').val(p.branchId)

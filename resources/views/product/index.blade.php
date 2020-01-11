@@ -46,23 +46,23 @@ LISTA PRODUCTO
     <div class="panel">
       <div class="panel-body">
         <div class="example-wrap">
-          <h1 class="text-center panel-title">{{ $title }}</h1>
-
-          <div class="panel-actions">
-
-            <div class="container-fluid row col-md-12 col-xs-12 col-lg-12">
-              @if(Auth::user()->type_user == 1 )
+          <h1 class="text-center panel-title">Productos De Tienda</h1>
+          <div class="panel-actions float-right">
+            <div class="container-fluid row float-right">
+              @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
               <!-- Botón para Generar PDF de productos-->
-              <div class="col-md-6 col-md-offset-2 col-xs-4 col-xs-offset-2 col-xs-4">
+              @if(Auth::user()->type_user == 1)
+              <div class="col-6">
                 <button onclick="window.location.href='productospdf'" type="button" id='pdf01' name='pdf01' class=" btn btn-sm small btn-floating
-                          toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                 btn-danger waves-effect waves-light waves-round float-right"
                   data-toggle="tooltip" data-original-title="Generar reporte PDF">
                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                 </button>
               </div>
-              <div class="col-md-6 col-md-offset-2  col-xs-4 col-xs-offset-2">
+              @endif
+              <div class="col-6=">
                 <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating
-                          toggler-left  btn-info waves-effect waves-light waves-round float-right"
+                 btn-info waves-effect waves-light waves-round float-left"
                   data-toggle="tooltip" data-original-title="Agregar">
                   <i class="icon md-plus" aria-hidden="true"></i>
                 </button>
@@ -85,23 +85,22 @@ LISTA PRODUCTO
             <div class="tab-content">
               <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                 <div class="page-content panel-body container-fluid">
-                  <table id="product_table_gr" class="table table-hover dataTable table-striped w-full"
-                    data-plugin="dataTable">
+                  <table id="product_table_gr" class=" display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                       {{ csrf_field() }}
                       <tr>
-                        <th>Clave</th>
-                        <th>Descripción</th>
-                        <th>Peso</th>
-                        <th>Observaciónes</th>
-                        <th>Imagen</th>
-                        <th>Categoría</th>
-                        <th>Linea</th>
-                        <th>Sucursal</th>
-                        <th>Status</th>
-                        <th>precio</th>
+                        <th data-toggle="true">Clave</th>
+                        <th data-hide="phone, tablet">Descripción</th>
+                        <th data-hide="phone, tablet">Peso</th>
+                        <th data-hide="phone, tablet">Observaciones</th>
+                        <th data-hide="phone, tablet">Imagen</th>
+                        <th data-hide="phone, tablet">Categoría</th>
+                        <th data-hide="phone, tablet">Linea</th>
+                        <th data-hide="phone, tablet">Sucursal</th>
+                        <th data-hide="phone, tablet">Status</th>
+                        <th data-hide="phone, tablet">Precio Venta</th>
                         @if(Auth::user()->type_user == 1 )
-                        <th>Opciones</th>
+                        <th data-hide="phone, tablet">Opciones</th>
                         @endif
                       </tr>
                     </thead>
@@ -116,7 +115,7 @@ LISTA PRODUCTO
                         <th></th>
                         <th>Sucursal</th>
                         <th>Status</th>
-                        <th>Precio</th>
+                        <th>Precio Venta</th>
                         @if(Auth::user()->type_user == 1 )
                         <th>Opciones</th>
                         @endif
@@ -125,7 +124,7 @@ LISTA PRODUCTO
                     <tbody>
                       @foreach ($products as $i => $product)
                       @if($product->category->type_product == 2 )
-                      <tr id="row{{$product->id}}">
+                      <tr id="row{{$product->id}}" class="row{{$product->id}}">
                         <td>{{ $product->clave }}</td>
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->weigth }}</td>
@@ -140,9 +139,19 @@ LISTA PRODUCTO
                         <td>{{ ($product->category) ? $product->category->name: '' }}</td>
                         <td>{{ ($product->line) ? $product->line->name : '' }}</td>
                         <td>{{ ($product->branch) ? $product->branch->name: '' }}</td>
-                        @if($product->status)
+                        @if($product->status_id == 1)
+                        <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
+                        @endif
+                        @if($product->status_id == 2)
+                        <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
+                        @endif
+                        @if($product->status_id == 3)
                         <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
                         @endif
+                        @if($product->status_id == 4)
+                        <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
+                        @endif
+                       
                         <td>${{$product->price }}</td>
                         @if(Auth::user()->type_user == 1)
                         <td>
@@ -173,22 +182,22 @@ LISTA PRODUCTO
             <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
               <div class="page-content panel-body container-fluid">
                 <!-- Tabla para listar productos-->
-                <table id="product_table_pz" class="table table-hover dataTable table-striped w-full table-responsive"
-                    data-plugin="dataTable">
+                <table id="product_table_pz" class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                   <thead>
                     {{ csrf_field() }}
                     <tr>
-                      <th>Clave</th>
-                      <th>Descripción</th>
-                      <th>Categoría</th>
-                      <th>Observaciónes</th>
-                      <th>Imagen</th>
-                      <th>Sucursal</th>
-                      <th>Status</th>
-                      <th>Precio Venta</th>
+                      <th data-toggle="true">Clave</th>
+                      <th data-hide="phone, tablet">Descripción</th>
+                      <th data-hide="phone, tablet">Categoría</th>
+                      <th data-hide="phone, tablet">Observaciónes</th>
+                      <th data-hide="phone, tablet">Imagen</th>
+                      <th data-hide="phone, tablet">Sucursal</th>
+                      <th data-hide="phone, tablet">Status</th>
+                      <th data-hide="phone, tablet">Precio Venta</th>
                       @if(Auth::user()->type_user == 1 )
-                      <th>Precio Compra</th>
-                      <th>Opciones</th>
+                      <th data-hide="phone, tablet">Precio Compra</th>
+                      <th data-hide="phone, tablet">Precio Descuento</th>
+                      <th data-hide="phone, tablet">Opciones</th>
                       @endif
                     </tr>
                   </thead>
@@ -204,6 +213,7 @@ LISTA PRODUCTO
                       <th>Precio Venta</th>
                       @if(Auth::user()->type_user == 1 )
                       <th>Precio Compra</th>
+                      <th>Precio Descuento</th>
                       <th>Opciones</th>
                       @endif
                     </tr>
@@ -211,7 +221,7 @@ LISTA PRODUCTO
                   <tbody>
                     @foreach ($products as $i => $product)
                     @if($product->category->type_product == 1 )
-                    <tr id="row{{$product->id}}">
+                    <tr id="row{{$product->id}}" class="row{{$product->id}}">
                       <td>{{$product->clave}}</td>
                       <td>{{ $product->description }}</td>
                       <td>{{ ($product->category) ? $product->category->name : '' }}</td>
@@ -224,12 +234,23 @@ LISTA PRODUCTO
                           />
                       </td>
                       <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
-                      @if($product->status)
-                      <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
-                      @endif
+                      @if($product->status_id == 1)
+                        <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
+                        @endif
+                        @if($product->status_id == 2)
+                        <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
+                        @endif
+                        @if($product->status_id == 3)
+                        <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                        @endif
+                        @if($product->status_id == 4)
+                        <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
+                        @endif
+                       
                       <td>${{$product->price }}</td>
                       @if(Auth::user()->type_user == 1)
                       <td>${{$product->price_purchase}}</td>
+                      <td>${{$product->discount}}</td>
                       <td>
                         <!-- Botón para editar producto-->
                         <a type="button" href="/productos/{{$product->id}}/edit"
@@ -239,7 +260,8 @@ LISTA PRODUCTO
                         <!-- END Botón-->
                         <!-- Botón para eliminar producto -->
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                          alt="{{$product->id}}" role="button" data-toggle="tooltip" data-original-title="Borrar">
+                          alt="{{$product->id}}" role="button"
+                          data-toggle="tooltip" data-original-title="Borrar">
                           <i class="icon md-delete" aria-hidden="true"></i>
                         </button>
                         <!-- END Botón-->
@@ -259,25 +281,85 @@ LISTA PRODUCTO
       <!-- End Example Tabs -->
     </div>
   </div>
+</div>
   <!-- End Panel Basic -->
   @endsection
   @section('barcode-product')
-  <script>
-    $(document).ready(function () {
-      
+  <script type="text/javascript">
+  //inicializa la tabla para resposnive
+    $(document).ready(function(){
+        $('#product_table_gr').DataTable({
+            retrieve: true,
+            //  responsive: true,
+            //paging: false,
+            //searching: false
+        });
+        $('#product_table_pz').DataTable({
+            retrieve: true,
+            //responsive: true,
+            //paging: false,
+            //searching: false
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+              .columns.adjust()
+              .responsive.recalc();
+        });    
     });
-  </script>
+    </script>
   @endsection
 
   <!-- Función Sweet Alert para eliminar producto-->
   @section('delete-productos')
   <script type="text/javascript">
-    $('#s').tooltip('update');
-
-    console.log("a")
-    $(document).ready(function () {
-      console.log("b")
-      $(".delete").click(function () {
+  $(document).ready(function () {
+  setTimeout(() => {
+    console.log("config datatable")
+    $('#product_table_gr').on('click', '.delete', function(){
+        var id = $(this).attr("alt");
+        console.log(id);
+        Swal.fire({
+          title: 'Confirmación',
+          text: "¿Seguro que desea eliminar este registro?",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Borralo!'
+        }).then((result) => {
+          if (result.value) {
+            $.ajaxSetup({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+            });
+            $.ajax({
+              url: '/productos/' + id,
+              method: 'DELETE',
+               success: function () {
+                $('#product_table_gr').DataTable()
+                .rows('.row' + id)
+                .remove()
+                .draw();
+                Swal.fire(
+                  'Eliminado',
+                  'El registro ha sido eliminado.',
+                  'success'
+                );
+              },
+              error: function () {
+                Swal.fire(
+                  'Eliminado',
+                  'El registro no ha sido eliminado.' + id,
+                  'error'
+                )
+              }
+            })
+          }
+        })
+      });
+      $('#product_table_pz').on('click', '.delete', function(){
         var id = $(this).attr("alt");
         console.log(id);
         Swal.fire({
@@ -299,12 +381,15 @@ LISTA PRODUCTO
               url: '/productos/' + id,
               method: 'DELETE',
               success: function () {
-                $("#row" + id).remove();
+                $('#product_table_pz').DataTable()
+                .rows('.row' + id)
+                .remove()
+                .draw();
                 Swal.fire(
                   'Eliminado',
                   'El registro ha sido eliminado.',
                   'success'
-                )
+                );
               },
               error: function () {
                 Swal.fire(
@@ -316,9 +401,10 @@ LISTA PRODUCTO
             })
           }
         })
-
       });
-    });
+  },500)
+  });
   </script>
   @endsection
   <!-- END Función-->
+ 

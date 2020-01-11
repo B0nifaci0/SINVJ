@@ -108,8 +108,7 @@ class SalesComissionsController extends Controller
       $shops = Auth::user()->shop()->get();
 
         $comission = User::where('id',$user)
-        ->select(DB::raw('SUM(comision / 100) as comissions'))
-        ->sum('comision','/','100');
+        ->select(DB::raw('SUM(comision / 100) as comissions'));
         //return $comission;
 
         //$number1 = (int)$comission;

@@ -6,156 +6,28 @@
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
      </head>
    <style>
-   {
-    font-size: 8px;
+ .cuerpo{
+    font-size: 12px;
     font-family: 'Times New Roman';
 }
-
-td,
-th,
-tr,
-table {
-    border-collapse: collapse;
-}
-
-td.sucursal{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.nota{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.fecha{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.hora{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.cliente {
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.vendedor {
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-
-
-td.sucursal1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-td.nota1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-td.fecha1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-td.hora1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-
-td.cliente1{
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-td.vendedor1{
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-th.clave{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-th.producto{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-th.precio{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-td.clave1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-td.producto1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-td.precio1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-
-.centrado {
-    text-align: center;
-    align-content: center;
-}
-
-.ticket {
-    width: 200px;
-    max-width: 200px;
-}
-
-img {
-    width: center ;
-    max-width: center;
-    text-align: center;
-}
-@page {size: 8cm 220mm;
+@page {size: 8.3cm 250mm;
      }
    </style>
 
     <body>
         <div border="">
-     
-            <img align="left" width="90px" height="90px" src="{{$shop->image}}"></p>
-            <p>
-            {{$branch ? $branch->name : ''}}<br>
-            {{$branch ? $branch->name_legal_re : ''}}<br>
-            {{$branch ? $branch->rfc : ''}}<br> 
-            {{$branch ? $branch->email : ''}}</p><br>
-            <p>{{$branch ? $branch->address : ''}}
+        <img align="right" width="200px" height="100px" src="{{$shop->image}}"><br>
+         <p align="center">{{$sale->created_at}}</p>
+            <p align="center">Suc:{{$branch->name}},
+            {{ $branch->name_legal_re }}<br>
+            RFC:{{ $branch->rfc }} <br>
+            Email:{{ $branch->email }}<br>
+            <p align="center"> Direccion:{{$branch ? $branch->address : ''}}<br>
             Tel:{{$branch ? $branch->phone_number : ''}}</p>
-            <p><b>Tipo de venta:</b>{{ ($sale->client) ? 'Mayorista' : 'General' }}</p>
+            <p align="left"><b>Folio:</b>{{$sale->folio}}</p>
+            <p><b>Tipo de venta: </b>{{ ($sale->client) ? 'Mayorista' : 'General' }}</p>
             @if($sale->client)
-                <p><b>Cliente:</b>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>
+                <p><b>Cliente: </b>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>
             @else
                 <p>{{ $sale->customer_name }}</p>
             @endif
@@ -172,23 +44,20 @@ img {
                     <tbody>
                         @foreach($sale->itemsSold as $item)
                         <tr>
-                            <td>{{ $item->clave }}</td>
-                            <td>{{ $item->description }}</td>
-                            <td>{{ $item->weigth }} g</td>
-                            <td>$ {{ $item->final_price }}</td>
+                            <td class='cuerpo'>{{ $item->clave }}</td>
+                            <td class='cuerpo'>{{ $item->description }}</td>
+                            <td class='cuerpo'>{{ $item->weigth }} g</td>
+                            <td class='cuerpo'>$ {{ $item->final_price }}</td>
                         </tr>
                         @endforeach
                         <tr>
-                            <td colspan="3"></td>
-                            <td><strong>$ {{ $sale->total }}</strong></td>
+                            <td colspan="3">Total a pagar</td>
+                            <td><strong> ${{ $sale->total }}</strong></td>
                         </tr> 
                     </tbody>
             </table>
             <br>
-            @if(count($sale->partials) > 0)
-                @if($sale->paid_out == $sale->total)
-                <p class="centrado">Detalles de pago</p>                
-                @else
+            @if($sale->partials->sum('amount') < $sale->total || $sale->partials->count() > 1)
                 <p class="centrado">Abonos a la cuenta</p>
                 @endif
 
@@ -221,8 +90,8 @@ img {
             @endif 
         </div> 
         <br>
-        <p class="centrado">¡GRACIAS POR SU COMPRA!</p>
-        <br>
-        <p class="centrado">¡ESTE NO ES UN COMPROBANTE FISCAL!</p>
+        <p align="center">¡GRACIAS POR SU COMPRA!</p>
+        <p align="center">¡ESTE NO ES UN COMPROBANTE FISCAL!</p>
+        <p align="justify">Si requiere factura favor de enviar sus datos fiscales al correo: <b>{{$branch->email}}</p>
     </body>
 </html>

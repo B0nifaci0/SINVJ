@@ -52,10 +52,8 @@
 
 <body>
   <div class="page-content">
+  <img align="left" width="90px" height="90px" src="{{ $shop->image }}"><br>
     <div class="panel">
-      <img align="left" width="100px" height="100px"
-        src="https://images.vexels.com/media/users/3/151690/isolated/preview/be2ec10fa7ff133565ba9a4bc65aae6c-icono-de-trazo-de-piedra-preciosa-de-diamante-by-vexels.png"
-        alt="Logotipo">
       <p align="right">Fecha: {{$dates}}</p>
       <p align="right">Hora: {{$hour}}</p>
       <h2 align="center">Reporte de Utilidad por 
@@ -74,10 +72,15 @@
           <tr>
             <th>Clave</th>
             <th>Descripción</th>
-            <th>Sucursal</th>
+            @foreach ($products as $i => $product)
+          @if($product->category->type_product == 2 )
+          <th>Peso</th>  
+          @endif
+          @break;
+          @endforeach
             <th>Precio Compra</th>
-            <th>Utilidad</th>
             <th>Precio Venta</th>
+            <th>Utilidad</th>
           </tr>
         </thead>
         <tbody>
@@ -85,14 +88,13 @@
           <tr id="row{{$product->id}}">
             <td>{{ $product->clave }}</td>
             <td>{{ $product->description }}</td>
-            <td>{{ $product->branch->name }}</td>
-            @foreach ($detalle as $det)
-            @if($det->product_id == $product->id)
-            <td>$ {{$det->final_price}}</td> 
-            <td>${{$det->profit}}</td>  
-            @endif 
-            @endforeach   
+            @if($product->category->type_product == 2 )
+            <td> {{$product->weigth}}</td>
+            @endif
             <td>$ {{$product->price_purchase}}</td>
+            <td>$ {{$product->final_price}}</td> 
+            <td>$ {{$product->profit}}</td>  
+            
             @foreach ($lines as $line)
           <td>{{$precio = $line->purchase_price}}</td>
             @endforeach
@@ -106,16 +108,27 @@
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
           <tr>
+            @foreach ($products as $i => $product)
+            @if($product->category->type_product == 2 )
             <th scope="col">Total de Gramos</th>
+            @endif
+            @break;
+            @endforeach
+            
             <th scope="col">Total Precio Compra</th>
             <th scope="col">Total precio Venta</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td align="center">{{$compra}} gr</td>
+            @foreach ($products as $i => $product)
+            @if($product->category->type_product == 2 )
+            <td align="center">{{$total}} gr</td>
+            @endif
+            @break;
+            @endforeach
+            <td align="center">$ {{$compra}}</td>
             <td align="center">$ {{$venta}}</td>
-            <td align="center">$ {{$cash}}</td>
           </tr>
         </tbody>
         <br>

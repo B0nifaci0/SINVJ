@@ -22,7 +22,7 @@ ALTA PRODUCTO
             </ul>
           </div>
         @endif
-        <center><h3>Nuevo Traspaso</h3></center>
+        <center><h3>Nuevo Traspasos</h3></center>
         <form class="" action="/traspasos" method="POST">
           {{ csrf_field() }} 
           <div class='row'>
@@ -34,7 +34,7 @@ ALTA PRODUCTO
                 <option></option>
                 <optgroup label="Productos">
                   @foreach($products as $product)
-                  <option value="{{ $product->id }}" required>{{$product->id}}-{{ $product->description }}</option>
+                  <option value="{{ $product->id }}" required>{{$product->clave}}-{{ $product->description }}</option>
                   @endforeach
                 </optgroup>
               </select>
@@ -43,11 +43,8 @@ ALTA PRODUCTO
             <!-- Select para Seleccionar Sucursal Destino-->
             <div class="form-group  col-md-3  col-md-offset-1 visible-md visible-lg">
               <label>Sucursal Destino</label>
-              <select id="sucursales_1" class="form-control sucursales" name="new_branch_id" alt="1" >
+              <select id="branches" class="form-control sucursales" name="new_branch_id" alt="1" >
                 <option value="*">Seleccione Sucursal</option>
-                @foreach ($branches as $branch)
-                  <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
-                @endforeach
               </select>
             </div>
             <!-- END Select-->
@@ -117,33 +114,33 @@ $(".usuarios").change(function(){
     });
 
     $('#product').change(function() {
-  var name = $(this).val();
-  var p = products.filter(p => p.name = name)[0];
+  var id = $(this).val();
+  var p = products.filter(p => p.id == id)[0];
   console.log(p);
   $('#branch').val(p.branchName)
   $('#branch_id').val(p.branchId)
-  $('#product_id').val(p.branchId);
-
+  $('#product_id').val(p.id);
+  console.log(branches);
   let brancehesList = branches.filter(b => b.id != p.branchId);
 
-  brancehesList.forEach(element => {
+  $('#branches').empty();
+  brancehesList.forEach(element => { 
     $('#branches').append(new Option(element.name, element.id, true, true));
   });
 
-}); 
+});  
 
 </script>
 @endsection
 <!-- END Función-->
 @section('traspaso')
 <script type="text/javascript">
-$('.accept').click(function({
+$('.accept').click(function(){
   var id = $(this).attr('alt');
   $('#t_product_id').val(id);
   $('#status').val(1)
 
   $('#form').submit();
-});  
 });
 </script> 
 @endsection

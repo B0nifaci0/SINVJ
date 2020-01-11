@@ -23,10 +23,15 @@ class TrasferUserController extends Controller
 {
     public function index()
        {
-        $user = Auth::user();
-        $trans = TransferProduct::where('user_id', $user->id)
-          ->orWhere('destination_user_id', $user->id)
-          ->with('user')->with('branch')->get();
+        
+        // $trans = TransferProduct::all();
+        $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function($u) {
+          return $u->id;
+        });
+        $trans = TransferProduct::whereIn('user_id', $usersIds)
+        ->whereIn('destination_user_id', $usersIds)
+        ->with('user')->with('branch')->with('product')->get();
+        //return $trans;
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
         //$statuses = Shop::find($status)->statuss()->get();
@@ -37,10 +42,10 @@ class TrasferUserController extends Controller
           return redirect('/traspasos/create');
         }else{
         }*/
-        
+         
         //return $transs; 
-
-        return view('transfer/TrasferUser/index', compact('trans','user'));
+        
+        return view('transfer/TrasferUser/index', compact('trans'));
         
        }
 
@@ -92,7 +97,6 @@ class TrasferUserController extends Controller
             'branches.id as branchId'
             )
             ->get();
-            //return $products;
         }
         $users = User::where('id', '!=', $user->id)
           ->whereIn('branch_id', $branch_ids)
@@ -102,6 +106,8 @@ class TrasferUserController extends Controller
 
   public function store(Request $request)
   {
+    $product = Product::find($request->product_id);
+
     $user = Auth::user();
     $transfer_product = new TransferProduct([
       'user_id' => $user->id,
@@ -111,8 +117,11 @@ class TrasferUserController extends Controller
       'destination_user_id' => $request->destination_user_id,
       'status_product' => null
     ]);
-    //return $transfer_product;
     $transfer_product->save();
+    
+		// $product->status_id = 3;
+		// $product->save();
+      
     return redirect('/traspasosAA')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
   }
  

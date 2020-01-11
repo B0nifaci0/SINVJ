@@ -50,8 +50,11 @@
 </head>
 <body>
 <div class="page-content">
+<img align="left" width="90px" height="90px" src="{{ $shop->image }}"><br>
     <div class="panel">
-    <h2 align="center">Productos</h2>
+    <p align="right">Fecha: {{$dates}} </p>
+    <p align="right">Hora: {{$hour}}</p>
+    <h2 align="center">Productos  {{$shop->name}}</h2>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>

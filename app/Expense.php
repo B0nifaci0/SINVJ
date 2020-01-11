@@ -4,9 +4,13 @@ namespace App;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Expense extends Model
 {
+
+    use SoftDeletes;
+
     protected $fillable = [
         'concept',
         'amount',
@@ -17,6 +21,8 @@ class Expense extends Model
         'name',
         'descripcion'
     ];
+
+
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id');

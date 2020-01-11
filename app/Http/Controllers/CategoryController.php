@@ -7,14 +7,18 @@ use categories;
 use Alert;
 use App\User;
 use App\Product;
+use Carbon\Carbon;
+use PDF;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CategoriesRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\S3ImageManager;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CategoryController extends Controller
 {
+  use S3ImageManager;
     /*public function __construct(){
       $this->middleware('Authentication');
     }/*
@@ -28,8 +32,9 @@ class CategoryController extends Controller
         $user = Auth::user();
         /*return $users;
         $shop = Auth::user()->shop;
-        return $shop; */   
-        $categories = Auth::user()->shop->categories;
+        return $shop; */
+        //$categories = Auth::user()->shop->categories;
+        $categories = Category::where('shop_id','=',NULL)->get();
         //Lista el array de datos de categorias almacenados en la variable $categories
         //return $categories;
         return view('category/index', compact('categories','user'));
@@ -42,7 +47,7 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request  $request)
-    { 
+    {
        $user = Auth::user();
         return view('category/add', compact('user'));
     }
@@ -65,7 +70,7 @@ class CategoryController extends Controller
 
 
         return redirect('/categorias')->with('mesage', 'la categoria se ha agregado exitosamente!');
-   
+
     }
 
     /**
@@ -107,7 +112,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->name = $request->name;
         $category->type_product = $request->type_product;
-        $category->save();  
+        $category->save();
         return redirect('/categorias')->with('mesage-update', 'La categoria se ha modificado exitosamente!');
     }
 
@@ -129,7 +134,20 @@ class CategoryController extends Controller
           Category::destroy($id);
            return response()->json([
           'success'=> true
-          ]); 
+          ]);
     }
  }
+ public function exportPdf(){
+  $date= date("Y-m-d");
+  $hour = Carbon::now();
+  $hour = date('H:i:s');
+  $shop = Auth::user()->shop;
+  if($shop->image) {
+      $shop->image = $this->getS3URL($shop->image);
+  }
+  $category = Category::where('shop_id','=',NULL)->get();
+  $pdf  = PDF::loadView('category.pdf', compact('category','date','hour','shop'));
+  return $pdf->stream('categorias.pdf');
 }
+}
+  

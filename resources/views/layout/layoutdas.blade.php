@@ -28,15 +28,13 @@
 
 
     <!-- Plugins -->
-        <!--<link rel="stylesheet" href={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css')}}}>-->
-    <link rel="stylesheet" href={{{url('global/vendor/animsition/animsition.css')}}}>
+     <link rel="stylesheet" href={{{url('global/vendor/animsition/animsition.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/asscrollable/asScrollable.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/switchery/switchery.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/intro-js/introjs.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/slidepanel/slidePanel.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/flag-icon-css/flag-icon.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/waves/waves.css')}}}>
-    <link rel="stylesheet" href={{{url('global/vendor/chartist/chartist.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/jvectormap/jquery-jvectormap.css')}}}>
     <link rel="stylesheet" href={{{url('assets/examples/css/dashboard/v1.css')}}}>
     <link rel="stylesheet" href={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.css')}}}>
@@ -48,7 +46,6 @@
     <link rel="stylesheet" href={{{url('global/fonts/font-awesome/font-awesome.css')}}}>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <link rel="stylesheet" href="{{{url('/global/css/bootstrap-extend.min.css')}}}">
-    
     <!--<script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>-->
     <!--Ligbox-->
     <link rel="stylesheet" href="{{{url('assets/examples/css/advanced/lightbox.css')}}}">
@@ -391,7 +388,7 @@
   <div class="site-menubar">
       <div class="site-menubar-header">
         <div class="cover overlay">
-          <img class="cover-image" src="../assets/examples/images/dashboard-header.jpg"
+          <img class="cover-image" src="/assets/examples/images/dashboard-header.jpg"
             alt="...">
           <div class="overlay-panel vertical-align overlay-background">
             <div class="vertical-align-middle">
@@ -435,6 +432,14 @@
                     <span class="site-menu-arrow"></span>
                   </a>
                   <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/tiendas">
+                          <i class="site-menu-icon fa-eye" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mi tienda</span>
+                        </a>
+                      </li>
+                    </ul>
+                  <ul class="site-menu-sub">
                   <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
                       <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
@@ -445,7 +450,15 @@
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/productos">
                           <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
-                            <span class="site-menu-title">Productos</span>
+                            <span class="site-menu-title">Mis Productos</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/productos/create">
+                          <i class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                            <span class="site-menu-title">Nuevo Producto</span>
                         </a>
                       </li>
                     </ul>
@@ -463,25 +476,39 @@
                         </a>
                       </li>
                     </ul>
-
+                    <li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon icon fa-map-marker" aria-hidden="true"></i>
+                        <span class="site-menu-title">Sucursales</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/sucursales">
-                        <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
-                          <span class="site-menu-title">Sucursales</span>
+                        <i  class="site-menu-icon icon  md-pin-drop"  aria-hidden="true"></i>
+                          <span class="site-menu-title">Mis Sucursales</span>
                       </a>
                     </li>
-
+                    </ul>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/sucursales/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar Sucursal</span>
+                      </a>
+                    </li>
+                    </ul>
                     <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
-                      <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                      <i class="site-menu-icon fa-list-alt" aria-hidden="true"></i>
                         <span class="site-menu-title">Inventarios</span>
                       <span class="site-menu-arrow"></span>
                     </a>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/inventarios">
-                          <i  class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
-                            <span class="site-menu-title">Inventarios</span>
+                          <i  class="site-menu-icon fa-list" aria-hidden="true"></i>
+                            <span class="site-menu-title">Lista Inventarios</span>
                         </a>
                       </li>
                     </ul>
@@ -494,20 +521,70 @@
                       </li>
                     </ul>
                   </li>
-
+                  <!--<li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
+                        <span class="site-menu-title">Categorias</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>-->
+                    <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/categorias">
-                        <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
-                          <span class="site-menu-title">Categorias</span>
+                        <i class="site-menu-icon fa-pie-chart" aria-hidden="true"></i>
+                          <span class="site-menu-title">Mis Categorias</span>
                       </a>
                     </li>
+                    </ul>
+                    <!--<ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/categorias/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar categoria</span>
+                      </a>
+                    </li>
+                    </ul>-->
+                    <!--<li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon fa-align-left" aria-hidden="true"></i>
+                        <span class="site-menu-title">Lineas</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>-->
+                    <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/lineas">
                         <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
-                          <span class="site-menu-title">Lineas</span>
+                          <span class="site-menu-title">Mis lineas</span>
                       </a>
                     </li>
-
+                    </ul>
+                   <!-- <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/lineas/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar linea</span>
+                      </a>
+                    </li>
+                    </ul>-->
+                    <!--<li class="site-menu-item has-sub">
+                    <a href="javascript:void(0)">
+                      <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
+                        <span class="site-menu-title">Lineas</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/lineas">
+                        <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
+                          <span class="site-menu-title"> Mis Lineas</span>
+                      </a>
+                    </li>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/lineas/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar linea</span>
+                      </a>
+                    </li>
+                    </ul>-->
                     <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
                       <i class="site-menu-icon fa-shopping-basket" aria-hidden="true"></i>
@@ -563,6 +640,14 @@
                     </ul>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
+                          <a class="animsition-link" href="/traspasosAA/create">
+                          <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                            <span class="site-menu-title">Nuevo transpaso</span>
+                        </a>
+                        </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
                           <a class="animsition-link" href="#">
                           <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
                             <span class="site-menu-title">Reporte de traspasos por sucursal</span>
@@ -570,7 +655,6 @@
                       </li>
                     </ul>
                   </li>
-
                     <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
                       <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
@@ -580,8 +664,16 @@
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/gastos">
-                        <i  class="site-menu-icon icon fa-book"  aria-hidden="true"></i>
+                        <i  class="site-menu-icon icon fa-usd"  aria-hidden="true"></i>
                           <span class="site-menu-title">Mis Gastos</span>
+                      </a>
+                    </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/gastos/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar gasto</span>
                       </a>
                     </li>
                     </ul>
@@ -610,7 +702,14 @@
                         </a>
                       </li>
                     </ul>
-
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/usuarios/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Agregar Usuario</span>
+                      </a>
+                    </li>
+                    </ul>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item has-sub">
                       <a href="javascript:void(0)">
@@ -659,6 +758,14 @@
                         </a>
                       </li>
                     </ul>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/mayoristas/create">
+                        <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                          <span class="site-menu-title">Crear Nuevo Cliente</span>
+                      </a>
+                    </li>
+                    </ul>
                   </li>
                   <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
@@ -702,12 +809,30 @@
                       <span class="site-menu-arrow"></span>
                     </a>
                     <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/tiendas">
+                          <i class="site-menu-icon fa-eye" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mi tienda</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <ul class="site-menu-sub">
                   <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
                       <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
                         <span class="site-menu-title">Productos</span>
                       <span class="site-menu-arrow"></span>
                     </a>
+                    <!-- Mis Productos-->
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/sucursalproductoCO">
+                          <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mis Productos</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <!-- END Mis Productos-->
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/productos">
@@ -730,6 +855,7 @@
                         </a>
                         </li>
                     </ul>
+                    
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/sucursales">
                           <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
@@ -781,13 +907,34 @@
                         </a>
                       </li>
                       @endif
-                      <li class="site-menu-item">
+                      <!-- <li class="site-menu-item">
                           <a class="animsition-link" href="/traspasos">
                           <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
                             <span class="site-menu-title">Traspasos</span>
                         </a>
-                      </li>
-
+                      </li>-->
+                      <li class="site-menu-item has-sub">
+                    <a  href="javascript:void(0)">
+                      <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
+                        <span class="site-menu-title">Traspasos</span>
+                      <span class="site-menu-arrow"></span>
+                    </a>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/traspasosAA">
+                          <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mis Traspasos</span>
+                        </a>
+                        </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/traspasos/create">
+                          <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                            <span class="site-menu-title">Nuevo transpaso</span>
+                        </a>
+                        </li>
+                    </ul>
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/gastos">
                           <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
@@ -816,6 +963,14 @@
                       <span class="site-menu-title">Inicio</span>
                     </a>
                   </li>
+                  <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/tiendas">
+                          <i class="site-menu-icon fa-eye" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mi tienda</span>
+                        </a>
+                      </li>
+                    </ul>
                     <!-- Productos-->
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
@@ -838,7 +993,7 @@
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/sucursalproductoCO">
                           <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
-                            <span class="site-menu-title">Productos Tienda</span>
+                            <span class="site-menu-title">Mis Productos</span>
                         </a>
                       </li>
                     </ul>
@@ -888,6 +1043,14 @@
                             <span class="site-menu-title">Mis Traspasos</span>
                         </a>
                       </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/traspasos/create">
+                          <i  class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                            <span class="site-menu-title">Nuevo transpaso</span>
+                        </a>
+                        </li>
                     </ul>
                     <!-- END Mis Taspasos-->
                     <!-- END Taspasos-->
@@ -943,7 +1106,6 @@
 <section>-->
   @yield('js')
     <!-- Core  -->
-      <script src="{{{url('/global/vendor/jquery/jquery.js')}}}"></script>
     <script src={{{url('global/vendor/babel-external-helpers/babel-external-helpers.js')}}}></script>
     <script src={{{url('global/vendor/jquery/jquery.min.js')}}}></script>
     <script src={{{url('global/vendor/popper-js/umd/popper.min.js')}}}></script>
@@ -954,13 +1116,11 @@
     <script src={{{url('global/vendor/waves/waves.js')}}}></script>
 
     <!-- Plugins -->
-    <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
-    <script src={{{url('global/vendor/switchery/switchery.js')}}}></script>
+ <script src={{{url('global/vendor/switchery/switchery.js')}}}></script>
     <script src={{{url('global/vendor/intro-js/intro.js')}}}></script>
     <script src={{{url('global/vendor/screenfull/screenfull.js')}}}></script>
     <script src={{{url('global/vendor/slidepanel/jquery-slidePanel.js')}}}></script>
-    <script src={{{url('global/vendor/chartist/chartist.min.js')}}}></script>
-    <!--<script src={{{url('global/vendor/jvectormap/jquery-jvectormap.min.js')}}}></script>-->
+     <!--<script src={{{url('global/vendor/jvectormap/jquery-jvectormap.min.js')}}}></script>-->
     <!--<script src={{{url('global/vendor/jvectormap/maps/jquery-jvectormap-world-mill-en.js')}}}></script>-->
     <script src={{{url('global/vendor/matchheight/jquery.matchHeight-min.js')}}}></script>
     <script src={{{url('global/vendor/peity/jquery.peity.min.js')}}}></script>
@@ -1004,7 +1164,6 @@
     <script src={{{url('global/js/Plugin/jvectormap.js')}}}></script>
     <script src={{{url('global/js/Plugin/peity.js')}}}></script>
     <script src={{{url('global/js/Plugin/select2.js')}}}></script>
-    <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
     <script src={{{url('global/js/Plugin/dropify.js')}}}></script>
     <!--<script src={{{url('assets/examples/js/forms/uploads.js')}}}></script>-->
 
@@ -1035,7 +1194,6 @@
     <script src={{{url('global/js/Plugin/jvectormap.js')}}}></script>
     <script src={{{url('global/js/Plugin/peity.js')}}}></script>
 
-    <script src={{{url('assets/examples/js/dashboard/v1.js')}}}></script>
     <script src={{{url('global/js/Plugin/icheck.js')}}}></script>
 
     <!-- datatable -->
@@ -1043,12 +1201,8 @@
     <script src={{{url('assets/examples/js/tables/datatable.js')}}}></script>
     <script src={{{url('assets/examples/js/uikit/icon.js')}}}></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-    <script src={{{url('global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js')}}}></script>
-    <script src={{{url('global/vendor/tooltip/tooltip-popover.js')}}}></script>
-    <script src="{{{url('global/js/components/material.js')}}}"></script>
-    <script src="{{{url('global/vendor/bootstrap/bootstrap.js')}}}"></script>
-    <script src={{{url('assets/examples/js/advanced/lightbox.js')}}}></script>
-    <script src={{{url('global/js/Plugin/magnific-popup.js')}}}></script>
+     <script src="{{{url('global/vendor/bootstrap/bootstrap.js')}}}"></script>
+     <script src={{{url('global/js/Plugin/magnific-popup.js')}}}></script>
     <script src={{{url('global/vendor/magnific-popup/jquery.magnific-popup.js')}}}></script>
 
 

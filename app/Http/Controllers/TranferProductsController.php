@@ -15,19 +15,24 @@ use Carbon\Carbon;
 use PDF;
 use DB;
 use Auth;
+use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\Storage;
 
 
 
 class TranferProductsController extends Controller
 {
+  use S3ImageManager;
     public function __construct(){
     }
     public function index()
        {
         $user = Auth::user();
+
         $trans = TransferProduct::where('user_id', $user->id)
           ->orWhere('destination_user_id', $user->id)
+          ->orWhere('last_branch_id', $user->branch->id)
+          ->orWhere('new_branch_id', $user->branch->id)
           ->with('user')->with('branch')->with('product')->get();
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
@@ -48,7 +53,7 @@ class TranferProductsController extends Controller
        }
        public function indexAA()
        {
-         
+        
         $user = Auth::user();
         $trans = TransferProduct::all();
         
@@ -87,21 +92,23 @@ class TranferProductsController extends Controller
         $users = User::where('id', '!=', $user->id)->get();
         $products = Product::where('branch_id', $user->branch_id)->get();
         
-        $branches = Branch::where('branches.id', '!=', $user->branch_id)
-          ->join('shops', 'shops.id', 'branches.shop_id')
-          ->where('shops.id', $shop->id)
-          ->select('branches.id', 'branches.name')
+        if($user->shop && $user->shop->shop_group_id) {
+          $shop_ids = Shop::where('shop_group_id', $user->shop->shop_group_id)->get()->map(function($item) { return $item->id;  });
+          $branches = Branch::whereIn('shop_id', $shop_ids)
           ->get();
+        } else {
+          $branches = Branch::where('shop_id', $user->shop->id)
+          // ->where('id', '!=', $user->branch_id)
+          ->get();
+        }
+        
+        $branch_ids = $branches->map(function($b) { return $b->id; });
         
         $user = Auth::user(); //Retorna el usuario con el que se encuentra logueado 
         $users = User::where('id', '!=', $user->id)->get(); // Retorna los usuarios que pertenecen a la tienda y no estan logueados
         //return $users;
-        $products = Product::where('branch_id', $user->branch_id)->get(); //Retorna todos los productos de la tienda solo si el usuario tiene
-        // un  type_user direfente de 0
-        //$products = Product::all();
-        //return $products;
-        $branches = Branch::where('id', '!=', $user->branch_id)->get(); 
-        //return $branches;
+        $products = Product::where('branch_id', $user->branch_id)
+        ->get(); //Retorna todos los productos de la tienda solo si el usuario tiene
         return view('transfer/add', compact('branches','users','products','user'));
        }
 
@@ -110,16 +117,21 @@ class TranferProductsController extends Controller
        return view('transfer.show');
        }
 
-       public function store(Request $request)
-       {
-          $user = Auth::user();
-          $data = $request->all();
-          $data['last_branch_id']  = $user->branch_id;
-          $data['user_id'] = $user->id;
-          $data['status_product'] = null;
+	public function store(Request $request)
+    {
+    	$user = Auth::user();
+    	$data = $request->all();
+    	$data['last_branch_id']  = $user->branch_id;
+    	$data['user_id'] = $user->id;
+    	$data['status_product'] = null;
 
-           $transfer_product = TransferProduct::create($data);
-           return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
+    	$transfer_product = TransferProduct::create($data);
+
+    	$product = Product::find($request->product_id);
+		  // $product->status_id = 3;
+		  // $product->save();
+
+    	return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
     }
 
   public function answerTransferRequest(Request $request) {
@@ -134,7 +146,8 @@ class TranferProductsController extends Controller
       $transfer->save(); 
       if($request->answer) {
         $product->branch_id = $transfer->new_branch_id;
-        $product->status_id = 3;
+        // $product->status_id = 2;
+	    	$product->status_id = 3;
         $product->shop_id = $user->shop->id;
         $product->save();
       }
@@ -153,22 +166,48 @@ class TranferProductsController extends Controller
     return back();
   }
 
+  public function giveBack(Request $request) {
+	$transfer = TransferProduct::find($request->transfer_id);
+	
+	$product = Product::where('id', $transfer->product_id)->first();
+  $product->branch_id = $transfer->last_branch_id;
+  $product->status_id = 2;
+	$product->save();
+    $transfer->delete();
+	
+    return back();
+  }
   
-public function exportPdfall(){
-    $user = Auth::user();
+public function exportPdfall(){ 
+  $user = Auth::user();
+        $date= date("Y-m-d");
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+        $branches = $user->shop->branches;
+        $shop = Auth::user()->shop;
+        if($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
+    // $trans = TransferProduct::all();
     $trans = TransferProduct::where('user_id', $user->id)
     ->orWhere('destination_user_id', $user->id)
     ->with('user')->with('branch')->get();
-    $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans'));
+    
+    $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans','date','hour','shop'));
     $pdf->setpaper('letter', 'landscape');
     return $pdf->stream('Traspasos.pdf');  
   }
 
     public function exportPdf($id){
      // return $id;
+     $user = Auth::user();
+     $shop = Auth::user()->shop;
+        if($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
     $trans = TransferProduct::where("id","=",$id)->get();
     $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));
-    return $pdf->stream('Traspaso.pdf');
+    return $pdf->stream('Traspaso.pdf');  
   }
 
 }

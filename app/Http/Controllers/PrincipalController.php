@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Traits\S3ImageManager;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class PrincipalController extends Controller
 {
@@ -39,56 +41,244 @@ class PrincipalController extends Controller
         ->get();
         //return $branches_col;
 
-        //CONSULTAS PARA ADMINISTRADORES
-       //SUMA TOTAL DE GRAMOS
-      $gramos = Shop::join('products','products.shop_id','shops.id')
+    //CONSULTAS PARA ADMINISTRADORES
+       //SUMA TOTAL DE GRAMOS EXISTENTES
+      $gramos_existentes = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
-      ->withTrashed()
-      ->where('products.status_id',2)
-      ->where('lines.shop_id', Auth::user()->shop->id)  
+      ->where('products.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
-     // ->where('products.branch_id',$branch->id)
-      ->select(DB::raw('SUM(products.weigth) as total_w'))
-      ->get();
-      //return $gramos->total_w;
+      ->where('products.deleted_at', NULL)
+      ->where('products.status_id',2)
+      ->select('products.weigth as total_ex' ,'products.status_id as existente', DB::raw('SUM(products.weigth) as total_ex'))
+      ->where('products.status_id',2)
+      ->sum('products.weigth');
 
-       //SUMA TOTAL DE VENTAS
-       $ventas = Shop::join('products','products.shop_id','shops.id')
+    //SUMA TOTAL DE GRAMOS TRASPASADOS
+      $gramos_traspasado = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->where('products.shop_id', Auth::user()->shop->id)  
+      ->where('categories.type_product',2) 
+      ->where('products.deleted_at', NULL)
+      ->select('products.weigth as total_ex' ,'products.status_id as trapasado', DB::raw('SUM(products.weigth) as total_traspasado'))
+      ->where('products.status_id',3)
+      ->sum('products.weigth');
+      //return $gramos_traspasado;
+
+      //SUMA TOTAL DE GRAMOS DAÑADOS 
+      $gramos_dañados = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->where('products.shop_id', Auth::user()->shop->id)  
+      ->where('categories.type_product',2) 
+      ->where('products.discar_cause',2) 
+      ->select('products.weigth as total_dañados' ,'products.status_id as dañados',)
+      ->sum('products.weigth');
+
+    //SUMA TOTAL DE GRAMOS
+        $total = $gramos_existentes + $gramos_traspasado  + $gramos_dañados;
+
+        /**return response()->json([
+          'gramos_existen'=>$gramos_existentes,
+          'gramos_traspasados'=>$gramos_traspasado,
+          'gramos_dañados'=>$gramos_dañados,
+          'total' => $gramos_existentes + $gramos_traspasado  + $gramos_dañados,
+          ]);**/
+
+        //return $gramos_d;
+       //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS
+
+        //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS EXISTENTES
+       $ventas_e = Shop::join('products','products.shop_id','shops.id')
        ->join('categories','categories.id','products.category_id')
        ->join('statuss','statuss.id','products.status_id')
        ->join('branches','branches.id','products.branch_id')
-       ->join('lines','lines.id','products.line_id')
-       ->withTrashed()
        ->where('products.status_id',2)
-       ->where('lines.shop_id', Auth::user()->shop->id)  
+       ->where('products.deleted_at', NULL)
+       ->where('products.shop_id', Auth::user()->shop->id)  
        ->where('categories.type_product',2) 
-      // ->where('products.branch_id',$branch->id)
-       ->select(DB::raw('SUM(products.price) as total_p'))
-       ->get();
-       //return $ventas;
+       ->sum('products.price');
 
-        
+       //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS TRASPASADOS
+       $ventas_t = Shop::join('products','products.shop_id','shops.id')
+       ->join('categories','categories.id','products.category_id')
+       ->join('statuss','statuss.id','products.status_id')
+       ->join('branches','branches.id','products.branch_id')
+       ->where('products.status_id',3)
+       ->where('products.deleted_at', NULL)
+       ->where('products.shop_id', Auth::user()->shop->id)  
+       ->where('categories.type_product',2) 
+       ->sum('products.price');
 
-        //CONSULTAS PARA SUB ADIMINISTRADORES Y COLABORADORES
+       //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS DAÑADOS
+       $ventas_d = Shop::join('products','products.shop_id','shops.id')
+       ->join('categories','categories.id','products.category_id')
+       ->join('statuss','statuss.id','products.status_id')
+       ->join('branches','branches.id','products.branch_id')
+       ->where('products.discar_cause',2) 
+       ->where('products.shop_id', Auth::user()->shop->id)  
+       ->where('categories.type_product',2) 
+       ->sum('products.price');
+
+       $ventas = $ventas_e + $ventas_t + $ventas_d;
+
+    //CONSULTAS PARA SUB-ADIMINISTRADORES Y COLABORADORES
        //SUMA TOTAL DE GRAMOS
-      $gramos_col = Shop::join('products','products.shop_id','shops.id')
+
+      //SUMA TOTAL DE GRAMOS EXISTENTES
+      $gramos_cole = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->join('lines','lines.id','products.line_id')
-      ->withTrashed()
       ->where('products.status_id',2)
-      ->where('lines.shop_id', Auth::user()->shop->id)  
+      ->where('products.deleted_at', NULL)
+      ->where('products.shop_id', Auth::user()->shop->id)  
       ->where('categories.type_product',2) 
       ->where('products.branch_id',$ids)
-      ->select(DB::raw('SUM(products.weigth) as total_w'))
-      ->get();
-      //return $gramos->total_w;
+      ->sum('products.weigth');
+
+      //SUMA TOTAL DE GRAMOS TRASPASADOS
+      $gramos_colt = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->where('products.status_id',3)
+      ->where('products.shop_id', Auth::user()->shop->id)  
+      ->where('categories.type_product',2)
+      ->where('products.deleted_at', NULL)
+      ->where('products.branch_id',$ids)
+      ->sum('products.weigth');
+
+      //SUMA TOTAL DE GRAMOS DAÑADOS
+      $gramos_cold = Shop::join('products','products.shop_id','shops.id')
+      ->join('categories','categories.id','products.category_id')
+      ->join('statuss','statuss.id','products.status_id')
+      ->join('branches','branches.id','products.branch_id')
+      ->where('products.shop_id', Auth::user()->shop->id)  
+      ->where('categories.type_product',2) 
+      ->where('products.branch_id',$ids)
+      ->where('products.discar_cause',2)
+      ->sum('products.weigth');
+
+      $gramos_col = $gramos_cole + $gramos_colt + $gramos_cold;
+
+    //CONSULTAS PARA ADMINISTRADORES
+ 
+       //SUMA TOTAL DE PIEZAS EXISTENTES
+       $piezas_e = Shop::join('products','products.shop_id','shops.id')
+       ->join('categories','categories.id','products.category_id')
+       ->join('statuss','statuss.id','products.status_id')
+       ->join('branches','branches.id','products.branch_id')
+       ->where('products.deleted_at', NULL)
+       ->where('categories.type_product',1)
+       ->where('products.shop_id', Auth::user()->shop->id)  
+       ->where('products.status_id',2) 
+       ->count('products.id');
+ 
+       //SUMA TOTAL DE PIEZAS TRASPASADAS
+       $piezas_t = Shop::join('products','products.shop_id','shops.id')
+       ->join('categories','categories.id','products.category_id')
+       ->join('statuss','statuss.id','products.status_id')
+       ->join('branches','branches.id','products.branch_id')
+       ->where('products.status_id',3)
+       ->where('products.deleted_at', NULL)
+       ->where('products.shop_id', Auth::user()->shop->id)  
+       ->where('categories.type_product',1)
+       ->count('products.id');
+ 
+       //SUMA TOTAL DE PIEZAS DAÑADAS
+       $piezas_d = Shop::join('products','products.shop_id','shops.id')
+       ->join('categories','categories.id','products.category_id')
+       ->join('statuss','statuss.id','products.status_id')
+       ->join('branches','branches.id','products.branch_id')
+       ->where('products.discar_cause',2)
+       ->where('products.shop_id', Auth::user()->shop->id)  
+       ->where('categories.type_product',1)  
+       ->count('products.id');
+
+       $piezas = $piezas_e + $piezas_t + $piezas_d;
+ 
+        //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA
+ 
+         //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA EXISTENTES
+        $pieza_vente = Shop::join('products','products.shop_id','shops.id')
+        ->join('categories','categories.id','products.category_id')
+        ->join('statuss','statuss.id','products.status_id')
+        ->join('branches','branches.id','products.branch_id')
+        ->where('products.status_id',2)
+        ->where('products.deleted_at', NULL)
+        ->where('products.shop_id', Auth::user()->shop->id)  
+        ->where('categories.type_product',1) 
+        ->sum('products.price');
+ 
+        //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA TRASPASADOS
+        $pieza_ventt = Shop::join('products','products.shop_id','shops.id')
+        ->join('categories','categories.id','products.category_id')
+        ->join('statuss','statuss.id','products.status_id')
+        ->join('branches','branches.id','products.branch_id')
+        ->where('products.status_id',3)
+        ->where('products.deleted_at', NULL)
+        ->where('products.shop_id', Auth::user()->shop->id)  
+        ->where('categories.type_product',1) 
+        ->sum('products.price');
+ 
+        //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA DAÑADOS
+        $pieza_ventd = Shop::join('products','products.shop_id','shops.id')
+        ->join('categories','categories.id','products.category_id')
+        ->join('statuss','statuss.id','products.status_id')
+        ->join('branches','branches.id','products.branch_id')
+        ->where('products.discar_cause',2)
+        ->where('products.shop_id', Auth::user()->shop->id)  
+        ->where('categories.type_product',1) 
+        ->sum('products.price');
+
+        $pieza_vent = $pieza_vente + $pieza_ventt + $pieza_ventd;
+ 
+    //CONSULTAS PARA SUB ADIMINISTRADORES Y COLABORADORES
+        //SUMA TOTAL DE PIEZAS
+ 
+       //SUMA TOTAL DE PIEZAS EXISTENTES
+       $piezas_cole = Shop::join('products','products.shop_id','shops.id')
+       ->join('categories','categories.id','products.category_id')
+       ->join('statuss','statuss.id','products.status_id')
+       ->join('branches','branches.id','products.branch_id')
+       ->where('products.status_id',2)
+       ->where('products.deleted_at', NULL)
+       ->where('products.shop_id', Auth::user()->shop->id)  
+       ->where('categories.type_product',1) 
+       ->where('products.branch_id',$ids)
+       ->count('products.id');
+ 
+       //SUMA TOTAL DE PIEZAS TRASPASADAS
+       $piezas_colt = Shop::join('products','products.shop_id','shops.id')
+       ->join('categories','categories.id','products.category_id')
+       ->join('statuss','statuss.id','products.status_id')
+       ->join('branches','branches.id','products.branch_id')
+       ->where('products.status_id',3)
+       ->where('products.shop_id', Auth::user()->shop->id)  
+       ->where('categories.type_product',1)
+       ->where('products.deleted_at', NULL)
+       ->where('products.branch_id',$ids)
+       ->count('products.id');
+ 
+       //SUMA TOTAL DE PIEZAS DAÑADAS
+       $piezas_cold = Shop::join('products','products.shop_id','shops.id')
+       ->join('categories','categories.id','products.category_id')
+       ->join('statuss','statuss.id','products.status_id')
+       ->join('branches','branches.id','products.branch_id')
+       ->where('products.shop_id', Auth::user()->shop->id)  
+       ->where('categories.type_product',1) 
+       ->where('products.branch_id',$ids)
+       ->where('products.discar_cause',2)
+       ->count('products.id');
+
+       $piezas_col = $piezas_cole + $piezas_colt + $piezas_cold;
         
-        return view ('Principal/principal',compact('branches_col','gramos_col','branches','branch','user','shop','shops','gramos','ventas'));
+        return view ('Principal/principal',compact('gramos_dañados','gramos_traspasado','pieza_vent','piezas_cold','piezas_col','piezas_cole','piezas_colt','pieza_vente','pieza_ventt','pieza_ventd','piezas_e','piezas_t','piezas_d','piezas','gramos_colt','gramos_cole','gramos_cold','ventas_d','ventas_t','ventas_e','branches_col','gramos_col','branches','branch','user','shop','shops','gramos_existentes','ventas','gramos_dañados','total'));
     }
 
     public function exportPdf(){

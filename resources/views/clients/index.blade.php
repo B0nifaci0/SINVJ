@@ -10,11 +10,11 @@ LISTA DE  SUCURSALES
 
 @endsection
 @section('menu')
-  
+
 @endsection
 @section('content')
   <div class="panel-body">
-	@if (session('mesage'))	
+	@if (session('mesage'))
 	<div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -22,7 +22,7 @@ LISTA DE  SUCURSALES
   </button>
 	</div>
 		@endif
-    @if (session('mesage-update'))	
+    @if (session('mesage-update'))
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage-update') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -30,28 +30,34 @@ LISTA DE  SUCURSALES
   </button>
 	</div>
 		@endif
-			@if (session('mesage-delete'))	
+			@if (session('mesage-delete'))
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage-delete') }}</strong>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 	</div>
-		@endif    
+		@endif
   <div class="page-content">
         <!-- Panel Basic -->
     <div class="panel">
-      <header class="panel-heading">
-        <div class="panel-actions">
-          @if(Auth::user()->type_user == 1 )
-          <div class="col-md-14 col-md-offset-2">
-            <button onclick="window.location.href='/mayoristas/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-right " data-toggle="tooltip" data-original-title="Agregar">
-             <i class="icon md-plus" aria-hidden="true"></i></button>
+        <div class="panel-body">
+            <div class="example-wrap">
+              <h1 class="text-center panel-title">Clientes Mayoristas</h1>
+              <div class="panel-actions float-right">
+                <div class="container-fluid row float-right">
+                  @if(Auth::user()->type_user == 1 )
+                  <!-- Botón para Generar PDF de productos-->
+                  <div class="col-6">
+                    <button onclick="window.location.href='/mayoristas/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip" data-original-title="Agregar">
+                        <i class="icon md-plus" aria-hidden="true"></i></button>
+                  </div>
+                  <!-- END Botón-->
+                  @endif
+                </div>
+              </div>
+            </div>
           </div>
-           @endif
-        </div>
-        <h3 class="panel-title">Clientes Mayoristas</h3>
-      </header>
       <div class="panel-body">
             <!-- Tabla para listar sucursales-->
             <table id='table'  class="table table-hover dataTable table-striped w-full">
@@ -78,29 +84,29 @@ LISTA DE  SUCURSALES
               <tbody>
                   @foreach ($clients as $client)
                   <tr id = "row{{ $client->id }}">
-                    <td>{{$client->name}}</td> 
+                    <td>{{$client->name}}</td>
                     <td>{{$client->first_lastname }}</td>
                     <td>{{$client->second_lastname }}</td>
                     <td>{{$client->phone_number }}</td>
                     <td>{{$client->branch ? $client->branch->name : 'Sin sucursal' }}</td>
                     <td>
                         <!-- Botón para ver cliente-->
-                        <a href="/mayoristas/{{ $client->id }}" type="button" 
+                        <a href="/mayoristas/{{ $client->id }}" type="button"
                         class="btn btn-icon btn-primary waves-effect waves-light waves-round"
                         data-toggle="tooltip" data-original-title="ver">
-                        <i class="icon fa-search" aria-hidden="true"></i></button></a> 
-                        <!--END Botón --> 
+                        <i class="icon fa-search" aria-hidden="true"></i></button></a>
+                        <!--END Botón -->
                         <!-- Botón para editar cliente-->
                         <a href="/mayoristas/{{$client->id}}/edit"> <button type="button"
                         class="btn btn-icon btn-info waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Editar">
                       <i class=" icon md-edit" aria-hidden="true"></i></button></a>
-                      <!--END Botón -->               
+                      <!--END Botón -->
                         <!-- Botón para eliminar cliente -->
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                        alt="{{$client->id}}" role="button" 
+                        alt="{{$client->id}}" role="button"
                         data-toggle="tooltip" data-original-title="Eliminar">
-                        <i class="icon md-delete" aria-hidden="true"></i></button></a> 
+                        <i class="icon md-delete" aria-hidden="true"></i></button></a>
                         <!--END Botón -->
                     </td>
                   </tr>
@@ -132,7 +138,7 @@ $(document).ready(function() {
       cancelButtonColor: '#3085d6',
       confirmButtonText: 'Si, Borralo!'
     }).then((result) => {
-      if (result.value) 
+      if (result.value)
       {
         $.ajaxSetup({
          headers: {
@@ -149,7 +155,7 @@ $(document).ready(function() {
               'El registro ha sido eliminado.',
               'success'
             )
-          }, 
+          },
           error: function () {
             Swal.fire(
               'Eliminado',
