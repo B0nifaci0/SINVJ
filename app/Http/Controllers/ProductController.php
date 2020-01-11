@@ -420,6 +420,7 @@ class ProductController extends Controller
           $product->image = $this->saveImages($base64Image, $path, $product->clave);
         }
 
+         $product->clave = $request->clave;
          $product->description = $request->description;
          $product->weigth = $request->weigth;
          $product->observations = $request->observations;
