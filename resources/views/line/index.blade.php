@@ -77,7 +77,8 @@ LISTA DE  LINEA
               <tr>
                 <th>Clave</th>
                 <th>Nombre</th>
-                <th>Precio</th>
+                <th>Precio compra</th>
+                <th>Precio venta</th>
                 <th>Descuento</th>
                 <!--@if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
@@ -88,7 +89,8 @@ LISTA DE  LINEA
               <tr>
                 <th>Clave</th>
                 <th>Nombre</th>
-                <th>Precio</th>
+                <th>Precio compra</th>
+                <th>Precio venta</th>
                 <th>Descuento</th>
                 <!--@if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
@@ -100,6 +102,7 @@ LISTA DE  LINEA
                 <tr id = "row{{ $line->id }}">
                   <td>{{ $line->id}}</td>
                   <td>{{ $line->name }}</td>
+                  <td>$ {{$line->purchase_price}}</td>
                   <td>$ {{ $line->sale_price }}</td>
                   <!--discount_percentage descuenta dinero-->
                   <td>% {{ $line->discount_percentage }}</td>

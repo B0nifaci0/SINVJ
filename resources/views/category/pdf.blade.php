@@ -1,9 +1,8 @@
-	 
-	 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
  <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Reporte de Lineas</title>
+   <title>Reporte de Categorias</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
    <style>
    @media print {
@@ -53,27 +52,30 @@
 </head>
 <body>
 <div class="page-content">
-<img align="left" width="120px" height="120px" src="{{ $shop->image }}"><br>
+<img align="left" width="140px" height="120px" src="{{ $shop->image }}"><br>
     <div class="panel">
     <p align="right">Fecha:{{$date}}</p>
     <p align="right">Hora:{{$hour}}</p>
-    <h2 align="center">Reporte de Lineas {{$shop->name}}</h2>
+    <h2 align="center">Reporte de Categorias {{$shop->name}}</h2>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
               <tr>
                 <th>Clave</th>
                 <th>Nombre</th>
-                <th>Precio Compra</th>
-                <th>Precio Venta</th>
+                <th>Tipo de producto</th>
               </tr>
               </thead>
               <tbody>
-                  @foreach ($lines as $line)
-                  <tr id = "row{{ $line->id }}">
-                    <td>{{ $line->id}}</td>
-                    <td>{{ $line->name }}</td>
-                    <td>$ {{ $line->purchase_price }}</td>
-                    <td>$ {{ $line->sale_price }}</td> 
+                  @foreach ($category as $category)
+                  <tr id = "row{{ $category->id }}">
+                    <td>{{ $category->id}}</td>
+                    <td>{{ $category->name }}</td>
+                    @if($category->type_product == 1 )
+                    <td>Pieza</td>
+                @endif
+                @if($category->type_product == 2 )
+                    <td>Gramos</td>
+                @endif
                     </td>
                   </tr>
                     @endforeach

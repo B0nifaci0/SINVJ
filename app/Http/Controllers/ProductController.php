@@ -505,7 +505,16 @@ $fecter = Carbon::parse($request->fecter)->addDay();
 
 /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
 
-
+        if($request->estatus_id == 3){
+      $products = Product::join('transfer_products','transfer_products.product_id','products.id')
+      ->where("products.branch_id",$request->branch_id)
+      ->whereBetween('products.updated_at',[$fecini,$fecter])
+      ->where("products.status_id",$request->estatus_id)
+      ->where("products.category_id",$request->category_id)
+      ->where("products.line_id","=",$request->id)
+      ->orderBy('products.clave','asc')
+      ->get();
+        }
       $branches = Branch::where("id",$request->branch_id)->get();
       $products = Product::where("branch_id",$request->branch_id)
       ->whereBetween('products.updated_at',[$fecini,$fecter])
@@ -514,6 +523,7 @@ $fecter = Carbon::parse($request->fecter)->addDay();
       ->where("line_id","=",$request->id)
       ->orderBy('clave','asc')
       ->get();
+
 
       $detalle = SaleDetails::all();
 

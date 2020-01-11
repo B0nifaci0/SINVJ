@@ -235,6 +235,7 @@ Route::group(['middleware' => ['auth']],function () {
   Route::delete('/lineas/{id}','LineController@destroy');
 
   //CATEGORIAS
+  Route::get('categoriaspdf', 'CategoryController@exportPdf');
   Route::get('categorias/create', 'CategoryController@create');
   Route::get('/categorias', 'CategoryController@index');
   Route::post('/categorias', 'CategoryController@store');

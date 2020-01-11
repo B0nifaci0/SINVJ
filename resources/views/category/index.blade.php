@@ -43,6 +43,15 @@ LISTA DE  CATEGORIA
               <div class="panel-actions float-right">
                 <div class="container-fluid row float-right">
                   @if(Auth::user()->type_user == 1 )
+                  <!-- Botón para Generar PDF de productos-->
+                  <div class="col-6">
+                    <button onclick="window.location.href='categoriaspdf'"
+                    type="button" class=" btn btn-sm small btn-floating
+                    toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                    data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                  </button>
+                  </div>
                   <!-- Botón para Generar PDF de productos
                   <div class="col-6">
                     <button onclick="window.location.href='/categorias/create'" type="button"
