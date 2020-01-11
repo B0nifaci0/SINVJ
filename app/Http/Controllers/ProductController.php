@@ -219,8 +219,13 @@ class ProductController extends Controller
         // }
 
         $products = Product::join('shops', 'shops.id','=', 'products.shop_id')
-        ->where('branch_id', $user->branch->id)
-        ->get();
+    		->where([
+          'branch_id' => $user->branch_id,
+          'status_id' => 2
+          ])
+          ->whereNull('products.deleted_at')
+          ->orderBy('clave','asc')
+          ->get();
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
