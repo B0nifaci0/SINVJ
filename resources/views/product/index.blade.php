@@ -92,13 +92,13 @@ LISTA PRODUCTO
                         <th data-toggle="true">Clave</th>
                         <th data-hide="phone, tablet">Descripción</th>
                         <th data-hide="phone, tablet">Peso</th>
-                        <th data-hide="phone, tablet">Observaciónes</th>
+                        <th data-hide="phone, tablet">Observaciones</th>
                         <th data-hide="phone, tablet">Imagen</th>
                         <th data-hide="phone, tablet">Categoría</th>
                         <th data-hide="phone, tablet">Linea</th>
                         <th data-hide="phone, tablet">Sucursal</th>
                         <th data-hide="phone, tablet">Status</th>
-                        <th data-hide="phone, tablet">precio</th>
+                        <th data-hide="phone, tablet">Precio Venta</th>
                         @if(Auth::user()->type_user == 1 )
                         <th data-hide="phone, tablet">Opciones</th>
                         @endif
@@ -115,7 +115,7 @@ LISTA PRODUCTO
                         <th></th>
                         <th>Sucursal</th>
                         <th>Status</th>
-                        <th>Precio</th>
+                        <th>Precio Venta</th>
                         @if(Auth::user()->type_user == 1 )
                         <th>Opciones</th>
                         @endif
@@ -196,6 +196,7 @@ LISTA PRODUCTO
                       <th data-hide="phone, tablet">Precio Venta</th>
                       @if(Auth::user()->type_user == 1 )
                       <th data-hide="phone, tablet">Precio Compra</th>
+                      <th data-hide="phone, tablet">Precio Descuento</th>
                       <th data-hide="phone, tablet">Opciones</th>
                       @endif
                     </tr>
@@ -212,6 +213,7 @@ LISTA PRODUCTO
                       <th>Precio Venta</th>
                       @if(Auth::user()->type_user == 1 )
                       <th>Precio Compra</th>
+                      <th>Precio Descuento</th>
                       <th>Opciones</th>
                       @endif
                     </tr>
@@ -248,6 +250,7 @@ LISTA PRODUCTO
                       <td>${{$product->price }}</td>
                       @if(Auth::user()->type_user == 1)
                       <td>${{$product->price_purchase}}</td>
+                      <td>${{$product->discount}}</td>
                       <td>
                         <!-- Botón para editar producto-->
                         <a type="button" href="/productos/{{$product->id}}/edit"
