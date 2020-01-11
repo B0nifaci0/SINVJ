@@ -44,12 +44,12 @@ Panel Sucursales
             <div class="row">
             @if(Auth::user()->type_user == 1 )
                   <div class="col-md-12">
-                      <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
+                     <!-- <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
                         type="button" class="btn btn-lg 
                         toggler-left  btn-primary waves-effect waves-light waves-round float-right"
                         data-toggle="tooltip" data-original-title="Editar Tienda">
                         <i class="icon md-edit" aria-hidden="true" align="right"></i>
-                      </button>
+                      </button>-->
                   </div>
                   @endif
               <div class="col-md-12">   
