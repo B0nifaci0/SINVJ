@@ -172,8 +172,8 @@ class ProductController extends Controller
           $products = Product::where('branch_id', $user->branch_id)
             ->where([
               'branch_id' => $user->branch_id,
-              'status_id' => 2
             ])
+            ->whereIn('status_id', [2, 3])
             ->whereNull('products.deleted_at')
             ->orderBy('clave','asc')
             ->get();
@@ -235,8 +235,8 @@ class ProductController extends Controller
         $products = Product::join('shops', 'shops.id','=', 'products.shop_id')
     		->where([
           'branch_id' => $user->branch_id,
-          'status_id' => 2
           ])
+          ->whereIn('status_id', [2, 3])
           ->whereNull('products.deleted_at')
           ->orderBy('clave','asc')
           ->get();
