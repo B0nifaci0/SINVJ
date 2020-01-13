@@ -53,7 +53,8 @@ Panel Sucursales
                   </div>
                   @endif
               <div class="col-md-12">   
-                  <h3>{{$braname->name}}</h3>
+                  <h3>Sucursal:{{$braname->name}}</h3>
+                  <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
               </div>
               </div>
           </div>
