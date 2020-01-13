@@ -168,7 +168,8 @@ class BranchController extends Controller
       $user = Auth::user();
       $branch = Shop::find($id_shop)->branches()->get();
       $shops = Auth::user()->shop()->get();
-
+  
+      
       if($shop->image) {
         $shop->image = $this->getS3URL($shop->image);
       }
@@ -176,7 +177,10 @@ class BranchController extends Controller
       $branches= Auth::user()->shop->branches;
 
       $branch = Branch::findOrFail($id);
+      
       $ids = $branch->id;
+      $braname = Branch::findOrFail($id);
+      //return $braname;
       //return $ids;
       //return Auth::user()->shop->id;
 
@@ -463,7 +467,7 @@ class BranchController extends Controller
       ->select(DB::raw('count(products.id) as num_pzd'))
       ->get();
 
-      return view('Branches/mostrar', ['cat_d' => $cat_d,'cat_t' => $cat_t,'cat_e' => $cat_e,'total_e'=> $total_e,'total_d'=> $total_d,'category' => $category , 'total_t'=> $total_t,'branch' => $id_shop, 'total' => $total, 'shop' => $shop],compact('branches_col','branch'));
+      return view('Branches/mostrar', ['cat_d' => $cat_d,'cat_t' => $cat_t,'cat_e' => $cat_e,'total_e'=> $total_e,'total_d'=> $total_d,'category' => $category , 'total_t'=> $total_t,'branch' => $id_shop, 'total' => $total, 'shop' => $shop],compact('braname','branch'));
     }
 
     /** 
