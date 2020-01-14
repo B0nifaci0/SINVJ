@@ -29,7 +29,7 @@
 
 .producto {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 15px;
     text-align: center;
     align-content: center;
 }
@@ -84,11 +84,11 @@
         <div class="ticket" id = "{{$transfer->id}}">
                 <p class="titulo">TRASPASO</p>
                 <p class="hora">{{$transfer->created_at->format('m/d/Y H:i:s')}}</p> 
-                <p align="center">Sucursal  Origen...............{{$transfer->lastBranch->name}}</p>
+                <p align="center">Sucursal  Origen........{{$transfer->lastBranch->name}}</p>
                 <p align="center">Envió...............{{$transfer->user->name}}</p>
                 <p class="producto">{{ $transfer->product->clave }}</p>
-                <p align="center">{{ $transfer->product->weigth }}.{{ $transfer->product->line ? $transfer->product->line->name : '' }}</p>
-                <p align="center">Sucursal Destino...............{{$transfer->newBranch->name}}</p>
+                <p align="center">{{ $transfer->product->weigth }} gr,{{ $transfer->product->line ? $transfer->product->line->name : '' }}</p>
+                <p align="center">Sucursal Destino..........{{$transfer->newBranch->name}}</p>
                 <p align="center">Recibió...............{{$transfer->destinationUser->name}}</p>
                 <br>
                 <p class="firma">________________

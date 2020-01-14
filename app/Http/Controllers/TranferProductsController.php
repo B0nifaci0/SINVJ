@@ -206,7 +206,7 @@ public function exportPdfall(){
             $shop->image = $this->getS3URL($shop->image);
         }
     $trans = TransferProduct::where("id","=",$id)->get();
-    $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans'));
+    $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans','shop'));
     return $pdf->stream('Traspaso.pdf');  
   }
 
