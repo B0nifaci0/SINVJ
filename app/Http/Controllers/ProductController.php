@@ -169,9 +169,23 @@ class ProductController extends Controller
         $user = Auth::user();
         $shop_id = $user->shop->id;
         if($user->type_user == User::CO) {
-          $products = Product::where('branch_id', $user->branch_id)->orderBy('description','asc')->get();
+          $products = Product::where('branch_id', $user->branch_id)
+            ->where([
+              'branch_id' => $user->branch_id,
+              'status_id' => 2
+            ])
+            ->whereNull('products.deleted_at')
+            ->orderBy('clave','asc')
+            ->get();
         } else {
-          $products = Shop::find($shop_id)->products()->get();
+          $products = Product::where('branch_id', $user->branch_id)
+            ->where([
+              'branch_id' => $user->branch_id,
+              'status_id' => 2
+            ])
+            ->whereNull('products.deleted_at')
+            ->orderBy('clave','asc')
+            ->get();
         }
         $shops = Auth::user()->shop()->get();
         $categories = Shop::find($shop_id)->categories()->get();
@@ -211,16 +225,21 @@ class ProductController extends Controller
         $lines = Shop::find($shop_id)->lines()->get();
         //$statuses = Shop::find($shop_id)->statuss()->get();
         $statuses = Status::all();
+ 
+        // if($grupo==null){
+          // $products = Shop::find($shop_id)->products()->get();
+        // }else{
+          // $products = Product::join('shops', 'shops.id','=', 'products.shop_id')->where('shops.shop_group_id',$grupo)->get();
+        // }
 
-        //$shop_group_id ==
-        if($grupo==null){
-          $products = Shop::find($shop_id)->products()->get();
-        }else{
-          //$products = ShopGroup::shop()->get();
-          $products = Product::join('shops', 'shops.id','=', 'products.shop_id')->where('shops.shop_group_id',$grupo)->get();
-
-        }
-        //return $products;
+        $products = Product::join('shops', 'shops.id','=', 'products.shop_id')
+    		->where([
+          'branch_id' => $user->branch_id,
+          'status_id' => 2
+          ])
+          ->whereNull('products.deleted_at')
+          ->orderBy('clave','asc')
+          ->get();
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
@@ -400,6 +419,7 @@ class ProductController extends Controller
           $product->image = $this->saveImages($base64Image, $path, $product->clave);
         }
 
+         $product->clave = $request->clave;
          $product->description = $request->description;
          $product->weigth = $request->weigth;
          $product->observations = $request->observations;

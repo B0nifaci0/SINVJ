@@ -52,8 +52,14 @@ Panel Sucursales
                       </button>-->
                   </div>
                   @endif
+<<<<<<< HEAD
               <div class="col-md-12 col-lg-12">   
                   <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
+=======
+              <div class="col-md-12">   
+                  <h2>{{$braname->name}}</h2>
+                <!-- <img align="left" width="225px" height="160px" src="{{ $shop->image }}">-->
+>>>>>>> a2eed3537b807c24841f958cf7a55707ecc47a3e
               </div>
               </div>
           </div>
@@ -86,7 +92,7 @@ Panel Sucursales
       <div class="col-sm-12 col-lg-12">
       <div class="panel-success">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:black">Lineas</h2>
+        <h2 class="panel-title" style="color:black">Lineas de Sucursal</h2>
         </div>
         <div>
 
@@ -122,9 +128,9 @@ Panel Sucursales
               <span class="grey-700 font-size-16">Gramos:  {{$row->total_w}} gr = $ {{number_format($row->total_line_p,2)}}
               <br>Con Descuento: $ {{number_format($row->total_discount,2)}}
               <br> <br>
-               <strong class="text-center badge badge-success col-sm-4"> Existente: {{$row->total_exis}} gr</strong>
-               <strong class="text-center badge badge-primary col-sm-4"> Traspasado: {{$row->total_tras}} gr</strong>
-               <strong class="text-center badge badge-warning col-sm-3"> Dañado: {{$row->total_damage}} gr</strong> 
+               <strong class="text-center badge badge-success col-sm-12"> Existente: {{$row->total_exis}} gr</strong>
+               <strong class="text-center badge badge-primary col-sm-12"> Traspasado: {{$row->total_tras}} gr</strong>
+               <strong class="text-center badge badge-warning col-sm-12"> Dañado: {{$row->total_damage}} gr</strong> 
                </span>
             </div><br>
             <div class="row">
@@ -212,7 +218,7 @@ Panel Sucursales
       <div class="col-sm-12 col-lg-12">
       <div class="panel-success">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:black">Categorias</h2>
+        <h2 class="panel-title" style="color:black">Categorias de Sucursal</h2>
         </div>
         <div>
 
@@ -233,9 +239,9 @@ Panel Sucursales
               <span class="grey-700 font-size-16">@if(Auth::user()->type_user == 1) Venta:  $ {{$c->total}} @endif
               <br>Piezas Totales: {{$c->num_pz}} pzs
               <br> <br>
-               <strong class="text-center badge badge-success"> Existente: {{$c->total_exis}} pzs </strong>
-               <strong class="text-center badge badge-primary"> Traspasado: {{$c->total_tras}} pzs </strong>
-               <strong class="text-center badge badge-warning"> Dañado: {{$c->total_damage}} pzs </strong>
+               <strong class="text-center badge badge-success col-sm-12"> Existente: {{$c->total_exis}} pzs </strong>
+               <strong class="text-center badge badge-primary col-sm-12"> Traspasado: {{$c->total_tras}} pzs </strong>
+               <strong class="text-center badge badge-warning col-sm-12"> Dañado: {{$c->total_damage}} pzs </strong>
                </span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
