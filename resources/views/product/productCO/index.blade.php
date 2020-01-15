@@ -249,13 +249,27 @@ LISTA PRODUCTO
 @endsection
 
 @section('barcode-product')
-<script>
-  $(document).ready(function () {
-    $('#example').dataTable({
-      "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-      }
-    });
+<script type="text/javascript">
+//inicializa la tabla para resposnive
+  $(document).ready(function(){
+      $('#product_table_gr').DataTable({
+          retrieve: true,
+          //  responsive: true,
+          //paging: false,
+          //searching: false
+      });
+      $('#product_table_pz').DataTable({
+          retrieve: true,
+          //responsive: true,
+          //paging: false,
+          //searching: false
+      });
+
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          $($.fn.dataTable.tables(true)).DataTable()
+            .columns.adjust()
+            .responsive.recalc();
+      });
   });
-</script>
+  </script>
 @endsection
