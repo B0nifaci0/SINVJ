@@ -38,12 +38,12 @@ Panel Principal
       @endif
   <div class="page-content container-fluid">
     <div class="row" data-plugin="matchHeight" data-by-row="true">
-      <div class="col-md-12">
+      <div class="col-md-12 col-lg-12">
         <div class="panel">
           <div class="panel-heading bg-white  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
             <div class="row">
             @if(Auth::user()->type_user == 1 )
-                  <div class="col-md-12">
+                  <div class="col-md-12 col-lg-12">
                       <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
                         type="button" class="btn btn-lg 
                         toggler-left  btn-primary waves-effect waves-light waves-round float-right"
@@ -52,7 +52,7 @@ Panel Principal
                       </button>
                   </div>
                   @endif
-              <div class="col-md-12">   
+              <div class="col-md-12 col-lg-12">   
                   <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
               </div>
               <!--<div class="col-md-6">
@@ -102,7 +102,7 @@ Panel Principal
       @if(Auth::user()->type_user == 1 )
       <div class="container" style="background-color:white">
       <div class="row">
-      <div class="col-12">
+      <div class="col-sm-12 col-lg-12">
       <div class="panel-warning">
       <div class="panel-heading">
        <center> <h2 class="panel-title" style="color:white">Informacion De Productos Por Gramos De Todas Las Sucursales</h2> </center>
@@ -115,7 +115,7 @@ Panel Principal
       <center> <h2 class="panel-title" style="color:white">Total De Gramos</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -136,14 +136,14 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Dinero Por Gramo</h2> </center>
       </div>
       <div class="row">
       
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -163,13 +163,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Gramos Existentes</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -190,13 +190,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total en Productos Existentes</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -216,13 +216,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Gramos Traspasados</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -240,13 +240,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total en Productos Traspasados</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -266,13 +266,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Gramos Dañados</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -292,13 +292,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total en Productos Dañados</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -329,20 +329,20 @@ Panel Principal
       
       <div class="container" style="background-color:white">
       <div class="row">
-      <div class="col-12">
+      <div class="col-sm-12 col-lg-12">
       <div class="bg-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Informacion De Productos Por Piezas De Todas Las Sucursales</h2> </center>
       </div>
 </div><br>
 </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-warning">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Productos Por Piezas</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -363,14 +363,14 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-warning">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total En Piezas</h2> </center>
       </div>
       <div class="row">
       
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -390,13 +390,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-warning">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Piezas Existentes</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -417,13 +417,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-warning">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total En Piezas Existentes</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -443,13 +443,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-warning">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Piezas Traspasadas</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -467,13 +467,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-warning">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total En Piezas Traspasadas</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -493,13 +493,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-warning">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Piezas Dañadas</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -519,13 +519,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-warning">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total En Piezas Dañadas</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -560,20 +560,20 @@ Panel Principal
 
       <div class="container" style="background-color:white">
       <div class="row">
-      <div class="col-12">
+      <div class="col-sm-12 col-lg-12">
       <div class="panel-warning">
       <div class="panel-heading">
        <center> <h2 class="panel-title" style="color:white">Informacion De Productos Por Gramos De La Sucursal @foreach($branches_col as $branch) {{$branch->name}} @endforeach</h2> </center>
       </div><br>
 </div>
 </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total de Gramos</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -594,13 +594,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Gramos Existentes</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -621,13 +621,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Gramos Traspasados</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -647,13 +647,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Gramos Dañados</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -683,20 +683,20 @@ Panel Principal
 
       <div class="container" style="background-color:white">
       <div class="row">
-      <div class="col-12">
+      <div class="col-sm-12 col-lg-12">
       <div class="panel-warning">
       <div class="panel-heading">
        <center> <h2 class="panel-title" style="color:white">Informacion De Productos Por Pieza De La Sucursal @foreach($branches_col as $branch) {{$branch->name}} @endforeach</h2> </center>
       </div><br>
 </div>
 </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total de Piezas</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -717,13 +717,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Piezas Existentes</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -744,13 +744,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Piezas Traspasadas</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -770,13 +770,13 @@ Panel Principal
       </div>
       </div>
 
-      <div class="col-sm-6">
+      <div class="col-sm-6 col-lg-6">
       <div class="panel-primary">
       <div class="panel-heading">
       <center> <h2 class="panel-title" style="color:white">Total De Piezas Dañadas</h2> </center>
       </div>
       <div class="row">
-      <div class="col-sm">
+      <div class="col-sm col-lg">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -808,7 +808,7 @@ Panel Principal
 
       <br>
 
-      <div class="col-12">
+      <div class="col-sm-12 col-lg-12">
       <div class="panel-success">
       <div class="panel-heading">
         
@@ -819,7 +819,7 @@ Panel Principal
         <div class="row">
       @foreach($branches as $branch)
       
-      <div class="col-sm-3">
+      <div class="col-sm-3 col-lg-3">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">
@@ -842,12 +842,12 @@ Panel Principal
     @endif
 
     @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
-    <h2 class="panel-title" style="color:white">Sucursal A La Que Pertenece</h2>
+    <h2 class="panel-title" style="color:white">Sucursal A La Que Perteneces</h2>
         </div>
         <div>
       @foreach($branches_col as $branch)
       <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-3 col-lg-3">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10">

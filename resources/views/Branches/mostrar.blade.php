@@ -38,12 +38,12 @@ Panel Sucursales
       @endif
   <div class="page-content container-fluid">
     <div class="row" data-plugin="matchHeight" data-by-row="true">
-      <div class="col-md-12">
+      <div class="col-md-12 col-lg-12">
         <div class="panel">
           <div class="panel-heading bg-white  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
             <div class="row">
             @if(Auth::user()->type_user == 1 )
-                  <div class="col-md-12">
+                  <div class="col-md-12 col-lg-12">
                      <!-- <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
                         type="button" class="btn btn-lg 
                         toggler-left  btn-primary waves-effect waves-light waves-round float-right"
@@ -52,7 +52,7 @@ Panel Sucursales
                       </button>-->
                   </div>
                   @endif
-              <div class="col-md-12">   
+              <div class="col-md-12 col-lg-12">   
                   <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
               </div>
               </div>
@@ -83,7 +83,7 @@ Panel Sucursales
         </div>
       </div>
 
-      <div class="col-12">
+      <div class="col-sm-12 col-lg-12">
       <div class="panel-success">
       <div class="panel-heading">
         <h2 class="panel-title" style="color:black">Lineas</h2>
@@ -93,7 +93,7 @@ Panel Sucursales
         <div class="row">
       @foreach($total as $t => $row)
       @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
-      <div class="col-sm-3">
+      <div class="col-sm-3 col-lg-3">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
@@ -109,7 +109,7 @@ Panel Sucursales
         <!-- End Widget Linearea One -->
       </div>
       @else
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
@@ -150,7 +150,7 @@ Panel Sucursales
       <div class="row">
 
       @foreach($total_e as $t)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
@@ -168,7 +168,7 @@ Panel Sucursales
       @endforeach
 
       @foreach($total_t as $t)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
@@ -186,7 +186,7 @@ Panel Sucursales
       @endforeach
 
       @foreach($total_d as $t)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
@@ -209,7 +209,7 @@ Panel Sucursales
       </div>
       </div>
       
-      <div class="col-12">
+      <div class="col-sm-12 col-lg-12">
       <div class="panel-success">
       <div class="panel-heading">
         <h2 class="panel-title" style="color:black">Categorias</h2>
@@ -220,7 +220,7 @@ Panel Sucursales
 
       @foreach($category as $k => $c)
 
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10 card-body text-dark">
@@ -251,7 +251,7 @@ Panel Sucursales
       <div class="row">
 
       @foreach($cat_e as $c)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10 card-body text-dark">
@@ -269,7 +269,7 @@ Panel Sucursales
       @endforeach
 
       @foreach($cat_t as $c)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10 card-body text-dark">
@@ -287,7 +287,7 @@ Panel Sucursales
       @endforeach
 
       @foreach($cat_d as $c)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10 card-body text-dark">

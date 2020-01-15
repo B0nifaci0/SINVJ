@@ -360,7 +360,6 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-
         $category = Auth::user()->shop->id;
         $user = Auth::user();
         $line = Auth::user()->shop->id;
@@ -421,6 +420,13 @@ class ProductController extends Controller
      */
         public function destroy($id)
         {
+          /*
+          $products = TransferProduct::Where('product_id',$id)->Where('paid_at',NULL)->sum('id');
+          if($products >= 1){
+            Product::destroy($id);
+          } else {
+            Product::destroy($id);
+          }   */
           Product::destroy($id);
         // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
         }
