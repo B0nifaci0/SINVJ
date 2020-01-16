@@ -11,7 +11,7 @@ Panel Sucursales
 @endsection
 @section('content')
 <!-- Page -->
-<div class="page">
+<div class="col-sm-12 col-lg-12">
     @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>{{ session('mesage') }}</strong>
@@ -52,14 +52,9 @@ Panel Sucursales
                       </button>-->
                   </div>
                   @endif
-<<<<<<< HEAD
-              <div class="col-md-12 col-lg-12">   
-                  <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
-=======
               <div class="col-md-12">   
                   <h2>{{$braname->name}}</h2>
                 <!-- <img align="left" width="225px" height="160px" src="{{ $shop->image }}">-->
->>>>>>> a2eed3537b807c24841f958cf7a55707ecc47a3e
               </div>
               </div>
           </div>
