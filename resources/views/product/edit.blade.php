@@ -75,12 +75,12 @@ MODIFICACIÓ PRODUCTO
               <input type="text" id="multiplicador"  class="form-control" name="weigth" value="{{($product->weigth) ? $product->weigth :old('$product->weigth')}}"> 
             </div>
             <!-- END Input-->
-            <!-- Input para ingresar precio del producto-->
+        <!--    
             <div id="show" class="form-group form-material col-md-3 remove">
               <label>Precio del Producto</label>
               <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price">
             </div> 
-            <!-- END Input-->
+             -->
             <!-- Input para ingresar Tope de descuento -->
             <div class="form-group form-material col-md-3 remove">
               <label>Tope de descuento</label>
@@ -112,6 +112,16 @@ MODIFICACIÓ PRODUCTO
                 @endphp
                   @foreach($branches as $branch)
                     <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
+                  @endforeach
+              </select>
+            </div>
+            <!-- END Select--> 
+            <!-- Select para Editar Estatus--> 
+            <div class="col-md-3">
+              <label>Seleccione El Estatus Actual</label>
+              <select name="status_id" class="form-control round">
+                  @foreach($statuses as $status)
+                    <option value="{{ $status->id }}" required>{{ $status->name }}</option>
                   @endforeach
               </select>
             </div>

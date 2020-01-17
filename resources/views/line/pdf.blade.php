@@ -53,7 +53,7 @@
 </head>
 <body>
 <div class="page-content">
-<img align="left" width="120px" height="120px" src="{{ $shop->image }}"><br>
+<img align="left" width="140px" height="120px" src="{{ $shop->image }}"><br>
     <div class="panel">
     <p align="right">Fecha:{{$date}}</p>
     <p align="right">Hora:{{$hour}}</p>
@@ -61,7 +61,6 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
               <tr>
-                <th>Clave</th>
                 <th>Nombre</th>
                 <th>Precio Compra</th>
                 <th>Precio Venta</th>
@@ -70,7 +69,6 @@
               <tbody>
                   @foreach ($lines as $line)
                   <tr id = "row{{ $line->id }}">
-                    <td>{{ $line->id}}</td>
                     <td>{{ $line->name }}</td>
                     <td>$ {{ $line->purchase_price }}</td>
                     <td>$ {{ $line->sale_price }}</td> 
