@@ -648,9 +648,9 @@
                     </ul>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
-                          <a class="animsition-link" href="#">
+                          <a class="animsition-link" href="/reportes-traspasos">
                           <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reporte de traspasos por sucursal</span>
+                            <span class="site-menu-title">Reporte de traspasos</span>
                         </a>
                       </li>
                     </ul>
@@ -735,7 +735,7 @@
                     </ul>
                       </li>
                     </ul>
-                  
+
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                         <a class="animsition-link" href="recibo">
@@ -855,7 +855,7 @@
                         </a>
                         </li>
                     </ul>
-                    
+
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/sucursales">
                           <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
@@ -869,7 +869,7 @@
                           <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
                             <span class="site-menu-title">Categorias</span>
                         </a>
-                      </li> 
+                      </li>
 
                       <!--<li class="site-menu-item">
                         <a class="animsition-link" href="/sucursales">
