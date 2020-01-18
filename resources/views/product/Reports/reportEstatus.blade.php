@@ -30,7 +30,7 @@
 <body>
   <div class="page-content">
     <div class="panel">
-      <img align="left" width="90px" height="90px" src="{{ $shop->image }}">
+      <img align="left" width="140px" height="120px" src="{{ $shop->image }}">
       <p align="right">Fecha: {{$dates}}</p>
       <p align="right">Hora: {{$hour}}</p>
       <h2 align="center">Reporte {{$estado->name}}s por

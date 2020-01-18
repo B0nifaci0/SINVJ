@@ -145,8 +145,17 @@ class CategoryController extends Controller
   if($shop->image) {
       $shop->image = $this->getS3URL($shop->image);
   }
-  $category = Category::where('shop_id','=',NULL)->get();
-  $pdf  = PDF::loadView('category.pdf', compact('category','date','hour','shop'));
+  $category = Category::where('shop_id','=',NULL)
+  ->where('type_product',2)
+  ->orderBy('name', 'ASC')
+  ->get();
+
+  $category2 = Category::where('shop_id','=',NULL)
+  ->where('type_product',1)
+  ->orderBy('name', 'ASC')
+  ->get();
+  
+  $pdf  = PDF::loadView('category.pdf', compact('category','category2','date','hour','shop'));
   return $pdf->stream('categorias.pdf');
 }
 }
