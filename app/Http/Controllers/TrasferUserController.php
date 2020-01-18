@@ -226,7 +226,7 @@ class TrasferUserController extends Controller
             }])
             ->with('product')
             ->get();
-            return $trans1;
+           // return $trans1;
 
         $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
             ->where('transfer_products.status_product',$request->status_product)
