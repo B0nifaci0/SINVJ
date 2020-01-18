@@ -28,6 +28,8 @@
                 <p><b>Cliente: </b>{{ $sale->customer_name }}</p>
             @endif
 
+            <p><b>Vendedor: </b>{{ $sale->user->name }}</p>
+
             <table class="table-sm table-bordered">
                     <thead>
                         <tr>

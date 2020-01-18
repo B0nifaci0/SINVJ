@@ -286,7 +286,7 @@ public function exportPdf( Request $request, $id) {
       if($shop->image) {
           $shop->image = $this->getS3URL($shop->image);
       }
-	$sale = Sale::with(['partials', 'client'])->findOrFail($id);
+	$sale = Sale::with(['partials', 'client', 'user'])->findOrFail($id);
 	$sale->itemsSold = $sale->itemsSold();
   $sale->total = $sale->itemsSold->sum('final_price');
   $branch = Branch::find($sale->branch_id);
@@ -297,7 +297,7 @@ public function exportPdf( Request $request, $id) {
  // return $branches;
 } 
 /**Reportes De Ventas */
-public function reporstSale(){
+public function reporstSale(){ 
       $user = Auth::user();
       $branches= Auth::user()->shop->branches;   
 

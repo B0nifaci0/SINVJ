@@ -1,6 +1,8 @@
 <?php
 
 namespace App;
+
+use App\User;
 use App\Product;
 use App\Partial;
 use Illuminate\Database\Eloquent\Model;
@@ -47,6 +49,10 @@ class Sale extends Model
 
     public function partials() {
         return $this->hasMany(Partial::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 
     public function scopeItemsSold() {
