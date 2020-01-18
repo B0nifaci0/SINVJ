@@ -53,7 +53,7 @@ class ProductController extends Controller
           ->where('shop_id', $shop_id)
           ->whereNull('products.deleted_at')
           ->whereIn('branch_id', $branch_ids)
-          ->whereIn('status_id', [2, 3])
+          ->whereIn('status_id', [2, 3, 4])
           ->get();
         }
 
@@ -171,18 +171,18 @@ class ProductController extends Controller
         if($user->type_user == User::CO) {
           $products = Product::where('branch_id', $user->branch_id)
             ->where([
-              'branch_id' => $user->branch_id,
+              'branch_id' => $user->branch_id
             ])
-            ->whereIn('status_id', [2, 3])
+            ->whereIn('status_id', [2, 3, 4])
             ->whereNull('products.deleted_at')
             ->orderBy('clave','asc')
             ->get();
         } else {
           $products = Product::where('branch_id', $user->branch_id)
             ->where([
-              'branch_id' => $user->branch_id,
-              'status_id' => 2
+              'branch_id' => $user->branch_id
             ])
+            ->whereIn('status_id', [2, 3, 4])
             ->whereNull('products.deleted_at')
             ->orderBy('clave','asc')
             ->get();
@@ -234,9 +234,9 @@ class ProductController extends Controller
 
         $products = Product::join('shops', 'shops.id','=', 'products.shop_id')
     		->where([
-          'branch_id' => $user->branch_id,
+          'branch_id' => $user->branch_id
           ])
-          ->whereIn('status_id', [2, 3])
+          ->whereIn('status_id', [2, 3, 4])
           ->whereNull('products.deleted_at')
           ->orderBy('clave','asc')
           ->get();
@@ -410,6 +410,7 @@ class ProductController extends Controller
     public function update(ProductValidate $request, $id)
     {
         $product = Product::findOrFail($id);
+        //return $request;
 
         if($request->hasFile('image')) {
           $adapter = Storage::disk('s3')->getDriver()->getAdapter();
@@ -424,6 +425,7 @@ class ProductController extends Controller
          $product->weigth = $request->weigth;
          $product->observations = $request->observations;
          $product->price = $request->price;
+         $product->status_id = $request->status_id;
         //$product->inventory = $request->inventory;
          $product->save();
 
@@ -440,14 +442,15 @@ class ProductController extends Controller
      */
         public function destroy($id)
         {
-          /*
-          $products = TransferProduct::Where('product_id',$id)->Where('paid_at',NULL)->sum('id');
-          if($products >= 1){
-            Product::destroy($id);
+          
+          $products = Product::where('id', $id)->Where('status_id',3)->sum('status_id');
+          if($products == 3){
+            return redirect('/productos');
           } else {
             Product::destroy($id);
-          }   */
-          Product::destroy($id);
+            //Product::destroy($id);
+          }    
+          //Product::destroy($id);
         // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
         }
 /**TERMINA FUNCIONES DE CRUD DE PRODUCTOS */

@@ -8,6 +8,7 @@ use App\TransferProduct;
 use App\Product;
 use App\Branch;
 use App\User;
+use App\Status;
 use App\State;
 use App\Category;
 use App\Line;
@@ -41,22 +42,22 @@ class TranferProductsController extends Controller
         $trans = Shop::find('users')->trans();
         return $trans;
         if($trans == 0){
-          return redirect('/traspasos/create');  
+          return redirect('/traspasos/create');
         }else{
         }*/
-        
+
         //return $transs;
         $branches=Branch::all();
         // return view('transfer/TrasferUser/index', compact('branches','trans','user'));
         return view('transfer/index', compact('branches','user','trans'));
-        
+
        }
        public function indexAA()
        {
-        
+
         $user = Auth::user();
         $trans = TransferProduct::all();
-        
+
           // return ['new_branch_id', $user->branch_id];
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
@@ -68,11 +69,11 @@ class TranferProductsController extends Controller
           return redirect('/traspasos/create');
         }else{
         }*/
-        
+
         //return $transs;
         $branches=Branch::all();
         return view('transfer/TrasferUser/index', compact('branches','user','trans'));
-        
+
        }
        public function createAA()
        {
@@ -83,7 +84,7 @@ class TranferProductsController extends Controller
         $branches = Branch::all();
         return view('transfer/TrasferUser/add', compact('branches','users','products'));
        }
-       
+
 
        public function create()
        {
@@ -91,7 +92,7 @@ class TranferProductsController extends Controller
         $shop = $user->branch->shop;
         $users = User::where('id', '!=', $user->id)->get();
         $products = Product::where('branch_id', $user->branch_id)->get();
-        
+
         if($user->shop && $user->shop->shop_group_id) {
           $shop_ids = Shop::where('shop_group_id', $user->shop->shop_group_id)->get()->map(function($item) { return $item->id;  });
           $branches = Branch::whereIn('shop_id', $shop_ids)
@@ -101,10 +102,10 @@ class TranferProductsController extends Controller
           // ->where('id', '!=', $user->branch_id)
           ->get();
         }
-        
+
         $branch_ids = $branches->map(function($b) { return $b->id; });
-        
-        $user = Auth::user(); //Retorna el usuario con el que se encuentra logueado 
+
+        $user = Auth::user(); //Retorna el usuario con el que se encuentra logueado
         $users = User::where('id', '!=', $user->id)->get(); // Retorna los usuarios que pertenecen a la tienda y no estan logueados
         //return $users;
         $products = Product::where('branch_id', $user->branch_id)
@@ -123,7 +124,12 @@ class TranferProductsController extends Controller
     	$data = $request->all();
     	$data['last_branch_id']  = $user->branch_id;
     	$data['user_id'] = $user->id;
-    	$data['status_product'] = null;
+        $data['status_product'] = null;
+
+        //pendiente
+        //por pagar
+        //devolcuion
+
 
     	$transfer_product = TransferProduct::create($data);
 
@@ -143,7 +149,7 @@ class TranferProductsController extends Controller
       $transfer->delete();
     } else {
       $transfer->status_product = $request->answer;
-      $transfer->save(); 
+      $transfer->save();
       if($request->answer) {
         $product->branch_id = $transfer->new_branch_id;
         // $product->status_id = 2;
@@ -168,17 +174,17 @@ class TranferProductsController extends Controller
 
   public function giveBack(Request $request) {
 	$transfer = TransferProduct::find($request->transfer_id);
-	
+
 	$product = Product::where('id', $transfer->product_id)->first();
   $product->branch_id = $transfer->last_branch_id;
   $product->status_id = 2;
 	$product->save();
     $transfer->delete();
-	
+
     return back();
   }
-  
-public function exportPdfall(){ 
+
+public function exportPdfall(){
   $user = Auth::user();
         $date= date("Y-m-d");
         $hour = Carbon::now();
@@ -192,10 +198,10 @@ public function exportPdfall(){
     $trans = TransferProduct::where('user_id', $user->id)
     ->orWhere('destination_user_id', $user->id)
     ->with('user')->with('branch')->get();
-    
+
     $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans','date','hour','shop'));
     $pdf->setpaper('letter', 'landscape');
-    return $pdf->stream('Traspasos.pdf');  
+    return $pdf->stream('Traspasos.pdf');
   }
 
     public function exportPdf($id){
@@ -207,11 +213,22 @@ public function exportPdfall(){
         }
     $trans = TransferProduct::where("id","=",$id)->get();
     $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans','shop'));
-    return $pdf->stream('Traspaso.pdf');  
+    return $pdf->stream('Traspaso.pdf');
   }
+
+
+  public function reportTransfer(){
+    $idshop = Auth::user()->shop->id;
+    $user = Auth::user();
+    $tienda = Shop::find($idshop)->branches()->get();
+    $statuses = TransferProduct::all();
+    $shop = Auth::user()->shop;
+    $shops = Auth::user()->shop()->get();
+  return view('transfer.Reports.indexReportTransfer',compact('shop','shops','tienda','user','statuses'));
+ }
 
 }
 
 //reporte de gastos
-//reporte de productos por sucursal 
+//reporte de productos por sucursal
 //Que aparesca el crud de elimina y edita en sucursales productos

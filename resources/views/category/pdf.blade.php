@@ -60,7 +60,6 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
               <tr>
-                <th>Clave</th>
                 <th>Nombre</th>
                 <th>Tipo de producto</th>
               </tr>
@@ -68,12 +67,23 @@
               <tbody>
                   @foreach ($category as $category)
                   <tr id = "row{{ $category->id }}">
-                    <td>{{ $category->id}}</td>
                     <td>{{ $category->name }}</td>
                     @if($category->type_product == 1 )
                     <td>Pieza</td>
                 @endif
                 @if($category->type_product == 2 )
+                    <td>Gramos</td>
+                @endif
+                    </td>
+                  </tr>
+                    @endforeach
+                    @foreach ($category2 as $category2)
+                  <tr id = "row{{ $category->id }}">
+                    <td>{{ $category2->name }}</td>
+                    @if($category2->type_product == 1 )
+                    <td>Pieza</td>
+                @endif
+                @if($category2->type_product == 2 )
                     <td>Gramos</td>
                 @endif
                     </td>

@@ -293,6 +293,10 @@ Route::group(['middleware' => ['auth', 'verified']],function () {
   Route::get('reportEntradasPrgppz', 'ProductController@reportEntradasPr_gppz');
   Route::get('reportProductspzs', 'ProductController@reportProductpzs');
 
+
+  Route::get('reportStatusTransfer', 'TrasferUserController@reportStatusTransfer');
+  Route::get('reportes-traspasos','TrasferUserController@reportTransfer');
+  Route::get('reportTransferG','TrasferUserController@reportTransferG');
 });
 
 Auth::routes(['verify' => true]);
