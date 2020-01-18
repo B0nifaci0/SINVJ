@@ -607,6 +607,7 @@
                       </a>
                     </li>
                     </ul>
+                    <!--
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="#">
@@ -615,6 +616,7 @@
                       </a>
                     </li>
                     </ul>
+                    !-->
                   </li>
 
                     <li class="d-none site-menu-item">
