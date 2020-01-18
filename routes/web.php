@@ -270,7 +270,6 @@ Route::group(['middleware' => ['auth', 'verified']],function () {
   /**Reportes Rutas y Vistas */
 
   Route::get('reportes-productos','ProductController@reportProduct');
-  Route::get('reportes-traspasos','TranferProductsController@reportTransfer');
   Route::get('reportEstatus', 'ProductController@reportEstatus');
   Route::get('reportEstatusG', 'ProductController@reportEstatusG');
   Route::get('reportLinea', 'ProductController@reportLinea');
@@ -294,6 +293,10 @@ Route::group(['middleware' => ['auth', 'verified']],function () {
   Route::get('reportEntradasPrgppz', 'ProductController@reportEntradasPr_gppz');
   Route::get('reportProductspzs', 'ProductController@reportProductpzs');
 
+
+  Route::get('reportStatusTransfer', 'TrasferUserController@reportStatusTransfer');
+  Route::get('reportes-traspasos','TrasferUserController@reportTransfer');
+  Route::get('reportTransferG','TrasferUserController@reportTransferG');
 });
 
 Auth::routes(['verify' => true]);
