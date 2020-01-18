@@ -14,11 +14,6 @@ return [
     |
     */
 
-    'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-    ],
-
     'ses' => [
         'key' => env('SES_KEY'),
         'secret' => env('SES_SECRET'),
@@ -33,6 +28,11 @@ return [
         'model' => App\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
+    ],
+
+    'mailgun' => [
+        'domain' => env('MAILGUN_DOMAIN', 'digital-pineapple.com.mx'),
+        'secret' => env('MAILGUN_SECRET', '449cb6f1c9cb08ca36021021bf8f92dc-e51d0a44-694a027a'),
     ],
 
 ];

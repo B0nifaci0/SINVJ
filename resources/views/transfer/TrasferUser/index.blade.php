@@ -214,7 +214,7 @@ TRASFERENCIAS
 <script>
 $(document).ready(function(){
 
-  $(".paid").click(function() {
+    $('#transfer').on('click', '.paid', function(){
       let id = $(this).attr("alt");
       console.log("es:", id)
       Swal.fire({
@@ -234,7 +234,7 @@ $(document).ready(function(){
       })
   });
 
-  $(".give-back").click(function() {
+    $('#transfer').on('click', '.give-back', function(){
       let id = $(this).attr("alt");
       Swal.fire({
         title: 'Confirmación',

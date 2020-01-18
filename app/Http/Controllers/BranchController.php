@@ -168,7 +168,8 @@ class BranchController extends Controller
       $user = Auth::user();
       $branch = Shop::find($id_shop)->branches()->get();
       $shops = Auth::user()->shop()->get();
-
+  
+      
       if($shop->image) {
         $shop->image = $this->getS3URL($shop->image);
       }
@@ -176,7 +177,10 @@ class BranchController extends Controller
       $branches= Auth::user()->shop->branches;
 
       $branch = Branch::findOrFail($id);
+      
       $ids = $branch->id;
+      $braname = Branch::findOrFail($id);
+      //return $braname;
       //return $ids;
       //return Auth::user()->shop->id;
 
@@ -190,9 +194,10 @@ class BranchController extends Controller
       ->where('categories.type_product',2)
       ->where('products.deleted_at',null)
       ->select('products.id','products.status_id','lines.id as ids', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
-      ->orWhere('products.status_id',2)
+    /*  ->orWhere('products.status_id',2)
       ->where('products.status_id',3)
-      ->orWhere('products.status_id',4)
+      ->orWhere('products.status_id',4) */
+      ->whereIn('status_id', [2, 3, 4])
       ->distinct('lines.name')
       ->orderBy('name_line','ASC')
       ->groupBy('products.id','products.status_id','lines.id', 'lines.name', 'lines.discount_percentage', 'lines.sale_price')
@@ -211,9 +216,10 @@ class BranchController extends Controller
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
       ->where('products.deleted_at',null)
-      ->orWhere('products.status_id',2)
+      /*  ->orWhere('products.status_id',2)
       ->where('products.status_id',3)
-      ->orWhere('products.status_id',4)
+      ->orWhere('products.status_id',4) */
+      ->whereIn('products.status_id', [2, 3, 4])
       ->select('lines.id as ids', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
       ->distinct('lines.name')
       ->orderBy('name_line','ASC')
@@ -324,9 +330,8 @@ class BranchController extends Controller
       ->where('categories.type_product',2)
       ->where('products.branch_id',$ids)
       ->where('products.status_id',3)
-      ->select(DB::raw('SUM(products.weigth) as total_wt'))
-      ->where('lines.shop_id', $id_shop)  
       ->where('products.deleted_at', NULL)
+      ->select(DB::raw('SUM(products.weigth) as total_wt'))
       ->get();
       //return $total_t;
 
@@ -359,9 +364,10 @@ class BranchController extends Controller
       ->where('products.branch_id',$ids)
       ->where('products.deleted_at', null)
       ->select('categories.id as ids', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
-      ->orWhere('products.status_id',2)
-      ->Where('products.status_id',3)
-      ->orWhere('products.status_id',4)
+      /*  ->orWhere('products.status_id',2)
+      ->where('products.status_id',3)
+      ->orWhere('products.status_id',4) */
+      ->whereIn('products.status_id', [2, 3, 4])
       ->distinct('categories.name')
       ->groupBy('categories.id','categories.name')
       ->orderBy('cat_name', 'ASC')
@@ -463,7 +469,7 @@ class BranchController extends Controller
       ->select(DB::raw('count(products.id) as num_pzd'))
       ->get();
 
-      return view('Branches/mostrar', ['cat_d' => $cat_d,'cat_t' => $cat_t,'cat_e' => $cat_e,'total_e'=> $total_e,'total_d'=> $total_d,'category' => $category , 'total_t'=> $total_t,'branch' => $id_shop, 'total' => $total, 'shop' => $shop],compact('branches_col','branch'));
+      return view('Branches/mostrar', ['cat_d' => $cat_d,'cat_t' => $cat_t,'cat_e' => $cat_e,'total_e'=> $total_e,'total_d'=> $total_d,'category' => $category , 'total_t'=> $total_t,'branch' => $id_shop, 'total' => $total, 'shop' => $shop],compact('braname','branch'));
     }
 
     /** 

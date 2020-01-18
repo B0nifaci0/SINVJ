@@ -66,7 +66,7 @@ TRASFERENCIAS
           </div>
         <div class="panel-body">
           <!-- Tabla para Listar Traspasos-->
-          <table id='example'  class="table table-hover dataTable table-striped w-full">
+          <table id="traspaso" class=" display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
               <tr>
                 <th>Clave Del Producto</th>
@@ -191,11 +191,26 @@ TRASFERENCIAS
 </form>
 @endsection
 
+@section('barcode-product')
+<script type="text/javascript">
+//inicializa la tabla para resposnive
+  $(document).ready(function(){
+      $('#traspaso').DataTable({
+          retrieve: true,
+          //  responsive: true,
+          //paging: false,
+          //searching: false
+      });
+
+  });
+  </script>
+@endsection
+
 @section('traspaso')
 <script>
   $(document).ready(function () {
 
-  $(".paid").click(function() {
+  $('#traspaso').on('click', '.paid', function(){
       let id = $(this).attr("alt");
       Swal.fire({
         title: 'Confirmación',
@@ -214,7 +229,8 @@ TRASFERENCIAS
       })
   });
 
-  $(".give-back").click(function() {
+  $('#traspaso').on('click', '.give-back', function(){
+
       let id = $(this).attr("alt");
       Swal.fire({
         title: 'Confirmación',
@@ -233,20 +249,21 @@ TRASFERENCIAS
       })
   });
 
-  $('.accept').click(function() {
+  $('#traspaso').on('click', '.accept', function(){
     var id = $(this).attr('alt');
     $('#transfer_id').val(id);
     $('#answer').val(1);
     $('#form').submit();
   })
 
-    $('.cancel').click(function () {
+  $('#traspaso').on('click', '.cancel', function(){
       var id = $(this).attr('alt');
       $('#transfer_id').val(id);
       $('#answer').val(0);
       $('#form').submit();
     })
-    $('.reject').click(function () {
+
+  $('#traspaso').on('click', '.reject', function(){
       var id = $(this).attr('alt');
       $('#transfer_id').val(id);
       $('#answer').val(null);

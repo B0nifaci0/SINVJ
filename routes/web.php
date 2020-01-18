@@ -17,8 +17,6 @@ Route::get('/', function () {
 });
 Route::get('logout', 'Auth\LoginController@logout');
 
-Auth::routes();
-
 Route::resource('usuario', 'Auth\RegisterController');
 
 //Route::get('/home', 'HomeController@index')->name('home');
@@ -125,7 +123,6 @@ Route::resource('municipios', 'MunicipalityController');
 Route::resource('sucursales.usuarios', 'BranchUserController');
 
 //Vista para usuario AA
-Route::resource('principal', 'PrincipalController');
 
 /*Route::get('download', function (){
   $pdf = PDF::loadVIEW('principal');
@@ -207,13 +204,13 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
   Route::resource('/mayoristas', 'ClientController');
 });
 
-Route::group(['middleware' => ['auth']],function () {
+Route::group(['middleware' => ['auth', 'verified']],function () {
 
   //Ventas PDF
   Route::get('ventaspdf', 'SaleController@exportPdfall');
   Route::get('/reportes_venta','saleController@reporstSale');
   Route::get('ventapdf/{id}', 'SaleController@exportPdf')->name('ventapdf');
-
+  Route::resource('principal', 'PrincipalController');
   //SUCURSALES
   Route::get('sucursales/create', 'BranchController@create');
   Route::get('/sucursales', 'BranchController@index');
@@ -292,15 +289,10 @@ Route::group(['middleware' => ['auth']],function () {
 
   Route::get('reportUtility','ProductController@reportUtility');
   Route::get('sucursales/sucursalcorte','BranchController@reportBox_cutDate')->name('sucursalcorte');
-
-
   Route::get('piezascategoriageneral', 'ProductController@reportCategoriaPGeneral');
-
-
-
-
   Route::get('reportEntradasPrgppz', 'ProductController@reportEntradasPr_gppz');
   Route::get('reportProductspzs', 'ProductController@reportProductpzs');
 
 });
 
+Auth::routes(['verify' => true]);

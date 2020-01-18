@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->boolean('type_user');
             $table->string('suscription_type')->default(User::FREE);
             $table->string('terms_conditions');
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('salary')->default(0);
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops');

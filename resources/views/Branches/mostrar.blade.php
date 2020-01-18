@@ -11,7 +11,7 @@ Panel Sucursales
 @endsection
 @section('content')
 <!-- Page -->
-<div class="page">
+<div class="col-sm-12 col-lg-12">
     @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>{{ session('mesage') }}</strong>
@@ -38,12 +38,12 @@ Panel Sucursales
       @endif
   <div class="page-content container-fluid">
     <div class="row" data-plugin="matchHeight" data-by-row="true">
-      <div class="col-md-12">
+      <div class="col-md-12 col-lg-12">
         <div class="panel">
           <div class="panel-heading bg-white  text-center text-white" id="exampleHeadingDefaultTwo" role="tab">
             <div class="row">
             @if(Auth::user()->type_user == 1 )
-                  <div class="col-md-12">
+                  <div class="col-md-12 col-lg-12">
                      <!-- <button onclick="window.location.href='/tiendas/{{$shop->id}}/edit'"
                         type="button" class="btn btn-lg 
                         toggler-left  btn-primary waves-effect waves-light waves-round float-right"
@@ -53,7 +53,8 @@ Panel Sucursales
                   </div>
                   @endif
               <div class="col-md-12">   
-                  <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
+                  <h2>{{$braname->name}}</h2>
+                <!-- <img align="left" width="225px" height="160px" src="{{ $shop->image }}">-->
               </div>
               </div>
           </div>
@@ -83,17 +84,17 @@ Panel Sucursales
         </div>
       </div>
 
-      <div class="col-12">
+      <div class="col-sm-12 col-lg-12">
       <div class="panel-success">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:black">Lineas</h2>
+        <h2 class="panel-title" style="color:black">Lineas de Sucursal</h2>
         </div>
         <div>
 
         <div class="row">
       @foreach($total as $t => $row)
       @if(Auth::user()->type_user == 3 OR  Auth::user()->type_user == 2)
-      <div class="col-sm-3">
+      <div class="col-sm-3 col-lg-3">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
@@ -109,7 +110,7 @@ Panel Sucursales
         <!-- End Widget Linearea One -->
       </div>
       @else
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
@@ -122,9 +123,9 @@ Panel Sucursales
               <span class="grey-700 font-size-16">Gramos:  {{$row->total_w}} gr = $ {{number_format($row->total_line_p,2)}}
               <br>Con Descuento: $ {{number_format($row->total_discount,2)}}
               <br> <br>
-               <strong class="text-center badge badge-success col-sm-4"> Existente: {{$row->total_exis}} gr</strong>
-               <strong class="text-center badge badge-primary col-sm-4"> Traspasado: {{$row->total_tras}} gr</strong>
-               <strong class="text-center badge badge-warning col-sm-3"> Dañado: {{$row->total_damage}} gr</strong> 
+               <strong class="text-center badge badge-success col-sm-12"> Existente: {{$row->total_exis}} gr</strong>
+               <strong class="text-center badge badge-primary col-sm-12"> Traspasado: {{$row->total_tras}} gr</strong>
+               <strong class="text-center badge badge-warning col-sm-12"> Dañado: {{$row->total_damage}} gr</strong> 
                </span>
             </div><br>
             <div class="row">
@@ -150,7 +151,7 @@ Panel Sucursales
       <div class="row">
 
       @foreach($total_e as $t)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
@@ -168,7 +169,7 @@ Panel Sucursales
       @endforeach
 
       @foreach($total_t as $t)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
@@ -186,7 +187,7 @@ Panel Sucursales
       @endforeach
 
       @foreach($total_d as $t)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow border-success">
           <div class="card-block p-20 pt-10">
@@ -209,10 +210,10 @@ Panel Sucursales
       </div>
       </div>
       
-      <div class="col-12">
+      <div class="col-sm-12 col-lg-12">
       <div class="panel-success">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:black">Categorias</h2>
+        <h2 class="panel-title" style="color:black">Categorias de Sucursal</h2>
         </div>
         <div>
 
@@ -220,7 +221,7 @@ Panel Sucursales
 
       @foreach($category as $k => $c)
 
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10 card-body text-dark">
@@ -233,9 +234,9 @@ Panel Sucursales
               <span class="grey-700 font-size-16">@if(Auth::user()->type_user == 1) Venta:  $ {{$c->total}} @endif
               <br>Piezas Totales: {{$c->num_pz}} pzs
               <br> <br>
-               <strong class="text-center badge badge-success"> Existente: {{$c->total_exis}} pzs </strong>
-               <strong class="text-center badge badge-primary"> Traspasado: {{$c->total_tras}} pzs </strong>
-               <strong class="text-center badge badge-warning"> Dañado: {{$c->total_damage}} pzs </strong>
+               <strong class="text-center badge badge-success col-sm-12"> Existente: {{$c->total_exis}} pzs </strong>
+               <strong class="text-center badge badge-primary col-sm-12"> Traspasado: {{$c->total_tras}} pzs </strong>
+               <strong class="text-center badge badge-warning col-sm-12"> Dañado: {{$c->total_damage}} pzs </strong>
                </span>
             </div>
           <!--  <div class="ct-chart h-50"></div>   -->
@@ -251,7 +252,7 @@ Panel Sucursales
       <div class="row">
 
       @foreach($cat_e as $c)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10 card-body text-dark">
@@ -269,7 +270,7 @@ Panel Sucursales
       @endforeach
 
       @foreach($cat_t as $c)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10 card-body text-dark">
@@ -287,7 +288,7 @@ Panel Sucursales
       @endforeach
 
       @foreach($cat_d as $c)
-      <div class="col-sm-4">
+      <div class="col-sm-4 col-lg-4">
         <!-- Widget Linearea One-->
         <div class="card card-shadow">
           <div class="card-block p-20 pt-10 card-body text-dark">
