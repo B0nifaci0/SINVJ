@@ -6,10 +6,6 @@
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
      </head>
    <style>
- .cuerpo{
-    font-size: 12px;
-    font-family: 'Times New Roman';
-}
 @page {size: 8.3cm 250mm;
      }
    </style>
@@ -35,7 +31,7 @@
             <table class="table-sm table-bordered">
                     <thead>
                         <tr>
-                            <th width="150px">Producto</th>
+                            <th width="160px">Producto</th>
                             <th>Peso</th>
                             <th>Precio</th>
                         </tr>
@@ -46,12 +42,12 @@
                             <td class='cuerpo'>
                                 Clave: {{ $item->clave }}
                                 <br>
-                                Nombre: {{ $item->description }}
+                                Producto: {{ $item->category_name }}
                             </td>
                             <td class='cuerpo'>{{ $item->weigth }} g</td>
                             <td class='cuerpo'>$ {{ $item->final_price }}</td>
                         </tr>
-                        @endforeach
+                        @endforeach 
                         <tr>
                             <td colspan="2">Total a pagar</td>
                             <td><strong> ${{ $sale->total }}</strong></td>

@@ -51,6 +51,8 @@ class Sale extends Model
 
     public function scopeItemsSold() {
         return Product::join('sale_details', 'sale_details.product_id', 'products.id')
+        ->join('categories', 'categories.id', 'products.category_id')
+        ->select('clave', 'weigth', 'categories.name as category_name', 'sale_details.final_price')
         ->where('sale_id', $this->id)
         ->get();
     }
