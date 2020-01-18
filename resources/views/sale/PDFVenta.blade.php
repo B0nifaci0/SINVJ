@@ -87,7 +87,6 @@
                             </tr>
                         </tbody>
                 </table>
-            @endif 
         </div> 
         <br>
         <p align="center">¡GRACIAS POR SU COMPRA!</p>
