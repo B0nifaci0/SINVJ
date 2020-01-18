@@ -35,8 +35,7 @@
             <table class="table-sm table-bordered">
                     <thead>
                         <tr>
-                            <th>Clave</th>
-                            <th>Descripción</th>
+                            <th width="150px">Producto</th>
                             <th>Peso</th>
                             <th>Precio</th>
                         </tr>
@@ -44,14 +43,17 @@
                     <tbody>
                         @foreach($sale->itemsSold as $item)
                         <tr>
-                            <td class='cuerpo'>{{ $item->clave }}</td>
-                            <td class='cuerpo'>{{ $item->description }}</td>
+                            <td class='cuerpo'>
+                                Clave: {{ $item->clave }}
+                                <br>
+                                Nombre: {{ $item->description }}
+                            </td>
                             <td class='cuerpo'>{{ $item->weigth }} g</td>
                             <td class='cuerpo'>$ {{ $item->final_price }}</td>
                         </tr>
                         @endforeach
                         <tr>
-                            <td colspan="3">Total a pagar</td>
+                            <td colspan="2">Total a pagar</td>
                             <td><strong> ${{ $sale->total }}</strong></td>
                         </tr> 
                     </tbody>
