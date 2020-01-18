@@ -59,7 +59,7 @@
             <br>
             @if($sale->partials->sum('amount') < $sale->total || $sale->partials->count() > 1)
                 <p class="centrado">Abonos a la cuenta</p>
-                @endif
+            @endif
 
                 <table class="table-sm table-bordered">
                         <thead>
@@ -78,13 +78,15 @@
                             </tr>
                             @endforeach
                             <tr>
-                                <td colspan="2"></td>
+                                <td colspan="2">Total</td>
                                 <td><strong>$ {{ $sale->partials->sum('amount') }}</strong></td>
                             </tr>
-                            <tr>
-                                <td colspan="2">Restan</td>
-                                <td><strong>$ {{ $sale->total - $sale->partials->sum('amount') }}</strong></td>
-                            </tr>
+                            @if($sale->partials->sum('amount') < $sale->total || $sale->partials->count() > 1)
+                                <tr>
+                                    <td colspan="2">Restan</td>
+                                    <td><strong>$ {{ $sale->total - $sale->partials->sum('amount') }}</strong></td>
+                                </tr>
+                            @endif
                         </tbody>
                 </table>
         </div> 
