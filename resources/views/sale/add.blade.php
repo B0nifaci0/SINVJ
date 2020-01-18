@@ -561,11 +561,10 @@ seleccionado con sus respectivos datos-->
                 });
 
                     $('#ventas').on('click', '.deletr', function(){
+                            console.log('a')
                         var table = $('#ventas').DataTable();
 
                         var row = $(this).parents('tr');
-
-
 
                     var productId = $(this).attr('alt');
                     var product = products.filter(p => p.id == productId)[0];
@@ -574,6 +573,7 @@ seleccionado con sus respectivos datos-->
                     selectedProducts.splice(index, 1);
 
                     console.log(JSON.stringify(selectedProducts))
+                    console.log('b')
                     console.log("buscar " + productId + " en", selectedProducts.map(p => p.id))
                     console.log("Indice", index);
 

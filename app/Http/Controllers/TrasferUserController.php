@@ -170,22 +170,73 @@ class TrasferUserController extends Controller
         $fecter = Carbon::parse($request->fecter)->addDay();
 
         $categoria = $request->category_id;
-        //return $categoria;
+
         $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
             return $u->id;
         });
         $trans1 = TransferProduct::whereIn('user_id', $usersIds)
+            ->whereBetween('updated_at',[$fecini,$fecter])
             ->with('user')->with('branch')->with('product')->with('product')
             ->get();
 
         $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
             ->with('user')->with('branch')->with('product')
+            ->whereBetween('updated_at',[$fecini,$fecter])
             ->get();
 
         $trans = $trans1->merge($trans2);
-       // return $trans;
-        //return $trans;
+
         $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransferGeneral', compact('trans', 'dates', 'hour', 'shop', 'estado', 'categoria', 'branches'));
+        return $pdf->stream('Traspasos.pdf');
+    }
+
+    public function reportTransferBranch(Request $request)
+    {
+        $user = Auth::user();
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+        $dates = Carbon::now();
+        $dates = $dates->format('d-m-Y');
+        $branches = $user->shop->branches;
+        $shop = Auth::user()->shop;
+        $estado = $request->estatus_id;
+        $fecini = Carbon::parse($request->fecini)->subDay();
+        $fecter = Carbon::parse($request->fecter)->addDay();
+
+        $categoria = $request->category_id;
+
+        $estado = $request->status_product;
+
+        $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
+            return $u->id;
+        });
+
+        $query = TransferProduct::whereIn('user_id', $usersIds);
+            if($request->status_product == 'null') {
+                $query->whereNull('transfer_products.status_product');
+            } else {
+                $query->where('transfer_products.status_product',$request->status_product);
+            }
+            //->where('last_branch_id',$request->branch_id)
+            // ->orWhere('new_branch_id',$request->branch_id)
+            $trans1 = $query->with('user')
+            ->with(['branch' => function($q) use($request)  {
+                $q->where('id',$request->branch_id)
+                ->orWhere('id',$request->branch_id);
+            }])
+            ->with('product')
+            ->get();
+            return $trans1;
+
+        $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
+            ->where('transfer_products.status_product',$request->status_product)
+            ->where('last_branch_id',$request->branch_id)
+            ->orWhere('new_branch_id',$request->branch_id)
+            ->with('user')->with('branch')->with('product')
+            ->get();
+
+        $trans = $trans1->merge($trans2);
+        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransfer', compact('estado','trans', 'dates', 'hour', 'shop', 'categoria', 'branches'));
         return $pdf->stream('Traspasos.pdf');
     }
 }

@@ -44,7 +44,7 @@
      }tfoot{
        color:#000;
        text-transform: uppercase;
-       font-weight: 500; 
+       font-weight: 500;
      }
       .sizedate{
        font-size: 12px!important;
@@ -56,15 +56,15 @@
     <div class="panel">
 
     <img align = "left" width="140px" height="120px" src="{{ $shop->image }}">
-             
+
     <p align="right">Fecha: {{$dates}}</p>
-          
+
     <p align="right">Hora: {{$hour}}</p>
-  
-  
+
+
     <h1 align="center">Reporte General De Entrada de Productos Por Gramos</h1>
         <h2 align="center">Reporte de Entradas Por Lineas</h2>
-            <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+            <h3 align="center" style="color:red"> {{$shop->name}}</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
@@ -78,14 +78,14 @@
                  <th scope="col" >Fecha</th>
 
                 </tr>
-              </thead>  
+              </thead>
               <tbody>
-              
+
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->clave }}</td> 
+                 <td>{{ $product->clave }}</td>
                  <td>{{ $product->description }}</td>
-                 <td>{{ $product->name_line }}</td> 
+                 <td>{{ $product->name_line }}</td>
                  <td>{{ $product->weigth }} gr</td>
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->name_category }}</td>
@@ -107,12 +107,12 @@
                 <tbody>
                    @foreach ($lines as $i => $line)
                     <tr>
-                        <td>{{$line->name}}</td> 
+                        <td>{{$line->name}}</td>
                         <td align="center">{{$line->total_g}}</td>
                     </tr>
                      @endforeach
-                </tbody> 
-                <br>   
+                </tbody>
+                <br>
             </table>
           </div>
           </div>
