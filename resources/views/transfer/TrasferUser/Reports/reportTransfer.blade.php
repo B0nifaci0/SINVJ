@@ -22,7 +22,17 @@
                 <img align="left" width="90px" height="90px" src="{{ $shop->image }}">
             <p align="right">Fecha: {{$dates}}</p>
             <p align="right">Hora: {{$hour}}</p>
-            <h2 align="center">Reporte General Traspasos
+            <h2 align="center">Reporte Traspasos
+                @foreach ($trans as $transfer)
+                @if($estado == 1)
+                    Por pagar
+                    @elseif($estado === 0)
+                    Rechazado
+                    @else
+                    Pendiente
+                @endif
+                @break;
+                @endforeach
                 @if($categoria==2)
                 Gr
                 @else
@@ -37,7 +47,7 @@
                         <th>Categoria</th>
                         @foreach ($trans as $transf)
                         @if($categoria == 2)
-                        <th>Peso</th>
+                        <th>Pesosss</th>
                         @break;
                         @endif
                         @endforeach
@@ -55,23 +65,23 @@
                     @foreach ($trans as $transfer)
                     @if($categoria == $transfer->product->category->type_product)
                     <tr>
-                        <td>{{ $transfer->product->clave }}</td>
+                        <td>{{ $transfer->product->id }}</td>
                         <td>{{ $transfer->product->category->name }}</td>
                         @if($transfer->product->category->type_product == 2 )
                         <td>{{ $transfer->product->weigth }} gr</td>
                         @endif
                      <td>{{ $transfer->product->description }}</td>
-                        <td>{{$transfer->product->price}}</td>
+                        <td> {{$transfer->product->price}}</td>
                         <td>{{$transfer->lastBranch->name}}</td>
                         <td>{{$transfer->user->name}}</td>
                         <td>{{$transfer->destinationUser->name}}</td>
-                        <td>{{$transfer->newBranch->name}}</td>
+                        <td>{{$transfer->newBranch->name}}  {{ $transfer->status_product }}</td>
                         @if($transfer->status_product === 1)
-                        <td>Por pagar</td>
+                            <td>Por pagar</td>
                         @elseif($transfer->status_product === 0)
-                        <td>Rechazado</td>
+                            <td>Rechazado</td>
                         @else
-                        <td>Pendiente</td>
+                            <td>Pendiente</td>
                         @endif
                         <td>{{$transfer->created_at->format('m-d-Y')}}</td>
                     </tr>

@@ -51,7 +51,7 @@ Panel Principal
                                                     <h4>Reporte Traspasos Por Gramos </h4>
                                                 </div>
                                             </div>
-                                            <form action="reportStatusTransfer">
+                                            <form action="reportTransfer">
                                                 <input type="int" name="category_id" class="form-control invisible round" data-plugin="datepicker" value="2" required>
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
@@ -70,7 +70,7 @@ Panel Principal
                                                                 <select id="" name="status_product" alt="1"
                                                                     class="form-control round sucursales">
                                                                     <!-- <option value="">Selecciona Estatus</option> -->
-                                                                    <option value='NULL'>Pendiente</option>
+                                                                    <option value='null'>Pendiente</option>
                                                                     <option value="1" selected='selected'>Por Pagar
                                                                     </option>
                                                                     <option value="0" selected='selected'>Devolucion
@@ -120,7 +120,7 @@ Panel Principal
                                     </div>
                                     <!-- Inicia TAB2 STATUS PRODUCT-->
                                     <div class="tab-pane" id="producstatusTwo" role="tabpanel">
-                                        <form action="reportStatusTransfer">
+                                        <form action="reportTransfer">
                                             <div class="panel panel-bordered">
                                                 <div class="row">
                                                     <div class="col-md col-sm-12">
@@ -144,7 +144,7 @@ Panel Principal
                                                             <select id="" name="status_product" alt="1"
                                                                 class="form-control round sucursales">
                                                                 <!-- <option value="">Selecciona Estatus</option> -->
-                                                                <option value="NULL">Pendiente</option>
+                                                                <option value="null">Pendiente</option>
                                                                 <option value="1" selected='selected'>Por Pagar</option>
                                                                 <option value="0" selected='selected'>Devolucion
                                                                 </option>

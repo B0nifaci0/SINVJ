@@ -114,8 +114,12 @@ TRASFERENCIAS
                   <td>{{$transfer->destinationUser->name}}</td>
                   <td>{{$transfer->created_at->format('m-d-Y')}}</td>
                   <td>
-                    @if($transfer->status_product === 1)
-                    <span class="text-center badge badge-success">Por Pagar</span>
+                    @if($transfer->status_product === 1 || $transfer->paid_at)
+                    @if($transfer->paid_at)
+                        <span class="text-center badge badge-success">Pagado</span>
+                    @else
+                    <span class="text-center badge badge-success">Por pagar</span>
+                    @endif
                     @elseif($transfer->status_product === 0)
                     <span class="text-center badge badge-warning">Rechazado</span>
                     @else
@@ -134,7 +138,6 @@ TRASFERENCIAS
                     @else
                       @if(!$transfer->paid_at)
                         @if(Auth::user()->id == $transfer->user_id && $transfer->status_product == 1)
-                          <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
                           <button class="btn btn-danger give-back" alt="{{ $transfer->id }}">Devolver</button>
                         @else
                           @if($transfer->status_product === null)
@@ -145,8 +148,6 @@ TRASFERENCIAS
                             <span class="text-center badge badge-warning">No se paga</span>
                           @endif
                         @endif
-                      @else
-                        <span class="text-center badge badge-success">Pagado</span>
                       @endif
                     @endif
                     <!-- END Botón-->
