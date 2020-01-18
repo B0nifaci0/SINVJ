@@ -22,6 +22,7 @@
             Tel:{{$branch ? $branch->phone_number : ''}}</p>
             <p align="left"><b>Folio:</b>{{$sale->folio}}</p>
             <p><b>Tipo de venta: </b>{{ ($sale->client) ? 'Mayorista' : 'General' }}</p>
+            Nombre del cliente:
             @if($sale->client)
                 <p><b>Cliente: </b>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>
             @else
