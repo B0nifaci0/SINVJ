@@ -26,7 +26,7 @@ class ProductValidate extends FormRequest
         return [
             'clave' => 'required|string|max:50',
             //'name' => 'required|alpha|unique:products,name',
-            'description' => 'required|string|max:15',
+            'description' => 'required|string|max:25',
             //'weigth'=> 'required_if:product,is:true',
             //'weigth' => 'required|numeric|max:200',
             'image' => 'image',
@@ -67,7 +67,7 @@ class ProductValidate extends FormRequest
     //         'price.numeric' => 'Solo se adminen caracteres alfabeticos',
     //         'image.required' =>'La imagen  del producto  es requerida',
     //         'category_id.required' =>'La categoria del producto  es requerida',
-    //         'line_id.required' =>'La categoria del producto  es requerida',            
+    //         'line_id.required' =>'La categoria del producto  es requerida',
     //         'shop_id.required' =>'La categoria del producto  es requerida',
     //         'branch_id.required' =>' La sucursal del producto  es requerida',
     //     ];
