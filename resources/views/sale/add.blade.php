@@ -30,7 +30,7 @@ ALTA VENTA
                 @endif
                 <form id="form" method="POST" action="/ventas">
                     <center>
-                        <h3>Registrate Venta</h3>
+                        <h3>Venta</h3>
                     </center>
                     {{ csrf_field() }}
                     <div class="row mb-10">

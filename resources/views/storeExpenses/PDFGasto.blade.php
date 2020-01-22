@@ -138,7 +138,7 @@ img {
     max-width: center;
     text-align: center;
 }
-@page {size: 8cm 170mm;
+@page {size: 8cm 150mm;
      }
    </style>
 
@@ -146,16 +146,13 @@ img {
         <p align= "right">Fecha: {{$date}}</p>
         <p align= "right">Hora: {{$hour}}</p>
         <div border="">
-        <img class="img-responsive " width="70px" height="70px" src="{{ $shop->image }}">
+        <img class="img-responsive " width="120px" height="140px" src="{{ $shop->image }}">
              
             <p><b>Tienda:</b> {{$shop->name}}</p><br>
-            <table class="table-sm table-bordered">
+            <table align="center" class="table-sm table-bordered">
             @foreach($expense as $expense)
             <tr>
                <th> Sucursal:</th><td>{{ ($expense->branch == null) ? $expense->shop->name : $expense->branch->name }}</td>
-            </tr>
-            <tr>
-               <th>Clave:</th><td>{{$expense->id}}</td>
             </tr>
             <tr>
                <th>Nombre:</th><td>{{$expense->name}}</td>
