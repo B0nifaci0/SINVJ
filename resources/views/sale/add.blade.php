@@ -37,7 +37,7 @@ ALTA VENTA
                         <div class="col-md-3">
                             <label for="user-type">Tipo de venta</label>
                             <select name="user_type" id="user-type" class="form-control">
-                                <option value="1">Venta normal</option>
+                                <option value="1">Venta Publico</option>
                                 <option value="2">Venta a mayorista</option>
                             </select>
                         </div>
