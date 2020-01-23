@@ -194,8 +194,8 @@ class ExpensesController extends Controller
             $expenses = $branch_expenses->merge($shop_expenses);
            // $total = $expenses->sum('price');
         //Consulta de gastos generales entre fechas//   
-        $fech1 = Carbon::parse($request->fecini)->format('y-m-d');
-        $fech2 = Carbon::parse($request->fecter)->format('y-m-d');
+        $fech1 = Carbon::parse($request->fecini)->subDay();
+        $fech2 = Carbon::parse($request->fecter)->addDay();
 
         if($fech1 == $fech2){
             $shops = Shop::where("id","=",$request->shop_id)->get();
@@ -295,13 +295,14 @@ class ExpensesController extends Controller
         $idshop = Auth::user()->shop->id;
         $user = Auth::user();
         $branch = Shop::find($idshop)->branches()->get();
+        //xreturn $branch;
         return view('storeExpenses.reportsPDF.reportgastos',compact('date','hour','idshop','branch','user'));
     }
     //METODO PARA CONSULTA DE GASTOS POR SUCURSAL Y POR FECHA //
     public function reportexpensebranch(Request $request){
 
-        $fech1 = Carbon::parse($request->fecini)->format('Y-m-d');
-        $fech2 = Carbon::parse($request->fecter)->format('Y-m-d');
+        $fech1 = Carbon::parse($request->fecini)->subDay();
+        $fech2 = Carbon::parse($request->fecter)->addDay();
         /**
          * Checar este if para la validacion de la fecha de un rango de 1 a 1
          */
