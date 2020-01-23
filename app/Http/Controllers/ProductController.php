@@ -195,9 +195,9 @@ class ProductController extends Controller
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($products as $product) {
           if($product->image) {
-            $path = env('S3_ENVIRONMENT') . 'products/' . $product->clave;
+            $path = env('S3_ENVIRONMENT') . '/' . 'products/' . $product->clave;
           } else {
-            $path = env('S3_ENVIRONMENT') . 'dummy';
+            $path = env('S3_ENVIRONMENT') . '/' . 'dummy';
           }
 
           $command = $adapter->getClient()->getCommand('GetObject', [
