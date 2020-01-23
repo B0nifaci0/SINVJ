@@ -46,7 +46,7 @@ class SaleController extends Controller
           ->get();
       } else {
         $branches = Branch::where('shop_id', Auth::user()->shop->id)->get();
-        $branch_ids = $brances->map(function($item){ return $item->id; });
+        $branch_ids = $branches->map(function($item){ return $item->id; });
         
         $sales = Sale::with('client')
           ->whereIn('branch_id', $branch_ids)
