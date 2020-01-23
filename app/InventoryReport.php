@@ -11,6 +11,7 @@ class InventoryReport extends Model
         'id',
         'start_date',
         'end_date',
+        'status_report',
         'branch_id'
     ];
 

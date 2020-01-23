@@ -18,7 +18,9 @@ LISTA DE  LINEA
       <div class="panel">
         <div class="panel-body">
             <div class="example-wrap">
-              <h1 class="text-center panel-title">Inventarios</h1>
+              @foreach($name_branch as $branch)
+              <h1 class="text-center panel-title">Inventarios {{$branch->name}}</h1>
+              @endforeach
               <div class="panel-actions float-right">
                 <div class="container-fluid row float-right">
                   @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
@@ -33,14 +35,14 @@ LISTA DE  LINEA
                   </button>
                   </div> -->
                   @endif
-                  <div class="col-6=">
+                <!--  <div class="col-6=">
                     <button onclick="window.location.href='/inventarios/create'"
                     type="button" class=" btn btn-sm small btn-floating
                     btn-info waves-effect waves-light waves-round float-left"
                     data-toggle="tooltip" data-original-title="Agregar">
                     <i class="icon md-plus" aria-hidden="true"></i>
                   </button>
-                  </div>
+                  </div>  !-->
                   <!-- END Botón-->
                   @endif
                 </div>
@@ -53,55 +55,90 @@ LISTA DE  LINEA
             <thead>
               <tr>
                 <th>Clave</th>
-                <th>Producto</th>
+                <th>Peso</th>
+                <th>Descripcion</th>
                 <th>Status</th>
-                <th>Operaciones</th>
+                @if($inventory->status_report == 1 OR $inventory->status_report == 2)
+                @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
+                  <th>Opciones</th>
+                @endif
+                @endif
               </tr>
             </thead>
             <tfoot>
               <tr>
                 <th>Clave</th>
-                <th>Producto</th>
+                <th>Peso</th>
+                <th>Descripcion</th>
                 <th>Status</th>
-                <th>Opciones</th>
+                @if($inventory->status_report == 1 OR $inventory->status_report == 2)
+                @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
+                  <th>Opciones</th>
+                @endif
+                @endif
               </tr>
             </tfoot>
             <tbody>
               @foreach ($inventory->products as $item)
                 <tr id = "row{{ $inventory->id }}">
                   <td>{{$item->clave}}</td>
+                  @if($item->weigth)
+                    <td>{{$item->weigth}} gr</td>
+                  @else
+                    <td>No Tiene Peso</td>
+                  @endif
                   <td>{{ $item->description }}</td>
                   <td>
                     @if( $item->status === null )
                         Pendiente
                     @elseif( $item->status === 1)
-                        Listado
+                        Existente
                     @elseif( $item->status === 0)
-                        Eliminado
+                        Faltante
                     @endif
                   </td>
+                  @if($inventory->status_report == 1 OR $inventory->status_report == 2)
+                  @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
                   <td>
                     @if( $item->status === null )
                       <button class="btn btn-success exist" alt="{{ $item->id }}">
-                        Listo
+                        Existente
                         <i class="icon md-check"></i>
                       </button>
                       <button class="btn btn-warning lost" alt="{{ $item->id }}">
                         Dañado
                       </button>
                       <button class="btn btn-danger damaged" alt="{{ $item->id }}">
-                        Perdido
+                        Faltante
                       </button>
                     @else
                       <button class="btn btn-info restart" alt="{{ $item->id }}">
                         Restaurar
                       </button>
                     @endif
+                    @endif
                   </td>
+                  @endif
                 </tr>
               @endforeach
             </tbody>
           </table>
+          @foreach ($id_inventory as $i)
+          @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
+            @if($inventory->status_report == 3)
+              <button class="btn btn-primary" name="id_report" disabled>
+                Inventario Terminado
+            @elseif($finalizar > 0)
+              <button class="btn btn-primary" name="id_report" disabled>
+                Aun No Has Acabado El Inventario
+             </button>
+             @elseif($finalizar == 0)
+              <button class="btn btn-primary" name="id_report" onclick=" location.href='terminar/{{$i->id}}' ">
+                Terminar Inventario
+              </button>
+            @endif
+          @endif
+          @endforeach
            <!-- END Tabla-->
         </div>
       </div>
