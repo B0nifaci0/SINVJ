@@ -32,7 +32,7 @@ class InventoryController extends Controller
     public function index() {
         $inventories = InventoryReport::join('branches','branches.id','inventory_reports.branch_id')
         ->where('branches.shop_id', Auth::user()->shop->id)
-        ->select('inventory_reports.*')
+        ->select('inventory_reports.*','branches.name as sucursal')
         ->get();
         //return $inventories;
         return view('inventory.index', compact('inventories'));
@@ -61,6 +61,8 @@ class InventoryController extends Controller
 
     public function show($id) {
         $branch = InventoryReport::where('id', $id)->select('branch_id')->sum('branch_id');
+        $name_branch = InventoryReport::join('branches','branches.id','inventory_reports.branch_id')
+        ->where('inventory_reports.id', $id)->select('branches.name')->get();
         $inventory = InventoryReport::where('id', $id)->first();
         $inventory->products = InventoryDetail::join('products', 'products.id', 'inventory_details.product_id')
         ->where('inventory_details.inventory_report_id', $inventory->id)
@@ -68,11 +70,24 @@ class InventoryController extends Controller
         ->where('products.deleted_at',NULL)
         ->whereIn('products.status_id', [2, 4])
         ->select('inventory_details.id', 'inventory_details.status', 'inventory_details.product_id',
-            'products.clave', 'products.description'
+            'products.clave', 'products.description', 'products.weigth'
         )
         ->get();
+        //QUERY PARA SABER SI HAY PRODUCTOS SIN LISTAR EN EL INVENTARIO
+        $finalizar = InventoryDetail::where('inventory_report_id', $id)
+        ->where('status',null)
+        ->count('id');
+        $id_inventory = InventoryReport::where('id', $id)->select('id')->get();
+        //return $id_inventory;
+        
+        if($inventory->status_report == 1){
+          $inventorie = InventoryReport::findOrFail($id);
+          $inventorie->status_report = 2;
+          $inventorie->save();
+        }
+        //return $finalizar;
         //return $inventory->products;
-        return view('inventory.show', compact('inventory'));
+        return view('inventory.show', compact('inventory','name_branch','finalizar','id_inventory'));
     }
 
     public function store(Request $request) {
@@ -86,6 +101,7 @@ class InventoryController extends Controller
 
         $inventory = InventoryReport::create([
             'start_date' => Carbon::now()->format('Y-m-d'),
+            'status_report' => 1,
             'branch_id' => $branch_id
         ]);
 
@@ -117,6 +133,14 @@ class InventoryController extends Controller
         }
 
         InventoryDetail::where('id', $request->inventory_id)->update(['status' => $request->status]);
+        return back();
+    }
+
+    public function terminar($id) {
+        $inventorie = InventoryReport::findOrFail($id);
+        $inventorie->status_report = 3;
+        $inventorie->end_date = Carbon::now()->format('Y-m-d');
+        $inventorie->save();
         return back();
     }
 
