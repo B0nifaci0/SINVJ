@@ -27,7 +27,7 @@ trait S3ImageManager {
 
 		$path = env('S3_ENVIRONMENT') . '/' . $path;
 
-        $command = $adapter->getClient()->getCommand('GetObject', [
+		$command = $adapter->getClient()->getCommand('GetObject', [
             'Bucket' => $adapter->getBucket(),
             'Key' => $adapter->getPathPrefix(). $path
 		]);

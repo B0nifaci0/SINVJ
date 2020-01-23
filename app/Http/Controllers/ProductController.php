@@ -195,9 +195,9 @@ class ProductController extends Controller
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($products as $product) {
           if($product->image) {
-            $path = 'products/' . $product->clave;
+            $path = env('S3_ENVIRONMENT') . 'products/' . $product->clave;
           } else {
-            $path = 'dummy';
+            $path = env('S3_ENVIRONMENT') . 'dummy';
           }
 
           $command = $adapter->getClient()->getCommand('GetObject', [
@@ -245,9 +245,12 @@ class ProductController extends Controller
 
         foreach ($products as $product) {
           if($product->image) {
+
+            $path = env('S3_ENVIRONMENT') . '/' . 'products/' . $product->clave;
+
             $command = $adapter->getClient()->getCommand('GetObject', [
               'Bucket' => $adapter->getBucket(),
-              'Key' => $adapter->getPathPrefix(). 'products/' . $product->clave
+              'Key' => $adapter->getPathPrefix() . $path
             ]);
 
             $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
