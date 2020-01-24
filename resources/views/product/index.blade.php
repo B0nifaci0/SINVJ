@@ -100,6 +100,8 @@ LISTA PRODUCTO
                         <th data-hide="phone, tablet">Status</th>
                         <th data-hide="phone, tablet">Precio Venta</th>
                         @if(Auth::user()->type_user == 1 )
+                        <th data-hide="phone, tablet">Precio Compra</th>
+                        <th data-hide="phone, tablet">Precio Descuento</th>
                         <th data-hide="phone, tablet">Opciones</th>
                         @endif
                       </tr>
@@ -117,6 +119,8 @@ LISTA PRODUCTO
                         <th>Status</th>
                         <th>Precio Venta</th>
                         @if(Auth::user()->type_user == 1 )
+                        <th>Precio Compra</th>
+                        <th>Precio Descuento</th>
                         <th>Opciones</th>
                         @endif
                       </tr>
@@ -154,6 +158,8 @@ LISTA PRODUCTO
                        
                         <td>${{$product->price }}</td>
                         @if(Auth::user()->type_user == 1)
+                        <td>${{$product->price_purchase }}</td>
+                        <td>${{$product->discount }}</td>
                         <td>
                           <!-- Botón para editar producto-->
                           <a type="button" href="/productos/{{$product->id}}/edit"

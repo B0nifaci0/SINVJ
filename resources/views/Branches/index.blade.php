@@ -121,10 +121,17 @@ LISTA DE  SUCURSALES
                       <!--END Botón -->
                       @endif
                       <!-- Botón para ver productos por sucursal-->
+                      @if($branch->num_products == 0)
+                     <!-- <a href="/sucursales/{{$branch->id}}/producto"> --> <button type="button"
+                      class="btn btn-icon btn-warning waves-effect waves-light waves-round products"
+                      data-toggle="tooltip" data-original-title="Productos">
+                      <i class="icon md-label-heart" aria-hidden="true"></i></button></a>
+                      @else
                       <a href="/sucursales/{{$branch->id}}/producto"><button type="button"
                       class="btn btn-icon btn-warning waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Productos">
                       <i class="icon md-label-heart" aria-hidden="true"></i></button></a>
+                      @endif
                       <!--END Botón -->
 
                       <!-- Botón para ver corte de venta
@@ -204,6 +211,40 @@ setTimeout(()=>{
                     'error',
                     response.message
                   )
+                 }
+                }
+              })
+           }
+       })
+     });
+     $("#branchs").on('click','.products',function () {
+    var id = $(this).attr("alt");
+    console.log(id);
+    Swal.fire({
+      title: 'Confirmación',
+      text: "Esta Sucursal No Tiene Productos Activos, ¿Quieres Crear Uno?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6' ,
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Crear!'
+    }).then((result) => {
+      if (result.value)
+      {
+        location.href ="/productos/create";
+        $.ajaxSetup({
+         headers: {
+           'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+           }
+         });
+        $.ajax({
+          url:  '/sucursales/' + id,
+          method: 'verificacion',
+            success: function (response) {
+              if(response.success){
+                location.href ="/productos/create";
+              }else{
+                location.href ="/sucursales";
                  }
                 }
               })
