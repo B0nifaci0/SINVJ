@@ -43,9 +43,9 @@
           @break;
           @endforeach
       </h2>
-      <h3 align="center" style="color:red"> @if($estado->name == 'Traspaso') Destino: @endif @foreach($branches as $branch){{$branch->name}} @endforeach</h3>
-      <h4 align="center" >Linea:
+    <h3 align="center" style="color:red"> @if($estado->name == 'Traspaso') Destino: @endif Sucursal: {{$branch}}</h3>
         @foreach ($products as $i => $product)
+        <h4 align="center" >Linea:
         @if($product->category->type_product == 2 )
         {{ $product->line->name }}
         @endif

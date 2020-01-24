@@ -6,22 +6,6 @@
   <title>Reporte de Productos</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
   <style>
-    @media print {
-
-      html,
-      body {
-        font-size: 9.5pt;
-        margin: 0;
-        padding: 0;
-      }
-
-      .page-break {
-        page-break-before: always;
-        width: auto;
-        margin: auto;
-      }
-    }
-
     .page-break {
       width: 980px;
       margin: 0 auto;
@@ -80,7 +64,6 @@
 <body>
   <div class="page-content">
     <div class="panel">
-
       <img align="left" width="140px" height="120px" src="{{ $shop->image }}">
       <p align="right">Fecha: {{$dates}}</p>
       <p align="right">Hora: {{$hour}}</p>
@@ -91,7 +74,7 @@
       Gr
       @endif
     </h2>
-      <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+      <h3 align="center" style="color:red">{{$shop->name}}</h3>
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
           <tr>

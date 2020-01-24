@@ -26,7 +26,7 @@ class ExpensesController extends Controller
 
     }/*
 
-    /** 
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -39,14 +39,14 @@ class ExpensesController extends Controller
         $expenses = Expense::whereIn('branch_id', $branches_ids)->get();
 
         if($user->type_user == User::AA) {
-            $shop_expenses = Expense::where('shop_id', $user->shop->id)->get();            
+            $shop_expenses = Expense::where('shop_id', $user->shop->id)->get();
             $expenses = $expenses->merge($shop_expenses);
         }
 
 
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
-        foreach ($expenses as $e) { 
+        foreach ($expenses as $e) {
             if($e->image) {
 
               $path = env('S3_ENVIRONMENT') . '/' .  'tickets/' . $e->id;
@@ -54,10 +54,10 @@ class ExpensesController extends Controller
                 $command = $adapter->getClient()->getCommand('GetObject', [
                     'Bucket' => $adapter->getBucket(),
                     'Key' => $adapter->getPathPrefix() . $path
-                ]); 
-            
+                ]);
+
                 $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
-            
+
                 $e->image = (string) $result->getUri();
             }
         }
@@ -67,7 +67,7 @@ class ExpensesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response 
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -76,7 +76,7 @@ class ExpensesController extends Controller
         $shops = Auth::user()->shop()->get();
         $branches = Auth::user()->branch()->get();
         //return $shops;
-        return view('storeExpenses/add ',compact('shops','user')); 
+        return view('storeExpenses/add ',compact('shops','user'));
     }
 
     /**
@@ -101,11 +101,11 @@ class ExpensesController extends Controller
         $data['price'] = $request->price;
         $data['descripcion'] = $request->descripcion;
         $data['name'] = $request->name;
-        
+
         $expense = Expense::create($data);
 
         if($request->hasFile('image')) {
-            $adapter = Storage::disk('s3')->getDriver()->getAdapter(); 
+            $adapter = Storage::disk('s3')->getDriver()->getAdapter();
             $image = file_get_contents($request->file('image')->path());
             $base64Image = base64_encode($image);
             $path = 'tickets';
@@ -124,7 +124,7 @@ class ExpensesController extends Controller
     public function show($id)
     {
         return view('gastos.show', ['gastos' => Expense::findOrFail($id)]);
-   
+
     }
 
     /**
@@ -135,7 +135,7 @@ class ExpensesController extends Controller
      */
     public function edit($id)
     {
-        $user = Auth::user();  
+        $user = Auth::user();
         $expense = Expense::find($id);
         $shops = Auth::user()->shop()->get();
         return view('storeExpenses/edit ',compact('shops','expense','user'));
@@ -153,7 +153,7 @@ class ExpensesController extends Controller
     {
         $expense = Expense::findOrFail($id);
         if($request->hasFile('image')) {
-            $adapter = Storage::disk('s3')->getDriver()->getAdapter(); 
+            $adapter = Storage::disk('s3')->getDriver()->getAdapter();
             $image = file_get_contents($request->file('image')->path());
             $base64Image = base64_encode($image);
             $path = 'tickets';
@@ -177,14 +177,14 @@ class ExpensesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {  
+    {
         Expense::destroy($id);
     }
-    
+
     public function exportPdf(Request $request){
-        
+
         $user = Auth::user();
-        
+
         if($user->type_user == User::CO) {
             $expenses = Expense::where('branch_id', $user->branch->id)->get();
         } else {
@@ -193,10 +193,10 @@ class ExpensesController extends Controller
             $branch_expenses = Expense::whereIn('branch_id', $branches_ids)->get();
 
             $shop_expenses = Expense::where('shop_id', $user->shop->id)->get();
-            
+
             $expenses = $branch_expenses->merge($shop_expenses);
            // $total = $expenses->sum('price');
-        //Consulta de gastos generales entre fechas//   
+        //Consulta de gastos generales entre fechas//
         $fech1 = Carbon::parse($request->fecini)->subDay();
         $fech2 = Carbon::parse($request->fecter)->addDay();
 
@@ -252,12 +252,12 @@ class ExpensesController extends Controller
 
         //Funcion para sumar el gastos de por sucursal
         $totals = Expense::join('branches', 'expenses.branch_id', 'branches.id')
-        ->where('expenses.shop_id', Auth::user()->shop->id)  
+        ->where('expenses.shop_id', Auth::user()->shop->id)
         ->select('branches.id', 'branches.name', DB::raw('SUM(expenses.price) as total'))
         ->groupBy('branches.id', 'branches.name')
         ->get();
-    
-        
+
+
         $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('branches','totals','totales','hour','date','expenses', 'shops','shop','total'));
         //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
         //return $pdf->stream('gastos.pdf'); //solo visualizacion del archivo en la vista web
@@ -265,7 +265,7 @@ class ExpensesController extends Controller
         //return $totals;
       }
     }
-    
+
    //  public function exportPdfall(){
      //   $user = Auth::user();
        // $shop = Auth::user()->shop;
@@ -273,7 +273,7 @@ class ExpensesController extends Controller
      //$pdf  = PDF::loadView('storeExpenses.PDFGasto', compact('expense','shop'));
         //return $pdf->stream('gasto.pdf');
       //}
-    
+
     //crear reporte individual de cada gasto//
     public function exportPdfall($id){
         $date= date("Y-m-d");
@@ -290,7 +290,7 @@ class ExpensesController extends Controller
     }
     //funcion para reporte de gastos por sucursal
     public function reportExpense(){
-        
+
         $date = date("y-m-d");
         $hour = Carbon::now();
         $hour = date("H:i:s");
@@ -312,9 +312,9 @@ class ExpensesController extends Controller
         if($fech1 == $fech2){
           $branches = Branch::where("id","=",$request->branch_id)->get();
           //$categories = Category::where("id","=",$request->id)->get();
-          $shop = Auth::user()->shop; 
+          $shop = Auth::user()->shop;
      $shops = Auth::user()->shop()->get();
-  
+
       if($shop->image) {
           $shop->image = $this->getS3URL($shop->image);
       }
@@ -324,8 +324,8 @@ class ExpensesController extends Controller
                             ->get();
                             //return $products;
                             $pdf  = PDF::loadView('storeExpenses.reportsPDF.reportbranch', compact('shop','shops','expenses','branches','hour','dates'));
-                            return $pdf->download('gastosucursal.pdf');
-  
+                            return $pdf->stream('gastosucursal.pdf');
+
         }elseif($fech1 != $fech2){
           $branches = Branch::where("id","=",$request->branch_id)->get();
           //$categories = Category::where("id","=",$request->id)->get();
@@ -333,15 +333,15 @@ class ExpensesController extends Controller
                               ->whereBetween('created_at',[$fech1,$fech2])
                               ->get();
                       //return $products;
-                      $shop = Auth::user()->shop; 
+                      $shop = Auth::user()->shop;
                       $shops = Auth::user()->shop()->get();
-                  
+
                       if($shop->image) {
                           $shop->image = $this->getS3URL($shop->image);
                       }
         $hour = Carbon::now();
         $hour = date('H:i:s');
-                      
+
         $dates = Carbon::now();
         $dates = $dates->format('d-m-Y');
 
@@ -357,8 +357,7 @@ class ExpensesController extends Controller
         $pdf  = PDF::loadView('storeExpenses.reportsPDF.reportbranch',compact('totals','shop','shops','expenses','branches','hour','dates'));
         //return $totals;
         return $pdf->stream('gastosucursal.pdf');
-  
+
         }
       }
 }
-  

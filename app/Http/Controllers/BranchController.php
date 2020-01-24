@@ -35,7 +35,26 @@ class BranchController extends Controller
     {
       $user = Auth::user();
       $branches= Auth::user()->shop->branches;
+      foreach($branches as $b){
+        $b->num_products = Product::withTrashed()->where('branch_id','=',$b->id)->where('deleted_at','=',NULL)->count();
+      }
+      
+     // return $branches;
+      
         return view('Branches/index', compact('branches','user'));
+    }
+
+    public function verificacion($id){
+      $num_products = Product::withTrashed()->where('branch_id','=',$id)->where('deleted_at','=',NULL)->count();
+      if($num_products == 0){
+        response()->json([
+          'success' => false,
+          'respuesta' => $id,
+          'message' => 'La sucursal no tiene productos activos',
+         ]);
+       } else {
+        return redirect('/sucursales/$id/producto');    
+       } 
     }
 
         /**
@@ -534,6 +553,7 @@ class BranchController extends Controller
 
     public function reportBox_cutDate(Request $request){
 
+        $shop = Auth::user()->shop;
       $hour = Carbon::now();
       $hour = date('H:i:s');
       $dates = Carbon::now();
@@ -541,6 +561,12 @@ class BranchController extends Controller
       $branch = Branch::findOrFail($request->branch_id);
       $branch->hour = $hour;
       $branch->date = $dates;
+
+      if($shop->image) {
+        $shop->image = $this->getS3URL($shop->image);
+    }
+
+      //return $shop->image;
 
       $fecini = Carbon::parse($request->fecini)->format('Y-m-d');
       $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
@@ -574,7 +600,7 @@ class BranchController extends Controller
       ->where('branch_id',$request->branch_id)
       ->sum('price');
       $branch->totalFin = $branch->total - $branch->gastos;
-      $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch'));
+      $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch','shop'));
      return $pdf->stream('CorteSucursal.pdf');
     }
 }

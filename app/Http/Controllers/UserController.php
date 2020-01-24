@@ -34,7 +34,7 @@ class UserController extends Controller
       //Consulta para obtener los usuarios con referencia de la tienda a la que pertenecen
       //$users = Auth::user()->shop->users;
       $users = Auth::user()->shop->users;
-     //$users = User::with('shop')->with('branch')->get(); //Consulta que se utiliza para poder acceder a los campos de cada modelo 
+     //$users = User::with('shop')->with('branch')->get(); //Consulta que se utiliza para poder acceder a los campos de cada modelo
       //Consulta para obtener las sucursales con referencia de la tienda a la que pertenecen
       $branches=Auth::user()->shop->branches;
       //Comprobacion de datos
@@ -42,7 +42,7 @@ class UserController extends Controller
       //Comprobacion de datos
       //return $users;
       // sreturn $user;
-      return view('User/index', compact('users','branches','user')); 
+      return view('User/index', compact('users','branches','user'));
     }
 
     /**
@@ -51,7 +51,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         $user = Auth::user();
         // Consulta para obtener la tienda de acuerdo al usuario
         $shops=Auth::user()->shop()->get();
@@ -62,7 +62,7 @@ class UserController extends Controller
         // if($user->shop->shop_group_id) {
           // $branches = Branch::where('shop_group_id', $user->shop->shop_group_id)
           // ->where('id', '!=', $user->branch->id)
-          // ->get(); 
+          // ->get();
         // } else {
           // $branches = collect([]);
         // }
@@ -83,7 +83,7 @@ class UserController extends Controller
     {
      $password = $request->password;
      $passcon = $request->password_confirmation;
-     
+
      if($password != $passcon){
       return redirect('/usuarios/create')->with('mesage-delete', 'Contraseñas diferentes, captura contraseñas iguales !');
      }
@@ -99,7 +99,7 @@ class UserController extends Controller
         'branch_id' => $request['branch_id'],
     ]);
 
-          
+
           return redirect('/usuarios')->with('mesage', 'El usuario  se ha agregado exitosamente!');
 
     }
@@ -140,7 +140,7 @@ class UserController extends Controller
 
       //return $users;
       return view('User/edit', compact('users','shops','branches','user'));
-      
+
     }
 
     /**
@@ -208,7 +208,7 @@ class UserController extends Controller
       $hour = Carbon::now();
       $hour = date('H:i:s');
 
-      $dates = Carbon::now(); 
+      $dates = Carbon::now();
       $dates = $dates->format('d-m-Y');
 
 
@@ -233,23 +233,23 @@ class UserController extends Controller
     }
 
     public function receiptPDF(Request $request){
-    
+
       $date = Carbon::now();
       $date = $date->format('d-m-Y');
 
       $users = User::where("id","=",$request->user_id)->get();
-    
+
       $pdf  = PDF::loadView('Payroll.receipt', compact('users','date'));
-      return $pdf->download('recibo.pdf');
+      return $pdf->stream('recibo.pdf');
     }
 
-    public function receiptallPDF(){ 
-    
+    public function receiptallPDF(){
+
       $users = Auth::user()->shop->users;
 
       $date = Carbon::now();
       $date = $date->format('d-m-Y');
-    
+
       $pdf  = PDF::loadView('Payroll.receipall', compact('users','date'));
       return $pdf->stream('recibos.pdf');
     }
