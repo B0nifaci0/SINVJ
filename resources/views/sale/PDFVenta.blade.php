@@ -53,7 +53,7 @@
                         <tr>
                             <td colspan="3">Total a pagar</td>
                             <td><strong> ${{ $sale->total }}</strong></td>
-                        </tr> 
+                        </tr>
                     </tbody>
             </table>
             <br>
@@ -87,7 +87,7 @@
                             </tr>
                         </tbody>
                 </table>
-        </div> 
+        </div>
         <br>
         <p align="center">¡GRACIAS POR SU COMPRA!</p>
         <p align="center">¡ESTE NO ES UN COMPROBANTE FISCAL!</p>

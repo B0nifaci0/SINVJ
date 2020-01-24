@@ -26,14 +26,14 @@ class BranchRequest extends FormRequest
         return [
             'name' => 'required|string|max:25',
             'rfc'  => 'required|string|min:10|max:13',
-            'email' => 'required|email:branches',
+            'email' => 'required|email',
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'address' => 'required|string|min:5|max:100',
         ];
     }
     public function messages(){
         return[
-            'name.required' => 'El nombre es requerido y con solo 15 caracteres', 
+            'name.required' => 'El nombre es requerido y con solo 15 caracteres',
         ];
     }
 }

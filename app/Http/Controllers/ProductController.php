@@ -21,6 +21,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\Foreach_;
 
 class ProductController extends Controller
 {
@@ -566,6 +567,9 @@ class ProductController extends Controller
 
         $estado = Status::findOrFail($request->estatus_id);
 
+        $type = $request->type_product;
+        return $type;
+
         /**Finaliza codigo de las consultas por campos seleccionados */
 
         /**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
@@ -616,7 +620,7 @@ class ProductController extends Controller
          * hacer uso de la informacion de cada consulta
          */
 
-        $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop', 'shops', 'estado', 'products', 'branch', 'sales', 'hour', 'dates', 'total', 'cash', 'compra', 'utilidad', 'trans', 'detalle', 'venta'));
+        $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop', 'shops', 'estado', 'products', 'branch', 'sales', 'hour', 'dates', 'total', 'cash', 'compra', 'utilidad', 'trans', 'detalle', 'venta','type'));
         return $pdf->stream('ReporteEstatus.pdf');
     }
     /**Termina el retorno del pdf */

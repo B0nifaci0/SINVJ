@@ -33,15 +33,7 @@
       <img align="left" width="140px" height="120px" src="{{ $shop->image }}">
       <p align="right">Fecha: {{$dates}}</p>
       <p align="right">Hora: {{$hour}}</p>
-      <h2 align="center">Reporte {{$estado->name}}s por
-          @foreach ($products as $i => $product)
-          @if($product->category->type_product == 2 )
-          Gr
-          @else
-          Pz
-          @endif
-          @break;
-          @endforeach
+      <h2 align="center">Reporte {{$estado->name}}s por {{$type}}
       </h2>
     <h3 align="center" style="color:red"> @if($estado->name == 'Traspaso') Destino: @endif Sucursal: {{$branch}}</h3>
         @foreach ($products as $i => $product)
