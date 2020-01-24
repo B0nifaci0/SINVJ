@@ -77,12 +77,12 @@
     }
   </style>
 </head>
-  
+
 <body>
   <div class="page-content">
     <div class="panel">
       <div class="panel">
-          <img 
+          <img
           align = "left"
           width="100px"
           height="100px"
@@ -99,11 +99,11 @@
           <td>$ {{$branch->total }} </td>
         </tr>
         <tr>
-          <th>TOTAL DE TARJETA</th>
+          <th>VENTA TARJETA</th>
           <td> $ {{$branch->tarjeta }} </td>
         </tr>
         <tr>
-          <th>TOTAL DE EFECTIVO</th>
+          <th>VENTA EFECTIVO</th>
           <td>$ {{$branch->efectivo }} </td>
         </tr>
         <tr>
@@ -111,7 +111,7 @@
           <td>$ {{$branch->gastos }} </td>
         </tr>
         <tr>
-          <th>TOTAL - GASTOS</th>
+          <th> TOTAL EFECTIVO</th>
           <td>$ {{$branch->totalFin }} </td>
         </tr>
       </table>
