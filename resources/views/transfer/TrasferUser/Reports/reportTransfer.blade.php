@@ -19,7 +19,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-">
-                <img align="left" width="90px" height="90px" src="{{ $shop->image }}">
+                <img align="left" width="140px" height="120px" src="{{ $shop->image }}">
             <p align="right">Fecha: {{$dates}}</p>
             <p align="right">Hora: {{$hour}}</p>
             <h2 align="center">Reporte Traspasos

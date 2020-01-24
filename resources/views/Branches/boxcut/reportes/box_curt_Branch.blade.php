@@ -6,21 +6,6 @@
   <title>Corte sucursal </title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
   <style>
-    @media print {
-
-      html,
-      body {
-        font-size: 9.5pt;
-        margin: 0;
-        padding: 0;
-      }
-
-      .page-break {
-        page-break-before: always;
-        width: auto;
-        margin: auto;
-      }
-    }
 
     .page-break {
       width: 980px;
@@ -77,18 +62,12 @@
     }
   </style>
 </head>
-  
+
 <body>
   <div class="page-content">
     <div class="panel">
       <div class="panel">
-          <img 
-          align = "left"
-          width="100px"
-          height="100px"
-          src="https://images.vexels.com/media/users/3/151690/isolated/preview/be2ec10fa7ff133565ba9a4bc65aae6c-icono-de-trazo-de-piedra-preciosa-de-diamante-by-vexels.png"
-          alt="Logotipo"
-          >
+        <img align="left" width="140px" height="120px" src="{{ $shop->image }}">
         <p align="right">Fecha: {{$branch-> date}}</p>
         <p align="right">Hora: {{$branch-> hour}}</p>
         <h2 align="center">Reporte Corte Por Sucursal {{$branch ->name}}
@@ -99,11 +78,11 @@
           <td>$ {{$branch->total }} </td>
         </tr>
         <tr>
-          <th>TOTAL DE TARJETA</th>
+          <th>VENTA TARJETA</th>
           <td> $ {{$branch->tarjeta }} </td>
         </tr>
         <tr>
-          <th>TOTAL DE EFECTIVO</th>
+          <th>VENTA EFECTIVO</th>
           <td>$ {{$branch->efectivo }} </td>
         </tr>
         <tr>
@@ -111,7 +90,7 @@
           <td>$ {{$branch->gastos }} </td>
         </tr>
         <tr>
-          <th>TOTAL - GASTOS</th>
+          <th> TOTAL EFECTIVO</th>
           <td>$ {{$branch->totalFin }} </td>
         </tr>
       </table>

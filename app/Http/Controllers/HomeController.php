@@ -33,14 +33,14 @@ class HomeController extends Controller
 
               $branches = Branch::all();
               $users = User::all();
-             
+
         return view('home/home', compact('branches','users'));
     }
-    public function exportPdf(){ 
+    public function exportPdf(){
         $products = Product::all();
         $branches = Branch::all();
         $users = User::all();
         $pdf  = PDF::loadView('home.pdf', compact('products','users'));
-        return $pdf->download('home.pdf');
+        return $pdf->stream('home.pdf');
       }
 }
