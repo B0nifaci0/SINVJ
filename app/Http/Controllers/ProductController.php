@@ -1015,17 +1015,16 @@ class ProductController extends Controller
             ->where('products.shop_id',$shop_id)
             ->where('products.deleted_at', NULL)
             ->where('products.status_id', 2)->get();
-
-
         //return $products;
         // $status = Shop::find($shop_id)->statuss()->get();
         //return $status;
         $lines = Shop::find($shop_id)->lines()->get();
         //FUNCION PARA CALCULAR EL TOTAL DE GRAMOS POR LINEA
+       // return $lines;
         foreach ($lines as $line) {
             $line->total_g = $products->where('line_id', $line->id)->sum('weigth');
         }
-        //return $line->total_g;
+        return $line->total_g;
 
         $hour = Carbon::now();
         $hour = date('H:i:s');
@@ -1078,6 +1077,7 @@ class ProductController extends Controller
             ->join('branches', 'branches.id', 'products.branch_id')
             ->select('products.*', 'categories.name as name_category', 'categories.type_product', 'statuss.name as name_status', 'branches.name as name_branch')
             ->where('categories.type_product', 1)
+            ->where('products.shop_id',$shop_id)
             ->where('products.deleted_at', NULL)
             ->where('products.status_id', 2)
             ->get();
@@ -1146,8 +1146,6 @@ class ProductController extends Controller
         foreach ($products as $product) {
             $total_sale_price = $product->pricepzt;
         }
-
-
 
         //$compra = $total * $precio;
         //$utilidad = $cash - $compra;

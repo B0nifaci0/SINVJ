@@ -668,7 +668,6 @@ Panel Principal
                                                                     <select id="sucursales_1" name="branch_id" alt="1"
                                                                         class="form-control round sucursales">
                                                                         <!-- <option value="*">Seleccione Sucursal</option> -->
-
                                                                         @foreach($tienda as $branch)
                                                                         <option value="{{$branch->id}}" required>
                                                                             {{$branch->name}}</option>
@@ -862,7 +861,7 @@ Panel Principal
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
-                                                <label>Seleccione Sucursal</label>
+                                                <label>Seleccione Sucursallll</label>
                                                 <select id="sucursales_1" name="branch_id" alt="1"
                                                     class="form-control round sucursales">
                                                     <!-- <option value="*">Seleccione Sucursal</option> -->
