@@ -93,7 +93,9 @@ LISTA DE  LINEA
                         Pendiente
                     @elseif( $item->status === 1)
                         Existente
-                    @elseif( $item->status === 0)
+                    @elseif( $item->status === 2)
+                        Dañado
+                    @elseif( $item->status === 3)
                         Faltante
                     @endif
                   </td>
@@ -191,7 +193,7 @@ $(document).ready(function() {
         if (result.value)
         {
           $('#inventory_id').val(id);
-          $('#status').val(0);
+          $('#status').val(2);
           $('#discar_cause').val(2);
           $('#form').submit();
         }
@@ -213,7 +215,7 @@ $(document).ready(function() {
         if (result.value)
         {
           $('#inventory_id').val(id);
-          $('#status').val(0);
+          $('#status').val(3);
           $('#discar_cause').val(1);
           $('#form').submit();
         }
