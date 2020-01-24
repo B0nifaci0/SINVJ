@@ -225,7 +225,7 @@ class ProductController extends Controller
         $lines = Shop::find($shop_id)->lines()->get();
         //$statuses = Shop::find($shop_id)->statuss()->get();
         $statuses = Status::all();
- 
+
         // if($grupo==null){
           // $products = Shop::find($shop_id)->products()->get();
         // }else{
@@ -442,14 +442,14 @@ class ProductController extends Controller
      */
         public function destroy($id)
         {
-          
+
           $products = Product::where('id', $id)->Where('status_id',3)->sum('status_id');
           if($products == 3){
             return redirect('/productos');
           } else {
             Product::destroy($id);
             //Product::destroy($id);
-          }    
+          }
           //Product::destroy($id);
         // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
         }
@@ -916,6 +916,7 @@ $fecter = Carbon::parse($request->fecter)->addDay();
    ->join('statuss','statuss.id','products.status_id')
    ->select('products.*', 'categories.name as name_category', 'lines.name as name_line','categories.type_product','statuss.name as name_status')
    ->whereBetween('products.updated_at',[$fecini,$fecter])
+   ->where('products.branch_id',$request->branch_id)
    ->where('categories.type_product',2)
    ->where('products.deleted_at',NULL)
    ->where('products.status_id',2)->get();
@@ -957,7 +958,7 @@ $fecter = Carbon::parse($request->fecter)->addDay();
       $compra = $total * $precio;
       $utilidad = $cash - $compra;
 
-      //return $products;
+      return $products;
 
   $pdf  = PDF::loadView('product.Reports.reportEntradasG_pgr', compact('shop','shops','branches','lines','products','total','cash','precio','hour','dates','compra','utilidad'));
   return $pdf->stream('R.EntradasGeneral_pgr.pdf');
@@ -980,6 +981,7 @@ $fecter = Carbon::parse($request->fecter)->addDay();
    ->join('statuss','statuss.id','products.status_id')
    ->select('products.*', 'categories.name as name_category', 'lines.name as name_line','categories.type_product','statuss.name as name_status')
    ->whereBetween('products.updated_at',[$fecini,$fecter])
+
    ->where('categories.type_product',2)
    ->where('products.deleted_at',NULL)
    ->where('products.status_id',2)->get();
@@ -1080,14 +1082,19 @@ $fecter = Carbon::parse($request->fecter)->addDay();
   public function reportEntradasP_pz(Request $request){
      $branches= Auth::user()->shop->branches;
     $shop_id = Auth::user()->shop->id;
+    //Resta un día a la fecha inicial
     $fecini = Carbon::parse($request->fecini)->subDay();
+    //Aumenta un día a la fecha final
     $fecter = Carbon::parse($request->fecter)->addDay();
+
     $categories = Shop::find($shop_id)->categories()->get();
     $products = Shop::join('products','products.shop_id','shops.id')
     ->join('categories','categories.id','products.category_id')
     ->join('statuss','statuss.id','products.status_id')
     ->select('products.*', 'categories.name as name_category','categories.type_product','statuss.name as name_status')
+    //Devuelve los resultados entre la fecha inicial y la fecha final
     ->whereBetween('products.updated_at',[$fecini,$fecter])
+    ->where('products.branch_id',$request->branch_id)
     ->where('categories.type_product',1)
     ->where('products.deleted_at',NULL)
     ->where('products.status_id',2)->get();
