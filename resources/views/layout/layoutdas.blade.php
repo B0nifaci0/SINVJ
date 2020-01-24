@@ -488,28 +488,11 @@
                     </li>
                     </ul>
                     <ul class="site-menu-sub">
-                      <li class="site-menu-item has-sub">
-                      <a href="javascript:void(0)">
+                      <li class="site-menu-item">
+                        <a class="animsition-link" href="/reportcomission">
                         <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
-                          <span class="site-menu-title">Comisiones</span>
-                          <span class="site-menu-arrow"></span>
+                          <span class="site-menu-title">Mis Comisiones</span>
                         </a>
-                        <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="/comisiones">
-                          <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
-                            <span class="site-menu-title">Comisiones</span>
-                        </a>
-                      </li>
-                    </ul>
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="/reportcomission">
-                          <i class="site-menu-icon icon fa-file-pdf-o" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reportes De Comisiones</span>
-                        </a>
-                      </li>
-                    </ul>
                       </li>
                     </ul>
 
@@ -640,29 +623,12 @@
                         </a>
                       </li>
 
-                  <li class="site-menu-item has-sub">
-                    <a  href="javascript:void(0)">
-                      <i class="site-menu-icon fa-list-alt" aria-hidden="true"></i>
-                        <span class="site-menu-title">Inventarios</span>
-                      <span class="site-menu-arrow"></span>
-                    </a>
-                    <ul class="site-menu-sub">
                       <li class="site-menu-item">
-                          <a class="animsition-link" href="/inventarios">
-                          <i  class="site-menu-icon fa-list" aria-hidden="true"></i>
-                            <span class="site-menu-title">Lista Inventarios</span>
+                        <a class="animsition-link" href="/inventarios">
+                        <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
+                        <span class="site-menu-title">Mis Inventarios</span>
                         </a>
                       </li>
-                    </ul>
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="/reportinventarios">
-                          <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reporte de Inventarios</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
 
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/categorias">
@@ -800,29 +766,14 @@
                     <!-- END Mis Productos-->
                   </li>
                   <!--END-Sucursales-->
-                  <li class="site-menu-item has-sub">
-                    <a  href="javascript:void(0)">
-                      <i class="site-menu-icon fa-list-alt" aria-hidden="true"></i>
-                        <span class="site-menu-title">Inventarios</span>
-                      <span class="site-menu-arrow"></span>
-                    </a>
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="/inventarios">
-                          <i  class="site-menu-icon fa-list" aria-hidden="true"></i>
-                            <span class="site-menu-title">Lista Inventarios</span>
-                        </a>
-                      </li>
-                    </ul>
-                    <ul class="site-menu-sub">
-                      <li class="site-menu-item">
-                          <a class="animsition-link" href="/reportinventarios">
-                          <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
-                            <span class="site-menu-title">Reporte de Inventarios</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
+                  <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                      <a class="animsition-link" href="/inventarios">
+                      <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
+                      <span class="site-menu-title">Mis Inventarios</span>
+                      </a>
+                    </li>
+                  </ul>
                   <!--Ventas-->
                   <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">

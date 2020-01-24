@@ -35,7 +35,26 @@ class BranchController extends Controller
     {
       $user = Auth::user();
       $branches= Auth::user()->shop->branches;
+      foreach($branches as $b){
+        $b->num_products = Product::withTrashed()->where('branch_id','=',$b->id)->where('deleted_at','=',NULL)->count();
+      }
+      
+     // return $branches;
+      
         return view('Branches/index', compact('branches','user'));
+    }
+
+    public function verificacion($id){
+      $num_products = Product::withTrashed()->where('branch_id','=',$id)->where('deleted_at','=',NULL)->count();
+      if($num_products == 0){
+        response()->json([
+          'success' => false,
+          'respuesta' => $id,
+          'message' => 'La sucursal no tiene productos activos',
+         ]);
+       } else {
+        return redirect('/sucursales/$id/producto');    
+       } 
     }
 
         /**

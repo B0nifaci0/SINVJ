@@ -442,15 +442,18 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-
-        $products = Product::where('id', $id)->Where('status_id', 3)->sum('status_id');
-        if ($products == 3) {
-            return redirect('/productos');
+        public function destroy($id)
+        {
+          $have = TransferProduct::where('product_id', $id)->get()->count();
+        if($have > 0){
+          return response()->json([
+            'success' => false,
+          ]);
         } else {
             Product::destroy($id);
-            //Product::destroy($id);
+          return response()->json([
+            'success'=> true 
+            ]);  
         }
         //Product::destroy($id);
         // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
