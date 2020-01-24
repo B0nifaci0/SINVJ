@@ -68,6 +68,7 @@ LISTA DE  LINEA
               </tr>
             </tfoot>
             <tbody>
+            @if(Auth::user()->type_user == 1)
               @foreach ($inventories as $inventory)
                 <tr id = "row{{ $inventory->id }}">
                   <td>{{ $inventory->id }}</td>
@@ -86,6 +87,26 @@ LISTA DE  LINEA
                   </td>
                 </tr>
               @endforeach
+              @else
+              @foreach ($inventories_user as $inventory)
+                <tr id = "row{{ $inventory->id }}">
+                  <td>{{ $inventory->id }}</td>
+                  <td>{{ $inventory->start_date }}</td>
+                  <td>{{ $inventory->name_branch }}</td>
+                  <td>
+                  <div class="col-md-4 col-md-offset-2">
+                    <button onclick="window.location.href='inventariospdf/{{$inventory->id}}'" 
+                      type="button" class=" btn btn-sm small btn-floating 
+                      toggler-left  btn-danger waves-effect waves-light waves-round float-right"
+                      data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                      <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                    </a>
+                  </td>
+                </tr>
+              @endforeach
+              @endif
             </tbody>
           </table>
            <!-- END Tabla-->

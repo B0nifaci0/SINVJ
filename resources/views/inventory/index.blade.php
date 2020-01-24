@@ -91,6 +91,7 @@ LISTA DE Inventarios
               </tr>
             </tfoot>
             <tbody>
+            @if(Auth::user()->type_user == 1)
               @foreach ($inventories as $inventory)
                 <tr id = "row{{ $inventory->id }}">
                   <td>{{ $inventory->start_date }}</td>
@@ -115,6 +116,32 @@ LISTA DE Inventarios
                   </td>
                 </tr>
               @endforeach
+              @else
+              @foreach ($inventories_user as $inventory)
+                <tr id = "row{{ $inventory->id }}">
+                  <td>{{ $inventory->start_date }}</td>
+                  @if($inventory->end_date == null)
+                  <td>No Terminado</td>
+                  @elseif($inventory->end_date)
+                  <td>{{ $inventory->end_date }}</td>
+                  @endif
+                  @if($inventory->status_report == 1)
+                  <td>No Iniciado</td>
+                  @elseif($inventory->status_report == 2)
+                  <td>En Proceso</td>
+                  @elseif($inventory->status_report == 3)
+                  <td>Finalizado</td>
+                  @endif
+               <!--   <td>{{ $inventory->end_date }}</td> -->
+                  <td>{{ $inventory->sucursal }}</td>
+                  <td>
+                    <a class="btn btn-primary" href="/inventarios/{{ $inventory->id }}">
+                    <i class="icon md-search"></i>
+                    </a>
+                  </td>
+                </tr>
+              @endforeach
+              @endif
             </tbody>
           </table>
            <!-- END Tabla-->
