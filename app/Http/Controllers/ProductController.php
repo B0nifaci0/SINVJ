@@ -62,10 +62,10 @@ class ProductController extends Controller
 			if($product->image) {
         $path = 'products/' . $product->clave;
       } else {
-        $path = 'dummy';
+        $path = 'products/default';
       }
 
-      $product->image = $this->getS3URL($path);
+      $product->image = $this->getS3URL($path); 
 		}
 
     	$shops = Auth::user()->shop()->get();
@@ -155,7 +155,7 @@ class ProductController extends Controller
         if($product->image) {
           $path = 'products/' . $product->clave;
         } else {
-          $path = 'dummy';
+          $path = 'products/default';
         }
         $product->image = $product->image = $this->getS3URL($path);
       }
@@ -197,7 +197,7 @@ class ProductController extends Controller
           if($product->image) {
             $path = env('S3_ENVIRONMENT') . '/' . 'products/' . $product->clave;
           } else {
-            $path = env('S3_ENVIRONMENT') . '/' . 'dummy';
+            $path = env('S3_ENVIRONMENT') . '/' . 'products/default';
           }
 
           $command = $adapter->getClient()->getCommand('GetObject', [
