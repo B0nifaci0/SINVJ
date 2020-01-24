@@ -113,13 +113,12 @@ class SalesComissionsController extends Controller
 
         //$number1 = (int)$comission;
 
-        //return $number1;
+        //return $user;
 
         $sales = Sale::join('users','users.id','sales.user_id')
-        ->select('users.name as username',DB::raw('SUM(sales.total * 0.01) as ventas'))
+        ->select('users.id','users.name as username',DB::raw('SUM(sales.total * 0.01) as ventas'))
         ->where('sales.branch_id',$branch)
         ->where('sales.user_id',$user)
-        ->distinct('users.name')
         ->groupBy('users.id', 'users.name')
         ->get();
         //return $sales;

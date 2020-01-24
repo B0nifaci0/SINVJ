@@ -147,23 +147,17 @@ img {
 
 
 <div border="">
-        <img 
-            align = "left"
-            width="90px"
-            height="90px"
-            src="https://images.vexels.com/media/users/3/151690/isolated/preview/be2ec10fa7ff133565ba9a4bc65aae6c-icono-de-trazo-de-piedra-preciosa-de-diamante-by-vexels.png"
-            alt="Logotipo"
-            ></p>
+       <img align = "left" width="140px" height="120px" src="{{ $shop->image }}">
             <p align="right">Fecha: {{$dates}}</p>
           
             <p align="right">Hora: {{$hour}}</p>
   
             <p>
             @foreach($branches as $branch)
-            {{$branch->name}}
+            Sucursal: {{$branch->name}}
             <br>
             @endforeach
-            <table class="table-sm table-bordered">
+            <table class="table-sm table-bordered" width="100%">
               <thead>
                 <tr>
                   <th>Nombre</th>
@@ -174,7 +168,7 @@ img {
             @foreach($sales as $s)
             <tr>
               <td>{{ $s->username }}</td>
-              <td> $ {{ $s->ventas }}</td>
+              <td>@if($s->ventas) $ {{ $s->ventas }} @else $ 0 @endif</td>
             </tr>
             @endforeach
             </tbody>
