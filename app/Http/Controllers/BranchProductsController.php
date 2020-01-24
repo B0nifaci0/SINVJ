@@ -37,9 +37,12 @@ class BranchProductsController extends Controller
 
       foreach ($products as $product) {
         if($product->image) {
+
+          $path = env('S3_ENVIRONMENT') . '/' . 'products/' . $product->clave;
+
           $command = $adapter->getClient()->getCommand('GetObject', [
             'Bucket' => $adapter->getBucket(),
-            'Key' => $adapter->getPathPrefix(). 'products/' . $product->clave
+            'Key' => $adapter->getPathPrefix(). $path
           ]);
   
           $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');

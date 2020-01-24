@@ -5,7 +5,7 @@ namespace App\Traits;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
-trait S3ImageManager {
+trait S3ImageManager { 
 
     private function saveImages($base_64, $path, $name)
 	{
@@ -25,9 +25,9 @@ trait S3ImageManager {
     private function getS3URL($path) {
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
-		$path = env('S3_ENVIRONMENT') . '/' . $path;
+		// $path = env('S3_ENVIRONMENT') . '/' . $path;
 
-        $command = $adapter->getClient()->getCommand('GetObject', [
+		$command = $adapter->getClient()->getCommand('GetObject', [
             'Bucket' => $adapter->getBucket(),
             'Key' => $adapter->getPathPrefix(). $path
 		]);

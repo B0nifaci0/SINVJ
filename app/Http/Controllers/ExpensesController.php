@@ -46,12 +46,15 @@ class ExpensesController extends Controller
 
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
-        foreach ($expenses as $e) {
+        foreach ($expenses as $e) { 
             if($e->image) {
+
+              $path = env('S3_ENVIRONMENT') . '/' .  'tickets/' . $e->id;
+
                 $command = $adapter->getClient()->getCommand('GetObject', [
                     'Bucket' => $adapter->getBucket(),
-                    'Key' => $adapter->getPathPrefix(). 'tickets/' . $e->id
-                ]);
+                    'Key' => $adapter->getPathPrefix() . $path
+                ]); 
             
                 $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
             
