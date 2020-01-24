@@ -55,7 +55,7 @@
 <div class="page-content">
     <div class="panel">
      
-   <img align="left" width="90px" height="90px" src="{{ $shop->image }}"><br>       
+   <img align="left" width="140px" height="120px" src="{{ $shop->image }}"><br>       
    <p align="right">Fecha: {{$dates}}</p>
           
     <p align="right">Hora: {{$hour}}</p>
