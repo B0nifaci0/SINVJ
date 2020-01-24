@@ -107,7 +107,7 @@ class BranchController extends Controller
         ]);
         $branch->shop_id = Auth::user()->shop->id;
         $branch->save();
-        //return $branch;
+
       return redirect('/sucursales')->with('mesage', 'La sucursal  se ha agregado exitosamente!');
 
     }

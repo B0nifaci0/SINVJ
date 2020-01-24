@@ -47,17 +47,6 @@
       border: 1px solid #212121;
     }
 
-    .sale-head h1,
-    table thead tr th,
-    table tfoot tr td {
-      background-color: #f8f8f8;
-    }
-
-    tfoot {
-      color: #000;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
   </style>
 </head>
 
@@ -75,7 +64,7 @@
       @endif
     </h2>
       <h3 align="center" style="color:red">{{$shop->name}}</h3>
-      <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+      <table class="table table-condensed table-hover table-striped ">
         <thead>
           <tr>
             <th scope="col">Clave</th>

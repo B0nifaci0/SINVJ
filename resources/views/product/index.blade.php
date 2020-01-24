@@ -343,7 +343,8 @@ LISTA PRODUCTO
             $.ajax({
               url: '/productos/' + id,
               method: 'DELETE',
-               success: function () {
+               success: function (response) {
+                if(response.success){
                 $('#product_table_gr').DataTable()
                 .rows('.row' + id)
                 .remove()
@@ -352,7 +353,14 @@ LISTA PRODUCTO
                   'Eliminado',
                   'El registro ha sido eliminado.',
                   'success'
-                );
+                )
+                }else{
+                Swal.fire(
+                  'No Eliminado',
+                  'El producto no ha sido eliminado por que esta activo en un traspaso',
+                  'error'
+                )
+            }
               },
               error: function () {
                 Swal.fire(
@@ -386,7 +394,8 @@ LISTA PRODUCTO
             $.ajax({
               url: '/productos/' + id,
               method: 'DELETE',
-              success: function () {
+              success: function (response) {
+                if(response.success){
                 $('#product_table_pz').DataTable()
                 .rows('.row' + id)
                 .remove()
@@ -395,7 +404,14 @@ LISTA PRODUCTO
                   'Eliminado',
                   'El registro ha sido eliminado.',
                   'success'
-                );
+                )
+                }else{
+                Swal.fire(
+                  'No Eliminado',
+                  'El producto no ha sido eliminado por que esta activo en un traspaso',
+                  'error'
+                )
+                }
               },
               error: function () {
                 Swal.fire(

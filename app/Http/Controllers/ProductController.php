@@ -21,6 +21,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\Foreach_;
 
 class ProductController extends Controller
 {
@@ -447,15 +448,12 @@ class ProductController extends Controller
         if($have > 0){
           return response()->json([
             'success' => false,
-            'message' => 'El producto no puede ser eliminado, porque esta en un traspaso activo',
           ]);
-        }
-          $products = Product::where('id', $id)->Where('status_id',3)->sum('status_id');
-          if($products == 3){
-            return redirect('/productos');
         } else {
             Product::destroy($id);
-            //Product::destroy($id);
+          return response()->json([
+            'success'=> true
+            ]);
         }
         //Product::destroy($id);
         // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
@@ -503,7 +501,7 @@ class ProductController extends Controller
         $tienda = Shop::find($idshop)->branches()->get();
         $statuses = Status::all();
         //$line = Shop::find($idshop)->lines()->get();
-        $line = Line::where('shop_id', NULL)->get();
+        $lineas = Line::where('shop_id', NULL)->get();
         $category = Auth::user()->shop->id;
         //$categories = Shop::find($category)->categories()->get();
         $categorias = Category::where('shop_id', NULL)->get();
@@ -521,7 +519,7 @@ class ProductController extends Controller
         }
         //return $categories;
 
-        return view('product.Reports.reportproduct', compact('hour', 'dates', 'shop', 'shops', 'tienda', 'user', 'statuses', 'line', 'categorias'));
+        return view('product.Reports.reportproduct', compact('hour', 'dates', 'shop', 'shops', 'tienda', 'user', 'statuses', 'lineas', 'categorias'));
     }
 
     public function reportEstatus(Request $request)
@@ -571,6 +569,12 @@ class ProductController extends Controller
         $detalle = SaleDetails::all();
 
         $estado = Status::findOrFail($request->estatus_id);
+
+
+        if($request->type_product == 2)
+        $type = "Gr";
+        else
+        $type = "Pz";
 
         /**Finaliza codigo de las consultas por campos seleccionados */
 
@@ -622,7 +626,7 @@ class ProductController extends Controller
          * hacer uso de la informacion de cada consulta
          */
 
-        $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop', 'shops', 'estado', 'products', 'branch', 'sales', 'hour', 'dates', 'total', 'cash', 'compra', 'utilidad', 'trans', 'detalle', 'venta'));
+        $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop', 'shops', 'estado', 'products', 'branch', 'sales', 'hour', 'dates', 'total', 'cash', 'compra', 'utilidad', 'trans', 'detalle', 'venta','type'));
         return $pdf->stream('ReporteEstatus.pdf');
     }
     /**Termina el retorno del pdf */
@@ -987,6 +991,13 @@ class ProductController extends Controller
     {
         $branches = Auth::user()->shop->branches;
 
+        $shop = Auth::user()->shop;
+        $shops = Auth::user()->shop()->get();
+
+        if ($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
+
         $shop_id = Auth::user()->shop->id;
         #pasar fecha actual
 
@@ -1000,10 +1011,12 @@ class ProductController extends Controller
             ->join('statuss', 'statuss.id', 'products.status_id')
             ->select('products.*', 'categories.name as name_category', 'lines.name as name_line', 'categories.type_product', 'statuss.name as name_status')
             ->whereBetween('products.updated_at', [$fecini, $fecter])
-
             ->where('categories.type_product', 2)
+            ->where('products.shop_id',$shop_id)
             ->where('products.deleted_at', NULL)
             ->where('products.status_id', 2)->get();
+
+
         //return $products;
         // $status = Shop::find($shop_id)->statuss()->get();
         //return $status;
@@ -1013,13 +1026,6 @@ class ProductController extends Controller
             $line->total_g = $products->where('line_id', $line->id)->sum('weigth');
         }
         //return $line->total_g;
-
-        $shop = Auth::user()->shop;
-        $shops = Auth::user()->shop()->get();
-
-        if ($shop->image) {
-            $shop->image = $this->getS3URL($shop->image);
-        }
 
         $hour = Carbon::now();
         $hour = date('H:i:s');

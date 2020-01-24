@@ -75,7 +75,7 @@
                  <th scope="col">Observaciones</th>
                  <th scope="col">Categoria</th>
                  <th scope="col">Estatus</th>
-                 <th scope="col" >Fecha</th>
+                 <th scope="col">Fecha</th>
 
                 </tr>
               </thead>
@@ -91,7 +91,6 @@
                  <td>{{ $product->name_category }}</td>
                  <td>{{ $product->name_status }}</td>
                 <td class="sizedate">{{ $product->date_creation }}</td>
-
                 </tr>
                   @endforeach
               </tbody>
