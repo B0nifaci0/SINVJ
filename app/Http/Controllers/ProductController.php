@@ -447,15 +447,12 @@ class ProductController extends Controller
         if($have > 0){
           return response()->json([
             'success' => false,
-            'message' => 'El producto no puede ser eliminado, porque esta en un traspaso activo',
           ]);
-        }
-          $products = Product::where('id', $id)->Where('status_id',3)->sum('status_id');
-          if($products == 3){
-            return redirect('/productos');
         } else {
             Product::destroy($id);
-            //Product::destroy($id);
+          return response()->json([
+            'success'=> true 
+            ]);  
         }
         //Product::destroy($id);
         // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
