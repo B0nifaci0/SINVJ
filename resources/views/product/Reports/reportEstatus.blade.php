@@ -36,13 +36,13 @@
       <h2 align="center">Reporte {{$estado->name}}s por {{$type}}
       </h2>
     <h3 align="center" style="color:red"> @if($estado->name == 'Traspaso') Destino: @endif Sucursal: {{$branch}}</h3>
-        @foreach ($products as $i => $product)
+    @if($type == "Gr")
         <h4 align="center" >Linea:
-        @if($product->category->type_product == 2 )
+        @foreach ($products as $i => $product)
         {{ $product->line->name }}
-        @endif
-        @break
-        @endforeach </h4>
+        @endforeach
+    @endif
+    </h4>
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
           <tr>
