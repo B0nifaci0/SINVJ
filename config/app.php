@@ -13,8 +13,6 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
-
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -52,7 +50,6 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -66,7 +63,7 @@ return [
     */
 
     'timezone' => 'America/Mexico_City',
-    
+
 
     /*
     |--------------------------------------------------------------------------
@@ -162,7 +159,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         //provider para DOMPPDF
         Barryvdh \ DomPDF \ ServiceProvider :: class,
-        //Pprovider for excel 
+        //Pprovider for excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
 
@@ -209,6 +206,7 @@ return [
         'Request' => Illuminate\Support\Facades\Request::class,
         'Response' => Illuminate\Support\Facades\Response::class,
         'Route' => Illuminate\Support\Facades\Route::class,
+        'Str' => Illuminate\Support\Str::class,
         'Schema' => Illuminate\Support\Facades\Schema::class,
         'Session' => Illuminate\Support\Facades\Session::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,

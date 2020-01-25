@@ -12,7 +12,7 @@ ALTA SUCURSALES
 @section('content')
 <div class="page-content container-fluid">
   <form autocomplete="off" method="POST" action="/sucursales" enctype="multipart/form-data">
-    {{ csrf_field() }}
+    @csrf
     <div class="panel">
       <div class="panel-body">
           @if (session('mesage'))
@@ -40,7 +40,7 @@ ALTA SUCURSALES
                 <!-- Input Para ingresar Nombre De Representante Legal-->
                 <div class="form-group form-material col-md-6">
                   <label class="form-control-label">Representante Legal:</label>
-                  <input type="text" class="form-control" name="name_legal_re"  placeholder="Francisco J" />
+                  <input type="text" class="form-control" name="name_legal_re" value="{{old('name_legal_re')}}" placeholder="Francisco J" />
                 </div>
                 <!-- END Input-->
                 <!-- Input Para ingresar email de sucursal-->
@@ -75,7 +75,7 @@ ALTA SUCURSALES
                 <!-- END Input-->
               </div>
 
-              <!-- Botón Para guardar cambios--> 
+              <!-- Botón Para guardar cambios-->
               <div class="col-md-12 form-group">
                 <button type="submit" name="button" class="btn btn-primary">Guardar</button>
               </div>

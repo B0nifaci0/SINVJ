@@ -10,16 +10,16 @@ ALTA USUARIOS
 
 @endsection
 @section('content')
-    @if (session('mesage-delete'))	
+    @if (session('mesage-delete'))
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <strong>{{ session('mesage-delete') }}</strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
 	    </div>
-		@endif  
+		@endif
   <div class="page-content container-fluid">
-    <!-- Form, Method "POST" para enviar los datos del formulario a la base de datos--> 
+    <!-- Form, Method "POST" para enviar los datos del formulario a la base de datos-->
     <form autocomplete="off" method="POST" action="/usuarios" enctype="multipart/form-data">
       {{ csrf_field() }}
       <div class="panel">
@@ -33,7 +33,7 @@ ALTA USUARIOS
             <div class="alert alert-danger" role="alert">
               <ul>
                 @foreach($errors->all() as $error)
-                  <li>{{ $error }}</li> 
+                  <li>{{ $error }}</li>
                 @endforeach
               </ul>
             </div>
@@ -64,11 +64,11 @@ ALTA USUARIOS
               <input type="password" name="password_confirmation" class="form-control" value="{{old('password_confirmation')}}" required="required" placeholder="Confirma la Contraseña">
             </div>
             <!-- END Input-->
-            <div> 
+            <div>
               @foreach ($shops as $shop)
                <input type="hidden" name="shop_id" value="{{$shop->id}}">
-              @endforeach 
-            </div> 
+              @endforeach
+            </div>
             <!-- Select para Seleccionar Sucursal-->
             <div class="col-md-offset-1 visible-md visible-lg col-md-6">
                 <label class="form-control-label" for="inputBranch">Seleccione una Sucursal</label>
@@ -78,7 +78,7 @@ ALTA USUARIOS
                     <option value="{{$branch->id}}">{{$branch->name}}</option>
                   @endforeach
                 </select>
-            </div> 
+            </div>
             <!-- END Select-->
             <!-- Seleccionar Tipo de Usuario -->
             <div class="col-md-offset-1 visible-md visible-lg col-md-6">
@@ -98,7 +98,7 @@ ALTA USUARIOS
             <!-- END Input-->
             <div>
               <input type="hidden" name="terms_conditions" value="1">
-            </div>   
+            </div>
           </div>
           <!-- Botón para guardar Usuario-->
           <div class="form-group col-md-12">
@@ -106,7 +106,7 @@ ALTA USUARIOS
           </div>
           <!-- END Botón-->
         </div>
-      </div> 
+      </div>
     </form>
   </div>
 @endsection

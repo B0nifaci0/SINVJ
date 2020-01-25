@@ -109,8 +109,9 @@ class TranferProductsController extends Controller
 
         $user = Auth::user(); //Retorna el usuario con el que se encuentra logueado
         $users = User::where('id', '!=', $user->id)->get(); // Retorna los usuarios que pertenecen a la tienda y no estan logueados
-
-        //Retorna todos los productos de la tienda solo si el usuario tiene
+        //return $users;
+        // $products = Product::where('branch_id', $user->branch_id)
+        // ->get(); //Retorna todos los productos de la tienda solo si el usuario tiene
         return view('transfer/add', compact('branches','users','products','user'));
        }
 

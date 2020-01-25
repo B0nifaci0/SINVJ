@@ -23,7 +23,7 @@ class PrincipalController extends Controller
      */
     public function index()
     {
-        $shop = Auth::user()->shop; 
+        $shop = Auth::user()->shop;
         $total = User::sum('salary');
         $branch = Auth::user()->shop->id;
         $user = Auth::user();
@@ -47,8 +47,8 @@ class PrincipalController extends Controller
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->where('products.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
+      ->where('products.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',2)
       ->where('products.deleted_at', NULL)
       ->where('products.status_id',2)
       ->select('products.weigth as total_ex' ,'products.status_id as existente', DB::raw('SUM(products.weigth) as total_ex'))
@@ -60,21 +60,21 @@ class PrincipalController extends Controller
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->where('products.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
+      ->where('products.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',2)
       ->where('products.deleted_at', NULL)
       ->select('products.weigth as total_ex' ,'products.status_id as trapasado', DB::raw('SUM(products.weigth) as total_traspasado'))
       ->where('products.status_id',3)
       ->sum('products.weigth');
       //return $gramos_traspasado;
 
-      //SUMA TOTAL DE GRAMOS DAÑADOS 
+      //SUMA TOTAL DE GRAMOS DAÑADOS
       $gramos_dañados = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->where('products.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
+      ->where('products.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',2)
       ->where('products.status_id',4)
        ->where('products.deleted_at', NULL)
       ->select('products.weigth as total_dañados' ,'products.status_id as dañados',)
@@ -100,8 +100,8 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',2)
        ->where('products.deleted_at', NULL)
-       ->where('products.shop_id', Auth::user()->shop->id)  
-       ->where('categories.type_product',2) 
+       ->where('products.shop_id', Auth::user()->shop->id)
+       ->where('categories.type_product',2)
        ->sum('products.price');
 
        //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS TRASPASADOS
@@ -111,8 +111,8 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',3)
        ->where('products.deleted_at', NULL)
-       ->where('products.shop_id', Auth::user()->shop->id)  
-       ->where('categories.type_product',2) 
+       ->where('products.shop_id', Auth::user()->shop->id)
+       ->where('categories.type_product',2)
        ->sum('products.price');
 
        //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS DAÑADOS
@@ -122,8 +122,8 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',4)
        ->where('products.deleted_at', NULL)
-       ->where('products.shop_id', Auth::user()->shop->id)  
-       ->where('categories.type_product',2) 
+       ->where('products.shop_id', Auth::user()->shop->id)
+       ->where('categories.type_product',2)
        ->sum('products.price');
 
        $ventas = $ventas_e + $ventas_t + $ventas_d;
@@ -138,8 +138,8 @@ class PrincipalController extends Controller
       ->join('branches','branches.id','products.branch_id')
       ->where('products.status_id',2)
       ->where('products.deleted_at', NULL)
-      ->where('products.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
+      ->where('products.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',2)
       ->where('products.branch_id',$ids)
       ->sum('products.weigth');
 
@@ -149,7 +149,7 @@ class PrincipalController extends Controller
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
       ->where('products.status_id',3)
-      ->where('products.shop_id', Auth::user()->shop->id)  
+      ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
       ->where('products.deleted_at', NULL)
       ->where('products.branch_id',$ids)
@@ -160,8 +160,8 @@ class PrincipalController extends Controller
       ->join('categories','categories.id','products.category_id')
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
-      ->where('products.shop_id', Auth::user()->shop->id)  
-      ->where('categories.type_product',2) 
+      ->where('products.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',2)
       ->where('products.branch_id',$ids)
       ->where('products.status_id',4)
        ->where('products.deleted_at', NULL)
@@ -170,7 +170,7 @@ class PrincipalController extends Controller
       $gramos_col = $gramos_cole + $gramos_colt + $gramos_cold;
 
     //CONSULTAS PARA ADMINISTRADORES
- 
+
        //SUMA TOTAL DE PIEZAS EXISTENTES
        $piezas_e = Shop::join('products','products.shop_id','shops.id')
        ->join('categories','categories.id','products.category_id')
@@ -178,10 +178,10 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->where('products.deleted_at', NULL)
        ->where('categories.type_product',1)
-       ->where('products.shop_id', Auth::user()->shop->id)  
-       ->where('products.status_id',2) 
+       ->where('products.shop_id', Auth::user()->shop->id)
+       ->where('products.status_id',2)
        ->count('products.id');
- 
+
        //SUMA TOTAL DE PIEZAS TRASPASADAS
        $piezas_t = Shop::join('products','products.shop_id','shops.id')
        ->join('categories','categories.id','products.category_id')
@@ -189,10 +189,10 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',3)
        ->where('products.deleted_at', NULL)
-       ->where('products.shop_id', Auth::user()->shop->id)  
+       ->where('products.shop_id', Auth::user()->shop->id)
        ->where('categories.type_product',1)
        ->count('products.id');
- 
+
        //SUMA TOTAL DE PIEZAS DAÑADAS
        $piezas_d = Shop::join('products','products.shop_id','shops.id')
        ->join('categories','categories.id','products.category_id')
@@ -200,14 +200,14 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',4)
        ->where('products.deleted_at', NULL)
-       ->where('products.shop_id', Auth::user()->shop->id)  
-       ->where('categories.type_product',1)  
+       ->where('products.shop_id', Auth::user()->shop->id)
+       ->where('categories.type_product',1)
        ->count('products.id');
 
        $piezas = $piezas_e + $piezas_t + $piezas_d;
- 
+
         //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA
- 
+
          //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA EXISTENTES
         $pieza_vente = Shop::join('products','products.shop_id','shops.id')
         ->join('categories','categories.id','products.category_id')
@@ -215,10 +215,10 @@ class PrincipalController extends Controller
         ->join('branches','branches.id','products.branch_id')
         ->where('products.status_id',2)
         ->where('products.deleted_at', NULL)
-        ->where('products.shop_id', Auth::user()->shop->id)  
-        ->where('categories.type_product',1) 
+        ->where('products.shop_id', Auth::user()->shop->id)
+        ->where('categories.type_product',1)
         ->sum('products.price');
- 
+
         //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA TRASPASADOS
         $pieza_ventt = Shop::join('products','products.shop_id','shops.id')
         ->join('categories','categories.id','products.category_id')
@@ -226,10 +226,10 @@ class PrincipalController extends Controller
         ->join('branches','branches.id','products.branch_id')
         ->where('products.status_id',3)
         ->where('products.deleted_at', NULL)
-        ->where('products.shop_id', Auth::user()->shop->id)  
-        ->where('categories.type_product',1) 
+        ->where('products.shop_id', Auth::user()->shop->id)
+        ->where('categories.type_product',1)
         ->sum('products.price');
- 
+
         //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA DAÑADOS
         $pieza_ventd = Shop::join('products','products.shop_id','shops.id')
         ->join('categories','categories.id','products.category_id')
@@ -237,15 +237,15 @@ class PrincipalController extends Controller
         ->join('branches','branches.id','products.branch_id')
         ->where('products.status_id',4)
         ->where('products.deleted_at', NULL)
-        ->where('products.shop_id', Auth::user()->shop->id)  
-        ->where('categories.type_product',1)  
+        ->where('products.shop_id', Auth::user()->shop->id)
+        ->where('categories.type_product',1)
         ->sum('products.price');
 
         $pieza_vent = $pieza_vente + $pieza_ventt + $pieza_ventd;
- 
+
     //CONSULTAS PARA SUB ADIMINISTRADORES Y COLABORADORES
         //SUMA TOTAL DE PIEZAS
- 
+
        //SUMA TOTAL DE PIEZAS EXISTENTES
        $piezas_cole = Shop::join('products','products.shop_id','shops.id')
        ->join('categories','categories.id','products.category_id')
@@ -253,37 +253,37 @@ class PrincipalController extends Controller
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',2)
        ->where('products.deleted_at', NULL)
-       ->where('products.shop_id', Auth::user()->shop->id)  
-       ->where('categories.type_product',1) 
+       ->where('products.shop_id', Auth::user()->shop->id)
+       ->where('categories.type_product',1)
        ->where('products.branch_id',$ids)
        ->count('products.id');
- 
+
        //SUMA TOTAL DE PIEZAS TRASPASADAS
        $piezas_colt = Shop::join('products','products.shop_id','shops.id')
        ->join('categories','categories.id','products.category_id')
        ->join('statuss','statuss.id','products.status_id')
        ->join('branches','branches.id','products.branch_id')
        ->where('products.status_id',3)
-       ->where('products.shop_id', Auth::user()->shop->id)  
+       ->where('products.shop_id', Auth::user()->shop->id)
        ->where('categories.type_product',1)
        ->where('products.deleted_at', NULL)
        ->where('products.branch_id',$ids)
        ->count('products.id');
- 
+
        //SUMA TOTAL DE PIEZAS DAÑADAS
        $piezas_cold = Shop::join('products','products.shop_id','shops.id')
        ->join('categories','categories.id','products.category_id')
        ->join('statuss','statuss.id','products.status_id')
        ->join('branches','branches.id','products.branch_id')
-       ->where('products.shop_id', Auth::user()->shop->id)  
-       ->where('categories.type_product',1) 
+       ->where('products.shop_id', Auth::user()->shop->id)
+       ->where('categories.type_product',1)
        ->where('products.branch_id',$ids)
        ->where('products.status_id',4)
        ->where('products.deleted_at', NULL)
        ->count('products.id');
 
        $piezas_col = $piezas_cole + $piezas_colt + $piezas_cold;
-        
+
         return view ('Principal/principal',compact('gramos_dañados','gramos_traspasado','pieza_vent','piezas_cold','piezas_col','piezas_cole','piezas_colt','pieza_vente','pieza_ventt','pieza_ventd','piezas_e','piezas_t','piezas_d','piezas','gramos_colt','gramos_cole','gramos_cold','ventas_d','ventas_t','ventas_e','branches_col','gramos_col','branches','branch','user','shop','shops','gramos_existentes','ventas','gramos_dañados','total'));
     }
 
@@ -293,7 +293,7 @@ class PrincipalController extends Controller
         $user = Auth::user();
         $branch = Shop::find($branch)->branches()->get();
         $pdf  = PDF::loadView('Principal.pdf', compact('branch', 'user', 'total'));
-        return $pdf->download('Principal.pdf');
+        return $pdf->stream('Principal.pdf');
       }
     /**
      * Funciones para el reporte de nomina

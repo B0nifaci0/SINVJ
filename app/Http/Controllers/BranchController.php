@@ -35,7 +35,26 @@ class BranchController extends Controller
     {
       $user = Auth::user();
       $branches= Auth::user()->shop->branches;
+      foreach($branches as $b){
+        $b->num_products = Product::withTrashed()->where('branch_id','=',$b->id)->where('deleted_at','=',NULL)->count();
+      }
+      
+     // return $branches;
+      
         return view('Branches/index', compact('branches','user'));
+    }
+
+    public function verificacion($id){
+      $num_products = Product::withTrashed()->where('branch_id','=',$id)->where('deleted_at','=',NULL)->count();
+      if($num_products == 0){
+        response()->json([
+          'success' => false,
+          'respuesta' => $id,
+          'message' => 'La sucursal no tiene productos activos',
+         ]);
+       } else {
+        return redirect('/sucursales/$id/producto');    
+       } 
     }
 
         /**
@@ -76,10 +95,10 @@ class BranchController extends Controller
         if($name == $request->name){
           return redirect('/sucursales')->with('mesage-delete', 'El nombre ya ha sido registrado!');
         } else */
-          
+
         $branch = new Branch([
           'name' => $request->name,
-         // 'name_legal_re' => $request->name_legal_re,
+          'name_legal_re' => $request->name_legal_re,
           'email' => $request->email,
           'other' => $request->other,
           'rfc' => $request->rfc,
@@ -88,7 +107,7 @@ class BranchController extends Controller
         ]);
         $branch->shop_id = Auth::user()->shop->id;
         $branch->save();
-        //return $branch;
+
       return redirect('/sucursales')->with('mesage', 'La sucursal  se ha agregado exitosamente!');
 
     }
@@ -162,14 +181,14 @@ class BranchController extends Controller
 
     public function mostrar($id)
     {
-      $shop = Auth::user()->shop; 
+      $shop = Auth::user()->shop;
       $branches_col = Branch::select('*');
       $id_shop = Auth::user()->shop->id;
       $user = Auth::user();
       $branch = Shop::find($id_shop)->branches()->get();
       $shops = Auth::user()->shop()->get();
-  
-      
+
+
       if($shop->image) {
         $shop->image = $this->getS3URL($shop->image);
       }
@@ -177,7 +196,7 @@ class BranchController extends Controller
       $branches= Auth::user()->shop->branches;
 
       $branch = Branch::findOrFail($id);
-      
+
       $ids = $branch->id;
       $braname = Branch::findOrFail($id);
       //return $braname;
@@ -299,7 +318,7 @@ class BranchController extends Controller
 
       //return $total_gramos_tras;
 
-      
+
 
       //SUMA TOTAL DE PRECIOS Y GRAMOS POR LINEAS EXISTENTES
       $total_e = Shop::join('products','products.shop_id','shops.id')
@@ -308,11 +327,11 @@ class BranchController extends Controller
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
       ->where('products.status_id',2)
-      //->where('lines.shop_id', Auth::user()->shop->id)  
+      //->where('lines.shop_id', Auth::user()->shop->id)
       ->where('lines.shop_id', NULL)
       ->where('products.shop_id', Auth::user()->shop->id)
-      ->where('categories.type_product',2) 
-      ->where('products.branch_id',$ids)   
+      ->where('categories.type_product',2)
+      ->where('products.branch_id',$ids)
       ->where('products.deleted_at', NULL)
       ->select(DB::raw('SUM(products.weigth) as total_we'))
       ->get();
@@ -324,7 +343,7 @@ class BranchController extends Controller
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
-      //->where('lines.shop_id', Auth::user()->shop->id)  
+      //->where('lines.shop_id', Auth::user()->shop->id)
       ->where('lines.shop_id', NULL)
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
@@ -341,11 +360,11 @@ class BranchController extends Controller
       ->join('statuss','statuss.id','products.status_id')
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
-      //->where('lines.shop_id', Auth::user()->shop->id)  
+      //->where('lines.shop_id', Auth::user()->shop->id)
       ->where('lines.shop_id', NULL)
       ->where('products.shop_id', Auth::user()->shop->id)
-      ->where('categories.type_product',2) 
-      ->where('products.branch_id',$ids)   
+      ->where('categories.type_product',2)
+      ->where('products.branch_id',$ids)
       ->where('products.deleted_at', NULL)
       ->where('products.status_id',4)
       ->select(DB::raw('SUM(products.weigth) as total_wd'))
@@ -359,7 +378,7 @@ class BranchController extends Controller
       ->join('branches','branches.id','products.branch_id')
       //->where('categories.shop_id', Auth::user()->shop->id)
       ->where('categories.shop_id', NULL)
-      ->where('products.shop_id', Auth::user()->shop->id)  
+      ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
       ->where('products.deleted_at', null)
@@ -380,7 +399,7 @@ class BranchController extends Controller
         ->join('branches','branches.id','products.branch_id')
         //->where('categories.shop_id', Auth::user()->shop->id)
         ->where('categories.shop_id', NULL)
-        ->where('products.shop_id', Auth::user()->shop->id) 
+        ->where('products.shop_id', Auth::user()->shop->id)
         ->where('products.branch_id',$ids)
         ->where('categories.type_product',1)
         ->where('products.deleted_at',null)
@@ -396,7 +415,7 @@ class BranchController extends Controller
         ->join('branches','branches.id','products.branch_id')
         //->where('categories.shop_id', Auth::user()->shop->id)
         ->where('categories.shop_id', NULL)
-        ->where('products.shop_id', Auth::user()->shop->id) 
+        ->where('products.shop_id', Auth::user()->shop->id)
         ->where('products.branch_id',$ids)
         ->where('categories.type_product',1)
         ->where('products.deleted_at',null)
@@ -412,7 +431,7 @@ class BranchController extends Controller
         ->join('branches','branches.id','products.branch_id')
         //->where('categories.shop_id', Auth::user()->shop->id)
         ->where('categories.shop_id', NULL)
-        ->where('products.shop_id', Auth::user()->shop->id) 
+        ->where('products.shop_id', Auth::user()->shop->id)
         ->where('products.branch_id',$ids)
         ->where('categories.type_product',1)
         ->where('products.deleted_at',null)
@@ -430,7 +449,7 @@ class BranchController extends Controller
       ->join('branches','branches.id','products.branch_id')
       //->where('categories.shop_id', Auth::user()->shop->id)
       ->where('categories.shop_id', NULL)
-      ->where('products.shop_id', Auth::user()->shop->id) 
+      ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
       ->where('products.status_id',2)
@@ -446,7 +465,7 @@ class BranchController extends Controller
       ->join('branches','branches.id','products.branch_id')
       //->where('categories.shop_id', Auth::user()->shop->id)
       ->where('categories.shop_id', NULL)
-      ->where('products.shop_id', Auth::user()->shop->id) 
+      ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
       ->where('products.status_id',3)
@@ -461,7 +480,7 @@ class BranchController extends Controller
       ->join('branches','branches.id','products.branch_id')
       //->where('categories.shop_id', Auth::user()->shop->id)
       ->where('categories.shop_id', NULL)
-      ->where('products.shop_id', Auth::user()->shop->id) 
+      ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
       ->where('products.deleted_at', NULL)
@@ -472,7 +491,7 @@ class BranchController extends Controller
       return view('Branches/mostrar', ['cat_d' => $cat_d,'cat_t' => $cat_t,'cat_e' => $cat_e,'total_e'=> $total_e,'total_d'=> $total_d,'category' => $category , 'total_t'=> $total_t,'branch' => $id_shop, 'total' => $total, 'shop' => $shop],compact('braname','branch'));
     }
 
-    /** 
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Branch  $branch
@@ -488,7 +507,7 @@ class BranchController extends Controller
         if($exist > 0){
           return response()->json([
             'success' => false,
-            'message' => 'La sucursal no puede ser eliminada, porque tiene productos existentes', 
+            'message' => 'La sucursal no puede ser eliminada, porque tiene productos existentes',
           ]);
         }
         $existe = User::where('branch_id', $id)->get()->count();
@@ -533,14 +552,21 @@ class BranchController extends Controller
     }
 
     public function reportBox_cutDate(Request $request){
-      
+
+        $shop = Auth::user()->shop;
       $hour = Carbon::now();
       $hour = date('H:i:s');
-      $dates = Carbon::now(); 
+      $dates = Carbon::now();
       $dates = $dates->format('d-m-Y');
       $branch = Branch::findOrFail($request->branch_id);
       $branch->hour = $hour;
       $branch->date = $dates;
+
+      if($shop->image) {
+        $shop->image = $this->getS3URL($shop->image);
+    }
+
+      //return $shop->image;
 
       $fecini = Carbon::parse($request->fecini)->format('Y-m-d');
       $fecter = Carbon::parse($request->fecter)->format('Y-m-d');
@@ -573,8 +599,8 @@ class BranchController extends Controller
       ->select('price')
       ->where('branch_id',$request->branch_id)
       ->sum('price');
-      $branch->totalFin = $branch->total - $branch->gastos;  
-      $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch'));  
+      $branch->totalFin = $branch->total - $branch->gastos;
+      $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch','shop'));
      return $pdf->stream('CorteSucursal.pdf');
     }
-}   
+}

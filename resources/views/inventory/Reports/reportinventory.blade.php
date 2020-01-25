@@ -56,6 +56,7 @@ LISTA DE  LINEA
                 <th>ID</th>
                 <th>Fecha Del Inventario</th>
                 <th>Sucursal</th>
+                <th>Status</th>
                 <th>Reportes</th>
               </tr>
             </thead>
@@ -64,6 +65,7 @@ LISTA DE  LINEA
                 <th>ID</th>
                 <th>Fecha Del Inventario</th>
                 <th>Sucursal</th>
+                <th>Status</th>
                 <th>Reportes</th>
               </tr>
             </tfoot>
@@ -73,6 +75,13 @@ LISTA DE  LINEA
                   <td>{{ $inventory->id }}</td>
                   <td>{{ $inventory->start_date }}</td>
                   <td>{{ $inventory->name_branch }}</td>
+                  @if($inventory->status_report == 1)
+                    <td><span class="text-center badge badge-primary">No Iniciado</span></td>
+                  @elseif($inventory->status_report == 2)
+                    <td><span class="text-center badge badge-warning">En Proceso</span></td>
+                  @elseif($inventory->status_report == 3)
+                    <td><span class="text-center badge badge-success">Finalizado</span></td>
+                  @endif
                   <td>
                   <div class="col-md-4 col-md-offset-2">
                   <button onclick="window.location.href='inventariospdf/{{$inventory->id}}'" 

@@ -38,10 +38,22 @@ class SaleController extends Controller
       //return $p;
       $po = Product::where('id','=','p')->first();
       // return $po;
-      $sales = Sale::with('client')->get();
-      
       $user = Auth::user();
-      $products = Product::with('line')
+
+      if($user->type_user == User::CO) {
+        $sales = Sale::with('client')
+          ->where('branch_id', $user->branch_id)
+          ->get();
+      } else {
+        $branches = Branch::where('shop_id', Auth::user()->shop->id)->get();
+        $branch_ids = $branches->map(function($item){ return $item->id; });
+        
+        $sales = Sale::with('client')
+          ->whereIn('branch_id', $branch_ids)
+          ->get();
+      }
+      
+      $products = Product::with('line') 
         ->with('branch')
         ->with('category')
         ->with('status') 

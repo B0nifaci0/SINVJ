@@ -21,9 +21,9 @@
           <h3 class="font-size-24">Registrate</h3>
           <p>Ingresa Los Siguientes Datos Para Completar Tu Registro.</p>
            <!-- Form,Method "POST" Envia los datos del formulario a la base de datos-->
-          <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
-            {{ csrf_field() }}  
-            <!-- Input para ingresar Nombre-->           
+           <form method="POST" action="{{ route('register') }}">
+            @csrf
+            <!-- Input para ingresar Nombre-->
             <div class="form-group form-material floating" data-plugin="formMaterial">
               <input type="text" class="form-control empty{{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" value="{{ old('name') }}" required autofocus>
               <label class="floating-label" for="inputName">{{ __('Nombre') }}</label>
@@ -32,8 +32,8 @@
                  <strong>{{ $errors->first('name') }}</strong>
                 </span>
               @endif
-            </div> 
-            <!-- END Input--> 
+            </div>
+            <!-- END Input-->
             <!-- Input para ingresar Email-->
             <div class="form-group form-material floating" data-plugin="formMaterial">
               <input type="email" class="form-control empty{{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" name="email" value="{{ old('email') }}" required>
@@ -74,7 +74,7 @@
             </div>
             <!-- END Input-->
             <div>
-              <input type="hidden" name='type_user' value='1'> 
+              <input type="hidden" name='type_user' value='1'>
             </div>
             <!--<div class="form-group form-material floating" data-plugin="formMaterial">
                 <input type="text" class="form-control empty{{ $errors->has('name_branch') ? ' is-invalid' : '' }}" id="name_branch" name="name_branch" value="{{ old('name_branch') }}" required autofocus>
@@ -86,7 +86,7 @@
               @endif
               </div>-->
               <div>
-                <input type="hidden" name='salary' value='NULL'> 
+                <input type="hidden" name='salary' value='NULL'>
               </div>
               <!-- Select para Seleccionar Estado-->
               <div class="col-md-12  col-md-offset-1 visible-md visible-lg">
@@ -116,9 +116,9 @@
                 <p class="ml-35">Al hacer clic en Registrarse, usted acepta nuestros <a href="#"> Términos.</a>.</p>
               </div>
               <!-- Botón para  Registrarse-->
-              <button id="register" type="submit" alt="{{ __('Registrarse->id') }}" class="btn btn-primary btn-block registro" alt="reg">
-               {{ __('Registrarse') }}
-              </button>
+              <button id="register" type="submit" class="btn btn-primary"class="btn btn-primary btn-block registro" alt="reg">
+                {{ __('Register') }}
+            </button>
               <!-- END Botón-->
               <p>¿Tienes cuenta ya?  Por favor, vaya a <a href="{{url('login')}}">Iniciar sesión</a></p>
               <footer class="page-copyright">
@@ -153,6 +153,6 @@ $(document).ready(function(){
   });
 });
   </script>
-@endsection 
+@endsection
 
 

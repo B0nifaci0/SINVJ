@@ -33,24 +33,16 @@
       <img align="left" width="140px" height="120px" src="{{ $shop->image }}">
       <p align="right">Fecha: {{$dates}}</p>
       <p align="right">Hora: {{$hour}}</p>
-      <h2 align="center">Reporte {{$estado->name}}s por
-          @foreach ($products as $i => $product)
-          @if($product->category->type_product == 2 )
-          Gr
-          @else
-          Pz
-          @endif
-          @break;
-          @endforeach
+      <h2 align="center">Reporte {{$estado->name}}s por {{$type}}
       </h2>
-      <h3 align="center" style="color:red"> @if($estado->name == 'Traspaso') Destino: @endif @foreach($branches as $branch){{$branch->name}} @endforeach</h3>
-      <h4 align="center" >Linea:
+    <h3 align="center" style="color:red"> @if($estado->name == 'Traspaso') Destino: @endif Sucursal: {{$branch}}</h3>
+    @if($type == "Gr")
+        <h4 align="center" >Linea:
         @foreach ($products as $i => $product)
-        @if($product->category->type_product == 2 )
         {{ $product->line->name }}
-        @endif
-        @break
-        @endforeach </h4>
+        @endforeach
+    @endif
+    </h4>
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
           <tr>

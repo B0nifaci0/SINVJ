@@ -1,4 +1,6 @@
 <?php
+
+use Illuminate\Support\Str;
 /*
  * jQuery File Upload Plugin PHP Class 8.3.1
  * https://github.com/blueimp/jQuery-File-Upload
@@ -511,7 +513,7 @@ class UploadHandler
         $name = trim(basename(stripslashes($name)), ".\x00..\x20");
         // Use a timestamp for empty filenames:
         if (!$name) {
-            $name = str_replace('.', '-', microtime(true));
+            $name = Str::replace('.', '-', microtime(true));
         }
         return $name;
     }
@@ -1117,7 +1119,7 @@ class UploadHandler
     protected function body($str) {
         echo $str;
     }
-    
+
     protected function header($str) {
         header($str);
     }

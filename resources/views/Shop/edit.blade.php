@@ -25,9 +25,9 @@ MODIFICACIÓN TIENDA
         </div>
     @endif
       <h2 align="center">Editar Tienda</h2>
-      <form id="multiplicar" class="" action="{{route('tiendas.update',['id' => $shop->id])}}" method="post" enctype="multipart/form-data">
+      <form id="multiplicar" class="" action="{{route('tiendas.update', $shop->id) }} " method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
-        {{ method_field('PUT') }}
+        @method('PUT')
         <div class='row'>
             <div class="form-group form-material col-md-6">
                 <label>Nombre</label>
@@ -79,7 +79,7 @@ MODIFICACIÓN TIENDA
           </div>
           <div class="row">
             <div class="form-group col-md-12">
-              <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button> 
+              <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
             </div>
           </div>
       </form>
