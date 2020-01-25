@@ -90,13 +90,13 @@ LISTA DE  LINEA
                   <td>{{ $item->description }}</td>
                   <td>
                     @if( $item->status === null )
-                        Pendiente
+                    <span class="text-center badge badge-secondary">Pendiente</span> 
                     @elseif( $item->status === 1)
-                        Existente
+                    <span class="text-center badge badge-success">Existente</span>
                     @elseif( $item->status === 2)
-                        Dañado
+                    <span class="text-center badge badge-warning">Dañado</span>
                     @elseif( $item->status === 3)
-                        Faltante
+                    <span class="text-center badge badge-danger">Faltante</span>
                     @endif
                   </td>
                   @if($inventory->status_report == 1 OR $inventory->status_report == 2)
