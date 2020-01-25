@@ -41,8 +41,12 @@ class InventoryController extends Controller
         ->where('inventory_reports.branch_id', $ids)
         ->select('inventory_reports.*','branches.name as sucursal')
         ->get();
+        $branch_user = Branch::where('id', $ids)
+        ->select('name as branch')
+        ->get();
+        //return $branch_user;
         //return $inventories_user;
-        return view('inventory.index', compact('inventories','inventories_user'));
+        return view('inventory.index', compact('branch_user','inventories','inventories_user'));
     }
 
     public function create() {
@@ -106,19 +110,26 @@ class InventoryController extends Controller
         
         $branch_id = $request->branch_id ? $request->branch_id : Auth::user()->branch_id;
 
-        $inventory = InventoryReport::create([
-            'start_date' => Carbon::now()->format('Y-m-d'),
-            'status_report' => 1,
-            'branch_id' => $branch_id
-        ]);
+        $num_products = Product::withTrashed()->where('branch_id','=',$branch_id)->where('deleted_at','=',NULL)->count();
 
-        $products = Product::whereIn('branch_id', $branches_ids)->get();
-        
-        foreach ($products as $p) {
-            InventoryDetail::create([
-                'inventory_report_id' => $inventory->id,
-                'product_id' => $p->id,
+        if($num_products == 0){
+            return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, porque la sucursal no tiene productos!');
+
+        } else {
+            $inventory = InventoryReport::create([
+                'start_date' => Carbon::now()->format('Y-m-d'),
+                'status_report' => 1,
+                'branch_id' => $branch_id
             ]);
+
+            $products = Product::whereIn('branch_id', $branches_ids)->get();
+        
+            foreach ($products as $p) {
+                InventoryDetail::create([
+                    'inventory_report_id' => $inventory->id,
+                    'product_id' => $p->id,
+                ]);
+            }
         }
 
         return redirect('/inventarios');
@@ -148,7 +159,7 @@ class InventoryController extends Controller
         $inventorie->status_report = 3;
         $inventorie->end_date = Carbon::now()->format('Y-m-d');
         $inventorie->save();
-        return back();
+        return redirect('/inventarios');
     }
 
     public function inventariosPDF($id){
@@ -217,8 +228,7 @@ class InventoryController extends Controller
           ->where('categories.type_product',2)
           ->whereIn('products.status_id', [2, 4])
           ->where('products.line_id', $g->ids)
-          ->Where('products.discar_cause',2) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',2)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -239,8 +249,7 @@ class InventoryController extends Controller
           ->where('categories.type_product',2)
           ->whereIn('products.status_id', [2, 4])
           ->where('products.line_id', $g->ids)
-          ->Where('products.discar_cause',2) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',2)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -261,8 +270,7 @@ class InventoryController extends Controller
           ->where('categories.type_product',2)
           ->whereIn('products.status_id', [2, 4])
           ->where('products.line_id', $g->ids)
-          ->Where('products.discar_cause',1) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',3)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -283,8 +291,7 @@ class InventoryController extends Controller
           ->where('categories.type_product',2)
           ->whereIn('products.status_id', [2, 4])
           ->where('products.line_id', $g->ids)
-          ->Where('products.discar_cause',1) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',3)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -312,8 +319,7 @@ class InventoryController extends Controller
       ->where('products.deleted_at',NULL)
       ->where('categories.type_product',2)
       ->where('products.branch_id',$id_branch)
-      ->where('inventory_details.status',0)  
-      ->where('products.discar_cause',1)
+      ->where('inventory_details.status',3)  
       ->where('inventory_details.inventory_report_id',$id)    
       ->select('products.weigth','products.description','products.clave', 'lines.name as name_line', DB::raw('SUM(products.price) as money'))
       ->distinct('products.clave')
@@ -336,8 +342,7 @@ class InventoryController extends Controller
       ->where('products.deleted_at',NULL)
       ->where('categories.type_product',2)
       ->where('products.branch_id',$id_branch)
-      ->where('inventory_details.status',0)  
-      ->where('products.discar_cause',2)
+      ->where('inventory_details.status',2)  
       ->where('inventory_details.inventory_report_id',$id)    
       ->select('products.weigth','products.description','products.clave', 'lines.name as name_line', DB::raw('SUM(products.price) as money'))
       ->distinct('products.clave')
@@ -382,8 +387,7 @@ class InventoryController extends Controller
           ->where('products.shop_id', Auth::user()->shop->id) 
           ->where('categories.type_product',2)
           ->whereIn('products.status_id', [2, 4])
-          ->Where('products.discar_cause',2) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',2)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -403,8 +407,7 @@ class InventoryController extends Controller
           ->where('products.shop_id', Auth::user()->shop->id) 
           ->where('categories.type_product',2)
           ->whereIn('products.status_id', [2, 4])
-          ->Where('products.discar_cause',2) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',2)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -424,8 +427,7 @@ class InventoryController extends Controller
           ->where('products.shop_id', Auth::user()->shop->id) 
           ->where('categories.type_product',2)
           ->whereIn('products.status_id', [2, 4])
-          ->Where('products.discar_cause',1) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',3)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -445,8 +447,7 @@ class InventoryController extends Controller
           ->where('products.shop_id', Auth::user()->shop->id) 
           ->where('categories.type_product',2)
           ->whereIn('products.status_id', [2, 4])
-          ->Where('products.discar_cause',1) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',3)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -497,8 +498,7 @@ class InventoryController extends Controller
           ->where('categories.type_product',1)
           ->whereIn('products.status_id', [2, 4])
           ->where('products.category_id', $c->ids)
-          ->Where('products.discar_cause',2) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',2)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -518,8 +518,7 @@ class InventoryController extends Controller
           ->where('categories.type_product',1)
           ->whereIn('products.status_id', [2, 4])
           ->where('products.category_id', $c->ids)
-          ->Where('products.discar_cause',2) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',2)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -539,8 +538,7 @@ class InventoryController extends Controller
           ->where('categories.type_product',1)
           ->whereIn('products.status_id', [2, 4])
           ->where('products.category_id', $c->ids)
-          ->Where('products.discar_cause',1) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',3)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -560,8 +558,7 @@ class InventoryController extends Controller
           ->where('categories.type_product',1)
           ->whereIn('products.status_id', [2, 4])
           ->where('products.category_id', $c->ids)
-          ->Where('products.discar_cause',1) 
-          ->where('inventory_details.status',0)
+          ->where('inventory_details.status',3)
           ->where('inventory_details.inventory_report_id',$id)
           //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
           ->get()
@@ -589,11 +586,10 @@ class InventoryController extends Controller
      ->where('products.shop_id', Auth::user()->shop->id) 
      ->where('categories.type_product',1)  
      ->where('products.branch_id',$id_branch)    
-     ->where('inventory_details.status',0)  
-     ->where('products.discar_cause',1)
+     ->where('inventory_details.status',3)  
      ->where('inventory_details.inventory_report_id',$id)
-     ->select('products.clave','products.price','categories.id as id_cat', 'categories.name as cat_name')
-     ->groupBy('products.clave','products.price','categories.id', 'categories.name')
+     ->select('products.clave','products.price','products.description','categories.id as id_cat', 'categories.name as cat_name')
+     ->groupBy('products.clave','products.price','products.description','categories.id', 'categories.name')
      ->orderBy('cat_name', 'DESC')
      ->get();
       // return $p_faltantes;
@@ -611,11 +607,10 @@ class InventoryController extends Controller
      ->where('products.shop_id', Auth::user()->shop->id) 
      ->where('categories.type_product',1) 
      ->where('products.branch_id',$id_branch)     
-     ->where('inventory_details.status',0) 
-     ->where('products.discar_cause',2)  
+     ->where('inventory_details.status',2) 
      ->where('inventory_details.inventory_report_id',$id)
-     ->select('products.clave','products.price','categories.id as id_cat', 'categories.name as cat_name')
-     ->groupBy('products.clave','products.price','categories.id', 'categories.name')
+     ->select('products.clave','products.price','products.description','categories.id as id_cat', 'categories.name as cat_name')
+     ->groupBy('products.clave','products.price','products.description','categories.id', 'categories.name')
      ->orderBy('cat_name', 'DESC')
      ->get();
      //  return $p_dañados;
@@ -653,8 +648,7 @@ class InventoryController extends Controller
          ->where('products.shop_id', Auth::user()->shop->id) 
          ->where('categories.type_product',1)
          ->whereIn('products.status_id', [2, 4])
-         ->Where('inventory_details.status',0)
-         ->where('products.discar_cause',1) 
+         ->Where('inventory_details.status',3)
          ->where('inventory_details.inventory_report_id',$id)
          ->get()
          ->count('id');
@@ -672,8 +666,7 @@ class InventoryController extends Controller
          ->where('products.shop_id', Auth::user()->shop->id) 
          ->where('categories.type_product',1)
          ->whereIn('products.status_id', [2, 4])
-         ->Where('inventory_details.status',0) 
-         ->where('products.discar_cause',1) 
+         ->Where('inventory_details.status',3) 
          ->where('inventory_details.inventory_report_id',$id)
          ->get()
          ->sum('price');
@@ -692,8 +685,7 @@ class InventoryController extends Controller
          ->where('products.shop_id', Auth::user()->shop->id) 
          ->where('categories.type_product',1)
          ->whereIn('products.status_id', [2, 4])
-         ->Where('inventory_details.status',0)
-         ->where('products.discar_cause',2) 
+         ->Where('inventory_details.status',2)
          ->where('inventory_details.inventory_report_id',$id)
          ->get()
          ->count('id');
@@ -711,8 +703,7 @@ class InventoryController extends Controller
          ->where('products.shop_id', Auth::user()->shop->id) 
          ->where('categories.type_product',1)
          ->whereIn('products.status_id', [2, 4])
-         ->Where('inventory_details.status',0) 
-         ->where('products.discar_cause',2) 
+         ->Where('inventory_details.status',2) 
          ->where('inventory_details.inventory_report_id',$id)
          ->get()
          ->sum('price');
@@ -757,11 +748,7 @@ class InventoryController extends Controller
       ->where('branches.shop_id', Auth::user()->shop->id)
       ->select('inventory_reports.*', 'branches.name as name_branch', 'branches.id as branch_id')
       ->get();
-      $ids = $user->branch_id;
-      $inventories_user = InventoryReport::join('branches','branches.id','inventory_reports.branch_id')
-      ->where('inventory_reports.branch_id', $ids)
-      ->select('inventory_reports.*','branches.name as name_branch')
-      ->get();
+      
 
     //CONSULTAS PARA COLABORADORES POR SUCURSAL
     //SUMA TOTAL DE GRAMOS POR SUCURSAL
@@ -789,7 +776,7 @@ class InventoryController extends Controller
     }
          //return $categories;
 
-      return view('inventory.Reports.reportinventory',compact('inventories_user','gramos_s','inventories','hour','dates','shop','shops','branch','user','statuses','line','categories'));
+      return view('inventory.Reports.reportinventory',compact('gramos_s','inventories','hour','dates','shop','shops','branch','user','statuses','line','categories'));
      }
 
 }

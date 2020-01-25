@@ -142,6 +142,8 @@ TRASFERENCIAS
                         @else
                           @if($transfer->status_product === null)
                             <span class="text-center badge badge-success">Pendiente</span>
+                          @elseif($transfer->status_product == 1)
+                            <span class="text-center badge badge-warning">Por pagar</span>
                           @elseif($transfer->status_product == 0)
                             <span class="text-center badge badge-warning">No se paga</span>
                           @endif

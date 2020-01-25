@@ -50,7 +50,7 @@
 </head>
 <body>
 <div class="page-content">
-<img align="left" width="90px" height="90px" src="{{ $shop->image }}"><br>
+<img align="left" width="140px" height="120px" src="{{ $shop->image }}"><br>
     <div class="panel">
     <p align="right">Fecha: {{$date}}</p>
     <p align="right">Hora: {{$hour}}</p>

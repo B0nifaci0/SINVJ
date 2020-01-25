@@ -75,7 +75,7 @@
                  <th scope="col">Observaciones</th>
                  <th scope="col">Categoria</th>
                  <th scope="col">Estatus</th>
-                 <th scope="col" >Fecha</th>
+                 <th scope="col">Fecha</th>
 
                 </tr>
               </thead>
@@ -91,7 +91,6 @@
                  <td>{{ $product->name_category }}</td>
                  <td>{{ $product->name_status }}</td>
                 <td class="sizedate">{{ $product->date_creation }}</td>
-
                 </tr>
                   @endforeach
               </tbody>
@@ -99,8 +98,8 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                            <th scope="col">Linea</th>
-                            <th scope="col">Total De Gramos</th>
+                        <th scope="col">Linea</th>
+                        <th scope="col">Total De Gramos</th>
 
                     </tr>
                 </thead>

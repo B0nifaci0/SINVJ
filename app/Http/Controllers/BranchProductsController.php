@@ -44,9 +44,9 @@ class BranchProductsController extends Controller
             'Bucket' => $adapter->getBucket(),
             'Key' => $adapter->getPathPrefix(). $path
           ]);
-  
+
           $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
-  
+
           $product->image = (string) $result->getUri();
         }
       }
@@ -55,15 +55,15 @@ class BranchProductsController extends Controller
       {
         return redirect('/productos/create')->with('mesage', 'Primero debes crear productos de esta Sucursal!');
       }
-      else 
+      else
       {
         return view('Branches/branchproduct', compact('branch','products','user','categories','lines','statuses'));
       }
 
-      
+
   }
-  public function edit($id)  
-    { 
+  public function edit($id)
+    {
         $user = Auth::user();
         $category = Auth::user()->shop->id;
         $line = Auth::user()->shop->id;
@@ -117,7 +117,7 @@ class BranchProductsController extends Controller
       $branches= Branch::find($id);
       $products = Product::withTrashed()->where('branch_id','=',$id)->get();
       $pdf  = PDF::loadView('Branches.sucursalespdf', compact('branches', 'products'));
-      return $pdf->download('productossucursal.pdf');
+      return $pdf->stream('productossucursal.pdf');
   }
 
   /**fucntion for inventory index */

@@ -65,14 +65,14 @@
               <thead>
                 <tr>
                  <th scope="col">Línea</th>
-                 <th scope="col">Total De Gramos</th>
-                 <th scope="col">Total De Dinero</th>
-                 <th scope="col">Total De Gramos Existentes</th>
-                 <th scope="col">Total De Dinero Existente</th>
-                 <th scope="col">Total De Gramos Faltantes</th>
-                 <th scope="col">Total De Dinero Faltante</th>
-                 <th scope="col">Total De Gramos Dañados</th>
-                 <th scope="col">Total De Dinero Dañado</th>
+                 <th scope="col">TD Gramos</th>
+                 <th scope="col">TD Dinero</th>
+                 <th scope="col">TD Gramos Existentes</th>
+                 <th scope="col">TD Dinero Existente</th>
+                 <th scope="col">TD Gramos Faltantes</th>
+                 <th scope="col">TD Dinero Faltante</th>
+                 <th scope="col">TD Gramos Dañados</th>
+                 <th scope="col">TD Dinero Dañado</th>
                 </tr>
               </thead>  
               <tbody>
@@ -113,7 +113,7 @@
                       <th scope="col">Clave Del Producto</th>
                       <th scope="col">Descripcion</th>
                       <th scope="col">Peso</th>
-                      <th scope="col">Total De Dinero Faltante</th>
+                      <th scope="col">Dinero Faltante</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -144,7 +144,7 @@
                       <th scope="col">Clave Del Producto</th>
                       <th scope="col">Descripcion</th>
                       <th scope="col">Peso</th>
-                      <th scope="col">Total De Dinero Dañado</th>
+                      <th scope="col">Dinero Dañado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -172,14 +172,14 @@
                 <thead>
                     <tr>
                       <th scope="col">Categoria</th>
-                      <th scope="col">Cantidad Total De PZ</th>
-                      <th scope="col">Total En Dinero</th>
-                      <th scope="col">Cantidad Total De PZ Existentes</th>
-                      <th scope="col">Total En Dinero Existente</th>
-                      <th scope="col">Cantidad Total De PZ Faltantes</th>
-                      <th scope="col">Total En Dinero Faltante</th>
-                      <th scope="col">Cantidad Total De PZ Dañadas</th>
-                      <th scope="col">Total En Dinero Dañado</th>
+                      <th scope="col">TD PZ</th>
+                      <th scope="col">TD Dinero</th>
+                      <th scope="col">TD PZ Existentes</th>
+                      <th scope="col">TD Dinero Existente</th>
+                      <th scope="col">TD PZ Faltantes</th>
+                      <th scope="col">TD Dinero Faltante</th>
+                      <th scope="col">TD PZ Dañadas</th>
+                      <th scope="col">TD Dinero Dañado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -216,22 +216,24 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                      <th scope="col">Clave Del Producto</th>
                       <th scope="col">Categoria</th>
+                      <th scope="col">Clave Del Producto</th>
+                      <th scope="col">Descripcion</th>
                       <th scope="col">Dinero Faltante</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach ($p_faltantes as $fal)
                     <tr>
-                      <td>{{$fal->clave}}</td>
                       <td>{{$fal->cat_name}}</td>
+                      <td>{{$fal->clave}}</td>
+                      <td>{{$fal->description}}</td>
                       <td>$ {{$fal->price}}</td>
                     </tr>
                 @endforeach 
                 @foreach ($totales_piezas as $p)
                     <tr>
-                      <td colspan="2">Total</td>
+                      <td colspan="3">Total</td>
                       <td>$ {{$p->din_falt}}</td>
                     </tr>
                 @endforeach 
@@ -242,22 +244,24 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                      <th scope="col">Clave Del Producto</th>
                       <th scope="col">Categoria</th>
+                      <th scope="col">Clave Del Producto</th>
+                      <th scope="col">Descripcion</th>
                       <th scope="col">Dinero Dañado</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach ($p_dañados as $fal)
                     <tr>
-                      <td>{{$fal->clave}}</td>
                       <td>{{$fal->cat_name}}</td>
+                      <td>{{$fal->clave}}</td>
+                      <td>{{$fal->description}}</td>
                       <td>$ {{$fal->price}}</td>
                     </tr>
                 @endforeach 
                 @foreach ($totales_piezas as $p)
                     <tr>
-                      <td colspan="2">Total</td>
+                      <td colspan="3">Total</td>
                       <td>$ {{$p->din_da}}</td>
                     </tr>
                 @endforeach 

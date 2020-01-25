@@ -154,6 +154,6 @@ class LineController extends Controller
 
     // Funcion para gener excel!!
     public function exportExcel(){
-     return Excel::download( new LinesExport, 'line.xlsx');
+     return Excel::stream( new LinesExport, 'line.xlsx');
     }
 }

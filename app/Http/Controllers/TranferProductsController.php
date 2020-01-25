@@ -91,7 +91,9 @@ class TranferProductsController extends Controller
         $user = Auth::user();
         $shop = $user->branch->shop;
         $users = User::where('id', '!=', $user->id)->get();
-        $products = Product::where('branch_id', $user->branch_id)->get();
+        $products = Product::where('branch_id', $user->branch_id)
+        ->whereIn('status_id', [2])
+        ->get();
 
         if($user->shop && $user->shop->shop_group_id) {
           $shop_ids = Shop::where('shop_group_id', $user->shop->shop_group_id)->get()->map(function($item) { return $item->id;  });
@@ -108,8 +110,8 @@ class TranferProductsController extends Controller
         $user = Auth::user(); //Retorna el usuario con el que se encuentra logueado
         $users = User::where('id', '!=', $user->id)->get(); // Retorna los usuarios que pertenecen a la tienda y no estan logueados
         //return $users;
-        $products = Product::where('branch_id', $user->branch_id)
-        ->get(); //Retorna todos los productos de la tienda solo si el usuario tiene
+        // $products = Product::where('branch_id', $user->branch_id)
+        // ->get(); //Retorna todos los productos de la tienda solo si el usuario tiene
         return view('transfer/add', compact('branches','users','products','user'));
        }
 
@@ -124,7 +126,7 @@ class TranferProductsController extends Controller
     	$data = $request->all();
     	$data['last_branch_id']  = $user->branch_id;
     	$data['user_id'] = $user->id;
-        $data['status_product'] = null;
+      $data['status_product'] = null;
 
         //pendiente
         //por pagar
@@ -134,8 +136,8 @@ class TranferProductsController extends Controller
     	$transfer_product = TransferProduct::create($data);
 
     	$product = Product::find($request->product_id);
-		  // $product->status_id = 3;
-		  // $product->save();
+		  $product->status_id = 3;
+		  $product->save();
 
     	return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
     }
@@ -153,7 +155,7 @@ class TranferProductsController extends Controller
       if($request->answer) {
         $product->branch_id = $transfer->new_branch_id;
         // $product->status_id = 2;
-	    	$product->status_id = 3;
+	    	// $product->status_id = 3;
         $product->shop_id = $user->shop->id;
         $product->save();
       }
@@ -179,7 +181,10 @@ class TranferProductsController extends Controller
   $product->branch_id = $transfer->last_branch_id;
   $product->status_id = 2;
 	$product->save();
-    $transfer->delete();
+  
+  $transfer->status_product = 3;
+  $transfer->save();;
+  // $transfer->delete();
 
     return back();
   }

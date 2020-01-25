@@ -42,18 +42,24 @@ LISTA DE Inventarios
       <div class="panel">
         <div class="panel-body">
             <div class="example-wrap">
+            @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
               <h1 class="text-center panel-title">Inventarios</h1>
+            @else
+            @foreach ($branch_user as $b)
+              <h1 class="text-center panel-title">Mis Inventarios - {{ $b->branch }}</h1>
+            @endforeach
+            @endif
               <div class="panel-actions float-right">
                 <div class="container-fluid row float-right">
                   @if(Auth::user()->type_user == 1 )
                   <!-- Botón para Generar PDF de productos-->
                   <div class="col-6">
-                    <button onclick="window.location.href='inventariospdf'"
+                    <!--<button onclick="window.location.href='inventariospdf'"
                     type="button" class=" btn btn-sm small btn-floating
                     toggler-left  btn-danger waves-effect waves-light waves-round float-right"
                     data-toggle="tooltip" data-original-title="Generar reporte PDF">
                     <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
-                  </button>
+                  </button>-->
                   </div>
                   <div class="col-6">
                     <button onclick="window.location.href='/inventarios/create'"
@@ -77,7 +83,9 @@ LISTA DE Inventarios
                 <th>Fecha de inicio</th>
                 <th>Fecha de termino</th>
                 <th>Status</th>
+                @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
                 <th>Sucursal</th>
+                @endif
                 <th></th>
               </tr>
             </thead>
@@ -86,26 +94,28 @@ LISTA DE Inventarios
                 <th>Fecha de inicio</th>
                 <th>Fecha de termino</th>
                 <th>Status</th>
+                @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
                 <th>Sucursal</th>
+                @endif
                 <th></th>
               </tr>
             </tfoot>
             <tbody>
-            @if(Auth::user()->type_user == 1)
+            @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
               @foreach ($inventories as $inventory)
                 <tr id = "row{{ $inventory->id }}">
                   <td>{{ $inventory->start_date }}</td>
                   @if($inventory->end_date == null)
-                  <td>No Terminado</td>
+                    <td>No Terminado</td>
                   @elseif($inventory->end_date)
-                  <td>{{ $inventory->end_date }}</td>
+                    <td>{{ $inventory->end_date }}</td>
                   @endif
                   @if($inventory->status_report == 1)
-                  <td>No Iniciado</td>
+                    <td><span class="text-center badge badge-primary">No Iniciado</span></td>
                   @elseif($inventory->status_report == 2)
-                  <td>En Proceso</td>
+                    <td><span class="text-center badge badge-warning">En Proceso</span></td>
                   @elseif($inventory->status_report == 3)
-                  <td>Finalizado</td>
+                    <td><span class="text-center badge badge-success">Finalizado</span></td>
                   @endif
                <!--   <td>{{ $inventory->end_date }}</td> -->
                   <td>{{ $inventory->sucursal }}</td>
@@ -121,19 +131,18 @@ LISTA DE Inventarios
                 <tr id = "row{{ $inventory->id }}">
                   <td>{{ $inventory->start_date }}</td>
                   @if($inventory->end_date == null)
-                  <td>No Terminado</td>
+                    <td>No Terminado</td>
                   @elseif($inventory->end_date)
-                  <td>{{ $inventory->end_date }}</td>
+                    <td>{{ $inventory->end_date }}</td>
                   @endif
                   @if($inventory->status_report == 1)
-                  <td>No Iniciado</td>
+                    <td><span class="text-center badge badge-primary">No Iniciado</span></td>
                   @elseif($inventory->status_report == 2)
-                  <td>En Proceso</td>
+                    <td><span class="text-center badge badge-warning">En Proceso</span></td>
                   @elseif($inventory->status_report == 3)
-                  <td>Finalizado</td>
+                    <td><span class="text-center badge badge-success">Finalizado</span></td>
                   @endif
                <!--   <td>{{ $inventory->end_date }}</td> -->
-                  <td>{{ $inventory->sucursal }}</td>
                   <td>
                     <a class="btn btn-primary" href="/inventarios/{{ $inventory->id }}">
                     <i class="icon md-search"></i>

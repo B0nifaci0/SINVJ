@@ -62,9 +62,7 @@ ALTA PRODUCTO
             <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputUser">{{ __('Quien lo recibe') }}</label>
               <select id="usuario_1" name="destination_user_id" class="form-control ">
-                @foreach($users as $u)
-                <option value="{{ $u->id }}">{{$u->name}}</option>
-                @endforeach
+                
               </select>
             </div>
             <!-- END Select-->
@@ -140,8 +138,10 @@ $('#product').change(function() {
   let brancehesList = branches.filter(b => b.id != p.branchId);
 
   $('#branches').empty();
+
+  $('#branches').append(new Option('Seleccione una opción', null));
   brancehesList.forEach(element => { 
-    $('#branches').append(new Option(element.name, element.id, true, true));
+    $('#branches').append(new Option(element.name, element.id));
   });
 
 }); 

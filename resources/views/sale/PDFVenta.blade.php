@@ -6,10 +6,6 @@
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
      </head>
    <style>
- .cuerpo{
-    font-size: 12px;
-    font-family: 'Times New Roman';
-}
 @page {size: 8.3cm 250mm;
      }
    </style>
@@ -29,14 +25,15 @@
             @if($sale->client)
                 <p><b>Cliente: </b>{{ $sale->client->name }} {{ $sale->client->first_lastname }} {{ $sale->client->second_lastname }} </p>
             @else
-                <p>{{ $sale->customer_name }}</p>
+                <p><b>Cliente: </b>{{ $sale->customer_name }}</p>
             @endif
+
+            <p><b>Vendedor: </b>{{ $sale->user->name }}</p>
 
             <table class="table-sm table-bordered">
                     <thead>
                         <tr>
-                            <th>Clave</th>
-                            <th>Descripción</th>
+                            <th width="160px">Producto</th>
                             <th>Peso</th>
                             <th>Precio</th>
                         </tr>
@@ -44,22 +41,25 @@
                     <tbody>
                         @foreach($sale->itemsSold as $item)
                         <tr>
-                            <td class='cuerpo'>{{ $item->clave }}</td>
-                            <td class='cuerpo'>{{ $item->description }}</td>
+                            <td class='cuerpo'>
+                                Clave: {{ $item->clave }}
+                                <br>
+                                Producto: {{ $item->category_name }}
+                            </td>
                             <td class='cuerpo'>{{ $item->weigth }} g</td>
                             <td class='cuerpo'>$ {{ $item->final_price }}</td>
                         </tr>
-                        @endforeach
+                        @endforeach 
                         <tr>
-                            <td colspan="3">Total a pagar</td>
+                            <td colspan="2">Total a pagar</td>
                             <td><strong> ${{ $sale->total }}</strong></td>
-                        </tr> 
+                        </tr>
                     </tbody>
             </table>
             <br>
-            @if($sale->partials->sum('amount') < $sale->total || $sale->partials->count() > 1)
+            @if($sale->partials->sum('amount') < $sale->total)
                 <p class="centrado">Abonos a la cuenta</p>
-                @endif
+            @endif
 
                 <table class="table-sm table-bordered">
                         <thead>
@@ -78,16 +78,18 @@
                             </tr>
                             @endforeach
                             <tr>
-                                <td colspan="2"></td>
+                                <td colspan="2">Total</td>
                                 <td><strong>$ {{ $sale->partials->sum('amount') }}</strong></td>
                             </tr>
-                            <tr>
-                                <td colspan="2">Restan</td>
-                                <td><strong>$ {{ $sale->total - $sale->partials->sum('amount') }}</strong></td>
-                            </tr>
+                            @if($sale->partials->sum('amount') < $sale->total)
+                                <tr>
+                                    <td colspan="2">Restan</td>
+                                    <td><strong>$ {{ $sale->total - $sale->partials->sum('amount') }}</strong></td>
+                                </tr>
+                            @endif
                         </tbody>
                 </table>
-        </div> 
+        </div>
         <br>
         <p align="center">¡GRACIAS POR SU COMPRA!</p>
         <p align="center">¡ESTE NO ES UN COMPROBANTE FISCAL!</p>

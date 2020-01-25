@@ -319,9 +319,9 @@ seleccionado con sus respectivos datos-->
                 WHOLESALERS: 2
             }
 
-            setInterval(() => {
-                console.log("------------------>overDiscount", overDiscount.length, overDiscountAuth);
-            }, 3000);
+            // setInterval(() => {  
+            //     console.log("------------------>overDiscount", overDiscount.length, overDiscountAuth);
+            // }, 4000);
 
             $('#user-type').change(function () {
                 let type = $(this).val();
@@ -500,7 +500,10 @@ seleccionado con sus respectivos datos-->
                 // $('#vari').val(cambio);
                 $('#tabl').val(_tr);
 
-                $(".finalPrice").unbind();
+                $('#ventas').off('click');
+                $('#ventas').off('input');
+                $('#ventas').off('focusin');
+                // $(".finalPrice").unbind();
                 var product
                 // $('.finalPrice').keydown(function() {
                 //   var productId = $(this).attr('alt');
@@ -510,7 +513,8 @@ seleccionado con sus respectivos datos-->
                 //   // console.log("valor anterior", tempPrice)
                 // });
 
-                $('.finalPrice').on('focusin', function () {
+                $('#ventas').on('focusin', '.finalPrice', function(){
+                    // $('.finalPrice').on('focusin', function () {
                     var productId = $(this).attr('alt');
                     product = products.filter(p => p.id == productId)[0];
 
@@ -519,15 +523,19 @@ seleccionado con sus respectivos datos-->
 
                 });
 
-                $('.finalPrice').on('change', function () {
-                    var productId = $(this).attr('alt');
-                    product = products.filter(p => p.id == productId)[0];
+                // $('#ventas').on('change', '.finalPrice', function(){
+                    // // $('.finalPrice').on('change', function () {
+                //     console.log("cahnge test")
+                //     var productId = $(this).attr('alt');
+                //     product = products.filter(p => p.id == productId)[0];
 
-                    tempPrice = Number($(this).val());
+                //     tempPrice = Number($(this).val());
 
-                });
+                // });
 
-                $('.finalPrice').on('input', function () {
+                $('#ventas').on('input', '.finalPrice', function() {
+                    // $('.finalPrice').on('input', function () {
+                    console.log("=================== Enta el evento Input ===================")
                     var productId = $(this).attr('alt');
                     product = products.filter(p => p.id == productId)[0];
 
@@ -561,39 +569,39 @@ seleccionado con sus respectivos datos-->
                 });
 
                     $('#ventas').on('click', '.deletr', function(){
-                            console.log('a')
+                        console.log("========> entra función", $(this).attr('alt'))
                         var table = $('#ventas').DataTable();
-
                         var row = $(this).parents('tr');
 
-                    var productId = $(this).attr('alt');
-                    var product = products.filter(p => p.id == productId)[0];
 
-                    var index = selectedProducts.map(p => p.id).indexOf(selectedProducts.filter(p => p.id == productId)[0].id)
-                    selectedProducts.splice(index, 1);
 
-                    console.log(JSON.stringify(selectedProducts))
-                    console.log('b')
-                    console.log("buscar " + productId + " en", selectedProducts.map(p => p.id))
-                    console.log("Indice", index);
+                        var productId = $(this).attr('alt');
+                        var product = products.filter(p => p.id == productId)[0];
 
-                    total -= Number($(`#finalPrice${product.id}`).val());
-                    $("#totalCash").val(total);
+                        var index = selectedProducts.map(p => p.id).indexOf(selectedProducts.filter(p => p.id == productId)[0].id)
+                        selectedProducts.splice(index, 1);
 
-                    $(`#raw-${product.id}`).remove();
+                        console.log(JSON.stringify(selectedProducts))
+                        console.log("buscar " + productId + " en", selectedProducts.map(p => p.id))
+                        console.log("Indice", index);
 
-                    $("#total").html("$" + total);
-                    if ($(row).hasClass('child')) {
-    	                    table.row($(row).prev('tr')).remove().draw();
-                        }
-                        else
-                        {
-		                   table
-			                .row($(this).parents('tr'))
-			                .remove()
-		                    .draw();
-                        }
-                });
+                        total -= Number($(`#finalPrice${product.id}`).val());
+                        $("#totalCash").val(total);
+
+                        $(`#raw-${product.id}`).remove();
+
+                        $("#total").html("$" + total);
+                        if ($(row).hasClass('child')) {
+                                table.row($(row).prev('tr')).remove().draw();
+                            }
+                            else
+                            {
+                            table
+                                .row($(this).parents('tr'))
+                                .remove()
+                                .draw();
+                            }
+                    });
 
             });
         });
