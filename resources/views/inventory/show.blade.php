@@ -246,7 +246,7 @@ LISTA DE LINEA
                 confirmButtonText: 'Aceptar',
                 showLoaderOnConfirm: true,
                 preConfirm: (password) => {
-                    return fetch(`/check-password`, {
+                    return fetch('/check-user', {
                         method: 'POST',
                         body: JSON.stringify({ password: password }),
                         headers: {

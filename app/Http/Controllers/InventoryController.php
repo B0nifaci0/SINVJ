@@ -30,6 +30,7 @@ class InventoryController extends Controller
     use SoftDeletes;
 
     public function index() {
+		
         $user = Auth::user();
         $ids = $user->branch_id;
         $inventories = InventoryReport::join('branches','branches.id','inventory_reports.branch_id')
@@ -158,6 +159,20 @@ class InventoryController extends Controller
 
         InventoryDetail::where('id', $request->inventory_id)->update(['status' => $request->status]);
         return back();
+    }
+
+    public function checkPassword(Request $request){
+        $user = Auth::user();
+        
+        if(Hash::check($request->password, $user->password)) {
+			return response()->json([
+				'success' => true
+			], 200);
+		}
+
+		return response()->json([
+			'success' => false
+		], 401);
     }
 
     public function terminar($id) {
