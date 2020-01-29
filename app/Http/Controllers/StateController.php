@@ -45,4 +45,18 @@ class StateController extends Controller
 		], 401);
 	}
 
+	public function checkUser(Request $request) {
+		$user = Auth::user();
+        
+        if(Hash::check($request->password, $user->password)) {
+			return response()->json([
+				'success' => true
+			], 200);
+		}
+
+		return response()->json([
+			'success' => false
+		], 401);
+	}
+
 }

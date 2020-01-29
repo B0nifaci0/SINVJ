@@ -77,7 +77,7 @@ class PrincipalController extends Controller
       ->where('categories.type_product',2)
       ->where('products.status_id',4)
        ->where('products.deleted_at', NULL)
-      ->select('products.weigth as total_dañados' ,'products.status_id as dañados',)
+      ->select('products.weigth as total_dañados' ,'products.status_id as dañados')
       ->sum('products.weigth');
 
     //SUMA TOTAL DE GRAMOS
