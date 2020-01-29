@@ -36,13 +36,18 @@ class ExpensesController extends Controller
         $user = Auth::user();
         $brances = Branch::where('shop_id', $user->shop->id)->select('id')->get();
         $branches_ids = $brances->map(function($item){ return $item->id; });
-        $expenses = Expense::whereIn('branch_id', $branches_ids)->get();
+        $expenses = Expense::where('branch_id', $user->branch->id)->get();
+        //return $expenses;
 
         if($user->type_user == User::AA) {
             $shop_expenses = Expense::where('shop_id', $user->shop->id)->get();
             $expenses = $expenses->merge($shop_expenses);
         }
-
+        
+        if($user->type_user == User::CO) {
+            $shop_expenses = Expense::where('branch_id', $user->branch->id)->get();
+            $expenses = $expenses->merge($shop_expenses);
+        }
 
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
 

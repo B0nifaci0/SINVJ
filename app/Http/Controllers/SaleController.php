@@ -64,7 +64,7 @@ class SaleController extends Controller
     public function indexCO() 
     {
       $user = Auth::user(); 
-      $sales = Sale::all();
+      $sales = Sale::with('client');
       $products = Product::with('line')
         ->with('branch')
         ->with('category')
