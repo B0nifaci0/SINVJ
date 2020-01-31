@@ -258,9 +258,9 @@ class SaleController extends Controller
      // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
    
 }
-public function exportPdfall(){ 
+public function exportPdfall(){  
   $user = Auth::user();
-        $date= date("Y-m-d");
+        $date= date("Y-m-d"); 
         $hour = Carbon::now();
         $hour = date('H:i:s');
         $branches = $user->shop->branches;
@@ -268,7 +268,12 @@ public function exportPdfall(){
         if($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
-  $sales = Sale::all();
+        $branch_ids = $branches->map(function($item){ return $item->id; });
+        
+        $sales = Sale::with('client')
+          ->whereIn('branch_id', $branch_ids)
+          ->get();
+        //return $sales;
   $pdf  = PDF::loadView('sale.PDFVentas', compact('sales','date','hour','shop','branches'));
   return $pdf->stream('venta.pdf');
 }

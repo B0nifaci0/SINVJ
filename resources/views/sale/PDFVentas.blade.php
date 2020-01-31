@@ -70,7 +70,7 @@
                   <tr id ="row{{$sale->id}}">
                     <td>{{ $sale->customer_name }}</td>
                     <td>{{ $sale->telephone }}</td>
-                    <td>{{ $sale->items->count() }}</td>
+                    <td align="center">{{ $sale->items->count() }}</td>
                     <td>${{ $sale->total }}</td>
                     <td>{{ $sale->created_at->format('m-d-Y')}}</td>
                   </tr>
