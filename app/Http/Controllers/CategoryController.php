@@ -34,7 +34,9 @@ class CategoryController extends Controller
         $shop = Auth::user()->shop;
         return $shop; */
         //$categories = Auth::user()->shop->categories;
-        $categories = Category::where('shop_id','=',NULL)->get();
+        $categories = Category::where('shop_id','=',NULL)
+        ->orderBy('name', 'ASC')
+        ->get();
         //Lista el array de datos de categorias almacenados en la variable $categories
         //return $categories;
         return view('category/index', compact('categories','user'));

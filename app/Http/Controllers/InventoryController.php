@@ -30,6 +30,7 @@ class InventoryController extends Controller
     use SoftDeletes;
 
     public function index() {
+		
         $user = Auth::user();
         $ids = $user->branch_id;
         $inventories = InventoryReport::join('branches','branches.id','inventory_reports.branch_id')
@@ -49,7 +50,8 @@ class InventoryController extends Controller
         return view('inventory.index', compact('branch_user','inventories','inventories_user'));
     }
 
-    public function create() {
+    public function create(Request $request) {
+        //return $request;
         $exist = InventoryReport::where('start_date', Carbon::now()->format('Y-m-d'))->get();
         $branches = Branch::where('shop_id', Auth::user()->shop->id)->get();
 
@@ -65,6 +67,7 @@ class InventoryController extends Controller
             }
             return $item;
         });
+        //return $branches;
         $date = Carbon::now()->toFormattedDateString();
 
         return view('inventory.add', compact('date', 'branches'));
@@ -116,13 +119,16 @@ class InventoryController extends Controller
             return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, porque la sucursal no tiene productos!');
 
         } else {
+            //return $branch_id;
             $inventory = InventoryReport::create([
                 'start_date' => Carbon::now()->format('Y-m-d'),
                 'status_report' => 1,
                 'branch_id' => $branch_id
             ]);
 
-            $products = Product::whereIn('branch_id', $branches_ids)->get();
+            $products = Product::where('branch_id', $branch_id)->get();
+            
+            
         
             foreach ($products as $p) {
                 InventoryDetail::create([
@@ -130,6 +136,7 @@ class InventoryController extends Controller
                     'product_id' => $p->id,
                 ]);
             }
+            //return $products;
         }
 
         return redirect('/inventarios');
@@ -152,6 +159,20 @@ class InventoryController extends Controller
 
         InventoryDetail::where('id', $request->inventory_id)->update(['status' => $request->status]);
         return back();
+    }
+
+    public function checkPassword(Request $request){
+        $user = Auth::user();
+        
+        if(Hash::check($request->password, $user->password)) {
+			return response()->json([
+				'success' => true
+			], 200);
+		}
+
+		return response()->json([
+			'success' => false
+		], 401);
     }
 
     public function terminar($id) {

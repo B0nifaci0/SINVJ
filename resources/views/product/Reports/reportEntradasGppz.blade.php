@@ -88,8 +88,8 @@
       <p align="right">Fecha: {{$dates}}</p>
       <p align="right">Hora: {{$hour}}</p>
       <h1 align="center">Reporte de Entrada de Productos</h1>
-      <h2 align="center">Todas las lineas</h2>
-      <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+      <h2 align="center">Categoria <span style="color:red">  @foreach($categories as $c){{ $c->nombre_categoria}} @endforeach </span> </h2>
+      <h3 align="center" style="color:red"> {{$shop->name}} - @foreach($branch as $b){{$b->name}} @endforeach</h3>
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
           <tr>
@@ -113,18 +113,6 @@
           </tr>
           @endforeach
         </tbody>
-      </table>
-      <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-        <thead>
-          <tr>
-            <th scope="col">Categoria</th>
-            <th scope="col">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-        <br>
       </table>
     </div>
   </div>

@@ -192,6 +192,7 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
   Route::get('reportinventarios', 'InventoryController@reportInventarios');
   Route::get('inventariospdf/{id}', 'InventoryController@inventariosPDF');
   Route::post('inventory/check', 'InventoryController@check');
+  Route::post('check-user', 'StateController@checkUser');
   Route::get('inventarios/terminar/{id}', 'InventoryController@terminar');
 
   Route::get('productos', 'ProductController@index');

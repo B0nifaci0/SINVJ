@@ -88,13 +88,8 @@
       <p align="right">Hora: {{$hour}}</p>
 
 
-      <h1 align="center">Reporte de Productos</h1>
-      <h2 align="center">Categoria:
-        @foreach ($products as $i => $product)
-         {{ $product->category->name }}
-         @break
-        @endforeach      
-      </h2>
+      <h1 align="center">Reporte de Productos </h1>
+      <h2 align="center">Categoria @foreach  ($categoria as $c) {{ $c->name }} @endforeach </h2>
       <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
       <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <thead>
@@ -102,7 +97,7 @@
             <th scope="col">Clave</th>
             <th scope="col">Descripción</th>
             <th scope="col">Precio Compra</th>
-            <th scope="col">Precio Ventax</th>
+            <th scope="col">Precio Venta</th>
             <th scope="col">Observaciones</th>
             <th scope="col">Estatus</th>
           </tr>

@@ -456,7 +456,7 @@
                     </ul>
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
-                        <a class="animsition-link" href="reportes-gastos">
+                        <a class="animsition-link" href="/reportes-gastos">
                         <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
                           <span class="site-menu-title">Reporte de Gastos</span>
                       </a>
@@ -729,14 +729,14 @@
                       <span class="site-menu-title">Inicio</span>
                     </a>
                   </li>
-                  <ul class="site-menu-sub">
+                 <!-- <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/tiendas">
                           <i class="site-menu-icon fa-eye" aria-hidden="true"></i>
                             <span class="site-menu-title">Mi tienda</span>
                         </a>
                       </li>
-                    </ul>
+                    </ul>-->
                     <!-- Productos-->
                     <ul class="site-menu-sub">
                     <li class="site-menu-item">
@@ -785,7 +785,7 @@
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/ventas/create">
-                          <i class="site-menu-icon fa-cart-arrow-down" aria-hidden="true"></i>
+                          <i class="site-menu-icon fa-plus" aria-hidden="true"></i>
                             <span class="site-menu-title">Agregar Venta</span>
                         </a>
                       </li>
@@ -842,14 +842,14 @@
                       </a>
                     </li>
                     </ul>
-                    <ul class="site-menu-sub">
+                    <!--<ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/reportes-gastos">
                         <i  class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
                           <span class="site-menu-title">Reporte de Gastos</span>
                       </a>
                     </li>
-                    </ul>
+                    </ul>-->
                   </li>
                   </ul>
                   </li>

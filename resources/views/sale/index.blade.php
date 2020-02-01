@@ -59,7 +59,6 @@ LISTA DE  VENTAS
           <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
               <tr>
-                <th>Clave</th>
                 <th>Nombre del cliente</th>
                 <th>Tipo</th>
                 <th>Teléfono</th>
@@ -71,7 +70,6 @@ LISTA DE  VENTAS
             </thead>
             <tfoot>
               <tr>
-                <th>Clave</th>
                 <th>Nombre del cliente</th>
                 <th>Tipo</th>
                 <th>Teléfono</th>
@@ -84,7 +82,6 @@ LISTA DE  VENTAS
             <tbody>
                 @foreach ($sales as $sale)
                   <tr id = "row{{ $sale->id }}">
-                    <td>{{ $sale->id}}</td>
                     <td>
                       @if($sale->client)
                       <a href="/mayoristas/{{$sale->client->id}}">

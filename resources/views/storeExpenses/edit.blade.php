@@ -12,7 +12,7 @@ MODIFICACIÓ PRODUCTO
 @endsection
 @section('content')
   <div class="page-content">
-    <div class="panel"> 
+    <div class="panel">
       <div class="panel-body">
         @if($errors->count() > 0)
           <div class="alert alert-danger" role="alert">
@@ -24,7 +24,7 @@ MODIFICACIÓ PRODUCTO
           </div>
         @endif
         <h2 align="center">Editar Gasto</h2>
-        <form id="multiplicar" class="" action="{{route('gastos.update',['id' => $expense->id])}}" method="post" enctype="multipart/form-data">
+        <form id="multiplicar" class="" action="{{route('gastos.update', $expense->id) }} "  method="post" enctype="multipart/form-data">
           {{ csrf_field() }}
           {{ method_field('PUT') }}
           <div class='row'>
@@ -57,11 +57,11 @@ MODIFICACIÓ PRODUCTO
             <div>
               @foreach ($shops as $shop)
                 <input type="hidden" name="shop_id" value="{{$shop->id}}">
-              @endforeach 
-            </div> 
+              @endforeach
+            </div>
             <!-- Botón para guardar cambios de gasto -->
             <div class="form-group col-md-12">
-              <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button> 
+              <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
             </div>
             <!-- END Botón-->
           </div>

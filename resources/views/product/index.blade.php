@@ -60,7 +60,7 @@ LISTA PRODUCTO
                 </button>
               </div>
               @endif
-              <div class="col-6=">
+              <div class="col-6">
                 <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating
                  btn-info waves-effect waves-light waves-round float-left"
                   data-toggle="tooltip" data-original-title="Agregar">

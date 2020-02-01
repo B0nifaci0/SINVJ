@@ -64,7 +64,7 @@
 
     <h1 align="center">Reporte General De Productos Por Pieza</h1>
         <!--<h2 align="center">Todas las Categorias</h2>-->
-            <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+            <h3 align="center" style="color:red"> {{$shop->name}} - @foreach($branch as $b){{$b->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
@@ -95,6 +95,7 @@
                   @endforeach
               </tbody>
             </table>
+            <br>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
@@ -104,10 +105,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($totals as $i => $total)
+                @foreach ($categories as $i => $c)
                     <tr>
-                        <td>{{$total->name}}</td> 
-                        <td align="center">$ {{ $total->total }}</td>
+                        <td>{{$c->nombre_categoria}}</td> 
+                        <td align="center"> {{ $c->producto }} pzs</td>
                     </tr>
                     @endforeach 
                 </tbody> 

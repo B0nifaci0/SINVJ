@@ -64,7 +64,7 @@
 
     <h1 align="center">Reporte General De Entrada de Productos Por Gramos</h1>
         <h2 align="center">Reporte de Entradas Por Lineas</h2>
-            <h3 align="center" style="color:red"> {{$shop->name}}</h3>
+            <h3 align="center" style="color:red"> {{$shop->name}} - @foreach($branch as $b) {{$b->name}} @endforeach</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
@@ -95,6 +95,7 @@
                   @endforeach
               </tbody>
             </table>
+            <br>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
@@ -106,8 +107,8 @@
                 <tbody>
                    @foreach ($lines as $i => $line)
                     <tr>
-                        <td>{{$line->name}}</td>
-                        <td align="center">{{$line->total_g}}</td>
+                        <td>{{$line->nombre_linea}}</td>
+                        <td align="center">{{$line->gramo_linea}} gr</td>
                     </tr>
                      @endforeach
                 </tbody>
