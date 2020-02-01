@@ -133,7 +133,7 @@ TRASFERENCIAS
                       <button class="btn btn-warning reject" alt="{{ $transfer->id }}">Rechazar</button>
                       @endif
                     @else
-                      @if(!$transfer->paid_at)
+                      @if(!$transfer->paid_at && $transfer->status_product === 1)
                         @if(Auth::user()->id == $transfer->user_id)
                           <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
                           <button class="btn btn-danger give-back" alt="{{ $transfer->id }}">Devolver</button>

@@ -115,7 +115,7 @@ TRASFERENCIAS
                   <td>{{$transfer->created_at->format('m-d-Y')}}</td>
                   <td>
                     @if($transfer->status_product === 1 || $transfer->paid_at)
-                    @if($transfer->paid_at)
+                    @if($transfer->paid_at && $transfer->status_product === 1)
                         <span class="text-center badge badge-success">Pagado</span>
                     @else
                     <span class="text-center badge badge-success">Por pagar</span>
