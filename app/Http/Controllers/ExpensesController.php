@@ -38,10 +38,11 @@ class ExpensesController extends Controller
         $branches_ids = $brances->map(function ($item) {
             return $item->id;
         });
-        if($user->type_user == User::CO) {
-        $expenses = Expense::where('branch_id', $user->branch->id)->get();
-        }else{
+        if($user->type_user == User::AA) {
             $expenses = Expense::whereIn('branch_id', $branches_ids)->get();
+        }else{
+            $expenses = Expense::where('branch_id', $user->branch->id)->get();
+
         }
         //return $expenses;
 
