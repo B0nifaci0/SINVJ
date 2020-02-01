@@ -64,7 +64,7 @@ class ProductController extends Controller
         $path = 'products/default';
       }
 
-      $product->image = $this->getS3URL($path); 
+      $product->image = $this->getS3URL($path);
 		}
 
     	$shops = Auth::user()->shop()->get();
@@ -201,7 +201,7 @@ class ProductController extends Controller
           $command = $adapter->getClient()->getCommand('GetObject', [
             'Bucket' => $adapter->getBucket(),
             'Key' => $adapter->getPathPrefix(). $path
-          ]); 
+          ]);
 
             $command = $adapter->getClient()->getCommand('GetObject', [
                 'Bucket' => $adapter->getBucket(),
@@ -390,6 +390,7 @@ class ProductController extends Controller
         $category = Auth::user()->shop->id;
         $user = Auth::user();
         $line = Auth::user()->shop->id;
+
         $shops = Auth::user()->shop()->get();
         //return $shops;
         $product = Product::find($id);
@@ -397,9 +398,11 @@ class ProductController extends Controller
         $shop_categories = Category::where('shop_id', $category)->where('id', '!=', $product->category_id)->get();
         $categories = Category::where('id', $product->category_id)->get();
 
-        $categories = $categories->merge($shop_categories);
+       // $categories = $categories->merge($shop_categories);
+        $categories = Category::where('shop_id', '=', NULL)->get();
 
-        $lines = Shop::find($line)->lines()->get();
+        $lines = Line::where('shop_id', '=', NULL)->get();
+       // $lines = Shop::find($line)->lines()->get();
         $branch = Auth::user()->shop->id;
         $branches = Shop::find($branch)->branches()->get();
         $statuses = Status::all();
@@ -778,7 +781,7 @@ class ProductController extends Controller
         $dates = $dates->format('d-m-Y');
         $shops = Auth::user()->shop()->get();
 
-        if ($shop->image) { 
+        if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
 
@@ -786,7 +789,7 @@ class ProductController extends Controller
             ->join('categories', 'categories.id', 'products.category_id')
             ->join('statuss', 'statuss.id', 'products.status_id')
             ->join('lines', 'lines.id', 'products.line_id')
-            ->where('products.deleted_at', NULL) 
+            ->where('products.deleted_at', NULL)
             ->whereBetween('products.updated_at', [$fecini, $fecter])
             ->where('products.status_id', 2)
             ->where('lines.shop_id', NULL)
@@ -1045,7 +1048,7 @@ class ProductController extends Controller
         //return $lines;
         //FUNCION PARA CALCULAR EL TOTAL DE GRAMOS POR LINEA
        // return $lines;
-        foreach ($lines as $line) {  
+        foreach ($lines as $line) {
             $line->total_g = $products->where('line_id', $line->id)->sum('weigth');
         }
         //return $line->total_g;
@@ -1086,7 +1089,7 @@ class ProductController extends Controller
         $branches = Auth::user()->shop->branches;
         $shop_id = Auth::user()->shop->id;
         $branch = Branch::where('id',$request->branch_id)->get();
-        
+
         $fecini = Carbon::parse($request->fecini)->subDay();
         $fecter = Carbon::parse($request->fecter)->addDay();
         #pasar fecha actual
@@ -1249,7 +1252,7 @@ class ProductController extends Controller
         $categories = Shop::find($category)->categories()->get();
 
         $status = $request->estatus_id;
-        $categoria = $request->category_id; 
+        $categoria = $request->category_id;
         $line = $request->id;
 
         /**Termina codigo de validacion de campos */
