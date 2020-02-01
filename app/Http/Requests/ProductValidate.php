@@ -30,9 +30,10 @@ class ProductValidate extends FormRequest
             //'weigth'=> 'required_if:product,is:true',
             //'weigth' => 'required|numeric|max:200',
             'image' => 'image',
-            //'pricepzt' => 'required|numeric',
-            //'price_purchase' => 'required|numeric',
-            //'price' => 'required|numeric',
+            'price' => 'required|numeric',
+            'pricepzt' => 'numeric',
+            'price_purchase' => 'numeric|nullable', 
+            'max_discountpz' => 'numeric|nullable',
             //'category_id' => 'required',
             //'category_id' => 'required_if:product,is:true',
             'line_id' => 'required',
@@ -43,7 +44,11 @@ class ProductValidate extends FormRequest
 
     public function attributes()
 {
-    return[
+    return [
+        'price' => 'Precio del Producto',
+        'pricepzt' => 'Precio del Producto pz',
+        'price_purchase' => 'Precio Compra',
+        'max_discountpz' => 'Precio con descuento',
         'description' => 'descripción', //This will replace any instance of 'username' in validation messages with 'email'
         'image' => 'imagen', //This will replace any instance of 'username' in validation messages with 'email'
         //'price_purchase' => 'precio compra', //This will replace any instance of 'username' in validation messages with 'email'

@@ -293,9 +293,9 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductValidate $request)
+    public function store(Request $request)
     {
-        //return $request;
+        // return $request;
         $date = date("Y-m-d");
         $branches = Auth::user()->shop->branches;
         $user = Auth::user();
@@ -312,7 +312,7 @@ class ProductController extends Controller
                 return redirect('/products')->with('mesage', 'El nombre que intentas registrar ya existe!');
             }
         }
-
+        
         $data = $request->all();
         $data['price'] = ($request->pricepzt) ? $request->pricepzt : $request->price;
         $data['discount'] = $request->max_discount ? $request->max_discount : 0;
