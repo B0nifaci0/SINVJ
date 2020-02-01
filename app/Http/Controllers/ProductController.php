@@ -434,6 +434,7 @@ class ProductController extends Controller
         $product->observations = $request->observations;
         $product->price = $request->price;
         $product->status_id = $request->status_id;
+        $product->branch_id = $request->branch_id;
         //$product->inventory = $request->inventory;
         $product->save();
 
