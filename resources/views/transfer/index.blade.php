@@ -140,6 +140,8 @@ TRASFERENCIAS
                         @else
                         <span class="text-center badge badge-warning">Por pagar</span>
                         @endif
+                      @elseif($transfer->status_product === 0)
+                        <span class="text-center badge badge-success">No se paga</span>
                       @else
                         <span class="text-center badge badge-success">Pagado</span>
                       @endif
