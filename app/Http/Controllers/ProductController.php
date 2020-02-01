@@ -322,6 +322,9 @@ class ProductController extends Controller
             $data['line_id'] = null;
             $data['weigth'] = null;
             $data['discount'] = $request->max_discountpz ? $request->max_discountpz : 0;
+        } else if ($category->type_product == 2) {
+            $line = Line::find($request->line_id);
+            $data['price_purchase'] = $line->purchase_price * $request->weigth;
         }
 
         $categories = Auth::user()->shop->categories()->get();
