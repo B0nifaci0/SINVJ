@@ -75,7 +75,7 @@ LISTA DE  LINEA
           <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
               <tr>
-                <th>Clave</th>
+                <!--<th>Clave</th>-->
                 <th>Nombre</th>
                 <th>Precio compra</th>
                 <th>Precio venta</th>
@@ -87,7 +87,7 @@ LISTA DE  LINEA
             </thead>
             <tfoot>
               <tr>
-                <th>Clave</th>
+                <!--<th>Clave</th>-->
                 <th>Nombre</th>
                 <th>Precio compra</th>
                 <th>Precio venta</th>
@@ -100,7 +100,7 @@ LISTA DE  LINEA
             <tbody>
               @foreach ($lines as $line)
                 <tr id = "row{{ $line->id }}">
-                  <td>{{ $line->id}}</td>
+                  <!--<td>{{ $line->id}}</td>-->
                   <td>{{ $line->name }}</td>
                   <td>$ {{$line->purchase_price}}</td>
                   <td>$ {{ $line->sale_price }}</td>

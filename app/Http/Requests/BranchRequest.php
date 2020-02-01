@@ -24,7 +24,8 @@ class BranchRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:25',
+            'name' => 'required|max:15|regex:/^([0-9a-zA-ZñÑáéíóúÁÉÍÓÚ_-])+((\s*)+([0-9a-zA-ZñÑáéíóúÁÉÍÓÚ_-]*)*)+$/',
+            'name_legal_re' => 'required|regex:/^[A-Z,a-z,á,é,í,ó,ú, ]*$/|max:25',
             'rfc'  => 'required|string|min:10|max:13',
             'email' => 'required|email',
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',

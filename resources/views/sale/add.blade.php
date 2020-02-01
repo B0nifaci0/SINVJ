@@ -50,7 +50,7 @@ ALTA VENTA
                                     <div class="form-group form-material">
                                         <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente:
                                         </label>
-                                        <input type="text" class="form-control" required="required" name="customer_name"
+                                        <input type="text" class="form-control"  name="customer_name"
                                             value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
                                     </div>
                                     <!-- END Input-->

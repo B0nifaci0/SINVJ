@@ -67,12 +67,13 @@ LISTA DE  CATEGORIA
               </div>
             </div>
           </div>
-        <div class="panel-body">
+        <div class="panel-body">         
+
         <!-- Tabla listar las categorias-->
-          <table id='categorias'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+          <table id='categorias'  class="table table-hover dataTable table-striped w-full text-center" data-plugin="dataTable">
             <thead>
               <tr>
-                <th>Clave</th>
+               <!-- <th>Clave</th>-->
                 <th>Nombre</th>
                 <th>Tipo de Producto</th>
                 <!--@if(Auth::user()->type_user == 1 )
@@ -82,9 +83,9 @@ LISTA DE  CATEGORIA
             </thead>
             <tfoot>
               <tr>
-                <th>Clave</th>
+                <!--<th>Clave</th>-->
                 <th>Nombre</th>
-                <th>T.Porducto</th>
+                <th>Tipo de Porducto</th>
                 <!--@if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
                 @endif -->
@@ -93,7 +94,7 @@ LISTA DE  CATEGORIA
             <tbody>
               @foreach ($categories as $category)
               <tr id = "row{{ $category->id }}">
-                <td>{{ $category->id}}</td>
+                <!--<td>{{ $category->id}}</td>-->
                 <td>{{ $category->name }}</td>
                 @if($category->type_product == 1 )
                     <td><span class="text-center badge badge-success">Pieza</span></td>

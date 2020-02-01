@@ -13,6 +13,7 @@ use App\Partial;
 use App\Shop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\SaleRequest;
 use Illuminate\Support\Facades\Storage;
@@ -42,6 +43,7 @@ class SaleController extends Controller
 
       if($user->type_user == User::CO) {
         $sales = Sale::with('client')
+          ->where('deleted_at', NULL)
           ->where('branch_id', $user->branch_id)
           ->get();
       } else {
@@ -64,7 +66,11 @@ class SaleController extends Controller
     public function indexCO() 
     {
       $user = Auth::user(); 
-      $sales = Sale::with('client');
+      $sales = Sale::with('client')
+      ->where('deleted_at', NULL)
+      ->where('branch_id', $user->branch_id)
+      ->get();
+      //return $sales;
       $products = Product::with('line')
         ->with('branch')
         ->with('category')
@@ -128,20 +134,31 @@ class SaleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SaleRequest $request)
+    public function store(Request $request)
     {
-      // return $request;
+      //return $request;
       $user = Auth::user();
       $folio = Sale::where('branch_id', $user->branch_id)->select('id')->get()->count();
       $folio++;
-      
+      $validator = Validator::make($request->all(), [
+        'customer_name' => Rule::requiredIf($request->user_type == 1),
+      ]);
+      if ($validator->fails()) {
+        $response = [
+            'success' => false,
+            'errors' => $validator->errors(),
+            'error' => 'Error en alguno de los campos'
+        ];
+        //return response()->json($response, $this->unprocessable);
+        return back()->withErrors($validator->errors());
+        }
       $sale = Sale::create([
-        'customer_name'=>Rule::requiredif($request->user_type == 1),
+        'customer_name'=> Rule::requiredif($request->user_type == 1),
         'customer_name' => $request->customer_name,
         'telephone' => $request->telephone,
         'price' => $request->price,
         'customer_name' => $request->customer_name,
-        'total' => $request->total_pay,
+        'total' => $request->total_pay, 
         'user_id' => $user->id,
         'branch_id' => $user->branch_id ? $user->branch_id : null,
         'client_id' => $request->user_type == 2 ? $request->client_id : null,

@@ -79,7 +79,7 @@
    </style>
 
 <body>
-<img class="img-responsive " width="90px" height="90px" src="{{ $shop->image }}">
+<img class="img-responsive " width="140px" height="120px" src="{{ $shop->image }}">
         @foreach ($trans as $transfer)
         <div class="ticket" id = "{{$transfer->id}}">
                 <p class="titulo">TRASPASO</p>
