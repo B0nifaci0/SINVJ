@@ -97,7 +97,7 @@ class SaleController extends Controller
     if($user->branch) {
       	$branch_id = $user->branch->id;
         $products = Product::where('branch_id',$branch_id)
-          ->where('status_id', 2)
+          ->whereIn('status_id', [2, 3])
           ->with('line')
           ->with('branch')
           ->with('category')
@@ -110,7 +110,7 @@ class SaleController extends Controller
       	  return $item->id;
         });
         $products = Product::whereIn('branch_id', $branch_ids)
-          ->where('status_id', 2)
+          ->whereIn('status_id', [2, 3])
           ->with('line')
           ->with('branch')
           ->with('category')
