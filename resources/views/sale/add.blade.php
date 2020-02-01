@@ -30,14 +30,14 @@ ALTA VENTA
                 @endif
                 <form id="form" method="POST" action="/ventas">
                     <center>
-                        <h3>Venta</h3>
+                        <h3>Registrate Venta</h3>
                     </center>
                     {{ csrf_field() }}
                     <div class="row mb-10">
                         <div class="col-md-3">
                             <label for="user-type">Tipo de venta</label>
                             <select name="user_type" id="user-type" class="form-control">
-                                <option value="1">Venta Publico</option>
+                                <option value="1">Venta normal</option>
                                 <option value="2">Venta a mayorista</option>
                             </select>
                         </div>
@@ -50,7 +50,7 @@ ALTA VENTA
                                     <div class="form-group form-material">
                                         <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente:
                                         </label>
-                                        <input type="text" class="form-control"  name="customer_name"
+                                        <input type="text" class="form-control" required="required" name="customer_name"
                                             value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
                                     </div>
                                     <!-- END Input-->
@@ -58,7 +58,7 @@ ALTA VENTA
                                 <div class="col-md-6">
                                     <!-- Input para Ingresar telefono del cliente-->
                                     <div class="form-group form-material">
-                                        <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
+                                        <label class="form-control-label" for="inputBasicLastName">TelÃ©fono:</label>
                                         <input type="text" class="form-control" required="required" name="telephone"
                                             value="{{old('telephone')}}" placeholder="7225674569" />
                                     </div>
@@ -100,11 +100,11 @@ ALTA VENTA
                             <button type="button" class="btn btn-primary" id="btn-add">+</button>
                         </div>
                         <!-- END Select-->
-                        <!-- Botón para agregar producto-->
+                        <!-- BotÃ³n para agregar producto-->
 
                     </div>
 
-                    <!-- END Botón-->
+                    <!-- END BotÃ³n-->
                     <div class="panel-body ">
                         <!-- Tabla para listar productos agregados-->
                         <table id="ventas" class=" display table table-hover dataTable table-striped w-full"
@@ -114,7 +114,7 @@ ALTA VENTA
                                     <th>Clave</th>
                                     <th>Nombre</th>
                                     <th>Peso</th>
-                                    <th>Categoría</th>
+                                    <th>CategorÃ­a</th>
                                     <th>Linea</th>
                                     <th>Sucursal</th>
                                     <th>Precio Max</th>
@@ -128,7 +128,7 @@ ALTA VENTA
                                     <th>Clave</th>
                                     <th>Nombre</th>
                                     <th>Peso</th>
-                                    <th>Categoría</th>
+                                    <th>CategorÃ­a</th>
                                     <th>Linea</th>
                                     <th>Sucursal</th>
                                     <th>Precio Max</th>
@@ -150,15 +150,15 @@ ALTA VENTA
                     </div>
                     <br>
                     <div class="row">
-                        <!-- Botón para mostar el Modal de Tipos de pago-->
+                        <!-- BotÃ³n para mostar el Modal de Tipos de pago-->
                         <div class="col-6 form-group">
                             <button class="btn btn-success" data-target="#exampleTabs" data-toggle="modal"
                                 type="button">$ Registro de pago</button>
                         </div>
-                        <!-- END Botón-->
+                        <!-- END BotÃ³n-->
                         <input type="hidden" class="form-control" name="partial_pay" id="faltan" />
                         <input type="hidden" class="form-control" name="total_pay" id="totalPay" />
-                        <!-- Botón para guardar venta-->
+                        <!-- BotÃ³n para guardar venta-->
 
                         <input type="hidden" class="form-control" name="products_list" id="productsList" />
                         <input type="hidden" class="form-control" name="cash_income" id="cashPayment" />
@@ -167,7 +167,7 @@ ALTA VENTA
                         <div class="form-group col-6">
                             <a id="submit" type="button" class="btn btn-primary text-white float-right">Terminar compra</a>
                         </div>
-                        <!-- END Botón-->
+                        <!-- END BotÃ³n-->
                     </div>
             </div>
             </form>
@@ -182,7 +182,7 @@ ALTA VENTA
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
+                                            <span aria-hidden="true">Ã—</span>
                                         </button>
                                         <h4 class="modal-title" id="exampleModalTabs">Tipo de Pago</h4>
                                     </div>
@@ -299,7 +299,7 @@ ALTA VENTA
         </div>
     </div>
     @endsection
-    <!-- Función para agregar a la tabla el producto
+    <!-- FunciÃ³n para agregar a la tabla el producto
 seleccionado con sus respectivos datos-->
     @section('listado-productos')
 
@@ -363,7 +363,7 @@ seleccionado con sus respectivos datos-->
 
                 if (overDiscount.length > 0 && !overDiscountAuth) {
                     var message = `${overDiscount.length} producto${(overDiscount.length == 1) ? '' : 's'} tiene un descuento superior al permitido.
-		Ingrese la contraseña de seguridad para continuar`;
+		Ingrese la contraseÃ±a de seguridad para continuar`;
                     Swal.fire({
                         title: message,
                         input: 'password',
@@ -374,7 +374,7 @@ seleccionado con sus respectivos datos-->
                         confirmButtonText: 'Aceptar',
                         showLoaderOnConfirm: true,
                         preConfirm: (password) => {
-                            return fetch('/check-user', {
+                            return fetch(`/check-password`, {
                                 method: 'POST',
                                 body: JSON.stringify({ password: password }),
                                 headers: {
@@ -390,7 +390,7 @@ seleccionado con sus respectivos datos-->
                                 })
                                 .catch(error => {
                                     Swal.showValidationMessage(
-                                        `Contraseña incorrecta`
+                                        `ContraseÃ±a incorrecta`
                                     )
                                 })
                         },
@@ -398,7 +398,7 @@ seleccionado con sus respectivos datos-->
                     }).then((result) => {
                         if (result.value) {
                             Swal.fire({
-                                title: `La contraseña es correcta`
+                                title: `La contraseÃ±a es correcta`
                             })
                             overDiscountAuth = true;
                             console.log("overDiscountAuth", overDiscountAuth);
@@ -484,13 +484,13 @@ seleccionado con sus respectivos datos-->
                     ]).draw( false );
 
                    // var _tr = `<td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button></div></td>`;
-                //END Función//
+                //END FunciÃ³n//
 
                 //Hacer suma de productos seleccionados en imprimirlos en Total//
                 $('tbody').append(_tr);
                 total += Number(product.price);
                 $("#total").html("$" + total);
-                //END Función//
+                //END FunciÃ³n//
 
                 $('#totalCash').val(total);
                 $('#pagar').val(total);
@@ -569,7 +569,7 @@ seleccionado con sus respectivos datos-->
                 });
 
                     $('#ventas').on('click', '.deletr', function(){
-                        console.log("========> entra función", $(this).attr('alt'))
+                        console.log("========> entra funciÃ³n", $(this).attr('alt'))
                         var table = $('#ventas').DataTable();
                         var row = $(this).parents('tr');
 
@@ -632,7 +632,7 @@ seleccionado con sus respectivos datos-->
 
     </script>
     @endsection
-    <!-- END Función-->
+    <!-- END FunciÃ³n-->
 
     @section('agregar-cliente')
 
