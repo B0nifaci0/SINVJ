@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Sale extends Model
 {
 
-   
+
     /**
      * The attributes that are mass assignable.
      *
@@ -35,7 +35,7 @@ class Sale extends Model
     public function line(){
         return $this->belongsTo(Line::class);
     }
-    
+
     public function partial(){
         return $this->hasMany(Partial::class);
     }
@@ -58,10 +58,11 @@ class Sale extends Model
     public function scopeItemsSold() {
         return Product::join('sale_details', 'sale_details.product_id', 'products.id')
         ->join('categories', 'categories.id', 'products.category_id')
-        ->select('clave', 'weigth', 'categories.name as category_name', 'sale_details.final_price')
+        ->select('products.id as id_product','clave', 'weigth','line_id', 'categories.name as category_name', 'sale_details.final_price','description')
         ->where('sale_id', $this->id)
         ->get();
     }
 }
 
- 
+
+
