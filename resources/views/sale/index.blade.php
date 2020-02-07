@@ -145,6 +145,7 @@ LISTA DE  VENTAS
               </div>
 
             </div>
+            <div class="tab-content">
             <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
               <div class="page-content panel-body container-fluid">
                 <!-- Tabla para listar productos-->
@@ -225,6 +226,7 @@ LISTA DE  VENTAS
                 <!-- END Table-->
               </div>
             </div>
+            </div>
           </div>
         </div>
       </div>
@@ -242,7 +244,7 @@ LISTA DE  VENTAS
 @section('footer')
 @endsection
 
-@section('barcode-ventas')
+@section('barcode-product')
   <script type="text/javascript">
   //inicializa la tabla para resposnive
     $(document).ready(function(){
