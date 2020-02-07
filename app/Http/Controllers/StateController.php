@@ -46,9 +46,9 @@ class StateController extends Controller
 	}
 
 	public function checkUser(Request $request) {
-		$user = Auth::user();
-        
-        if(Hash::check($request->password, $user->password)) {
+		$shop = Auth::user()->shop;
+		
+		if(Hash::check($request->password, $shop->password)) {
 			return response()->json([
 				'success' => true
 			], 200);

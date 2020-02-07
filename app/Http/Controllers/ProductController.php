@@ -51,7 +51,7 @@ class ProductController extends Controller
                 ->where('shop_id', $shop_id)
                 ->whereNull('products.deleted_at')
                 ->whereIn('branch_id', $branch_ids)
-                ->whereIn('status_id', [2, 3, 4])
+                ->whereIn('status_id', [1, 2, 3, 4])
                 ->get();
         }
 

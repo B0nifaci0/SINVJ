@@ -61,8 +61,8 @@ LISTA DE  VENTAS
                 </tr>
               </thead>
               <tfoot>
-              <tr>
-              <th>Clave</th>
+                <tr>
+                  <th>Clave</th>
                   <th>Nombre del cliente</th>
                   <th>Teléfono</th>
                   <th>Productos</th>
@@ -73,10 +73,10 @@ LISTA DE  VENTAS
               <tbody>
                   @foreach ($sales as $saleco)
                   <tr id = "row{{ $saleco->id }}">
-                    <td>{{ $saleco->id}}</td>
+                    <td>{{ $saleco->folio}}</td>
                     <td>{{ $saleco->customer_name }}</td>
                     <td>{{ $saleco->telephone }}</td>
-                    <td>{{ $saleco->product->name }}</td>
+                    <td>{{ $saleco->items->count() }}</td>
                     <td>$ {{ $saleco->total }}</td>
                     <td>{{ $saleco->created_at->format('m-d-Y')}}</td>
                   </tr>

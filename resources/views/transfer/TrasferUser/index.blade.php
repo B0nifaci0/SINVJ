@@ -122,6 +122,8 @@ TRASFERENCIAS
                     @endif
                     @elseif($transfer->status_product === 0)
                     <span class="text-center badge badge-warning">Rechazado</span>
+                    @elseif($transfer->status_product === 3)
+                      <span class="text-center badge badge-danger">Devuelto</span>
                     @else
                     <span class="text-center badge badge-primary">Pendiente</span>
                     @endif
