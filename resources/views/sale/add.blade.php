@@ -280,8 +280,9 @@ ALTA VENTA
                                                     <!-- END Input-->
                                                 </div>
                                                 <hr class="mb-4">
-                                                <button class="btn btn-success btn-lg btn-block"
-                                                    type="button">Continuar</button>
+                                                <button type="button" name="continuar" data-dismiss="modal"
+                                                    class="btn btn-success btn-lg btn-block"
+                                                    aria-label="Close">Continuar</button>
                                             </div>
                                             <!-- END PAGO CON TARJETA-->
                                         </div>

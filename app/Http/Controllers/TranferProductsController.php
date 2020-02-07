@@ -30,6 +30,7 @@ class TranferProductsController extends Controller
        {
         $user = Auth::user();
 
+<<<<<<< HEAD
         $trasen = TransferProduct::where('user_id', $user->id)
         ->get();
 
@@ -44,6 +45,14 @@ class TranferProductsController extends Controller
 
         //return $trasre;
         
+=======
+        if (Auth::user()->type_user == User::CO) {
+             redirect('/traspasos');
+        } else {
+            redirect('/traspasosAA');
+        }
+
+>>>>>>> 6c3ce1a6e09bf351746eea10e261ce308128012f
         $trans = TransferProduct::where('user_id', $user->id)
           ->orWhere('destination_user_id', $user->id)
           ->orWhere('last_branch_id', $user->branch->id)
@@ -68,6 +77,11 @@ class TranferProductsController extends Controller
        }
        public function indexAA()
        {
+         if (Auth::user()->type_user == User::CO) {
+             redirect('/traspasos');
+        } else {
+            redirect('/traspasosAA');
+        }
 
         $user = Auth::user();
         $trans = TransferProduct::all();
