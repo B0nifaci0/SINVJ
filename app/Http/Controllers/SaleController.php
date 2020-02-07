@@ -40,19 +40,87 @@ class SaleController extends Controller
       $po = Product::where('id','=','p')->first();
       // return $po;
       $user = Auth::user();
-
+      //return $user;
+    /*  $sale = Sale::with(['partials', 'client'])->findOrFail($id);
+    	$sale->itemsSold = $sale->itemsSold();
+      $sale->total = $sale->itemsSold->sum('final_price'); 
+      $sale->payments = $sale->partials->sum('amount');
+*/
       if($user->type_user == User::CO) {
         $sales = Sale::with('client')
           ->where('deleted_at', NULL)
           ->where('branch_id', $user->branch_id)
           ->get();
+          //return $sales;
+        foreach($sales as $s){
+          $sold = Sale::with('client')
+            ->join('partials','partials.sale_id','sales.id')
+            ->where('sales.deleted_at', NULL)
+            ->where('sales.branch_id', $user->branch_id)
+            ->select('sales.*',DB::raw('SUM(partials.amount) as payments'))
+            ->groupBy('sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+            ->havingRaw('SUM(partials.amount) >= ?',[$s->total])
+            ->orderBy('sales.customer_name','ASC')
+            ->get();
+          $apart = Sale::with('client')
+          ->join('partials','partials.sale_id','sales.id')
+          ->where('sales.deleted_at', NULL)
+          ->where('sales.branch_id', $user->branch_id)
+          ->select('sales.*',DB::raw('SUM(partials.amount) as payments'))
+          ->groupBy('sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+          ->havingRaw('SUM(partials.amount) < ?',[$s->total])
+          ->orderBy('sales.customer_name','ASC')
+          ->get();
+        }
       } else {
         $branches = Branch::where('shop_id', Auth::user()->shop->id)->get();
         $branch_ids = $branches->map(function($item){ return $item->id; });
         
+        $sold = Sale::with('client')
+            ->join('partials','partials.sale_id','sales.id')
+            ->join('branches','branches.id','sales.branch_id')
+            ->whereIn('sales.branch_id', $branch_ids)
+            ->select('sales.*','branches.name as sucursal',DB::raw('SUM(partials.amount) as payments'))
+            ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+            //->havingRaw('SUM(partials.amount) >= ?',[$s->total])
+            ->orderBy('sales.customer_name','ASC')
+            ->get();
+        $apart = Sale::with('client')
+          ->join('partials','partials.sale_id','sales.id')
+          ->join('branches','branches.id','sales.branch_id')
+          ->whereIn('sales.branch_id', $branch_ids)
+          ->select('branches.name as sucursal','sales.*',DB::raw('SUM(partials.amount) as payments'))
+          ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+          //->havingRaw('SUM(partials.amount) < ?',[$s->total])
+          ->orderBy('sales.customer_name','ASC')
+          ->get();
+        //return $apart;
+
         $sales = Sale::with('client')
           ->whereIn('branch_id', $branch_ids)
           ->get();
+        
+        foreach($sales as $s){
+          $sold = Sale::with('client')
+            ->join('partials','partials.sale_id','sales.id')
+            ->join('branches','branches.id','sales.branch_id')
+            ->whereIn('sales.branch_id', $branch_ids)
+            ->select('sales.*','branches.name as sucursal',DB::raw('SUM(partials.amount) as payments'))
+            ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+            ->havingRaw('SUM(partials.amount) >= ?',[$s->total])
+            ->orderBy('sales.customer_name','ASC')
+            ->get();
+          $apart = Sale::with('client')
+          ->join('partials','partials.sale_id','sales.id')
+          ->join('branches','branches.id','sales.branch_id')
+          ->whereIn('sales.branch_id', $branch_ids)
+          ->select('branches.name as sucursal','sales.*',DB::raw('SUM(partials.amount) as payments'))
+          ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+          ->havingRaw('SUM(partials.amount) < ?',[$s->total])
+          ->orderBy('sales.customer_name','ASC')
+          ->get();
+        }
+        //return $apart;
       }
       
       $products = Product::with('line') 
@@ -60,7 +128,7 @@ class SaleController extends Controller
         ->with('category')
         ->with('status') 
         ->get();
-    return view('sale/index', compact('sales','products','user','p'));
+    return view('sale/index', compact('apart','sold','sales','products','user','p'));
     }
 
     public function indexCO() 
@@ -70,13 +138,57 @@ class SaleController extends Controller
       ->where('deleted_at', NULL)
       ->where('branch_id', $user->branch_id)
       ->get();
-      //return $sales;
+
+      $sold = Sale::with('client')
+          ->join('partials','partials.sale_id','sales.id')
+          ->join('branches','branches.id','sales.branch_id')
+          ->where('sales.deleted_at', NULL)
+          ->where('sales.branch_id', $user->branch_id)
+          ->select('sales.*','branches.name as sucursal',DB::raw('SUM(partials.amount) as payments'))
+          ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+          //->havingRaw('SUM(partials.amount) >= ?',[$s->total])
+          ->orderBy('sales.customer_name','ASC')
+          ->get();
+      $apart = Sale::with('client')
+        ->join('partials','partials.sale_id','sales.id')
+        ->join('branches','branches.id','sales.branch_id')
+        ->where('sales.deleted_at', NULL)
+        ->where('sales.branch_id', $user->branch_id)
+        ->select('branches.name as sucursal','sales.*',DB::raw('SUM(partials.amount) as payments'))
+        ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+        //->havingRaw('SUM(partials.amount) < ?',[$s->total])
+        ->orderBy('sales.customer_name','ASC')
+        ->get();
+      
+      foreach($sales as $s){
+        $sold = Sale::with('client')
+          ->join('partials','partials.sale_id','sales.id')
+          ->join('branches','branches.id','sales.branch_id')
+          ->where('sales.deleted_at', NULL)
+          ->where('sales.branch_id', $user->branch_id)
+          ->select('sales.*','branches.name as sucursal',DB::raw('SUM(partials.amount) as payments'))
+          ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+          ->havingRaw('SUM(partials.amount) >= ?',[$s->total])
+          ->orderBy('sales.customer_name','ASC')
+          ->get();
+        $apart = Sale::with('client')
+        ->join('partials','partials.sale_id','sales.id')
+        ->join('branches','branches.id','sales.branch_id')
+        ->where('sales.deleted_at', NULL)
+        ->where('sales.branch_id', $user->branch_id)
+        ->select('branches.name as sucursal','sales.*',DB::raw('SUM(partials.amount) as payments'))
+        ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+        ->havingRaw('SUM(partials.amount) < ?',[$s->total])
+        ->orderBy('sales.customer_name','ASC')
+        ->get();
+      }
+      //return $sold;
       $products = Product::with('line')
         ->with('branch')
         ->with('category')
         ->with('status')
         ->get();
-      return view('sale/index', compact('sales','products','user'));
+      return view('sale/index', compact('apart','sold','sales','products','user'));
     }
 
     /**
@@ -225,8 +337,9 @@ class SaleController extends Controller
     {
     	$sale = Sale::with(['partials', 'client'])->findOrFail($id);
     	$sale->itemsSold = $sale->itemsSold();
-    	$sale->total = $sale->itemsSold->sum('final_price'); 
-      // return $sale;
+      $sale->total = $sale->itemsSold->sum('final_price'); 
+      $sale->payments = $sale->partials->sum('amount');
+      //return $sale;
       return view('sale.show', ['sale' => $sale]); 
     }
 
