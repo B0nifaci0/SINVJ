@@ -69,9 +69,9 @@ TRASFERENCIAS
           <div class="nav-tabs-horizontal" data-plugin="tabs">
             <ul class="nav nav-tabs" role="tablist">
               <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab"
-                  href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">Productos Enviados YZ</a></li>
+                  href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">Salientes</a></li>
               <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
-                  aria-controls="exampleTabsTwo" role="tab">Productos Recibidos xd</a></li>
+                  aria-controls="exampleTabsTwo" role="tab">Entrantes</a></li>
             </ul>
             
         <div class="panel-body">
