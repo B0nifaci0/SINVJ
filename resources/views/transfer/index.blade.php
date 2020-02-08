@@ -132,7 +132,7 @@ TRASFERENCIAS
                     @elseif($transfer->status_product === 0)
                       <span class="text-center badge badge-warning">Rechazado</span>
                     @elseif($transfer->status_product === 3)
-                      <span class="text-center badge badge-danger">Devuelto</span>
+                      <span class="text-center badge badge-warning">Devuelto</span>
                     @else
                       <span class="text-center badge badge-primary">Pendiente</span>
                     @endif
@@ -147,13 +147,8 @@ TRASFERENCIAS
                       <button class="btn btn-warning reject" alt="{{ $transfer->id }}">Rechazar</button>
                       @endif
                     @else
-<<<<<<< HEAD
                       @if(!$transfer->paid_at && $transfer->status_product === 1)
                         @if(Auth::user()->id == $transfer->user_id)
-=======
-                      @if(!$transfer->paid_at)
-                      @if(Auth::user()->id == $transfer->user_id  && $transfer->status_product == 1)
->>>>>>> 4feb1c37c63a6d4d60d7ed60a23c29256ffc32a6
                           <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
                           <button class="btn btn-danger give-back" alt="{{ $transfer->id }}">Devolver</button>
                         @else

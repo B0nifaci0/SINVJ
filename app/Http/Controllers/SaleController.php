@@ -207,37 +207,38 @@ class SaleController extends Controller
             $clients = Client::where('shop_id', $user->shop->id)->get();
         }
 
-        if ($user->branch) {
-            $branch_id = $user->branch->id;
-            $products = Product::where('branch_id', $branch_id)
-                ->with('line')
-                ->with('branch')
-                ->with('category')
-                ->with('status')
-                ->get();
-            $branches = [$user->branch];
-        } else {
-            $branches = Branch::where('shop_id', $user->shop->id)->get();
-            $branch_ids = $branches->map(function ($item) {
-                return $item->id;
-            });
-            $products = Product::whereIn('branch_id', $branch_ids)
-                ->where('status_id', 2)
-                ->with('line')
-                ->with('branch')
-                ->with('category')
-                ->with('status')
-                ->get();
-        }
-        // $products = Product::where([
-        //   'branch_id' => $user->branch_id,
-        //   'status_id' => 2
-        // ])
-        //   ->with('line')
-        // 	->with('branch')
-        // 	->with('category')
-        // 	->with('status')
-        // 	->get();
+    if($user->branch) {
+      	$branch_id = $user->branch->id;
+        $products = Product::where('branch_id',$branch_id)
+          ->whereIn('status_id', [2, 3])
+          ->with('line')
+          ->with('branch')
+          ->with('category')
+          ->with('status')
+          ->get();
+        $branches = [$user->branch];
+    } else {
+      	$branches = Branch::where('shop_id', $user->shop->id)->get();
+      	$branch_ids = $branches->map(function($item) {
+      	  return $item->id;
+        });
+        $products = Product::whereIn('branch_id', $branch_ids)
+          ->whereIn('status_id', [2, 3])
+          ->with('line')
+          ->with('branch')
+          ->with('category')
+          ->with('status')
+          ->get();
+    }
+    // $products = Product::where([
+    //   'branch_id' => $user->branch_id,
+    //   'status_id' => 2
+    // ])
+    //   ->with('line')
+    // 	->with('branch')
+    // 	->with('category')
+    // 	->with('status')
+    // 	->get();
         return view('sale/add', compact('products', 'user', 'branches', 'clients'));
     }
 
