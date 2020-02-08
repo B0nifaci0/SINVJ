@@ -30,7 +30,7 @@ ALTA VENTA
                 @endif
                 <form id="form" method="POST" action="/ventas">
                     <center>
-                        <h3>Registrate Venta</h3>
+                        <h3>Venta</h3>
                     </center>
                     {{ csrf_field() }}
                     <div class="row mb-10">
@@ -146,6 +146,22 @@ ALTA VENTA
                               <td><strong id="total"></strong><input type="hidden" class="form-control" name="price" id="pagar"/> </td>
                             </tr>
 
+                            <tr>
+                              <td colspan="6"></td>
+                                <th>
+                                  <strong>Importe</strong>
+                                </th>
+                              <td><strong id="amount"></strong><input type="hidden" class="form-control" name="price" id="pagar"/> </td>
+                            </tr>
+
+                            <tr>
+                              <td colspan="6"></td>
+                                <th>
+                                  <strong>Cambio</strong>
+                                </th>
+                              <td><strong id="change"></strong><input type="hidden" class="form-control" name="price" id="pagar"/> </td>
+                            </tr>
+
                         <!-- END Tabla-->
                     </div>
                     <br>
@@ -208,16 +224,20 @@ ALTA VENTA
                                                     <div class="form-group form-material col-md-3">
                                                         <label class="form-control-label"
                                                             for="inputBasicFirstName">Recibo:</label>
-                                                        <input type="text" class="form-control" name="" id="cashIncome"
+                                                        <input type="text" class="form-control income" name="" id="cashIncome"
                                                             required="required" placeholder="$" required />
                                                     </div>
                                                     <!-- END Input-->
                                                     <!-- Input para mostar el total a pagar-->
                                                     <div class="form-group form-material col-md-3">
-                                                        <label class="form-control-label" for="inputBasicLastName">Total
-                                                            a Pagar:</label>
-                                                        <input type="text" class="form-control" name="price"
-                                                            id="totalCash" required="required" readonly="readonly" />
+                                                        <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
+                                                        <p>
+                                                            $ <label id="totalCash"></label>
+                                                            <br>
+                                                            Restan: <label id="cashRest"></label>                                                        
+                                                        </p>
+                                                        <!-- <input type="text" class="form-control" name="price"
+                                                            id="totalCash" required="required" readonly="readonly" /> -->
                                                     </div>
                                                     <!-- END Input-->
                                                     <!-- Input para mostar cambio-->
@@ -234,23 +254,7 @@ ALTA VENTA
                                             <!-- END CONTADO-->
 
                                             <!-- APARTADO-->
-                                            <!-- <div class="tab-pane" id="exampleLine2" role="tabpanel">
-                            <div class="row">
-                              <div class="form-group form-material col-md-3">
-                                <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
-                                <input type="text" class="form-control" name="" id="apartado" required="required" placeholder="$"required />
-                              </div>
-                              <div class="form-group form-material col-md-3">
-                                <label class="form-control-label" for="inputBasicFirstName">Restan</label>
-                                <input type="text" class="form-control" name="parcial" id="falta" required="required" placeholder="$"required />
-                              </div>
-                              <div class="form-group form-material col-md-3">
-                                <label class="form-control-label">Total a Pagar:</label>
-                                <input type="text" class="form-control" id="totalpayment"  required="required" readonly="readonly" />
-                              </div>
-                            </div>
-                            <button class="btn btn-success btn-lg btn-block" type="button">Continuar</button>
-                          </div> -->
+                                    
                                             <!-- END APARTADO-->
 
                                             <!-- PAGO CON TARJETA-->
@@ -259,15 +263,16 @@ ALTA VENTA
                                                     <!-- Input para ingresar cantidad a pagar-->
                                                     <div class="form-group form-material col-md-3">
                                                         <label class="form-control-label">Recibo:</label>
-                                                        <input type="text" class="form-control" id="cardIncome"
+                                                        <input type="text" class="form-control income" id="cardIncome"
                                                             placeholder="$" required="required" />
                                                     </div>
                                                     <!-- END Input-->
                                                     <!-- Input para mostar total a pagar-->
                                                     <div class="form-group form-material col-md-3">
                                                         <label class="form-control-label">Total a Pagar:</label>
-                                                        <input type="text" class="form-control" id="totalCard"
-                                                            required="required" readonly="readonly" />
+                                                        <label id="totalCard"></label>
+                                                        <!-- <input type="text" class="form-control" id="totalCard"
+                                                            required="required" readonly="readonly" /> -->
                                                     </div>
                                                     <!-- END Input-->
                                                     <!-- Input para seleccionar Imagen del ticket-->
@@ -311,6 +316,10 @@ seleccionado con sus respectivos datos-->
         var overDiscount = [];
         var overDiscountAuth = null;
         var total = 0;
+
+        var cashIncome = 0;
+        var cardIncome = 0;
+        var totalIncome = 0;
 
 
         $(function () {
@@ -364,7 +373,7 @@ seleccionado con sus respectivos datos-->
 
                 if (overDiscount.length > 0 && !overDiscountAuth) {
                     var message = `${overDiscount.length} producto${(overDiscount.length == 1) ? '' : 's'} tiene un descuento superior al permitido.
-		Ingrese la contraseña de seguridad para continuar`;
+		                Ingrese la contraseña de seguridad para continuar`;
                     Swal.fire({
                         title: message,
                         input: 'password',
@@ -437,14 +446,36 @@ seleccionado con sus respectivos datos-->
             });
 
             $(document).ready(function(){
-        $('#ventas').DataTable({
-            retrieve: true,
-            //  responsive: true,
-            //paging: false,
-            //searching: false
-        });
+                $('#ventas').DataTable({
+                    retrieve: true,
+                    //  responsive: true,
+                    //paging: false,
+                    //searching: false
+                });
 
-    });
+                $('.income').on('input', function() {
+                    let id = $(this).attr('id');
+                    if (id == 'cashIncome') {
+                        cashIncome = $(`#${id}`).val();
+                    } else if (id == 'cardIncome') {
+                        cardIncome = $(`#${id}`).val();
+                    }
+
+                    totalIncome = Number(cashIncome) + Number(cardIncome);
+                    
+                    rest = total - totalIncome;
+
+                    if(rest < 0)  {
+                        let toCut = $(`#${id}`).val();
+                        $(`#${id}`).val( toCut.substr(toCut.length - 1 ));
+                        return;
+                    }
+
+                    $('#cashRest').html( `$ ${rest}` );
+                    console.log("totalIncome", totalIncome);
+                })
+
+            });
 
 
 
@@ -493,11 +524,11 @@ seleccionado con sus respectivos datos-->
                 $("#total").html("$" + total);
                 //END Función//
 
-                $('#totalCash').val(total);
-                $('#pagar').val(total);
-                $('#totalCard').val(total);
-                $('#totalpayment').val(total);
-                $('#totalPay').val(total);
+                $('#pagar').val(`${total}`);
+                $('#totalCash').html(total);
+                $('#totalCard').html(total);
+                $('#totalpayment').val(`${total}`);
+                $('#totalPay').val(`${total}`);
                 // $('#vari').val(cambio);
                 $('#tabl').val(_tr);
 
@@ -559,6 +590,9 @@ seleccionado con sus respectivos datos-->
                     $("#totalPay").val(total);
                     $("#totalCash").val(total);
                     $("#totalCard").val(total);
+
+                    $("#amount").val(total);
+                    $("#change").val(total);
 
 
                     lastPrice = Number($(this).val());
