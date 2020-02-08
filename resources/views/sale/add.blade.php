@@ -138,10 +138,11 @@ ALTA VENTA
                                 </tr>
                             </tfoot>
                         </table>
-                            <tr>
+                        <table>
+                        <tr>
                               <td colspan="6"></td>
                                 <th>
-                                  <strong>Total</strong>
+                                  <strong>Total:</strong>
                                 </th>
                               <td><strong id="total"></strong><input type="hidden" class="form-control" name="price" id="pagar"/> </td>
                             </tr>
@@ -149,7 +150,7 @@ ALTA VENTA
                             <tr>
                               <td colspan="6"></td>
                                 <th>
-                                  <strong>Importe</strong>
+                                  <strong>Importe:</strong>
                                 </th>
                               <td><strong id="amount"></strong><input type="hidden" class="form-control" name="price" id="monto"/> </td>
                             </tr>
@@ -157,10 +158,11 @@ ALTA VENTA
                             <tr>
                               <td colspan="6"></td>
                                 <th>
-                                  <strong>Cambio</strong>
+                                  <strong>Cambio:</strong>
                                 </th>
                               <td><strong id="change"></strong><input type="hidden" class="form-control" name="price" id="cambio"/> </td>
                             </tr>
+                        </table>
 
                         <!-- END Tabla-->
                     </div>
@@ -200,79 +202,25 @@ ALTA VENTA
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
-                                        <h4 class="modal-title" id="exampleModalTabs">Tipo de Pago</h4>
+                                        <h4 class="modal-title" id="exampleModalTabs">Agregar pago</h4>
                                     </div>
-                                    <ul class="nav nav-tabs nav-tabs-line" role="tablist">
-                                        <li class="nav-item " role="presentation"><a class="nav-link active"
-                                                data-toggle="tab" href="#exampleLine1" aria-controls="exampleLine1"
-                                                role="tab">Contado</a>
-                                        </li>
-                                        <!-- <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleLine2"
-                            aria-controls="exampleLine2 " role="tab">Apartado</a>
-                          </li> -->
-                                        <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab"
-                                                href="#exampleLine3" aria-controls="exampleLine3" role="tab">Pago con
-                                                Tarjeta</a>
-                                        </li>
-                                    </ul>
                                     <div class="modal-body">
-                                        <div class="tab-content">
                                             <!-- CONTADO-->
-                                            <div class="tab-pane active" id="exampleLine1" role="tabpanel">
-                                                <div class="row">
-                                                    <!-- Input para Ingresar cantidad a pagar-->
-                                                    <div class="form-group form-material col-md-3">
+                                            
+                                                <div class="row mt-5">
+                                                    <div class="form-group form-material col-md-6">
                                                         <label class="form-control-label"
-                                                            for="inputBasicFirstName">Recibo:</label>
+                                                            for="inputBasicFirstName">Efectivo:</label>
                                                         <input type="text" class="form-control income" name="" id="cashIncome"
                                                             required="required" placeholder="$" required />
                                                     </div>
-                                                    <!-- END Input-->
-                                                    <!-- Input para mostar el total a pagar-->
-                                                    <div class="form-group form-material col-md-3">
-                                                        <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
-                                                        <p>
-                                                            $ <label id="totalCash"></label>
-                                                            <br>
-                                                            Restan: <label id="cashRest"></label>                                                        
-                                                        </p>
-                                                        <!-- <input type="text" class="form-control" name="price"
-                                                            id="totalCash" required="required" readonly="readonly" /> -->
-                                                    </div>
-                                                    <!-- END Input-->
-                                                    <!-- Input para mostar cambio-->
-                                                    <!-- <div class="form-group form-material col-md-3">
-                                <label class="form-control-label" for="inputBasicLastName">Tu Cambio es:</label>
-                                <input type="text" class="form-control" name="" id="cambio" required="required" />
-                              </div> -->
-                                                    <!-- END Input-->
                                                 </div>
-                                                <button type="button" name="continuar" data-dismiss="modal"
-                                                    class="btn btn-success btn-lg btn-block"
-                                                    aria-label="Close">Continuar</button>
-                                            </div>
-                                            <!-- END CONTADO-->
-
-                                            <!-- APARTADO-->
-                                    
-                                            <!-- END APARTADO-->
-
-                                            <!-- PAGO CON TARJETA-->
-                                            <div class="tab-pane" id="exampleLine3" role="tabpanel">
                                                 <div class="row">
                                                     <!-- Input para ingresar cantidad a pagar-->
-                                                    <div class="form-group form-material col-md-3">
-                                                        <label class="form-control-label">Recibo:</label>
+                                                    <div class="form-group form-material col-md-6">
+                                                        <label class="form-control-label">Tarjeta:</label>
                                                         <input type="text" class="form-control income" id="cardIncome"
                                                             placeholder="$" required="required" />
-                                                    </div>
-                                                    <!-- END Input-->
-                                                    <!-- Input para mostar total a pagar-->
-                                                    <div class="form-group form-material col-md-3">
-                                                        <label class="form-control-label">Total a Pagar:</label>
-                                                        <label id="totalCard"></label>
-                                                        <!-- <input type="text" class="form-control" id="totalCard"
-                                                            required="required" readonly="readonly" /> -->
                                                     </div>
                                                     <!-- END Input-->
                                                     <!-- Input para seleccionar Imagen del ticket-->
@@ -284,13 +232,19 @@ ALTA VENTA
                                                     </div>
                                                     <!-- END Input-->
                                                 </div>
+                                                <div class="row">
+                                                <div class="form-group form-material col-md-6">
+                                                        <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
+                                                            $ <label id="totalCash"></label>
+                                                            <br>
+                                                            <strong>Restan:</strong> <label class="cashRest"></label>
+                                                    </div>
+                                                </div>
                                                 <hr class="mb-4">
                                                 <button type="button" name="continuar" data-dismiss="modal"
                                                     class="btn btn-success btn-lg btn-block"
                                                     aria-label="Close">Continuar</button>
-                                            </div>
                                             <!-- END PAGO CON TARJETA-->
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -461,15 +415,19 @@ seleccionado con sus respectivos datos-->
 
                     totalIncome = Number(cashIncome) + Number(cardIncome);
                     
+                    $('#amount').html(`$ ${totalIncome}`)
+
                     rest = total - totalIncome;
 
                     if(rest < 0)  {
+                        $('#change').html(`$ ${rest * -1} `)
                         let toCut = $(`#${id}`).val();
-                        $(`#${id}`).val( toCut.substr(toCut.length - 1 ));
+                        //$(`#${id}`).val( toCut.substr(toCut.length - 1 ));
+                        $('.cashRest').html( `$ 0` );
                         return;
                     }
 
-                    $('#cashRest').html( `$ ${rest}` );
+                    $('.cashRest').html( `$ ${rest}` );
                     console.log("totalIncome", totalIncome);
                 })
 
@@ -519,7 +477,7 @@ seleccionado con sus respectivos datos-->
                 //Hacer suma de productos seleccionados en imprimirlos en Total//
                 $('tbody').append(_tr);
                 total += Number(product.price);
-                $("#total").html("$" + total);
+                $("#total").html(`$ ${total}`);
                 //END Función//
 
                 $('#pagar').val(`${total}`);
@@ -586,7 +544,7 @@ seleccionado con sus respectivos datos-->
 
 
                     console.log(total);
-                    $("#total").html("$" + total);
+                    $("#total").html(`$ ${total}`);
                     $("#totalPay").val(total);
 
                     $('#totalCash').html(total);
@@ -625,7 +583,7 @@ seleccionado con sus respectivos datos-->
 
                         $(`#raw-${product.id}`).remove();
 
-                        $("#total").html("$" + total);
+                        $("#total").html(`$ ${total}`);
                         if ($(row).hasClass('child')) {
                                 table.row($(row).prev('tr')).remove().draw();
                             }

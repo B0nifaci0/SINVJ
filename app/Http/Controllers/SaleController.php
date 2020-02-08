@@ -250,7 +250,7 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request;
+        // return $request;
         $user = Auth::user();
         $folio = Sale::where('branch_id', $user->branch_id)->select('id')->get()->count();
         $folio++;

@@ -237,7 +237,9 @@ TRASFERENCIAS
                       <span class="text-center badge badge-success">Aceptado</span>
                     @elseif($transfer->status_product === 0)
                       <span class="text-center badge badge-warning">Rechazado</span>
-                    @else
+                    @elseif($transfer->status_product === 3)
+                      <span class="text-center badge badge-warning">Devuelto</span>
+                    @else 
                       <span class="text-center badge badge-primary">Pendiente</span>
                     @endif
                   </td>
@@ -252,11 +254,13 @@ TRASFERENCIAS
                       @endif
                     @else
                       @if(!$transfer->paid_at)
-                        @if(Auth::user()->id == $transfer->user_id)
+                        @if(Auth::user()->id == $transfer->user_id  && $transfer->status_product === 1)
                           <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
                           <button class="btn btn-danger give-back" alt="{{ $transfer->id }}">Devolver</button>
+                        @elseif($transfer->status_product === 3)
+                          <span class="text-center badge badge-warning">Devuelto</span>
                         @else
-                        <span class="text-center badge badge-warning">Por pagar</span>
+                          <span class="text-center badge badge-warning">Por pagar</span>
                         @endif
                       @else
                         <span class="text-center badge badge-success">Pagado</span>
@@ -348,6 +352,7 @@ $(document).ready(function(){
 
     $('#transfer').on('click', '.give-back', function(){
       let id = $(this).attr("alt");
+      console.log(id)
       Swal.fire({
         title: 'Confirmación',
         text: "¿Se ha devuelto este producto?",
