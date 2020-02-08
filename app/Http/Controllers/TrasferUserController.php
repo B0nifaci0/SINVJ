@@ -21,10 +21,13 @@ class TrasferUserController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
 
         // $trans = TransferProduct::all();
         $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
             return $u->id;
+
+        //return $usersIds;
         });
         $trans1 = TransferProduct::whereIn('user_id', $usersIds)
             ->with('user')->with('branch')->with('product')
@@ -34,7 +37,29 @@ class TrasferUserController extends Controller
             ->with('user')->with('branch')->with('product')
             ->get();
 
+        if (Auth::user()->type_user == User::CO) {
+            redirect('/traspasos');
+        } else {
+            redirect('/traspasosAA');
+        }
+
         $trans = $trans1->merge($trans2);
+        //return $trans1;
+        $trasen = TransferProduct::where('user_id', $user->id)
+        //->orWhere('last_branch_id', $user->branch->id)
+       // ->with('user')->with('branch')->with('product')
+        ->get();
+
+       // return $trasen;
+
+        $trasre = TransferProduct::Where('destination_user_id', $usersIds)
+        ->with('user')->with('branch')->with('product')
+        ->get();
+
+        //return $trasre;
+
+
+       return view('transfer/TrasferUser/index', compact('trans','trasen','trasre'));
         //return $trans;
         //return response()->json($trans);
         //$status = Auth::user()->shop->id;
@@ -49,7 +74,7 @@ class TrasferUserController extends Controller
 
         //return $transs;
 
-        return view('transfer/TrasferUser/index', compact('trans'));
+        
     }
 
     public function create()

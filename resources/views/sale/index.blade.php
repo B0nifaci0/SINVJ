@@ -56,32 +56,56 @@ LISTA DE  VENTAS
           </div>
         <div class="panel-body">
         <!-- Tabla para listar ventas-->
-          <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+
+        <div class="col-xl-12 col-md-12 col-sl">
+        <div class="example-wrap">
+          <div class="nav-tabs-horizontal" data-plugin="tabs">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab"
+                  href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">Vendidos</a></li>
+              <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
+                  aria-controls="exampleTabsTwo" role="tab">Apartados</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
+                <div class="page-content panel-body container-fluid">
+                <table id="sale_table_sold"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
               <tr>
+                <th>Clave</th>
                 <th>Nombre del cliente</th>
                 <th>Tipo</th>
                 <th>Teléfono</th>
                 <th>Productos</th>
-                <th>Total a pagar</th>
+                <th>Total</th>
                 <th>Fecha</th>
-                <th>Reporte</th>
+                @if(Auth::user()->type_user == 1 )
+                <th>Sucursal</th>
+                @endif
+                <th>Estatus</th>
+                <th>Opciones</th>
               </tr>
             </thead>
             <tfoot>
               <tr>
+                <th>Clave</th>
                 <th>Nombre del cliente</th>
                 <th>Tipo</th>
                 <th>Teléfono</th>
                 <th>Productos</th>
-                <th>Total a pagar</th>
+                <th>Total</th>
                 <th>Fecha</th>
-                <th>Reporte</th>
+                @if(Auth::user()->type_user == 1 )
+                <th>Sucursal</th>
+                @endif
+                <th>Estatus</th>
+                <th>Opciones</th>
               </tr>
             </tfoot>
             <tbody>
-                @foreach ($sales as $sale)
+                @foreach ($sold as $sale)
                   <tr id = "row{{ $sale->id }}">
+                    <td>{{$sale->folio}}</td>
                     <td>
                       @if($sale->client)
                       <a href="/mayoristas/{{$sale->client->id}}">
@@ -96,10 +120,14 @@ LISTA DE  VENTAS
                     <td>{{ $sale->items->count() }}</td>
                     <td>$ {{ $sale->total }}</td>
                     <td>{{ $sale->created_at->format('m-d-Y')}}</td>
+                    @if(Auth::user()->type_user == 1 )
+                    <td>{{ $sale->sucursal }}</td>
+                    @endif
+                    <td><span class="text-center badge badge-success">Liquidado</span></td>
                     <td>
                       <a href="/ventas/{{ $sale->id }}"><button type="button"
                           class="btn btn-icon btn-primary waves-effect waves-light"
-                          data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                          data-toggle="tooltip" data-original-title="Detalle de la Venta">
                           <i class="icon fa-search" aria-hidden="true"></i></button>
                       </a>
                       <a href="ventapdf/{{$sale->id}}"><button type="button"
@@ -112,6 +140,99 @@ LISTA DE  VENTAS
                 @endforeach
             </tbody>
           </table>
+                  <!-- END Table-->
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-content">
+            <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+              <div class="page-content panel-body container-fluid">
+                <!-- Tabla para listar productos-->
+                <table id="sale_table_apart"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <thead>
+              <tr>
+                <th>Clave</th>
+                <th>Nombre del cliente</th>
+                <th>Tipo</th>
+                <th>Teléfono</th>
+                <th>Productos</th>
+                <th>Total a pagar</th>
+                <th>Total Pagado</th>
+                <th>Fecha</th>
+                @if(Auth::user()->type_user == 1 )
+                <th>Sucursal</th>
+                @endif
+                <th>Estatus</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>Clave</th>
+                <th>Nombre del cliente</th>
+                <th>Tipo</th>
+                <th>Teléfono</th>
+                <th>Productos</th>
+                <th>Total a pagar</th>
+                <th>Total Pagado</th>
+                <th>Fecha</th>
+                @if(Auth::user()->type_user == 1 )
+                <th>Sucursal</th>
+                @endif
+                <th>Estatus</th>
+                <th>Opciones</th>
+              </tr>
+            </tfoot>
+            <tbody>
+                @foreach ($apart as $sale)
+                  <tr id = "row{{ $sale->id }}">
+                    <td>{{$sale->folio}}</td>
+                    <td>
+                      @if($sale->client)
+                      <a href="/mayoristas/{{$sale->client->id}}">
+                      {{ "{$sale->client->name} {$sale->client->first_lastname} {$sale->client->second_lastname}" }}
+                      </a>
+                      @else
+                        {{$sale->customer_name}}
+                      @endif
+                    </td>
+                    <td>{{ ($sale->client) ? 'Mayorista' : 'Publico' }}</td>
+                    <td>{{ $sale->telephone }}</td>
+                    <td>{{ $sale->items->count() }}</td>
+                    <td>$ {{ $sale->total }}</td>
+                    <td>$ {{ $sale->payments }}</td>
+                    <td>{{ $sale->created_at->format('m-d-Y')}}</td>
+                    @if(Auth::user()->type_user == 1 )
+                    <td>{{ $sale->sucursal }}</td>
+                    @endif
+                    <td><span class="text-center badge badge-warning">No Liquidado</span></td>
+                    <td>
+                      <a href="/ventas/{{ $sale->id }}"><button type="button"
+                          class="btn btn-icon btn-primary waves-effect waves-light"
+                          data-toggle="tooltip" data-original-title="Detalle de la Venta">
+                          <i class="icon fa-search" aria-hidden="true"></i></button>
+                      </a>
+                      <a href="ventapdf/{{$sale->id}}"><button type="button"
+                        class="btn btn-icon btn-danger waves-effect waves-light"
+                        data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                      </a>
+                    </td>
+                  </tr>
+                @endforeach
+            </tbody>
+          </table>
+                <!-- END Table-->
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+            
           <!-- END Tabla-->
         </div>
       </div>
@@ -122,6 +243,32 @@ LISTA DE  VENTAS
 
 @section('footer')
 @endsection
+
+@section('barcode-product')
+  <script type="text/javascript">
+  //inicializa la tabla para resposnive
+    $(document).ready(function(){
+        $('#sale_table_sold').DataTable({
+            retrieve: true,
+            //  responsive: true,
+            //paging: false,
+            //searching: false
+        });
+        $('#sale_table_apart').DataTable({
+            retrieve: true,
+            //responsive: true,
+            //paging: false,
+            //searching: false
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+              .columns.adjust()
+              .responsive.recalc();
+        });    
+    });
+    </script>
+  @endsection
 
 @section('delete-ventas')
 <script type="text/javascript">

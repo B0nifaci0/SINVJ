@@ -30,6 +30,26 @@ class TranferProductsController extends Controller
        {
         $user = Auth::user();
 
+        $trasen = TransferProduct::where('user_id', $user->id)
+        ->get();
+
+        //return $trasen;
+        $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
+          return $u->id;
+        });
+
+        $trasre = TransferProduct::Where('user_id', $usersIds)
+        ->with('user')->with('branch')->with('product')
+        ->get();
+
+        //return $trasre;
+        
+        if (Auth::user()->type_user == User::CO) {
+             redirect('/traspasos');
+        } else {
+            redirect('/traspasosAA');
+        }
+
         $trans = TransferProduct::where('user_id', $user->id)
           ->orWhere('destination_user_id', $user->id)
           ->orWhere('last_branch_id', $user->branch->id)
@@ -49,14 +69,20 @@ class TranferProductsController extends Controller
         //return $transs;
         $branches=Branch::all();
         // return view('transfer/TrasferUser/index', compact('branches','trans','user'));
-        return view('transfer/index', compact('branches','user','trans'));
+        return view('transfer/index', compact('branches','user','trans','trasen','trasre'));
 
        }
        public function indexAA()
        {
+         if (Auth::user()->type_user == User::CO) {
+             redirect('/traspasos');
+        } else {
+            redirect('/traspasosAA');
+        }
 
         $user = Auth::user();
         $trans = TransferProduct::all();
+        //return $trans;
 
           // return ['new_branch_id', $user->branch_id];
          //return response()->json($trans);
@@ -143,9 +169,13 @@ class TranferProductsController extends Controller
     }
 
   public function answerTransferRequest(Request $request) {
+    //return $request;
     $user = Auth::user();
     $transfer = TransferProduct::find($request->transfer_id);
+    //return $transfer;
     $product = Product::find($transfer->product_id);
+
+    
 
     if($request->answer === null) {
       $transfer->delete();
@@ -166,7 +196,7 @@ class TranferProductsController extends Controller
       return redirect('/traspasos');
     }
   }
-
+ 
   public function payTransfer(Request $request) {
     $transfer = TransferProduct::find($request->transfer_id);
     $transfer->paid_at = Carbon::now()->format('Y-m-d');

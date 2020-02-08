@@ -18,13 +18,14 @@ class admin
      */
     public function handle($request, Closure $next)
     {
-    if (Auth::user()->type_user == USER::CO) {
-        return redirect('traspasos');
 
-   }else{
-        //return ('Primero debes configurar tu linea!');
-        redirect('traspasosadmin');
+    if (Auth::user()->type_user == User::CO) {
+        redirect('/traspasos');
+    } else {
+        redirect('/traspasosAA');
     }
         return $next($request);
+
     }
+
 }
