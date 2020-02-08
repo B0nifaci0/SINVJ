@@ -50,6 +50,11 @@ class PaymentsController extends Controller
             'amount' => $request->amount,
             'type' => $request->type,
         ]);
+
+        $sale = Sale::find($request->sale_id);
+        $sale->paid_out += $request->amount;
+        $sale->save(); 
+
         return back();
     }
 
