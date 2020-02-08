@@ -35,7 +35,7 @@ EDITAR SUCURSALES
         <!-- END Input-->
         <!-- Input Para editar Representante-->
         <div class="form-group form-material col-md-6">
-          <label class="form-control-label">Representante Legal:(Opcional)</label>
+          <label class="form-control-label">Representante Legal:</label>
           <input type="text" class="form-control" value="{{$branch->name_legal_re}}" name="name_legal_re"> 
         </div>
         <!-- END Input-->
