@@ -60,7 +60,7 @@
           
     <p align="right">Hora: {{$hour}}</p>
   
-    <h1 align="center">Reporte Gastos @foreach($branches as $branch){{$branch->name}} @endforeach </h1>
+    <h1 align="left">Reporte Gastos sucursal: @foreach($branches as $branch){{$branch->name}} @endforeach </h1>
     <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
@@ -80,17 +80,14 @@
                     <td>{{$expense->created_at}}</td>
                     <td>{{$expense->price}}</td>
                     </tr>
-                  </tbody><br>
+                  
               @endforeach
-              <br>
-              <br>
-              <br>
+              </tbody>
               <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
                             <th scope="col">Total De Gastos</th>
                             <th scope="col">${{$totals}}</th>
-
                     </tr>
                 </thead>
             </table>

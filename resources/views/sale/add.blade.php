@@ -213,7 +213,7 @@ ALTA VENTA
                                                             for="inputBasicFirstName">Efectivo:</label>
                                                         <input type="text" class="form-control income" name="" id="cashIncome"
                                                             required="required" placeholder="$" required />
-                                                    </div>
+                                                    </div> 
                                                 </div>
                                                 <div class="row">
                                                     <!-- Input para ingresar cantidad a pagar-->
@@ -407,6 +407,9 @@ seleccionado con sus respectivos datos-->
 
                 $('.income').on('input', function() {
                     let id = $(this).attr('id');
+                    let val = $(this).val();
+                    $(`#${id}`).val( val.replace(/\s+/, "") );
+                    
                     if (id == 'cashIncome') {
                         cashIncome = $(`#${id}`).val();
                     } else if (id == 'cardIncome') {
