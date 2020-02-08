@@ -205,16 +205,16 @@ class TranferProductsController extends Controller
   }
 
   public function giveBack(Request $request) {
-	$transfer = TransferProduct::find($request->transfer_id);
+    $transfer = TransferProduct::find($request->transfer_id);
 
-	$product = Product::where('id', $transfer->product_id)->first();
-  $product->branch_id = $transfer->last_branch_id;
-  $product->status_id = 2;
-	$product->save();
-  
-  $transfer->status_product = 3;
-  $transfer->save();;
-  // $transfer->delete();
+    $product = Product::where('id', $transfer->product_id)->first();
+    $product->branch_id = $transfer->last_branch_id;
+    $product->status_id = 2;
+    $product->save();
+    
+    $transfer->status_product = 3;
+    $transfer->save();;
+    // $transfer->delete();
 
     return back();
   }

@@ -30,14 +30,14 @@ ALTA VENTA
                 @endif
                 <form id="form" method="POST" action="/ventas">
                     <center>
-                        <h3>Venta</h3>
+                        <h3>Registrate Venta</h3>
                     </center>
                     {{ csrf_field() }}
                     <div class="row mb-10">
                         <div class="col-md-3">
                             <label for="user-type">Tipo de venta</label>
                             <select name="user_type" id="user-type" class="form-control">
-                                <option value="1">Venta Publico</option>
+                                <option value="1">Venta al publico</option>
                                 <option value="2">Venta a mayorista</option>
                             </select>
                         </div>
@@ -50,7 +50,7 @@ ALTA VENTA
                                     <div class="form-group form-material">
                                         <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente:
                                         </label>
-                                        <input type="text" class="form-control"  name="customer_name"
+                                        <input type="text" class="form-control" required="required" name="customer_name"
                                             value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
                                     </div>
                                     <!-- END Input-->
@@ -375,7 +375,7 @@ seleccionado con sus respectivos datos-->
                         confirmButtonText: 'Aceptar',
                         showLoaderOnConfirm: true,
                         preConfirm: (password) => {
-                            return fetch('/check-user', {
+                            return fetch(`/check-password`, {
                                 method: 'POST',
                                 body: JSON.stringify({ password: password }),
                                 headers: {
@@ -526,7 +526,7 @@ seleccionado con sus respectivos datos-->
 
                 // $('#ventas').on('change', '.finalPrice', function(){
                     // // $('.finalPrice').on('change', function () {
-                //     console.log("cahnge test")
+                //     console.log("cahnge test")   
                 //     var productId = $(this).attr('alt');
                 //     product = products.filter(p => p.id == productId)[0];
 
@@ -540,8 +540,7 @@ seleccionado con sus respectivos datos-->
                     var productId = $(this).attr('alt');
                     product = products.filter(p => p.id == productId)[0];
 
-                    currentPrice = Number($(`#finalPrice${product.id}`).val());
-
+                    currentPrice = Number($(this).val());
 
                     if (lastPrice > currentPrice) {
                         console.log(`Entra uno por que ${lastPrice} > ${currentPrice}`)
