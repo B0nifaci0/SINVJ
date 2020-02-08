@@ -54,7 +54,9 @@ class TranferProductsController extends Controller
           ->orWhere('destination_user_id', $user->id)
           ->orWhere('last_branch_id', $user->branch->id)
           ->orWhere('new_branch_id', $user->branch->id)
-          ->with('user')->with('branch')->with('product')->get();
+          ->with('user')->with('branch')->with('product')
+          ->get();
+        
          //return response()->json($trans);
          //$status = Auth::user()->shop->id;
         //$statuses = Shop::find($status)->statuss()->get();
@@ -206,16 +208,16 @@ class TranferProductsController extends Controller
 
   public function giveBack(Request $request) {
     $transfer = TransferProduct::find($request->transfer_id);
-
     $product = Product::where('id', $transfer->product_id)->first();
     $product->branch_id = $transfer->last_branch_id;
     $product->status_id = 2;
-    $product->save();
+    $product->save(); 
     
     $transfer->status_product = 3;
-    $transfer->save();;
+    $transfer->save();
     // $transfer->delete();
-
+    
+    // return $transfer;
     return back();
   }
 

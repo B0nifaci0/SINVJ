@@ -30,7 +30,7 @@ ALTA VENTA
                 @endif
                 <form id="form" method="POST" action="/ventas">
                     <center>
-                        <h3>Registrate Venta</h3>
+                        <h3>Venta</h3>
                     </center>
                     {{ csrf_field() }}
                     <div class="row mb-10">
@@ -138,13 +138,31 @@ ALTA VENTA
                                 </tr>
                             </tfoot>
                         </table>
-                            <tr>
+                        <table>
+                        <tr>
                               <td colspan="6"></td>
                                 <th>
-                                  <strong>Total</strong>
+                                  <strong>Total:</strong>
                                 </th>
                               <td><strong id="total"></strong><input type="hidden" class="form-control" name="price" id="pagar"/> </td>
                             </tr>
+
+                            <tr>
+                              <td colspan="6"></td>
+                                <th>
+                                  <strong>Importe:</strong>
+                                </th>
+                              <td><strong id="amount"></strong><input type="hidden" class="form-control" name="income" id="monto"/> </td>
+                            </tr>
+
+                            <tr>
+                              <td colspan="6"></td>
+                                <th>
+                                  <strong>Cambio:</strong>
+                                </th>
+                              <td><strong id="change"></strong><input type="hidden" class="form-control" name="change" id="cambio"/> </td>
+                            </tr>
+                        </table>
 
                         <!-- END Tabla-->
                     </div>
@@ -184,90 +202,25 @@ ALTA VENTA
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
-                                        <h4 class="modal-title" id="exampleModalTabs">Tipo de Pago</h4>
+                                        <h4 class="modal-title" id="exampleModalTabs">Agregar pago</h4>
                                     </div>
-                                    <ul class="nav nav-tabs nav-tabs-line" role="tablist">
-                                        <li class="nav-item " role="presentation"><a class="nav-link active"
-                                                data-toggle="tab" href="#exampleLine1" aria-controls="exampleLine1"
-                                                role="tab">Contado</a>
-                                        </li>
-                                        <!-- <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleLine2"
-                            aria-controls="exampleLine2 " role="tab">Apartado</a>
-                          </li> -->
-                                        <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab"
-                                                href="#exampleLine3" aria-controls="exampleLine3" role="tab">Pago con
-                                                Tarjeta</a>
-                                        </li>
-                                    </ul>
                                     <div class="modal-body">
-                                        <div class="tab-content">
                                             <!-- CONTADO-->
-                                            <div class="tab-pane active" id="exampleLine1" role="tabpanel">
-                                                <div class="row">
-                                                    <!-- Input para Ingresar cantidad a pagar-->
-                                                    <div class="form-group form-material col-md-3">
+                                            
+                                                <div class="row mt-5">
+                                                    <div class="form-group form-material col-md-6">
                                                         <label class="form-control-label"
-                                                            for="inputBasicFirstName">Recibo:</label>
-                                                        <input type="text" class="form-control" name="" id="cashIncome"
+                                                            for="inputBasicFirstName">Efectivo:</label>
+                                                        <input type="text" class="form-control income" name="" id="cashIncome"
                                                             required="required" placeholder="$" required />
                                                     </div>
-                                                    <!-- END Input-->
-                                                    <!-- Input para mostar el total a pagar-->
-                                                    <div class="form-group form-material col-md-3">
-                                                        <label class="form-control-label" for="inputBasicLastName">Total
-                                                            a Pagar:</label>
-                                                        <input type="text" class="form-control" name="price"
-                                                            id="totalCash" required="required" readonly="readonly" />
-                                                    </div>
-                                                    <!-- END Input-->
-                                                    <!-- Input para mostar cambio-->
-                                                    <!-- <div class="form-group form-material col-md-3">
-                                <label class="form-control-label" for="inputBasicLastName">Tu Cambio es:</label>
-                                <input type="text" class="form-control" name="" id="cambio" required="required" />
-                              </div> -->
-                                                    <!-- END Input-->
                                                 </div>
-                                                <button type="button" name="continuar" data-dismiss="modal"
-                                                    class="btn btn-success btn-lg btn-block"
-                                                    aria-label="Close">Continuar</button>
-                                            </div>
-                                            <!-- END CONTADO-->
-
-                                            <!-- APARTADO-->
-                                            <!-- <div class="tab-pane" id="exampleLine2" role="tabpanel">
-                            <div class="row">
-                              <div class="form-group form-material col-md-3">
-                                <label class="form-control-label" for="inputBasicFirstName">Recibo:</label>
-                                <input type="text" class="form-control" name="" id="apartado" required="required" placeholder="$"required />
-                              </div>
-                              <div class="form-group form-material col-md-3">
-                                <label class="form-control-label" for="inputBasicFirstName">Restan</label>
-                                <input type="text" class="form-control" name="parcial" id="falta" required="required" placeholder="$"required />
-                              </div>
-                              <div class="form-group form-material col-md-3">
-                                <label class="form-control-label">Total a Pagar:</label>
-                                <input type="text" class="form-control" id="totalpayment"  required="required" readonly="readonly" />
-                              </div>
-                            </div>
-                            <button class="btn btn-success btn-lg btn-block" type="button">Continuar</button>
-                          </div> -->
-                                            <!-- END APARTADO-->
-
-                                            <!-- PAGO CON TARJETA-->
-                                            <div class="tab-pane" id="exampleLine3" role="tabpanel">
                                                 <div class="row">
                                                     <!-- Input para ingresar cantidad a pagar-->
-                                                    <div class="form-group form-material col-md-3">
-                                                        <label class="form-control-label">Recibo:</label>
-                                                        <input type="text" class="form-control" id="cardIncome"
+                                                    <div class="form-group form-material col-md-6">
+                                                        <label class="form-control-label">Tarjeta:</label>
+                                                        <input type="text" class="form-control income" id="cardIncome"
                                                             placeholder="$" required="required" />
-                                                    </div>
-                                                    <!-- END Input-->
-                                                    <!-- Input para mostar total a pagar-->
-                                                    <div class="form-group form-material col-md-3">
-                                                        <label class="form-control-label">Total a Pagar:</label>
-                                                        <input type="text" class="form-control" id="totalCard"
-                                                            required="required" readonly="readonly" />
                                                     </div>
                                                     <!-- END Input-->
                                                     <!-- Input para seleccionar Imagen del ticket-->
@@ -279,13 +232,19 @@ ALTA VENTA
                                                     </div>
                                                     <!-- END Input-->
                                                 </div>
+                                                <div class="row">
+                                                <div class="form-group form-material col-md-6">
+                                                        <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
+                                                            $ <label id="totalCash"></label>
+                                                            <br>
+                                                            <strong>Restan:</strong> <label class="cashRest"></label>
+                                                    </div>
+                                                </div>
                                                 <hr class="mb-4">
                                                 <button type="button" name="continuar" data-dismiss="modal"
                                                     class="btn btn-success btn-lg btn-block"
                                                     aria-label="Close">Continuar</button>
-                                            </div>
                                             <!-- END PAGO CON TARJETA-->
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -311,6 +270,10 @@ seleccionado con sus respectivos datos-->
         var overDiscount = [];
         var overDiscountAuth = null;
         var total = 0;
+
+        var cashIncome = 0;
+        var cardIncome = 0;
+        var totalIncome = 0;
 
 
         $(function () {
@@ -364,7 +327,7 @@ seleccionado con sus respectivos datos-->
 
                 if (overDiscount.length > 0 && !overDiscountAuth) {
                     var message = `${overDiscount.length} producto${(overDiscount.length == 1) ? '' : 's'} tiene un descuento superior al permitido.
-		Ingrese la contraseña de seguridad para continuar`;
+		                Ingrese la contraseña de seguridad para continuar`;
                     Swal.fire({
                         title: message,
                         input: 'password',
@@ -429,22 +392,48 @@ seleccionado con sus respectivos datos-->
                 let cardPayment = $('#cardIncome').val();
                 $('#cashPayment').val(cashPayment);
                 $('#cardPayment').val(cardPayment);
-                console.log($('#productsList').val());
+                console.log("productsList", $('#productsList').val());
 
                 $('#form').submit();
-                console.log("llega");
-
             });
 
             $(document).ready(function(){
-        $('#ventas').DataTable({
-            retrieve: true,
-            //  responsive: true,
-            //paging: false,
-            //searching: false
-        });
+                $('#ventas').DataTable({
+                    retrieve: true,
+                    //  responsive: true,
+                    //paging: false,
+                    //searching: false
+                });
 
-    });
+                $('.income').on('input', function() {
+                    let id = $(this).attr('id');
+                    if (id == 'cashIncome') {
+                        cashIncome = $(`#${id}`).val();
+                    } else if (id == 'cardIncome') {
+                        cardIncome = $(`#${id}`).val();
+                    }
+
+                    totalIncome = Number(cashIncome) + Number(cardIncome);
+                    
+                    $('#amount').html(`$ ${totalIncome}`)
+                    $('#monto').val(totalIncome);
+
+                    rest = total - totalIncome;
+
+                    if(rest < 0)  {
+                        $('#change').html(`$ ${rest * -1} `)
+                        $('#cambio').val(rest * -1);
+                        let toCut = $(`#${id}`).val();
+                        //$(`#${id}`).val( toCut.substr(toCut.length - 1 ));
+                        $('.cashRest').html( `$ 0` );
+                        return;
+                    }
+                    $('#cambio').val(0);
+                    $('.cashRest').html( `$ ${rest}` );
+                    console.log("totalIncome", totalIncome);
+                })
+
+            });
 
 
 
@@ -490,14 +479,14 @@ seleccionado con sus respectivos datos-->
                 //Hacer suma de productos seleccionados en imprimirlos en Total//
                 $('tbody').append(_tr);
                 total += Number(product.price);
-                $("#total").html("$" + total);
+                $("#total").html(`$ ${total}`);
                 //END Función//
 
-                $('#totalCash').val(total);
-                $('#pagar').val(total);
-                $('#totalCard').val(total);
-                $('#totalpayment').val(total);
-                $('#totalPay').val(total);
+                $('#pagar').val(`${total}`);
+                $('#totalCash').html(total);
+                $('#totalCard').html(total);
+                $('#totalpayment').val(`${total}`);
+                $('#totalPay').val(`${total}`);
                 // $('#vari').val(cambio);
                 $('#tabl').val(_tr);
 
@@ -521,7 +510,6 @@ seleccionado con sus respectivos datos-->
 
                     lastPrice = Number($(this).val());
                     console.log("entra focusin", lastPrice)
-
                 });
 
                 // $('#ventas').on('change', '.finalPrice', function(){
@@ -535,12 +523,15 @@ seleccionado con sus respectivos datos-->
                 // });
 
                 $('#ventas').on('input', '.finalPrice', function() {
-                    // $('.finalPrice').on('input', function () {
+
                     console.log("=================== Enta el evento Input ===================")
                     var productId = $(this).attr('alt');
                     product = products.filter(p => p.id == productId)[0];
 
                     currentPrice = Number($(this).val());
+                    
+                    // IMPORTANTE Asignarl el precio actual al input oculto
+                    $(`#finalPrice${product.id}`).val(currentPrice);
 
                     if (lastPrice > currentPrice) {
                         console.log(`Entra uno por que ${lastPrice} > ${currentPrice}`)
@@ -555,10 +546,14 @@ seleccionado con sus respectivos datos-->
 
 
                     console.log(total);
-                    $("#total").html("$" + total);
+                    $("#total").html(`$ ${total}`);
                     $("#totalPay").val(total);
-                    $("#totalCash").val(total);
-                    $("#totalCard").val(total);
+
+                    $('#totalCash').html(total);
+                    $('#totalCard').html(total);
+
+                    $("#amount").val(total);
+                    $("#change").val(total);
 
 
                     lastPrice = Number($(this).val());
@@ -590,7 +585,7 @@ seleccionado con sus respectivos datos-->
 
                         $(`#raw-${product.id}`).remove();
 
-                        $("#total").html("$" + total);
+                        $("#total").html(`$ ${total}`);
                         if ($(row).hasClass('child')) {
                                 table.row($(row).prev('tr')).remove().draw();
                             }

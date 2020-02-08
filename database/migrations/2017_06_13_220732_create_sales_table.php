@@ -20,7 +20,9 @@ class CreateSalesTable extends Migration
             $table->integer('branch_id')->nullable();
             $table->integer('client_id')->nullable();
             $table->integer('user_id')->nullable();
-            $table->double('total');
+            $table->double('total', 9, 2);
+            $table->double('income', 9, 2);
+            $table->double('change', 9, 2);
             $table->integer('folio');
             $table->double('paid_out');
             $table->softDeletes();
