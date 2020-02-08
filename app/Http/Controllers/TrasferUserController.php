@@ -37,6 +37,8 @@ class TrasferUserController extends Controller
             ->with('user')->with('branch')->with('product')
             ->get();
 
+        //return $trans2;
+
         if (Auth::user()->type_user == User::CO) {
             redirect('/traspasos');
         } else {
