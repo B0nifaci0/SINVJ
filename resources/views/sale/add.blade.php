@@ -151,7 +151,7 @@ ALTA VENTA
                                 <th>
                                   <strong>Importe</strong>
                                 </th>
-                              <td><strong id="amount"></strong><input type="hidden" class="form-control" name="price" id="pagar"/> </td>
+                              <td><strong id="amount"></strong><input type="hidden" class="form-control" name="price" id="monto"/> </td>
                             </tr>
 
                             <tr>
@@ -159,7 +159,7 @@ ALTA VENTA
                                 <th>
                                   <strong>Cambio</strong>
                                 </th>
-                              <td><strong id="change"></strong><input type="hidden" class="form-control" name="price" id="pagar"/> </td>
+                              <td><strong id="change"></strong><input type="hidden" class="form-control" name="price" id="cambio"/> </td>
                             </tr>
 
                         <!-- END Tabla-->
@@ -438,11 +438,9 @@ seleccionado con sus respectivos datos-->
                 let cardPayment = $('#cardIncome').val();
                 $('#cashPayment').val(cashPayment);
                 $('#cardPayment').val(cardPayment);
-                console.log($('#productsList').val());
+                console.log("productsList", $('#productsList').val());
 
                 $('#form').submit();
-                console.log("llega");
-
             });
 
             $(document).ready(function(){
@@ -552,7 +550,6 @@ seleccionado con sus respectivos datos-->
 
                     lastPrice = Number($(this).val());
                     console.log("entra focusin", lastPrice)
-
                 });
 
                 // $('#ventas').on('change', '.finalPrice', function(){
@@ -566,12 +563,15 @@ seleccionado con sus respectivos datos-->
                 // });
 
                 $('#ventas').on('input', '.finalPrice', function() {
-                    // $('.finalPrice').on('input', function () {
+
                     console.log("=================== Enta el evento Input ===================")
                     var productId = $(this).attr('alt');
                     product = products.filter(p => p.id == productId)[0];
 
                     currentPrice = Number($(this).val());
+                    
+                    // IMPORTANTE Asignarl el precio actual al input oculto
+                    $(`#finalPrice${product.id}`).val(currentPrice);
 
                     if (lastPrice > currentPrice) {
                         console.log(`Entra uno por que ${lastPrice} > ${currentPrice}`)
@@ -588,8 +588,9 @@ seleccionado con sus respectivos datos-->
                     console.log(total);
                     $("#total").html("$" + total);
                     $("#totalPay").val(total);
-                    $("#totalCash").val(total);
-                    $("#totalCard").val(total);
+
+                    $('#totalCash').html(total);
+                    $('#totalCard').html(total);
 
                     $("#amount").val(total);
                     $("#change").val(total);
