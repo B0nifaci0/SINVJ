@@ -26,6 +26,8 @@ class Sale extends Model
         'user_id',
         'paid_out',
         'folio',
+        'change',
+        'income',
     ];
 
     public function client() {

@@ -152,7 +152,7 @@ ALTA VENTA
                                 <th>
                                   <strong>Importe:</strong>
                                 </th>
-                              <td><strong id="amount"></strong><input type="hidden" class="form-control" name="price" id="monto"/> </td>
+                              <td><strong id="amount"></strong><input type="hidden" class="form-control" name="income" id="monto"/> </td>
                             </tr>
 
                             <tr>
@@ -160,7 +160,7 @@ ALTA VENTA
                                 <th>
                                   <strong>Cambio:</strong>
                                 </th>
-                              <td><strong id="change"></strong><input type="hidden" class="form-control" name="price" id="cambio"/> </td>
+                              <td><strong id="change"></strong><input type="hidden" class="form-control" name="change" id="cambio"/> </td>
                             </tr>
                         </table>
 
@@ -416,17 +416,19 @@ seleccionado con sus respectivos datos-->
                     totalIncome = Number(cashIncome) + Number(cardIncome);
                     
                     $('#amount').html(`$ ${totalIncome}`)
+                    $('#monto').val(totalIncome);
 
                     rest = total - totalIncome;
 
                     if(rest < 0)  {
                         $('#change').html(`$ ${rest * -1} `)
+                        $('#cambio').val(rest * -1);
                         let toCut = $(`#${id}`).val();
                         //$(`#${id}`).val( toCut.substr(toCut.length - 1 ));
                         $('.cashRest').html( `$ 0` );
                         return;
                     }
-
+                    $('#cambio').val(0);
                     $('.cashRest').html( `$ ${rest}` );
                     console.log("totalIncome", totalIncome);
                 })

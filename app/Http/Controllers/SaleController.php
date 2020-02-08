@@ -59,7 +59,22 @@ class SaleController extends Controller
             ->where('sales.deleted_at', NULL)
             ->where('sales.branch_id', $user->branch_id)
             ->select('sales.*',DB::raw('SUM(partials.amount) as payments'))
-            ->groupBy('sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+            ->groupBy(
+                'sales.id',
+                'sales.customer_name',
+                'sales.total',
+                'sales.income',
+                'sales.change',
+                'sales.telephone',
+                'sales.branch_id',
+                'sales.client_id',
+                'sales.user_id',
+                'sales.paid_out',
+                'sales.deleted_at',
+                'sales.created_at',
+                'sales.updated_at',
+                'sales.folio'
+              )
             ->havingRaw('SUM(partials.amount) >= ?',[$s->total])
             ->orderBy('sales.customer_name','ASC')
             ->get();
@@ -68,7 +83,22 @@ class SaleController extends Controller
           ->where('sales.deleted_at', NULL)
           ->where('sales.branch_id', $user->branch_id)
           ->select('sales.*',DB::raw('SUM(partials.amount) as payments'))
-          ->groupBy('sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+          ->groupBy(
+              'sales.id',
+              'sales.customer_name',
+              'sales.total',
+              'sales.change',
+              'sales.income',
+              'sales.telephone',
+              'sales.branch_id',
+              'sales.client_id',
+              'sales.user_id',
+              'sales.paid_out',
+              'sales.deleted_at',
+              'sales.created_at',
+              'sales.updated_at',
+              'sales.folio'
+            )
           ->havingRaw('SUM(partials.amount) < ?',[$s->total])
           ->orderBy('sales.customer_name','ASC')
           ->get();
@@ -82,7 +112,22 @@ class SaleController extends Controller
             ->join('branches','branches.id','sales.branch_id')
             ->whereIn('sales.branch_id', $branch_ids)
             ->select('sales.*','branches.name as sucursal',DB::raw('SUM(partials.amount) as payments'))
-            ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+            ->groupBy(
+              'branches.name',
+              'sales.id',
+              'sales.customer_name',
+              'sales.total',
+              'sales.income',
+              'sales.change',
+              'sales.telephone',
+              'sales.branch_id',
+              'sales.client_id',
+              'sales.user_id',
+              'sales.paid_out',
+              'sales.deleted_at',
+              'sales.created_at',
+              'sales.updated_at',
+              'sales.folio')
             //->havingRaw('SUM(partials.amount) >= ?',[$s->total])
             ->orderBy('sales.customer_name','ASC')
             ->get();
@@ -91,7 +136,21 @@ class SaleController extends Controller
           ->join('branches','branches.id','sales.branch_id')
           ->whereIn('sales.branch_id', $branch_ids)
           ->select('branches.name as sucursal','sales.*',DB::raw('SUM(partials.amount) as payments'))
-          ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+          ->groupBy('branches.name',
+          'sales.id',
+          'sales.customer_name',
+          'sales.total',
+          'sales.income',
+          'sales.change',
+          'sales.telephone',
+          'sales.branch_id',
+          'sales.client_id',
+          'sales.user_id',
+          'sales.paid_out',
+          'sales.deleted_at',
+          'sales.created_at',
+          'sales.updated_at',
+          'sales.folio')
           //->havingRaw('SUM(partials.amount) < ?',[$s->total])
           ->orderBy('sales.customer_name','ASC')
           ->get();
@@ -107,7 +166,22 @@ class SaleController extends Controller
             ->join('branches','branches.id','sales.branch_id')
             ->whereIn('sales.branch_id', $branch_ids)
             ->select('sales.*','branches.name as sucursal',DB::raw('SUM(partials.amount) as payments'))
-            ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+            ->groupBy('branches.name',
+                'sales.id',
+                'sales.change',
+                'sales.income',
+                'sales.customer_name',
+                'sales.total',
+                'sales.telephone',
+                'sales.branch_id',
+                'sales.client_id',
+                'sales.user_id',
+                'sales.paid_out',
+                'sales.deleted_at',
+                'sales.created_at',
+                'sales.updated_at',
+                'sales.folio'
+              )
             ->havingRaw('SUM(partials.amount) >= ?',[$s->total])
             ->orderBy('sales.customer_name','ASC')
             ->get();
@@ -116,7 +190,22 @@ class SaleController extends Controller
           ->join('branches','branches.id','sales.branch_id')
           ->whereIn('sales.branch_id', $branch_ids)
           ->select('branches.name as sucursal','sales.*',DB::raw('SUM(partials.amount) as payments'))
-          ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+          ->groupBy('branches.name',
+            'sales.id',
+            'sales.change',
+            'sales.income',
+            'sales.customer_name',
+            'sales.total',
+            'sales.telephone',
+            'sales.branch_id',
+            'sales.client_id',
+            'sales.user_id',
+            'sales.paid_out',
+            'sales.deleted_at',
+            'sales.created_at',
+            'sales.updated_at',
+            'sales.folio'
+          )
           ->havingRaw('SUM(partials.amount) < ?',[$s->total])
           ->orderBy('sales.customer_name','ASC')
           ->get();
@@ -168,7 +257,23 @@ class SaleController extends Controller
           ->where('sales.deleted_at', NULL)
           ->where('sales.branch_id', $user->branch_id)
           ->select('sales.*','branches.name as sucursal',DB::raw('SUM(partials.amount) as payments'))
-          ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+          ->groupBy(
+            'branches.name',
+            'sales.id',
+            'sales.customer_name',
+            'sales.total',
+            'sales.change',
+            'sales.income',
+            'sales.telephone',
+            'sales.branch_id',
+            'sales.client_id',
+            'sales.user_id',
+            'sales.paid_out',
+            'sales.deleted_at',
+            'sales.created_at',
+            'sales.updated_at',
+            'sales.folio'
+          )
           ->havingRaw('SUM(partials.amount) >= ?',[$s->total])
           ->orderBy('sales.customer_name','ASC')
           ->get();
@@ -178,7 +283,23 @@ class SaleController extends Controller
         ->where('sales.deleted_at', NULL)
         ->where('sales.branch_id', $user->branch_id)
         ->select('branches.name as sucursal','sales.*',DB::raw('SUM(partials.amount) as payments'))
-        ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
+        ->groupBy(
+          'branches.name',
+          'sales.id',
+          'sales.customer_name',
+          'sales.total',
+          'sales.income',
+          'sales.change',
+          'sales.telephone',
+          'sales.branch_id',
+          'sales.client_id',
+          'sales.user_id',
+          'sales.paid_out',
+          'sales.deleted_at',
+          'sales.created_at',
+          'sales.updated_at',
+          'sales.folio'
+        )
         ->havingRaw('SUM(partials.amount) < ?',[$s->total])
         ->orderBy('sales.customer_name','ASC')
         ->get();
@@ -273,6 +394,8 @@ class SaleController extends Controller
             'price' => $request->price,
             'customer_name' => $request->customer_name,
             'total' => $request->total_pay,
+            'change' => $request->change,
+            'income' => $request->income,
             'user_id' => $user->id,
             'branch_id' => $user->branch_id ? $user->branch_id : null,
             'client_id' => $request->user_type == 2 ? $request->client_id : null,
