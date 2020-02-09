@@ -78,6 +78,7 @@ LISTA DE  VENTAS
                 <th>Teléfono</th>
                 <th>Productos</th>
                 <th>Total</th>
+                <th>Total Pagado</th>
                 <th>Fecha</th>
                 @if(Auth::user()->type_user == 1 )
                 <th>Sucursal</th>
@@ -94,6 +95,7 @@ LISTA DE  VENTAS
                 <th>Teléfono</th>
                 <th>Productos</th>
                 <th>Total</th>
+                <th>Total Pagado</th>
                 <th>Fecha</th>
                 @if(Auth::user()->type_user == 1 )
                 <th>Sucursal</th>
@@ -119,6 +121,7 @@ LISTA DE  VENTAS
                     <td>{{ $sale->telephone }}</td>
                     <td>{{ $sale->items->count() }}</td>
                     <td>$ {{ $sale->total }}</td>
+                    <td>$ {{ $sale->paid_out }}</td>
                     <td>{{ $sale->created_at->format('m-d-Y')}}</td>
                     @if(Auth::user()->type_user == 1 )
                     <td>{{ $sale->sucursal }}</td>
@@ -201,7 +204,7 @@ LISTA DE  VENTAS
                     <td>{{ $sale->telephone }}</td>
                     <td>{{ $sale->items->count() }}</td>
                     <td>$ {{ $sale->total }}</td>
-                    <td>$ {{ $sale->payments }}</td>
+                    <td>$ {{ $sale->paid_out }}</td>
                     <td>{{ $sale->created_at->format('m-d-Y')}}</td>
                     @if(Auth::user()->type_user == 1 )
                     <td>{{ $sale->sucursal }}</td>
