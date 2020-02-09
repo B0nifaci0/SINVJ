@@ -218,6 +218,15 @@ SUCURSAl
         }
         $('#saleForm').submit();
     })
+
+    $(document).ready(function(){
+              
+    $('#amount').on('input', function() {
+                    let id = $(this).attr('id');
+                    let val = $(this).val();
+                    $(`#${id}`).val( val.replace(/\s+/, "") );
+    })
+});
 </script>
 @endsection
 
