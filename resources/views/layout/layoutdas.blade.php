@@ -79,6 +79,21 @@
     <script>
       Breakpoints();
     </script>
+
+
+
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+      var OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "15c4dfa0-6a3b-4659-8a0e-ce7dc2e7aa09",
+        });
+        
+        OneSignal.sendTag('user_id', {{ Auth::user()->id }} );
+      });
+    </script>
+
   </head>
   <body class="animsition dashboard">
     <!--[if lt IE 8]>
