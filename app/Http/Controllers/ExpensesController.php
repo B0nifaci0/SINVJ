@@ -42,7 +42,6 @@ class ExpensesController extends Controller
             $expenses = Expense::whereIn('branch_id', $branches_ids)->get();
         }else{
             $expenses = Expense::where('branch_id', $user->branch->id)->get();
-
         }
         //return $expenses;
 
@@ -51,7 +50,7 @@ class ExpensesController extends Controller
             $expenses = $expenses->merge($shop_expenses);
         }
 
-        if ($user->type_user == User::CO) {
+        if ($user->type_user == User::CO || $user->type_user == User::SA) {
             $shop_expenses = Expense::where('branch_id', $user->branch->id)->get();
             $expenses = $expenses->merge($shop_expenses);
         }
@@ -106,7 +105,7 @@ class ExpensesController extends Controller
             } else {
                 $data['shop_id'] = $user->shop->id;
             }
-        } else if ($user->type_user == User::CO) {
+        } else {
             $data['branch_id'] = $user->branch->id;
         }
         $data['user_id'] = Auth::user()->id;
