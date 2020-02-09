@@ -64,19 +64,7 @@ TRASFERENCIAS
               </div>
             </div>
           </div>
-          <div class="col-xl-12 col-md-12 col-sl">
-        <div class="example-wrap">
-          <div class="nav-tabs-horizontal" data-plugin="tabs">
-            <ul class="nav nav-tabs" role="tablist">
-              <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab"
-                  href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">Salientes</a></li>
-              <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
-                  aria-controls="exampleTabsTwo" role="tab">Entrantes</a></li>
-            </ul>
-            
         <div class="panel-body">
-         <!--Lista de productos enviados -->
-        <div class="tab-pane" id="exampleTabsOne" role="tabpanel">
           <!-- Tabla para Listar Traspasos-->
           <table id="traspaso" class=" display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
@@ -114,7 +102,7 @@ TRASFERENCIAS
               </tr>
             </tfoot>
             <tbody>
-              @foreach  ($trasen as $transfer)
+              @foreach  ($trans as $transfer)
                 <tr id = "row{{$transfer->id}}">
                   <td>{{ $transfer->product->clave }}</td>
                   <td>{{ $transfer->product ? $transfer->product->description : 'Sin product' }}</td>
@@ -132,7 +120,7 @@ TRASFERENCIAS
                     @elseif($transfer->status_product === 0)
                       <span class="text-center badge badge-warning">Rechazado</span>
                     @elseif($transfer->status_product === 3)
-                      <span class="text-center badge badge-warning">Devuelto</span>
+                      <span class="text-center badge badge-danger">Devuelto</span>
                     @else
                       <span class="text-center badge badge-primary">Pendiente</span>
                     @endif
@@ -143,25 +131,29 @@ TRASFERENCIAS
                       @if(Auth::user()->id == $transfer->user_id)
                         <button class="btn btn-warning cancel" alt="{{ $transfer->id }}">Cancelar</button>
                       @else
-                   <!--   <button class="btn btn-primary accept" alt="{{ $transfer->id }}">Aceptar</button>
-                      <button class="btn btn-warning reject" alt="{{ $transfer->id }}">Rechazar</button>  -->
+                      <button class="btn btn-primary accept" alt="{{ $transfer->id }}">Aceptar</button>
+                      <button class="btn btn-warning reject" alt="{{ $transfer->id }}">Rechazar</button>
                       @endif
                     @else
-                      @if(!$transfer->paid_at && $transfer->status_product === 1)
-                      @if(Auth::user()->id == $transfer->user_id)
-                          <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
+                      @if(!$transfer->paid_at)
+                        @if(Auth::user()->id == $transfer->user_id && $transfer->status_product == 1)
+                          <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagar</button>
                           <button class="btn btn-danger give-back" alt="{{ $transfer->id }}">Devolver</button>
                         @else
-                        <span class="text-center badge badge-warning">Por pagar</span>
+                          @if($transfer->status_product === null)
+                            <span class="text-center badge badge-success">Pendiente</span>
+                          @elseif($transfer->status_product == 1)
+                            <span class="text-center badge badge-warning">Por pagar</span>
+                          @elseif($transfer->status_product == 0 || $transfer->status_product == 3)
+                            <span class="text-center badge badge-warning">No se paga</span>
+                          @endif
                         @endif
-                        @elseif($transfer->status_product === 0)
-                        <span class="text-center badge badge-success">No se paga</span>
                       @else
                         <span class="text-center badge badge-success">Pagado</span>
                       @endif
                     @endif
                     <!-- END Botón-->
-                  </<span>
+                  </td>
                   <td>
                     <!-- Botón para generar Traspaso por (ID)-->
                     <a href="traspasopdf/{{$transfer->id}}"<button type="button"
@@ -177,115 +169,10 @@ TRASFERENCIAS
           </table>
           <!-- END Tabla-->
         </div>
-      <!--Lista de productos Recibidos --------------------------------------------------------------------------------------->
-        <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-        <!-- Tabla para Listar Traspasos-->
-         <table id="transfer" class=" display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-            <thead>
-              <tr>
-                <th>Clave Del Producto</th>
-                <th>Producto</th>
-                <th>Peso</th>
-                <th>Categoría</th>
-                <th>Linea</th>
-                <th>S.Origen</th>
-                <th>Quien lo mando</th>
-                <th>S.Destino</th>
-                <th>Quien recibio</th>
-                <th>Fecha</th>
-                <th>Status</th>
-                <th>Opciones</th>
-                <th>Reporte</th>
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-                <th>Clave Del Producto</th>
-                <th>Producto</th>
-                <th>Peso</th>
-                <th>Categoría</th>
-                <th>Linea</th>
-                <th>S.Origen</th>
-                <th>Quien lo mando</th>
-                <th>S.Destino</th>
-                <th>Quien recibio</th>
-                <th>Fecha</th>
-                <th>Status</th>
-                <th>Opciones</th>
-                <th>Reporte</th>
-              </tr>
-            </tfoot>
-            <tbody>
-              @foreach  ($trasre as $transfer)
-                <tr id = "row{{$transfer->id}}">
-                  <td>{{ $transfer->product->clave }}</td>
-                  <td>{{ $transfer->product ? $transfer->product->description : 'Sin product' }}</td>
-                  <td>{{ $transfer->product->weigth }}</td>
-                  <td>{{ $transfer->product->category ? $transfer->product->category->name : 'Sin category' }}</td>
-                  <td>{{ $transfer->product->line ? $transfer->product->line->name : 'Sin line' }}</td>
-                  <td>{{ $transfer->lastBranch ? $transfer->lastBranch->name : 'Sin lastBranch'}}</td>
-                  <td>{{ $transfer->user ? $transfer->user->name : 'Sin user'}}</td>
-                  <td>{{ $transfer->newBranch ? $transfer->newBranch->name : 'Sin newBranch'}}</td>
-                  <td>{{ $transfer->destinationUser ? $transfer->destinationUser->name : 'Sin destinationUser'}}</td>
-                  <td>{{ $transfer->created_at->format('m-d-Y')}}</td>
-                  <td>
-                    @if($transfer->status_product === 1)
-                      <span class="text-center badge badge-success">Aceptado</span>
-                    @elseif($transfer->status_product === 0)
-                      <span class="text-center badge badge-warning">Rechazado</span>
-                    @elseif($transfer->status_product === 3)
-                      <span class="text-center badge badge-warning">Devuelto</span>
-                    @else 
-                      <span class="text-center badge badge-primary">Pendiente</span>
-                    @endif
-                  </td>
-                  <td>
-                    <!--Botón para Aceptar o Rechazar Traspaso -->
-                    @if($transfer->status_product === null)
-                      @if(Auth::user()->id == $transfer->user_id)
-                     <!--   <button class="btn btn-warning cancel" alt="{{ $transfer->id }}">Cancelar</button>  -->
-                      @else
-                      <button class="btn btn-primary accept" alt="{{ $transfer->id }}">Aceptar</button>
-                      <button class="btn btn-warning reject" alt="{{ $transfer->id }}">Rechazar</button>
-                      @endif
-                    @else
-                      @if(!$transfer->paid_at && $transfer->status_product === 1)
-                      @if(Auth::user()->id == $transfer->user_id)
-                  <!--        <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagado</button>
-                          <button class="btn btn-danger give-back" alt="{{ $transfer->id }}">Devolver</button>  -->
-                        @else
-                        <span class="text-center badge badge-warning">Por pagar</span>
-                        @endif
-                        @elseif($transfer->status_product === 0)
-                        <span class="text-center badge badge-success">No se paga</span>
-                      @else
-                        <span class="text-center badge badge-success">Pagado</span>
-                      @endif
-                    @endif
-                    <!--END Botón-->
-                  </td>   
-                  <td>
-                    <!--Botón para generar Traspaso por (ID)-->
-                    <a href="traspasopdf/{{$transfer->id}}"<button type="button"
-                      class="btn btn-icon btn-danger waves-effect waves-light"
-                      data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                      <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
-                    </a>
-                    <!--END Botón-->
-                  </td>
-                </tr>
-              @endforeach
-            </tbody>
-          </table>
-          <!-- END Tabla-->
-        </div>
-       </div> 
       </header>
- 
+
     </div>
   </div>
-  </div>
-  </div> 
   <!-- End Panel Basic -->
 </div>
 <form method="post" action="/traspasos/respuesta" id="form" class="d-none">
@@ -296,12 +183,12 @@ TRASFERENCIAS
 
   <form method="post" action="/traspasos/pagar" id="payment-form" class="d-none">
     {{ csrf_field() }}
-    <input type="text" name="transfer_id" id="inventory_id_p">
+    <input type="text" name="transfer_id" id="inventory_id">
   </form>
 
   <form method="post" action="/traspasos/cancelar" id="give-back" class="d-none">
     {{ csrf_field() }}
-    <input type="text" name="transfer_id" id="inventory_id_gb">
+    <input type="text" name="transfer_id" id="inventory_id">
   </form>
 
 <form method="post" action="/inventory/check" id="payment-form" class="d-none">
@@ -313,35 +200,22 @@ TRASFERENCIAS
 @endsection
 
 @section('barcode-product')
-  <script type="text/javascript">
-  //inicializa la tabla para resposnive
-    $(document).ready(function(){
-        $('#traspaso').DataTable({
-            retrieve: true,
-            //  responsive: true,
-            //paging: false,
-            //searching: false
-        });
+<script type="text/javascript">
+//inicializa la tabla para resposnive
+  $(document).ready(function(){
+      $('#traspaso').DataTable({
+          retrieve: true,
+          //  responsive: true,
+          //paging: false,
+          //searching: false
+      });
 
-        $('#transfer').DataTable({
-            retrieve: true,
-            //  responsive: true,
-            //paging: false,
-            //searching: false
-        });
-
-
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            $($.fn.dataTable.tables(true)).DataTable()
-              .columns.adjust()
-              .responsive.recalc();
-        });    
-    });
-    </script>
-  @endsection
+  });
+  </script>
+@endsection
 
 @section('traspaso')
-<script type="text/javascript">
+<script>
   $(document).ready(function () {
 
   $('#traspaso').on('click', '.paid', function(){
@@ -357,7 +231,7 @@ TRASFERENCIAS
       }).then((result) => {
         if (result.value)
         {
-          $('#inventory_id_p').val(id);
+          $('#inventory_id').val(id);
           $('#payment-form').submit();
         }
       })
@@ -377,7 +251,7 @@ TRASFERENCIAS
       }).then((result) => {
         if (result.value)
         {
-          $('#inventory_id_gb').val(id);
+          $('#inventory_id').val(id);
           $('#payment-form').submit();
         }
       })
@@ -403,67 +277,6 @@ TRASFERENCIAS
       $('#answer').val(0);
       $('#form').submit();
     })
-
-    $('#transfer').on('click', '.paid', function(){
-      let id = $(this).attr("alt");
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha pagado este traspaso?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value)
-        {
-          $('#inventory_id_p').val(id);
-          $('#payment-form').submit();
-        }
-      })
-  });
-
-  $('#transfer').on('click', '.give-back', function(){
-
-      let id = $(this).attr("alt");
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha devuelto este producto?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value)
-        {
-          $('#inventory_id_gb').val(id);
-          $('#payment-form').submit();
-        }
-      })
-  });
-
-  $('#transfer').on('click', '.accept', function(){
-    var id = $(this).attr('alt');
-    $('#transfer_id').val(id);
-    $('#answer').val(1);
-    $('#form').submit();
-  })
-
-  $('#transfer').on('click', '.cancel', function(){
-      var id = $(this).attr('alt');
-      $('#transfer_id').val(id);
-      $('#answer').val(null);
-      $('#form').submit();
-    })
-
-  $('#transfer').on('click', '.reject', function(){
-      var id = $(this).attr('alt');
-      $('#transfer_id').val(id);
-      $('#answer').val(0);
-      $('#form').submit();
-    })
-
   });
 
 </script>
