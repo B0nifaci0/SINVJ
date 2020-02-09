@@ -426,14 +426,12 @@ seleccionado con sus respectivos datos-->
                     if(rest < 0)  {
                         $('#change').html(`$ ${rest * -1} `)
                         $('#cambio').val(rest * -1);
-                        let toCut = $(`#${id}`).val();
-                        //$(`#${id}`).val( toCut.substr(toCut.length - 1 ));
                         $('.cashRest').html( `$ 0` );
-                        return;
+                    } else {
+                        $('#change').html(`$ 0 `)
+                        $('#cambio').val(0);
+                        $('.cashRest').html( `$ ${rest}` );
                     }
-                    $('#cambio').val(0);
-                    $('.cashRest').html( `$ ${rest}` );
-                    console.log("totalIncome", totalIncome);
                 })
 
             });

@@ -131,6 +131,11 @@ SUCURSAl
                             <strong>Total abonado: </strong>$ {{ $sale->partials->sum('amount') }}
                         </p>
                     </div>
+                    <div class="col-md-3">
+                        <p>
+                            <strong>Restan: </strong>$ {{ $sale->total - $sale->partials->sum('amount') }}
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="panel-body">
@@ -181,12 +186,12 @@ SUCURSAl
                             <label>Método de pago</label>
                             <select name="type" id="" class="form-control">
                                 <option value="1">Efectivo</option>
-                                <option value="1">Tarjeta</option>
+                                <option value="2">Tarjeta</option>
                             </select>
                         </div>
                         <div class="col-md-12">
                             <label>Monto</label>
-                            <input type="text" name="amount" class="form-control">
+                            <input type="text" id="amount" name="amount" class="form-control" alt="{{$sale->total - $sale->partials->sum('amount')}}">
                         </div>
                     </div>
                 </form>
@@ -202,8 +207,15 @@ SUCURSAl
 
 @section('listado-productos')
 <script>
-    $('#savePartial').click(function() {
-        console.log("Holii");
+    $('#savePartial').click(function(e) {
+        e.preventDefault();
+        let amount = Number($('#amount').val());
+        let max = Number($('#amount').attr('alt'));
+        console.log(amount, max);
+        if(amount > max) {
+            alert('No puede pagar más de $ ' + max);
+            return;
+        }
         $('#saleForm').submit();
     })
 </script>

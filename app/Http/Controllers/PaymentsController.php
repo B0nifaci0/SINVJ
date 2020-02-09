@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Sale;
 use App\PayPal;
 use App\Payment;
 use App\Partial;
