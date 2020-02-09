@@ -186,7 +186,7 @@ SUCURSAl
                         </div>
                         <div class="col-md-12">
                             <label>Monto</label>
-                            <input type="text" name="amount" class="form-control">
+                            <input type="text" name="amount" class="form-control income" id="ventas">
                         </div>
                     </div>
                 </form>
@@ -202,10 +202,22 @@ SUCURSAl
 
 @section('listado-productos')
 <script>
+
+  
+    
     $('#savePartial').click(function() {
         console.log("Holii");
         $('#saleForm').submit();
     })
+
+    $(document).ready(function(){
+              
+    $('.income').on('input', function() {
+                    let id = $(this).attr('id');
+                    let val = $(this).val();
+                    $(`#${id}`).val( val.replace(/\s+/, "") );
+    })
+});
 </script>
 @endsection
 
