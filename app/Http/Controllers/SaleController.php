@@ -57,7 +57,7 @@ class SaleController extends Controller
             ->select('sales.*', 'branches.name as sucursal' )
             ->whereRaw('sales.total = sales.paid_out')
             ->where('shops.id',$user->shop_id)
-            ->orderBy('sales.created_at','DESC')
+            ->orderBy('sales.id','DESC')
             ->get();
 
        $apart = Sale::with('client')
@@ -67,7 +67,7 @@ class SaleController extends Controller
             ->select('sales.*', 'branches.name as sucursal' )
             ->whereRaw('sales.total > sales.paid_out')
             ->where('shops.id',$user->shop_id)
-            ->orderBy('sales.created_at','DESC')
+            ->orderBy('sales.id','DESC')
             ->get();
      
  
