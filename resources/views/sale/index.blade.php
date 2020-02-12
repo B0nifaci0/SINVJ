@@ -126,7 +126,7 @@ LISTA DE  VENTAS
                     @if(Auth::user()->type_user == 1 )
                     <td>{{ $sale->sucursal }}</td>
                     @endif
-                    <td><span class="text-center badge badge-success">Liquidado</span></td>
+                    <td><span class="text-center badge badge-success">Vendido</span></td>
                     <td>
                       <a href="/ventas/{{ $sale->id }}"><button type="button"
                           class="btn btn-icon btn-primary waves-effect waves-light"
@@ -209,7 +209,7 @@ LISTA DE  VENTAS
                     @if(Auth::user()->type_user == 1 )
                     <td>{{ $sale->sucursal }}</td>
                     @endif
-                    <td><span class="text-center badge badge-warning">No Liquidado</span></td>
+                    <td><span class="text-center badge badge-warning">Apartado</span></td>
                     <td>
                       <a href="/ventas/{{ $sale->id }}"><button type="button"
                           class="btn btn-icon btn-primary waves-effect waves-light"

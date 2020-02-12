@@ -48,11 +48,12 @@ Route::get('lineasexc', 'LineController@exportExcel');
 
 
 //Taspasos
-Route::group(['middleware' => ['auth','admin']],function(){
+//Route::group(['middleware' => ['admin']],function(){
 
-Route::resource('traspasos', 'TranferProductsController');
-Route::resource('traspasosAA', 'TrasferUserController');
-});
+  Route::resource('traspasos', 'TranferProductsController')->middleware('admin');
+  Route::resource('traspasosAA', 'TrasferUserController')->middleware('admin');
+
+//});
 Route::get('traspasospdf', 'TranferProductsController@exportPdfall');
 
 //Traspaso id PDF

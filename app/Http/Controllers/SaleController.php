@@ -50,6 +50,7 @@ class SaleController extends Controller
       $user = Auth::user();
       if($user->type_user == User::AA)
       {
+          //VENDIDOS
        $sold = Sale::with('client')
             ->join('branches','branches.id','sales.branch_id')
             ->join('shops','shops.id','branches.shop_id')
@@ -60,6 +61,7 @@ class SaleController extends Controller
             ->orderBy('sales.created_at','DESC')
             ->get();
 
+            //APARTADOS
        $apart = Sale::with('client')
             ->join('branches','branches.id','sales.branch_id')
             ->join('shops','shops.id','branches.shop_id')
@@ -72,21 +74,24 @@ class SaleController extends Controller
      
  
       }elseif ($user->type_user == User::CO || $user->type_user == User::SA ){
+          //VENDIDOS
           $sold = Sale::with('client')
             ->join('branches','branches.id','sales.branch_id')
             ->where('sales.deleted_at', NULL)
             ->select('sales.*' )
             ->whereRaw('sales.total = sales.paid_out')
             ->where('sales.branch_id',$user->branch_id)
+            ->orderBy('sales.created_at','DESC')
             ->get();
 
-            
+            //APARTADOS
           $apart = Sale::with('client')
             ->join('branches','branches.id','sales.branch_id')
             ->where('sales.deleted_at', NULL)
             ->select('sales.*' )
             ->whereRaw('sales.total > sales.paid_out')
             ->where('sales.branch_id',$user->branch_id)
+            ->orderBy('sales.created_at','DESC')
             ->get();
 
 
@@ -103,98 +108,6 @@ class SaleController extends Controller
         ->with('status') 
         ->get(); */
     return view('sale/index', compact('sold','user','apart'));
-    }
-
-    public function indexCO()
-    {
-      $user = Auth::user(); 
-      $sales = Sale::with('client')
-      ->where('deleted_at', NULL)
-      ->where('branch_id', $user->branch_id)
-      ->get();
-
-      $sold = Sale::with('client')
-          ->join('partials','partials.sale_id','sales.id')
-          ->join('branches','branches.id','sales.branch_id')
-          ->where('sales.deleted_at', NULL)
-          ->where('sales.branch_id', $user->branch_id)
-          ->select('sales.*','branches.name as sucursal',DB::raw('SUM(partials.amount) as payments'))
-          ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
-          //->havingRaw('SUM(partials.amount) >= ?',[$s->total])
-          ->orderBy('sales.customer_name','ASC')
-          ->get();
-      $apart = Sale::with('client')
-        ->join('partials','partials.sale_id','sales.id')
-        ->join('branches','branches.id','sales.branch_id')
-        ->where('sales.deleted_at', NULL)
-        ->where('sales.branch_id', $user->branch_id)
-        ->select('branches.name as sucursal','sales.*',DB::raw('SUM(partials.amount) as payments'))
-        ->groupBy('branches.name','sales.id','sales.customer_name','sales.total','sales.telephone','sales.branch_id','sales.client_id','sales.user_id','sales.paid_out','sales.deleted_at','sales.created_at','sales.updated_at','sales.folio')
-        //->havingRaw('SUM(partials.amount) < ?',[$s->total])
-        ->orderBy('sales.customer_name','ASC')
-        ->get();
-      
-      foreach($sales as $s){
-        $sold = Sale::with('client')
-          ->join('partials','partials.sale_id','sales.id')
-          ->join('branches','branches.id','sales.branch_id')
-          ->where('sales.deleted_at', NULL)
-          ->where('sales.branch_id', $user->branch_id)
-          ->select('sales.*','branches.name as sucursal',DB::raw('SUM(partials.amount) as payments'))
-          ->groupBy(
-            'branches.name',
-            'sales.id',
-            'sales.customer_name',
-            'sales.total',
-            'sales.change',
-            'sales.income',
-            'sales.telephone',
-            'sales.branch_id',
-            'sales.client_id',
-            'sales.user_id',
-            'sales.paid_out',
-            'sales.deleted_at',
-            'sales.created_at',
-            'sales.updated_at',
-            'sales.folio'
-          )
-          ->havingRaw('SUM(partials.amount) >= ?',[$s->total])
-          ->orderBy('sales.customer_name','ASC')
-          ->get();
-        $apart = Sale::with('client')
-        ->join('partials','partials.sale_id','sales.id')
-        ->join('branches','branches.id','sales.branch_id')
-        ->where('sales.deleted_at', NULL)
-        ->where('sales.branch_id', $user->branch_id)
-        ->select('branches.name as sucursal','sales.*',DB::raw('SUM(partials.amount) as payments'))
-        ->groupBy(
-          'branches.name',
-          'sales.id',
-          'sales.customer_name',
-          'sales.total',
-          'sales.income',
-          'sales.change',
-          'sales.telephone',
-          'sales.branch_id',
-          'sales.client_id',
-          'sales.user_id',
-          'sales.paid_out',
-          'sales.deleted_at',
-          'sales.created_at',
-          'sales.updated_at',
-          'sales.folio'
-        )
-        ->havingRaw('SUM(partials.amount) < ?',[$s->total])
-        ->orderBy('sales.customer_name','ASC')
-        ->get();
-      }
-      //return $sold;
-      $products = Product::with('line')
-        ->with('branch')
-        ->with('category')
-        ->with('status')
-        ->get();
-      return view('sale/index', compact('apart','sold','sales','products','user'));
     }
 
     /**
@@ -255,10 +168,25 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
+         //return $request;
         $user = Auth::user();
-        $folio = Sale::where('branch_id', $user->branch_id)->select('id')->get()->count();
-        $folio++;
+        if($user->type_user == User::AA)
+        {
+            /* $branches = Branch::where('shop_id', $user->shop->id)->get();
+        	$branch_ids = $branches->map(function($item) {
+              return $item->id;
+            }); */
+            $product = Product::find($request->product_id);
+            //return $product;
+            $folio = Sale::whereIn('branch_id', $product->branch_id)->select('id')->get()->count();
+            $folio++;
+        }
+        elseif ($user->type_user == User::CO || $user->type_user == User::SA )
+        {
+            $folio = Sale::where('branch_id', $user->branch_id)->select('id')->get()->count();
+            $folio++;
+        }
+        
         $validator = Validator::make($request->all(), [
             'customer_name' => Rule::requiredIf($request->user_type == 1),
         ]);
