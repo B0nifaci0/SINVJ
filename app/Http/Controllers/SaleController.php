@@ -58,7 +58,7 @@ class SaleController extends Controller
             ->select('sales.*', 'branches.name as sucursal' )
             ->whereRaw('sales.total = sales.paid_out')
             ->where('shops.id',$user->shop_id)
-            ->orderBy('sales.created_at','DESC')
+            ->orderBy('sales.id','DESC')
             ->get();
 
             //APARTADOS
@@ -69,7 +69,7 @@ class SaleController extends Controller
             ->select('sales.*', 'branches.name as sucursal' )
             ->whereRaw('sales.total > sales.paid_out')
             ->where('shops.id',$user->shop_id)
-            ->orderBy('sales.created_at','DESC')
+            ->orderBy('sales.id','DESC')
             ->get();
      
  

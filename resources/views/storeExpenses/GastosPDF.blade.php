@@ -58,7 +58,6 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
-                  <th>Clave</th>
                   <th>Nombre</th>
                   <th>Descripcion</th>
                   <th>Usuario</th>
@@ -70,7 +69,6 @@
               <tbody>
               @foreach ($expenses as  $expense)
                   <tr id ="row{{$expense->id}}">
-                    <td>{{ $expense->id}}</td>
                     <td>{{ $expense->name }}</td>
                     <td>{{ $expense->descripcion }}</td>
                     <td>{{ $expense->user ? $expense->user->name : ''}}</td>
@@ -84,14 +82,14 @@
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
-                            <th scope="col">Nombre Sucursal</th>
+                            <th scope="col">Sucursal</th>
                             <th scope="col">Total Gastado</th></tr>
                         </thead>
                       <tbody>
-                      @foreach($branches as $branch)
+                      @foreach($total as $t)
                       <tr>
-                      <td align="center">{{$branch->name}}</td>
-                      <td align="center">${{$totals}}</td>
+                      <td align="center">{{$t->sucursal}}</td>
+                      <td align="center">${{$t->money}}</td>
                       </tr>
                       @endforeach
                       </tbody>
