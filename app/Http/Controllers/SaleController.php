@@ -168,7 +168,7 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-         //return $request;
+        //return $request;
         $user = Auth::user();
         if($user->type_user == User::AA)
         {
@@ -178,7 +178,7 @@ class SaleController extends Controller
             }); */
             $product = Product::find($request->product_id);
             //return $product;
-            $folio = Sale::whereIn('branch_id', $product->branch_id)->select('id')->get()->count();
+            $folio = Sale::where('branch_id', $product->branch_id)->select('id')->get()->count();
             $folio++;
         }
         elseif ($user->type_user == User::CO || $user->type_user == User::SA )
