@@ -28,6 +28,7 @@ class Sale extends Model
         'folio',
         'change',
         'income',
+        'positive_balance',
     ];
 
     public function client() {

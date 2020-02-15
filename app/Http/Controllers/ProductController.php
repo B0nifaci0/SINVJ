@@ -525,6 +525,61 @@ class ProductController extends Controller
         //Product::destroy($id);
         // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
     }
+
+    //PRODUCTOS DEVUELTOS EN VENTAS
+    public function devuelto(){
+        $user = Auth::user();
+        $products = Product::where('discar_cause',3)
+        ->where('shop_id',$user->shop_id)
+        ->withTrashed()
+        ->get();
+        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+        foreach ($products as $product) {
+			if($product->image) {
+            $path = 'products/' . $product->clave;
+        } else {
+            $path = 'products/default';
+        }
+            $product->image = $this->getS3URL($path);
+		}
+        //return $products;
+        return view('product/devueltos', compact('products'));
+    }
+
+    public function reetiquetado($id){
+        {
+            $category = Auth::user()->shop->id;
+            $user = Auth::user();
+            $line = Auth::user()->shop->id;
+    
+            $shops = Auth::user()->shop()->get();
+            //return $shops;
+            $products = Product::join('categories','categories.id','products.category_id')
+            ->where('products.id',$id)
+            ->withTrashed()
+            ->select('products.*','categories.type_product as tipo')
+            ->get();
+            //return $products;
+        foreach($products as $p){
+           if($p->tipo == 1){
+            $categories = Category::where('shop_id', '=', NULL)->where('type_product',1)->get();
+           }else {
+            $categories = Category::where('shop_id', '=', NULL)->where('type_product',2)->get();
+           }        
+        }
+           //return $categories;  
+
+            $lines = Line::where('shop_id', '=', NULL)->get();
+           // $lines = Shop::find($line)->lines()->get();<div class="">5555</div>
+            $branch = Auth::user()->shop->id;
+            $branches = Shop::find($branch)->branches()->get();
+            $statuses = Status::all();
+            // return $product;
+    
+            return view('product/reetiquetado', compact('products', 'categories', 'lines', 'shops', 'branches', 'statuses', 'user'));
+        }
+    }
+
     /**TERMINA FUNCIONES DE CRUD DE PRODUCTOS */
 
     /**FUNCIONES DE REPORTES DE PDF */

@@ -48,11 +48,12 @@ Route::get('lineasexc', 'LineController@exportExcel');
 
 
 //Taspasos
-Route::group(['middleware' => ['auth','admin']],function(){
+//Route::group(['middleware' => ['admin']],function(){
 
-Route::resource('traspasos', 'TranferProductsController');
-Route::resource('traspasosAA', 'TrasferUserController');
-});
+  Route::resource('traspasos', 'TranferProductsController')->middleware('admin');
+  Route::resource('traspasosAA', 'TrasferUserController')->middleware('admin');
+
+//});
 Route::get('traspasospdf', 'TranferProductsController@exportPdfall');
 
 //Traspaso id PDF
@@ -191,6 +192,7 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
 
   //Ventas
   Route::resource('ventas', 'SaleController');
+  Route::post('ventas/check', 'SaleController@check');
   Route::resource('inventarios', 'InventoryController');
   Route::get('reportinventarios', 'InventoryController@reportInventarios');
   Route::get('inventariospdf/{id}', 'InventoryController@inventariosPDF');
@@ -200,6 +202,8 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
 
   Route::get('productos', 'ProductController@index');
   Route::get('productos/create', 'ProductController@create');
+  Route::get('productos/devueltos', 'ProductController@devuelto');
+  Route::get('/productos/{id}/reetiquetado', 'ProductController@reetiquetado');
   Route::post('/productos', 'ProductController@store');
   Route::get('/productos/{id}/edit', 'ProductController@edit');
   Route::get('/productos/{id}/show', 'ProductController@show');

@@ -57,11 +57,20 @@ SUCURSAl
                                 </tr>
                                 <tr>
                                     <td><strong class="text-center badge badge-danger" >Pagado:</strong></td>
-                                    <td>$ {{ $sale->partials->sum('amount') }}</td>
+                                    @if(($sale->paid_out - $sale->positive_balance) > 0)
+                                        <td>$ {{($sale->paid_out - $sale->positive_balance)}}</td>
+                                    @else
+                                        <td>$ {{$sale->paid_out}}</td>
+                                    @endif
                                 </tr>
                                 <tr>
-                                    <td><strong class="text-center badge badge-success">Restan:</strong></td>
-                                    <td>$ {{ $sale->total - $sale->paid_out }}</td>
+                                    @if(($sale->total - $sale->partials->sum('amount')) >  0)
+                                        <td><strong class="text-center badge badge-success">Restan:</strong></td>
+                                        <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
+                                    @else
+                                        <td><strong class="text-center badge badge-success">Restan:</strong></td>
+                                        <td> $ 0</td>
+                                    @endif
                                 </tr>
                             </tbody>
                         </table>
@@ -69,7 +78,7 @@ SUCURSAl
                 </div>
             </div>
 
-                <table class="table">
+                <table id="items" class="table">
                     <thead>
                         <tr>
                             <th>Clave</th>
@@ -78,6 +87,7 @@ SUCURSAl
                             <th>Categoria</th>
                             <th>Peso</th>
                             <th>Precio</th>
+                            <th>Devolver</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -95,11 +105,18 @@ SUCURSAl
                             <td>{{$item->category_name}}</td>
                             <td>{{ ($item->weigth) ? $item->weigth  : 0 }}g</td>
                             <td>$ {{ $item->final_price }}</td>
+                            <td>
+                                <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
+                                alt="{{$item->id_product}}" role="button" data-toggle="tooltip" data-original-title="Devolver">
+                                <i class="icon md-delete" aria-hidden="true"></i>
+                                </button>
+                            </td>
                         </tr>
                         @endforeach
                         <tr>
                             <td colspan="5"></td>
                             <td><strong>$ {{ $sale->total }}</strong></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -137,7 +154,11 @@ SUCURSAl
                     </div>
                     <div class="col-md-3">
                         <p>
+                            @if(($sale->total - $sale->partials->sum('amount')) >  0)
                             <strong>Restan: </strong>$ {{ $sale->total - $sale->partials->sum('amount') }}
+                            @else
+                            <strong>Restan: $ 0</strong>
+                            @endif
                         </p>
                     </div>
                 </div>
@@ -216,11 +237,35 @@ SUCURSAl
 
     </div>
 </div>
-
+<form method="post" action="/ventas/check" id="form" class="d-none">
+    {{ csrf_field() }}
+    <input type="text" name="discar_cause" id="discar_cause">
+    <input type="text" name="product_id" id="product_id">
+    <input type="text" name="sale_id" id="sale-id" value="{{ $sale->id }}">
+</form>
 @section('listado-productos') 
 <script>
 
 $(document).ready(function(){
+
+    $('#items').on('click', '.give-back', function () {
+        let id = $(this).attr("alt");
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿El producto ha sido devuelto?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4caf50',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+        }).then((result) => {
+            if (result.value) {
+                $('#discar_cause').val(3);
+                $('#product_id').val(id);
+                $('#form').submit();
+            }
+        })
+    });
 
     $('#savePartial').click(function(e) {
         e.preventDefault();
