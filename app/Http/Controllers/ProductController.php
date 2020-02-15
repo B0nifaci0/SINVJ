@@ -14,6 +14,8 @@ use App\Category;
 use Carbon\Carbon;
 use App\SaleDetails;
 use App\TransferProduct;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\DB;
@@ -337,6 +339,20 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // return $request;
+        $category = Category::find($request->category_id);
+        //return $category;
+        $validator = Validator::make($request->all(), [
+            'max_discountpz' => Rule::requiredIf($category->type_product == 1),
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'errors' => $validator->errors(),
+                'error' => 'Error en alguno de los campos'
+            ];
+            //return response()->json($response, $this->unprocessable);
+            return back()->withErrors($validator->errors());
+        }
         $date = date("Y-m-d");
         $branches = Auth::user()->shop->branches;
         $user = Auth::user();
