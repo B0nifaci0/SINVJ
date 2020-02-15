@@ -170,9 +170,9 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         //return $request;
+        $sale = null;
         $user = Auth::user();
-        if($user->type_user == User::AA)
-        {
+        if($user->type_user == User::AA) {
             /* $branches = Branch::where('shop_id', $user->shop->id)->get();
         	$branch_ids = $branches->map(function($item) {
               return $item->id;
@@ -181,9 +181,7 @@ class SaleController extends Controller
             //return $product;
             $folio = Sale::where('branch_id', $product->branch_id)->select('id')->get()->count();
             $folio++;
-        }
-        elseif ($user->type_user == User::CO || $user->type_user == User::SA )
-        {
+        } elseif ($user->type_user == User::CO || $user->type_user == User::SA ) {
             $folio = Sale::where('branch_id', $user->branch_id)->select('id')->get()->count();
             $folio++;
         }
@@ -197,24 +195,33 @@ class SaleController extends Controller
                 'errors' => $validator->errors(),
                 'error' => 'Error en alguno de los campos'
             ];
-            //return response()->json($response, $this->unprocessable);
             return back()->withErrors($validator->errors());
         }
-        $sale = Sale::create([
-            'customer_name' => Rule::requiredif($request->user_type == 1),
-            'customer_name' => $request->customer_name,
-            'telephone' => $request->telephone,
-            'price' => $request->price,
-            'customer_name' => $request->customer_name,
-            'total' => $request->total_pay,
-            'change' => $request->change,
-            'income' => $request->income,
-            'user_id' => $user->id,
-            'branch_id' => $user->branch_id ? $user->branch_id : null,
-            'client_id' => $request->user_type == 2 ? $request->client_id : null,
-            'paid_out' => 0,
-            'folio' => $folio
-        ]);
+
+        if($request->user_type == 2 && $request->client_id) {
+            $sale = Sale::where('client_id', $request->client_id)
+                ->whereRaw('paid_out < total')
+                ->first();
+        }
+
+        if($sale) {
+            $sale->total += $request->total_pay;
+        } else {
+            $paid_out_value = 0;
+            $sale = Sale::create([
+                'telephone' => $request->telephone,
+                'price' => $request->price,
+                'customer_name' => $request->customer_name,
+                'total' => $request->total_pay,
+                'change' => $request->change,
+                'income' => $request->income,
+                'user_id' => $user->id,
+                'branch_id' => $user->branch_id ? $user->branch_id : null,
+                'client_id' => $request->user_type == 2 ? $request->client_id : null,
+                'paid_out' => 0,
+                'folio' => $folio
+            ]);
+        }
 
         $products = json_decode($request->products_list);
 
@@ -222,8 +229,6 @@ class SaleController extends Controller
             if (!$sale->branch_id && $i == 0) {
                 $pranch_product = Product::find($p->id);
                 $sale->branch_id = $pranch_product->branch_id;
-                $sale->save();
-                // Sale::where('id', $sale->id)->update([ 'branch_id' => $pranch_product->branch_id ]);
             }
 
             $product = Product::find($p->id);
@@ -237,15 +242,12 @@ class SaleController extends Controller
             $product->save();
         }
 
-        $partials_list = collect([]);
-
         if ($request->cash_income) {
             $partial = Partial::create([
                 'sale_id' => $sale->id,
                 'amount' => ($request->cash_income) ? $request->cash_income : 0,
                 'type' => Partial::CASH,
             ]);
-            $partials_list->push($partial);
         }
 
         if ($request->card_income) {
@@ -254,13 +256,12 @@ class SaleController extends Controller
                 'amount' => ($request->card_income) ? $request->card_income : 0,
                 'type' => Partial::CARD,
             ]);
-            $partials_list->push($partial);
         }
 
-        $sale->paid_out = $partials_list->sum('amount');
+        $sale->paid_out = Partial::where('sale_id', $sale->id)->sum('amount');
         $sale->save();
 
-        return redirect('/ventas')->with('mesage', 'la venta se ha agregado exitosamente!');
+        return redirect('/ventas')->with('mesage', 'La venta se ha agregado exitosamente!');
     }
 
 
