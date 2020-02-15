@@ -21,6 +21,7 @@ use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SaleController extends Controller
 {
@@ -56,7 +57,7 @@ class SaleController extends Controller
             ->join('shops','shops.id','branches.shop_id')
             ->where('sales.deleted_at', NULL)
             ->select('sales.*', 'branches.name as sucursal' )
-            ->whereRaw('sales.total = sales.paid_out')
+            ->whereRaw('sales.total <= sales.paid_out')
             ->where('shops.id',$user->shop_id)
             ->orderBy('sales.id','DESC')
             ->get();
@@ -79,9 +80,9 @@ class SaleController extends Controller
             ->join('branches','branches.id','sales.branch_id')
             ->where('sales.deleted_at', NULL)
             ->select('sales.*' )
-            ->whereRaw('sales.total = sales.paid_out')
+            ->whereRaw('sales.total <= sales.paid_out')
             ->where('sales.branch_id',$user->branch_id)
-            ->orderBy('sales.created_at','DESC')
+            ->orderBy('sales.id','DESC')
             ->get();
 
             //APARTADOS
@@ -91,7 +92,7 @@ class SaleController extends Controller
             ->select('sales.*' )
             ->whereRaw('sales.total > sales.paid_out')
             ->where('sales.branch_id',$user->branch_id)
-            ->orderBy('sales.created_at','DESC')
+            ->orderBy('sales.id','DESC')
             ->get();
 
 
@@ -275,9 +276,38 @@ class SaleController extends Controller
         $sale = Sale::with(['partials', 'client'])->findOrFail($id);
         $sale->itemsSold = $sale->itemsSold();
         $sale->total = $sale->itemsSold->sum('final_price');
+        //return $sale;
+        $restan = $sale->total - $sale->partials->sum('amount');
+        //return $restan;
         $lines = Line::all();
 
-        return view('sale.show', compact('sale', 'lines'));
+        return view('sale.show', compact('sale', 'lines', 'restan'));
+    }
+
+    public function check(Request $request) {
+        //return $request;
+        $product = Product::find($request->product_id);
+        $sale = Sale::findOrFail($request->sale_id);
+        //return $sale;
+        $giveback = SaleDetails::where('sale_id',$request->sale_id)
+            ->where('product_id',$request->product_id)
+            ->sum('final_price');
+        //return $giveback;
+        $total = $sale->total - $giveback;
+        //return $total;
+        $sale->total = $total;
+        $sale->positive_balance = $total - $sale->paid_out;
+        if($sale->positive_balance < 0){
+            $sale->positive_balance = $sale->positive_balance * -1;
+        }
+        //return $sale;
+        $product->discar_cause = $request->discar_cause;
+        //return $product;
+        $sale->save();
+        $product->save();            
+        $product->delete();
+        Sale::where('id', $request->sale_id)->update(['total' => $total]);
+        return back();
     }
 
     /**
