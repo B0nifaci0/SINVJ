@@ -103,7 +103,7 @@ SUCURSAl
                                 @endforeach
                              @else  N/A @endif</td>
                             <td>{{$item->category_name}}</td>
-                            <td>{{ ($item->weigth) ? $item->weigth  : 0 }}g</td>
+                            <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                             <td>$ {{ $item->final_price }}</td>
                             <td>
                                 <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
