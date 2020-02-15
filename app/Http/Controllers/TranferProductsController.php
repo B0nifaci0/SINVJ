@@ -30,6 +30,12 @@ class TranferProductsController extends Controller
     public function index()
        {
         $user = Auth::user();
+ 
+        if (Auth::user()->type_user == User::CO) {
+        redirect('/traspasos');
+        } else {
+        redirect('/traspasosAA');
+        }
 
         $trans = TransferProduct::where('user_id', $user->id)
           ->orWhere('destination_user_id', $user->id)
@@ -43,7 +49,7 @@ class TranferProductsController extends Controller
         $trans = Shop::find('users')->trans();
         return $trans;
         if($trans == 0){
-          return redirect('/traspasos/create');
+          return redirect('/traspasos/create'); 
         }else{
         }*/
 
@@ -56,6 +62,11 @@ class TranferProductsController extends Controller
        public function indexAA()
        {
 
+        if (Auth::user()->type_user == User::CO) {
+        redirect('/traspasos');
+        } else {
+        redirect('/traspasosAA');
+        }
         $user = Auth::user();
         $trans = TransferProduct::all();
 
@@ -160,6 +171,11 @@ class TranferProductsController extends Controller
         $product->shop_id = $user->shop->id;
         $product->save();
       }
+    }
+    if($user->type_user == User::AA || $user->type_user == User::SA) {
+    return redirect('/traspasosAA');
+    } else {
+    return redirect('/traspasos');
     }
   }
 
