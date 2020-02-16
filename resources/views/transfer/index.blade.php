@@ -137,7 +137,9 @@ TRASFERENCIAS
                     @else
                       @if(!$transfer->paid_at)
                         @if(Auth::user()->id == $transfer->user_id && $transfer->status_product == 1)
+                        @if(Auth::user()->type_user =='1')
                           <button class="btn btn-success paid" alt="{{ $transfer->id }}">Pagar</button>
+                        @endif
                           <button class="btn btn-danger give-back" alt="{{ $transfer->id }}">Devolver</button>
                         @else
                           @if($transfer->status_product === null)
