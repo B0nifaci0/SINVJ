@@ -470,7 +470,7 @@ seleccionado con sus respectivos datos-->
                         product.branch.name,
                         product.price,
                         product.discount,
-                        `<input class="finalPrice" id="finalPrice${product.id}" alt="${product.id}" type="text" value="${product.price}"/>`,
+                        `<input class="finalPrice income" id="finalPrice${product.id}" alt="${product.id}" type="text" value="${product.price}"/>`,
                         `<button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button>`
                     ]).draw( false );
 
