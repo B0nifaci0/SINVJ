@@ -408,7 +408,9 @@ seleccionado con sus respectivos datos-->
                 $('.income').on('input', function() {
                     let id = $(this).attr('id');
                     let val = $(this).val();
-                    $(`#${id}`).val( val.replace(/\s+/, "") );
+                    if(!Number(val)) {
+                        $(this).val( val.replace(/[^0-9.]/, '') );
+                    }
                     
                     if (id == 'cashIncome') {
                         cashIncome = $(`#${id}`).val();
@@ -524,6 +526,10 @@ seleccionado con sus respectivos datos-->
                 // });
 
                 $('#ventas').on('input', '.finalPrice', function() {
+                    let val = $(this).val();
+                    if(!Number(val)) {
+                        $(this).val( val.replace(/[^0-9.]/, '') );
+                    }
 
                     console.log("=================== Enta el evento Input ===================")
                     var productId = $(this).attr('alt');
