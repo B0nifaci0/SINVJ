@@ -16,7 +16,7 @@
             </div>
           </div>
         </div>
-      </div>  
+      </div>
       <div class="site-menubar-body">
         <div>
           <div>
@@ -53,8 +53,8 @@
                       <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
                       <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
-                        <span class="site-menu-title">Reportes</span> 
-                      <span class="site-menu-arrow"></span> 
+                        <span class="site-menu-title">Reportes</span>
+                      <span class="site-menu-arrow"></span>
                     </a>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
@@ -128,8 +128,8 @@
                         <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
                           <span class="site-menu-title">Inventarios</span>
                       </a>
-                    </li> 
-                    
+                    </li>
+
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/lineas">
                         <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
@@ -175,7 +175,7 @@
                           <span class="site-menu-title">Estatus</span>
                       </a>
                     </li>
-                    
+
                     <li class="site-menu-item has-sub">
                     <a  href="javascript:void(0)">
                       <i class="site-menu-icon fa-exchange" aria-hidden="true"></i>
@@ -186,7 +186,7 @@
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/traspasos">
                           <i  class="site-menu-icon fa-exchange" aria-hidden="true"></i>
-                            <span class="site-menu-title">Mis Traspasos</span>
+                            <span class="site-menu-title">Traspasos de Tienda</span>
                         </a>
                       </li>
                     </ul>
@@ -199,7 +199,7 @@
                       </li>
                     </ul>
                   </li>
-                    
+
                     <li class="site-menu-item has-sub">
                     <a href="javascript:void(0)">
                       <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
@@ -222,7 +222,7 @@
                       </a>
                     </li>
                     </ul>
-                  </li> 
+                  </li>
                   </ul>
                 </li>
                   <li class="site-menu-item has-sub">
@@ -247,7 +247,7 @@
                       </a>
                     </li>
                     </ul>
-                  </li>  
+                  </li>
               </ul>
             <!-- AA =(0) END-Administrator-->
 
