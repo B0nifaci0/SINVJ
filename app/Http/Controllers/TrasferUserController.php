@@ -22,6 +22,7 @@ class TrasferUserController extends Controller
     public function index()
     {
 
+        // $trans = TransferProduct::all();
         $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
             return $u->id;
         });
@@ -33,7 +34,28 @@ class TrasferUserController extends Controller
             ->with('user')->with('branch')->with('product')
             ->get();
 
-        return view('transfer/TrasferUser/index', compact('trans1','trans2'));
+        if (Auth::user()->type_user == User::CO) {
+            redirect('/traspasos');
+        } else {
+            redirect('/traspasosAA');
+        }
+
+        $trans = $trans1->merge($trans2);
+        //return $trans;
+        //return response()->json($trans);
+        //$status = Auth::user()->shop->id;
+        //$statuses = Shop::find($status)->statuss()->get();
+        /*$users=Auth::user()->shop->id;
+        $trans = Shop::find('users')->trans();
+        return $trans;
+        if($trans == 0){
+          return redirect('/traspasos/create');
+        }else{
+        }*/
+
+        //return $transs;
+
+        return view('transfer/TrasferUser/index', compact('trans'));
     }
 
     public function create()

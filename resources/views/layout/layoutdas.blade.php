@@ -408,14 +408,13 @@
                       <span class="site-menu-arrow"></span>
                     </a>
                     <ul class="site-menu-sub">
-                        <li class="site-menu-item">
-                            <a class="animsition-link" href="/traspasosAA">
-                            <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
-                              <span class="site-menu-title">Traspasos de Tienda</span>
-                          </a>
-                        </li>
-                      </ul>
-
+                      <li class="site-menu-item">
+                          <a class="animsition-link" href="/traspasosAA">
+                          <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
+                            <span class="site-menu-title">Mis Traspasos</span>
+                        </a>
+                      </li>
+                    </ul>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/traspasosAA/create">
@@ -638,6 +637,13 @@
                         </a>
                       </li>
 
+                      <!--<li class="site-menu-item">
+                        <a class="animsition-link" href="/sucursales">
+                        <i class="site-menu-icon md-pin-drop" aria-hidden="true"></i>
+                          <span class="site-menu-title">Inventarios</span>
+                      </a>
+                    </li>-->
+
                       <li class="site-menu-item">
                           <a class="animsition-link" href="/lineas">
                           <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
@@ -681,7 +687,7 @@
                     </a>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">
-                          <a class="animsition-link" href="/traspasos">
+                          <a class="animsition-link" href="/traspasosAA">
                           <i  class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
                             <span class="site-menu-title">Mis Traspasos</span>
                         </a>
