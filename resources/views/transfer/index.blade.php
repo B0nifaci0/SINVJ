@@ -276,7 +276,6 @@ TRANSFERENCIAS
                                                 @if(!$transferout->paid_at)
                                                 @if(Auth::user()->id == $transferout->user_id && $transferout->status_product
                                                 == 1)
-
                                                 <button class="btn btn-danger give-back"
                                                     alt="{{ $transferout->id }}">Devolver</button>
                                                 @else
