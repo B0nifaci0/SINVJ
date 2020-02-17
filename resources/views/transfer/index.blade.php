@@ -162,8 +162,10 @@ TRANSFERENCIAS
                                                     @if(!$transferin->paid_at)
                                                     @if(Auth::user()->id == $transferin->user_id &&
                                                     $transferin->status_product == 1)
+                                                    @if (Auth::user()->type_user =='1')
                                                     <button class="btn btn-success paid"
                                                         alt="{{ $transferin->id }}">Pagar</button>
+                                                    @endif
                                                     <button class="btn btn-danger give-back"
                                                         alt="{{ $transferin->id }}">Devolver</button>
                                                     @else
@@ -278,8 +280,10 @@ TRANSFERENCIAS
                                                 @if(!$transferout->paid_at)
                                                 @if(Auth::user()->id == $transferout->user_id && $transferout->status_product
                                                 == 1)
+                                                @if (Auth::user()->type_user =='1')
                                                 <button class="btn btn-success paid"
                                                     alt="{{ $transferout->id }}">Pagar</button>
+                                                @endif
                                                 <button class="btn btn-danger give-back"
                                                     alt="{{ $transferout->id }}">Devolver</button>
                                                 @else
