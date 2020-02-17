@@ -31,7 +31,7 @@ ALTA PRODUCTO
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
               <label>Producto</label>
               <select id="product" class="form-control" data-plugin="select2" data-placeholder="Seleccione Producto"
-                data-allow-clear="true">
+                data-allow-clear="true" required>
                 <option></option>
                 <optgroup label="Productos">
                 @foreach($products as $product)
@@ -53,7 +53,7 @@ ALTA PRODUCTO
             <!-- Select para Seleccionar Sucursal Destino-->
             <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputBranch">{{ __('Destino') }}</label>
-              <select id="branches" class="form-control  sucursales1" name="new_branch_id" alt="1" >
+              <select id="branches" class="form-control  sucursales1" name="new_branch_id" alt="1" required>
                 <option value="*">Seleccione Sucursal</option>
               </select>
             </div>
@@ -61,7 +61,7 @@ ALTA PRODUCTO
             <!-- Select para Seleccionar Quien lo recibe (Usuario)-->
             <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
               <label class="floating-label" for="inputUser">{{ __('Quien lo recibe') }}</label>
-              <select id="usuario_1" name="destination_user_id" class="form-control ">
+              <select id="usuario_1" name="destination_user_id" class="form-control " required>
                 
               </select>
             </div>

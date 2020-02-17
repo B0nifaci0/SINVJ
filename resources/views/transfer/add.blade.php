@@ -51,7 +51,7 @@ ALTA PRODUCTO
             <!-- Select para Seleccionar Quien Recibe (Usuario) -->
             <div class="form-group  col-md-3 col-md-offset-1 visible-md visible-lg">
               <label>Recibe</label>
-              <select id="usuarios_1" name="destination_user_id" class="form-control ">
+              <select id="usuarios_1" name="destination_user_id" class="form-control " required>
               </select>
             </div>
             <!-- END Select-->
