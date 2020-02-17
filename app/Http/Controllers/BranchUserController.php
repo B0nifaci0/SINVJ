@@ -16,8 +16,10 @@ class BranchUserController extends Controller
         $branch = Branch::find($id);
         $users = User::where('branch_id', $branch->id)->get();
         $shop = Shop::find($branch->shop_id);
-        $admin = User::where('shop_id', $shop->id)->first();
-        $users->push($admin);
+        $admin = User::where('shop_id', $shop->id)
+        ->where('type_user', 1)->get();
+        //return $admin;
+        $users= $users->merge($admin);
 
         return $users;  
     }

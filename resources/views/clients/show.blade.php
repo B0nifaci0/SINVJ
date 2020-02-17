@@ -85,8 +85,8 @@ ALTA BITACORAS
                                 <tr>
                                     <td>{{ $item->clave }}</td>
                                     <td>{{ $item->description }}</td>
-                                    <td>{{ $item->weigth }} g</td>
-                                    <td class="text-right">$ {{ $item->price }}</td>
+                                    <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
+                                    <td class="text-right">$ {{ $item->final_price }}</td>
                                 </tr>
                                 @endforeach
                                 <tr>

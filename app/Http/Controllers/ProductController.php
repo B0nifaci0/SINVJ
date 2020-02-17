@@ -14,6 +14,8 @@ use App\Category;
 use Carbon\Carbon;
 use App\SaleDetails;
 use App\TransferProduct;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\DB;
@@ -337,6 +339,20 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // return $request;
+        $category = Category::find($request->category_id);
+        //return $category;
+        $validator = Validator::make($request->all(), [
+            'max_discountpz' => Rule::requiredIf($category->type_product == 1),
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'errors' => $validator->errors(),
+                'error' => 'Error en alguno de los campos'
+            ];
+            //return response()->json($response, $this->unprocessable);
+            return back()->withErrors($validator->errors());
+        }
         $date = date("Y-m-d");
         $branches = Auth::user()->shop->branches;
         $user = Auth::user();
@@ -359,7 +375,7 @@ class ProductController extends Controller
         $data['discount'] = $request->max_discount ? $request->max_discount : 0;
         $data['user_id'] = Auth::user()->id;
         $data['price_purchase'] = $request->price_purchase;
-        $data['status_id'] = 2;
+        $data['status_id'] = $request->status_id;
 
         $category = Category::find($request->category_id);
         if ($category->type_product == 1) {
@@ -509,6 +525,62 @@ class ProductController extends Controller
         //Product::destroy($id);
         // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
     }
+
+    //PRODUCTOS DEVUELTOS EN VENTAS
+    public function devuelto(){
+        $user = Auth::user();
+        $products = Product::where('discar_cause',3)
+        ->where('shop_id',$user->shop_id)
+        ->withTrashed()
+        ->get();
+        
+        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+        foreach ($products as $product) {
+			if($product->image) {
+            $path = 'products/' . $product->clave;
+        } else {
+            $path = 'products/default';
+        }
+            $product->image = $this->getS3URL($path);
+		}
+        //return $products;
+        return view('product/devueltos', compact('products'));
+    }
+
+    public function reetiquetado($id){
+        {
+            $category = Auth::user()->shop->id;
+            $user = Auth::user();
+            $line = Auth::user()->shop->id;
+    
+            $shops = Auth::user()->shop()->get();
+            //return $shops;
+            $products = Product::join('categories','categories.id','products.category_id')
+            ->where('products.id',$id)
+            ->withTrashed()
+            ->select('products.*','categories.type_product as tipo')
+            ->get();
+            //return $products;
+        foreach($products as $p){
+           if($p->tipo == 1){
+            $categories = Category::where('shop_id', '=', NULL)->where('type_product',1)->get();
+           }else {
+            $categories = Category::where('shop_id', '=', NULL)->where('type_product',2)->get();
+           }        
+        }
+           //return $categories;  
+
+            $lines = Line::where('shop_id', '=', NULL)->get();
+           // $lines = Shop::find($line)->lines()->get();<div class="">5555</div>
+            $branch = Auth::user()->shop->id;
+            $branches = Shop::find($branch)->branches()->get();
+            $statuses = Status::all();
+            // return $product;
+    
+            return view('product/reetiquetado', compact('products', 'categories', 'lines', 'shops', 'branches', 'statuses', 'user'));
+        }
+    }
+
     /**TERMINA FUNCIONES DE CRUD DE PRODUCTOS */
 
     /**FUNCIONES DE REPORTES DE PDF */

@@ -19,6 +19,10 @@ class TrasferUserController extends Controller
 
     use S3ImageManager;
 
+    public function __construct(){
+        $this->middleware('admin');
+    }
+
     public function index()
     {
 

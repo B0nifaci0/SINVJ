@@ -79,6 +79,21 @@
     <script>
       Breakpoints();
     </script>
+
+
+
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+      var OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "15c4dfa0-6a3b-4659-8a0e-ce7dc2e7aa09",
+        });
+        
+        OneSignal.sendTag('user_id', {{ Auth::user()->id }} );
+      });
+    </script>
+
   </head>
   <body class="animsition dashboard">
     <!--[if lt IE 8]>
@@ -236,6 +251,14 @@
                             <span class="site-menu-title">Nuevo Producto</span>
                         </a>
                       </li>
+                    </ul>
+                    <ul class="site-menu-sub">
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="/productos/devueltos">
+                        <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
+                          <span class="site-menu-title">Productos Devueltos</span>
+                      </a>
+                    </li>
                     </ul>
                     <ul class="site-menu-sub">
                       <li class="site-menu-item">

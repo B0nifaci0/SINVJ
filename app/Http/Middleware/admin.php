@@ -5,6 +5,8 @@ use Closure;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use TransferProduct;
+use TransferUser;
 
 class admin
 {
@@ -20,9 +22,9 @@ class admin
     {
 
     if (Auth::user()->type_user == User::CO) {
-        redirect('/traspasos');
+         redirect('/traspasos');
     } else {
-        redirect('/traspasosAA');
+         redirect('/traspasosAA');
     }
         return $next($request);
 

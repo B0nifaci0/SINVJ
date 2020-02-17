@@ -60,7 +60,7 @@ LISTA DE  SUCURSALES
           </div>
       <div class="panel-body">
             <!-- Tabla para listar sucursales-->
-            <table id='table'  class="table table-hover dataTable table-striped w-full">
+            <table id='table'  class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
                   <th>Nombre</th>
@@ -120,6 +120,19 @@ LISTA DE  SUCURSALES
     </div>
   <!-- End Panel Basic -->
 @endsection
+@section('barcode-product')
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#table').DataTable({
+            retrieve: true,
+            //responsive: true,
+            //paging: false,
+            //searching: false
+        });
+ 
+    });
+    </script>
+  @endsection
 <!-- Función Sweet Alert para eliminar sucursal-->
 @section('delete-sucursales')
 <script type="text/javascript">
@@ -177,5 +190,4 @@ $(document).ready(function() {
 @endsection
 <!--END Función-->
 
-@section('barcode-product')
-@endsection
+

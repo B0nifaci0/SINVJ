@@ -15,6 +15,10 @@ SUCURSAl
         <header class="panel-heading">
             <div class="row">
                 <h1 class=" panel-title col-9">Detalle de ventas</h1>
+                <div class="panel-actions float-right col-">
+                    <button onclick="window.location.href='/ventas'" class="btn btn-sm small btn-floating
+                    btn-primary waves-light float-right" data-original-title="Ir a mis vent">  <i class="icon fa-reply-all " aria-hidden="true"></i></button>
+                </div>         
                 {{-- <div class="panel-actions float-right col-">
                     <a href="/ventas/{{$sale->id}}/edit">
                         <button class="btn btn-sm small btn-floating
@@ -53,11 +57,20 @@ SUCURSAl
                                 </tr>
                                 <tr>
                                     <td><strong class="text-center badge badge-danger" >Pagado:</strong></td>
-                                    <td>$ {{ $sale->partials->sum('amount') }}</td>
+                                    @if(($sale->paid_out - $sale->positive_balance) > 0)
+                                        <td>$ {{($sale->paid_out - $sale->positive_balance)}}</td>
+                                    @else
+                                        <td>$ {{$sale->paid_out}}</td>
+                                    @endif
                                 </tr>
                                 <tr>
-                                    <td><strong class="text-center badge badge-success">Restan:</strong></td>
-                                    <td>$ {{ $sale->total - $sale->paid_out }}</td>
+                                    @if(($sale->total - $sale->partials->sum('amount')) >  0)
+                                        <td><strong class="text-center badge badge-success">Restan:</strong></td>
+                                        <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
+                                    @else
+                                        <td><strong class="text-center badge badge-success">Restan:</strong></td>
+                                        <td> $ 0</td>
+                                    @endif
                                 </tr>
                             </tbody>
                         </table>
@@ -65,7 +78,7 @@ SUCURSAl
                 </div>
             </div>
 
-                <table class="table">
+                <table id="items" class="table">
                     <thead>
                         <tr>
                             <th>Clave</th>
@@ -74,6 +87,7 @@ SUCURSAl
                             <th>Categoria</th>
                             <th>Peso</th>
                             <th>Precio</th>
+                            <th>Devolver</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,13 +103,20 @@ SUCURSAl
                                 @endforeach
                              @else  N/A @endif</td>
                             <td>{{$item->category_name}}</td>
-                            <td>{{ ($item->weigth) ? $item->weigth  : 0 }}g</td>
+                            <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                             <td>$ {{ $item->final_price }}</td>
+                            <td>
+                                <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
+                                alt="{{$item->id_product}}" role="button" data-toggle="tooltip" data-original-title="Devolver">
+                                <i class="icon md-delete" aria-hidden="true"></i>
+                                </button>
+                            </td>
                         </tr>
                         @endforeach
                         <tr>
                             <td colspan="5"></td>
                             <td><strong>$ {{ $sale->total }}</strong></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -133,7 +154,11 @@ SUCURSAl
                     </div>
                     <div class="col-md-3">
                         <p>
+                            @if(($sale->total - $sale->partials->sum('amount')) >  0)
                             <strong>Restan: </strong>$ {{ $sale->total - $sale->partials->sum('amount') }}
+                            @else
+                            <strong>Restan: $ 0</strong>
+                            @endif
                         </p>
                     </div>
                 </div>
@@ -184,48 +209,99 @@ SUCURSAl
                     <div class="row">
                         <div class="col-md-12">
                             <label>Método de pago</label>
-                            <select name="type" id="" class="form-control">
-                                <option value="1">Efectivo</option>
-                                <option value="2">Tarjeta</option>
+                            <select name="type"  class="form-control">
+                                <option value="1" id="t">Efectivo</option>
+                                <option value="2" id="e">Tarjeta</option>
                             </select>
                         </div>
                         <div class="col-md-12">
                             <label>Monto</label>
                             <input type="text" id="amount" name="amount" class="form-control" alt="{{$sale->total - $sale->partials->sum('amount')}}">
                         </div>
+                            <!-- Input para seleccionar Imagen del ticket-->
+                                <div class="form-group form-material col-md-6"  >
+                                    <label>Selecciona Ticket de la venta</label>
+                                    <br>
+                                    <label for="image" class="btn btn-success">Explorar</label>
+                                    <input type="file" name="image" id="image">
+                                </div>
+                            <!-- END Input-->
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="savePartial" type="button" class="btn btn-primary">Guardar pago</button>
+                <button id="savePartial" type="button" class="btn btn-primary" data-dismiss="modal">Guardar pago  </button>
                 <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button> -->
             </div>
         </div>
 
     </div>
 </div>
-
-@section('listado-productos')
+<form method="post" action="/ventas/check" id="form" class="d-none">
+    {{ csrf_field() }}
+    <input type="text" name="discar_cause" id="discar_cause">
+    <input type="text" name="product_id" id="product_id">
+    <input type="text" name="sale_id" id="sale-id" value="{{ $sale->id }}">
+</form>
+@section('listado-productos') 
 <script>
+
+$(document).ready(function(){
+
+    $('#items').on('click', '.give-back', function () {
+        let id = $(this).attr("alt");
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿El producto ha sido devuelto?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4caf50',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+        }).then((result) => {
+            if (result.value) {
+                $('#discar_cause').val(3);
+                $('#product_id').val(id);
+                $('#form').submit();
+            }
+        })
+    });
+
     $('#savePartial').click(function(e) {
         e.preventDefault();
         let amount = Number($('#amount').val());
         let max = Number($('#amount').attr('alt'));
         console.log(amount, max);
         if(amount > max) {
-            alert('No puede pagar más de $ ' + max);
+            swal.fire({
+            title: 'Error',
+            text: 'El pago maximo es $ ' + max,
+            type: 'warning',
+            showAcepptButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar!'
+            });
             return;
         }
         $('#saleForm').submit();
-    })
+    }); 
 
-    $(document).ready(function(){
+
               
     $('#amount').on('input', function() {
                     let id = $(this).attr('id');
                     let val = $(this).val();
-                    $(`#${id}`).val( val.replace(/\s+/, "") );
+                    if(!Number(val)) {
+                        $(this).val( val.replace(/[^0-9.]/, '') );
+                    }
     })
+    $("#t").on( 'select', function() {
+			$('#image').show(); //muestro mediante clase
+		 });
+	$("#e").on( 'select', function() {
+			$('#image').hide(); //muestro mediante clase
+	    });
 });
 </script>
 @endsection

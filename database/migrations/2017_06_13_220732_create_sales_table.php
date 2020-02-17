@@ -23,6 +23,7 @@ class CreateSalesTable extends Migration
             $table->double('total', 9, 2);
             $table->double('income', 9, 2);
             $table->double('change', 9, 2);
+            $table->double('positive_balance', 9, 2);
             $table->integer('folio');
             $table->double('paid_out');
             $table->softDeletes();

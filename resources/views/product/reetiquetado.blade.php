@@ -27,21 +27,21 @@ ALTA PRODUCTO
           </ul>
         </div>
       @endif
-      <h2 align="center">Nuevo Producto</h2>
+      <h2 align="center">Reetiquetado De Producto</h2>
       <br>
       <form id="multiplicar" class="" action="/productos" method="POST" enctype="multipart/form-data">
+      @foreach($products as $product)
         {{ csrf_field() }}
-        <input type="text" value="2" class="form-control d-none"  name="status_id">
         <div class='row'>
           <!-- Input para ingresar clave del producto-->
           <div class="form-group form-material col-md-3">
             <label>Clave</label>
-            <input type="text" class="form-control" name="clave"  value="{{old('clave')}}" required>
+            <input type="text" class="form-control" name="clave" value="{{($product->clave) ? $product->clave: old('clave')}}" required>
           </div>
             <!-- Input para ingresar descripcion-->
             <div class="form-group form-material col-md-3">
               <label>Descripcion</label>
-              <input type="text" class="form-control" name="description"  value="{{old('description')}}" required>
+              <input type="text" class="form-control" name="description" value="{{($product->description) ? $product->description: old('description')}}" required>
             </div>
             <!-- END Input-->
             <!-- Select para Seleccionar linea-->
@@ -49,7 +49,7 @@ ALTA PRODUCTO
                <label  class="control-label">Seleccione Linea</label>
               <select id="line_id"   name="line_id"  class="form-control round">
                 @foreach($lines as $line)
-                  <option value="{{ $line->id }}" required>{{ $line->name }}</option>
+                  <option value="{{ $line->id }}" required>{{($line->name) ? $line->name :old('$line->name')}}</option>
                 @endforeach
               </select>
             </div>
@@ -58,19 +58,19 @@ ALTA PRODUCTO
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
-              <input type="text" id="pricepzt" class="form-control"  name="pricepzt" value="{{old('pricepzt')}}">
+              <input type="text" id="pricepzt" class="form-control"  name="pricepzt" value="{{($product->price) ? $product->price: old('pricepzt')}}">
             </div>
 
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricecp" class="form-group form-material col-md-3 remove">
               <label>Precio Compra</label>
-              <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{old('price_purchase')}}">
+              <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{($product->price_purchase) ? $product->price_purchase :old('$product->price_purchase')}}">
             </div>
             <!-- END Input-->
             <!-- Input para ingresar precio con descuento-->
             <div id="discountpz" class="form-group form-material col-md-3 remove">
               <label>Precio con descuentopz</label>
-              <input type="text"  class="form-control" id="pcdpz" name="max_discountpz" value="{{old('max_discountpz')}}" >
+              <input type="text"  class="form-control" id="pcdpz" name="max_discountpz" value="{{($product->discount) ? $product->discount :old('max_discountpz')}}">
             </div>
             <!-- END Input-->
             <div   class="col-md-3 form-material remove">
@@ -81,19 +81,19 @@ ALTA PRODUCTO
             <!-- Input para ingresar Peso del producto-->
             <div class="form-group form-material col-md-3 remove">
               <label>Gramos</label>
-              <input type="text" id="multiplicador"  class="form-control" name="weigth">
+              <input type="text" id="multiplicador"  class="form-control" name="weigth"  value="{{($product->weigth) ? $product->weigth :old('$product->weigth')}}">
             </div>
             <!-- END Input-->
             <!-- Input para ingresar precio del producto-->
             <div id="show" class="form-group form-material col-md-3 remove">
               <label>Precio del Producto</label>
-              <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price" value="{{old('price')}}">
+              <input type="text" class="form-control" id="total" readonly name="price" value="{{($product->price) ? $product->price :old('price')}}">
             </div>
             <!-- END Input-->
             <!-- Input para ingresar Tope de descuento -->
             <div class="form-group form-material col-md-3 remove">
               <label>Precio con descuentogr</label>
-              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount" value="{{old('max_discount')}}">
+              <input type="text" class="form-control" id="discount" readonly name="max_discount" value="{{($product->discount) ? $product->discount :old('max_discount')}}">
             </div>
             <!-- END Input-->
             <!-- Select para Seleccionar categoria-->
@@ -134,10 +134,22 @@ ALTA PRODUCTO
               </select>
             </div>
             <!-- END Select-->
+            <!-- Select para Editar Estatus-->
+            <div class="col-md-3">
+            <label>Seleccione El Estatus Actual</label>
+                <select name="status_id" class="form-control round">
+                    @foreach($statuses as $status)
+                        @if($status->id != 3 && $status->id != 1)
+                            <option value="{{ $status->id }}" required>{{ $status->name }}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+            <!-- END Select-->
             <!-- Input para ingresar Observaciones-->
             <div class="form-group form-material col-md-3">
               <label>Observaciones</label>
-              <input type="text" class="form-control" name="observations"  value="{{old('observations')}}">
+              <input type="text" class="form-control" name="observations" value="{{($product->observations) ? $product->observations :old('$product->observations')}}">
             </div>
             <!-- END Input-->
             <!-- Input para Seleccionar Imagen del producto-->
@@ -153,6 +165,7 @@ ALTA PRODUCTO
           </div>
           <!-- END Botón-->
         </div>
+        @endforeach
       </form>
     </div>
   </div>

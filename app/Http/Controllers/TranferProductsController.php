@@ -15,9 +15,9 @@ use App\Traits\S3ImageManager;
 
 class TranferProductsController extends Controller
 {
-    use S3ImageManager;
-    public function __construct()
-    {
+  use S3ImageManager;
+    public function __construct(){
+      $this->middleware('admin');
     }
     public function index()
     {
@@ -40,9 +40,8 @@ class TranferProductsController extends Controller
         if (Auth::user()->type_user == User::CO) {
             redirect('/traspasos');
         } else {
-            redirect('/traspasosAA');
+        redirect('/traspasosAA');
         }
-
         $user = Auth::user();
         $trans = TransferProduct::all();
 
