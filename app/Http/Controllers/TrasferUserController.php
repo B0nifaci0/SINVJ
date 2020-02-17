@@ -41,12 +41,6 @@ class TrasferUserController extends Controller
         $user = Auth::user();
         $shop_id = $user->shop->id;
 
-        // if($user->branch && $user->branch->id) {
-        //   $branch_ids = [$user->branch->id];
-        // } else {
-        //   $branch_ids = $user->shop->branches->map(function($b) { return $b->id; });
-        // }
-
         if ($user->shop && $user->shop->shop_group_id) {
             $shop_ids = Shop::where('shop_group_id', $user->shop->shop_group_id)->get()->map(function ($item) {
                 return $item->id;
