@@ -375,7 +375,7 @@ class ProductController extends Controller
         $data['discount'] = $request->max_discount ? $request->max_discount : 0;
         $data['user_id'] = Auth::user()->id;
         $data['price_purchase'] = $request->price_purchase;
-        $data['status_id'] = 2;
+        $data['status_id'] = $request->status_id;
 
         $category = Category::find($request->category_id);
         if ($category->type_product == 1) {
@@ -533,6 +533,7 @@ class ProductController extends Controller
         ->where('shop_id',$user->shop_id)
         ->withTrashed()
         ->get();
+        
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($products as $product) {
 			if($product->image) {
