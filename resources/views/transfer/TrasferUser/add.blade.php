@@ -35,7 +35,7 @@ ALTA PRODUCTO
                 <option></option>
                 <optgroup label="Productos">
                 @foreach($products as $product)
-                <option value="{{ $product->description }}">{{$product->clave}}-{{ $product->description }}</option>
+                <option value="{{ $product->description }}" required>{{$product->clave}}-{{ $product->description }}</option>
                 @endforeach
                 </optgroup>
               </select>

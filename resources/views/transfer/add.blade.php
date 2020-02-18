@@ -30,7 +30,7 @@ ALTA PRODUCTO
             <div class="form-group form-material  col-md-3  col-md-offset-1 visible-md visible-lg">
               <label>Producto</label>
               <select id="product" name="product_id" class="form-control " data-plugin="select2" data-placeholder="Seleccione Producto"
-                data-allow-clear="true">
+                data-allow-clear="true" required>
                 <option></option>
                 <optgroup label="Productos">
                   @foreach($products as $product)
@@ -43,7 +43,7 @@ ALTA PRODUCTO
             <!-- Select para Seleccionar Sucursal Destino-->
             <div class="form-group  col-md-3  col-md-offset-1 visible-md visible-lg">
               <label>Sucursal Destino</label>
-              <select id="branches" class="form-control sucursales" name="new_branch_id" alt="1" >
+              <select id="branches" class="form-control sucursales" name="new_branch_id" alt="1" required>
                 <option value="*">Seleccione Sucursal</option>
               </select>
             </div>
