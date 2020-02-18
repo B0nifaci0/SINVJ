@@ -167,6 +167,7 @@ ALTA VENTA
                         <!-- END Tabla-->
                     </div>
                     <br>
+                    <input type="file" name="image" id="image" class="">
                     <div class="row">
                         <!-- Botón para mostar el Modal de Tipos de pago-->
                         <div class="col-6 form-group">
@@ -206,14 +207,14 @@ ALTA VENTA
                                     </div>
                                     <div class="modal-body">
                                             <!-- CONTADO-->
-                                            
+
                                                 <div class="row mt-5">
                                                     <div class="form-group form-material col-md-6">
                                                         <label class="form-control-label"
                                                             for="inputBasicFirstName">Efectivo:</label>
                                                         <input type="text" class="form-control income" name="" id="cashIncome"
                                                             required="required" placeholder="$" required />
-                                                    </div> 
+                                                    </div>
                                                 </div>
                                                 <div class="row">
                                                     <!-- Input para ingresar cantidad a pagar-->
@@ -228,7 +229,7 @@ ALTA VENTA
                                                         <label>Selecciona Ticket de la venta</label>
                                                         <br>
                                                         <label for="image" class="btn btn-success">Explorar</label>
-                                                        <input type="file" name="image" id="image" class="hidden">
+                                                        <input type="file" id="imageModal">
                                                     </div>
                                                     <!-- END Input-->
                                                 </div>
@@ -283,7 +284,7 @@ seleccionado con sus respectivos datos-->
                 WHOLESALERS: 2
             }
 
-            // setInterval(() => {  
+            // setInterval(() => {
             //     console.log("------------------>overDiscount", overDiscount.length, overDiscountAuth);
             // }, 4000);
 
@@ -390,6 +391,7 @@ seleccionado con sus respectivos datos-->
 
                 let cashPayment = $('#cashIncome').val();
                 let cardPayment = $('#cardIncome').val();
+
                 $('#cashPayment').val(cashPayment);
                 $('#cardPayment').val(cardPayment);
                 console.log("productsList", $('#productsList').val());
@@ -411,7 +413,7 @@ seleccionado con sus respectivos datos-->
                     if(!Number(val)) {
                         $(this).val( val.replace(/[^0-9.]/, '') );
                     }
-                    
+
                     if (id == 'cashIncome') {
                         cashIncome = $(`#${id}`).val();
                     } else if (id == 'cardIncome') {
@@ -419,7 +421,7 @@ seleccionado con sus respectivos datos-->
                     }
 
                     totalIncome = Number(cashIncome) + Number(cardIncome);
-                    
+
                     $('#amount').html(`$ ${totalIncome}`)
                     $('#monto').val(totalIncome);
 
@@ -517,7 +519,7 @@ seleccionado con sus respectivos datos-->
 
                 // $('#ventas').on('change', '.finalPrice', function(){
                     // // $('.finalPrice').on('change', function () {
-                //     console.log("cahnge test")   
+                //     console.log("cahnge test")
                 //     var productId = $(this).attr('alt');
                 //     product = products.filter(p => p.id == productId)[0];
 
@@ -536,7 +538,7 @@ seleccionado con sus respectivos datos-->
                     product = products.filter(p => p.id == productId)[0];
 
                     currentPrice = Number($(this).val());
-                    
+
                     // IMPORTANTE Asignarl el precio actual al input oculto
                     $(`#finalPrice${product.id}`).val(currentPrice);
 

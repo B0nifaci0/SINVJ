@@ -10,22 +10,19 @@ use App\Client;
 use App\User;
 use App\Branch;
 use App\Partial;
-use App\Shop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\SaleRequest;
-use Illuminate\Support\Facades\Storage;
 use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\Auth;
 use PDF;
-use DB;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SaleController extends Controller
 {
     use S3ImageManager;
+
     public function __construct()
     {
         //$this->middleware('Authentication');
@@ -44,7 +41,7 @@ class SaleController extends Controller
       //return $user;
     $sale = Sale::with(['partials', 'client'])->findOrFail($id);
     	$sale->itemsSold = $sale->itemsSold();
-      $sale->total = $sale->itemsSold->sum('final_price'); 
+      $sale->total = $sale->itemsSold->sum('final_price');
       $sale->payments = $sale->partials->sum('amount'); */
 
 
@@ -72,8 +69,8 @@ class SaleController extends Controller
             ->where('shops.id',$user->shop_id)
             ->orderBy('sales.id','DESC')
             ->get();
-     
- 
+
+
       }elseif ($user->type_user == User::CO || $user->type_user == User::SA ){
           //VENDIDOS
           $sold = Sale::with('client')
@@ -102,11 +99,11 @@ class SaleController extends Controller
           'Apartados' => $apart,
         ],200); */
 
-      
-      /* $products = Product::with('line') 
+
+      /* $products = Product::with('line')
         ->with('branch')
         ->with('category')
-        ->with('status') 
+        ->with('status')
         ->get(); */
     return view('sale/index', compact('sold','user','apart'));
     }
@@ -185,7 +182,7 @@ class SaleController extends Controller
             $folio = Sale::where('branch_id', $user->branch_id)->select('id')->get()->count();
             $folio++;
         }
-        
+
         $validator = Validator::make($request->all(), [
             'customer_name' => Rule::requiredIf($request->user_type == 1),
         ]);
@@ -207,7 +204,6 @@ class SaleController extends Controller
         if($sale) {
             $sale->total += $request->total_pay;
         } else {
-            $paid_out_value = 0;
             $sale = Sale::create([
                 'telephone' => $request->telephone,
                 'price' => $request->price,
@@ -255,10 +251,19 @@ class SaleController extends Controller
                 'sale_id' => $sale->id,
                 'amount' => ($request->card_income) ? $request->card_income : 0,
                 'type' => Partial::CARD,
+                'image' => $request->image
             ]);
+            if ($request->hasFile('image')) {
+                $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+                $image = file_get_contents($request->file('image')->path());
+                $base64Image = base64_encode($image);
+                $path = 'ticketpartial';
+                $partial->image = $this->saveImages($base64Image, $path, $product->id);
+            }
         }
 
         $sale->paid_out = Partial::where('sale_id', $sale->id)->sum('amount');
+
         $sale->save();
 
         return redirect('/ventas')->with('mesage', 'La venta se ha agregado exitosamente!');
@@ -305,7 +310,7 @@ class SaleController extends Controller
         $product->discar_cause = $request->discar_cause;
         //return $product;
         $sale->save();
-        $product->save();            
+        $product->save();
         $product->delete();
         Sale::where('id', $request->sale_id)->update(['total' => $total]);
         return back();

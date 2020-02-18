@@ -136,7 +136,7 @@ TRANSFERENCIAS
                                                     @if($transferin->paid_at)
                                                     <span class="text-center badge badge-success">Pagado</span>
                                                     @else
-                                                    <span class="text-center badge badge-success">Por pagar</span>
+                                                    <span class="text-center badge badge-success">Aceptado</span>
                                                     @endif
                                                     @elseif($transferin->status_product === 0)
                                                     <span class="text-center badge badge-warning">Rechazado</span>
@@ -150,8 +150,7 @@ TRANSFERENCIAS
                                                     <!-- Botón para Aceptar o Rechazar Traspaso -->
                                                     @if($transferin->status_product === null)
                                                     @if(Auth::user()->id == $transferin->user_id)
-                                                    <button class="btn btn-warning cancel"
-                                                        alt="{{ $transferin->id }}">Cancelar</button>
+
                                                     @else
                                                     <button class="btn btn-primary accept"
                                                         alt="{{ $transferin->id }}">Aceptar</button>
@@ -162,10 +161,7 @@ TRANSFERENCIAS
                                                     @if(!$transferin->paid_at)
                                                     @if(Auth::user()->id == $transferin->user_id &&
                                                     $transferin->status_product == 1)
-                                                    <button class="btn btn-success paid"
-                                                        alt="{{ $transferin->id }}">Pagar</button>
-                                                    <button class="btn btn-danger give-back"
-                                                        alt="{{ $transferin->id }}">Devolver</button>
+
                                                     @else
                                                     @if($transferin->status_product === null)
                                                     <span class="text-center badge badge-success">Pendiente</span>
@@ -269,15 +265,11 @@ TRANSFERENCIAS
                                                 <button class="btn btn-warning cancel"
                                                     alt="{{ $transferout->id }}">Cancelar</button>
                                                 @else
-                                                <button class="btn btn-primary accept"
-                                                    alt="{{ $transferout->id }}">Aceptar</button>
-                                                <button class="btn btn-warning reject"
-                                                    alt="{{ $transferout->id }}">Rechazar</button>
+
                                                 @endif
                                                 @else
                                                 @if(!$transferout->paid_at)
-                                                @if(Auth::user()->id == $transferout->user_id && $transferout->status_product
-                                                == 1)
+                                                @if($transferout->status_product == 1)
                                                 <button class="btn btn-success paid"
                                                     alt="{{ $transferout->id }}">Pagar</button>
                                                 <button class="btn btn-danger give-back"

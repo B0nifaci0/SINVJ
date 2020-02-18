@@ -136,7 +136,7 @@ TRANSFERENCIAS
                                                     @if($transferin->paid_at)
                                                     <span class="text-center badge badge-success">Pagado</span>
                                                     @else
-                                                    <span class="text-center badge badge-success">Por pagar</span>
+                                                    <span class="text-center badge badge-success">Aceptado</span>
                                                     @endif
                                                     @elseif($transferin->status_product === 0)
                                                     <span class="text-center badge badge-warning">Rechazado</span>
@@ -162,8 +162,6 @@ TRANSFERENCIAS
                                                     @if(!$transferin->paid_at)
                                                     @if(Auth::user()->id == $transferin->user_id &&
                                                     $transferin->status_product == 1)
-                                                    <button class="btn btn-success paid"
-                                                        alt="{{ $transferin->id }}">Pagar</button>
                                                     <button class="btn btn-danger give-back"
                                                         alt="{{ $transferin->id }}">Devolver</button>
                                                     @else
@@ -278,8 +276,6 @@ TRANSFERENCIAS
                                                 @if(!$transferout->paid_at)
                                                 @if(Auth::user()->id == $transferout->user_id && $transferout->status_product
                                                 == 1)
-                                                <button class="btn btn-success paid"
-                                                    alt="{{ $transferout->id }}">Pagar</button>
                                                 <button class="btn btn-danger give-back"
                                                     alt="{{ $transferout->id }}">Devolver</button>
                                                 @else
@@ -334,10 +330,7 @@ TRANSFERENCIAS
     <input type="text" name="transfer_id" id="transfer_id_gb">
 </form>
 
-<form method="post" action="/traspasos/pagar" id="payment-form" class="d-none">
-    {{ csrf_field() }}
-    <input type="text" name="transfer_id" id="transfer_id_p">
-</form>
+
 
 @endsection
 
