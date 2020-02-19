@@ -88,6 +88,7 @@ TRANSFERENCIAS
                                         data-plugin="dataTable">
                                         <thead>
                                             <tr>
+                                                <th>Fecha</th>
                                                 <th>Clave</th>
                                                 <th>Peso</th>
                                                 <th>Categoría</th>
@@ -96,7 +97,6 @@ TRANSFERENCIAS
                                                 <th>Quien lo mando</th>
                                                 <th>S.Destino</th>
                                                 <th>Quien recibio</th>
-                                                <th>Fecha</th>
                                                 <th>Status</th>
                                                 <th>Opciones</th>
                                                 <th>Reporte</th>
@@ -104,6 +104,7 @@ TRANSFERENCIAS
                                         </thead>
                                         <tfoot>
                                             <tr>
+                                                <th>Fecha</th>
                                                 <th>Clave</th>
                                                 <th>Peso</th>
                                                 <th>Categoría</th>
@@ -112,7 +113,6 @@ TRANSFERENCIAS
                                                 <th>Quien lo mando</th>
                                                 <th>S.Destino</th>
                                                 <th>Quien recibio</th>
-                                                <th>Fecha</th>
                                                 <th>Status</th>
                                                 <th>Opciones</th>
                                                 <th>Reporte</th>
@@ -121,6 +121,7 @@ TRANSFERENCIAS
                                         <tbody>
                                             @foreach ($trans2 as $transferin)
                                             <tr id="row{{$transferin->id}}">
+                                                <td>{{$transferin->created_at->format('m-d-Y')}}</td>
                                                 <td>{{ $transferin->product->clave }}</td>
                                                 <td>{{ $transferin->product->weigth }}</td>
                                                 <td>{{ $transferin->product->category->name }}</td>
@@ -130,7 +131,6 @@ TRANSFERENCIAS
                                                 <td>{{$transferin->user->name}}</td>
                                                 <td>{{$transferin->newBranch->name}}</td>
                                                 <td>{{$transferin->destinationUser->name}}</td>
-                                                <td>{{$transferin->created_at->format('m-d-Y')}}</td>
                                                 <td>
                                                     @if($transferin->status_product === 1 || $transferin->paid_at)
                                                     @if($transferin->paid_at)
@@ -139,7 +139,7 @@ TRANSFERENCIAS
                                                     <span class="text-center badge badge-success">Aceptado</span>
                                                     @endif
                                                     @elseif($transferin->status_product === 0)
-                                                    <span class="text-center badge badge-warning">Rechazado</span>
+                                                    <span class="text-center badge badge-secondary">Rechazado</span>
                                                     @elseif($transferin->status_product === 3)
                                                     <span class="text-center badge badge-danger">Devuelto</span>
                                                     @else
@@ -149,9 +149,7 @@ TRANSFERENCIAS
                                                 <td>
                                                     <!-- Botón para Aceptar o Rechazar Traspaso -->
                                                     @if($transferin->status_product === null)
-                                                    @if(Auth::user()->id == $transferin->user_id)
-
-                                                    @else
+                                                    @if(Auth::user()->id == $transferin->destinationUser->id)
                                                     <button class="btn btn-primary accept"
                                                         alt="{{ $transferin->id }}">Aceptar</button>
                                                     <button class="btn btn-warning reject"
@@ -167,13 +165,12 @@ TRANSFERENCIAS
                                                     <span class="text-center badge badge-success">Pendiente</span>
                                                     @elseif($transferin->status_product == 1)
                                                     <span class="text-center badge badge-warning">Por pagar</span>
-                                                    @elseif($transferin->status_product == 0 || $transferin->status_product
+                                                    @elseif($transferin->status_product == 0 ||
+                                                    $transferin->status_product
                                                     == 3)
-                                                    <span class="text-center badge badge-warning">No se paga</span>
+                                                    <span class="text-center badge badge-info">No se paga</span>
                                                     @endif
                                                     @endif
-                                                    @else
-                                                    <span class="text-center badge badge-success">Pagado</span>
                                                     @endif
                                                     @endif
                                                     <!-- END Botón-->
@@ -203,14 +200,15 @@ TRANSFERENCIAS
                                     data-plugin="dataTable">
                                     <thead>
                                         <tr>
+                                            <th>Fecha</th>
                                             <th>Clave</th>
                                             <th>Peso</th>
                                             <th>Categoría</th>
                                             <th>Linea</th>
                                             <th>S.Origen</th>
+                                            <th>Quien lo mando</th>
                                             <th>S.Destino</th>
                                             <th>Quien recibio</th>
-                                            <th>Fecha</th>
                                             <th>Status</th>
                                             <th>Opciones</th>
                                             <th>Reporte</th>
@@ -218,14 +216,15 @@ TRANSFERENCIAS
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Fecha</th>
                                             <th>Clave</th>
                                             <th>Peso</th>
                                             <th>Categoría</th>
                                             <th>Linea</th>
                                             <th>S.Origen</th>
+                                            <th>Quien lo mando</th>
                                             <th>S.Destino</th>
                                             <th>Quien recibio</th>
-                                            <th>Fecha</th>
                                             <th>Status</th>
                                             <th>Opciones</th>
                                             <th>Reporte</th>
@@ -234,24 +233,25 @@ TRANSFERENCIAS
                                     <tbody>
                                         @foreach ($trans1 as $transferout)
                                         <tr id="row{{$transferout->id}}">
+                                            <td>{{ $transferout->created_at->format('m-d-Y')}}</td>
                                             <td>{{ $transferout->product->clave }}</td>
                                             <td>{{ $transferout->product->weigth }}</td>
                                             <td>{{ $transferout->product->category->name }}</td>
                                             <td>{{ $transferout->product->line ? $transferout->product->line->name : '' }}
                                             </td>
+                                            <td>{{$transferout->lastBranch->name}}</td>
                                             <td>{{$transferout->user->name}}</td>
                                             <td>{{$transferout->newBranch->name}}</td>
                                             <td>{{$transferout->destinationUser->name}}</td>
-                                            <td>{{$transferout->created_at->format('m-d-Y')}}</td>
                                             <td>
                                                 @if($transferout->status_product === 1 || $transferout->paid_at)
                                                 @if($transferout->paid_at)
                                                 <span class="text-center badge badge-success">Pagado</span>
                                                 @else
-                                                <span class="text-center badge badge-success">Por pagar</span>
+                                                <span class="text-center badge badge-warning">Por pagar</span>
                                                 @endif
                                                 @elseif($transferout->status_product === 0)
-                                                <span class="text-center badge badge-warning">Rechazado</span>
+                                                <span class="text-center badge badge-secondary">Rechazado</span>
                                                 @elseif($transferout->status_product === 3)
                                                 <span class="text-center badge badge-danger">Devuelto</span>
                                                 @else
@@ -279,13 +279,12 @@ TRANSFERENCIAS
                                                 <span class="text-center badge badge-success">Pendiente</span>
                                                 @elseif($transferout->status_product == 1)
                                                 <span class="text-center badge badge-warning">Por pagar</span>
-                                                @elseif($transferout->status_product == 0 || $transferout->status_product ==
+                                                @elseif($transferout->status_product == 0 ||
+                                                $transferout->status_product ==
                                                 3)
-                                                <span class="text-center badge badge-warning">No se paga</span>
+                                                <span class="text-center badge badge-info">No se paga</span>
                                                 @endif
                                                 @endif
-                                                @else
-                                                <span class="text-center badge badge-success">Pagado</span>
                                                 @endif
                                                 @endif
                                                 <!-- END Botón-->
@@ -498,4 +497,3 @@ TRANSFERENCIAS
         });
 </script>
 @endsection
-

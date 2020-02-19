@@ -57,7 +57,7 @@ TRANSFERENCIAS
                             </div>
                             @endif
                             <div class="col-6">
-                                <button onclick="window.location.href='/traspasosAA/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left
+                                <button onclick="window.location.href='/traspasos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left
                   btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip"
                                     data-original-title="Agregar">
                                     <i class="icon md-plus" aria-hidden="true"></i>
@@ -139,7 +139,7 @@ TRANSFERENCIAS
                                                     <span class="text-center badge badge-success">Aceptado</span>
                                                     @endif
                                                     @elseif($transferin->status_product === 0)
-                                                    <span class="text-center badge badge-warning">Rechazado</span>
+                                                    <span class="text-center badge badge-secondary">Rechazado</span>
                                                     @elseif($transferin->status_product === 3)
                                                     <span class="text-center badge badge-danger">Devuelto</span>
                                                     @else
@@ -169,9 +169,10 @@ TRANSFERENCIAS
                                                     <span class="text-center badge badge-success">Pendiente</span>
                                                     @elseif($transferin->status_product == 1)
                                                     <span class="text-center badge badge-warning">Por pagar</span>
-                                                    @elseif($transferin->status_product == 0 || $transferin->status_product
+                                                    @elseif($transferin->status_product == 0 ||
+                                                    $transferin->status_product
                                                     == 3)
-                                                    <span class="text-center badge badge-warning">No se paga</span>
+                                                    <span class="text-center badge badge-info">No se paga</span>
                                                     @endif
                                                     @endif
                                                     @else
@@ -250,10 +251,10 @@ TRANSFERENCIAS
                                                 @if($transferout->paid_at)
                                                 <span class="text-center badge badge-success">Pagado</span>
                                                 @else
-                                                <span class="text-center badge badge-success">Por pagar</span>
+                                                <span class="text-center badge badge-warning">Por pagar</span>
                                                 @endif
                                                 @elseif($transferout->status_product === 0)
-                                                <span class="text-center badge badge-warning">Rechazado</span>
+                                                <span class="text-center badge badge-secondary">Rechazado</span>
                                                 @elseif($transferout->status_product === 3)
                                                 <span class="text-center badge badge-danger">Devuelto</span>
                                                 @else
@@ -274,7 +275,8 @@ TRANSFERENCIAS
                                                 @endif
                                                 @else
                                                 @if(!$transferout->paid_at)
-                                                @if(Auth::user()->id == $transferout->user_id && $transferout->status_product
+                                                @if(Auth::user()->id == $transferout->user_id &&
+                                                $transferout->status_product
                                                 == 1)
                                                 <button class="btn btn-danger give-back"
                                                     alt="{{ $transferout->id }}">Devolver</button>
@@ -283,9 +285,10 @@ TRANSFERENCIAS
                                                 <span class="text-center badge badge-success">Pendiente</span>
                                                 @elseif($transferout->status_product == 1)
                                                 <span class="text-center badge badge-warning">Por pagar</span>
-                                                @elseif($transferout->status_product == 0 || $transferout->status_product ==
+                                                @elseif($transferout->status_product == 0 ||
+                                                $transferout->status_product ==
                                                 3)
-                                                <span class="text-center badge badge-warning">No se paga</span>
+                                                <span class="text-center badge badge-info">No se paga</span>
                                                 @endif
                                                 @endif
                                                 @else
@@ -499,4 +502,3 @@ TRANSFERENCIAS
         });
 </script>
 @endsection
-

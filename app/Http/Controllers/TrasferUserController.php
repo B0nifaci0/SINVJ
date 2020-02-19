@@ -19,7 +19,8 @@ class TrasferUserController extends Controller
 
     use S3ImageManager;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('admin');
     }
 
@@ -31,13 +32,15 @@ class TrasferUserController extends Controller
         });
         $trans1 = TransferProduct::whereIn('user_id', $usersIds)
             ->with('user')->with('branch')->with('product')
+            ->orderBy('transfer_products.created_at', 'desc')
             ->get();
 
         $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
+            ->orderBy('transfer_products.created_at', 'desc')
             ->with('user')->with('branch')->with('product')
             ->get();
 
-        return view('transfer/TrasferUser/index', compact('trans1','trans2'));
+        return view('transfer/TrasferUser/index', compact('trans1', 'trans2'));
     }
 
     public function create()

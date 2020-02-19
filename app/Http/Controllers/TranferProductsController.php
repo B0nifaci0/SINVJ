@@ -15,9 +15,10 @@ use App\Traits\S3ImageManager;
 
 class TranferProductsController extends Controller
 {
-  use S3ImageManager;
-    public function __construct(){
-      $this->middleware('admin');
+    use S3ImageManager;
+    public function __construct()
+    {
+        $this->middleware('admin');
     }
     public function index()
     {
@@ -27,50 +28,15 @@ class TranferProductsController extends Controller
         });
         $trans1 = TransferProduct::where('user_id', $user->id)
             ->with('user')->with('branch')->with('product')
+
             ->get();
 
         $trans2 = TransferProduct::where('destination_user_id', $user->id)
             ->with('user')->with('branch')->with('product')
             ->get();
 
-        return view('transfer/index', compact('trans1','trans2'));
+        return view('transfer/index', compact('trans1', 'trans2'));
     }
-    public function indexAA()
-    {
-        if (Auth::user()->type_user == User::CO) {
-            redirect('/traspasos');
-        } else {
-        redirect('/traspasosAA');
-        }
-        $user = Auth::user();
-        $trans = TransferProduct::all();
-
-        // return ['new_branch_id', $user->branch_id];
-        //return response()->json($trans);
-        //$status = Auth::user()->shop->id;
-        //$statuses = Shop::find($status)->statuss()->get();
-        /*$users=Auth::user()->shop->id;
-        $trans = Shop::find('users')->trans();
-        return $trans;
-        if($trans == 0){
-          return redirect('/traspasos/create');
-        }else{
-        }*/
-
-        //return $transs;
-        $branches = Branch::all();
-        return view('transfer/TrasferUser/index', compact('branches', 'user', 'trans'));
-    }
-    public function createAA()
-    {
-        $user = Auth::user();
-        $users = User::where('id', '!=', $user->id)->get();
-        return $users;
-        $products = Product::where('branch_id', $user->branch_id)->get();
-        $branches = Branch::all();
-        return view('transfer/TrasferUser/add', compact('branches', 'users', 'products'));
-    }
-
 
     public function create()
     {
@@ -129,7 +95,11 @@ class TranferProductsController extends Controller
         $product->status_id = 3;
         $product->save();
 
-        return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
+        if ($user->type_user == User::SA) {
+            return redirect('/traspasosAA')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
+        } else {
+            return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
+        }
     }
 
     public function answerTransferRequest(Request $request)
