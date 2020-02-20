@@ -102,14 +102,14 @@ ALTA PRODUCTO
               @if(null !== session('categories')){
                 <select id="categorie_id" name="category_id" class="form-control round">
                   @foreach(session('categories') as $category)
-                    <option value="{{ $category->id }}" required>{{ $category->name }}</option>
+                    <option value="{{ $category->id}}" required>{{ $category->name }} - @if($category->type_product == 1) pza @else gr @endif</option>
                     <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
                   @endforeach
                 </select>
               @else
                 <select  id="categorie_id" name="category_id" class="form-control round">
                   @foreach($categories as $category)
-                    <option value="{{ $category->id }}" required>{{ $category->name }}</option>
+                    <option value="{{ $category->id }}" required>{{ $category->name }} - @if($category->type_product == 1) pza @else gr @endif</option>
                     <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
                   @endforeach
                 </select>
