@@ -286,7 +286,8 @@ class ExpensesController extends Controller
             // return $user->shop->id;
 
             $total = Branch::join('expenses', 'expenses.branch_id', 'branches.id')
-                ->where('branches.shop_id', $user->shop->id)
+                //->where('branches.shop_id', $user->shop->id)
+                ->whereIn('expenses.branch_id', $branch_ids)
                 ->where('expenses.deleted_at', NULL)
                 ->select('branches.id as id', 'branches.name as sucursal', DB::raw('SUM(expenses.price) as money'))
                 ->groupBy('branches.id', 'branches.name')
