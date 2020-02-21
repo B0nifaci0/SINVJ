@@ -140,8 +140,13 @@ class TranferProductsController extends Controller
     {
         $transfer = TransferProduct::find($request->transfer_id);
 
+        $last_shop = Branch::where('id', $transfer->last_branch_id)
+            ->sum('shop_id');
+        //return $last_shop;
+
         $product = Product::where('id', $transfer->product_id)->first();
         $product->branch_id = $transfer->last_branch_id;
+        $product->shop_id = $last_shop;
         $product->status_id = 2;
         $product->save();
 
