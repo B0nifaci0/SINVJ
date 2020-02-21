@@ -38,9 +38,9 @@ class ExpensesController extends Controller
         $branches_ids = $brances->map(function ($item) {
             return $item->id;
         });
-        if($user->type_user == User::AA) {
+        if ($user->type_user == User::AA) {
             $expenses = Expense::whereIn('branch_id', $branches_ids)->get();
-        }else{
+        } else {
             $expenses = Expense::where('branch_id', $user->branch->id)->get();
         }
         //return $expenses;
@@ -260,13 +260,13 @@ class ExpensesController extends Controller
             foreach ($expenses as $expense) {
                 $expense->totales = $expense->where('branch_id', $branchs)->sum('price');
             }
-            
+
 
             $totales = 0;
             foreach ($expenses as $expense) {
                 $totales = $expense->price + $totales;
             }
-             //return $totals;
+            //return $totals;
             //Sumar Gasto por sucursal
             foreach ($expenses as $expense) {
                 $expense->total = $expense->where('branch_id', $expense->id)->sum('price');
@@ -280,19 +280,21 @@ class ExpensesController extends Controller
             //return $total;
             //Funcion para sumar el gastos de por sucursal
             $branches = Branch::where('shop_id', $user->shop->id)->get();
-            $branch_ids = $branches->map(function($b) { return $b->id; });
-           // return $user->shop->id;
+            $branch_ids = $branches->map(function ($b) {
+                return $b->id;
+            });
+            // return $user->shop->id;
 
-            $total = Branch::join('expenses','expenses.branch_id','branches.id')
-                ->where('branches.shop_id',$user->shop->id)
-                ->where('expenses.deleted_at',NULL)
+            $total = Branch::join('expenses', 'expenses.branch_id', 'branches.id')
+                ->where('branches.shop_id', $user->shop->id)
+                ->where('expenses.deleted_at', NULL)
                 ->select('branches.id as id', 'branches.name as sucursal', DB::raw('SUM(expenses.price) as money'))
                 ->groupBy('branches.id', 'branches.name')
                 ->get();
 
             //return $total;
-            
-            $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('total','branchs','branches', 'totals', 'totales', 'hour', 'date', 'expenses', 'shops', 'shop', 'total','branch_expenses'));
+
+            $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('total', 'branchs', 'branches', 'totales', 'hour', 'date', 'expenses', 'shops', 'shop', 'total', 'branch_expenses'));
             //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
             //return $pdf->stream('gastos.pdf'); //solo visualizacion del archivo en la vista web
             return $pdf->stream('gastos.pdf');
