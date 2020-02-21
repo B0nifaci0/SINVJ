@@ -46,60 +46,65 @@ class TrasferUserController extends Controller
     public function create()
     {
         $user = Auth::user();
-        $shop_id = $user->shop->id;
+        if ($user->type_user == User::SA) {
+            return redirect('/traspasos/create');
+        } else {
 
-        // if($user->branch && $user->branch->id) {
-        //   $branch_ids = [$user->branch->id];
-        // } else {
-        //   $branch_ids = $user->shop->branches->map(function($b) { return $b->id; });
-        // }
+            $shop_id = $user->shop->id;
 
-        if ($user->shop && $user->shop->shop_group_id) {
-            $shop_ids = Shop::where('shop_group_id', $user->shop->shop_group_id)->get()->map(function ($item) {
-                return $item->id;
+            // if($user->branch && $user->branch->id) {
+            //   $branch_ids = [$user->branch->id];
+            // } else {
+            //   $branch_ids = $user->shop->branches->map(function($b) { return $b->id; });
+            // }
+
+            if ($user->shop && $user->shop->shop_group_id) {
+                $shop_ids = Shop::where('shop_group_id', $user->shop->shop_group_id)->get()->map(function ($item) {
+                    return $item->id;
+                });
+                $branches = Branch::whereIn('shop_id', $shop_ids)
+                    ->get();
+            } else {
+                $branches = Branch::where('shop_id', $user->shop->id)
+                    ->get();
+            }
+
+            $branch_ids = $branches->map(function ($b) {
+                return $b->id;
             });
-            $branches = Branch::whereIn('shop_id', $shop_ids)
+
+
+            if ($user->type_user == User::CO) {
+                $products = Product::where('branch_id', $user->branch_id)->get();
+            } else {
+                $products = Product::join('branches', 'branches.id', 'products.branch_id')
+                    ->join('shops', 'shops.id', 'branches.shop_id')
+                    ->where('shops.id', $shop_id)
+                    ->where('products.status_id', 2)
+                    ->select(
+                        'products.id',
+                        'products.clave',
+                        //'products.name',
+                        'products.description',
+                        'products.weigth',
+                        'products.observations',
+                        'products.price',
+                        'products.image',
+                        'products.category_id',
+                        'products.line_id',
+                        'products.shop_id',
+                        'products.branch_id',
+                        'status_id',
+                        'branches.name as branchName',
+                        'branches.id as branchId'
+                    )
+                    ->get();
+            }
+            $users = User::where('id', '!=', $user->id)
+                ->whereIn('branch_id', $branch_ids)
                 ->get();
-        } else {
-            $branches = Branch::where('shop_id', $user->shop->id)
-                ->get();
+            return view('transfer/TrasferUser/add', compact('branches', 'users', 'products', 'shop_id'));
         }
-
-        $branch_ids = $branches->map(function ($b) {
-            return $b->id;
-        });
-
-
-        if ($user->type_user == User::CO) {
-            $products = Product::where('branch_id', $user->branch_id)->get();
-        } else {
-            $products = Product::join('branches', 'branches.id', 'products.branch_id')
-                ->join('shops', 'shops.id', 'branches.shop_id')
-                ->where('shops.id', $shop_id)
-                ->where('products.status_id', 2)
-                ->select(
-                    'products.id',
-                    'products.clave',
-                    //'products.name',
-                    'products.description',
-                    'products.weigth',
-                    'products.observations',
-                    'products.price',
-                    'products.image',
-                    'products.category_id',
-                    'products.line_id',
-                    'products.shop_id',
-                    'products.branch_id',
-                    'status_id',
-                    'branches.name as branchName',
-                    'branches.id as branchId'
-                )
-                ->get();
-        }
-        $users = User::where('id', '!=', $user->id)
-            ->whereIn('branch_id', $branch_ids)
-            ->get();
-        return view('transfer/TrasferUser/add', compact('branches', 'users', 'products', 'shop_id'));
     }
 
     public function store(Request $request)

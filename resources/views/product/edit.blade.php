@@ -121,8 +121,6 @@ ALTA PRODUCTO
                 <input type="hidden" name="shop_id" value="{{$shop->id}}">
                 @endforeach
             </div>
-<<<<<<< HEAD
-             -->
                     <!-- Input para ingresar Tope de descuento -->
 
 
@@ -151,9 +149,6 @@ ALTA PRODUCTO
                     <div class="col-md-3">
                         <label>Seleccione Sucursal</label>
                         <select name="branch_id" class="form-control round">
-                            @php
-                            $branches = $user->shop->branches;
-                            @endphp
                             @foreach($branches as $branch)
                             <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
                             @endforeach
@@ -166,27 +161,6 @@ ALTA PRODUCTO
                         <select name="status_id" class="form-control round">
                             @foreach($statuses as $status)
                             @if($status->id != 3)
-=======
-            <!-- Select para Seleccionar sucursal-->
-            <div class="col-md-3">
-              <label>Seleccione Sucursal</label>
-              <select name="branch_id" class="form-control round">
-                @php
-                    $branches = $user->shop->branches;
-                @endphp
-                  @foreach($branches as $branch)
-                    <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
-                  @endforeach
-              </select>
-            </div>
-            <!-- END Select-->
-            <!-- Select para Editar Estatus-->
-            <div class="col-md-3">
-            <label>Seleccione El Estatus Actual</label>
-                <select name="status_id" class="form-control round">
-                    @foreach($statuses as $status)
-                        @if($status->id != 3)
->>>>>>> 8fe0a0fba28c158f002c8aa4e607a0ac32cbd34e
                             <option value="{{ $status->id }}" required>{{ $status->name }}</option>
                         @endif
                     @endforeach
@@ -384,7 +358,7 @@ $('#pricePurchase').keyup(function(){
         $('#pcdpz').val(descuentoxpz);
         return;
       }
-      
+
     //console.log("pricePurchase", Number($('#pricepzt').val()) * Number($('#pricePurchase').val()))
   $('#pricepzt').val(total);
   $('#pcdpz').val(descuentoxpz);

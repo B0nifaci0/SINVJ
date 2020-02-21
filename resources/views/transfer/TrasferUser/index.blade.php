@@ -50,16 +50,14 @@ TRANSFERENCIAS
                             @if(Auth::user()->type_user == 1)
                             <div class="col-6">
                                 <button onclick="window.location.href='traspasospdf'" type="button" class=" btn btn-sm small btn-floating
-                  toggler-left  btn-danger waves-effect waves-light waves-round float-right" data-toggle="tooltip"
-                                    data-original-title="Generar reporte PDF">
+                  toggler-left  btn-danger waves-effect waves-light waves-round float-right" data-toggle="tooltip" data-original-title="Generar reporte PDF">
                                     <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                                 </button>
                             </div>
                             @endif
                             <div class="col-6">
                                 <button onclick="window.location.href='/traspasosAA/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left
-                  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip"
-                                    data-original-title="Agregar">
+                  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip" data-original-title="Agregar">
                                     <i class="icon md-plus" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -73,19 +71,15 @@ TRANSFERENCIAS
                 <div class="example-wrap">
                     <div class="nav-tabs-horizontal" data-plugin="tabs">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab"
-                                    href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">Entrantes</a>
+                            <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">Entrantes</a>
                             </li>
-                            <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab"
-                                    href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">Salientes</a>
+                            <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">Salientes</a>
                             </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                                 <div class="page-content panel-body container-fluid">
-                                    <table id='incoming_transfers'
-                                        class="table table-hover dataTable table-striped w-full"
-                                        data-plugin="dataTable">
+                                    <table id='incoming_transfers' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                         <thead>
                                             <tr>
                                                 <th>Fecha</th>
@@ -150,10 +144,8 @@ TRANSFERENCIAS
                                                     <!-- Botón para Aceptar o Rechazar Traspaso -->
                                                     @if($transferin->status_product === null)
                                                     @if(Auth::user()->id == $transferin->destinationUser->id)
-                                                    <button class="btn btn-primary accept"
-                                                        alt="{{ $transferin->id }}">Aceptar</button>
-                                                    <button class="btn btn-warning reject"
-                                                        alt="{{ $transferin->id }}">Rechazar</button>
+                                                    <button class="btn btn-primary accept" alt="{{ $transferin->id }}">Aceptar</button>
+                                                    <button class="btn btn-warning reject" alt="{{ $transferin->id }}">Rechazar</button>
                                                     @endif
                                                     @else
                                                     @if(!$transferin->paid_at)
@@ -177,12 +169,8 @@ TRANSFERENCIAS
                                                 </td>
                                                 <td>
                                                     <!-- Botón para generar Traspaso por (ID)-->
-                                                    <a href="traspasopdf/{{$transferin->id}}"><button type="button"
-                                                            class="btn btn-icon btn-danger waves-effect waves-light"
-                                                            data-toggle="tooltip"
-                                                            data-original-title="Generar reporte PDF">
-                                                            <i class="icon fa-file-pdf-o"
-                                                                aria-hidden="true"></i></button>
+                                                    <a href="traspasopdf/{{$transferin->id}}"><button type="button" class="btn btn-icon btn-danger waves-effect waves-light" data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                                                            <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                                                     </a>
                                                     <!-- END Botón-->
                                                 </td>
@@ -196,8 +184,7 @@ TRANSFERENCIAS
                         </div>
                         <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
                             <div class="page-content panel-body container-fluid">
-                                <table id='outgoing_transfers' class="table table-hover dataTable table-striped w-full"
-                                    data-plugin="dataTable">
+                                <table id='outgoing_transfers' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                                     <thead>
                                         <tr>
                                             <th>Fecha</th>
@@ -262,18 +249,15 @@ TRANSFERENCIAS
                                                 <!-- Botón para Aceptar o Rechazar Traspaso -->
                                                 @if($transferout->status_product === null)
                                                 @if(Auth::user()->id == $transferout->user_id)
-                                                <button class="btn btn-warning cancel"
-                                                    alt="{{ $transferout->id }}">Cancelar</button>
+                                                <button class="btn btn-warning cancel" alt="{{ $transferout->id }}">Cancelar</button>
                                                 @else
 
                                                 @endif
                                                 @else
                                                 @if(!$transferout->paid_at)
                                                 @if($transferout->status_product == 1)
-                                                <button class="btn btn-success paid"
-                                                    alt="{{ $transferout->id }}">Pagar</button>
-                                                <button class="btn btn-danger give-back"
-                                                    alt="{{ $transferout->id }}">Devolver</button>
+                                                <button class="btn btn-success paid" alt="{{ $transferout->id }}">Pagar</button>
+                                                <button class="btn btn-danger give-back" alt="{{ $transferout->id }}">Devolver</button>
                                                 @else
                                                 @if($transferout->status_product === null)
                                                 <span class="text-center badge badge-success">Pendiente</span>
@@ -291,9 +275,7 @@ TRANSFERENCIAS
                                             </td>
                                             <td>
                                                 <!-- Botón para generar Traspaso por (ID)-->
-                                                <a href="traspasopdf/{{$transferout->id}}"><button type="button"
-                                                        class="btn btn-icon btn-danger waves-effect waves-light"
-                                                        data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                                                <a href="traspasopdf/{{$transferout->id}}"><button type="button" class="btn btn-icon btn-danger waves-effect waves-light" data-toggle="tooltip" data-original-title="Generar reporte PDF">
                                                         <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                                                 </a>
                                                 <!-- END Botón-->
@@ -335,7 +317,7 @@ TRANSFERENCIAS
 @section('barcode-product')
 <script type="text/javascript">
     //inicializa la tabla para resposnive
-    $(document).ready(function(){
+    $(document).ready(function() {
         $('#incoming_transfers').DataTable({
             retrieve: true,
         });
@@ -343,10 +325,10 @@ TRANSFERENCIAS
             retrieve: true,
         });
 
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             $($.fn.dataTable.tables(true)).DataTable()
-              .columns.adjust()
-              .responsive.recalc();
+                .columns.adjust()
+                .responsive.recalc();
         });
     });
 </script>
@@ -356,144 +338,80 @@ TRANSFERENCIAS
 
 @section('traspaso')
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
 
-    $('#incoming_transfers').on('click', '.paid', function(){
-      let id = $(this).attr("alt");
-      console.log("es:", id)
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha pagado este traspaso?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value)
-        {
-          $('#transfer_id_p').val(id);
-          $('#payment-form').submit();
-        }
-      })
-  });
+        $('#incoming_transfers').on('click', '.accept', function() {
+            var id = $(this).attr('alt');
+            $('#transfer_id_r').val(id);
+            $('#answer').val(1);
+            $('#form').submit();
+        })
 
-    $('#incoming_transfers').on('click', '.give-back', function(){
-      let id = $(this).attr("alt");
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha devuelto este producto?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value)
-        {
-          $('#transfer_id_gb').val(id);
-          $('#give-back').submit();
-        }
-      })
-  });
-
-    $('#incoming_transfers').on('click', '.accept', function(){
-    var id = $(this).attr('alt');
-    $('#transfer_id_r').val(id);
-    $('#answer').val(1);
-    $('#form').submit();
-  })
-
-  $('#incoming_transfers').on('click', '.cancel', function(){
-    var id = $(this).attr('alt');
-      $('#transfer_id_r').val(id);
-      $('#answer').val(null);
-      $('#form').submit();
-  })
-
-   $('#incoming_transfers').on('click', '.reject', function(){
-    var id = $(this).attr('alt');
-      $('#transfer_id_r').val(id);
-      $('#answer').val(0);
-      $('#form').submit();
-  })
-});
-
+        $('#incoming_transfers').on('click', '.reject', function() {
+            var id = $(this).attr('alt');
+            $('#transfer_id_r').val(id);
+            $('#answer').val(0);
+            $('#form').submit();
+        })
+    });
 </script>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
 
-    $('#outgoing_transfers').on('click', '.paid', function(){
-      let id = $(this).attr("alt");
-      console.log("es:", id)
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha pagado este traspaso?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value)
-        {
-          $('#transfer_id_p').val(id);
-          $('#payment-form').submit();
-        }
-      })
-  });
+        $('#outgoing_transfers').on('click', '.paid', function() {
+            let id = $(this).attr("alt");
+            console.log("es:", id)
+            Swal.fire({
+                title: 'Confirmación',
+                text: "¿Se ha pagado este traspaso?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4caf50',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.value) {
+                    $('#transfer_id_p').val(id);
+                    $('#payment-form').submit();
+                }
+            })
+        });
 
-    $('#outgoing_transfers').on('click', '.give-back', function(){
-      let id = $(this).attr("alt");
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha devuelto este producto?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value)
-        {
-          $('#transfer_id_gb').val(id);
-          $('#give-back').submit();
-        }
-      })
-  });
+        $('#outgoing_transfers').on('click', '.give-back', function() {
+            let id = $(this).attr("alt");
+            Swal.fire({
+                title: 'Confirmación',
+                text: "¿Se ha devuelto este producto?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4caf50',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.value) {
+                    $('#transfer_id_gb').val(id);
+                    $('#give-back').submit();
+                }
+            })
+        });
 
-    $('#outgoing_transfers').on('click', '.accept', function(){
-    var id = $(this).attr('alt');
-    $('#transfer_id_r').val(id);
-    $('#answer').val(1);
-    $('#form').submit();
-  })
-
-  $('#outgoing_transfers').on('click', '.cancel', function(){
-    var id = $(this).attr('alt');
-      $('#transfer_id_r').val(id);
-      $('#answer').val(null);
-      $('#form').submit();
-  })
-
-   $('#outgoing_transfers').on('click', '.reject', function(){
-    var id = $(this).attr('alt');
-      $('#transfer_id_r').val(id);
-      $('#answer').val(0);
-      $('#form').submit();
-  })
-});
-
+        $('#outgoing_transfers').on('click', '.cancel', function() {
+            var id = $(this).attr('alt');
+            $('#transfer_id_r').val(id);
+            $('#answer').val(null);
+            $('#form').submit();
+        })
+    });
 </script>
 @endsection
 
 @section('barcode-product')
 <script type="text/javascript">
     $('#example').dataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-            }
-        });
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        }
+    });
 </script>
 @endsection
