@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
- <head> 
+ <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <title>Reporte de Productos</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
@@ -42,26 +42,25 @@
      }.sale-head h1,table thead tr th,table tfoot tr td{
        background-color: #f8f8f8;
      }tfoot{
-       color:#000;  
+       color:#000;
        text-transform: uppercase;
-       font-weight: 500; 
+       font-weight: 500;
      }
    </style>
 </head>
 <body>
 <div class="page-content">
     <div class="panel">
-    
+
     <img align = "left" width="140px" height="120px" src="{{ $shop->image }}">
-             
-    <p align="right">Fecha: {{$dates}}</p> 
-          
+
+    <p align="right">Fecha: {{$dates}}</p>
+
     <p align="right">Hora: {{$hour}}</p>
-  
-  
+
     <h1 align="center">Reporte de Productos por Piezas y Dinero</h1>
         <h2 align="center">Todas las Categorias</h2>
-            <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+            <h3 align="center" style="color:red">{{$shop->name}}</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
               <thead>
                 <tr>
@@ -74,23 +73,23 @@
                  <th scope="col">Estatus</th>
                  <th scope="col">Sucursal</th>
                 </tr>
-              </thead>  
+              </thead>
               <tbody>
-               
+
       @foreach ($products as $i => $product)
-                <tr>  
-                
-                 <td>{{ $product->clave }}</td>   
+                <tr>
+
+                 <td>{{ $product->clave }}</td>
                  <td>{{ $product->description }}</td>
-                
+
                  <td>$ {{ $product->price_purchase }}</td>
                  <td>$ {{ $product->price }}</td>
-                
+
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->name_category }}</td>
                  <td>{{ $product->name_status }}</td>
                  <td>{{ $product->name_branch }}</td>
-                
+
                 </tr>
                   @endforeach
               </tbody>
@@ -109,8 +108,8 @@
                         <td>{{$c->name}}</td>
                         <td>$ {{$c->total}}</td>
                     </tr>
-                @endforeach 
-                </tbody>    
+                @endforeach
+                </tbody>
             </table>
           </div>
           </div>

@@ -321,19 +321,11 @@ TRANSFERENCIAS
 </div>
 <!-- End Panel Basic -->
 
-
 <form method="post" action="/traspasos/respuesta" id="form" class="d-none">
     {{ csrf_field() }}
     <input type="text" name="transfer_id" id="transfer_id_r">
     <input type="text" name="answer" id="answer">
 </form>
-
-<form method="post" action="/traspasos/cancelar" id="give-back" class="d-none">
-    {{ csrf_field() }}
-    <input type="text" name="transfer_id" id="transfer_id_gb">
-</form>
-
-
 
 @endsection
 
@@ -363,57 +355,11 @@ TRANSFERENCIAS
 <script>
     $(document).ready(function(){
 
-    $('#incoming_transfers').on('click', '.paid', function(){
-      let id = $(this).attr("alt");
-      console.log("es:", id)
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha pagado este traspaso?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value)
-        {
-          $('#transfer_id_p').val(id);
-          $('#payment-form').submit();
-        }
-      })
-  });
-
-    $('#incoming_transfers').on('click', '.give-back', function(){
-      let id = $(this).attr("alt");
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha devuelto este producto?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value)
-        {
-          $('#transfer_id_gb').val(id);
-          $('#give-back').submit();
-        }
-      })
-  });
-
     $('#incoming_transfers').on('click', '.accept', function(){
     var id = $(this).attr('alt');
     $('#transfer_id_r').val(id);
     $('#answer').val(1);
     $('#form').submit();
-  })
-
-  $('#incoming_transfers').on('click', '.cancel', function(){
-    var id = $(this).attr('alt');
-      $('#transfer_id_r').val(id);
-      $('#answer').val(null);
-      $('#form').submit();
   })
 
    $('#incoming_transfers').on('click', '.reject', function(){
@@ -429,63 +375,10 @@ TRANSFERENCIAS
 <script>
     $(document).ready(function(){
 
-    $('#outgoing_transfers').on('click', '.paid', function(){
-      let id = $(this).attr("alt");
-      console.log("es:", id)
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha pagado este traspaso?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value)
-        {
-          $('#transfer_id_p').val(id);
-          $('#payment-form').submit();
-        }
-      })
-  });
-
-    $('#outgoing_transfers').on('click', '.give-back', function(){
-      let id = $(this).attr("alt");
-      Swal.fire({
-        title: 'Confirmación',
-        text: "¿Se ha devuelto este producto?",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#4caf50' ,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.value)
-        {
-          $('#transfer_id_gb').val(id);
-          $('#give-back').submit();
-        }
-      })
-  });
-
-    $('#outgoing_transfers').on('click', '.accept', function(){
-    var id = $(this).attr('alt');
-    $('#transfer_id_r').val(id);
-    $('#answer').val(1);
-    $('#form').submit();
-  })
-
   $('#outgoing_transfers').on('click', '.cancel', function(){
     var id = $(this).attr('alt');
       $('#transfer_id_r').val(id);
       $('#answer').val(null);
-      $('#form').submit();
-  })
-
-   $('#outgoing_transfers').on('click', '.reject', function(){
-    var id = $(this).attr('alt');
-      $('#transfer_id_r').val(id);
-      $('#answer').val(0);
       $('#form').submit();
   })
 });

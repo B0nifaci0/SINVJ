@@ -35,40 +35,49 @@ class TranferProductsController extends Controller
             ->with('user')->with('branch')->with('product')
             ->get();
 
+        if ($user->type_user == User::AA || $user->type_user == User::SA) {
+            return redirect('/traspasosAA');
+        }
+
         return view('transfer/index', compact('trans1', 'trans2'));
     }
 
     public function create()
     {
         $user = Auth::user();
-        $shop = $user->branch->shop;
-        $users = User::where('id', '!=', $user->id)->get();
-        $products = Product::where('branch_id', $user->branch_id)
-            ->whereIn('status_id', [2])
-            ->get();
-
-        if ($user->shop && $user->shop->shop_group_id) {
-            $shop_ids = Shop::where('shop_group_id', $user->shop->shop_group_id)->get()->map(function ($item) {
-                return $item->id;
-            });
-            $branches = Branch::whereIn('shop_id', $shop_ids)
-                ->get();
+        if ($user->type_user == User::AA) {
+            return redirect('/traspasosAA/create');
         } else {
-            $branches = Branch::where('shop_id', $user->shop->id)
-                // ->where('id', '!=', $user->branch_id)
+
+            $shop = $user->branch->shop;
+            $users = User::where('id', '!=', $user->id)->get();
+            $products = Product::where('branch_id', $user->branch_id)
+                ->whereIn('status_id', [2])
                 ->get();
+
+            if ($user->shop && $user->shop->shop_group_id) {
+                $shop_ids = Shop::where('shop_group_id', $user->shop->shop_group_id)->get()->map(function ($item) {
+                    return $item->id;
+                });
+                $branches = Branch::whereIn('shop_id', $shop_ids)
+                    ->get();
+            } else {
+                $branches = Branch::where('shop_id', $user->shop->id)
+                    // ->where('id', '!=', $user->branch_id)
+                    ->get();
+            }
+
+            $branch_ids = $branches->map(function ($b) {
+                return $b->id;
+            });
+
+            $user = Auth::user(); //Retorna el usuario con el que se encuentra logueado
+            $users = User::where('id', '!=', $user->id)->get(); // Retorna los usuarios que pertenecen a la tienda y no estan logueados
+            //return $users;
+            // $products = Product::where('branch_id', $user->branch_id)
+            // ->get(); //Retorna todos los productos de la tienda solo si el usuario tiene
+            return view('transfer/add', compact('branches', 'users', 'products', 'user'));
         }
-
-        $branch_ids = $branches->map(function ($b) {
-            return $b->id;
-        });
-
-        $user = Auth::user(); //Retorna el usuario con el que se encuentra logueado
-        $users = User::where('id', '!=', $user->id)->get(); // Retorna los usuarios que pertenecen a la tienda y no estan logueados
-        //return $users;
-        // $products = Product::where('branch_id', $user->branch_id)
-        // ->get(); //Retorna todos los productos de la tienda solo si el usuario tiene
-        return view('transfer/add', compact('branches', 'users', 'products', 'user'));
     }
 
     public function show()
@@ -83,11 +92,6 @@ class TranferProductsController extends Controller
         $data['last_branch_id']  = $user->branch_id;
         $data['user_id'] = $user->id;
         $data['status_product'] = null;
-
-        //pendiente
-        //por pagar
-        //devolcuion
-
 
         $transfer_product = TransferProduct::create($data);
 
@@ -110,6 +114,8 @@ class TranferProductsController extends Controller
 
         if ($request->answer === null) {
             $transfer->delete();
+            $product->status_id = 2;
+            $product->save();
         } else {
             $transfer->status_product = $request->answer;
             $transfer->save();
@@ -151,8 +157,7 @@ class TranferProductsController extends Controller
         $product->save();
 
         $transfer->status_product = 3;
-        $transfer->save();;
-        // $transfer->delete();
+        $transfer->save();
 
         return back();
     }
