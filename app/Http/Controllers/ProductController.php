@@ -994,6 +994,7 @@ class ProductController extends Controller
                 ->select('products.*', 'categories.name as name_category', 'lines.name as name_line', 'categories.type_product', 'statuss.name as name_status')
                 ->where('categories.type_product', $request->cat)
                 ->where('products.deleted_at', NULL)
+                ->where('shops.id', $id_shop)
                 ->OrderBy('products.clave', 'asc')
                 ->get();
         } else {
@@ -1004,6 +1005,7 @@ class ProductController extends Controller
                 ->select('products.*', 'categories.name as name_category', 'categories.type_product', 'statuss.name as name_status')
                 ->where('categories.type_product', $request->cat)
                 ->where('products.deleted_at', NULL)
+                ->where('shops.id', $id_shop)
                 ->OrderBy('products.clave', 'asc')
                 ->get();
         }

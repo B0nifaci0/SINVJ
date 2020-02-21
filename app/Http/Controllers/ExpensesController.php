@@ -194,7 +194,11 @@ class ExpensesController extends Controller
     {
 
         $user = Auth::user();
+        $branches = Branch::where('shop_id', $user->shop->id)->get();
 
+        $branch_ids = $branches->map(function ($b) {
+            return $b->id;
+        });
         $branchs = $user->shop->branches;
         //return $branchs;
 
@@ -233,6 +237,7 @@ class ExpensesController extends Controller
             } elseif ($fech1 != $fech2) {
                 $shops = Shop::where("id", "=", $request->shop_id)->get();
                 $expenses = Expense::where("shop_id", "=", $request->shop_id)
+                    ->whereIn('expenses.branch_id', $branch_ids)
                     ->whereBetween('created_at', [$fech1, $fech2])
                     ->get();
                 $shop = Auth::user()->shop;
@@ -252,6 +257,7 @@ class ExpensesController extends Controller
             $branches = Shop::join('expenses', 'expenses.branch_id', 'shops.id')
                 ->join('branches', 'branches.id', 'expenses.branch_id')
                 ->select('branches.name')
+
                 ->distinct('branches.name')
                 ->orderBy('branches.name', 'DESC')
                 ->get();
@@ -280,15 +286,12 @@ class ExpensesController extends Controller
             //return $total;
             //Funcion para sumar el gastos de por sucursal
             $branches = Branch::where('shop_id', $user->shop->id)->get();
-            $branch_ids = $branches->map(function ($b) {
-                return $b->id;
-            });
             // return $user->shop->id;
-
+            //return $branch_ids;
             $total = Branch::join('expenses', 'expenses.branch_id', 'branches.id')
                 //->where('branches.shop_id', $user->shop->id)
                 ->whereIn('expenses.branch_id', $branch_ids)
-                ->where('expenses.deleted_at', NULL)
+                //->where('expenses.deleted_at', NULL)
                 ->select('branches.id as id', 'branches.name as sucursal', DB::raw('SUM(expenses.price) as money'))
                 ->groupBy('branches.id', 'branches.name')
                 ->get();
