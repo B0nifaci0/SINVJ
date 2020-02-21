@@ -57,104 +57,105 @@ class ProductController extends Controller
                 ->get();
         }
 
-		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
-    foreach ($products as $product) {
-			if($product->image) {
-        $path = 'products/' . $product->clave;
-      } else {
-        $path = 'products/default';
-      }
+        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+        foreach ($products as $product) {
+            if ($product->image) {
+                $path = 'products/' . $product->clave;
+            } else {
+                $path = 'products/default';
+            }
 
-      $product->image = $this->getS3URL($path);
-		}
+            $product->image = $this->getS3URL($path);
+        }
 
-    	$shops = Auth::user()->shop()->get();
-    	//return $shops;
-    	$category = Auth::user()->shop->id;
-    	$categories = Shop::find($category)->categories()->get();
-    	$line = Auth::user()->shop->id;
-    	$lines = Shop::find($line)->lines()->get();
-    	//return $lines;
-    	$status = Auth::user()->shop->id;
-      $statuses = Status::all();
-     // $title = 'Productos De Tienda';
-		  //  return $products;
-    	return view('product/index', compact('user','categories','lines','shops','statuses','products'));
-  }
+        $shops = Auth::user()->shop()->get();
+        //return $shops;
+        $category = Auth::user()->shop->id;
+        $categories = Shop::find($category)->categories()->get();
+        $line = Auth::user()->shop->id;
+        $lines = Shop::find($line)->lines()->get();
+        //return $lines;
+        $status = Auth::user()->shop->id;
+        $statuses = Status::all();
+        // $title = 'Productos De Tienda';
+        //  return $products;
+        return view('product/index', compact('user', 'categories', 'lines', 'shops', 'statuses', 'products'));
+    }
 
-  public function reportProductSeparated() {
-    $user = Auth::user();
-    $shop_id = $user->shop->id;
+    public function reportProductSeparated()
+    {
+        $user = Auth::user();
+        $shop_id = $user->shop->id;
 
-    if($user->type_user == User::CO) {
-      $products = Product::where([
-        'products.branch_id' => $user->branch_id,
-        'status_id' => 1
-        ])
-        ->where('sales.paid_out', '>=', 'total')
-        ->select(
-          'id',
-          'clave',
-          'description',
-          'weigth',
-          'observations',
-          'price',
-          'price_purchase',
-          'discount',
-          'discar_cause',
-          'image',
-          'category_id',
-          'line_id',
-          'shop_id',
-          'products.branch_id',
-          'date_creation',
-          'products.user_id',
-          'sold_at',
-          'discarded_at',
-          'status_id'
-        )
-        ->get();
-    } else {
-      $branches = Branch::where('shop_id', $user->shop->id)->get();
-      $branch_ids = $branches->map(function($item) {
-        return $item->id;
-      });
-      $products = Shop::find($shop_id)
-        ->products()
-        ->join('sale_details', 'sale_details.product_id', 'products.id')
-        ->join('sales', 'sales.id', 'sale_details.sale_id')
-        ->where('sales.paid_out', '>=', 'total')
-        ->whereIn('products.branch_id', $branch_ids)
-        ->where('status_id', 1)
-        ->select(
-          'products.id',
-          'clave',
-          'description',
-          'weigth',
-          'observations',
-          'price',
-          'price_purchase',
-          'discount',
-          'discar_cause',
-          'image',
-          'category_id',
-          'line_id',
-          'shop_id',
-          'products.branch_id',
-          'date_creation',
-          'products.user_id',
-          'sold_at',
-          'discarded_at',
-          'status_id'
-        )
-        ->get();
-      }
-      $adapter = Storage::disk('s3')->getDriver()->getAdapter();
-      $title = 'Productos apartados';
+        if ($user->type_user == User::CO) {
+            $products = Product::where([
+                'products.branch_id' => $user->branch_id,
+                'status_id' => 1
+            ])
+                ->where('sales.paid_out', '>=', 'total')
+                ->select(
+                    'id',
+                    'clave',
+                    'description',
+                    'weigth',
+                    'observations',
+                    'price',
+                    'price_purchase',
+                    'discount',
+                    'discar_cause',
+                    'image',
+                    'category_id',
+                    'line_id',
+                    'shop_id',
+                    'products.branch_id',
+                    'date_creation',
+                    'products.user_id',
+                    'sold_at',
+                    'discarded_at',
+                    'status_id'
+                )
+                ->get();
+        } else {
+            $branches = Branch::where('shop_id', $user->shop->id)->get();
+            $branch_ids = $branches->map(function ($item) {
+                return $item->id;
+            });
+            $products = Shop::find($shop_id)
+                ->products()
+                ->join('sale_details', 'sale_details.product_id', 'products.id')
+                ->join('sales', 'sales.id', 'sale_details.sale_id')
+                ->where('sales.paid_out', '>=', 'total')
+                ->whereIn('products.branch_id', $branch_ids)
+                ->where('status_id', 1)
+                ->select(
+                    'products.id',
+                    'clave',
+                    'description',
+                    'weigth',
+                    'observations',
+                    'price',
+                    'price_purchase',
+                    'discount',
+                    'discar_cause',
+                    'image',
+                    'category_id',
+                    'line_id',
+                    'shop_id',
+                    'products.branch_id',
+                    'date_creation',
+                    'products.user_id',
+                    'sold_at',
+                    'discarded_at',
+                    'status_id'
+                )
+                ->get();
+        }
+        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+        $title = 'Productos apartados';
 
         foreach ($products as $product) {
-            if($product->image) {
-            $path = 'products/' . $product->clave;
+            if ($product->image) {
+                $path = 'products/' . $product->clave;
             } else {
                 $branches = Branch::where('shop_id', $user->shop->id)->get();
                 $branch_ids = $branches->map(function ($item) {
@@ -241,10 +242,10 @@ class ProductController extends Controller
                 $path = env('S3_ENVIRONMENT') . '/' . 'products/default';
             }
 
-          $command = $adapter->getClient()->getCommand('GetObject', [
-            'Bucket' => $adapter->getBucket(),
-            'Key' => $adapter->getPathPrefix(). $path
-          ]);
+            $command = $adapter->getClient()->getCommand('GetObject', [
+                'Bucket' => $adapter->getBucket(),
+                'Key' => $adapter->getPathPrefix() . $path
+            ]);
 
             $command = $adapter->getClient()->getCommand('GetObject', [
                 'Bucket' => $adapter->getBucket(),
@@ -369,7 +370,7 @@ class ProductController extends Controller
                 return redirect('/products')->with('mesage', 'El nombre que intentas registrar ya existe!');
             }
         }
-        
+
         $data = $request->all();
         $data['price'] = ($request->pricepzt) ? $request->pricepzt : $request->price;
         $data['discount'] = $request->max_discount ? $request->max_discount : 0;
@@ -455,11 +456,11 @@ class ProductController extends Controller
         $shop_categories = Category::where('shop_id', $category)->where('id', '!=', $product->category_id)->get();
         $categories = Category::where('id', $product->category_id)->get();
 
-       // $categories = $categories->merge($shop_categories);
+        // $categories = $categories->merge($shop_categories);
         $categories = Category::where('shop_id', '=', NULL)->get();
 
         $lines = Line::where('shop_id', '=', NULL)->get();
-       // $lines = Shop::find($line)->lines()->get();
+        // $lines = Shop::find($line)->lines()->get();
         $branch = Auth::user()->shop->id;
         $branches = Shop::find($branch)->branches()->get();
         $statuses = Status::all();
@@ -527,56 +528,57 @@ class ProductController extends Controller
     }
 
     //PRODUCTOS DEVUELTOS EN VENTAS
-    public function devuelto(){
+    public function devuelto()
+    {
         $user = Auth::user();
-        $products = Product::where('discar_cause',3)
-        ->where('shop_id',$user->shop_id)
-        ->withTrashed()
-        ->get();
-        
+        $products = Product::where('discar_cause', 3)
+            ->where('shop_id', $user->shop_id)
+            ->withTrashed()
+            ->get();
+
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($products as $product) {
-			if($product->image) {
-            $path = 'products/' . $product->clave;
-        } else {
-            $path = 'products/default';
-        }
+            if ($product->image) {
+                $path = 'products/' . $product->clave;
+            } else {
+                $path = 'products/default';
+            }
             $product->image = $this->getS3URL($path);
-		}
+        }
         //return $products;
         return view('product/devueltos', compact('products'));
     }
 
-    public function reetiquetado($id){
-        {
+    public function reetiquetado($id)
+    { {
             $category = Auth::user()->shop->id;
             $user = Auth::user();
             $line = Auth::user()->shop->id;
-    
+
             $shops = Auth::user()->shop()->get();
             //return $shops;
-            $products = Product::join('categories','categories.id','products.category_id')
-            ->where('products.id',$id)
-            ->withTrashed()
-            ->select('products.*','categories.type_product as tipo')
-            ->get();
+            $products = Product::join('categories', 'categories.id', 'products.category_id')
+                ->where('products.id', $id)
+                ->withTrashed()
+                ->select('products.*', 'categories.type_product as tipo')
+                ->get();
             //return $products;
-        foreach($products as $p){
-           if($p->tipo == 1){
-            $categories = Category::where('shop_id', '=', NULL)->where('type_product',1)->get();
-           }else {
-            $categories = Category::where('shop_id', '=', NULL)->where('type_product',2)->get();
-           }        
-        }
-           //return $categories;  
+            foreach ($products as $p) {
+                if ($p->tipo == 1) {
+                    $categories = Category::where('shop_id', '=', NULL)->where('type_product', 1)->get();
+                } else {
+                    $categories = Category::where('shop_id', '=', NULL)->where('type_product', 2)->get();
+                }
+            }
+            //return $categories;
 
             $lines = Line::where('shop_id', '=', NULL)->get();
-           // $lines = Shop::find($line)->lines()->get();<div class="">5555</div>
+            // $lines = Shop::find($line)->lines()->get();<div class="">5555</div>
             $branch = Auth::user()->shop->id;
             $branches = Shop::find($branch)->branches()->get();
             $statuses = Status::all();
             // return $product;
-    
+
             return view('product/reetiquetado', compact('products', 'categories', 'lines', 'shops', 'branches', 'statuses', 'user'));
         }
     }
@@ -805,17 +807,13 @@ class ProductController extends Controller
     //**Reporte de Entradas De Prosuctos Por Fechas */
     public function reportEntradas(Request $request)
     {
-        //return $request;
-
         $hour = Carbon::now();
         $hour = date('H:i:s');
         $dates = Carbon::now();
         $dates = $dates->format('d-m-Y');
 
-
         $fecini = Carbon::parse($request->fecini)->subDay();
         $fecter = Carbon::parse($request->fecter)->addDay();
-
 
         $dates = Carbon::now();
         $dates = $dates->format('d-m-Y');
@@ -963,13 +961,12 @@ class ProductController extends Controller
         }
 
         $cash = Category::join('products', 'products.category_id', 'categories.id')
-            ->where('categories.shop_id', Auth::user()->shop->id)
+            ->where('categories.shop_id', null)
             ->where('categories.type_product', 1)
             ->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as total'))
             ->distinct('categories.name')
             ->groupBy('categories.id', 'categories.name')
             ->get();
-
 
         $pdf  = PDF::loadView('product.Reports.reportCategoriaGeneral', compact('categories', 'shop', 'hour', 'dates', 'shops', 'branches', 'lines', 'products', 'cash'));
         return $pdf->stream('ReporteCategoriasPGeneral.pdf');
@@ -1160,7 +1157,7 @@ class ProductController extends Controller
             ->get();
         //return $lines;
         //FUNCION PARA CALCULAR EL TOTAL DE GRAMOS POR LINEA
-       // return $lines;
+        // return $lines;
         foreach ($lines as $line) {
             $line->total_g = $products->where('line_id', $line->id)->sum('weigth');
         }
@@ -1473,15 +1470,18 @@ class ProductController extends Controller
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
-        $cash = Category::join('products', 'products.category_id', 'categories.id')
-            ->where('categories.shop_id', Auth::user()->shop->id)
-            ->where('categories.type_product', $request->cat)
-            ->where('categories.id', $request->category_id)
-            ->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as total'))
 
+
+        $cash = Category::join('products', 'products.category_id', 'categories.id')
+            ->where('categories.shop_id', null)
+            //->where('categories.type_product', $request->cat)
+            ->where('categories.id', $request->category_id)
+            ->where('products.shop_id', Auth::user()->shop->id)
+            ->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as total'))
             ->groupBy('categories.id', 'categories.name')
             ->get();
         //return $cash;
+
 
         $categories = Category::join('products', 'products.category_id', 'categories.id')
             ->where('categories.shop_id', NULL)

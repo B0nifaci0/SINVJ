@@ -235,7 +235,7 @@ LISTA DE  VENTAS
       </div>
 
 
-            
+
           <!-- END Tabla-->
         </div>
       </div>
@@ -268,7 +268,7 @@ LISTA DE  VENTAS
             $($.fn.dataTable.tables(true)).DataTable()
               .columns.adjust()
               .responsive.recalc();
-        });    
+        });
     });
     </script>
   @endsection

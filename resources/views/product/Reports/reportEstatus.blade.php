@@ -40,6 +40,7 @@
         <h4 align="center" >Linea:
         @foreach ($products as $i => $product)
         {{ $product->line->name }}
+        @break
         @endforeach
     @endif
     </h4>
@@ -55,7 +56,8 @@
             @endif
             @endforeach
             <th>Descripción</th>
-            <th>Precio</th>
+            <th>Precio venta</th>
+            <th>Precio compra</th>
             <th>Fecha alta</th>
             @if ($estado->name == 'Traspaso')
             <th>Sucursal Origen</th>
@@ -76,6 +78,7 @@
             <td>{{ $product->description }}</td>
             @if ($estado->name != 'Vendido')
             <td>$ {{$product->price }}</td>
+            <td>$ {{$product->price_purchase }}</td>
             @else
             @foreach ($detalle as $det)
             @if($det->product_id == $product->id)

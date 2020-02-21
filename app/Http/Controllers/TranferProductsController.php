@@ -28,11 +28,14 @@ class TranferProductsController extends Controller
         });
         $trans1 = TransferProduct::where('user_id', $user->id)
             ->with('user')->with('branch')->with('product')
+            ->orderBy('transfer_products.created_at', 'desc')
+
 
             ->get();
 
         $trans2 = TransferProduct::where('destination_user_id', $user->id)
             ->with('user')->with('branch')->with('product')
+            ->orderBy('transfer_products.created_at', 'desc')
             ->get();
 
         if ($user->type_user == User::AA || $user->type_user == User::SA) {

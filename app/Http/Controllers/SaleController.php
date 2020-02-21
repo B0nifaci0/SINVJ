@@ -55,7 +55,7 @@ class SaleController extends Controller
                 ->select('sales.*', 'branches.name as sucursal')
                 ->whereRaw('sales.total <= sales.paid_out')
                 ->where('shops.id', $user->shop_id)
-                ->orderBy('sales.id', 'DESC')
+                ->orderBy('sales.id', 'desc')
                 ->get();
 
             //APARTADOS
@@ -66,7 +66,7 @@ class SaleController extends Controller
                 ->select('sales.*', 'branches.name as sucursal')
                 ->whereRaw('sales.total > sales.paid_out')
                 ->where('shops.id', $user->shop_id)
-                ->orderBy('sales.id', 'DESC')
+                ->orderBy('sales.id', 'desc')
                 ->get();
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             //VENDIDOS

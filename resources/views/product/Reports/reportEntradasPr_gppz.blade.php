@@ -44,7 +44,7 @@
      }tfoot{
        color:#000;
        text-transform: uppercase;
-       font-weight: 500; 
+       font-weight: 500;
      }
       .sizedate{
        font-size: 12px!important;
@@ -54,11 +54,11 @@
 <body>
 <div class="page-content">
     <div class="panel">
-    
+
     <img align = "left" width="140px" height="120px" src="{{ $shop->image }}">
-         
+
         <p align="right">Fecha: {{$dates}}</p>
-          
+
         <p align="right">Hora: {{$hour}}</p>
 
 
@@ -78,18 +78,18 @@
                  <th>Sucursal</th>
 
                 </tr>
-              </thead>  
+              </thead>
               <tbody>
-              
+
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->clave }}</td> 
+                 <td>{{ $product->clave }}</td>
                  <td>{{ $product->description }}</td>
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->name_category }}</td>
                  <td>$ {{ $product->price }}</td>
                  <td>{{ $product->name_status }}</td>
-                <td class="sizedate">{{ $product->date_creation }}</td>
+                <td class="sizedate">{{ $product->updated_at->format('m-d-Y') }}</td>
                  <td>{{ $product->name_branch }}</td>
                 </tr>
                   @endforeach
@@ -107,12 +107,12 @@
                 <tbody>
                 @foreach ($categories as $i => $c)
                     <tr>
-                        <td>{{$c->nombre_categoria}}</td> 
+                        <td>{{$c->nombre_categoria}}</td>
                         <td align="center"> {{ $c->producto }} pzs</td>
                     </tr>
-                    @endforeach 
-                </tbody> 
-                <br>   
+                    @endforeach
+                </tbody>
+                <br>
             </table>
           </div>
           </div>
