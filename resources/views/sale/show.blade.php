@@ -299,9 +299,7 @@ $(document).ready(function(){
     $('#amount').on('input', function() {
                     let id = $(this).attr('id');
                     let val = $(this).val();
-                    if(!Number(val)) {
-                        $(this).val( val.replace(/[^0-9.]/, '') );
-                    }
+                    $(`#${id}`).val( val.replace(/\s+/, "") );
     })
     $("#t").on( 'select', function() {
 			$('#image').show(); //muestro mediante clase

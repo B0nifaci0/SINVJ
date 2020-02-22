@@ -279,14 +279,14 @@ class ProductController extends Controller
         // $products = Product::join('shops', 'shops.id','=', 'products.shop_id')->where('shops.shop_group_id',$grupo)->get();
         // }
 
-        $products = Product::join('shops', 'shops.id', '=', 'products.shop_id')
-            ->where([
+        $products = Product::where([
                 'branch_id' => $user->branch_id
             ])
             ->whereIn('status_id', [2, 3, 4])
             ->whereNull('products.deleted_at')
             ->orderBy('clave', 'asc')
             ->get();
+            //return $products;
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
@@ -305,6 +305,7 @@ class ProductController extends Controller
                 $product->image = (string) $result->getUri();
             }
         }
+        
         return view('product/productCO/index', compact('user', 'categories', 'lines', 'shops', 'statuses', 'products'));
     }
     /**
