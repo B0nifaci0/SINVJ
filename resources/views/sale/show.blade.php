@@ -57,20 +57,11 @@ SUCURSAl
                                 </tr>
                                 <tr>
                                     <td><strong class="text-center badge badge-danger" >Pagado:</strong></td>
-                                    @if(($sale->paid_out - $sale->positive_balance) > 0)
-                                        <td>$ {{($sale->paid_out - $sale->positive_balance)}}</td>
-                                    @else
-                                        <td>$ {{$sale->paid_out}}</td>
-                                    @endif
+                                    <td>$ {{$sale->paid_out}}</td>
                                 </tr>
                                 <tr>
-                                    @if(($sale->total - $sale->partials->sum('amount')) >  0)
-                                        <td><strong class="text-center badge badge-success">Restan:</strong></td>
-                                        <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
-                                    @else
-                                        <td><strong class="text-center badge badge-success">Restan:</strong></td>
-                                        <td> $ 0</td>
-                                    @endif
+                                    <td><strong class="text-center badge badge-success">Restan:</strong></td>
+                                    <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
                                 </tr>
                             </tbody>
                         </table>
