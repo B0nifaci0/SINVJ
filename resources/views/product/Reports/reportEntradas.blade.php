@@ -44,7 +44,7 @@
      }tfoot{
        color:#000;
        text-transform: uppercase;
-       font-weight: 500; 
+       font-weight: 500;
      }
       .sizedate{
        font-size: 12px!important;
@@ -54,14 +54,14 @@
 <body>
 <div class="page-content">
     <div class="panel">
-     
+
     <img align = "left" width="140px" height="120px" src="{{ $shop->image }}">
-             
+
     <p align="right">Fecha: {{$dates}}</p>
-          
+
     <p align="right">Hora: {{$hour}}</p>
-  
-  
+
+
     <h1 align="center">Reporte de Entrada de Productos</h1>
         <h2 align="center">Linea: @foreach($lines as $line){{$line->name}} @endforeach</h2>
             <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
@@ -76,18 +76,18 @@
                  <th scope="col">Estatus</th>
                  <th>Fecha</th>
                 </tr>
-              </thead>  
+              </thead>
               <tbody>
-              
+
       @foreach ($products as $i => $product)
                 <tr id="row{{$product->id}}">
-                 <td>{{ $product->clave }}</td> 
+                 <td>{{ $product->clave }}</td>
                  <td>{{ $product->description }}</td>
                  <td>{{ $product->weigth }} gr</td>
                  <td>{{ $product->observations }}</td>
                  <td>{{ $product->category->name }}</td>
                  <td>{{ $product->status->name }}</td>
-                 <td class="sizedate">{{ $product->date_creation }}</td>
+                 <td class="sizedate">{{ $product->updated_at }}</td>
                 </tr>
                   @endforeach
               </tbody>
@@ -96,15 +96,15 @@
                 <thead>
                     <tr>
                             <th scope="col">Total De Gramos</th>
-                            
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td align="center">{{$products->sum('weigth')}}</td>
                     </tr>
-                </tbody> 
-                <br>   
+                </tbody>
+                <br>
             </table>
           </div>
           </div>

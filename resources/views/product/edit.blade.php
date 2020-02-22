@@ -33,6 +33,39 @@ ALTA PRODUCTO
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}
         <div class='row'>
+            <!-- Select para Seleccionar categoria-->
+            <div class="col-md-3">
+              <label>Seleccione Categoria </label>
+              @if(null !== session('categories')){
+                <select id="categorie_id" name="category_id" class="form-control round">
+                  @foreach(session('categories') as $category)
+                    <option value="{{ $category->id }}" required>{{ $category->name }}
+                        @if ($category->type_product==1)
+                            pz
+                        @else
+                            gr
+                        @endif
+                     </option>
+                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
+                  @endforeach
+                </select>
+              @else
+                <select  id="categorie_id" name="category_id" class="form-control round">
+                  @foreach($categories as $category)
+                    <option value="{{ $category->id }}" required>{{ $category->name }}
+                    @if ($category->type_product==1)
+                            pz
+                        @else
+                            gr
+                        @endif
+                    </option>
+                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
+                  @endforeach
+                </select>
+              @endif
+            </div>
+            <!-- END Select-->
+
           <!-- Input para ingresar clave del producto-->
           <div class="form-group form-material col-md-3">
             <label>Clave</label>
@@ -96,49 +129,19 @@ ALTA PRODUCTO
               <input type="text" class="form-control" id="discount" readonly name="max_discount" value="{{($product->discount) ? $product->discount :old('max_discount')}}">
             </div>
             <!-- END Input-->
-            <!-- Select para Seleccionar categoria-->
-            <div class="col-md-3">
-              <label>Seleccione Categoria </label>
-              @if(null !== session('categories')){
-                <select id="categorie_id" name="category_id" class="form-control round">
-                  @foreach(session('categories') as $category)
-                    <option value="{{ $category->id }}" required>{{ $category->name }}</option>
-                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-                  @endforeach
-                </select>
-              @else
-                <select  id="categorie_id" name="category_id" class="form-control round">
-                  @foreach($categories as $category)
-                    <option value="{{ $category->id }}" required>{{ $category->name }}</option>
-                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-                  @endforeach
-                </select>
-              @endif
-            </div>
-            <!-- END Select-->
             <div>
                 @foreach ($shops as $shop)
                 <input type="hidden" name="shop_id" value="{{$shop->id}}">
                 @endforeach
             </div>
-                    <!-- Input para ingresar Tope de descuento -->
+                    <!-- Input para ingresar Tope de descuento 
 
 
                     <div class="form-group form-material col-md-3 remove">
                         <label>Tope de descuento gr</label>
                         <input type="text" readonly="readonly" class="form-control" id="discount" readonly name="purchase_price">
                     </div>
-                    <!-- END Input-->
-                    <!-- Select para Seleccionar categoria-->
-                    <div class="col-md-3">
-                        <label>Seleccione Categoria </label>
-                        <select id="categorie_id" name="category_id" class="form-control round">
-                            @foreach($categories as $category)
-                            <option value="{{ $category->id }}" required>{{ $category->name }} - @if($category->type_product == 1) pza @else gr @endif</option>
-                            <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-                            @endforeach
-                        </select>
-                    </div>
+                     END Input-->
                     <!-- END Select-->
                     <div>
                         @foreach ($shops as $shop)
@@ -160,7 +163,7 @@ ALTA PRODUCTO
                         <label>Seleccione El Estatus Actual</label>
                         <select name="status_id" class="form-control round">
                             @foreach($statuses as $status)
-                            @if($status->id != 3)
+                            @if($status->id != 3 && $status->id != 1)
                             <option value="{{ $status->id }}" required>{{ $status->name }}</option>
                         @endif
                     @endforeach
