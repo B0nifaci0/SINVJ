@@ -98,9 +98,11 @@ LISTA PRODUCTO
                         <th data-hide="phone, tablet">Linea</th>
                         <th data-hide="phone, tablet">Sucursal</th>
                         <th data-hide="phone, tablet">Status</th>
-                        <th data-hide="phone, tablet">Precio Venta</th>
                         @if(Auth::user()->type_user == 1 )
                         <th data-hide="phone, tablet">Precio Compra</th>
+                        @endif
+                        <th data-hide="phone, tablet">Precio Venta</th>
+                        @if(Auth::user()->type_user == 1 )
                         <th data-hide="phone, tablet">Precio Descuento</th>
                         <th data-hide="phone, tablet">Opciones</th>
                         @endif
@@ -117,9 +119,11 @@ LISTA PRODUCTO
                         <th></th>
                         <th>Sucursal</th>
                         <th>Status</th>
-                        <th>Precio Venta</th>
                         @if(Auth::user()->type_user == 1 )
                         <th>Precio Compra</th>
+                        @endif
+                        <th>Precio Venta</th>
+                        @if(Auth::user()->type_user == 1 )
                         <th>Precio Descuento</th>
                         <th>Opciones</th>
                         @endif
@@ -156,9 +160,12 @@ LISTA PRODUCTO
                         <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
                         @endif
                        
-                        <td>${{$product->price }}</td>
+                        
                         @if(Auth::user()->type_user == 1)
                         <td>${{$product->price_purchase }}</td>
+                        @endif
+                        <td>${{$product->price }}</td>
+                        @if(Auth::user()->type_user == 1)
                         <td>${{$product->discount }}</td>
                         <td>
                           <!-- Botón para editar producto-->
@@ -199,9 +206,11 @@ LISTA PRODUCTO
                       <th data-hide="phone, tablet">Imagen</th>
                       <th data-hide="phone, tablet">Sucursal</th>
                       <th data-hide="phone, tablet">Status</th>
-                      <th data-hide="phone, tablet">Precio Venta</th>
                       @if(Auth::user()->type_user == 1 )
                       <th data-hide="phone, tablet">Precio Compra</th>
+                      @endif
+                      <th data-hide="phone, tablet">Precio Venta</th>
+                      @if(Auth::user()->type_user == 1 )
                       <th data-hide="phone, tablet">Precio Descuento</th>
                       <th data-hide="phone, tablet">Opciones</th>
                       @endif
@@ -215,10 +224,12 @@ LISTA PRODUCTO
                       <th>Observaciónes</th>
                       <th>Imagen</th>
                       <th>Sucursal</th>
-                      <th>Status</th>
-                      <th>Precio Venta</th>
+                      <th>Status</th>                      
                       @if(Auth::user()->type_user == 1 )
                       <th>Precio Compra</th>
+                      @endif
+                      <th>Precio Venta</th>
+                      @if(Auth::user()->type_user == 1 )
                       <th>Precio Descuento</th>
                       <th>Opciones</th>
                       @endif
@@ -253,9 +264,12 @@ LISTA PRODUCTO
                         <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
                         @endif
                        
-                      <td>${{$product->price }}</td>
+                      
                       @if(Auth::user()->type_user == 1)
                       <td>${{$product->price_purchase}}</td>
+                      @endif
+                      <td>${{$product->price }}</td>
+                      @if(Auth::user()->type_user == 1)
                       <td>${{$product->discount}}</td>
                       <td>
                         <!-- Botón para editar producto-->

@@ -24,7 +24,7 @@ class ExpensesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:15',
+            'name' => 'required|string|max:25',
             'descripcion' => 'required|string|max:25',
             'price' => 'required|numeric|min:2',
         ];

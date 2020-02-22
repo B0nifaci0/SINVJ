@@ -209,14 +209,14 @@ class BranchController extends Controller
       ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
       ->where('products.branch_id',$ids)
-      ->where('lines.shop_id', Auth::user()->shop->id)
+      ->where('lines.shop_id', null)
       ->where('categories.type_product',2)
-      ->where('products.deleted_at',null)
+      ->withTrashed()
       ->select('products.id','products.status_id','lines.id as ids', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
     /*  ->orWhere('products.status_id',2)
       ->where('products.status_id',3)
       ->orWhere('products.status_id',4) */
-      ->whereIn('status_id', [2, 3, 4])
+      ->whereIn('status_id', [1, 2, 3, 4])
       ->distinct('lines.name')
       ->orderBy('name_line','ASC')
       ->groupBy('products.id','products.status_id','lines.id', 'lines.name', 'lines.discount_percentage', 'lines.sale_price')
@@ -226,19 +226,14 @@ class BranchController extends Controller
       //SUMA TOTAL DE PRECIOS Y GRAMOS POR LINEAS
       $total = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
-      ->join('statuss','statuss.id','products.status_id')
-      ->join('branches','branches.id','products.branch_id')
       ->join('lines','lines.id','products.line_id')
       ->where('products.branch_id',$ids)
       //->where('lines.shop_id', Auth::user()->shop->id)
       ->where('lines.shop_id', NULL)
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
-      ->where('products.deleted_at',null)
-      /*  ->orWhere('products.status_id',2)
-      ->where('products.status_id',3)
-      ->orWhere('products.status_id',4) */
-      ->whereIn('products.status_id', [2, 3, 4])
+      ->whereIn('products.status_id', [1, 2, 3, 4])
+      ->withTrashed()
       ->select('lines.id as ids', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
       ->distinct('lines.name')
       ->orderBy('name_line','ASC')
@@ -248,8 +243,6 @@ class BranchController extends Controller
       foreach($total as $t){
         $t->total_exis = Shop::join('products','products.shop_id','shops.id')
         ->join('categories','categories.id','products.category_id')
-        ->join('statuss','statuss.id','products.status_id')
-        ->join('branches','branches.id','products.branch_id')
         ->join('lines','lines.id','products.line_id')
         ->where('products.branch_id',$ids)
         //->where('lines.shop_id', Auth::user()->shop->id)
@@ -265,8 +258,6 @@ class BranchController extends Controller
 
         $t->total_tras = Shop::join('products','products.shop_id','shops.id')
         ->join('categories','categories.id','products.category_id')
-        ->join('statuss','statuss.id','products.status_id')
-        ->join('branches','branches.id','products.branch_id')
         ->join('lines','lines.id','products.line_id')
         ->where('products.branch_id',$ids)
         //->where('lines.shop_id', Auth::user()->shop->id)
@@ -282,8 +273,6 @@ class BranchController extends Controller
 
         $t->total_damage = Shop::join('products','products.shop_id','shops.id')
         ->join('categories','categories.id','products.category_id')
-        ->join('statuss','statuss.id','products.status_id')
-        ->join('branches','branches.id','products.branch_id')
         ->join('lines','lines.id','products.line_id')
         ->where('products.branch_id',$ids)
         //->where('lines.shop_id', Auth::user()->shop->id)
@@ -296,6 +285,24 @@ class BranchController extends Controller
         ->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
         ->get()
         ->sum('weigth');
+        
+        $t->total_giveback = Shop::join('products','products.shop_id','shops.id')
+        ->join('categories','categories.id','products.category_id')
+        ->join('lines','lines.id','products.line_id')
+        //->where('categories.shop_id', Auth::user()->shop->id)
+        ->withTrashed()
+        ->where('lines.shop_id', NULL)
+        ->where('products.shop_id', Auth::user()->shop->id)
+        ->where('products.branch_id',$ids)
+        ->where('categories.type_product',2)
+        ->where('products.discar_cause', 3)
+        ->where('products.line_id', $t->ids)
+        //->where('products.status_id', 1)
+        ->select('products.id', 'products.price', 'products.line_id', 'products.status_id')
+        ->get()
+        ->sum('weigth');
+
+        $t->totals = $t->total_exis + $t->total_tras + $t->total_damage + $t->total_giveback;
       }
       //return $total;
 
@@ -371,22 +378,27 @@ class BranchController extends Controller
       ->get();
       //return $total_d;
 
+      //SUMA TOTAL DE PRECIOS Y GRAMOS POR DEVUELTOS
+      $total_devueltos = Product::join('categories','categories.id','products.category_id')
+      ->where('products.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',2)
+      ->where('products.branch_id',$ids)
+      ->where('products.discar_cause',3)
+      ->withTrashed()
+      ->sum('products.weigth');
+      //return $total_devueltos;
+
      //SUMA TOTAL DE CATEGORIAS POR PIEZAS
       $category = Shop::join('products','products.shop_id','shops.id')
       ->join('categories','categories.id','products.category_id')
-      ->join('statuss','statuss.id','products.status_id')
-      ->join('branches','branches.id','products.branch_id')
       //->where('categories.shop_id', Auth::user()->shop->id)
       ->where('categories.shop_id', NULL)
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
-      ->where('products.deleted_at', null)
+      ->withTrashed()
       ->select('categories.id as ids', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
-      /*  ->orWhere('products.status_id',2)
-      ->where('products.status_id',3)
-      ->orWhere('products.status_id',4) */
-      ->whereIn('products.status_id', [2, 3, 4])
+      ->whereIn('products.status_id', [1, 2, 3, 4])
       ->distinct('categories.name')
       ->groupBy('categories.id','categories.name')
       ->orderBy('cat_name', 'ASC')
@@ -440,7 +452,25 @@ class BranchController extends Controller
         ->select('products.id', 'products.price', 'products.line_id', 'products.status_id')
         ->get()
         ->count('id');
+
+        $c->total_giveback = Shop::join('products','products.shop_id','shops.id')
+        ->join('categories','categories.id','products.category_id')
+        //->where('categories.shop_id', Auth::user()->shop->id)
+        ->withTrashed()
+        ->where('products.shop_id', Auth::user()->shop->id)
+        ->where('products.branch_id',$ids)
+        ->where('categories.type_product',1)
+        ->where('products.discar_cause', 3)
+        ->where('products.category_id', $c->ids)
+        ->where('products.status_id', 1)
+        ->select('products.id', 'products.price', 'products.line_id', 'products.status_id')
+        ->get()
+        ->count('id');
+
+        $c->totals = $c->total_exis + $c->total_tras + $c->total_damage + $c->total_giveback;
       }
+
+      //return $category;
 
       //SUMA TOTAL DE CATEGORIAS POR PIEZAS EXISTENTES
       $cat_e = Shop::join('products','products.shop_id','shops.id')
@@ -488,7 +518,17 @@ class BranchController extends Controller
       ->select(DB::raw('count(products.id) as num_pzd'))
       ->get();
 
-      return view('Branches/mostrar', ['cat_d' => $cat_d,'cat_t' => $cat_t,'cat_e' => $cat_e,'total_e'=> $total_e,'total_d'=> $total_d,'category' => $category , 'total_t'=> $total_t,'branch' => $id_shop, 'total' => $total, 'shop' => $shop],compact('braname','branch'));
+      //SUMA TOTAL DE CATEGORIAS POR PIEZAS DEVUELTAS
+      $cat_devueltos = Product::join('categories','categories.id','products.category_id')
+      ->where('products.shop_id', Auth::user()->shop->id)
+      ->where('categories.type_product',1)
+      ->where('products.branch_id',$ids)
+      ->where('products.discar_cause',3)
+      ->withTrashed()
+      ->count('products.id');
+      //return $cat_devueltos;
+
+      return view('Branches/mostrar', ['total_devueltos' => $total_devueltos,'cat_devueltos' => $cat_devueltos,'cat_d' => $cat_d,'cat_t' => $cat_t,'cat_e' => $cat_e,'total_e'=> $total_e,'total_d'=> $total_d,'category' => $category , 'total_t'=> $total_t,'branch' => $id_shop, 'total' => $total, 'shop' => $shop],compact('braname','branch'));
     }
 
     /**

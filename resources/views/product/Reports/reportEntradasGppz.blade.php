@@ -109,7 +109,7 @@
             <td>{{ $product->observations }}</td>
             <td>{{ $product->name_category }}</td>
             <td>{{ $product->name_status }}</td>
-            <td class="sizedate">{{ $product->date_creation }}</td>
+            <td class="sizedate">{{ $product->updated_at }}</td>
           </tr>
           @endforeach
         </tbody>

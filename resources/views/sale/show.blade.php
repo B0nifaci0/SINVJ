@@ -57,20 +57,11 @@ SUCURSAl
                                 </tr>
                                 <tr>
                                     <td><strong class="text-center badge badge-danger" >Pagado:</strong></td>
-                                    @if(($sale->paid_out - $sale->positive_balance) > 0)
-                                        <td>$ {{($sale->paid_out - $sale->positive_balance)}}</td>
-                                    @else
-                                        <td>$ {{$sale->paid_out}}</td>
-                                    @endif
+                                    <td>$ {{$sale->paid_out}}</td>
                                 </tr>
                                 <tr>
-                                    @if(($sale->total - $sale->partials->sum('amount')) >  0)
-                                        <td><strong class="text-center badge badge-success">Restan:</strong></td>
-                                        <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
-                                    @else
-                                        <td><strong class="text-center badge badge-success">Restan:</strong></td>
-                                        <td> $ 0</td>
-                                    @endif
+                                    <td><strong class="text-center badge badge-success">Restan:</strong></td>
+                                    <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -130,7 +121,14 @@ SUCURSAl
         <header class="panel-heading">
             <div class="row">
                 <h3 class="panel-title col-9">Historial de pagos</h3>
-                <div class="panel-actions float-right col-">
+                <div class="panel-actions float-right col-md-1">
+                    
+                    <a href="/ventapdf/{{$sale->id}}"><button mt="5"type="button"
+                    class="btn btn-sm samll btn-floating btn-danger waves-effect waves-light"
+                    data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                    </a>
+                    
                     @if($sale->total > $sale->partials->sum('amount'))
                     <button id="newPayment" class="btn btn-sm small btn-floating
                     btn-primary waves-light float-right" data-toggle="modal" data-target="#myModal">  <i class="icon md-plus " aria-hidden="true"></i></button>
@@ -292,9 +290,7 @@ $(document).ready(function(){
     $('#amount').on('input', function() {
                     let id = $(this).attr('id');
                     let val = $(this).val();
-                    if(!Number(val)) {
-                        $(this).val( val.replace(/[^0-9.]/, '') );
-                    }
+                    $(`#${id}`).val( val.replace(/\s+/, "") );
     })
     $("#t").on( 'select', function() {
 			$('#image').show(); //muestro mediante clase

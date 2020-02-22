@@ -139,34 +139,38 @@ ALTA VENTA
                             </tfoot>
                         </table>
                         <table>
-                        <tr>
-                              <td colspan="6"></td>
+                            <tr>
+                                <td colspan="6"></td>
                                 <th>
-                                  <strong>Total:</strong>
+                                    <strong>Total:</strong>
                                 </th>
-                              <td><strong id="total"></strong><input type="hidden" class="form-control" name="price" id="pagar"/> </td>
+                                <td><strong id="total"></strong><input type="hidden" class="form-control" name="price"
+                                        id="pagar" /> </td>
                             </tr>
 
                             <tr>
-                              <td colspan="6"></td>
+                                <td colspan="6"></td>
                                 <th>
-                                  <strong>Importe:</strong>
+                                    <strong>Importe:</strong>
                                 </th>
-                              <td><strong id="amount"></strong><input type="hidden" class="form-control" name="income" id="monto"/> </td>
+                                <td><strong id="amount"></strong><input type="hidden" class="form-control" name="income"
+                                        id="monto" /> </td>
                             </tr>
 
                             <tr>
-                              <td colspan="6"></td>
+                                <td colspan="6"></td>
                                 <th>
-                                  <strong>Cambio:</strong>
+                                    <strong>Cambio:</strong>
                                 </th>
-                              <td><strong id="change"></strong><input type="hidden" class="form-control" name="change" id="cambio"/> </td>
+                                <td><strong id="change"></strong><input type="hidden" class="form-control" name="change"
+                                        id="cambio" /> </td>
                             </tr>
                         </table>
 
                         <!-- END Tabla-->
                     </div>
                     <br>
+                    {{-- <input type="file" name="image" id="image" class=""> --}}
                     <div class="row">
                         <!-- Botón para mostar el Modal de Tipos de pago-->
                         <div class="col-6 form-group">
@@ -183,7 +187,8 @@ ALTA VENTA
                         <input type="hidden" class="form-control" name="card_income" id="cardPayment" />
 
                         <div class="form-group col-6">
-                            <a id="submit" type="button" class="btn btn-primary text-white float-right">Terminar compra</a>
+                            <a id="submit" type="button" class="btn btn-primary text-white float-right">Terminar
+                                compra</a>
                         </div>
                         <!-- END Botón-->
                     </div>
@@ -205,46 +210,47 @@ ALTA VENTA
                                         <h4 class="modal-title" id="exampleModalTabs">Agregar pago</h4>
                                     </div>
                                     <div class="modal-body">
-                                            <!-- CONTADO-->
-                                            
-                                                <div class="row mt-5">
-                                                    <div class="form-group form-material col-md-6">
-                                                        <label class="form-control-label"
-                                                            for="inputBasicFirstName">Efectivo:</label>
-                                                        <input type="text" class="form-control income" name="" id="cashIncome"
-                                                            required="required" placeholder="$" required />
-                                                    </div> 
-                                                </div>
-                                                <div class="row">
-                                                    <!-- Input para ingresar cantidad a pagar-->
-                                                    <div class="form-group form-material col-md-6">
-                                                        <label class="form-control-label">Tarjeta:</label>
-                                                        <input type="text" class="form-control income" id="cardIncome"
-                                                            placeholder="$" required="required" />
-                                                    </div>
-                                                    <!-- END Input-->
-                                                    <!-- Input para seleccionar Imagen del ticket-->
-                                                    <div class="form-group form-material col-md-6">
-                                                        <label>Selecciona Ticket de la venta</label>
-                                                        <br>
-                                                        <label for="image" class="btn btn-success">Explorar</label>
-                                                        <input type="file" name="image" id="image" class="hidden">
-                                                    </div>
-                                                    <!-- END Input-->
-                                                </div>
-                                                <div class="row">
-                                                <div class="form-group form-material col-md-6">
-                                                        <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
-                                                            $ <label id="totalCash"></label>
-                                                            <br>
-                                                            <strong>Restan:</strong> <label class="cashRest"></label>
-                                                    </div>
-                                                </div>
-                                                <hr class="mb-4">
-                                                <button type="button" name="continuar" data-dismiss="modal"
-                                                    class="btn btn-success btn-lg btn-block"
-                                                    aria-label="Close">Continuar</button>
-                                            <!-- END PAGO CON TARJETA-->
+                                        <!-- CONTADO-->
+
+                                        <div class="row mt-5">
+                                            <div class="form-group form-material col-md-6">
+                                                <label class="form-control-label"
+                                                    for="inputBasicFirstName">Efectivo:</label>
+                                                <input type="text" class="form-control income" name="" id="cashIncome"
+                                                    required="required" placeholder="$" required />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <!-- Input para ingresar cantidad a pagar-->
+                                            <div class="form-group form-material col-md-6">
+                                                <label class="form-control-label">Tarjeta:</label>
+                                                <input type="text" class="form-control income" id="cardIncome"
+                                                    placeholder="$" required="required" />
+                                            </div>
+                                            <!-- END Input-->
+                                            <!-- Input para seleccionar Imagen del ticket-->
+                                            <div class="form-group form-material col-md-6">
+                                                <label>Selecciona Ticket de la venta</label>
+                                                <br>
+                                                <label for="image" class="btn btn-success">Explorar</label>
+                                                <input type="file" id="imageModal">
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group form-material col-md-6">
+                                                <label class="form-control-label" for="inputBasicLastName">Total a
+                                                    Pagar:</label>
+                                                $ <label id="totalCash"></label>
+                                                <br>
+                                                <strong>Restan:</strong> <label class="cashRest"></label>
+                                            </div>
+                                        </div>
+                                        <hr class="mb-4">
+                                        <button type="button" name="continuar" data-dismiss="modal"
+                                            class="btn btn-success btn-lg btn-block"
+                                            aria-label="Close">Continuar</button>
+                                        <!-- END PAGO CON TARJETA-->
                                     </div>
                                 </div>
                             </div>
@@ -264,7 +270,6 @@ seleccionado con sus respectivos datos-->
     @section('listado-productos')
 
     <script>
-
         var products = {!! $products !!};
         var selectedProducts = [];
         var overDiscount = [];
@@ -283,7 +288,7 @@ seleccionado con sus respectivos datos-->
                 WHOLESALERS: 2
             }
 
-            // setInterval(() => {  
+            // setInterval(() => {
             //     console.log("------------------>overDiscount", overDiscount.length, overDiscountAuth);
             // }, 4000);
 
@@ -390,6 +395,7 @@ seleccionado con sus respectivos datos-->
 
                 let cashPayment = $('#cashIncome').val();
                 let cardPayment = $('#cardIncome').val();
+
                 $('#cashPayment').val(cashPayment);
                 $('#cardPayment').val(cardPayment);
                 console.log("productsList", $('#productsList').val());
@@ -411,7 +417,7 @@ seleccionado con sus respectivos datos-->
                     if(!Number(val)) {
                         $(this).val( val.replace(/[^0-9.]/, '') );
                     }
-                    
+
                     if (id == 'cashIncome') {
                         cashIncome = $(`#${id}`).val();
                     } else if (id == 'cardIncome') {
@@ -419,7 +425,7 @@ seleccionado con sus respectivos datos-->
                     }
 
                     totalIncome = Number(cashIncome) + Number(cardIncome);
-                    
+
                     $('#amount').html(`$ ${totalIncome}`)
                     $('#monto').val(totalIncome);
 
@@ -517,7 +523,7 @@ seleccionado con sus respectivos datos-->
 
                 // $('#ventas').on('change', '.finalPrice', function(){
                     // // $('.finalPrice').on('change', function () {
-                //     console.log("cahnge test")   
+                //     console.log("cahnge test")
                 //     var productId = $(this).attr('alt');
                 //     product = products.filter(p => p.id == productId)[0];
 
@@ -536,7 +542,7 @@ seleccionado con sus respectivos datos-->
                     product = products.filter(p => p.id == productId)[0];
 
                     currentPrice = Number($(this).val());
-                    
+
                     // IMPORTANTE Asignarl el precio actual al input oculto
                     $(`#finalPrice${product.id}`).val(currentPrice);
 
