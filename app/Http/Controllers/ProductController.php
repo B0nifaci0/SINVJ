@@ -60,9 +60,9 @@ class ProductController extends Controller
 		$adapter = Storage::disk('s3')->getDriver()->getAdapter();
     foreach ($products as $product) {
 			if($product->image) {
-        $path = 'products/' . $product->clave;
+        $path = env('S3_ENVIRONMENT') . 'products/' . $product->clave;
       } else {
-        $path = 'products/default';
+        $path = env('S3_ENVIRONMENT') . 'products/default';
       }
 
       $product->image = $this->getS3URL($path);
