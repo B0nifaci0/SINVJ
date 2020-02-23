@@ -204,6 +204,7 @@ Route::group(['middleware' => ['auth','BranchMiddleware','CategoryMiddleware','L
   Route::get('productos/create', 'ProductController@create');
   Route::get('productos/devueltos', 'ProductController@devuelto');
   Route::get('/productos/{id}/reetiquetado', 'ProductController@reetiquetado');
+  Route::get('/productos/{id}/restore', 'ProductController@restore');
   Route::post('/productos', 'ProductController@store');
   Route::get('/productos/{id}/edit', 'ProductController@edit');
   Route::get('/productos/{id}/show', 'ProductController@show');

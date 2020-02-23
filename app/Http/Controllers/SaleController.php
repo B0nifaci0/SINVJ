@@ -53,7 +53,7 @@ class SaleController extends Controller
                 ->join('shops', 'shops.id', 'branches.shop_id')
                 ->where('sales.deleted_at', NULL)
                 ->select('sales.*', 'branches.name as sucursal')
-                ->whereRaw('sales.total <= sales.paid_out')
+                ->whereRaw('sales.total = sales.paid_out')
                 ->where('shops.id', $user->shop_id)
                 ->orderBy('sales.id', 'desc')
                 ->get();
@@ -64,7 +64,7 @@ class SaleController extends Controller
                 ->join('shops', 'shops.id', 'branches.shop_id')
                 ->where('sales.deleted_at', NULL)
                 ->select('sales.*', 'branches.name as sucursal')
-                ->whereRaw('sales.total > sales.paid_out')
+                ->whereRaw('sales.total <> sales.paid_out')
                 ->where('shops.id', $user->shop_id)
                 ->orderBy('sales.id', 'desc')
                 ->get();
@@ -289,6 +289,11 @@ class SaleController extends Controller
     {
         //return $request;
         $product = Product::find($request->product_id);
+        $give = Product::join('transfer_products','transfer_products.product_id','products.id')
+        ->where('products.id',$request->product_id)
+        ->where('transfer_products.status_product',1)
+        ->count('products.id');
+        //return $give;
         $sale = Sale::findOrFail($request->sale_id);
         //return $sale;
         $giveback = SaleDetails::where('sale_id', $request->sale_id)
@@ -303,8 +308,13 @@ class SaleController extends Controller
             $sale->positive_balance = $sale->positive_balance * -1;
         }
         //return $sale;
-        $product->discar_cause = $request->discar_cause;
+        if($give == 1){
+            $product->discar_cause = 4;
+        } else {
+            $product->discar_cause = $request->discar_cause;
+        }
         //return $product;
+        
         $sale->save();
         $product->save();
         $product->delete();

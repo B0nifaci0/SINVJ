@@ -63,6 +63,10 @@ SUCURSAl
                                     <td><strong class="text-center badge badge-success">Restan:</strong></td>
                                     <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
                                 </tr>
+                                <tr>
+                                    <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
+                                    <td> $ @if($sale->positive_balance) {{$sale->positive_balance}} @else 0 @endif</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -210,20 +214,37 @@ SUCURSAl
                             <select name="type"  class="form-control">
                                 <option value="1" id="t">Efectivo</option>
                                 <option value="2" id="e">Tarjeta</option>
+                                @if($sale->positive_balance)
+                                    <option value="3" id="s">Saldo a Favor</option>
+                                @endif
                             </select>
                         </div>
+                        @if($sale->positive_balance)
+                        <div class="col-md-12">
+                            <label>Monto</label>
+                            <input type="text" id="amount" name="amount" class="form-control" value="{{$sale->positive_balance}}" alt="{{$sale->total - $sale->partials->sum('amount')}}">
+                        </div>
+                        <!-- Input para seleccionar Imagen del ticket-->
+                        <div class="form-group form-material col-md-6"  >
+                            <label>Selecciona Ticket de la venta</label>
+                            <br>
+                            <label for="image" class="btn btn-success image">Explorar</label>
+                            <input type="file" name="image" class="image">
+                        </div>
+                        @else
                         <div class="col-md-12">
                             <label>Monto</label>
                             <input type="text" id="amount" name="amount" class="form-control" alt="{{$sale->total - $sale->partials->sum('amount')}}">
                         </div>
-                            <!-- Input para seleccionar Imagen del ticket-->
-                                <div class="form-group form-material col-md-6"  >
-                                    <label>Selecciona Ticket de la venta</label>
-                                    <br>
-                                    <label for="image" class="btn btn-success">Explorar</label>
-                                    <input type="file" name="image" id="image">
-                                </div>
-                            <!-- END Input-->
+                        <!-- Input para seleccionar Imagen del ticket-->
+                        <div class="form-group form-material col-md-6"  >
+                            <label>Selecciona Ticket de la venta</label>
+                            <br>
+                            <label for="image" class="btn btn-success image">Explorar</label>
+                            <input type="file" name="image" class="image">
+                        </div>
+                        @endif
+                        <!-- END Input-->
                     </div>
                 </form>
             </div>
@@ -292,11 +313,14 @@ $(document).ready(function(){
                     let val = $(this).val();
                     $(`#${id}`).val( val.replace(/\s+/, "") );
     })
-    $("#t").on( 'select', function() {
-			$('#image').show(); //muestro mediante clase
+    $("#t").on( 'option', function() {
+			$('.image').show(); //muestro mediante clase
 		 });
-	$("#e").on( 'select', function() {
-			$('#image').hide(); //muestro mediante clase
+	$("#e").on( 'option', function() {
+			$('.image').hide(); //muestro mediante clase
+	    });
+    $("#s").on( 'option', function() {
+			$('.image').hide(); //muestro mediante clase
 	    });
 });
 </script>

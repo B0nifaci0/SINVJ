@@ -53,6 +53,12 @@ class PaymentsController extends Controller
         ]);
 
         $sale = Sale::find($request->sale_id);
+        
+        if($request->type == 3)
+        {
+            $sale->positive_balance = null;
+        }
+        
         $sale->paid_out += $request->amount;
         $sale->save(); 
 

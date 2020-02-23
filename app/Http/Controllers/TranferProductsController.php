@@ -27,6 +27,7 @@ class TranferProductsController extends Controller
             return $u->id;
         });
         $trans1 = TransferProduct::where('user_id', $user->id)
+            ->withTrashed()
             ->with('user')->with('branch')->with('product')
             ->orderBy('transfer_products.created_at', 'desc')
 
@@ -34,6 +35,7 @@ class TranferProductsController extends Controller
             ->get();
 
         $trans2 = TransferProduct::where('destination_user_id', $user->id)
+            ->withTrashed()
             ->with('user')->with('branch')->with('product')
             ->orderBy('transfer_products.created_at', 'desc')
             ->get();

@@ -31,11 +31,13 @@ class TrasferUserController extends Controller
             return $u->id;
         });
         $trans1 = TransferProduct::whereIn('user_id', $usersIds)
+            ->withTrashed()
             ->with('user')->with('branch')->with('product')
             ->orderBy('transfer_products.created_at', 'desc')
             ->get();
 
         $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
+            ->withTrashed()
             ->orderBy('transfer_products.created_at', 'desc')
             ->with('user')->with('branch')->with('product')
             ->get();
