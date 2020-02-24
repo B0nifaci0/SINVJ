@@ -280,13 +280,13 @@ class ProductController extends Controller
         // }
 
         $products = Product::where([
-                'branch_id' => $user->branch_id
-            ])
+            'branch_id' => $user->branch_id
+        ])
             ->whereIn('status_id', [2, 3, 4])
             ->whereNull('products.deleted_at')
             ->orderBy('clave', 'asc')
             ->get();
-            //return $products;
+        //return $products;
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
@@ -305,7 +305,7 @@ class ProductController extends Controller
                 $product->image = (string) $result->getUri();
             }
         }
-        
+
         return view('product/productCO/index', compact('user', 'categories', 'lines', 'shops', 'statuses', 'products'));
     }
     /**
@@ -421,7 +421,7 @@ class ProductController extends Controller
             $image = file_get_contents($request->file('image')->path());
             $base64Image = base64_encode($image);
             $path = 'products';
-            $product->image = $this->saveImages($base64Image, $path, $product->clave);;
+            $product->image = $this->saveImages($base64Image, $path, $product->clave);
         }
         $product->save();
         return redirect('/productos')->with('mesage', 'El Producto  se ha agregado exitosamente!');
@@ -551,7 +551,7 @@ class ProductController extends Controller
     }
 
     public function reetiquetado($id)
-    { 
+    {
         $category = Auth::user()->shop->id;
         $user = Auth::user();
         $line = Auth::user()->shop->id;
@@ -586,15 +586,15 @@ class ProductController extends Controller
     public function restore($id)
     {
         //return $id;
-        $product = Product::where('id',$id)->withTrashed()->get();
-        foreach($product as $p){
+        $product = Product::where('id', $id)->withTrashed()->get();
+        foreach ($product as $p) {
             $p->deleted_at = NULL;
             $p->status_id = 2;
             $p->discar_cause = NULL;
             $p->save();
         }
         //return $product;
-        
+
         return back();
     }
 

@@ -17,6 +17,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Requests\SaleRequest;
 use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 class SaleController extends Controller
@@ -242,19 +243,26 @@ class SaleController extends Controller
         }
 
         if ($request->card_income) {
-            $partial = Partial::create([
-                'sale_id' => $sale->id,
-                'amount' => ($request->card_income) ? $request->card_income : 0,
-                'type' => Partial::CARD,
-                // 'image' => $request->image
-            ]);
-            // if ($request->hasFile('image')) {
-            //     $adapter = Storage::disk('s3')->getDriver()->getAdapter();
-            //     $image = file_get_contents($request->file('image')->path());
-            //     $base64Image = base64_encode($image);
-            //     $path = 'ticketpartial';
-            //     $partial->image = $this->saveImages($base64Image, $path, $product->id);
-            // }
+            if ($request->image) {
+                $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+                $image = file_get_contents($request->file('image')->path());
+                $base64Image = base64_encode($image);
+                $path = 'payment-tickets';
+                $imagen = $this->saveImages($base64Image, $path, $sale->id);
+                $partial = Partial::create([
+                    'sale_id' => $sale->id,
+                    'amount' => ($request->card_income) ? $request->card_income : 0,
+                    'type' => Partial::CARD,
+                    'image' => $imagen
+    
+                ]);
+            }else{
+                $partial = Partial::create([
+                    'sale_id' => $sale->id,
+                    'amount' => ($request->card_income) ? $request->card_income : 0,
+                    'type' => Partial::CARD,    
+                ]);
+            }
         }
 
         $sale->paid_out = Partial::where('sale_id', $sale->id)->sum('amount');
@@ -274,6 +282,7 @@ class SaleController extends Controller
      */
     public function show($id)
     {
+
         $sale = Sale::with(['partials', 'client'])->findOrFail($id);
         $sale->itemsSold = $sale->itemsSold();
         $sale->total = $sale->itemsSold->sum('final_price');
@@ -282,6 +291,23 @@ class SaleController extends Controller
         //return $restan;
         $lines = Line::all();
 
+        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+        foreach ($sale->partials as $e) {
+            if ($e->image) {
+
+                $path = env('S3_ENVIRONMENT') . '/' .  'payment-tickets/' . $e->sale_id;
+
+                $command = $adapter->getClient()->getCommand('GetObject', [
+                    'Bucket' => $adapter->getBucket(),
+                    'Key' => $adapter->getPathPrefix() . $path
+                ]);
+
+                $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+
+                $e->image = (string) $result->getUri();
+            }
+        }
+
         return view('sale.show', compact('sale', 'lines', 'restan'));
     }
 
@@ -289,10 +315,10 @@ class SaleController extends Controller
     {
         //return $request;
         $product = Product::find($request->product_id);
-        $give = Product::join('transfer_products','transfer_products.product_id','products.id')
-        ->where('products.id',$request->product_id)
-        ->where('transfer_products.status_product',1)
-        ->count('products.id');
+        $give = Product::join('transfer_products', 'transfer_products.product_id', 'products.id')
+            ->where('products.id', $request->product_id)
+            ->where('transfer_products.status_product', 1)
+            ->count('products.id');
         //return $give;
         $sale = Sale::findOrFail($request->sale_id);
         //return $sale;
@@ -308,13 +334,13 @@ class SaleController extends Controller
             $sale->positive_balance = $sale->positive_balance * -1;
         }
         //return $sale;
-        if($give == 1){
+        if ($give == 1) {
             $product->discar_cause = 4;
         } else {
             $product->discar_cause = $request->discar_cause;
         }
         //return $product;
-        
+
         $sale->save();
         $product->save();
         $product->delete();

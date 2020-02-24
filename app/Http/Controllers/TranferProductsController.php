@@ -30,8 +30,6 @@ class TranferProductsController extends Controller
             ->withTrashed()
             ->with('user')->with('branch')->with('product')
             ->orderBy('transfer_products.created_at', 'desc')
-
-
             ->get();
 
         $trans2 = TransferProduct::where('destination_user_id', $user->id)
@@ -101,7 +99,7 @@ class TranferProductsController extends Controller
         $transfer_product = TransferProduct::create($data);
 
         $product = Product::find($request->product_id);
-        $product->status_id = 3;
+        $product->status_id = Product::TRANSFER;
         $product->save();
 
         if ($user->type_user == User::SA) {
@@ -119,7 +117,7 @@ class TranferProductsController extends Controller
 
         if ($request->answer === null) {
             $transfer->delete();
-            $product->status_id = 2;
+            $product->status_id = Product::EXISTING;
             $product->save();
         } else {
             $transfer->status_product = $request->answer;
@@ -158,7 +156,7 @@ class TranferProductsController extends Controller
         $product = Product::where('id', $transfer->product_id)->first();
         $product->branch_id = $transfer->last_branch_id;
         $product->shop_id = $last_shop;
-        $product->status_id = 2;
+        $product->status_id = Product::EXISTING;
         $product->save();
 
         $transfer->status_product = 3;
