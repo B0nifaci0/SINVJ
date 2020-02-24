@@ -52,7 +52,7 @@ class SaleController extends Controller
             $sold = Sale::with('client')
                 ->join('branches', 'branches.id', 'sales.branch_id')
                 ->join('shops', 'shops.id', 'branches.shop_id')
-                ->where('sales.deleted_at', NULL)
+                ->where('sales.deleted_at', null)
                 ->select('sales.*', 'branches.name as sucursal')
                 ->whereRaw('sales.total = sales.paid_out')
                 ->where('shops.id', $user->shop_id)
@@ -63,7 +63,7 @@ class SaleController extends Controller
             $apart = Sale::with('client')
                 ->join('branches', 'branches.id', 'sales.branch_id')
                 ->join('shops', 'shops.id', 'branches.shop_id')
-                ->where('sales.deleted_at', NULL)
+                ->where('sales.deleted_at', null)
                 ->select('sales.*', 'branches.name as sucursal')
                 ->whereRaw('sales.total <> sales.paid_out')
                 ->where('shops.id', $user->shop_id)
@@ -73,7 +73,7 @@ class SaleController extends Controller
             //VENDIDOS
             $sold = Sale::with('client')
                 ->join('branches', 'branches.id', 'sales.branch_id')
-                ->where('sales.deleted_at', NULL)
+                ->where('sales.deleted_at', null)
                 ->select('sales.*')
                 ->whereRaw('sales.total <= sales.paid_out')
                 ->where('sales.branch_id', $user->branch_id)
@@ -83,7 +83,7 @@ class SaleController extends Controller
             //APARTADOS
             $apart = Sale::with('client')
                 ->join('branches', 'branches.id', 'sales.branch_id')
-                ->where('sales.deleted_at', NULL)
+                ->where('sales.deleted_at', null)
                 ->select('sales.*')
                 ->whereRaw('sales.total > sales.paid_out')
                 ->where('sales.branch_id', $user->branch_id)
@@ -181,6 +181,7 @@ class SaleController extends Controller
 
         $validator = Validator::make($request->all(), [
             'customer_name' => Rule::requiredIf($request->user_type == 1),
+            'image' => Rule::requiredIf($request->card_income),
         ]);
         if ($validator->fails()) {
             $response = [
@@ -242,27 +243,23 @@ class SaleController extends Controller
             ]);
         }
 
+        
         if ($request->card_income) {
-            if ($request->image) {
-                $adapter = Storage::disk('s3')->getDriver()->getAdapter();
-                $image = file_get_contents($request->file('image')->path());
-                $base64Image = base64_encode($image);
-                $path = 'payment-tickets';
-                $imagen = $this->saveImages($base64Image, $path, $sale->id);
-                $partial = Partial::create([
+            $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+            $image = file_get_contents($request->file('image')->path());
+            $base64Image = base64_encode($image);
+            $path = 'payment-tickets';
+            $consulta = Partial::orderby('id', 'desc')
+                ->take(1)
+                ->get();
+            $conteo =$consulta[0]->id +1;
+            $imagen = $this->saveImages($base64Image, $path, $conteo);
+            $partial = Partial::create([
                     'sale_id' => $sale->id,
                     'amount' => ($request->card_income) ? $request->card_income : 0,
                     'type' => Partial::CARD,
-                    'image' => $imagen
-    
+                    'image' => $imagen,
                 ]);
-            }else{
-                $partial = Partial::create([
-                    'sale_id' => $sale->id,
-                    'amount' => ($request->card_income) ? $request->card_income : 0,
-                    'type' => Partial::CARD,    
-                ]);
-            }
         }
 
         $sale->paid_out = Partial::where('sale_id', $sale->id)->sum('amount');
@@ -282,7 +279,6 @@ class SaleController extends Controller
      */
     public function show($id)
     {
-
         $sale = Sale::with(['partials', 'client'])->findOrFail($id);
         $sale->itemsSold = $sale->itemsSold();
         $sale->total = $sale->itemsSold->sum('final_price');
@@ -294,8 +290,7 @@ class SaleController extends Controller
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($sale->partials as $e) {
             if ($e->image) {
-
-                $path = env('S3_ENVIRONMENT') . '/' .  'payment-tickets/' . $e->sale_id;
+                $path = env('S3_ENVIRONMENT') . '/' .  'payment-tickets/' . $e->id;
 
                 $command = $adapter->getClient()->getCommand('GetObject', [
                     'Bucket' => $adapter->getBucket(),
@@ -391,7 +386,6 @@ class SaleController extends Controller
     {
         Product::destroy($id);
         // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
-
     }
     public function exportPdfall()
     {

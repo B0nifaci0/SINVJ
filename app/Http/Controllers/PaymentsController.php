@@ -11,9 +11,15 @@ use App\CardInformation;
 use PayPal\Api\CreditCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use App\Traits\S3ImageManager;
+
+
 
 class PaymentsController extends Controller
 {
+
+    use S3ImageManager;
     public function __construct()
     {
         $this->middleware('Authentication');
@@ -46,11 +52,32 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        Partial::create([
-            'sale_id' => $request->sale_id,
-            'amount' => $request->amount,
-            'type' => $request->type,
-        ]);
+
+        if ($request->type == 2) {
+                $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+                $image = file_get_contents($request->file('image')->path());
+                $base64Image = base64_encode($image);
+                $path = 'payment-tickets';
+                $consulta = Partial::orderby('id','desc')
+                ->take(1) 
+                ->get();
+                $conteo =$consulta[0]->id +1;
+                $imagen = $this->saveImages($base64Image, $path, $conteo);
+                $partial = Partial::create([
+                    'sale_id' => $request->sale_id,
+                    'amount' => $request->amount,
+                    'type' => Partial::CARD,
+                    'image' => $imagen,
+                ]);
+        }else{
+            $partial = Partial::create([
+                'sale_id' => $request->sale_id,
+                'amount' => $request->amount,
+                'type' => Partial::CASH,
+            ]);
+        }
+
+
 
         $sale = Sale::find($request->sale_id);
         

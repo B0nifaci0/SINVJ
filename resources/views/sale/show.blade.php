@@ -210,7 +210,7 @@ SUCURSAl
                 <h4 class="modal-title">Nuevo pago</h4>
             </div>
             <div class="modal-body">
-                <form action="/pagos" method="post" id="saleForm">
+                <form action="/pagos" method="post" id="saleForm"  enctype="multipart/form-data">
                     <input type="hidden" name="sale_id" value="{{ $sale->id }}">
                     @csrf
                     <div class="row">
@@ -289,6 +289,8 @@ SUCURSAl
                 }
             })
         });
+
+        
 
         $('#savePartial').click(function(e) {
             e.preventDefault();
