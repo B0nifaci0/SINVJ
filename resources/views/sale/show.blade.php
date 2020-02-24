@@ -61,7 +61,11 @@ SUCURSAl
                             </tr>
                             <tr>
                                 <td><strong class="text-center badge badge-success">Restan:</strong></td>
-                                <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
+                                @if(($sale->total - $sale->partials->sum('amount')) > 0)
+                                <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>\
+                                @else
+                                <td> $ 0 </td>
+                                @endif
                             </tr>
                             <tr>
                                 <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
