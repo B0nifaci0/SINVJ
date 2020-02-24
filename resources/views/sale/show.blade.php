@@ -62,7 +62,7 @@ SUCURSAl
                             <tr>
                                 <td><strong class="text-center badge badge-success">Restan:</strong></td>
                                 @if(($sale->total - $sale->partials->sum('amount')) > 0)
-                                <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>\
+                                <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
                                 @else
                                 <td> $ 0 </td>
                                 @endif
@@ -128,6 +128,9 @@ SUCURSAl
         <header class="panel-heading">
             <div class="row">
                 <h3 class="panel-title col-9">Historial de pagos</h3>
+                <p>total venta: {{$sale->total}}</p>
+                <p>total parciales: {{$sale->partials->sum('amount')}}</p>
+
                 <div class="panel-actions float-right col-md-1">
 
                     <a href="/ventapdf/{{$sale->id}}"><button mt="5" type="button" class="btn btn-sm samll btn-floating btn-danger waves-effect waves-light" data-toggle="tooltip" data-original-title="Generar reporte PDF">
@@ -216,50 +219,41 @@ SUCURSAl
             <div class="modal-body">
                 <form action="/pagos" method="post" id="saleForm"  enctype="multipart/form-data">
                     <input type="hidden" name="sale_id" value="{{ $sale->id }}">
-                    @csrf
+                    {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-12">
                             <label>Método de pago</label>
-                            <select name="type" class="form-control">
-                                <option value="1" id="t">Efectivo</option>
-                                <option value="2" id="e">Tarjeta</option>
+                            <select name="partial_id" id="valor" class="form-control">
+                                <option value="1" id="cash">Efectivo</option>
+                                <option value="2" id="card">Tarjeta</option>
                                 @if($sale->positive_balance)
-                                <option value="3" id="s">Saldo a Favor</option>
+                                <option value="3" id="balance">Saldo a Favor</option>
                                 @endif
                             </select>
                         </div>
                         @if($sale->positive_balance)
-                        <div class="col-md-12">
+                        <p>positive</p>
+                        <div class="col-md-12 positive">
                             <label>Monto</label>
-                            <input type="text" id="amount" name="amount" class="form-control" value="{{$sale->positive_balance}}" alt="{{$sale->total - $sale->partials->sum('amount')}}">
-                        </div>
-                        <!-- Input para seleccionar Imagen del ticket-->
-                        <div class="form-group form-material col-md-6">
-                            <label>Selecciona Ticket de la venta</label>
-                            <br>
-                            <label for="image" class="btn btn-success image">Explorar</label>
-                            <input type="file" name="image" class="image">
+                            <input type="text" id="amount" name="amount" class="form-control" value="{{$sale->positive_balance}}" alt="{{$sale->total - $sale->partials->sum('amount')}} ">
                         </div>
                         @else
+                        <p>no positive</p>
                         <div class="col-md-12">
-                            <label>Monto</label>
+                            <label>Montos</label>
                             <input type="text" id="amount" name="amount" class="form-control" alt="{{$sale->total - $sale->partials->sum('amount')}}">
                         </div>
-                        <!-- Input para seleccionar Imagen del ticket-->
-                        <div class="form-group form-material col-md-6">
-                            <label>Selecciona Ticket de la venta</label>
-                            <br>
-                            <label for="image" class="btn btn-success image">Explorar</label>
-                            <input type="file" name="image" class="image">
-                        </div>
                         @endif
-                        <!-- END Input-->
+                    </div>
+                     <div class="form-group form-material col-md-6 remove">
+                            <label>Selecciona Ticket de la venta</label>
+                            <label for="image" class="btn btn-primary">Explorar</label>
+                            <input type="file" name="image" id="image" class="invisible">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button id="savePartial" type="button" class="btn btn-primary" data-dismiss="modal">Guardar pago </button>
-                <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button> -->
             </div>
         </div>
 
@@ -294,8 +288,6 @@ SUCURSAl
             })
         });
 
-        
-
         $('#savePartial').click(function(e) {
             e.preventDefault();
             let amount = Number($('#amount').val());
@@ -321,17 +313,35 @@ SUCURSAl
             let val = $(this).val();
             $(`#${id}`).val(val.replace(/\s+/, ""));
         })
+        $('.remove').hide();
+            var guarda = $('#amount').val();
+            //console.log("input: ",$('#amount').val());
+            console.log("Variable: ",guarda);
 
-        $("#t").on('option', function() {
-            $('.image').show(); //muestro mediante clase
-        });
+             $('#valor').change(function(){
+            var partialId = $(this).val();
+            console.log("El valor del id es:",partialId)
+            if(partialId == 2 ){
+                //Tarjeta
+                //console.log("Entro 1");
+                $('.remove').show();
+                $('#amount').val(0);
+                $('#amount').prop('disabled',false);
+                // console.log($('#amount').value)
 
-        $("#e").on('option', function() {
-            $('.image').hide(); //muestro mediante clase
-        });
+            }else if (partialId == 1 ){
+                //Efectivo
+                //console.log("Entro 2");
+                 $('.remove').hide();
+                 $('#amount').val(0);
+                 $('#amount').prop('disabled',false);
+                //  console.log($('#amount').value)
+            }else{
+                $('.remove').hide();
+                $('#amount').val(guarda);
+                $('#amount').prop('disabled',true);
 
-        $("#s").on('option', function() {
-            $('.image').hide(); //muestro mediante clase
+            }
         });
     });
 </script>

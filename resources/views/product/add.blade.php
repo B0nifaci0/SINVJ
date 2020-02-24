@@ -115,7 +115,7 @@ ALTA PRODUCTO
             <!-- Input para ingresar Tope de descuento -->
             <div class="form-group form-material col-md-3 remove">
               <label>Precio con descuentogr</label>
-              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount" value="{{old('max_discount')}}">
+              <input type="text" readonly="readonly" class="form-control" id="discount" readonly name="max_discount" value="{{old('max_discount')}}">
             </div>
             <!-- END Input-->
 

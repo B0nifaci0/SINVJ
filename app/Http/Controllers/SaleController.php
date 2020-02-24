@@ -286,6 +286,7 @@ class SaleController extends Controller
         $restan = $sale->total - $sale->partials->sum('amount');
         //return $restan;
         $lines = Line::all();
+        $partials =Partial::all();
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($sale->partials as $e) {
@@ -303,7 +304,7 @@ class SaleController extends Controller
             }
         }
 
-        return view('sale.show', compact('sale', 'lines', 'restan'));
+        return view('sale.show', compact('sale', 'lines', 'restan','partials'));
     }
 
     public function check(Request $request)
