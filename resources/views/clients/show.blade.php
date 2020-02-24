@@ -99,6 +99,34 @@ ALTA BITACORAS
                         </table>
                     </div>
                 </div>
+                    <!--TABLA DE PRODUCTOS DEVUELTOS-->
+                    <div class="offset-md-2 col-md-8">
+                        <strong>Productos Devueltos</strong>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Clave</th>
+                                    <th>Descripción</th>
+                                    <th>Peso</th>
+                                   <!-- <th> Fecha de devolucion</th>-->
+                                    <th class="text-right">Precio</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($products as $product)
+                                <tr>
+                                    <td>{{ $product->clave }}</td>
+                                    <td>{{ $product->description }}</td>
+                                    <td>{{ $product->weigth }}</td>
+                                    <!--<td> {{ $product->updated_at }} </td>-->
+                                    <td class="text-right">${{ $product->price }}</td>
+                                </tr>
+                                @endforeach    
+                            </tbody>
+                        </table>
+                    </div>
+		<!-- FIN TABLA PRODUCTOS DEVUELTOS-->
                 <div class="row">
                     <div class="offset-md-2 col-md-8">
                         <strong>Abonos realizados</strong>
