@@ -52,7 +52,7 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-
+        //return $request;
         if ($request->type == 2) {
                 $adapter = Storage::disk('s3')->getDriver()->getAdapter();
                 $image = file_get_contents($request->file('image')->path());
@@ -73,7 +73,7 @@ class PaymentsController extends Controller
             $partial = Partial::create([
                 'sale_id' => $request->sale_id,
                 'amount' => $request->amount,
-                'type' => Partial::CASH,
+                'type' => $request->type,
             ]);
         }
 

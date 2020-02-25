@@ -128,8 +128,6 @@ SUCURSAl
         <header class="panel-heading">
             <div class="row">
                 <h3 class="panel-title col-9">Historial de pagos</h3>
-                <p>total venta: {{$sale->total}}</p>
-                <p>total parciales: {{$sale->partials->sum('amount')}}</p>
 
                 <div class="panel-actions float-right col-md-1">
 
@@ -137,7 +135,7 @@ SUCURSAl
                             <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                     </a>
 
-                    @if($sale->total > $sale->partials->sum('amount'))
+                    @if($sale->total > $sale->paid_out)
                     <button id="newPayment" class="btn btn-sm small btn-floating
                     btn-primary waves-light float-right" data-toggle="modal" data-target="#myModal"> <i class="icon md-plus " aria-hidden="true"></i></button>
                     @endif
@@ -232,16 +230,14 @@ SUCURSAl
                             </select>
                         </div>
                         @if($sale->positive_balance)
-                        <p>positive</p>
                         <div class="col-md-12 positive">
                             <label>Monto</label>
-                            <input type="text" id="amount" name="amount" class="form-control" value="{{$sale->positive_balance}}" alt="{{$sale->total - $sale->partials->sum('amount')}} ">
+                            <input type="text" id="amount" name="amount" class="form-control" value="{{$sale->positive_balance}}" alt="{{$sale->total - $sale->paid_out}} ">
                         </div>
                         @else
-                        <p>no positive</p>
                         <div class="col-md-12">
                             <label>Montos</label>
-                            <input type="text" id="amount" name="amount" class="form-control" alt="{{$sale->total - $sale->partials->sum('amount')}}">
+                            <input type="text" id="amount" name="amount" class="form-control" alt="{{$sale->total - $sale->paid_out}}">
                         </div>
                         @endif
                     </div>
@@ -340,7 +336,6 @@ SUCURSAl
                 $('.remove').hide();
                 $('#amount').val(guarda);
                 $('#amount').prop('disabled',true);
-
             }
         });
     });
