@@ -69,16 +69,19 @@ class PaymentsController extends Controller
                     'type' => Partial::CARD,
                     'image' => $imagen,
                 ]);
-        }else{
+        }else if($request->type == 1){
             $partial = Partial::create([
                 'sale_id' => $request->sale_id,
                 'amount' => $request->amount,
-                'type' => $request->type,
+                'type' => Partial::CASH,
+            ]);
+        }else{       
+            $partial = Partial::create([
+                'sale_id' => $request->sale_id,
+                'amount' => $request->amount,
+                'type' => Partial::CREDIT,
             ]);
         }
-
-
-
         $sale = Sale::find($request->sale_id);
         
         if($request->type == 3)

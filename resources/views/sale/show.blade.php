@@ -181,7 +181,14 @@ SUCURSAl
                         @foreach($sale->partials as $partial)
                         <tr>
                             <td>{{ $partial->created_at }}</td>
-                            <td>{{ ($partial->type === "1") ? 'Efectivo' : 'Tarjeta' }} </td>
+                                @if($partial->type == "1")
+                                    <td>Efectivo</td>
+                                @elseif($partial->type == "2")
+                                    <td>Tarjeta</td>
+                                @else
+                                    <td>Credito</td>
+                                @endif
+                            </td>
                             <td>$ {{ $partial->amount }}</td>
                             <td>
                         <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
@@ -221,8 +228,8 @@ SUCURSAl
                     <div class="row">
                         <div class="col-md-12">
                             <label>Método de pago</label>
-                            <select name="partial_id" id="valor" class="form-control">
-                                <option value="1" id="cash">Efectivo</option>
+                            <select name="type" id="valor" class="form-control">
+                                <option value="1" selected="selected" id="cash">Efectivo</option>
                                 <option value="2" id="card">Tarjeta</option>
                                 @if($sale->positive_balance)
                                 <option value="3" id="balance">Saldo a Favor</option>
@@ -312,8 +319,10 @@ SUCURSAl
         $('.remove').hide();
             var guarda = $('#amount').val();
             //console.log("input: ",$('#amount').val());
+            $('#amount').val(0)
+            $('#amount').removeAttr('readonly');
+            $('#amount').removeClass('readOnly');
             console.log("Variable: ",guarda);
-
              $('#valor').change(function(){
             var partialId = $(this).val();
             console.log("El valor del id es:",partialId)
@@ -322,7 +331,7 @@ SUCURSAl
                 //console.log("Entro 1");
                 $('.remove').show();
                 $('#amount').val(0);
-                $('#amount').prop('disabled',false);
+                //$('#amount').prop('disabled',false);
                 // console.log($('#amount').value)
 
             }else if (partialId == 1 ){
@@ -330,12 +339,16 @@ SUCURSAl
                 //console.log("Entro 2");
                  $('.remove').hide();
                  $('#amount').val(0);
-                 $('#amount').prop('disabled',false);
+                // $('#amount').prop('disabled',false);
+                $('#amount').removeAttr('readonly');
+                $('#amount').removeClass('readOnly');
                 //  console.log($('#amount').value)
             }else{
                 $('.remove').hide();
                 $('#amount').val(guarda);
-                $('#amount').prop('disabled',true);
+                //$('#amount').prop('disabled',true);
+                $('#amount').attr('readonly','readonly');
+                $('#amount').addClasss('readOnly');
             }
         });
     });
