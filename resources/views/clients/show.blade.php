@@ -30,30 +30,42 @@ ALTA BITACORAS
                     </div>
                 @endif
                 <div class="row">
-                    <div class="col-md-4">
-                        <h2 class="panel-title">Perfil de {{ $client->name }} {{ $client->first_lastname }} {{ $client->second_lastname }}</h2>                    
-                        <h4 class="panel-title">Número telefónico: {{ $client->phone_number }}</h4>                    
+                <div class=" col-lg">
+                <div class="panel-primary">
+                <div class="panel-heading">
+                <h2 class="panel-title" style="color:white" align="center"> Perfil Cliente Mayorista</h2>
+                </div>
+                </div>
+                </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="panel-title fa-user"> {{ $client->name }} {{ $client->first_lastname }} {{ $client->second_lastname }}</h2>                    
+                    </div>
+                    <div class="col-md-6">    
+                        <h2 class="panel-title fa-phone"> {{ $client->phone_number }}</h2>                    
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 mt-40">
                         <p>
-                            <strong>Compras realizadas:</strong> {{ $client->sales->count() }}
+                            <strong class=" badge-info col-md-3" >Compras realizadas:</strong> {{ $client->sales->count() }}
                         </p>
                     </div>
                     <div class="col-md-3 mt-40">
                         <p>
-                            <strong>Total comprado: </strong>$ {{ $client->sales->sum('total') }}
+                            <strong class=" badge-primary col-md-3" >Total comprado: </strong>$ {{ $client->sales->sum('total') }}
                         </p>
                     </div>
                     <div class="col-md-3 mt-40">
                         <p>
-                            <strong>Pagado: </strong>$ {{ $client->sales->sum('paid_out') }}
+                            <strong class=" badge-success col-md-3" >Pagado: </strong>$ {{ $client->sales->sum('paid_out') }}
                         </p>
                     </div>
                     <div class="col-md-3 mt-40">
                         <p>
-                            <strong>Por pagar: </strong>$ {{ $client->sales->sum('total') - $client->sales->sum('paid_out') }}
+                            <strong class=" badge-warning col-md-3">Por pagar: </strong>$ {{ $client->sales->sum('total') - $client->sales->sum('paid_out') }}
                         </p>
                     </div>
                 </div>
@@ -61,16 +73,16 @@ ALTA BITACORAS
         </div>
         <div class="panel">
             <div class="panel-body">
-                <h3>Historial de compras</h3>    
+                <h3 align="center">Historial de compras y abonos</h3>    
             </div>
             @foreach($client->sales as $sale)
             <div class="panel-body">
-                <div class="offset-md-2 col-md-8">
-                    <h2 class="panel-title">Fecha de compra: {{ date('d/m/Y', strtotime($sale->created_at)) }}</h2>
+                <div class=" col-md-12">
+                    <h2 class="panel-title" align="left">Fecha de compra: {{ date('d/m/Y', strtotime($sale->created_at)) }}</h2>
                 </div>
                 <div class="row">
-                    <div class="offset-md-2 col-md-8">
-                        <strong>Productos comprados</strong>
+                    <div class=" col-md-12">
+                        <strong class="badge-warning col-sm-4">Productos comprados</strong>
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
@@ -100,17 +112,16 @@ ALTA BITACORAS
                     </div>
                 </div>
                     <!--TABLA DE PRODUCTOS DEVUELTOS-->
-                    <div class="offset-md-2 col-md-8">
-                        <strong>Productos Devueltos</strong>
+                  <div class="row">  
+                    <div class=" col-md-12">
+                        <strong class="badge-danger col-sm-4">Productos Devueltos</strong>
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
                                     <th>Clave</th>
                                     <th>Descripción</th>
                                     <th>Peso</th>
-                                   <!-- <th> Fecha de devolucion</th>-->
                                     <th class="text-right">Precio</th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -122,14 +133,21 @@ ALTA BITACORAS
                                     <!--<td> {{ $product->updated_at }} </td>-->
                                     <td class="text-right">${{ $product->price }}</td>
                                 </tr>
-                                @endforeach    
+                                @endforeach
+                                <tr>
+                                    <th colspan="3"> Total devuelto</th>
+                                    <td class="text-right">
+                                        <strong>$ {{ $products->sum('total') }} </strong>
+                                    </td>
+                                </tr>    
                             </tbody>
                         </table>
                     </div>
+                   </div> 
 		<!-- FIN TABLA PRODUCTOS DEVUELTOS-->
                 <div class="row">
-                    <div class="offset-md-2 col-md-8">
-                        <strong>Abonos realizados</strong>
+                    <div class=" col-md-12">
+                        <strong class="badge-success col-sm-4">Abonos realizados</strong>
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
