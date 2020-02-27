@@ -263,7 +263,7 @@
                                         <ul class="site-menu-sub">
                                             <li class="site-menu-item">
                                                 <a class="animsition-link" href="/productos/devueltos">
-                                                    <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
+                                                    <i class="site-menu-icon fa-reply" aria-hidden="true"></i>
                                                     <span class="site-menu-title">Productos Devueltos</span>
                                                 </a>
                                             </li>
@@ -271,7 +271,7 @@
                                         <ul class="site-menu-sub">
                                             <li class="site-menu-item">
                                                 <a class="animsition-link" href="/reportes-productos-apartados">
-                                                    <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
+                                                    <i class="site-menu-icon fa-shopping-cart" aria-hidden="true"></i>
                                                     <span class="site-menu-title">Productos apartados</span>
                                                 </a>
                                             </li>

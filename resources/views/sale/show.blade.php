@@ -135,15 +135,15 @@ SUCURSAl
             <div class="row">
                 <h3 class="panel-title col-9">Historial de pagos</h3>
 
-                <div class="panel-actions float-right col-md-1">
+                <div class="panel-actions float-right" >
 
-                    <a href="/ventapdf/{{$sale->id}}"><button mt="5" type="button" class="btn btn-sm samll btn-floating btn-danger waves-effect waves-light" data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                    <a href="/ventapdf/{{$sale->id}}"><button type="button" class="btn btn-sm samll btn-floating btn-danger waves-effect waves-light" data-toggle="tooltip" data-original-title="Generar reporte PDF">
                             <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                     </a>
 
                     @if($sale->total > $sale->paid_out)
                     <button id="newPayment" class="btn btn-sm small btn-floating
-                    btn-primary waves-light float-right" data-toggle="modal" data-target="#myModal"> <i class="icon md-plus " aria-hidden="true"></i></button>
+                    btn-primary waves-light float-rightleft" data-toggle="modal" data-target="#myModal"> <i class="icon md-plus " aria-hidden="true"></i></button>
                     @endif
                 </div>
             </div>

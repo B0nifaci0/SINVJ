@@ -780,7 +780,7 @@ class ProductController extends Controller
         }
         $compra = $precio;
 
-        $utilidad = $compra - $venta;
+        $utilidad = $venta - $compra;
 
         /**Finalizan consultas de folio de la venta, la hora y el dia */
 
