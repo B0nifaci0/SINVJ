@@ -46,21 +46,21 @@ Panel Principal
                                     </ul>
                                     <div class="tab-content pt-20">
                                         <div class="tab-pane active" id="producstatusOne" role="tabpanel">
-                                            <div class="row">
-                                                <div class="col-sm">
-                                                    <h4>Reporte Traspasos Por Gramos </h4>
-                                                </div>
-                                            </div>
                                             <form action="reportTransfer">
-                                                <input type="int" name="category_id" class="form-control invisible round" data-plugin="datepicker" value="2" required>
+                                                <input type="hidden" name="category_id" class="form-control round"
+                                                    data-plugin="datepicker" value="2" required>
                                                 <div class="panel panel-bordered">
+                                                    <div class="row">
+                                                        <div class="col-sm">
+                                                            <h4>Reporte Traspasos Por Gramos </h4>
+                                                        </div>
+                                                    </div>
                                                     <div class="panel-body">
                                                         <div class="row">
                                                             <div class="col-12 col-sm-6">
                                                                 <label>Seleccione Sucursal</label>
                                                                 <select id="sucursales_1" name="branch_id" alt="1"
                                                                     class="form-control round sucursales">
-                                                                    <!-- <option value="*">Seleccione Sucursal</option> -->
                                                                     @foreach($tienda as $branch)
                                                                     <option value="{{$branch->id}}" required>
                                                                         {{$branch->name}}</option>
@@ -69,12 +69,16 @@ Panel Principal
                                                                 <label>Seleccione Estatus</label>
                                                                 <select id="" name="status_product" alt="1"
                                                                     class="form-control round sucursales">
-                                                                    <!-- <option value="">Selecciona Estatus</option> -->
                                                                     <option value='null'>Pendiente</option>
-                                                                    <option value="1" selected='selected'>Por Pagar
-                                                                    </option>
-                                                                    <option value="0" selected='selected'>Devolucion
-                                                                    </option>
+                                                                    <option value="1">Por Pagar</option>
+                                                                    <option value="0">Rechazado</option>
+                                                                    <option value="3">Devolucion</option>
+                                                                </select>
+                                                                <label>Tipo</label>
+                                                                <select id="" name="type" alt="1"
+                                                                    class="form-control round">
+                                                                    <option value="0">Entrantes</option>
+                                                                    <option value="1">Salientes</option>
                                                                 </select>
                                                             </div>
                                                             <div class="col-12 col-sm-6">
@@ -106,14 +110,14 @@ Panel Principal
                                                                         class="form-control round"
                                                                         data-plugin="datepicker" required>
                                                                 </div>
-                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="input-group col-3 col-6 col-12">
-                                                    <button id="submit" type="submit" name="button"
-                                                        class="btn btn-primary">Generar
-                                                        reporte</button>
+                                                    <div class="input-group col-3 col-6 col-12">
+                                                        <button id="submit" type="submit" name="button"
+                                                            class="btn btn-primary">Generar
+                                                            reporte</button>
+                                                    </div>
                                                 </div>
                                         </div>
                                         </form>
@@ -133,8 +137,6 @@ Panel Principal
                                                             <label>Seleccione Sucursal</label>
                                                             <select id="sucursales_1" name="branch_id" alt="1"
                                                                 class="form-control round sucursales">
-                                                                <!-- <option value="*">Seleccione Sucursal</option> -->
-
                                                                 @foreach($tienda as $branch)
                                                                 <option value="{{$branch->id}}" required>
                                                                     {{$branch->name}}</option>
@@ -143,11 +145,16 @@ Panel Principal
                                                             <label>Seleccione Estatus</label>
                                                             <select id="" name="status_product" alt="1"
                                                                 class="form-control round sucursales">
-                                                                <!-- <option value="">Selecciona Estatus</option> -->
                                                                 <option value="null">Pendiente</option>
-                                                                <option value="1" selected='selected'>Por Pagar</option>
-                                                                <option value="0" selected='selected'>Devolucion
-                                                                </option>
+                                                                <option value="1">Por Pagar</option>
+                                                                <option value="0">Rechazado</option>
+                                                                <option value="3">Devolucion</option>
+                                                            </select>
+                                                            <label>Tipo</label>
+                                                            <select id="" name="type" alt="1"
+                                                                class="form-control round">
+                                                                <option value="0">Entrantes</option>
+                                                                <option value="1">Salientes</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-12 col-sm-6">
@@ -202,6 +209,14 @@ Panel Principal
                                                 <div class="panel-body">
                                                     <div class="row">
                                                         <div class="col-12 col-sm-6">
+                                                            <label>Tipo</label>
+                                                            <select id="" name="type" alt="1"
+                                                                class="form-control round">
+                                                                <option value="0">Entrantes</option>
+                                                                <option value="1">Salientes</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-12 col-sm-6">
                                                             <div class="input-group">
                                                                 <div class="row container"><label>De la
                                                                         Fecha:</label></div>
@@ -217,8 +232,6 @@ Panel Principal
                                                                         data-plugin="datepicker" required>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-12 col-sm-6">
                                                             <div class="input-group">
                                                                 <div class="row container"><label>Hasta la
                                                                         Fecha:</label></div>
@@ -233,8 +246,9 @@ Panel Principal
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <input type="int" name="category_id" class="form-control invisible round"
-                                                        data-plugin="datepicker" value="2" required>
+                                                    <input type="int" name="category_id"
+                                                        class="form-control invisible round" data-plugin="datepicker"
+                                                        value="2" required>
                                                 </div>
                                                 <div class="input-group col-3 col-6 col-12">
                                                     <button id="submit" type="submit" name="button"
@@ -255,6 +269,14 @@ Panel Principal
                                                 <div class="panel-body">
                                                     <div class="row">
                                                         <div class="col-12 col-sm-6">
+                                                            <label>Tipo</label>
+                                                            <select id="" name="type" alt="1"
+                                                                class="form-control round">
+                                                                <option value="0">Entrantes</option>
+                                                                <option value="1">Salientes</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-12 col-sm-6">
                                                             <div class="input-group">
                                                                 <div class="row container"><label>De la
                                                                         Fecha:</label></div>
@@ -270,8 +292,6 @@ Panel Principal
                                                                         data-plugin="datepicker" required>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-12 col-sm-6">
                                                             <div class="input-group">
                                                                 <div class="row container"><label>Hasta la
                                                                         Fecha:</label></div>
@@ -282,13 +302,13 @@ Panel Principal
                                                                     </span>
                                                                 </div>
                                                                 <input name="fecter" type="text"
-                                                                    class="form-control round" data-plugin="datepicker"
-                                                                    required>
+                                                                    class="form-control round" data-plugin="datepicker">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <input type="int" name="category_id" class="form-control invisible round"
-                                                        data-plugin="datepicker" value="1">
+                                                    <input type="int" name="category_id"
+                                                        class="form-control invisible round" data-plugin="datepicker"
+                                                        value="1">
                                                 </div>
                                                 <div class="input-group col-3 col-6 col-12">
                                                     <button id="submit" type="submit" name="button"
@@ -311,6 +331,5 @@ Panel Principal
     </div>
 </div>
 <!-- End Example Tabs -->
-
 <!-- Termina formulario de Prueba -->
 @endsection
