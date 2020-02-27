@@ -88,8 +88,8 @@ Panel Principal
                                                                         @endforeach
                                                                     </select>
                                                                     <input type="int" name="type_product"
-                                                            class="form-control invisible round"
-                                                            data-plugin="datepicker" value="2" required>
+                                                                        class="form-control invisible round"
+                                                                        data-plugin="datepicker" value="2" required>
                                                                 </div>
                                                                 <div class="col-12 col-sm-6">
                                                                     <label>Seleccione Linea</label>

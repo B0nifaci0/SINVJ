@@ -124,7 +124,7 @@
                 </tbody>
             </table>
             <br>
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table class="table table-condensed">
                 <thead>
                     <tr>
                         <th scope="col">Categoria</th>

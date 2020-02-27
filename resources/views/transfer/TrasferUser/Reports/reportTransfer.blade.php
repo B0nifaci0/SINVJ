@@ -6,12 +6,37 @@
     <title>Reporte de Productos</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
     <style>
+        .page-break {
+            width: 980px;
+            margin: 0 auto;
+        }
+
+        table thead tr th {
+            text-align: center;
+            border: 1px solid #ededed;
+        }
+
+        table tbody tr td {
+            vertical-align: middle;
+        }
+
         .sale-head,
-        table.tabla thead tr th,
+        table.table thead tr th,
         table tbody tr td,
         table tfoot tr td {
             border: 1px solid #212121;
-            text-align: center;
+        }
+
+        .sale-head h1,
+        table thead tr th,
+        table tfoot tr td {
+            background-color: #f8f8f8;
+        }
+
+        tfoot {
+            color: #000;
+            text-transform: uppercase;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -37,7 +62,7 @@
                     {{$categoria==2 ? 'por Gr' : 'por Pz'}}
                 </h2>
                 <h3 align="center" style="color:red">{{$shop->name}}</h3>
-                <table class="tabla">
+                <table class="table table-condensed">
                     <thead>
                         <tr>
                             <th>Clave</th>
