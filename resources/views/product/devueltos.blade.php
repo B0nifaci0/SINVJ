@@ -102,8 +102,8 @@ LISTA PRODUCTO
                         @if(Auth::user()->type_user == 1 )
                         <th data-hide="phone, tablet">Precio Compra</th>
                         <th data-hide="phone, tablet">Precio Descuento</th>
-                        <th data-hide="phone, tablet">Restaurar</th>
                         @endif
+                        <th data-hide="phone, tablet">Restaurar</th>
                       </tr>
                     </thead>
                     <tfoot>
@@ -121,8 +121,8 @@ LISTA PRODUCTO
                         @if(Auth::user()->type_user == 1 )
                         <th>Precio Compra</th>
                         <th>Precio Descuento</th>
-                        <th>Restaurar</th>
                         @endif
+                        <th>Restaurar</th>
                       </tr>
                     </tfoot>
                     <tbody>
@@ -148,6 +148,7 @@ LISTA PRODUCTO
                         @if(Auth::user()->type_user == 1)
                         <td>${{$product->price_purchase }}</td>
                         <td>${{$product->discount }}</td>
+                        @endif
                         @if($product->discar_cause == 4)
                           <td>
                               <!-- Botón para restaurar producto devuelto-->
@@ -164,7 +165,6 @@ LISTA PRODUCTO
                                   data-original-title="Restaurar">Restaurar</a>
                               <!-- END Botón-->
                           </td>
-                        @endif
                         @endif
                       </tr>
                       @endif
@@ -194,8 +194,8 @@ LISTA PRODUCTO
                       @if(Auth::user()->type_user == 1 )
                       <th data-hide="phone, tablet">Precio Compra</th>
                       <th data-hide="phone, tablet">Precio Descuento</th>
-                      <th data-hide="phone, tablet">Restaurar</th>
                       @endif
+                      <th data-hide="phone, tablet">Restaurar</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -211,8 +211,8 @@ LISTA PRODUCTO
                       @if(Auth::user()->type_user == 1 )
                       <th>Precio Compra</th>
                       <th>Precio Descuento</th>
-                      <th>Restaurar</th>
                       @endif
+                      <th>Restaurar</th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -236,6 +236,7 @@ LISTA PRODUCTO
                       @if(Auth::user()->type_user == 1)
                         <td>${{$product->price_purchase}}</td>
                         <td>${{$product->discount}}</td>
+                      @endif
                         @if($product->discar_cause == 4)
                           <td>
                               <!-- Botón para restaurar producto devuelto-->
@@ -253,7 +254,6 @@ LISTA PRODUCTO
                               <!-- END Botón-->
                           </td>
                         @endif
-                      @endif
                     </tr>
                     @endif
                     @endforeach

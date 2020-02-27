@@ -576,6 +576,14 @@
                                         </ul>
                                         <ul class="site-menu-sub">
                                             <li class="site-menu-item">
+                                                <a class="animsition-link" href="/productos/devueltos">
+                                                    <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
+                                                    <span class="site-menu-title">Productos Devueltos</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <ul class="site-menu-sub">
+                                            <li class="site-menu-item">
                                                 <a class="animsition-link" href="/productos/create">
                                                     <i class="site-menu-icon fa-plus" aria-hidden="true"></i>
                                                     <span class="site-menu-title">Agregar Productos</span>

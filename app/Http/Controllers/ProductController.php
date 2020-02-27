@@ -410,6 +410,7 @@ class ProductController extends Controller
 
         $product = new Product($data);
         $product->date_creation = $date;
+        $product->restored_at = $date;
         // if ($request->hasFile('image')){
         //    $filename = $request->image->getCLientOriginalName();
         //    $request->image->storeAs('public/upload/products',$filename);
@@ -453,12 +454,20 @@ class ProductController extends Controller
         $shops = Auth::user()->shop()->get();
         //return $shops;
         $product = Product::find($id);
+        //return $product;
 
         $shop_categories = Category::where('shop_id', $category)->where('id', '!=', $product->category_id)->get();
         $categories = Category::where('id', $product->category_id)->get();
 
         // $categories = $categories->merge($shop_categories);
         $categories = Category::where('shop_id', '=', NULL)->get();
+        /*
+        if ($product->tipo == 1) {
+            $categories = Category::where('shop_id', '=', NULL)->where('type_product', 1)->get();
+        } else {
+            $categories = Category::where('shop_id', '=', NULL)->where('type_product', 2)->get();
+        }
+        */
 
         $lines = Line::where('shop_id', '=', NULL)->get();
         // $lines = Shop::find($line)->lines()->get();
@@ -532,10 +541,21 @@ class ProductController extends Controller
     public function devuelto()
     {
         $user = Auth::user();
-        $products = Product::whereIn('discar_cause', [3, 4])
+        if($user->type_user == User::AA){
+            $products = Product::whereIn('discar_cause', [3, 4])
             ->where('shop_id', $user->shop_id)
+            ->where('restored_at', null)
             ->withTrashed()
             ->get();
+        } elseif($user->type_user == User::SA || $user->type_user == User::CO) {
+            $products = Product::whereIn('discar_cause', [3, 4])
+            ->where('shop_id', $user->shop_id)
+            ->where('branch_id', $user->branch_id)
+            ->where('restored_at', null)
+            ->withTrashed()
+            ->get();
+        }
+        
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($products as $product) {
@@ -586,11 +606,14 @@ class ProductController extends Controller
     public function restore($id)
     {
         //return $id;
+        $date = Carbon::now();
+        $date = $date->format('d-m-Y');
         $product = Product::where('id', $id)->withTrashed()->get();
         foreach ($product as $p) {
-            $p->deleted_at = NULL;
+            $p->deleted_at = null;
+            $p->restored_at = $date;
             $p->status_id = 2;
-            $p->discar_cause = NULL;
+            $p->discar_cause = null;
             $p->save();
         }
         //return $product;

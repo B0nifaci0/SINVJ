@@ -32,6 +32,7 @@ class Product extends Model
         'branch_id',
         'discarded_product',
         'discar_cause',
+        'restored_at',
         'price_purchase',
         'status_id'
     ];
