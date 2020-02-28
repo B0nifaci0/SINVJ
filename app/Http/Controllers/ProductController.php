@@ -344,7 +344,20 @@ class ProductController extends Controller
         $category = Category::find($request->category_id);
         //return $category;
         $validator = Validator::make($request->all(), [
-            'max_discountpz' => Rule::requiredIf($category->type_product == 1),
+            'price_purchase' => Rule::requiredIf($category->type_product == 1),
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'errors' => $validator->errors(),
+                'error' => 'Error en alguno de los campos'
+            ];
+            //return response()->json($response, $this->unprocessable);
+            return back()->withErrors($validator->errors());
+        }
+
+        $validator = Validator::make($request->all(), [
+            'weigth' => Rule::requiredIf($category->type_product == 2),
         ]);
         if ($validator->fails()) {
             $response = [
@@ -401,11 +414,11 @@ class ProductController extends Controller
         });
         $categories->prepend($selected_category);
 
-        /**if($category->type_product == 1 && (!$data['pricepzt']) || !is_numeric($data['pricepzt'])){
-          return back()->with('categories', $categories)->withErrors(['msg', 'El precio por pieza es requerido y debe ser numerico']);
+        if($category->type_product == 1 && (!$data['price_purchase']) || !is_numeric($data['price_purchase'])){
+          return back()->with('categories', $categories)->withErrors(['el precio compra es requerido']);
         }
-        elseif($category->type_product == 2 && (!$data['weigth']) || !is_numeric($data['weigth'])){
-            return back()->with('categories', $categories)->withErrors(['msg', 'El peso es requerido y debe ser numerico']);
+        /*if($category->type_product == 2 && (!$data['weigth']) || !is_numeric($data['weigth'])){
+          return back()->with('categories', $categories)->withErrors(['Los gramos son requeridos']);
         }*/
 
         $product = new Product($data);
@@ -499,14 +512,38 @@ class ProductController extends Controller
             $product->image = $this->saveImages($base64Image, $path, $product->clave);
         }
 
+
         $product->clave = $request->clave;
         $product->description = $request->description;
+        $product->category_id = $request->category_id;
+        $product->line_id = $request->line_id;
+        //$product->price = ($request->pricepzt) ? $request->pricepzt : $request->price;
+        $product->discount = $request->max_discountpz ? $request->max_discountpz : 0;
+        //$product->price= ($request->pricepzt) ? $request->pricepzt :0 ;
+        $product->discount = $request->max_discount ? $request->max_discount : 0;
         $product->weigth = $request->weigth;
         $product->observations = $request->observations;
-        $product->price = $request->price;
+        
+        $product->price_purchase = $request->price_purchase;
+        //$product->discount = $request->discount;
+        $product->price = $request->pricepzt;
+        //$product->max_discountpz = $request->max_discountpz;
         $product->status_id = $request->status_id;
         $product->branch_id = $request->branch_id;
         //$product->inventory = $request->inventory;
+
+        $category = Category::find($request->category_id);
+        if ($category->type_product == 1) {
+            $product['line_id'] = null;
+            $product['weigth'] = null;
+            $product['discount'] = $request->max_discountpz ? $request->max_discountpz : 0;
+        } else if ($category->type_product == 2) {
+            $line = Line::find($request->line_id);
+            $product->price = $request->price;
+            $data['price_purchase'] = $line->purchase_price * $request->weigth;
+        }        
+
+
         $product->save();
 
         //return $request->all();

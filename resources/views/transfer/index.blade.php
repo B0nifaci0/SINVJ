@@ -88,6 +88,7 @@ TRANSFERENCIAS
                                         data-plugin="dataTable">
                                         <thead>
                                             <tr>
+                                                <th>Fecha</th>
                                                 <th>Clave</th>
                                                 <th>Peso</th>
                                                 <th>Categoría</th>
@@ -96,7 +97,6 @@ TRANSFERENCIAS
                                                 <th>Quien lo mando</th>
                                                 <th>S.Destino</th>
                                                 <th>Quien recibio</th>
-                                                <th>Fecha</th>
                                                 <th>Status</th>
                                                 <th>Opciones</th>
                                                 <th>Reporte</th>
@@ -104,6 +104,7 @@ TRANSFERENCIAS
                                         </thead>
                                         <tfoot>
                                             <tr>
+                                                <th>Fecha</th>
                                                 <th>Clave</th>
                                                 <th>Peso</th>
                                                 <th>Categoría</th>
@@ -112,7 +113,6 @@ TRANSFERENCIAS
                                                 <th>Quien lo mando</th>
                                                 <th>S.Destino</th>
                                                 <th>Quien recibio</th>
-                                                <th>Fecha</th>
                                                 <th>Status</th>
                                                 <th>Opciones</th>
                                                 <th>Reporte</th>
@@ -120,7 +120,9 @@ TRANSFERENCIAS
                                         </tfoot>
                                         <tbody>
                                             @foreach ($trans2 as $transferin)
-                                            <tr id="row{{$transferin->id}}">
+                                            <tr>
+                                                <td data-sort='YYYYMMDD'>{{$transferin->updated_at->format('m-d-Y')}}
+                                                </td>
                                                 <td>{{ $transferin->product->clave }}</td>
                                                 <td>{{ $transferin->product->weigth }}</td>
                                                 <td>{{ $transferin->product->category->name }}</td>
@@ -130,7 +132,6 @@ TRANSFERENCIAS
                                                 <td>{{$transferin->user->name}}</td>
                                                 <td>{{$transferin->newBranch->name}}</td>
                                                 <td>{{$transferin->destinationUser->name}}</td>
-                                                <td>{{$transferin->created_at->format('m-d-Y')}}</td>
                                                 <td>
                                                     @if($transferin->status_product === 1 || $transferin->paid_at)
                                                     @if($transferin->paid_at)
@@ -206,6 +207,7 @@ TRANSFERENCIAS
                                     data-plugin="dataTable">
                                     <thead>
                                         <tr>
+                                            <th>Fecha</th>
                                             <th>Clave</th>
                                             <th>Peso</th>
                                             <th>Categoría</th>
@@ -213,7 +215,6 @@ TRANSFERENCIAS
                                             <th>S.Origen</th>
                                             <th>S.Destino</th>
                                             <th>Quien recibio</th>
-                                            <th>Fecha</th>
                                             <th>Status</th>
                                             <th>Opciones</th>
                                             <th>Reporte</th>
@@ -221,6 +222,7 @@ TRANSFERENCIAS
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Fecha</th>
                                             <th>Clave</th>
                                             <th>Peso</th>
                                             <th>Categoría</th>
@@ -228,7 +230,6 @@ TRANSFERENCIAS
                                             <th>S.Origen</th>
                                             <th>S.Destino</th>
                                             <th>Quien recibio</th>
-                                            <th>Fecha</th>
                                             <th>Status</th>
                                             <th>Opciones</th>
                                             <th>Reporte</th>
@@ -236,7 +237,8 @@ TRANSFERENCIAS
                                     </tfoot>
                                     <tbody>
                                         @foreach ($trans1 as $transferout)
-                                        <tr id="row{{$transferout->id}}">
+                                        <tr>
+                                            <td data-sort='YYYYMMDD'>{{$transferout->updated_at->format('m-d-Y')}}</td>
                                             <td>{{ $transferout->product->clave }}</td>
                                             <td>{{ $transferout->product->weigth }}</td>
                                             <td>{{ $transferout->product->category->name }}</td>
@@ -245,7 +247,6 @@ TRANSFERENCIAS
                                             <td>{{$transferout->user->name}}</td>
                                             <td>{{$transferout->newBranch->name}}</td>
                                             <td>{{$transferout->destinationUser->name}}</td>
-                                            <td>{{$transferout->created_at->format('m-d-Y')}}</td>
                                             <td>
                                                 @if($transferout->status_product === 1 || $transferout->paid_at)
                                                 @if($transferout->paid_at)
@@ -297,6 +298,7 @@ TRANSFERENCIAS
                                                 @endif
                                                 <!-- END Botón-->
                                             </td>
+                                            @if ($transferout->paid_at !== null )
                                             <td>
                                                 <!-- Botón para generar Traspaso por (ID)-->
                                                 <a href="traspasopdf/{{$transferout->id}}"><button type="button"
@@ -306,6 +308,9 @@ TRANSFERENCIAS
                                                 </a>
                                                 <!-- END Botón-->
                                             </td>
+                                            @else
+                                            <td></td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                     </tbody>

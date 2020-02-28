@@ -17,7 +17,8 @@ SUCURSAl
                 <h1 class=" panel-title col-9">Detalle de ventas</h1>
                 <div class="panel-actions float-right col-">
                     <button onclick="window.location.href='/ventas'" class="btn btn-sm small btn-floating
-                    btn-primary waves-light float-right" data-original-title="Ir a mis vent"> <i class="icon fa-reply-all " aria-hidden="true"></i></button>
+                    btn-primary waves-light float-right" data-original-title="Ir a mis vent"> <i
+                            class="icon fa-reply-all " aria-hidden="true"></i></button>
                 </div>
                 {{-- <div class="panel-actions float-right col-">
                     <a href="/ventas/{{$sale->id}}/edit">
@@ -34,7 +35,8 @@ SUCURSAl
             <div class="row">
                 <div class="col-md-3">
                     <p class="">
-                        <strong>Nombre: </strong>{{ ($sale->client_id) ? $sale->client->full_name : $sale->customer_name }}
+                        <strong>Nombre:
+                        </strong>{{ ($sale->client_id) ? $sale->client->full_name : $sale->customer_name }}
                     </p>
                     <p class="">
                         <strong>Teléfono: </strong>{{ ($sale->client) ? $sale->client->phone_number : $sale->telephone}}
@@ -66,9 +68,9 @@ SUCURSAl
                             <tr>
                                 <td><strong class="text-center badge badge-success">Restan:</strong></td>
                                 @if(($sale->total - $sale->partials->sum('amount')) > 0)
-                                    <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
+                                <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
                                 @else
-                                    <td> $ 0 </td>
+                                <td> $ 0 </td>
                                 @endif
                             </tr>
                         </tbody>
@@ -108,7 +110,9 @@ SUCURSAl
                     <td>$ {{ $item->final_price }}</td>
                     @if($sale->paid_out != $sale->total)
                     <td>
-                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back" alt="{{$item->id_product}}" role="button" data-toggle="tooltip" data-original-title="Devolver">
+                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
+                            alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
+                            data-original-title="Devolver">
                             <i class="icon fa-reply-all" aria-hidden="true"></i>
                         </button>
                     </td>
@@ -135,7 +139,7 @@ SUCURSAl
             <div class="row">
                 <h3 class="panel-title col-9">Historial de pagos</h3>
 
-                <div class="panel-actions float-right" >
+                <div class="panel-actions float-right">
 
                     <a href="/ventapdf/{{$sale->id}}"><button type="button" class="btn btn-sm samll btn-floating btn-danger waves-effect waves-light" data-toggle="tooltip" data-original-title="Generar reporte PDF">
                         <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
@@ -167,7 +171,7 @@ SUCURSAl
                             @if(($sale->total - $sale->paid_out) > 0)
                                 <strong>Restan: </strong>$ {{ $sale->total - $sale->paid_out }}
                             @else
-                                <strong>Restan: $ 0</strong>
+                            <strong>Restan: $ 0</strong>
                             @endif
                         </p>
                     </div>
@@ -187,22 +191,23 @@ SUCURSAl
                         @foreach($sale->partials as $partial)
                         <tr>
                             <td>{{ $partial->created_at }}</td>
-                                @if($partial->type == "1")
-                                    <td>Efectivo</td>
-                                @elseif($partial->type == "2")
-                                    <td>Tarjeta</td>
-                                @else
-                                    <td>Saldo a Favor</td>
-                                @endif
+                            @if($partial->type == "1")
+                            <td>Efectivo</td>
+                            @elseif($partial->type == "2")
+                            <td>Tarjeta</td>
+                            @else
+                            <td>Saldo a Favor</td>
+                            @endif
                             </td>
                             <td>$ {{ $partial->amount }}</td>
                             <td>
-                        <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
-                          data-close-btn-inside="false" data-fixed-contentPos="true"
-                          data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
-                          <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200" height="150"
-                          />
-                  </td>
+                                <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
+                                    data-close-btn-inside="false" data-fixed-contentPos="true"
+                                    data-main-class="mfp-margin-0s mfp-with-zoom"
+                                    data-zoom='{"enabled": "true","duration":"300"}'>
+                                    <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200"
+                                        height="150" />
+                            </td>
                         </tr>
                         @endforeach
                         <tr>
@@ -228,7 +233,7 @@ SUCURSAl
                 <h4 class="modal-title">Nuevo pago</h4>
             </div>
             <div class="modal-body">
-                <form action="/pagos" method="post" id="saleForm"  enctype="multipart/form-data">
+                <form action="/pagos" method="post" id="saleForm" enctype="multipart/form-data">
                     <input type="hidden" name="sale_id" value="{{ $sale->id }}">
                     {{ csrf_field() }}
                     <div class="row">
@@ -249,20 +254,27 @@ SUCURSAl
                         </div>
                         @else
                         <div class="col-md-12">
+<<<<<<< HEAD
                             <label>Monto</label>
                             <input type="text" id="amount" name="amount" class="form-control" alt="{{$sale->total - $sale->paid_out}}">
+=======
+                            <label>Montos</label>
+                            <input type="text" id="amount" name="amount" class="form-control"
+                                alt="{{$sale->total - $sale->paid_out}}">
+>>>>>>> 9e183a2a8ed868d5947aeae12e4383191fd67644
                         </div>
                         @endif
                     </div>
-                     <div class="form-group form-material col-md-6 remove">
-                            <label>Selecciona Ticket de la venta</label>
-                            <label for="image" class="btn btn-primary">Explorar</label>
-                            <input type="file" name="image" id="image" class="invisible">
+                    <div class="form-group form-material col-md-6 remove">
+                        <label>Selecciona Ticket de la venta</label>
+                        <label for="image" class="btn btn-primary">Explorar</label>
+                        <input type="file" name="image" id="image" class="invisible">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="savePartial" type="button" class="btn btn-primary" data-dismiss="modal">Guardar pago </button>
+                <button id="savePartial" type="button" class="btn btn-primary" data-dismiss="modal">Guardar pago
+                </button>
             </div>
         </div>
 
