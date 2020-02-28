@@ -73,6 +73,7 @@ Panel Principal
                                                                     <option value="1">Por Pagar</option>
                                                                     <option value="0">Rechazado</option>
                                                                     <option value="3">Devolucion</option>
+                                                                    <option value="4">Pagado</option>
                                                                 </select>
                                                                 <label>Tipo</label>
                                                                 <select id="" name="type" alt="1"
@@ -149,6 +150,7 @@ Panel Principal
                                                                 <option value="1">Por Pagar</option>
                                                                 <option value="0">Rechazado</option>
                                                                 <option value="3">Devolucion</option>
+                                                                <option value="4">Pagado</option>
                                                             </select>
                                                             <label>Tipo</label>
                                                             <select id="" name="type" alt="1"

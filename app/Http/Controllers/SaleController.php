@@ -327,11 +327,11 @@ class SaleController extends Controller
         $total = $sale->total - $giveback;
         //return $total;
         $sale->total = $total;
-        if($sale->total < $sale->paid_out) {
-            $balance = $sale->paid_out - $sale->total;
-            $sale->positive_balance = $sale->positive_balance + $balance;
-            $client->positive_balance = $client->positive_balance + $balance;
-            $sale->paid_out = $sale->paid_out - $balance;
+        if($sale->total == 0) {
+            //$balance = $sale->paid_out - $sale->total;
+            $sale->positive_balance = $sale->positive_balance + $sale->paid_out;
+            $client->positive_balance = $client->positive_balance + $sale->paid_out;
+            $sale->paid_out = 0;
         }       
         if ($client->positive_balance < 0) {
             $client->positive_balance = $client->positive_balance * -1;

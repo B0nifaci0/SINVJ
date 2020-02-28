@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sale;
+use App\Client;
 use App\PayPal;
 use App\Payment;
 use App\Partial;
@@ -83,14 +84,32 @@ class PaymentsController extends Controller
             ]);
         }
         $sale = Sale::find($request->sale_id);
+        $client = Client::findOrFail($sale->client_id);
         
         if($request->type == 3)
         {
             $sale->positive_balance = null;
         }
-        
+
         $sale->paid_out += $request->amount;
+
+        if($sale->total == 0)
+        {
+            $sale->positive_balance = $sale->paid_out;
+            $client->positive_balance = $sale->paid_out;
+        }
+
+        if($sale->total < $client->positive_balance)
+        {
+            $client_positive_balance = $client->positive_balance - $sale->paid_out;
+        }
+
+        return $sale;
+        
+        return $client;
+
         $sale->save(); 
+        $client->save();
 
         return back();
     }
