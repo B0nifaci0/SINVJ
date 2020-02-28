@@ -54,6 +54,54 @@ class PaymentsController extends Controller
     public function store(Request $request)
     {
         //return $request;
+        $sale = Sale::find($request->sale_id);
+        $client = Client::find($sale->client_id);
+
+        $balance = $sale->total - $sale->paid_out;
+        
+        if($request->type == 3)
+        {
+            if($client->positive_balance > $balance)
+            {
+                $client->positive_balance = $client->positive_balance - $balance;
+                $sale->paid_out = $sale->total;
+                //return $sale;
+            } else {
+                $sale->paid_out = $sale->paid_out + $client->positive_balance;
+                $sale->positive_balance = null;
+                $client->positive_balance = null;
+            }
+            //return $sale;
+        } else {
+            $sale->paid_out += $request->amount;
+        }
+        
+        if($sale->total == 0)
+        {
+            $sale->positive_balance = $sale->paid_out;
+            if($sale->client_id)
+            {
+                if($sale->total < $client->positive_balance)
+                {
+                    $client_positive_balance = $client->positive_balance - $sale->paid_out;
+                    $client->positive_balance = $sale->paid_out;
+                    //return $client;
+                    
+                }
+            }
+        }
+        
+        //return $sale;
+        
+        //return $client;
+        
+        $sale->save(); 
+
+        if($sale->client_id)
+        {
+            $client->save();
+        }
+        
         if ($request->type == 2) {
                 $adapter = Storage::disk('s3')->getDriver()->getAdapter();
                 $image = file_get_contents($request->file('image')->path());
@@ -83,33 +131,6 @@ class PaymentsController extends Controller
                 'type' => Partial::CREDIT,
             ]);
         }
-        $sale = Sale::find($request->sale_id);
-        $client = Client::findOrFail($sale->client_id);
-        
-        if($request->type == 3)
-        {
-            $sale->positive_balance = null;
-        }
-
-        $sale->paid_out += $request->amount;
-
-        if($sale->total == 0)
-        {
-            $sale->positive_balance = $sale->paid_out;
-            $client->positive_balance = $sale->paid_out;
-        }
-
-        if($sale->total < $client->positive_balance)
-        {
-            $client_positive_balance = $client->positive_balance - $sale->paid_out;
-        }
-
-        return $sale;
-        
-        return $client;
-
-        $sale->save(); 
-        $client->save();
 
         return back();
     }
