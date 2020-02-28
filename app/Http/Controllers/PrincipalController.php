@@ -85,7 +85,8 @@ class PrincipalController extends Controller
       $gramos_devueltos = Product::join('categories','categories.id','products.category_id')
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
-      ->where('products.discar_cause',3)
+      ->whereIn('products.discar_cause', [3, 4])
+      ->where('products.restored_at', null)
       ->withTrashed()
       ->sum('products.weigth');
       //return $gramos_devueltos;
@@ -140,7 +141,8 @@ class PrincipalController extends Controller
       $ventas_devueltos = Product::join('categories','categories.id','products.category_id')
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
-      ->where('products.discar_cause',3)
+      ->whereIn('products.discar_cause', [3, 4])
+      ->where('products.restored_at', null)
       ->withTrashed()
       ->sum('products.discount');
       //return $ventas_devueltos;
@@ -191,7 +193,8 @@ class PrincipalController extends Controller
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
       ->where('products.branch_id',$ids)
-      ->where('products.discar_cause',3)
+      ->whereIn('products.discar_cause', [3, 4])
+      ->where('products.restored_at', null)
       ->withTrashed()
       ->sum('products.weigth');
       //return $gramos_coldev;
@@ -236,7 +239,8 @@ class PrincipalController extends Controller
        $piezas_devueltos = Product::join('categories','categories.id','products.category_id')
        ->where('products.shop_id', Auth::user()->shop->id)
        ->where('categories.type_product',1)
-       ->where('products.discar_cause',3)
+       ->whereIn('products.discar_cause', [3, 4])
+       ->where('products.restored_at', null)
        ->withTrashed()
        ->count('products.id');
        //return $piezas_devueltos;
@@ -281,7 +285,8 @@ class PrincipalController extends Controller
         $piezas_ventdev = Product::join('categories','categories.id','products.category_id')
        ->where('products.shop_id', Auth::user()->shop->id)
        ->where('categories.type_product',1)
-       ->where('products.discar_cause',3)
+       ->whereIn('products.discar_cause', [3, 4])
+       ->where('products.restored_at', null)
        ->withTrashed()
        ->sum('products.discount');
        //return $piezas_ventdev;
@@ -332,7 +337,8 @@ class PrincipalController extends Controller
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
-      ->where('products.discar_cause',3)
+      ->whereIn('products.discar_cause', [3, 4])
+      ->where('products.restored_at', null)
       ->withTrashed()
       ->count('products.id');
       //return $piezas_coldev;

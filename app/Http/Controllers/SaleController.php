@@ -303,7 +303,7 @@ class SaleController extends Controller
                 $e->image = (string) $result->getUri();
             }
         }
-
+        //return $sale;
         return view('sale.show', compact('sale', 'lines', 'restan','partials'));
     }
 
@@ -318,6 +318,8 @@ class SaleController extends Controller
         //return $give;
         $sale = Sale::findOrFail($request->sale_id);
         //return $sale;
+        $client = Client::findOrFail($sale->client_id);
+        //return $client;
         $giveback = SaleDetails::where('sale_id', $request->sale_id)
             ->where('product_id', $request->product_id)
             ->sum('final_price');
@@ -326,13 +328,16 @@ class SaleController extends Controller
         //return $total;
         $sale->total = $total;
         if($sale->total < $sale->paid_out) {
-            $sale->paid_out = $sale->paid_out - $giveback;
-            $sale->positive_balance = $total - $sale->paid_out;
-        }
-        if ($sale->positive_balance < 0) {
-            $sale->positive_balance = $sale->positive_balance * -1;
+            $balance = $sale->paid_out - $sale->total;
+            $sale->positive_balance = $sale->positive_balance + $balance;
+            $client->positive_balance = $client->positive_balance + $balance;
+            $sale->paid_out = $sale->paid_out - $balance;
+        }       
+        if ($client->positive_balance < 0) {
+            $client->positive_balance = $client->positive_balance * -1;
         }
         //return $sale;
+        //return $client;
         if ($give == 1) {
             $product->discar_cause = 4;
         } else {
@@ -340,7 +345,10 @@ class SaleController extends Controller
         }
         //return $product;
 
+        $product->restored_at = null;
+
         $sale->save();
+        $client->save();
         $product->save();
         $product->delete();
         Sale::where('id', $request->sale_id)->update(['total' => $total]);

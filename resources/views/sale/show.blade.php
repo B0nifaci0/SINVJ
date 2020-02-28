@@ -60,16 +60,16 @@ SUCURSAl
                                 <td>$ {{$sale->paid_out}}</td>
                             </tr>
                             <tr>
-                                <td><strong class="text-center badge badge-success">Restan:</strong></td>
-                                @if(($sale->total - $sale->partials->sum('amount')) > 0)
-                                <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
-                                @else
-                                <td> $ 0 </td>
-                                @endif
+                                <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
+                                <td> $ @if($sale->client->positive_balance) {{$sale->client->positive_balance}} @else 0 @endif</td>
                             </tr>
                             <tr>
-                                <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
-                                <td> $ @if($sale->positive_balance) {{$sale->positive_balance}} @else 0 @endif</td>
+                                <td><strong class="text-center badge badge-success">Restan:</strong></td>
+                                @if(($sale->total - $sale->partials->sum('amount')) > 0)
+                                    <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
+                                @else
+                                    <td> $ 0 </td>
+                                @endif
                             </tr>
                         </tbody>
                     </table>
@@ -86,7 +86,9 @@ SUCURSAl
                     <th>Categoria</th>
                     <th>Peso</th>
                     <th>Precio</th>
+                    @if($sale->paid_out != $sale->total)
                     <th>Devolver</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -104,17 +106,21 @@ SUCURSAl
                     <td>{{$item->category_name}}</td>
                     <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                     <td>$ {{ $item->final_price }}</td>
+                    @if($sale->paid_out != $sale->total)
                     <td>
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back" alt="{{$item->id_product}}" role="button" data-toggle="tooltip" data-original-title="Devolver">
-                            <i class="icon md-delete" aria-hidden="true"></i>
+                            <i class="icon fa-reply-all" aria-hidden="true"></i>
                         </button>
                     </td>
+                    @endif
                 </tr>
                 @endforeach
                 <tr>
                     <td colspan="5"></td>
                     <td><strong>$ {{ $sale->total }}</strong></td>
+                    @if($sale->paid_out != $sale->total)
                     <td></td>
+                    @endif
                 </tr>
             </tbody>
         </table>
@@ -159,9 +165,9 @@ SUCURSAl
                     <div class="col-md-3">
                         <p>
                             @if(($sale->total - $sale->partials->sum('amount')) > 0)
-                            <strong>Restan: </strong>$ {{ $sale->total - $sale->partials->sum('amount') }}
+                                <strong>Restan: </strong>$ {{ $sale->total - $sale->partials->sum('amount') }}
                             @else
-                            <strong>Restan: $ 0</strong>
+                                <strong>Restan: $ 0</strong>
                             @endif
                         </p>
                     </div>
@@ -186,7 +192,7 @@ SUCURSAl
                                 @elseif($partial->type == "2")
                                     <td>Tarjeta</td>
                                 @else
-                                    <td>Credito</td>
+                                    <td>Saldo a Favor</td>
                                 @endif
                             </td>
                             <td>$ {{ $partial->amount }}</td>
@@ -231,15 +237,15 @@ SUCURSAl
                             <select name="type" id="valor" class="form-control">
                                 <option value="1" selected="selected" id="cash">Efectivo</option>
                                 <option value="2" id="card">Tarjeta</option>
-                                @if($sale->positive_balance)
-                                <option value="3" id="balance">Saldo a Favor</option>
+                                @if($sale->client->positive_balance)
+                                    <option value="3" id="balance">Saldo a Favor</option>
                                 @endif
                             </select>
                         </div>
-                        @if($sale->positive_balance)
+                        @if($sale->client->positive_balance)
                         <div class="col-md-12 positive">
                             <label>Monto</label>
-                            <input type="text" id="amount" name="amount" class="form-control" value="{{$sale->positive_balance}}" alt="{{$sale->total - $sale->paid_out}} ">
+                            <input type="text" id="amount" name="amount" class="form-control" value="{{$sale->client->positive_balance}}" alt="{{$sale->total - $sale->paid_out}} ">
                         </div>
                         @else
                         <div class="col-md-12">

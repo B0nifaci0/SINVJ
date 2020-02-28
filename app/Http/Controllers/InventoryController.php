@@ -130,9 +130,9 @@ class InventoryController extends Controller
                 'branch_id' => $branch_id
             ]);
 
-            $products = Product::where('branch_id', $branch_id)->get();
-
-
+            $products = Product::where('branch_id', $branch_id)
+            ->where('status_id', 2)
+            ->get();
 
             foreach ($products as $p) {
                 InventoryDetail::create([

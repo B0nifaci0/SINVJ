@@ -89,17 +89,18 @@ ALTA PRODUCTO
             <!-- END Select-->
 
             <!-- Input para ingresar precio del producto pz-->
-            <div id="pricepz" class="form-group form-material col-md-3">
-              <label>Precio del Producto</label>
-              <input type="text" id="pricepzt" class="form-control" readonly name="pricepzt" value="{{($product->price) ? $product->price: old('pricepzt')}}">
-            </div>
-
-            <!-- Input para ingresar precio del producto pz-->
             <div id="pricecp" class="form-group form-material col-md-3 remove">
               <label>Precio Compra</label>
               <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{($product->price_purchase) ? $product->price_purchase :old('$product->price_purchase')}}">
             </div>
             <!-- END Input-->
+
+            <!-- Input para ingresar precio del producto pz-->
+            <div id="pricepz" class="form-group form-material col-md-3">
+              <label>Precio del Producto</label>
+              <input type="text" id="pricepzt" class="form-control" readonly name="pricepzt" value="{{($product->price) ? $product->price: old('pricepzt')}}">
+            </div>
+
             <!-- Input para ingresar precio con descuento-->
             <div id="discountpz" class="form-group form-material col-md-3 remove">
               <label>Precio con descuentopz</label>
