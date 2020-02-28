@@ -56,7 +56,7 @@ class SaleController extends Controller
                 ->select('sales.*', 'branches.name as sucursal')
                 ->whereRaw('sales.total = sales.paid_out')
                 ->where('shops.id', $user->shop_id)
-                ->orderBy('sales.id', 'desc')
+                ->orderBy('sales.updated_at', 'desc')
                 ->get();
 
             //APARTADOS
@@ -67,7 +67,7 @@ class SaleController extends Controller
                 ->select('sales.*', 'branches.name as sucursal')
                 ->whereRaw('sales.total <> sales.paid_out')
                 ->where('shops.id', $user->shop_id)
-                ->orderBy('sales.id', 'desc')
+                ->orderBy('sales.updated_at', 'desc')
                 ->get();
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             //VENDIDOS
@@ -77,7 +77,7 @@ class SaleController extends Controller
                 ->select('sales.*')
                 ->whereRaw('sales.total <= sales.paid_out')
                 ->where('sales.branch_id', $user->branch_id)
-                ->orderBy('sales.id', 'DESC')
+                ->orderBy('sales.updated_at', 'desc')
                 ->get();
 
             //APARTADOS
@@ -87,7 +87,7 @@ class SaleController extends Controller
                 ->select('sales.*')
                 ->whereRaw('sales.total > sales.paid_out')
                 ->where('sales.branch_id', $user->branch_id)
-                ->orderBy('sales.id', 'DESC')
+                ->orderBy('sales.updated_at', 'desc')
                 ->get();
         }
         /*        return response()->json([
@@ -318,7 +318,7 @@ class SaleController extends Controller
         //return $give;
         $sale = Sale::findOrFail($request->sale_id);
         //return $sale;
-        $client = Client::findOrFail($sale->client_id);
+        $client = Client::find($sale->client_id);
         //return $client;
         $giveback = SaleDetails::where('sale_id', $request->sale_id)
             ->where('product_id', $request->product_id)
@@ -330,12 +330,18 @@ class SaleController extends Controller
         if($sale->total == 0) {
             //$balance = $sale->paid_out - $sale->total;
             $sale->positive_balance = $sale->positive_balance + $sale->paid_out;
-            $client->positive_balance = $client->positive_balance + $sale->paid_out;
+            if($sale->client_id)
+            {
+                $client->positive_balance = $client->positive_balance + $sale->paid_out;
+                if ($client->positive_balance < 0) 
+                {
+                    $client->positive_balance = $client->positive_balance * -1;
+                }
+                $client->save();
+            }
             $sale->paid_out = 0;
         }       
-        if ($client->positive_balance < 0) {
-            $client->positive_balance = $client->positive_balance * -1;
-        }
+        
         //return $sale;
         //return $client;
         if ($give == 1) {
@@ -348,7 +354,7 @@ class SaleController extends Controller
         $product->restored_at = null;
 
         $sale->save();
-        $client->save();
+        
         $product->save();
         $product->delete();
         Sale::where('id', $request->sale_id)->update(['total' => $total]);

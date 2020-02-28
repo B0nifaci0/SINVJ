@@ -72,16 +72,16 @@ LISTA DE  VENTAS
                 <table id="sale_table_sold"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
               <tr>
-                <th>Clave</th>
+                <th>Fecha</th>
+                <th>Folio</th>
                 <th>Nombre del cliente</th>
                 <th>Tipo</th>
                 <th>Teléfono</th>
                 <th>Productos</th>
                 <th>Total</th>
                 <th>Total Pagado</th>
-                <th>Fecha</th>
                 @if(Auth::user()->type_user == 1 )
-                <th>Sucursal</th>
+                  <th>Sucursal</th>
                 @endif
                 <th>Estatus</th>
                 <th>Opciones</th>
@@ -89,16 +89,16 @@ LISTA DE  VENTAS
             </thead>
             <tfoot>
               <tr>
-                <th>Clave</th>
+                <th>Fecha</th>
+                <th>Folio</th>
                 <th>Nombre del cliente</th>
                 <th>Tipo</th>
                 <th>Teléfono</th>
                 <th>Productos</th>
                 <th>Total</th>
                 <th>Total Pagado</th>
-                <th>Fecha</th>
                 @if(Auth::user()->type_user == 1 )
-                <th>Sucursal</th>
+                  <th>Sucursal</th>
                 @endif
                 <th>Estatus</th>
                 <th>Opciones</th>
@@ -106,7 +106,8 @@ LISTA DE  VENTAS
             </tfoot>
             <tbody>
                 @foreach ($sold as $sale)
-                  <tr id = "row{{ $sale->id }}">
+                  <tr>
+                    <td data-sort='YYYYMMDD'>{{ $sale->updated_at->format('m-d-Y')}}</td>
                     <td>{{$sale->folio}}</td>
                     <td>
                       @if($sale->client)
@@ -122,9 +123,8 @@ LISTA DE  VENTAS
                     <td>{{ $sale->items->count() }}</td>
                     <td>$ {{ $sale->total }}</td>
                     <td>$ {{ $sale->paid_out }}</td>
-                    <td>{{ $sale->created_at->format('m-d-Y')}}</td>
                     @if(Auth::user()->type_user == 1 )
-                    <td>{{ $sale->sucursal }}</td>
+                      <td>{{ $sale->sucursal }}</td>
                     @endif
                     <td><span class="text-center badge badge-success">Vendido</span></td>
                     <td>
@@ -155,16 +155,16 @@ LISTA DE  VENTAS
                 <table id="sale_table_apart"  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
               <tr>
-                <th>Clave</th>
+                <th>Fecha</th>
+                <th>Folio</th>
                 <th>Nombre del cliente</th>
                 <th>Tipo</th>
                 <th>Teléfono</th>
                 <th>Productos</th>
                 <th>Total a pagar</th>
                 <th>Total Pagado</th>
-                <th>Fecha</th>
                 @if(Auth::user()->type_user == 1 )
-                <th>Sucursal</th>
+                  <th>Sucursal</th>
                 @endif
                 <th>Estatus</th>
                 <th>Opciones</th>
@@ -172,16 +172,16 @@ LISTA DE  VENTAS
             </thead>
             <tfoot>
               <tr>
-                <th>Clave</th>
+                <th>Fecha</th>
+                <th>Folio</th>
                 <th>Nombre del cliente</th>
                 <th>Tipo</th>
                 <th>Teléfono</th>
                 <th>Productos</th>
                 <th>Total a pagar</th>
                 <th>Total Pagado</th>
-                <th>Fecha</th>
                 @if(Auth::user()->type_user == 1 )
-                <th>Sucursal</th>
+                  <th>Sucursal</th>
                 @endif
                 <th>Estatus</th>
                 <th>Opciones</th>
@@ -189,7 +189,8 @@ LISTA DE  VENTAS
             </tfoot>
             <tbody>
                 @foreach ($apart as $sale)
-                  <tr id = "row{{ $sale->id }}">
+                  <tr>
+                    <td data-sort='YYYYMMDD'>{{ $sale->updated_at->format('m-d-Y')}}</td>
                     <td>{{$sale->folio}}</td>
                     <td>
                       @if($sale->client)
@@ -205,7 +206,6 @@ LISTA DE  VENTAS
                     <td>{{ $sale->items->count() }}</td>
                     <td>$ {{ $sale->total }}</td>
                     <td>$ {{ $sale->paid_out }}</td>
-                    <td>{{ $sale->created_at->format('m-d-Y')}}</td>
                     @if(Auth::user()->type_user == 1 )
                     <td>{{ $sale->sucursal }}</td>
                     @endif
