@@ -57,11 +57,11 @@ SUCURSAl
                             </tr>
                             <tr>
                                 <td><strong class="text-center badge badge-danger">Pagado:</strong></td>
-                                <td>$ {{$sale->paid_out}}</td>
+                                <td>$ {{ $sale->paid_out }}</td>
                             </tr>
                             <tr>
                                 <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
-                                <td> $ @if($sale->client->positive_balance) {{$sale->client->positive_balance}} @else 0 @endif</td>
+                                <td> $ @if(($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance) {{ ($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance }} @else 0 @endif</td>
                             </tr>
                             <tr>
                                 <td><strong class="text-center badge badge-success">Restan:</strong></td>
@@ -237,12 +237,12 @@ SUCURSAl
                             <select name="type" id="valor" class="form-control">
                                 <option value="1" selected="selected" id="cash">Efectivo</option>
                                 <option value="2" id="card">Tarjeta</option>
-                                @if($sale->client->positive_balance)
+                                @if(($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance)
                                     <option value="3" id="balance">Saldo a Favor</option>
                                 @endif
                             </select>
                         </div>
-                        @if($sale->client->positive_balance)
+                        @if(($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance)
                         <div class="col-md-12 positive">
                             <label>Monto</label>
                             <input type="text" id="amount" name="amount" class="form-control" value="{{$sale->client->positive_balance}}" alt="{{$sale->total - $sale->paid_out}} ">
