@@ -59,8 +59,6 @@
               <thead>
                 <tr>
                  <th>Clave</th>
-                 <th>Clave Del Producto</th>
-                 <th>Producto</th>
                  <th>Peso</th>
                  <th>Categoría</th>
                  <th>Linea</th>
@@ -70,13 +68,11 @@
                  <th>Quien recibio</th>
                  <th>Fecha</th>
                 </tr>
-              </thead>  
+              </thead>
               <tbody>
                     @foreach ($trans as $transfer)
                     <tr id = "row{{$transfer->id}}">
-                    <td>{{ $transfer->id }}</td> 
-                          <td>{{ $transfer->product->clave }}</td> 
-                          <td>{{ $transfer->product->name }}</td>
+                          <td>{{ $transfer->product->clave }}</td>
                           <td>{{ $transfer->product->weigth }}</td>
                           <td>{{ $transfer->product->category->name }}</td>
                           <td>{{ $transfer->product->line ? $transfer->product->line->name : '' }}</td>

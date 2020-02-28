@@ -186,19 +186,29 @@ class TranferProductsController extends Controller
         return $pdf->stream('Traspasos.pdf');
     }
 
-    public function exportPdf($id)
+    public function exportPdfIn($id)
     {
-        // return $id;
         $user = Auth::user();
         $shop = Auth::user()->shop;
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
         $trans = TransferProduct::where("id", "=", $id)->get();
-        $pdf  = PDF::loadView('transfer.PdfTranfer', compact('trans', 'shop'));
-        return $pdf->stream('Traspaso.pdf');
+        $pdf  = PDF::loadView('transfer.PdfTranferInt', compact('trans', 'shop'));
+        return $pdf->stream('TraspasoEntrante.pdf');
     }
 
+    public function exportPdfOut($id)
+    {
+        $user = Auth::user();
+        $shop = Auth::user()->shop;
+        if ($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
+        $trans = TransferProduct::where("id", "=", $id)->get();
+        $pdf  = PDF::loadView('transfer.PdfTranferOut', compact('trans', 'shop'));
+        return $pdf->stream('TraspasoSaliente.pdf');
+    }
 
     public function reportTransfer()
     {
