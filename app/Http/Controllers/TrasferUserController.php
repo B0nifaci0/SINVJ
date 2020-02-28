@@ -216,23 +216,37 @@ class TrasferUserController extends Controller
         });
 
         $type = $request->type;
-        if ($request->type == 0) {
+        if ($request->type == 0) {  //Entradas
             $query = TransferProduct::whereIn('destination_user_id', $usersIds)
                 ->where('new_branch_id', $request->branch_id)
                 ->whereBetween('transfer_products.updated_at', [$fecini, $fecter]);
-        } else {
+        } else {    //Salidas
             $query = TransferProduct::whereIn('user_id', $usersIds)
                 ->where('last_branch_id', $request->branch_id)
                 ->whereBetween('transfer_products.updated_at', [$fecini, $fecter]);
         }
-        if ($request->status_product == 'null') {
+
+        if ($request->status_product == 'null') { //Estatus Pendiente
             $query->whereNull('transfer_products.status_product');
         } else {
-            $query->where('transfer_products.status_product', $request->status_product);
+            if ($request->status_product == 4) { //Pagado
+                $query->where('transfer_products.status_product', 1)
+                    ->whereNotNull('transfer_products.paid_at');
+            } else {
+                $query->where('transfer_products.status_product', $request->status_product)
+                    ->whereNull('transfer_products.paid_at'); //Por pagar
+            }
         }
+
+        $branch = Branch::where('id', $request->branch_id)->get();
+        //return $branch;
+        foreach ($branch as $bra) {
+            $branch = $bra->name;
+        }
+
         $trans = $query->with('user')->with('branch')->with('product')->get();
 
-        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransfer', compact('estado', 'trans', 'dates', 'hour', 'shop', 'categoria', 'branches', 'type'));
+        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransfer', compact('estado', 'trans', 'dates', 'hour', 'shop', 'categoria', 'branches', 'type', 'branch'));
         return $pdf->stream('Traspasos.pdf');
     }
 }
