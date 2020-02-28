@@ -254,14 +254,8 @@ SUCURSAl
                         </div>
                         @else
                         <div class="col-md-12">
-<<<<<<< HEAD
                             <label>Monto</label>
                             <input type="text" id="amount" name="amount" class="form-control" alt="{{$sale->total - $sale->paid_out}}">
-=======
-                            <label>Montos</label>
-                            <input type="text" id="amount" name="amount" class="form-control"
-                                alt="{{$sale->total - $sale->paid_out}}">
->>>>>>> 9e183a2a8ed868d5947aeae12e4383191fd67644
                         </div>
                         @endif
                     </div>
