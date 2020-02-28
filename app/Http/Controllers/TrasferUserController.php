@@ -32,11 +32,13 @@ class TrasferUserController extends Controller
         });
         $trans1 = TransferProduct::whereIn('user_id', $usersIds)
             ->with('user')->with('branch')->with('product')
-            ->orderBy('transfer_products.created_at', 'desc')
+            ->orderBy('transfer_products.updated_at', 'desc')
             ->get();
 
+        // return $trans1;
+
         $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
-            ->orderBy('transfer_products.created_at', 'desc')
+            ->orderBy('transfer_products.updated_at', 'desc')
             ->with('user')->with('branch')->with('product')
             ->get();
 
