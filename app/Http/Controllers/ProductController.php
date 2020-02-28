@@ -344,7 +344,20 @@ class ProductController extends Controller
         $category = Category::find($request->category_id);
         //return $category;
         $validator = Validator::make($request->all(), [
-            'max_discountpz' => Rule::requiredIf($category->type_product == 1),
+            'price_purchase' => Rule::requiredIf($category->type_product == 1),
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'errors' => $validator->errors(),
+                'error' => 'Error en alguno de los campos'
+            ];
+            //return response()->json($response, $this->unprocessable);
+            return back()->withErrors($validator->errors());
+        }
+
+        $validator = Validator::make($request->all(), [
+            'weigth' => Rule::requiredIf($category->type_product == 2),
         ]);
         if ($validator->fails()) {
             $response = [
@@ -401,11 +414,11 @@ class ProductController extends Controller
         });
         $categories->prepend($selected_category);
 
-        /**if($category->type_product == 1 && (!$data['pricepzt']) || !is_numeric($data['pricepzt'])){
-          return back()->with('categories', $categories)->withErrors(['msg', 'El precio por pieza es requerido y debe ser numerico']);
+        if($category->type_product == 1 && (!$data['price_purchase']) || !is_numeric($data['price_purchase'])){
+          return back()->with('categories', $categories)->withErrors(['el precio compra es requerido']);
         }
-        elseif($category->type_product == 2 && (!$data['weigth']) || !is_numeric($data['weigth'])){
-            return back()->with('categories', $categories)->withErrors(['msg', 'El peso es requerido y debe ser numerico']);
+        /*if($category->type_product == 2 && (!$data['weigth']) || !is_numeric($data['weigth'])){
+          return back()->with('categories', $categories)->withErrors(['Los gramos son requeridos']);
         }*/
 
         $product = new Product($data);

@@ -59,12 +59,11 @@ SUCURSAl
                             </tr>
                             <tr>
                                 <td><strong class="text-center badge badge-danger">Pagado:</strong></td>
-                                <td>$ {{$sale->paid_out}}</td>
+                                <td>$ {{ $sale->paid_out }}</td>
                             </tr>
                             <tr>
                                 <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
-                                <td> $ @if($sale->client->positive_balance) {{$sale->client->positive_balance}} @else 0
-                                    @endif</td>
+                                <td> $ @if(($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance) {{ ($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance }} @else 0 @endif</td>
                             </tr>
                             <tr>
                                 <td><strong class="text-center badge badge-success">Restan:</strong></td>
@@ -142,16 +141,13 @@ SUCURSAl
 
                 <div class="panel-actions float-right">
 
-                    <a href="/ventapdf/{{$sale->id}}"><button type="button"
-                            class="btn btn-sm samll btn-floating btn-danger waves-effect waves-light"
-                            data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                            <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                    <a href="/ventapdf/{{$sale->id}}"><button type="button" class="btn btn-sm samll btn-floating btn-danger waves-effect waves-light" data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                     </a>
 
                     @if($sale->total > $sale->paid_out)
-                    <button id="newPayment" class="btn btn-sm small btn-floating
-                    btn-primary waves-light float-rightleft" data-toggle="modal" data-target="#myModal"> <i
-                            class="icon md-plus " aria-hidden="true"></i></button>
+                        <button id="newPayment" class="btn btn-sm small btn-floating
+                        btn-primary waves-light float-rightleft" data-toggle="modal" data-target="#myModal"> <i class="icon md-plus " aria-hidden="true"></i></button>
                     @endif
                 </div>
             </div>
@@ -172,8 +168,8 @@ SUCURSAl
                     </div>
                     <div class="col-md-3">
                         <p>
-                            @if(($sale->total - $sale->partials->sum('amount')) > 0)
-                            <strong>Restan: </strong>$ {{ $sale->total - $sale->partials->sum('amount') }}
+                            @if(($sale->total - $sale->paid_out) > 0)
+                                <strong>Restan: </strong>$ {{ $sale->total - $sale->paid_out }}
                             @else
                             <strong>Restan: $ 0</strong>
                             @endif
@@ -246,16 +242,15 @@ SUCURSAl
                             <select name="type" id="valor" class="form-control">
                                 <option value="1" selected="selected" id="cash">Efectivo</option>
                                 <option value="2" id="card">Tarjeta</option>
-                                @if($sale->client->positive_balance)
-                                <option value="3" id="balance">Saldo a Favor</option>
+                                @if(($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance)
+                                    <option value="3" id="balance">Saldo a Favor</option>
                                 @endif
                             </select>
                         </div>
-                        @if($sale->client->positive_balance)
+                        @if(($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance)
                         <div class="col-md-12 positive">
                             <label>Monto</label>
-                            <input type="text" id="amount" name="amount" class="form-control"
-                                value="{{$sale->client->positive_balance}}" alt="{{$sale->total - $sale->paid_out}} ">
+                            <input type="text" id="amount" name="amount" class="form-control" value="{{($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance}}" alt="{{$sale->total - $sale->paid_out}} ">
                         </div>
                         @else
                         <div class="col-md-12">
@@ -313,8 +308,8 @@ SUCURSAl
             e.preventDefault();
             let amount = Number($('#amount').val());
             let max = Number($('#amount').attr('alt'));
-            console.log('Prueba',amount, max);
-            if (amount > max) {
+            console.log(amount, max);
+            if (amount > max ) {
                 swal.fire({
                     title: 'Error',
                     text: 'El pago maximo es $ ' + max,
