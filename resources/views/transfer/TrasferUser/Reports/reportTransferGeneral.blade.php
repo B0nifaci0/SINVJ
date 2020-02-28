@@ -56,6 +56,7 @@
                     <tbody>
                         @foreach ($trans as $transfer)
                         <tr id="row{{$transfer->id}}">
+                            @if($categoria == $transfer->product->category->type_product)
                             <td>{{ $transfer->product->clave }}</td>
                             <td>{{ $transfer->product->category->name }}</td>
                             @if($transfer->product->category->type_product == 2 )
@@ -78,6 +79,7 @@
                             @endif
                             <td>{{$transfer->updated_at->format('m-d-Y')}}</td>
                         </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>
