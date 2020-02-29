@@ -135,6 +135,7 @@ return [
         'required'              => 'Requerido',
         'price_purchase'        => 'precio compra',
         'weigth'                => 'gramos',
+        'customer_name'         => 'nombre de cliente',
 
     ],
 ];
