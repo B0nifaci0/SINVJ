@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Branch;
+use App\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ClientRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -79,7 +81,27 @@ class ClientController extends Controller
         // return response()->json([
         //     'client' => $client
         // ]);
-        return view('clients.show', compact('client'));
+        {
+            $user = Auth::user();
+            $cliente = Client::find($id);
+
+            //return $cliente;
+            $products = Product::join('sale_details','sale_details.product_id','products.id')
+            ->join('sales', 'sales.id','sale_details.sale_id')
+            ->whereIn('products.discar_cause', [3, 4])
+            ->where('sales.client_id', $id)
+            ->select('products.id as id','products.clave as clave','products.description as description','products.weigth','products.price as price', DB::raw('SUM(products.price) as total'))
+            ->groupBy('products.id','products.clave','products.description','products.weigth','products.price')
+            ->withTrashed()
+            ->get();
+
+        //return $products;
+
+        }
+        
+        return view('clients.show', compact('client','products'));
+
+
     }
 
     /**

@@ -31,14 +31,14 @@ class TrasferUserController extends Controller
             return $u->id;
         });
         $trans1 = TransferProduct::whereIn('user_id', $usersIds)
-            ->withTrashed()
             ->with('user')->with('branch')->with('product')
-            ->orderBy('transfer_products.created_at', 'desc')
+            ->orderBy('transfer_products.updated_at', 'desc')
             ->get();
 
+        // return $trans1;
+
         $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
-            ->withTrashed()
-            ->orderBy('transfer_products.created_at', 'desc')
+            ->orderBy('transfer_products.updated_at', 'desc')
             ->with('user')->with('branch')->with('product')
             ->get();
 
@@ -124,7 +124,7 @@ class TrasferUserController extends Controller
         ]);
         $transfer_product->save();
 
-        $product->status_id = 3;
+        $product->status_id = Product::TRANSFER;
         $product->save();
 
         return redirect('/traspasosAA')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
@@ -174,19 +174,21 @@ class TrasferUserController extends Controller
         $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
             return $u->id;
         });
-        $trans1 = TransferProduct::whereIn('user_id', $usersIds)
-            ->whereBetween('updated_at', [$fecini, $fecter])
-            ->with('user')->with('branch')->with('product')->with('product')
-            ->get();
+        $type = $request->type;
+        if ($request->type == 0) {
+            $trans = TransferProduct::whereIn('destination_user_id', $usersIds)
+                ->with('user')->with('branch')->with('product')
+                ->whereBetween('updated_at', [$fecini, $fecter])
+                ->get();
+        } else {
+            $trans = TransferProduct::whereIn('user_id', $usersIds)
+                ->whereBetween('updated_at', [$fecini, $fecter])
+                ->with('user')->with('branch')->with('product')->with('product')
+                ->get();
+        }
+        // $trans = $trans1->merge($trans2);
 
-        $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
-            ->with('user')->with('branch')->with('product')
-            ->whereBetween('updated_at', [$fecini, $fecter])
-            ->get();
-
-        $trans = $trans1->merge($trans2);
-
-        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransferGeneral', compact('trans', 'dates', 'hour', 'shop', 'estado', 'categoria', 'branches'));
+        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransferGeneral', compact('trans', 'dates', 'hour', 'shop', 'estado', 'categoria', 'branches', 'type'));
         return $pdf->stream('Traspasos.pdf');
     }
 
@@ -204,8 +206,6 @@ class TrasferUserController extends Controller
             $shop->image = $this->getS3URL($shop->image);
         }
         //return $shop;
-
-        $estado = $request->estatus_id;
         $fecini = Carbon::parse($request->fecini)->subDay();
         $fecter = Carbon::parse($request->fecter)->addDay();
 
@@ -217,32 +217,38 @@ class TrasferUserController extends Controller
             return $u->id;
         });
 
-        $query = TransferProduct::whereIn('user_id', $usersIds);
-        if ($request->status_product == 'null') {
+        $type = $request->type;
+        if ($request->type == 0) {  //Entradas
+            $query = TransferProduct::whereIn('destination_user_id', $usersIds)
+                ->where('new_branch_id', $request->branch_id)
+                ->whereBetween('transfer_products.updated_at', [$fecini, $fecter]);
+        } else {    //Salidas
+            $query = TransferProduct::whereIn('user_id', $usersIds)
+                ->where('last_branch_id', $request->branch_id)
+                ->whereBetween('transfer_products.updated_at', [$fecini, $fecter]);
+        }
+
+        if ($request->status_product == 'null') { //Estatus Pendiente
             $query->whereNull('transfer_products.status_product');
         } else {
-            $query->where('transfer_products.status_product', $request->status_product);
+            if ($request->status_product == 4) { //Pagado
+                $query->where('transfer_products.status_product', 1)
+                    ->whereNotNull('transfer_products.paid_at');
+            } else {
+                $query->where('transfer_products.status_product', $request->status_product)
+                    ->whereNull('transfer_products.paid_at'); //Por pagar
+            }
         }
-        //->where('last_branch_id',$request->branch_id)
-        // ->orWhere('new_branch_id',$request->branch_id)
-        $trans1 = $query->with('user')
-            ->with(['branch' => function ($q) use ($request) {
-                $q->where('id', $request->branch_id)
-                    ->orWhere('id', $request->branch_id);
-            }])
-            ->with('product')
-            ->get();
-        // return $trans1;
 
-        $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
-            ->where('transfer_products.status_product', $request->status_product)
-            ->where('last_branch_id', $request->branch_id)
-            ->orWhere('new_branch_id', $request->branch_id)
-            ->with('user')->with('branch')->with('product')
-            ->get();
+        $branch = Branch::where('id', $request->branch_id)->get();
+        //return $branch;
+        foreach ($branch as $bra) {
+            $branch = $bra->name;
+        }
 
-        $trans = $trans1->merge($trans2);
-        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransfer', compact('estado', 'trans', 'dates', 'hour', 'shop', 'categoria', 'branches'));
+        $trans = $query->with('user')->with('branch')->with('product')->get();
+
+        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransfer', compact('estado', 'trans', 'dates', 'hour', 'shop', 'categoria', 'branches', 'type', 'branch'));
         return $pdf->stream('Traspasos.pdf');
     }
 }

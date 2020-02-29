@@ -28,7 +28,7 @@ ALTA VENTA
                     </ul>
                 </div>
                 @endif
-                <form id="form" method="POST" action="/ventas">
+                <form id="form" method="POST" action="/ventas" enctype="multipart/form-data">
                     <center>
                         <h3>Venta</h3>
                     </center>
@@ -50,8 +50,7 @@ ALTA VENTA
                                     <div class="form-group form-material">
                                         <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente:
                                         </label>
-                                        <input type="text" class="form-control" required="required" name="customer_name"
-                                            value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
+                                        <input type="text" class="form-control" required="required" name="customer_name" value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
                                     </div>
                                     <!-- END Input-->
                                 </div>
@@ -59,8 +58,7 @@ ALTA VENTA
                                     <!-- Input para Ingresar telefono del cliente-->
                                     <div class="form-group form-material">
                                         <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-                                        <input type="text" class="form-control" required="required" name="telephone"
-                                            value="{{old('telephone')}}" placeholder="7225674569" />
+                                        <input type="text" class="form-control" required="required" name="telephone" value="{{old('telephone')}}" placeholder="7225674569" />
                                     </div>
                                     <!-- END Input-->
                                 </div>
@@ -84,8 +82,7 @@ ALTA VENTA
                         <!-- Select para Seleccionar  producto-->
                         <div class="form-group form-material col-10 col-md-4">
                             <label>Producto</label>
-                            <select id="current_product" name="product_id" class="form-control" data-plugin="select2"
-                                data-placeholder="Seleccione Producto" data-allow-clear="true">
+                            <select id="current_product" name="product_id" class="form-control" data-plugin="select2" data-placeholder="Seleccione Producto" data-allow-clear="true">
                                 <option></option>
                                 <optgroup label="Productos">
                                     @foreach($products as $product)
@@ -107,8 +104,7 @@ ALTA VENTA
                     <!-- END Botón-->
                     <div class="panel-body ">
                         <!-- Tabla para listar productos agregados-->
-                        <table id="ventas" class=" display table table-hover dataTable table-striped w-full"
-                            data-plugin="dataTable">
+                        <table id="ventas" class=" display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                             <thead>
                                 <tr>
                                     <th>Clave</th>
@@ -144,8 +140,7 @@ ALTA VENTA
                                 <th>
                                     <strong>Total:</strong>
                                 </th>
-                                <td><strong id="total"></strong><input type="hidden" class="form-control" name="price"
-                                        id="pagar" /> </td>
+                                <td><strong id="total"></strong><input type="hidden" class="form-control" name="price" id="pagar" /> </td>
                             </tr>
 
                             <tr>
@@ -153,8 +148,7 @@ ALTA VENTA
                                 <th>
                                     <strong>Importe:</strong>
                                 </th>
-                                <td><strong id="amount"></strong><input type="hidden" class="form-control" name="income"
-                                        id="monto" /> </td>
+                                <td><strong id="amount"></strong><input type="hidden" class="form-control" name="income" id="monto" /> </td>
                             </tr>
 
                             <tr>
@@ -162,20 +156,18 @@ ALTA VENTA
                                 <th>
                                     <strong>Cambio:</strong>
                                 </th>
-                                <td><strong id="change"></strong><input type="hidden" class="form-control" name="change"
-                                        id="cambio" /> </td>
+                                <td><strong id="change"></strong><input type="hidden" class="form-control" name="change" id="cambio" /> </td>
                             </tr>
                         </table>
 
                         <!-- END Tabla-->
                     </div>
                     <br>
-                    {{-- <input type="file" name="image" id="image" class=""> --}}
+                <input type="file" name="image" id="image" class="invisible">
                     <div class="row">
                         <!-- Botón para mostar el Modal de Tipos de pago-->
                         <div class="col-6 form-group">
-                            <button class="btn btn-success" data-target="#exampleTabs" data-toggle="modal"
-                                type="button">$ Registro de pago</button>
+                            <button class="btn btn-success" data-target="#exampleTabs" data-toggle="modal" type="button">$ Registro de pago</button>
                         </div>
                         <!-- END Botón-->
                         <input type="hidden" class="form-control" name="partial_pay" id="faltan" />
@@ -199,8 +191,7 @@ ALTA VENTA
                 <div class="example-wrap">
                     <div class="example">
                         <!-- Modal -->
-                        <div class="modal fade modal-success" id="exampleTabs" aria-hidden="true"
-                            aria-labelledby="exampleModalTabs" role="dialog" tabindex="-1">
+                        <div class="modal fade modal-success" id="exampleTabs" aria-hidden="true" aria-labelledby="exampleModalTabs" role="dialog" tabindex="-1">
                             <div class="modal-dialog modal-simple">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -214,18 +205,15 @@ ALTA VENTA
 
                                         <div class="row mt-5">
                                             <div class="form-group form-material col-md-6">
-                                                <label class="form-control-label"
-                                                    for="inputBasicFirstName">Efectivo:</label>
-                                                <input type="text" class="form-control income" name="" id="cashIncome"
-                                                    required="required" placeholder="$" required />
+                                                <label class="form-control-label" for="inputBasicFirstName">Efectivo:</label>
+                                                <input type="text" class="form-control income" name="" id="cashIncome" required="required" placeholder="$" required />
                                             </div>
                                         </div>
                                         <div class="row">
                                             <!-- Input para ingresar cantidad a pagar-->
                                             <div class="form-group form-material col-md-6">
                                                 <label class="form-control-label">Tarjeta:</label>
-                                                <input type="text" class="form-control income" id="cardIncome"
-                                                    placeholder="$" required="required" />
+                                                <input type="text" class="form-control income" id="cardIncome" placeholder="$" required="required" />
                                             </div>
                                             <!-- END Input-->
                                             <!-- Input para seleccionar Imagen del ticket-->
@@ -233,7 +221,6 @@ ALTA VENTA
                                                 <label>Selecciona Ticket de la venta</label>
                                                 <br>
                                                 <label for="image" class="btn btn-success">Explorar</label>
-                                                <input type="file" id="imageModal">
                                             </div>
                                             <!-- END Input-->
                                         </div>
@@ -247,9 +234,7 @@ ALTA VENTA
                                             </div>
                                         </div>
                                         <hr class="mb-4">
-                                        <button type="button" name="continuar" data-dismiss="modal"
-                                            class="btn btn-success btn-lg btn-block"
-                                            aria-label="Close">Continuar</button>
+                                        <button type="button" name="continuar" data-dismiss="modal" class="btn btn-success btn-lg btn-block" aria-label="Close">Continuar</button>
                                         <!-- END PAGO CON TARJETA-->
                                     </div>
                                 </div>
@@ -281,7 +266,7 @@ seleccionado con sus respectivos datos-->
         var totalIncome = 0;
 
 
-        $(function () {
+        $(function() {
 
             let SALETYPE = {
                 NORMAL: 1,
@@ -292,7 +277,7 @@ seleccionado con sus respectivos datos-->
             //     console.log("------------------>overDiscount", overDiscount.length, overDiscountAuth);
             // }, 4000);
 
-            $('#user-type').change(function () {
+            $('#user-type').change(function() {
                 let type = $(this).val();
                 if (SALETYPE.NORMAL == type) {
                     $('#wholesalers').addClass('col-md-7');
@@ -309,7 +294,7 @@ seleccionado con sus respectivos datos-->
                 }
             });
 
-            $('#submit').click(function (e) {
+            $('#submit').click(function(e) {
                 e.preventDefault();
                 overDiscount = [];
                 console.log("selectedProducts", selectedProducts);
@@ -344,13 +329,15 @@ seleccionado con sus respectivos datos-->
                         showLoaderOnConfirm: true,
                         preConfirm: (password) => {
                             return fetch(`/check-password`, {
-                                method: 'POST',
-                                body: JSON.stringify({ password: password }),
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                                }
-                            })
+                                    method: 'POST',
+                                    body: JSON.stringify({
+                                        password: password
+                                    }),
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                    }
+                                })
                                 .then(response => {
                                     if (!response.ok) {
                                         throw new Error(response.statusText)
@@ -387,8 +374,14 @@ seleccionado con sus respectivos datos-->
                 }
 
                 let productIds = selectedProducts.map(p => {
-                    console.log({ id: p.id, price: $(`#finalPrice${p.id}`).val() });
-                    return { id: p.id, price: $(`#finalPrice${p.id}`).val() }
+                    console.log({
+                        id: p.id,
+                        price: $(`#finalPrice${p.id}`).val()
+                    });
+                    return {
+                        id: p.id,
+                        price: $(`#finalPrice${p.id}`).val()
+                    }
                 });
 
                 $('#productsList').val(JSON.stringify(productIds));
@@ -403,7 +396,7 @@ seleccionado con sus respectivos datos-->
                 $('#form').submit();
             });
 
-            $(document).ready(function(){
+            $(document).ready(function() {
                 $('#ventas').DataTable({
                     retrieve: true,
                     //  responsive: true,
@@ -414,8 +407,8 @@ seleccionado con sus respectivos datos-->
                 $('.income').on('input', function() {
                     let id = $(this).attr('id');
                     let val = $(this).val();
-                    if(!Number(val)) {
-                        $(this).val( val.replace(/[^0-9.]/, '') );
+                    if (!Number(val)) {
+                        $(this).val(val.replace(/[^0-9.]/, ''));
                     }
 
                     if (id == 'cashIncome') {
@@ -431,14 +424,14 @@ seleccionado con sus respectivos datos-->
 
                     rest = total - totalIncome;
 
-                    if(rest < 0)  {
+                    if (rest < 0) {
                         $('#change').html(`$ ${rest * -1} `)
                         $('#cambio').val(rest * -1);
-                        $('.cashRest').html( `$ 0` );
+                        $('.cashRest').html(`$ 0`);
                     } else {
                         $('#change').html(`$ 0 `)
                         $('#cambio').val(0);
-                        $('.cashRest').html( `$ ${rest}` );
+                        $('.cashRest').html(`$ ${rest}`);
                     }
                 })
 
@@ -446,30 +439,30 @@ seleccionado con sus respectivos datos-->
 
 
 
-            $(document).ready(function(){
-            var _tr = $('#ventas').DataTable();
+            $(document).ready(function() {
+                var _tr = $('#ventas').DataTable();
 
-            $('#btn-add').click(function () {
-                var tempPrice = 0;
-                var lastPrice = 0;
-                var currentPrice = 0;
+                $('#btn-add').click(function() {
+                    var tempPrice = 0;
+                    var lastPrice = 0;
+                    var currentPrice = 0;
 
-                var productId = $('#current_product').val();
-                if (!productId) return
-                var product = products.filter(p => p.id == productId)[0];
+                    var productId = $('#current_product').val();
+                    if (!productId) return
+                    var product = products.filter(p => p.id == productId)[0];
 
-                var exist = selectedProducts.filter(p => p.id == product.id);
-                if (exist.length) {
-                    Swal.fire(
-                        'No permitido',
-                        'Este producto ya se ha agregado',
-                        'error'
-                    );
-                    return;
-                }
+                    var exist = selectedProducts.filter(p => p.id == product.id);
+                    if (exist.length) {
+                        Swal.fire(
+                            'No permitido',
+                            'Este producto ya se ha agregado',
+                            'error'
+                        );
+                        return;
+                    }
 
-                selectedProducts.push(product);
-                _tr.row.add([
+                    selectedProducts.push(product);
+                    _tr.row.add([
                         product.clave,
                         product.description,
                         product.weigth,
@@ -480,103 +473,103 @@ seleccionado con sus respectivos datos-->
                         product.discount,
                         `<input class="finalPrice income" id="finalPrice${product.id}" alt="${product.id}" type="text" value="${product.price}"/>`,
                         `<button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button>`
-                    ]).draw( false );
+                    ]).draw(false);
 
-                   // var _tr = `<td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button></div></td>`;
-                //END Función//
+                    // var _tr = `<td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button></div></td>`;
+                    //END Función//
 
-                //Hacer suma de productos seleccionados en imprimirlos en Total//
-                $('tbody').append(_tr);
-                total += Number(product.price);
-                $("#total").html(`$ ${total}`);
-                //END Función//
-
-                $('#pagar').val(`${total}`);
-                $('#totalCash').html(total);
-                $('#totalCard').html(total);
-                $('#totalpayment').val(`${total}`);
-                $('#totalPay').val(`${total}`);
-                // $('#vari').val(cambio);
-                $('#tabl').val(_tr);
-
-                $('#ventas').off('click');
-                $('#ventas').off('input');
-                $('#ventas').off('focusin');
-                // $(".finalPrice").unbind();
-                var product
-                // $('.finalPrice').keydown(function() {
-                //   var productId = $(this).attr('alt');
-                //   product = products.filter(p => p.id == productId)[0];
-
-                //   tempPrice = Number($(`#finalPrice${product.id}`).val());
-                //   // console.log("valor anterior", tempPrice)
-                // });
-
-                $('#ventas').on('focusin', '.finalPrice', function(){
-                    // $('.finalPrice').on('focusin', function () {
-                    var productId = $(this).attr('alt');
-                    product = products.filter(p => p.id == productId)[0];
-
-                    lastPrice = Number($(this).val());
-                    console.log("entra focusin", lastPrice)
-                });
-
-                // $('#ventas').on('change', '.finalPrice', function(){
-                    // // $('.finalPrice').on('change', function () {
-                //     console.log("cahnge test")
-                //     var productId = $(this).attr('alt');
-                //     product = products.filter(p => p.id == productId)[0];
-
-                //     tempPrice = Number($(this).val());
-
-                // });
-
-                $('#ventas').on('input', '.finalPrice', function() {
-                    let val = $(this).val();
-                    if(!Number(val)) {
-                        $(this).val( val.replace(/[^0-9.]/, '') );
-                    }
-
-                    console.log("=================== Enta el evento Input ===================")
-                    var productId = $(this).attr('alt');
-                    product = products.filter(p => p.id == productId)[0];
-
-                    currentPrice = Number($(this).val());
-
-                    // IMPORTANTE Asignarl el precio actual al input oculto
-                    $(`#finalPrice${product.id}`).val(currentPrice);
-
-                    if (lastPrice > currentPrice) {
-                        console.log(`Entra uno por que ${lastPrice} > ${currentPrice}`)
-                        total = total - lastPrice + currentPrice;
-                    } else if (lastPrice < currentPrice) {
-                        console.log(`Entra dos por que ${lastPrice} > ${currentPrice}`)
-                        total = total - lastPrice + currentPrice;
-                    }
-
-                    console.log("Current", currentPrice);
-                    console.log("Last", lastPrice);
-
-
-                    console.log(total);
+                    //Hacer suma de productos seleccionados en imprimirlos en Total//
+                    $('tbody').append(_tr);
+                    total += Number(product.price);
                     $("#total").html(`$ ${total}`);
-                    $("#totalPay").val(total);
+                    //END Función//
 
+                    $('#pagar').val(`${total}`);
                     $('#totalCash').html(total);
                     $('#totalCard').html(total);
+                    $('#totalpayment').val(`${total}`);
+                    $('#totalPay').val(`${total}`);
+                    // $('#vari').val(cambio);
+                    $('#tabl').val(_tr);
 
-                    $("#amount").val(total);
-                    $("#change").val(total);
+                    $('#ventas').off('click');
+                    $('#ventas').off('input');
+                    $('#ventas').off('focusin');
+                    // $(".finalPrice").unbind();
+                    var product
+                    // $('.finalPrice').keydown(function() {
+                    //   var productId = $(this).attr('alt');
+                    //   product = products.filter(p => p.id == productId)[0];
+
+                    //   tempPrice = Number($(`#finalPrice${product.id}`).val());
+                    //   // console.log("valor anterior", tempPrice)
+                    // });
+
+                    $('#ventas').on('focusin', '.finalPrice', function() {
+                        // $('.finalPrice').on('focusin', function () {
+                        var productId = $(this).attr('alt');
+                        product = products.filter(p => p.id == productId)[0];
+
+                        lastPrice = Number($(this).val());
+                        console.log("entra focusin", lastPrice)
+                    });
+
+                    // $('#ventas').on('change', '.finalPrice', function(){
+                    // // $('.finalPrice').on('change', function () {
+                    //     console.log("cahnge test")
+                    //     var productId = $(this).attr('alt');
+                    //     product = products.filter(p => p.id == productId)[0];
+
+                    //     tempPrice = Number($(this).val());
+
+                    // });
+
+                    $('#ventas').on('input', '.finalPrice', function() {
+                        let val = $(this).val();
+                        if (!Number(val)) {
+                            $(this).val(val.replace(/[^0-9.]/, ''));
+                        }
+
+                        console.log("=================== Enta el evento Input ===================")
+                        var productId = $(this).attr('alt');
+                        product = products.filter(p => p.id == productId)[0];
+
+                        currentPrice = Number($(this).val());
+
+                        // IMPORTANTE Asignarl el precio actual al input oculto
+                        $(`#finalPrice${product.id}`).val(currentPrice);
+
+                        if (lastPrice > currentPrice) {
+                            console.log(`Entra uno por que ${lastPrice} > ${currentPrice}`)
+                            total = total - lastPrice + currentPrice;
+                        } else if (lastPrice < currentPrice) {
+                            console.log(`Entra dos por que ${lastPrice} > ${currentPrice}`)
+                            total = total - lastPrice + currentPrice;
+                        }
+
+                        console.log("Current", currentPrice);
+                        console.log("Last", lastPrice);
 
 
-                    lastPrice = Number($(this).val());
-                    if (!lastPrice) {
-                        lastPrice = 0;
-                        $(`#finalPrice${product.id}`).val()
-                    }
-                });
+                        console.log(total);
+                        $("#total").html(`$ ${total}`);
+                        $("#totalPay").val(total);
 
-                    $('#ventas').on('click', '.deletr', function(){
+                        $('#totalCash').html(total);
+                        $('#totalCard').html(total);
+
+                        $("#amount").val(total);
+                        $("#change").val(total);
+
+
+                        lastPrice = Number($(this).val());
+                        if (!lastPrice) {
+                            lastPrice = 0;
+                            $(`#finalPrice${product.id}`).val()
+                        }
+                    });
+
+                    $('#ventas').on('click', '.deletr', function() {
                         console.log("========> entra función", $(this).attr('alt'))
                         var table = $('#ventas').DataTable();
                         var row = $(this).parents('tr');
@@ -600,19 +593,17 @@ seleccionado con sus respectivos datos-->
 
                         $("#total").html(`$ ${total}`);
                         if ($(row).hasClass('child')) {
-                                table.row($(row).prev('tr')).remove().draw();
-                            }
-                            else
-                            {
+                            table.row($(row).prev('tr')).remove().draw();
+                        } else {
                             table
                                 .row($(this).parents('tr'))
                                 .remove()
                                 .draw();
-                            }
+                        }
                     });
 
+                });
             });
-        });
 
             // $('#resta').keyup(function() {
             //   var cambio =  $(this).val() - $('#totalCash').val();
@@ -620,7 +611,7 @@ seleccionado con sus respectivos datos-->
             //   console.log(cambio);
             // });
 
-            $('#apartado').keyup(function () {
+            $('#apartado').keyup(function() {
                 var falta = $('#totalpayment').val() - $(this).val();
                 $('#falta').val(falta);
                 $('#faltan').val(falta);
@@ -636,8 +627,6 @@ seleccionado con sus respectivos datos-->
 
             // });
         });
-
-
     </script>
     @endsection
     <!-- END Función-->

@@ -17,6 +17,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Requests\SaleRequest;
 use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 class SaleController extends Controller
@@ -51,42 +52,42 @@ class SaleController extends Controller
             $sold = Sale::with('client')
                 ->join('branches', 'branches.id', 'sales.branch_id')
                 ->join('shops', 'shops.id', 'branches.shop_id')
-                ->where('sales.deleted_at', NULL)
+                ->where('sales.deleted_at', null)
                 ->select('sales.*', 'branches.name as sucursal')
                 ->whereRaw('sales.total = sales.paid_out')
                 ->where('shops.id', $user->shop_id)
-                ->orderBy('sales.id', 'desc')
+                ->orderBy('sales.updated_at', 'desc')
                 ->get();
 
             //APARTADOS
             $apart = Sale::with('client')
                 ->join('branches', 'branches.id', 'sales.branch_id')
                 ->join('shops', 'shops.id', 'branches.shop_id')
-                ->where('sales.deleted_at', NULL)
+                ->where('sales.deleted_at', null)
                 ->select('sales.*', 'branches.name as sucursal')
                 ->whereRaw('sales.total <> sales.paid_out')
                 ->where('shops.id', $user->shop_id)
-                ->orderBy('sales.id', 'desc')
+                ->orderBy('sales.updated_at', 'desc')
                 ->get();
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             //VENDIDOS
             $sold = Sale::with('client')
                 ->join('branches', 'branches.id', 'sales.branch_id')
-                ->where('sales.deleted_at', NULL)
+                ->where('sales.deleted_at', null)
                 ->select('sales.*')
                 ->whereRaw('sales.total <= sales.paid_out')
                 ->where('sales.branch_id', $user->branch_id)
-                ->orderBy('sales.id', 'DESC')
+                ->orderBy('sales.updated_at', 'desc')
                 ->get();
 
             //APARTADOS
             $apart = Sale::with('client')
                 ->join('branches', 'branches.id', 'sales.branch_id')
-                ->where('sales.deleted_at', NULL)
+                ->where('sales.deleted_at', null)
                 ->select('sales.*')
                 ->whereRaw('sales.total > sales.paid_out')
                 ->where('sales.branch_id', $user->branch_id)
-                ->orderBy('sales.id', 'DESC')
+                ->orderBy('sales.updated_at', 'desc')
                 ->get();
         }
         /*        return response()->json([
@@ -180,6 +181,7 @@ class SaleController extends Controller
 
         $validator = Validator::make($request->all(), [
             'customer_name' => Rule::requiredIf($request->user_type == 1),
+            'image' => Rule::requiredIf($request->card_income),
         ]);
         if ($validator->fails()) {
             $response = [
@@ -241,20 +243,23 @@ class SaleController extends Controller
             ]);
         }
 
+        
         if ($request->card_income) {
+            $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+            $image = file_get_contents($request->file('image')->path());
+            $base64Image = base64_encode($image);
+            $path = 'payment-tickets';
+            $consulta = Partial::orderby('id', 'desc')
+                ->take(1)
+                ->get();
+            $conteo =$consulta[0]->id +1;
+            $imagen = $this->saveImages($base64Image, $path, $conteo);
             $partial = Partial::create([
-                'sale_id' => $sale->id,
-                'amount' => ($request->card_income) ? $request->card_income : 0,
-                'type' => Partial::CARD,
-                // 'image' => $request->image
-            ]);
-            // if ($request->hasFile('image')) {
-            //     $adapter = Storage::disk('s3')->getDriver()->getAdapter();
-            //     $image = file_get_contents($request->file('image')->path());
-            //     $base64Image = base64_encode($image);
-            //     $path = 'ticketpartial';
-            //     $partial->image = $this->saveImages($base64Image, $path, $product->id);
-            // }
+                    'sale_id' => $sale->id,
+                    'amount' => ($request->card_income) ? $request->card_income : 0,
+                    'type' => Partial::CARD,
+                    'image' => $imagen,
+                ]);
         }
 
         $sale->paid_out = Partial::where('sale_id', $sale->id)->sum('amount');
@@ -281,21 +286,40 @@ class SaleController extends Controller
         $restan = $sale->total - $sale->partials->sum('amount');
         //return $restan;
         $lines = Line::all();
+        $partials =Partial::all();
 
-        return view('sale.show', compact('sale', 'lines', 'restan'));
+        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+        foreach ($sale->partials as $e) {
+            if ($e->image) {
+                $path = env('S3_ENVIRONMENT') . '/' .  'payment-tickets/' . $e->id;
+
+                $command = $adapter->getClient()->getCommand('GetObject', [
+                    'Bucket' => $adapter->getBucket(),
+                    'Key' => $adapter->getPathPrefix() . $path
+                ]);
+
+                $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+
+                $e->image = (string) $result->getUri();
+            }
+        }
+        //return $sale;
+        return view('sale.show', compact('sale', 'lines', 'restan','partials'));
     }
 
     public function check(Request $request)
     {
         //return $request;
         $product = Product::find($request->product_id);
-        $give = Product::join('transfer_products','transfer_products.product_id','products.id')
-        ->where('products.id',$request->product_id)
-        ->where('transfer_products.status_product',1)
-        ->count('products.id');
+        $give = Product::join('transfer_products', 'transfer_products.product_id', 'products.id')
+            ->where('products.id', $request->product_id)
+            ->where('transfer_products.status_product', 1)
+            ->count('products.id');
         //return $give;
         $sale = Sale::findOrFail($request->sale_id);
         //return $sale;
+        $client = Client::find($sale->client_id);
+        //return $client;
         $giveback = SaleDetails::where('sale_id', $request->sale_id)
             ->where('product_id', $request->product_id)
             ->sum('final_price');
@@ -303,19 +327,34 @@ class SaleController extends Controller
         $total = $sale->total - $giveback;
         //return $total;
         $sale->total = $total;
-        $sale->positive_balance = $total - $sale->paid_out;
-        if ($sale->positive_balance < 0) {
-            $sale->positive_balance = $sale->positive_balance * -1;
-        }
+        if($sale->total == 0) {
+            //$balance = $sale->paid_out - $sale->total;
+            $sale->positive_balance = $sale->positive_balance + $sale->paid_out;
+            if($sale->client_id)
+            {
+                $client->positive_balance = $client->positive_balance + $sale->paid_out;
+                if ($client->positive_balance < 0) 
+                {
+                    $client->positive_balance = $client->positive_balance * -1;
+                }
+                $client->save();
+            }
+            $sale->paid_out = 0;
+        }       
+        
         //return $sale;
-        if($give == 1){
+        //return $client;
+        if ($give == 1) {
             $product->discar_cause = 4;
         } else {
             $product->discar_cause = $request->discar_cause;
         }
         //return $product;
-        
+
+        $product->restored_at = null;
+
         $sale->save();
+        
         $product->save();
         $product->delete();
         Sale::where('id', $request->sale_id)->update(['total' => $total]);
@@ -365,7 +404,6 @@ class SaleController extends Controller
     {
         Product::destroy($id);
         // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
-
     }
     public function exportPdfall()
     {

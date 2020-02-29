@@ -36,9 +36,9 @@ ALTA PRODUCTO
         <!-- Select para Seleccionar categoria-->
           <div class="col-md-3">
             <label>Seleccione Categoria </label>
-            @if(null !== session('categories')){
+            @if(null !== session('categories'))
             <select id="categorie_id" name="category_id" class="form-control round">
-            @foreach(session('categories') as $category)
+            @foreach( $categories as $category)
             <option value="{{ $category->id}}" required>{{ $category->name }} - @if($category->type_product == 1) pza @else gr @endif</option>
             <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
             @endforeach
@@ -85,7 +85,7 @@ ALTA PRODUCTO
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
-              <input type="text" id="pricepzt" class="form-control" readonly  name="pricepzt" value="{{old('pricepzt')}}">
+              <input type="text" id="pricepzt" class="form-control" readonly  name="pricepzt" value="{{old('pricepzt')}}" required>
             </div>
 
 
@@ -103,19 +103,19 @@ ALTA PRODUCTO
             <!-- Input para ingresar Peso del producto-->
             <div class="form-group form-material col-md-3 remove">
               <label>Gramos</label>
-              <input type="text" id="multiplicador"  class="form-control gramos" name="weigth">
+              <input type="text" id="multiplicador"  class="form-control gramoss" name="weigth">
             </div>
             <!-- END Input-->
             <!-- Input para ingresar precio del producto-->
             <div id="show" class="form-group form-material col-md-3 remove">
               <label>Precio del Producto</label>
-              <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price" value="{{old('price')}}">
+              <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price" value="{{old('price')}}" required>
             </div>
             <!-- END Input-->
             <!-- Input para ingresar Tope de descuento -->
             <div class="form-group form-material col-md-3 remove">
               <label>Precio con descuentogr</label>
-              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount" value="{{old('max_discount')}}">
+              <input type="text" readonly="readonly" class="form-control" id="discount" readonly name="max_discount" value="{{old('max_discount')}}">
             </div>
             <!-- END Input-->
 

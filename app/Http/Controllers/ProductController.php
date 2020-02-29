@@ -280,13 +280,13 @@ class ProductController extends Controller
         // }
 
         $products = Product::where([
-                'branch_id' => $user->branch_id
-            ])
+            'branch_id' => $user->branch_id
+        ])
             ->whereIn('status_id', [2, 3, 4])
             ->whereNull('products.deleted_at')
             ->orderBy('clave', 'asc')
             ->get();
-            //return $products;
+        //return $products;
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
@@ -305,7 +305,7 @@ class ProductController extends Controller
                 $product->image = (string) $result->getUri();
             }
         }
-        
+
         return view('product/productCO/index', compact('user', 'categories', 'lines', 'shops', 'statuses', 'products'));
     }
     /**
@@ -344,7 +344,20 @@ class ProductController extends Controller
         $category = Category::find($request->category_id);
         //return $category;
         $validator = Validator::make($request->all(), [
-            'max_discountpz' => Rule::requiredIf($category->type_product == 1),
+            'price_purchase' => Rule::requiredIf($category->type_product == 1),
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'errors' => $validator->errors(),
+                'error' => 'Error en alguno de los campos'
+            ];
+            //return response()->json($response, $this->unprocessable);
+            return back()->withErrors($validator->errors());
+        }
+
+        $validator = Validator::make($request->all(), [
+            'weigth' => Rule::requiredIf($category->type_product == 2),
         ]);
         if ($validator->fails()) {
             $response = [
@@ -401,15 +414,16 @@ class ProductController extends Controller
         });
         $categories->prepend($selected_category);
 
-        /**if($category->type_product == 1 && (!$data['pricepzt']) || !is_numeric($data['pricepzt'])){
-          return back()->with('categories', $categories)->withErrors(['msg', 'El precio por pieza es requerido y debe ser numerico']);
+        if($category->type_product == 1 && (!$data['price_purchase']) || !is_numeric($data['price_purchase'])){
+          return back()->with('categories', $categories)->withErrors(['el precio compra es requerido']);
         }
-        elseif($category->type_product == 2 && (!$data['weigth']) || !is_numeric($data['weigth'])){
-            return back()->with('categories', $categories)->withErrors(['msg', 'El peso es requerido y debe ser numerico']);
+        /*if($category->type_product == 2 && (!$data['weigth']) || !is_numeric($data['weigth'])){
+          return back()->with('categories', $categories)->withErrors(['Los gramos son requeridos']);
         }*/
 
         $product = new Product($data);
         $product->date_creation = $date;
+        $product->restored_at = $date;
         // if ($request->hasFile('image')){
         //    $filename = $request->image->getCLientOriginalName();
         //    $request->image->storeAs('public/upload/products',$filename);
@@ -421,7 +435,7 @@ class ProductController extends Controller
             $image = file_get_contents($request->file('image')->path());
             $base64Image = base64_encode($image);
             $path = 'products';
-            $product->image = $this->saveImages($base64Image, $path, $product->clave);;
+            $product->image = $this->saveImages($base64Image, $path, $product->clave);
         }
         $product->save();
         return redirect('/productos')->with('mesage', 'El Producto  se ha agregado exitosamente!');
@@ -453,12 +467,20 @@ class ProductController extends Controller
         $shops = Auth::user()->shop()->get();
         //return $shops;
         $product = Product::find($id);
+        //return $product;
 
         $shop_categories = Category::where('shop_id', $category)->where('id', '!=', $product->category_id)->get();
         $categories = Category::where('id', $product->category_id)->get();
 
         // $categories = $categories->merge($shop_categories);
         $categories = Category::where('shop_id', '=', NULL)->get();
+        /*
+        if ($product->tipo == 1) {
+            $categories = Category::where('shop_id', '=', NULL)->where('type_product', 1)->get();
+        } else {
+            $categories = Category::where('shop_id', '=', NULL)->where('type_product', 2)->get();
+        }
+        */
 
         $lines = Line::where('shop_id', '=', NULL)->get();
         // $lines = Shop::find($line)->lines()->get();
@@ -490,14 +512,38 @@ class ProductController extends Controller
             $product->image = $this->saveImages($base64Image, $path, $product->clave);
         }
 
+
         $product->clave = $request->clave;
         $product->description = $request->description;
+        $product->category_id = $request->category_id;
+        $product->line_id = $request->line_id;
+        //$product->price = ($request->pricepzt) ? $request->pricepzt : $request->price;
+        $product->discount = $request->max_discountpz ? $request->max_discountpz : 0;
+        //$product->price= ($request->pricepzt) ? $request->pricepzt :0 ;
+        $product->discount = $request->max_discount ? $request->max_discount : 0;
         $product->weigth = $request->weigth;
         $product->observations = $request->observations;
-        $product->price = $request->price;
+        
+        $product->price_purchase = $request->price_purchase;
+        //$product->discount = $request->discount;
+        $product->price = $request->pricepzt;
+        //$product->max_discountpz = $request->max_discountpz;
         $product->status_id = $request->status_id;
         $product->branch_id = $request->branch_id;
         //$product->inventory = $request->inventory;
+
+        $category = Category::find($request->category_id);
+        if ($category->type_product == 1) {
+            $product['line_id'] = null;
+            $product['weigth'] = null;
+            $product['discount'] = $request->max_discountpz ? $request->max_discountpz : 0;
+        } else if ($category->type_product == 2) {
+            $line = Line::find($request->line_id);
+            $product->price = $request->price;
+            $data['price_purchase'] = $line->purchase_price * $request->weigth;
+        }        
+
+
         $product->save();
 
         //return $request->all();
@@ -532,10 +578,21 @@ class ProductController extends Controller
     public function devuelto()
     {
         $user = Auth::user();
-        $products = Product::whereIn('discar_cause', [3, 4])
+        if($user->type_user == User::AA){
+            $products = Product::whereIn('discar_cause', [3, 4])
             ->where('shop_id', $user->shop_id)
+            ->where('restored_at', null)
             ->withTrashed()
             ->get();
+        } elseif($user->type_user == User::SA || $user->type_user == User::CO) {
+            $products = Product::whereIn('discar_cause', [3, 4])
+            ->where('shop_id', $user->shop_id)
+            ->where('branch_id', $user->branch_id)
+            ->where('restored_at', null)
+            ->withTrashed()
+            ->get();
+        }
+        
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($products as $product) {
@@ -551,7 +608,7 @@ class ProductController extends Controller
     }
 
     public function reetiquetado($id)
-    { 
+    {
         $category = Auth::user()->shop->id;
         $user = Auth::user();
         $line = Auth::user()->shop->id;
@@ -586,15 +643,18 @@ class ProductController extends Controller
     public function restore($id)
     {
         //return $id;
-        $product = Product::where('id',$id)->withTrashed()->get();
-        foreach($product as $p){
-            $p->deleted_at = NULL;
+        $date = Carbon::now();
+        $date = $date->format('Y-m-d');
+        $product = Product::where('id', $id)->withTrashed()->get();
+        foreach ($product as $p) {
+            $p->deleted_at = null;
+            $p->restored_at = $date;
             $p->status_id = 2;
-            $p->discar_cause = NULL;
+            $p->discar_cause = null;
             $p->save();
         }
         //return $product;
-        
+
         return back();
     }
 
@@ -757,7 +817,7 @@ class ProductController extends Controller
         }
         $compra = $precio;
 
-        $utilidad = $compra - $venta;
+        $utilidad = $venta - $compra;
 
         /**Finalizan consultas de folio de la venta, la hora y el dia */
 

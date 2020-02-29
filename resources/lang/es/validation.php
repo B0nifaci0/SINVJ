@@ -133,5 +133,8 @@ return [
         'subject'               => 'asunto',
         'message'               => 'mensaje',
         'required'              => 'Requerido',
+        'price_purchase'        => 'precio compra',
+        'weigth'                => 'gramos',
+
     ],
 ];

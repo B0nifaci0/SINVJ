@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sale;
+use App\Client;
 use App\PayPal;
 use App\Payment;
 use App\Partial;
@@ -11,9 +12,15 @@ use App\CardInformation;
 use PayPal\Api\CreditCard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use App\Traits\S3ImageManager;
+
+
 
 class PaymentsController extends Controller
 {
+
+    use S3ImageManager;
     public function __construct()
     {
         $this->middleware('Authentication');
@@ -46,21 +53,84 @@ class PaymentsController extends Controller
      */
     public function store(Request $request)
     {
-        Partial::create([
-            'sale_id' => $request->sale_id,
-            'amount' => $request->amount,
-            'type' => $request->type,
-        ]);
-
+        //return $request;
         $sale = Sale::find($request->sale_id);
+        $client = Client::find($sale->client_id);
+
+        $balance = $sale->total - $sale->paid_out;
         
         if($request->type == 3)
         {
-            $sale->positive_balance = null;
+            if($client->positive_balance > $balance)
+            {
+                $client->positive_balance = $client->positive_balance - $balance;
+                $sale->paid_out = $sale->total;
+                //return $sale;
+            } else {
+                $sale->paid_out = $sale->paid_out + $client->positive_balance;
+                $sale->positive_balance = null;
+                $client->positive_balance = null;
+            }
+            //return $sale;
+        } else {
+            $sale->paid_out += $request->amount;
         }
         
-        $sale->paid_out += $request->amount;
+        if($sale->total == 0)
+        {
+            $sale->positive_balance = $sale->paid_out;
+            if($sale->client_id)
+            {
+                if($sale->total < $client->positive_balance)
+                {
+                    $client_positive_balance = $client->positive_balance - $sale->paid_out;
+                    $client->positive_balance = $sale->paid_out;
+                    //return $client;
+                    
+                }
+            }
+        }
+        
+        //return $sale;
+        
+        //return $client;
+        
         $sale->save(); 
+
+        if($sale->client_id)
+        {
+            $client->save();
+        }
+        
+        if ($request->type == 2) {
+                $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+                $image = file_get_contents($request->file('image')->path());
+                $base64Image = base64_encode($image);
+                $path = 'payment-tickets';
+                $consulta = Partial::orderby('id','desc')
+                ->take(1) 
+                ->get();
+                $conteo =$consulta[0]->id +1;
+                $imagen = $this->saveImages($base64Image, $path, $conteo);
+                $partial = Partial::create([
+                    'sale_id' => $request->sale_id,
+                    'amount' => $request->amount,
+                    'type' => Partial::CARD,
+                    'image' => $imagen,
+                ]);
+        }else if($request->type == 1){
+            $partial = Partial::create([
+                'sale_id' => $request->sale_id,
+                'amount' => $request->amount,
+                'type' => Partial::CASH,
+            ]);
+        }else{       
+            $partial = Partial::create([
+                'sale_id' => $request->sale_id,
+                'amount' => $request->amount,
+                'type' => Partial::CREDIT,
+            ]);
+        }
 
         return back();
     }
