@@ -644,7 +644,7 @@ class ProductController extends Controller
     {
         //return $id;
         $date = Carbon::now();
-        $date = $date->format('d-m-Y');
+        $date = $date->format('Y-m-d');
         $product = Product::where('id', $id)->withTrashed()->get();
         foreach ($product as $p) {
             $p->deleted_at = null;

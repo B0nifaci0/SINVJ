@@ -254,9 +254,8 @@ SUCURSAl
                         </div>
                         @else
                         <div class="col-md-12">
-                            <label>Montos</label>
-                            <input type="text" id="amount" name="amount" class="form-control"
-                                alt="{{$sale->total - $sale->paid_out}}">
+                            <label>Monto</label>
+                            <input type="text" id="amount" name="amount" class="form-control" alt="{{$sale->total - $sale->paid_out}}">
                         </div>
                         @endif
                     </div>
@@ -306,10 +305,13 @@ SUCURSAl
 
         $('#savePartial').click(function(e) {
             e.preventDefault();
+            let valor = Number($('#valor').val());
             let amount = Number($('#amount').val());
             let max = Number($('#amount').attr('alt'));
-            console.log(amount, max);
-            if (amount > max ) {
+            console.log(valor, amount, max);
+            if(valor == 1 || valor == 2)
+            {
+                if (amount > max ) {
                 swal.fire({
                     title: 'Error',
                     text: 'El pago maximo es $ ' + max,
@@ -320,6 +322,7 @@ SUCURSAl
                     confirmButtonText: 'Aceptar!'
                 });
                 return;
+                }
             }
             $('#saleForm').submit();
         });

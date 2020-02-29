@@ -91,7 +91,6 @@
 
             <p align="right">Hora: {{$hour}}</p>
 
-
             <h1 align="center">Reporte de Entrada de Productos</h1>
             <h2 align="center">Linea: @foreach($lines as $line){{$line->name}} @endforeach</h2>
             <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>

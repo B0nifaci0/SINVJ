@@ -55,6 +55,7 @@
                     </thead>
                     <tbody>
                         @foreach ($trans as $transfer)
+                        @if($categoria == $transfer->product->category->type_product)
                         <tr id="row{{$transfer->id}}">
                             <td>{{ $transfer->product->clave }}</td>
                             <td>{{ $transfer->product->category->name }}</td>
@@ -69,15 +70,16 @@
                             <td>{{$transfer->newBranch->name}}</td>
                             @if($transfer->status_product === 1)
                             <td>{{$transfer->paid_at ? 'Pagado' : 'Por Pagar'}}</td>
-                            @elseif($transfer->status_product === '0')
+                            @elseif($transfer->status_product === 0)
                             <td>Rechazado</td>
-                            @elseif($transfer->status_product === 3)
+                            @elseif($transfer->status_product == 3)
                             <td>Devuelto</td>
                             @else
-                            <td>Pendiente</td>
+                            <td>Pendiente</td>z
                             @endif
                             <td>{{$transfer->updated_at->format('m-d-Y')}}</td>
                         </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>
