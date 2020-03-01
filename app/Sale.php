@@ -65,6 +65,17 @@ class Sale extends Model
         ->where('sale_id', $this->id)
         ->get();
     }
+
+    public function scopeItemsGivedBack() {
+        return Product::join('sale_details', 'sale_details.product_id', 'products.id')
+        ->join('categories', 'categories.id', 'products.category_id')
+        ->withTrashed()
+        ->whereIn('products.discar_cause', [3,4])
+        ->select('products.id as id_product','clave', 'weigth','line_id', 'categories.name as category_name', 'sale_details.final_price','description')
+        ->where('sale_id', $this->id)
+        ->get();
+    }
+    
 }
 
 
