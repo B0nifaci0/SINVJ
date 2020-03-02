@@ -54,12 +54,12 @@
                             @endif
                             <th>Descripción</th>
                             <th>Precio</th>
-                            @if ($type==1)
-                            <th>Origen</th>
-                            @endif
                             <th>Quien mando</th>
                             <th>Quien recibé</th>
                             @if ($type==0)
+                            <th>Origen</th>
+                            @endif
+                            @if ($type==1)
                             <th>Destino</th>
                             @endif
                             <th>Estatus</th>
