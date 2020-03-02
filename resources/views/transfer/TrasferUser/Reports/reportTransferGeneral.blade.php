@@ -44,7 +44,7 @@
                 <table class="table table-condensed">
                     <thead>
                         <tr>
-                            <th class="text-center" colspan="11">Sucursal: {{$branch->name}} </th>
+                            <th class="text-center" colspan="10">Sucursal: {{$branch->name}} </th>
                         </tr>
                         <tr>
                             <th>Clave</th>
@@ -54,10 +54,14 @@
                             @endif
                             <th>Descripción</th>
                             <th>Precio</th>
+                            @if ($type==1)
                             <th>Origen</th>
+                            @endif
                             <th>Quien mando</th>
                             <th>Quien recibé</th>
+                            @if ($type==0)
                             <th>Destino</th>
+                            @endif
                             <th>Estatus</th>
                             <th>Fecha</th>
                         </tr>
@@ -75,7 +79,7 @@
                             @endif
                             <td>{{ $transfer->product->description }}</td>
                             <td>{{$transfer->product->price}}</td>
-                            <td>{{$transfer->lastBranch->name}}</td>
+                            {{-- <td>{{$transfer->lastBranch->name}}</td> --}}
                             <td>{{$transfer->user->name}}</td>
                             <td>{{$transfer->destinationUser->name}}</td>
                             <td>{{$transfer->newBranch->name}}</td>
@@ -103,7 +107,7 @@
                             <td>{{$transfer->lastBranch->name}}</td>
                             <td>{{$transfer->user->name}}</td>
                             <td>{{$transfer->destinationUser->name}}</td>
-                            <td>{{$transfer->newBranch->name}}</td>
+                            {{-- <td>{{$transfer->newBranch->name}}</td> --}}
                             @if($transfer->status_product === 1)
                             <td>{{$transfer->paid_at ? 'Pagado' : 'Por Pagar'}}</td>
                             @elseif($transfer->status_product === 0)
