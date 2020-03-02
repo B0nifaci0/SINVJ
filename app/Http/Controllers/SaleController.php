@@ -19,6 +19,8 @@ use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use PDF;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class SaleController extends Controller
 {
@@ -281,13 +283,21 @@ class SaleController extends Controller
     {
         $sale = Sale::with(['partials', 'client'])->findOrFail($id);
         $sale->itemsSold = $sale->itemsSold();
+        $sale->itemsGivedBack =  $sale->ItemsGivedBack();
         $sale->total = $sale->itemsSold->sum('final_price');
         //return $sale;
+        $finalprice = Product::join('sale_details', 'sale_details.product_id', 'products.id')
+        ->join('categories', 'categories.id', 'products.category_id')
+        ->withTrashed()
+        ->whereIn('products.discar_cause', [3,4])
+        ->select('products.id as id_product','clave', 'weigth','line_id', 'categories.name as category_name', 'sale_details.final_price','description')
+        ->where('sale_id', $id)
+        ->sum('sale_details.final_price');
+        //return $finalprice;
         $restan = $sale->total - $sale->partials->sum('amount');
         //return $restan;
         $lines = Line::all();
         $partials =Partial::all();
-
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($sale->partials as $e) {
             if ($e->image) {
@@ -304,7 +314,7 @@ class SaleController extends Controller
             }
         }
         //return $sale;
-        return view('sale.show', compact('sale', 'lines', 'restan','partials'));
+        return view('sale.show', compact('finalprice' ,'sale', 'lines', 'restan','partials'));
     }
 
     public function check(Request $request)

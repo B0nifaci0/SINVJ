@@ -135,6 +135,11 @@ return [
         'required'              => 'Requerido',
         'price_purchase'        => 'precio compra',
         'weigth'                => 'gramos',
+        'customer_name'         => 'nombre de cliente',
+        'first_lastname'        => 'Primer Apellido',
+        'second_lastname'       => 'Segundo Apellido',
+        'phone_number'          => 'Número Telefónico',
+        'phone_number'          => 'Telefono',
 
     ],
 ];

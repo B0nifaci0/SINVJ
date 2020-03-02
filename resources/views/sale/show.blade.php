@@ -61,10 +61,12 @@ SUCURSAl
                                 <td><strong class="text-center badge badge-danger">Pagado:</strong></td>
                                 <td>$ {{ $sale->paid_out }}</td>
                             </tr>
-                            <tr>
-                                <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
-                                <td> $ @if(($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance) {{ ($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance }} @else 0 @endif</td>
-                            </tr>
+                            @if($sale->client_id)
+                                <tr>
+                                    <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
+                                    <td> $ @if(($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance) {{ ($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance }} @else 0 @endif</td>
+                                </tr>
+                            @endif
                             <tr>
                                 <td><strong class="text-center badge badge-success">Restan:</strong></td>
                                 @if(($sale->total - $sale->partials->sum('amount')) > 0)
@@ -79,6 +81,7 @@ SUCURSAl
             </div>
         </div>
 
+        <strong class="text-center badge-success">Productos comprados</strong>
         <table id="items" class="table">
             <thead>
                 <tr>
@@ -89,7 +92,9 @@ SUCURSAl
                     <th>Peso</th>
                     <th>Precio</th>
                     @if($sale->paid_out != $sale->total)
-                    <th>Devolver</th>
+                        @if($sale->client_id)
+                            <th>Devolver</th>
+                        @endif
                     @endif
                 </tr>
             </thead>
@@ -109,13 +114,15 @@ SUCURSAl
                     <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                     <td>$ {{ $item->final_price }}</td>
                     @if($sale->paid_out != $sale->total)
-                    <td>
-                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
-                            alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
-                            data-original-title="Devolver">
-                            <i class="icon fa-reply-all" aria-hidden="true"></i>
-                        </button>
-                    </td>
+                        @if($sale->client_id)
+                            <td>
+                                <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
+                                    alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
+                                   data-original-title="Devolver">
+                                    <i class="icon fa-reply-all" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                        @endif
                     @endif
                 </tr>
                 @endforeach
@@ -128,6 +135,44 @@ SUCURSAl
                 </tr>
             </tbody>
         </table>
+
+        @if($sale->client_id)
+        <strong class="text-center badge-warning">Productos Devueltos</strong>
+        <table id="items" class="table">
+            <thead>
+                <tr>
+                    <th>Clave</th>
+                    <th>Descripción</th>
+                    <th>Linea</th>
+                    <th>Categoria</th>
+                    <th>Peso</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($sale->itemsGivedBack as $item)
+                <tr class="table-active">
+                    <td>{{ $item->clave }}</td>
+                    <td>{{ $item->description }}</td>
+                    <td>@if($item->line_id)
+                        @foreach ($lines as $line)
+                        @if ($item->line_id == $line->id)
+                        {{$line->name}}
+                        @endif
+                        @endforeach
+                        @else N/A @endif</td>
+                    <td>{{$item->category_name}}</td>
+                    <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
+                    <td>$ {{ $item->final_price }}</td>
+                </tr>
+                @endforeach
+                <tr>
+                    <td colspan="5"></td>
+                    <td><strong>$ {{ $finalprice }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        @endif
 
     </div>
 </div>

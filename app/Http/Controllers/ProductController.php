@@ -613,6 +613,9 @@ class ProductController extends Controller
         $user = Auth::user();
         $line = Auth::user()->shop->id;
 
+        $date = Carbon::now();
+        $date = $date->format('Y-m-d');
+
         $shops = Auth::user()->shop()->get();
         //return $shops;
         $products = Product::join('categories', 'categories.id', 'products.category_id')
@@ -627,6 +630,7 @@ class ProductController extends Controller
             } else {
                 $categories = Category::where('shop_id', '=', NULL)->where('type_product', 2)->get();
             }
+            $p->restored_at = $date;
         }
         //return $categories;
 
@@ -644,7 +648,7 @@ class ProductController extends Controller
     {
         //return $id;
         $date = Carbon::now();
-        $date = $date->format('d-m-Y');
+        $date = $date->format('Y-m-d');
         $product = Product::where('id', $id)->withTrashed()->get();
         foreach ($product as $p) {
             $p->deleted_at = null;
