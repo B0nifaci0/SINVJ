@@ -32,13 +32,13 @@
                 <p align="right">Hora: {{$hour}}</p>
                 <h2 align="center">Reporte Traspasos
                     {{$type==0 ? 'Entrantes' : 'Salientes'}}
-                    @if($estado == 1)
+                    @if($status == 1)
                     Por pagar
-                    @elseif($estado == 3)
+                    @elseif($status == 3)
                     Devuelto
-                    @elseif($estado == 4)
+                    @elseif($status == 4)
                     Pagado
-                    @elseif($estado === '0')
+                    @elseif($status === '0')
                     Rechazado
                     @else
                     Pendiente

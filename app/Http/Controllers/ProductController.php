@@ -414,8 +414,8 @@ class ProductController extends Controller
         });
         $categories->prepend($selected_category);
 
-        if($category->type_product == 1 && (!$data['price_purchase']) || !is_numeric($data['price_purchase'])){
-          return back()->with('categories', $categories)->withErrors(['el precio compra es requerido']);
+        if ($category->type_product == 1 && (!$data['price_purchase']) || !is_numeric($data['price_purchase'])) {
+            return back()->with('categories', $categories)->withErrors(['el precio compra es requerido']);
         }
         /*if($category->type_product == 2 && (!$data['weigth']) || !is_numeric($data['weigth'])){
           return back()->with('categories', $categories)->withErrors(['Los gramos son requeridos']);
@@ -523,7 +523,7 @@ class ProductController extends Controller
         $product->discount = $request->max_discount ? $request->max_discount : 0;
         $product->weigth = $request->weigth;
         $product->observations = $request->observations;
-        
+
         $product->price_purchase = $request->price_purchase;
         //$product->discount = $request->discount;
         $product->price = $request->pricepzt;
@@ -541,7 +541,7 @@ class ProductController extends Controller
             $line = Line::find($request->line_id);
             $product->price = $request->price;
             $data['price_purchase'] = $line->purchase_price * $request->weigth;
-        }        
+        }
 
 
         $product->save();
@@ -578,21 +578,21 @@ class ProductController extends Controller
     public function devuelto()
     {
         $user = Auth::user();
-        if($user->type_user == User::AA){
+        if ($user->type_user == User::AA) {
             $products = Product::whereIn('discar_cause', [3, 4])
-            ->where('shop_id', $user->shop_id)
-            ->where('restored_at', null)
-            ->withTrashed()
-            ->get();
-        } elseif($user->type_user == User::SA || $user->type_user == User::CO) {
+                ->where('shop_id', $user->shop_id)
+                ->where('restored_at', null)
+                ->withTrashed()
+                ->get();
+        } elseif ($user->type_user == User::SA || $user->type_user == User::CO) {
             $products = Product::whereIn('discar_cause', [3, 4])
-            ->where('shop_id', $user->shop_id)
-            ->where('branch_id', $user->branch_id)
-            ->where('restored_at', null)
-            ->withTrashed()
-            ->get();
+                ->where('shop_id', $user->shop_id)
+                ->where('branch_id', $user->branch_id)
+                ->where('restored_at', null)
+                ->withTrashed()
+                ->get();
         }
-        
+
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($products as $product) {
@@ -826,7 +826,8 @@ class ProductController extends Controller
          * hacer uso de la informacion de cada consulta
          */
 
-        $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop', 'shops', 'estado', 'products', 'branch', 'sales', 'hour', 'dates', 'total', 'cash', 'compra', 'utilidad', 'trans', 'detalle', 'venta', 'type'));
+        $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop', 'shops', 'estado', 'products', 'branch', 'sales', 'hour', 'dates', 'total', 'cash', 'compra', 'utilidad', 'trans', 'detalle', 'venta', 'type'))->setPaper('a4', 'landscape');
+        //$pdf = $pdf->set_paper('a4', 'landscape');
         return $pdf->stream('ReporteEstatus.pdf');
     }
     /**Termina el retorno del pdf */

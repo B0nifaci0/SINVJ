@@ -8,10 +8,12 @@ use App\Shop;
 use App\User;
 use App\Branch;
 use App\Product;
+use App\Category;
 use Carbon\Carbon;
-use App\Traits\S3ImageManager;
+use App\TrasferUser;
 use App\TransferProduct;
 use Illuminate\Http\Request;
+use App\Traits\S3ImageManager;
 use Illuminate\Routing\Controller;
 
 class TrasferUserController extends Controller
@@ -158,37 +160,57 @@ class TrasferUserController extends Controller
         $hour = date('H:i:s');
         $dates = Carbon::now();
         $dates = $dates->format('d-m-Y');
-        $branches = $user->shop->branches;
         $shop = Auth::user()->shop;
 
 
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
-        $estado = $request->estatus_id;
         $fecini = Carbon::parse($request->fecini)->subDay();
         $fecter = Carbon::parse($request->fecter)->addDay();
 
-        $categoria = $request->category_id;
+        $category = $request->category_id;
 
         $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
             return $u->id;
         });
         $type = $request->type;
-        if ($request->type == 0) {
-            $trans = TransferProduct::whereIn('destination_user_id', $usersIds)
-                ->with('user')->with('branch')->with('product')
-                ->whereBetween('updated_at', [$fecini, $fecter])
-                ->get();
-        } else {
-            $trans = TransferProduct::whereIn('user_id', $usersIds)
-                ->whereBetween('updated_at', [$fecini, $fecter])
-                ->with('user')->with('branch')->with('product')->with('product')
-                ->get();
-        }
-        // $trans = $trans1->merge($trans2);
 
-        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransferGeneral', compact('trans', 'dates', 'hour', 'shop', 'estado', 'categoria', 'branches', 'type'));
+        $branchesIds = Branch::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
+            return $u->id;
+        });
+
+        $branches = Branch::whereIn('id', $branchesIds)->get();
+
+        //return $branches;
+
+        if ($request->type == 0) {
+            $query = TransferProduct::whereIn('destination_user_id', $usersIds)->OrderBy('new_branch_id', 'asc');
+        } else {
+            //return "Salientes";
+            $query = TransferProduct::whereIn('user_id', $usersIds)
+                ->OrderBy('last_branch_id', 'asc');
+        }
+
+        if ($request->status_product == 'null') { //Estatus Pendiente
+            $query->whereNull('transfer_products.status_product');
+        } else {
+            if ($request->status_product == 4) { //Pagado
+                $query->where('transfer_products.status_product', 1)
+                    ->whereNotNull('transfer_products.paid_at');
+            } else {
+                $query->where('transfer_products.status_product', $request->status_product)
+                    ->whereNull('transfer_products.paid_at'); //Por pagar
+            }
+        }
+
+        $trans = $query->with('user')->with('branch')->with('product')
+            ->whereBetween('updated_at', [$fecini, $fecter])
+            ->get();
+
+        //return $trans;
+
+        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransferGeneral', compact('trans', 'dates', 'hour', 'shop', 'category', 'type', 'branches'));
         return $pdf->stream('Traspasos.pdf');
     }
 
@@ -211,11 +233,12 @@ class TrasferUserController extends Controller
 
         $categoria = $request->category_id;
 
-        $estado = $request->status_product;
+        $status = $request->status_product;
 
         $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
             return $u->id;
         });
+
 
         $type = $request->type;
         if ($request->type == 0) {  //Entradas
@@ -248,7 +271,7 @@ class TrasferUserController extends Controller
 
         $trans = $query->with('user')->with('branch')->with('product')->get();
 
-        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransfer', compact('estado', 'trans', 'dates', 'hour', 'shop', 'categoria', 'branches', 'type', 'branch'));
+        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransfer', compact('status', 'trans', 'dates', 'hour', 'shop', 'categoria', 'branches', 'type', 'branch', 'branchesIds'));
         return $pdf->stream('Traspasos.pdf');
     }
 }

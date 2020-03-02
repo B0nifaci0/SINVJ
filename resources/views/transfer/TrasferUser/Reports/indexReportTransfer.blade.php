@@ -217,6 +217,15 @@ Panel Principal
                                                                 <option value="0">Entrantes</option>
                                                                 <option value="1">Salientes</option>
                                                             </select>
+                                                            <label>Seleccione Estatus</label>
+                                                            <select id="" name="status_product" alt="1"
+                                                                class="form-control round sucursales">
+                                                                <option value="null">Pendiente</option>
+                                                                <option value="1">Por Pagar</option>
+                                                                <option value="0">Rechazado</option>
+                                                                <option value="3">Devolucion</option>
+                                                                <option value="4">Pagado</option>
+                                                            </select>
                                                         </div>
                                                         <div class="col-12 col-sm-6">
                                                             <div class="input-group">
@@ -276,6 +285,15 @@ Panel Principal
                                                                 class="form-control round">
                                                                 <option value="0">Entrantes</option>
                                                                 <option value="1">Salientes</option>
+                                                            </select>
+                                                            <label>Seleccione Estatus</label>
+                                                            <select id="" name="status_product" alt="1"
+                                                                class="form-control round sucursales">
+                                                                <option value="null">Pendiente</option>
+                                                                <option value="1">Por Pagar</option>
+                                                                <option value="0">Rechazado</option>
+                                                                <option value="3">Devolucion</option>
+                                                                <option value="4">Pagado</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-12 col-sm-6">
