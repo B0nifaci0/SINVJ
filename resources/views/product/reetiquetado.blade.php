@@ -35,6 +35,7 @@ ALTA PRODUCTO
         <div class='row'>
             <!-- Select para Seleccionar categoria-->
             <div class="col-md-3">
+            <input type="hidden" name="id_product" value="{{$product->id}}">
               <label>Seleccione Categoria </label>
               @if(null !== session('categories')){
                 <select id="categorie_id" name="category_id" class="form-control round">

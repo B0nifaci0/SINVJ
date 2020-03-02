@@ -340,7 +340,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
+        //return $request;
         $category = Category::find($request->category_id);
         //return $category;
         $validator = Validator::make($request->all(), [
@@ -423,7 +423,18 @@ class ProductController extends Controller
 
         $product = new Product($data);
         $product->date_creation = $date;
-        $product->restored_at = $date;
+        //return $request;
+        if($request->id_product){
+            $restored_product = Product::where('id',$request->id_product)
+            ->withTrashed()
+            ->get();
+            foreach($restored_product as $r){
+                $r->restored_at = $date;
+                $r->save();
+            }
+            //return $restored_product;
+        }
+        
         // if ($request->hasFile('image')){
         //    $filename = $request->image->getCLientOriginalName();
         //    $request->image->storeAs('public/upload/products',$filename);
@@ -437,6 +448,7 @@ class ProductController extends Controller
             $path = 'products';
             $product->image = $this->saveImages($base64Image, $path, $product->clave);
         }
+        //return $product;
         $product->save();
         return redirect('/productos')->with('mesage', 'El Producto  se ha agregado exitosamente!');
     }
@@ -639,7 +651,7 @@ class ProductController extends Controller
         $branch = Auth::user()->shop->id;
         $branches = Shop::find($branch)->branches()->get();
         $statuses = Status::all();
-        // return $product;
+        //return $products;
 
         return view('product/reetiquetado', compact('products', 'categories', 'lines', 'shops', 'branches', 'statuses', 'user'));
     }
