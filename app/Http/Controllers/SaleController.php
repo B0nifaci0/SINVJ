@@ -196,7 +196,7 @@ class SaleController extends Controller
 
         if ($request->user_type == 2 && $request->client_id) {
             $sale = Sale::where('client_id', $request->client_id)
-                ->whereRaw('paid_out < total')
+                ->whereRaw('paid_out <> total')
                 ->first();
         }
 
@@ -217,7 +217,7 @@ class SaleController extends Controller
                 'folio' => $folio
             ]);
         }
-
+        //return $request;
         $products = json_decode($request->products_list);
 
         foreach ($products as $i => $p) {
@@ -265,7 +265,7 @@ class SaleController extends Controller
         }
 
         $sale->paid_out = Partial::where('sale_id', $sale->id)->sum('amount');
-
+        //return $sale;
         $sale->save();
 
         return redirect('/ventas')->with('mesage', 'La venta se ha agregado exitosamente!');
