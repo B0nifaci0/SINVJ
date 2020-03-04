@@ -129,23 +129,13 @@ LISTA PRODUCTO
                         <td>${{$product->price_purchase }}</td>
                         <td>${{$product->discount }}</td>
                         @endif
-                        @if($product->discar_cause == 4)
-                          <td>
-                              <!-- Botón para restaurar producto devuelto-->
-                              <a type="button" href="/productos/{{$product->id}}/reetiquetado"
-                                  class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
-                                  data-original-title="Restaurar">Restaurar</a>
-                              <!-- END Botón-->
-                          </td>
-                        @else
-                          <td>
-                              <!-- Botón para restaurar producto devuelto-->
-                              <a type="button" href="/productos/{{$product->id}}/restore"
-                                  class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
-                                  data-original-title="Restaurar">Restaurar</a>
-                              <!-- END Botón-->
-                          </td>
-                        @endif
+                        <td>
+                            <!-- Botón para restaurar producto devuelto-->
+                            <a type="button" href="/productos/{{$product->id}}/reetiquetado"
+                                class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
+                                data-original-title="Restaurar">Restaurar</a>
+                            <!-- END Botón-->
+                        </td>
                       </tr>
                       @endif
                       @endforeach
@@ -217,23 +207,13 @@ LISTA PRODUCTO
                         <td>${{$product->price_purchase}}</td>
                         <td>${{$product->discount}}</td>
                       @endif
-                        @if($product->discar_cause == 4)
-                          <td>
-                              <!-- Botón para restaurar producto devuelto-->
-                              <a type="button" href="/productos/{{$product->id}}/reetiquetado"
-                                  class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
-                                  data-original-title="Restaurar">Restaurar</a>
-                              <!-- END Botón-->
-                          </td>
-                        @else
-                          <td>
-                              <!-- Botón para restaurar producto devuelto-->
-                              <a type="button" href="/productos/{{$product->id}}/restore"
-                                  class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
-                                  data-original-title="Restaurar">Restaurar</a>
-                              <!-- END Botón-->
-                          </td>
-                        @endif
+                      <td>
+                            <!-- Botón para restaurar producto devuelto-->
+                            <a type="button" href="/productos/{{$product->id}}/reetiquetado"
+                                class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
+                                data-original-title="Restaurar">Restaurar</a>
+                            <!-- END Botón-->
+                        </td>
                     </tr>
                     @endif
                     @endforeach
