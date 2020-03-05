@@ -36,9 +36,9 @@ MODIFICACIÓN TIENDA
             <div class="form-group form-material col-md-6">
                     <label>Descripcion</label>
                     @if($shop->description == "NULL")
-                    <input type="text" class="form-control" name="description"  value=" " required="required">
+                    <input type="text" class="form-control" name="description"  value=" ">
                     @elseif($shop->description != "NULL")
-                    <input type="text" class="form-control" name="description"  value="{{$shop->description}}" required="required">
+                    <input type="text" class="form-control" name="description"  value="{{$shop->description}}">
                     @endif
             </div>
             <div class="form-group form-material col-md-6">
