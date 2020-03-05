@@ -93,8 +93,8 @@
 
 
             <h1 align="center">Reporte General De Productos Por Pieza</h1>
-            <!--<h2 align="center">Todas las Categorias</h2>-->
-            <h3 align="center" style="color:red"> {{$shop->name}} - @foreach($branch as $b){{$b->name}} @endforeach</h3>
+
+            <h3 align="center" style="color:red">Sucursal {{$branch->name}} </h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
                     <tr>
@@ -105,8 +105,6 @@
                         <th scope="col">Precio Venta</th>
                         <th scope="col">Estatus</th>
                         <th scope="col">Fecha</th>
-                        <th>Sucursal</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -119,8 +117,7 @@
                         <td>{{ $product->name_category }}</td>
                         <td>$ {{ $product->price }}</td>
                         <td>{{ $product->name_status }}</td>
-                        <td class="sizedate">{{ $product->updated_at->format('m-d-Y') }}</td>
-                        <td>{{ $product->name_branch }}</td>
+                        <td class="sizedate">{{ $product->date_creation->format('m-d-Y') }}</td>
                     </tr>
                     @endforeach
                 </tbody>

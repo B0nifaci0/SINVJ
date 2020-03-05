@@ -150,6 +150,16 @@ class TrasferUserController extends Controller
         $shop = Auth::user()->shop;
 
         $shops = Auth::user()->shop()->get();
+
+        $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
+            return $u->id;
+        });
+        $transout = TransferProduct::whereIn('user_id', $usersIds)->count();
+        $transint = TransferProduct::whereIn('destination_user_id', $usersIds)->count();
+        // return $trans;
+        if ($transout <= 0 && $transint <= 0) {
+            return redirect('/traspasosAA/create')->with('mesage', 'No se tiene ningun traspaso registrado, primero debes crear uno !');
+        }
         return view('transfer.TrasferUser.Reports.indexReportTransfer', compact('shop', 'shops', 'tienda', 'user'));
     }
 

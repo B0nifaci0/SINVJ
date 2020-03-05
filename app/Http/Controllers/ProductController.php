@@ -424,17 +424,17 @@ class ProductController extends Controller
         $product = new Product($data);
         $product->date_creation = $date;
         //return $request;
-        if($request->id_product){
-            $restored_product = Product::where('id',$request->id_product)
-            ->withTrashed()
-            ->get();
-            foreach($restored_product as $r){
+        if ($request->id_product) {
+            $restored_product = Product::where('id', $request->id_product)
+                ->withTrashed()
+                ->get();
+            foreach ($restored_product as $r) {
                 $r->restored_at = $date;
                 $r->save();
             }
             //return $restored_product;
         }
-        
+
         // if ($request->hasFile('image')){
         //    $filename = $request->image->getCLientOriginalName();
         //    $request->image->storeAs('public/upload/products',$filename);
@@ -668,6 +668,7 @@ class ProductController extends Controller
             $p->status_id = 2;
             $p->discar_cause = null;
             $p->save();
+            $p->date_creation = Now();
         }
         //return $product;
 
@@ -712,6 +713,10 @@ class ProductController extends Controller
      ***/
     public function reportProduct()
     {
+
+        if (Auth::user()->shop->products->count() == 0) {
+            return redirect('/productos/create')->with('mesage', 'Primero debes crear productos!');
+        }
         $idshop = Auth::user()->shop->id;
         $user = Auth::user();
         $tienda = Shop::find($idshop)->branches()->get();
@@ -912,33 +917,22 @@ class ProductController extends Controller
 
         $hour = Carbon::now();
         $hour = date('H:i:s');
-
-        /**
-         * Checar este if para la validacion de la fecha de un rango de 1 a 1
-         */
-
-        $branches = Branch::where("id", "=", $request->branch_id)->get();
-        $lines = Line::where("id", "=", $request->id)->get();
-        //$categories = Category::where("id","=",$request->id)->get();
         $shop = Auth::user()->shop;
-        $shops = Auth::user()->shop()->get();
+        $branch = Branch::find($request->branch_id);
+        $line = Line::find($request->line_id);
 
-        $branches = Branch::where("id", "=", $request->branch_id)->get();
-        $lines = Line::where("id", "=", $request->id)->get();
         //$categories = Category::where("id","=",$request->id)->get();
         $products = Product::where("branch_id", "=", $request->branch_id)
-            ->where("line_id", "=", $request->id)
-            ->whereBetween('products.updated_at', [$fecini, $fecter])
+            ->where("line_id", "=", $request->line_id)
+            ->whereBetween('products.date_creation', [$fecini, $fecter])
             ->orderBy('clave', 'asc')
             ->get();
-        //return $products;
-        $shop = Auth::user()->shop;
         $shops = Auth::user()->shop()->get();
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
 
-        $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('shop', 'shops', 'products', 'branches', 'lines', 'hour', 'dates'));
+        $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('shop', 'shops', 'products', 'branch', 'line', 'hour', 'dates'));
         return $pdf->stream('ReporteEntradas.pdf');
     }
     //**  */
@@ -1154,7 +1148,7 @@ class ProductController extends Controller
             ->join('lines', 'lines.id', 'products.line_id')
             ->join('statuss', 'statuss.id', 'products.status_id')
             ->select('products.*', 'categories.name as name_category', 'lines.name as name_line', 'categories.type_product', 'statuss.name as name_status')
-            ->whereBetween('products.updated_at', [$fecini, $fecter])
+            ->whereBetween('products.date_creation', [$fecini, $fecter])
             ->where('products.branch_id', $request->branch_id)
             ->where('categories.type_product', 2)
             ->where('products.deleted_at', NULL)
@@ -1208,7 +1202,7 @@ class ProductController extends Controller
     {
         $branches = Auth::user()->shop->branches;
         //return $request;
-        $branch = Branch::where('id', $request->branch_id)->get();
+        $branch = Branch::find($request->branch_id);
         //return $branch;
 
         $shop = Auth::user()->shop;
@@ -1230,7 +1224,7 @@ class ProductController extends Controller
             ->join('lines', 'lines.id', 'products.line_id')
             ->join('statuss', 'statuss.id', 'products.status_id')
             ->select('products.*', 'categories.name as name_category', 'lines.name as name_line', 'categories.type_product', 'statuss.name as name_status')
-            ->whereBetween('products.updated_at', [$fecini, $fecter])
+            ->whereBetween('products.date_creation', [$fecini, $fecter])
             ->where('categories.type_product', 2)
             ->where('products.shop_id', $shop_id)
             ->where('products.deleted_at', NULL)
@@ -1245,7 +1239,7 @@ class ProductController extends Controller
             ->where('products.shop_id', $shop_id)
             ->where('categories.type_product', 2)
             ->where('products.branch_id', $request->branch_id)
-            ->whereBetween('products.updated_at', [$fecini, $fecter])
+            ->whereBetween('products.date_creation', [$fecini, $fecter])
             ->select('lines.name as nombre_linea', DB::raw('SUM(products.weigth) as gramo_linea'))
             ->groupBy('lines.name')
             ->get();
@@ -1292,7 +1286,7 @@ class ProductController extends Controller
     {
         $branches = Auth::user()->shop->branches;
         $shop_id = Auth::user()->shop->id;
-        $branch = Branch::where('id', $request->branch_id)->get();
+        $branch = Branch::find($request->branch_id);
 
         $fecini = Carbon::parse($request->fecini)->subDay();
         $fecter = Carbon::parse($request->fecter)->addDay();
@@ -1316,7 +1310,7 @@ class ProductController extends Controller
             ->where('products.deleted_at', NULL)
             ->where('products.status_id', 2)
             ->where('products.branch_id', $request->branch_id)
-            ->whereBetween('products.updated_at', [$fecini, $fecter])
+            ->whereBetween('products.date_creation', [$fecini, $fecter])
             ->get();
         $hour = Carbon::now();
         $hour = date('H:i:s');
@@ -1360,7 +1354,7 @@ class ProductController extends Controller
     {
         $branches = Auth::user()->shop->branches;
         $shop_id = Auth::user()->shop->id;
-        $branch = Branch::where('id', $request->branch_id)->get();
+        $branch = Branch::find($request->branch_id);
         //Resta un día a la fecha inicial
         $fecini = Carbon::parse($request->fecini)->subDay();
         //Aumenta un día a la fecha final
@@ -1373,7 +1367,7 @@ class ProductController extends Controller
             ->get();
         // return $categories;
         $products = Product::join('categories', 'categories.id', 'products.category_id')
-            // ->join('statuss', 'statuss.id', 'products.status_id')
+            ->join('statuss', 'statuss.id', 'products.status_id')
             //Devuelve los resultados entre la fecha inicial y la fecha final
             ->whereBetween('products.updated_at', [$fecini, $fecter])
             ->where('products.branch_id', $request->branch_id)
@@ -1381,7 +1375,7 @@ class ProductController extends Controller
             ->where('categories.type_product', 1)
             ->where('products.deleted_at', NULL)
             ->where('products.status_id', 2)
-            ->select('products.*', 'categories.name as name_category', 'categories.type_product')
+            ->select('products.*', 'categories.name as name_category', 'statuss.name as name_status', 'categories.type_product')
             ->get();
         //return $products;
         $shop = Auth::user()->shop;

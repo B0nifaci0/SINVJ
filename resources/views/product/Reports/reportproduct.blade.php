@@ -674,7 +674,7 @@ Panel Principal
                                                                         @endforeach
                                                                     </select>
                                                                     <label>Seleccione Linea</label>
-                                                                    <select id="" name="id" alt="1"
+                                                                    <select id="" name="line_id" alt="1"
                                                                         class="form-control round sucursales">
                                                                         @foreach($lineas as $line)
                                                                         <option value="{{$line->id}}" required>

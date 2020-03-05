@@ -90,7 +90,7 @@
             <h1 align="center">Reporte de Entrada de Productos</h1>
             <h2 align="center">Categoria <span style="color:red"> @foreach($categories as $c){{ $c->nombre_categoria}}
                     @endforeach </span> </h2>
-            <h3 align="center" style="color:red"> {{$shop->name}} - @foreach($branch as $b){{$b->name}} @endforeach</h3>
+            <h3 align="center" style="color:red"> Sucursal: {{$branch->name}}</h3>
             <table class="table table-condensed">
                 <thead>
                     <tr>
@@ -110,7 +110,7 @@
                         <td>{{ $product->observations }}</td>
                         <td>{{ $product->name_category }}</td>
                         <td>{{ $product->name_status }}</td>
-                        <td class="sizedate">{{ $product->updated_at }}</td>
+                        <td class="sizedate">{{ $product->date_creation }}</td>
                     </tr>
                     @endforeach
                 </tbody>

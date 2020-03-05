@@ -92,8 +92,8 @@
             <p align="right">Hora: {{$hour}}</p>
 
             <h1 align="center">Reporte de Entrada de Productos</h1>
-            <h2 align="center">Linea: @foreach($lines as $line){{$line->name}} @endforeach</h2>
-            <h3 align="center" style="color:red">@foreach($branches as $branch){{$branch->name}} @endforeach</h3>
+            <h2 align="center">Linea: {{$line->name}}</h2>
+            <h3 align="center" style="color:red">Sucursal: {{$branch->name}}</h3>
             <table class="table table-condensed">
                 <thead>
                     <tr>
@@ -116,7 +116,7 @@
                         <td>{{ $product->observations }}</td>
                         <td>{{ $product->category->name }}</td>
                         <td>{{ $product->status->name }}</td>
-                        <td class="sizedate">{{ $product->updated_at }}</td>
+                        <td class="sizedate">{{ $product->date_creation }}</td>
                     </tr>
                     @endforeach
                 </tbody>

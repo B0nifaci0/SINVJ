@@ -260,21 +260,21 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                        <ul class="site-menu-sub">
+                                        {{-- <ul class="site-menu-sub">
                                             <li class="site-menu-item">
                                                 <a class="animsition-link" href="/productos/devueltos">
                                                     <i class="site-menu-icon fa-reply" aria-hidden="true"></i>
                                                     <span class="site-menu-title">Productos Devueltos</span>
                                                 </a>
                                             </li>
-                                        </ul>
+                                        </ul> --}}
                                         <ul class="site-menu-sub">
-                                            <li class="site-menu-item">
+                                            {{-- <li class="site-menu-item">
                                                 <a class="animsition-link" href="/reportes-productos-apartados">
                                                     <i class="site-menu-icon fa-shopping-cart" aria-hidden="true"></i>
                                                     <span class="site-menu-title">Productos apartados</span>
                                                 </a>
-                                            </li>
+                                            </li> --}}
                                             <li class="site-menu-item">
                                                 <a class="animsition-link" href="/reportes-productos">
                                                     <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
@@ -574,14 +574,14 @@
                                                 </a>
                                             </li>
                                         </ul>
-                                        <ul class="site-menu-sub">
+                                        {{-- <ul class="site-menu-sub">
                                             <li class="site-menu-item">
                                                 <a class="animsition-link" href="/productos/devueltos">
                                                     <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
                                                     <span class="site-menu-title">Productos Devueltos</span>
                                                 </a>
                                             </li>
-                                        </ul>
+                                        </ul> --}}
                                         <ul class="site-menu-sub">
                                             <li class="site-menu-item">
                                                 <a class="animsition-link" href="/productos/create">

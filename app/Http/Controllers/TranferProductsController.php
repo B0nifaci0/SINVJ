@@ -127,6 +127,7 @@ class TranferProductsController extends Controller
                 // $product->status_id = 2;
                 // $product->status_id = 3;
                 $product->shop_id = $user->shop->id;
+                $product->date_creation = Now();
                 $product->save();
             }
         }

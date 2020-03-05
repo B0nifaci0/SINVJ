@@ -19,7 +19,6 @@ use App\Traits\S3ImageManager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use PDF;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class SaleController extends Controller
@@ -245,7 +244,7 @@ class SaleController extends Controller
             ]);
         }
 
-        
+
         if ($request->card_income) {
             $adapter = Storage::disk('s3')->getDriver()->getAdapter();
             $image = file_get_contents($request->file('image')->path());
@@ -254,14 +253,14 @@ class SaleController extends Controller
             $consulta = Partial::orderby('id', 'desc')
                 ->take(1)
                 ->get();
-            $conteo =$consulta[0]->id +1;
+            $conteo = $consulta[0]->id + 1;
             $imagen = $this->saveImages($base64Image, $path, $conteo);
             $partial = Partial::create([
-                    'sale_id' => $sale->id,
-                    'amount' => ($request->card_income) ? $request->card_income : 0,
-                    'type' => Partial::CARD,
-                    'image' => $imagen,
-                ]);
+                'sale_id' => $sale->id,
+                'amount' => ($request->card_income) ? $request->card_income : 0,
+                'type' => Partial::CARD,
+                'image' => $imagen,
+            ]);
         }
 
         $sale->paid_out = Partial::where('sale_id', $sale->id)->sum('amount');
@@ -287,17 +286,17 @@ class SaleController extends Controller
         $sale->total = $sale->itemsSold->sum('final_price');
         //return $sale;
         $finalprice = Product::join('sale_details', 'sale_details.product_id', 'products.id')
-        ->join('categories', 'categories.id', 'products.category_id')
-        ->withTrashed()
-        ->whereIn('products.discar_cause', [3,4])
-        ->select('products.id as id_product','clave', 'weigth','line_id', 'categories.name as category_name', 'sale_details.final_price','description')
-        ->where('sale_id', $id)
-        ->sum('sale_details.final_price');
+            ->join('categories', 'categories.id', 'products.category_id')
+            ->withTrashed()
+            ->whereIn('products.discar_cause', [3, 4])
+            ->select('products.id as id_product', 'clave', 'weigth', 'line_id', 'categories.name as category_name', 'sale_details.final_price', 'description')
+            ->where('sale_id', $id)
+            ->sum('sale_details.final_price');
         //return $finalprice;
         $restan = $sale->total - $sale->partials->sum('amount');
         //return $restan;
         $lines = Line::all();
-        $partials =Partial::all();
+        $partials = Partial::all();
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($sale->partials as $e) {
             if ($e->image) {
@@ -314,7 +313,7 @@ class SaleController extends Controller
             }
         }
         //return $sale;
-        return view('sale.show', compact('finalprice' ,'sale', 'lines', 'restan','partials'));
+        return view('sale.show', compact('finalprice', 'sale', 'lines', 'restan', 'partials'));
     }
 
     public function check(Request $request)
@@ -337,21 +336,19 @@ class SaleController extends Controller
         $total = $sale->total - $giveback;
         //return $total;
         $sale->total = $total;
-        if($sale->total == 0) {
+        if ($sale->total == 0) {
             //$balance = $sale->paid_out - $sale->total;
             $sale->positive_balance = $sale->positive_balance + $sale->paid_out;
-            if($sale->client_id)
-            {
+            if ($sale->client_id) {
                 $client->positive_balance = $client->positive_balance + $sale->paid_out;
-                if ($client->positive_balance < 0) 
-                {
+                if ($client->positive_balance < 0) {
                     $client->positive_balance = $client->positive_balance * -1;
                 }
                 $client->save();
             }
             $sale->paid_out = 0;
-        }       
-        
+        }
+
         //return $sale;
         //return $client;
         if ($give == 1) {
@@ -364,7 +361,7 @@ class SaleController extends Controller
         $product->restored_at = null;
 
         $sale->save();
-        
+
         $product->save();
         $product->delete();
         Sale::where('id', $request->sale_id)->update(['total' => $total]);

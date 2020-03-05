@@ -94,7 +94,7 @@
 
             <h1 align="center">Reporte General De Entrada de Productos Por Gramos</h1>
             <h2 align="center">Reporte de Entradas Por Lineas</h2>
-            <h3 align="center" style="color:red"> {{$shop->name}} - @foreach($branch as $b) {{$b->name}} @endforeach
+            <h3 align="center" style="color:red"> Sucursl: {{$branch->name}}
             </h3>
             <table class="table table-condensed">
                 <thead>
@@ -121,7 +121,7 @@
                         <td>{{ $product->observations }}</td>
                         <td>{{ $product->name_category }}</td>
                         <td>{{ $product->name_status }}</td>
-                        <td class="sizedate">{{ $product->updated_at->format('m-d-Y')}}</td>
+                        <td class="sizedate">{{ $product->date_creation->format('m-d-Y')}}</td>
                     </tr>
                     @endforeach
                 </tbody>
