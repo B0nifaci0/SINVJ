@@ -72,13 +72,18 @@ class PaymentsController extends Controller
             ];
             return back()->withErrors($validator->errors());
         }
-
+        //CUANDO SE UTILIZA EL SALDO A FAVOR
         if ($request->type == 3) {
+            //CUANDO EL SALDO A FAVOR ES MAYOR A LO RESTANTE
             if ($client->positive_balance > $balance) {
+                //EL NUEVO SALDO A FAVOR SE RESTARA A LO RESTANTE
                 $client->positive_balance = $client->positive_balance - $balance;
+                //LO RESTANTE SERA LO MISMO AL TOTAL PARA QUE LA VENTA SEA LIQUIDADA
                 $sale->paid_out = $sale->total;
+                //EL CLIENTE TODAVIA TENDRA SALDO A FAVOR
                 //return $sale;
             } else {
+                //SI EL SALDO A FAVOR ES MENOR A LO RESTANTE SE UTILIZARA TODO EL SALDO A FAVOR Y QUEDARA NULO
                 $sale->paid_out = $sale->paid_out + $client->positive_balance;
                 $sale->positive_balance = null;
                 $client->positive_balance = null;
@@ -135,8 +140,14 @@ class PaymentsController extends Controller
                 'type' => Partial::CREDIT,
             ]);
         }
-
-        return back();
+        if($request->type == 3)
+        {
+            return back()->with('mesage', 'El saldo a favor ha sido utilizado exitosamente!');
+        } elseif($request->type == 2) {
+            return back()->with('mesage', 'El pago con tarjeta se agrego exitosamente!');
+        } else {
+            return back()->with('mesage', 'El pago con efectivo se agrego exitosamente!');
+        }
     }
 
     /**
