@@ -7,11 +7,9 @@ use App\Client;
 use App\PayPal;
 use App\Payment;
 use App\Partial;
-use App\Subscription;
-use App\CardInformation;
-use PayPal\Api\CreditCard;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\S3ImageManager;
 
@@ -30,10 +28,10 @@ class PaymentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function index()
-       {
+    public function index()
+    {
         return view('payments/index');
-       }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -58,11 +56,25 @@ class PaymentsController extends Controller
         $client = Client::find($sale->client_id);
 
         $balance = $sale->total - $sale->paid_out;
-        
-        if($request->type == 3)
-        {
-            if($client->positive_balance > $balance)
-            {
+
+        $validator = Validator::make($request->all(), [
+
+            'image' => Rule::requiredIf($request->type == 2)
+
+
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'image' => 'imagen',
+                'errors' => $validator->errors()->add('imagen', 'La imagen del comprobante es necesaria.'),
+                'error' => 'Error en alguno de los campos',
+            ];
+            return back()->withErrors($validator->errors());
+        }
+
+        if ($request->type == 3) {
+            if ($client->positive_balance > $balance) {
                 $client->positive_balance = $client->positive_balance - $balance;
                 $sale->paid_out = $sale->total;
                 //return $sale;
@@ -75,56 +87,48 @@ class PaymentsController extends Controller
         } else {
             $sale->paid_out += $request->amount;
         }
-        
-        if($sale->total == 0)
-        {
+
+        if ($sale->total == 0) {
             $sale->positive_balance = $sale->paid_out;
-            if($sale->client_id)
-            {
-                if($sale->total < $client->positive_balance)
-                {
+            if ($sale->client_id) {
+                if ($sale->total < $client->positive_balance) {
                     $client_positive_balance = $client->positive_balance - $sale->paid_out;
                     $client->positive_balance = $sale->paid_out;
                     //return $client;
-                    
+
                 }
             }
         }
-        
-        //return $sale;
-        
-        //return $client;
-        
-        $sale->save(); 
 
-        if($sale->client_id)
-        {
+        $sale->save();
+
+        if ($sale->client_id) {
             $client->save();
         }
-        
+
         if ($request->type == 2) {
-                $adapter = Storage::disk('s3')->getDriver()->getAdapter();
-                $image = file_get_contents($request->file('image')->path());
-                $base64Image = base64_encode($image);
-                $path = 'payment-tickets';
-                $consulta = Partial::orderby('id','desc')
-                ->take(1) 
+            $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+            $image = file_get_contents($request->file('image')->path());
+            $base64Image = base64_encode($image);
+            $path = 'payment-tickets';
+            $consulta = Partial::orderby('id', 'desc')
+                ->take(1)
                 ->get();
-                $conteo =$consulta[0]->id +1;
-                $imagen = $this->saveImages($base64Image, $path, $conteo);
-                $partial = Partial::create([
-                    'sale_id' => $request->sale_id,
-                    'amount' => $request->amount,
-                    'type' => Partial::CARD,
-                    'image' => $imagen,
-                ]);
-        }else if($request->type == 1){
+            $conteo = $consulta[0]->id + 1;
+            $imagen = $this->saveImages($base64Image, $path, $conteo);
+            $partial = Partial::create([
+                'sale_id' => $request->sale_id,
+                'amount' => $request->amount,
+                'type' => Partial::CARD,
+                'image' => $imagen,
+            ]);
+        } else if ($request->type == 1) {
             $partial = Partial::create([
                 'sale_id' => $request->sale_id,
                 'amount' => $request->amount,
                 'type' => Partial::CASH,
             ]);
-        }else{       
+        } else {
             $partial = Partial::create([
                 'sale_id' => $request->sale_id,
                 'amount' => $request->amount,

@@ -32,6 +32,15 @@ SUCURSAl
     </header>
     <div class="table-responsive">
         <div class="panel-body">
+            @if($errors->count() > 0)
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach($errors->get('imagen') as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <div class="row">
                 <div class="col-md-3">
                     <p class="">
@@ -62,10 +71,13 @@ SUCURSAl
                                 <td>$ {{ $sale->paid_out }}</td>
                             </tr>
                             @if($sale->client_id)
-                                <tr>
-                                    <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
-                                    <td> $ @if(($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance) {{ ($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance }} @else 0 @endif</td>
-                                </tr>
+                            <tr>
+                                <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
+                                <td> $ @if(($sale->client_id) ? $sale->client->positive_balance :
+                                    $sale->positive_balance)
+                                    {{ ($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance }}
+                                    @else 0 @endif</td>
+                            </tr>
                             @endif
                             <tr>
                                 <td><strong class="text-center badge badge-success">Restan:</strong></td>
@@ -92,9 +104,9 @@ SUCURSAl
                     <th>Peso</th>
                     <th>Precio</th>
                     @if($sale->paid_out != $sale->total)
-                        @if($sale->client_id)
-                            <th>Devolver</th>
-                        @endif
+                    @if($sale->client_id)
+                    <th>Devolver</th>
+                    @endif
                     @endif
                 </tr>
             </thead>
@@ -114,15 +126,15 @@ SUCURSAl
                     <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                     <td>$ {{ $item->final_price }}</td>
                     @if($sale->paid_out != $sale->total)
-                        @if($sale->client_id)
-                            <td>
-                                <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
-                                    alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
-                                   data-original-title="Devolver">
-                                    <i class="icon fa-reply-all" aria-hidden="true"></i>
-                                </button>
-                            </td>
-                        @endif
+                    @if($sale->client_id)
+                    <td>
+                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
+                            alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
+                            data-original-title="Devolver">
+                            <i class="icon fa-reply-all" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                    @endif
                     @endif
                 </tr>
                 @endforeach
@@ -186,13 +198,16 @@ SUCURSAl
 
                 <div class="panel-actions float-right">
 
-                    <a href="/ventapdf/{{$sale->id}}"><button type="button" class="btn btn-sm samll btn-floating btn-danger waves-effect waves-light" data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                    <a href="/ventapdf/{{$sale->id}}"><button type="button"
+                            class="btn btn-sm samll btn-floating btn-danger waves-effect waves-light"
+                            data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                            <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
                     </a>
 
                     @if($sale->total > $sale->paid_out)
-                        <button id="newPayment" class="btn btn-sm small btn-floating
-                        btn-primary waves-light float-rightleft" data-toggle="modal" data-target="#myModal"> <i class="icon md-plus " aria-hidden="true"></i></button>
+                    <button id="newPayment" class="btn btn-sm small btn-floating
+                        btn-primary waves-light float-rightleft" data-toggle="modal" data-target="#myModal"> <i
+                            class="icon md-plus " aria-hidden="true"></i></button>
                     @endif
                 </div>
             </div>
@@ -214,7 +229,7 @@ SUCURSAl
                     <div class="col-md-3">
                         <p>
                             @if(($sale->total - $sale->paid_out) > 0)
-                                <strong>Restan: </strong>$ {{ $sale->total - $sale->paid_out }}
+                            <strong>Restan: </strong>$ {{ $sale->total - $sale->paid_out }}
                             @else
                             <strong>Restan: $ 0</strong>
                             @endif
@@ -288,19 +303,22 @@ SUCURSAl
                                 <option value="1" selected="selected" id="cash">Efectivo</option>
                                 <option value="2" id="card">Tarjeta</option>
                                 @if(($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance)
-                                    <option value="3" id="balance">Saldo a Favor</option>
+                                <option value="3" id="balance">Saldo a Favor</option>
                                 @endif
                             </select>
                         </div>
                         @if(($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance)
                         <div class="col-md-12 positive">
                             <label>Monto</label>
-                            <input type="text" id="amount" name="amount" class="form-control" value="{{($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance}}" alt="{{$sale->total - $sale->paid_out}} ">
+                            <input type="text" id="amount" name="amount" class="form-control"
+                                value="{{($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance}}"
+                                alt="{{$sale->total - $sale->paid_out}} ">
                         </div>
                         @else
                         <div class="col-md-12">
                             <label>Monto</label>
-                            <input type="text" id="amount" name="amount" class="form-control" alt="{{$sale->total - $sale->paid_out}}">
+                            <input type="text" id="amount" name="amount" class="form-control"
+                                alt="{{$sale->total - $sale->paid_out}}">
                         </div>
                         @endif
                     </div>
