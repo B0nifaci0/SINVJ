@@ -111,7 +111,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     @foreach ($products as $i => $product)
                     <tr id="row{{$product->id}}">
                         <td>{{ $product->clave }}</td>
@@ -121,7 +120,7 @@
                         <td>{{ $product->observations }}</td>
                         <td>{{ $product->name_category }}</td>
                         <td>{{ $product->name_status }}</td>
-                        <td class="sizedate">{{ $product->date_creation->format('m-d-Y')}}</td>
+                        <td>{{ $product->date_creation}}</td>
                     </tr>
                     @endforeach
                 </tbody>

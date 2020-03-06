@@ -117,7 +117,7 @@
                         <td>{{ $product->name_category }}</td>
                         <td>$ {{ $product->price }}</td>
                         <td>{{ $product->name_status }}</td>
-                        <td class="sizedate">{{ $product->date_creation->format('m-d-Y') }}</td>
+                        <td class="sizedate">{{ $product->date_creation }}</td>
                     </tr>
                     @endforeach
                 </tbody>
