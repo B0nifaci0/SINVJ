@@ -76,7 +76,7 @@ class SaleController extends Controller
                 ->join('branches', 'branches.id', 'sales.branch_id')
                 ->where('sales.deleted_at', null)
                 ->select('sales.*')
-                ->whereRaw('sales.total <= sales.paid_out')
+                ->whereRaw('sales.total = sales.paid_out')
                 ->where('sales.branch_id', $user->branch_id)
                 ->orderBy('sales.updated_at', 'desc')
                 ->get();
@@ -86,7 +86,7 @@ class SaleController extends Controller
                 ->join('branches', 'branches.id', 'sales.branch_id')
                 ->where('sales.deleted_at', null)
                 ->select('sales.*')
-                ->whereRaw('sales.total > sales.paid_out')
+                ->whereRaw('sales.total <> sales.paid_out')
                 ->where('sales.branch_id', $user->branch_id)
                 ->orderBy('sales.updated_at', 'desc')
                 ->get();
