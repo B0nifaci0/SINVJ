@@ -41,31 +41,36 @@ ALTA BITACORAS
 
                 <div class="row">
                     <div class="col-md-6">
-                        <h2 class="panel-title fa-user"> {{ $client->name }} {{ $client->first_lastname }} {{ $client->second_lastname }}</h2>                    
+                        <h2 class="panel-title"> Cliente: {{ $client->name }} {{ $client->first_lastname }} {{ $client->second_lastname }}</h2>                    
                     </div>
                     <div class="col-md-6">    
-                        <h2 class="panel-title fa-phone"> {{ $client->phone_number }}</h2>                    
+                        <h2 class="panel-title"> Telefono: {{ $client->phone_number }}</h2>                    
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-3 mt-40">
+                <div class="row" >
+                    <div class="col-md-3 mt-40" align="center">
                         <p>
-                            <strong class=" badge-info col-md-3" >Compras realizadas:</strong> {{ $client->sales->count() }}
+                            <strong class=" badge-info col-md-3" >Compras realizadas: {{ $client->sales->count() }}</strong>
                         </p>
                     </div>
-                    <div class="col-md-3 mt-40">
+                    <div class="col-md-2 mt-40" align="center">
                         <p>
-                            <strong class=" badge-primary col-md-3" >Total comprado: </strong>$ {{ $client->sales->sum('total') }}
+                            <strong class=" badge-primary col-md-3" >Total comprado: {{ $client->sales->sum('total') }}</strong>
                         </p>
                     </div>
-                    <div class="col-md-3 mt-40">
+                    <div class="col-md-2 mt-40" align="center">
                         <p>
-                            <strong class=" badge-success col-md-3" >Pagado: </strong>$ {{ $client->sales->sum('paid_out') }}
+                            <strong class=" badge-success col-md-3" >Pagado: $ {{ $client->sales->sum('paid_out') }} </strong>
                         </p>
                     </div>
-                    <div class="col-md-3 mt-40">
+                    <div class="col-md-2 mt-40">
                         <p>
-                            <strong class=" badge-warning col-md-3">Por pagar: </strong>$ {{ $client->sales->sum('total') - $client->sales->sum('paid_out') }}
+                            <strong class=" badge-warning col-md-3">Por pagar: $ {{ $client->sales->sum('total') - $client->sales->sum('paid_out') }} </strong>
+                        </p>
+                    </div>
+                    <div class="col-md-2 mt-40">
+                        <p>
+                            <strong class=" badge-secondary col-md-3">Saldo a favor: $ {{ $client->sum('positive_balance') }} </strong>
                         </p>
                     </div>
                 </div>
@@ -73,7 +78,15 @@ ALTA BITACORAS
         </div>
         <div class="panel">
             <div class="panel-body">
-                <h3 align="center">Historial de compras y abonos</h3>    
+                <div class="row">
+                  <div class=" col-lg">
+                    <div class="panel-info">
+                      <div class="panel-heading">
+                        <h2 class="panel-title" style="color:white" align="center"> Historial de Compras y Abonos</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>   
             </div>
             @foreach($client->sales as $sale)
             <div class="panel-body">
@@ -82,7 +95,15 @@ ALTA BITACORAS
                 </div>
                 <div class="row">
                     <div class=" col-md-12">
-                        <strong class="badge-warning col-sm-4">Productos comprados</strong>
+                        <div class="row">
+                        <div class=" col-lg">
+                        <div class="panel-warning">
+                        <div class="panel-heading">
+                        <h2 class="panel-title" style="color:white" align="center"> Productos Comprados</h2>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
@@ -114,7 +135,15 @@ ALTA BITACORAS
                     <!--TABLA DE PRODUCTOS DEVUELTOS-->
                   <div class="row">  
                     <div class=" col-md-12">
-                        <strong class="badge-danger col-sm-4">Productos Devueltos</strong>
+                        <div class="row">
+                        <div class=" col-lg">
+                        <div class="panel-danger">
+                        <div class="panel-heading">
+                        <h2 class="panel-title" style="color:white" align="center"> Productos Devueltos</h2>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
@@ -147,7 +176,15 @@ ALTA BITACORAS
 		<!-- FIN TABLA PRODUCTOS DEVUELTOS-->
                 <div class="row">
                     <div class=" col-md-12">
-                        <strong class="badge-success col-sm-4">Abonos realizados</strong>
+                        <div class="row">
+                          <div class=" col-lg">
+                            <div class="panel-success">
+                              <div class="panel-heading">
+                                 <h2 class="panel-title" style="color:white" align="center"> Abonos Realizados</h2>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
