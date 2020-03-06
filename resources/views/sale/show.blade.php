@@ -9,8 +9,23 @@ SUCURSAl
 
 @endsection
 @section('content')
-
 <div class="page-content">
+    @if (session('mesage'))
+	    <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session('mesage') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+	    </div>
+    @endif
+    @if (session('mesage-givedback'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ session('mesage-givedback') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <div class="panel panel-primary panel-bordered" data-plugin="appear" data-animate="fade">
         <header class="panel-heading">
             <div class="row">
@@ -73,10 +88,12 @@ SUCURSAl
                             @if($sale->client_id)
                             <tr>
                                 <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
-                                <td> $ @if(($sale->client_id) ? $sale->client->positive_balance :
-                                    $sale->positive_balance)
-                                    {{ ($sale->client_id) ? $sale->client->positive_balance : $sale->positive_balance }}
-                                    @else 0 @endif</td>
+                                <td> $  @if($sale->total == 0 || $sale->total == $sale->paid_out || $sale->client->positive_balance == null)
+                                            0 
+                                        @else
+                                            {{ $sale->client->positive_balance }}
+                                        @endif
+                                </td>
                             </tr>
                             @endif
                             <tr>
@@ -93,7 +110,11 @@ SUCURSAl
             </div>
         </div>
 
-        <strong class="text-center badge-success">Productos comprados</strong>
+        <div class="panel-success">
+                <div class="panel-heading">
+                    <h2 class="panel-title" style="color:white" align="center"> Productos Comprados</h2>
+                </div>
+            </div>
         <table id="items" class="table">
             <thead>
                 <tr>
@@ -149,7 +170,13 @@ SUCURSAl
         </table>
 
         @if($sale->client_id)
-        <strong class="text-center badge-warning">Productos Devueltos</strong>
+            <div class="panel-warning">
+                <div class="panel-heading">
+                    <h2 class="panel-title" style="color:white" align="center"> Productos Devueltos</h2>
+                </div>
+            </div>
+
+
         <table id="items" class="table">
             <thead>
                 <tr>
@@ -374,10 +401,10 @@ SUCURSAl
             console.log(valor, amount, max);
             if(valor == 1 || valor == 2)
             {
-                if (amount > max ) {
+                if (amount > max || amount <= 0) {
                 swal.fire({
                     title: 'Error',
-                    text: 'El pago maximo es $ ' + max,
+                    text: 'El pago maximo es $ ' + max + ' y el minimo es $ 1',
                     type: 'warning',
                     showAcepptButton: true,
                     confirmButtonColor: '#3085d6',
@@ -410,6 +437,8 @@ SUCURSAl
                 //console.log("Entro 1");
                 $('.remove').show();
                 $('#amount').val(0);
+                $('#amount').removeAttr('readonly');
+                $('#amount').removeClass('readOnly');
                 //$('#amount').prop('disabled',false);
                 // console.log($('#amount').value)
 

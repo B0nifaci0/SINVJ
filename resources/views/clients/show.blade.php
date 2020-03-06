@@ -70,7 +70,7 @@ ALTA BITACORAS
                     </div>
                     <div class="col-md-2 mt-40">
                         <p>
-                            <strong class=" badge-secondary col-md-3">Saldo a favor: $ {{ $client->sum('positive_balance') }} </strong>
+                            <strong class=" badge-secondary col-md-3">Saldo a favor: $ @if($client->positive_balance) {{ $client->positive_balance }} @else 0 @endif </strong>
                         </p>
                     </div>
                 </div>

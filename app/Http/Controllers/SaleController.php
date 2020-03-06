@@ -365,7 +365,7 @@ class SaleController extends Controller
         $product->save();
         $product->delete();
         Sale::where('id', $request->sale_id)->update(['total' => $total]);
-        return back();
+        return back()->with('mesage-givedback', 'El producto ha sido devuelto exitosamente!');
     }
 
     /**
