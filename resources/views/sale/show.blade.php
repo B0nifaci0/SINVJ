@@ -110,7 +110,11 @@ SUCURSAl
             </div>
         </div>
 
-        <strong class="text-center badge-success">Productos comprados</strong>
+        <div class="panel-success">
+                <div class="panel-heading">
+                    <h2 class="panel-title" style="color:white" align="center"> Productos Comprados</h2>
+                </div>
+            </div>
         <table id="items" class="table">
             <thead>
                 <tr>
@@ -166,7 +170,13 @@ SUCURSAl
         </table>
 
         @if($sale->client_id)
-        <strong class="text-center badge-warning">Productos Devueltos</strong>
+            <div class="panel-warning">
+                <div class="panel-heading">
+                    <h2 class="panel-title" style="color:white" align="center"> Productos Devueltos</h2>
+                </div>
+            </div>
+
+
         <table id="items" class="table">
             <thead>
                 <tr>
