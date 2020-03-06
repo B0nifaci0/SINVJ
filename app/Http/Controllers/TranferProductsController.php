@@ -23,9 +23,7 @@ class TranferProductsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
-            return $u->id;
-        });
+
         $trans1 = TransferProduct::where('user_id', $user->id)
             ->withTrashed()
             ->with('user')->with('branch')->with('product')
