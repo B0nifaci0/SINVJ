@@ -28,21 +28,34 @@ class TrasferUserController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
 
         $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
             return $u->id;
         });
-        $trans1 = TransferProduct::whereIn('user_id', $usersIds)
-            ->with('user')->with('branch')->with('product')
-            ->orderBy('transfer_products.updated_at', 'desc')
-            ->get();
 
+        if ($user->type_user == User::SA) {
+            $trans1 = TransferProduct::whereIn('user_id', $usersIds)
+                ->where('last_branch_id', $user->branch->id)
+                ->with('user')->with('branch')->with('product')
+                ->orderBy('transfer_products.updated_at', 'desc')
+                ->get();
+            $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
+                ->where('new_branch_id', $user->branch->id)
+                ->orderBy('transfer_products.updated_at', 'desc')
+                ->with('user')->with('branch')->with('product')
+                ->get();
+        } else {
+            $trans1 = TransferProduct::whereIn('user_id', $usersIds)
+                ->with('user')->with('branch')->with('product')
+                ->orderBy('transfer_products.updated_at', 'desc')
+                ->get();
+            $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
+                ->orderBy('transfer_products.updated_at', 'desc')
+                ->with('user')->with('branch')->with('product')
+                ->get();
+        }
         // return $trans1;
-
-        $trans2 = TransferProduct::whereIn('destination_user_id', $usersIds)
-            ->orderBy('transfer_products.updated_at', 'desc')
-            ->with('user')->with('branch')->with('product')
-            ->get();
 
         return view('transfer/TrasferUser/index', compact('trans1', 'trans2'));
     }

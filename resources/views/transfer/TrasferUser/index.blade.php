@@ -176,13 +176,16 @@ TRANSFERENCIAS
                                                     @endif
                                                     <!-- END Botón-->
                                                 </td>
-                                                @if ($transferin->status_product !== null && $transferin->paid_at == null )
+                                                @if ($transferin->status_product !== null && $transferin->paid_at ==
+                                                null && Auth::user()->id == $transferin->destinationUser->id )
                                                 <td>
                                                     <!-- Botón para generar Traspaso por (ID)-->
                                                     <a href="traspasoEntrante/{{$transferin->id}}"><button type="button"
                                                             class="btn btn-icon btn-danger waves-effect waves-light"
-                                                            data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                                                            <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
+                                                            data-toggle="tooltip"
+                                                            data-original-title="Generar reporte PDF">
+                                                            <i class="icon fa-file-pdf-o"
+                                                                aria-hidden="true"></i></button>
                                                     </a>
                                                     <!-- END Botón-->
                                                 </td>
@@ -292,7 +295,8 @@ TRANSFERENCIAS
                                                 @endif
                                                 <!-- END Botón-->
                                             </td>
-                                            @if ($transferout->status_product !== null && $transferout->paid_at == null)
+                                            @if ($transferout->status_product !== null && $transferout->paid_at == null
+                                            && Auth::user()->id == $transferout->user_id)
                                             <td>
                                                 <!-- Botón para generar Traspaso por (ID)-->
                                                 <a href="traspasoSaliente/{{$transferout->id}}"><button type="button"
