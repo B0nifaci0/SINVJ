@@ -358,8 +358,7 @@ SUCURSAl
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="savePartial" type="button" class="btn btn-primary" preventDefault()
-                    data-dismiss="modal">Guardar pago
+                <button id="savePartial" type="button" class="btn btn-primary" data-dismiss="modal">Guardar pago
                 </button>
             </div>
         </div>
@@ -398,26 +397,26 @@ SUCURSAl
         $('#savePartial').click(function(e) {
             console.log("Diste click");
             e.preventDefault();
-            // let valor = Number($('#valor').val());
-            // let amount = Number($('#amount').val());
-            // let max = Number($('#amount').attr('alt'));
-            // console.log(valor, amount, max);
-            // if(valor == 1 || valor == 2)
-            // {
-            //     if (amount > max || amount <= 0) {
-            //     swal.fire({
-            //         title: 'Error',
-            //         text: 'El pago maximo es $ ' + max + ' y el minimo es $ 1',
-            //         type: 'warning',
-            //         showAcepptButton: true,
-            //         confirmButtonColor: '#3085d6',
-            //         cancelButtonColor: '#d33',
-            //         confirmButtonText: 'Aceptar!'
-            //     });
-            //     return;
-            //     }
-            // }
-            // $('#saleForm').submit();
+            let valor = Number($('#valor').val());
+            let amount = Number($('#amount').val());
+            let max = Number($('#amount').attr('alt'));
+            console.log(valor, amount, max);
+            if(valor == 1 || valor == 2)
+            {
+                if (amount > max || amount <= 0) {
+                swal.fire({
+                    title: 'Error',
+                    text: 'El pago maximo es $ ' + max + ' y el minimo es $ 1',
+                    type: 'warning',
+                    showAcepptButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar!'
+                });
+                return;
+                }
+            }
+            $('#saleForm').submit();
         });
 
         $('#amount').on('input', function() {
