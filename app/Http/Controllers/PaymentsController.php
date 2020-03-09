@@ -66,8 +66,7 @@ class PaymentsController extends Controller
         if ($validator->fails()) {
             $response = [
                 'success' => false,
-                'image' => 'imagen',
-                'errors' => $validator->errors()->add('imagen', 'La imagen del comprobante es necesaria.'),
+                'errors' => $validator->errors(),
                 'error' => 'Error en alguno de los campos',
             ];
             return back()->withErrors($validator->errors());
@@ -140,10 +139,9 @@ class PaymentsController extends Controller
                 'type' => Partial::CREDIT,
             ]);
         }
-        if($request->type == 3)
-        {
+        if ($request->type == 3) {
             return back()->with('mesage', 'El saldo a favor ha sido utilizado exitosamente!');
-        } elseif($request->type == 2) {
+        } elseif ($request->type == 2) {
             return back()->with('mesage', 'El pago con tarjeta se agrego exitosamente!');
         } else {
             return back()->with('mesage', 'El pago con efectivo se agrego exitosamente!');

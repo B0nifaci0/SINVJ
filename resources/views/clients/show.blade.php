@@ -16,61 +16,68 @@ ALTA BITACORAS
         <div class="panel">
             <div class="panel-body">
                 @if (session('mesage'))
-                    <div class="alert alert-success">
-                        <strong>{{ session('mesage') }}</strong>
-                    </div>
+                <div class="alert alert-success">
+                    <strong>{{ session('mesage') }}</strong>
+                </div>
                 @endif
                 @if($errors->count() > 0)
-                    <div class="alert alert-danger" role="alert">
-                        <ul>
+                <div class="alert alert-danger" role="alert">
+                    <ul>
                         @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                        <li>{{ $error }}</li>
                         @endforeach
-                        </ul>
-                    </div>
+                    </ul>
+                </div>
                 @endif
                 <div class="row">
-                <div class=" col-lg">
-                <div class="panel-primary">
-                <div class="panel-heading">
-                <h2 class="panel-title" style="color:white" align="center"> Perfil Cliente Mayorista</h2>
-                </div>
-                </div>
-                </div>
+                    <div class=" col-lg">
+                        <div class="panel-primary">
+                            <div class="panel-heading">
+                                <h2 class="panel-title" style="color:white" align="center"> Perfil Cliente Mayorista
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
-                        <h2 class="panel-title"> Cliente: {{ $client->name }} {{ $client->first_lastname }} {{ $client->second_lastname }}</h2>                    
+                        <h2 class="panel-title"> Cliente: {{ $client->name }} {{ $client->first_lastname }}
+                            {{ $client->second_lastname }}</h2>
                     </div>
-                    <div class="col-md-6">    
-                        <h2 class="panel-title"> Telefono: {{ $client->phone_number }}</h2>                    
+                    <div class="col-md-6">
+                        <h2 class="panel-title"> Telefono: {{ $client->phone_number }}</h2>
                     </div>
                 </div>
-                <div class="row" >
-                    <div class="col-md-2 mt-30" >
+                <div class="row">
+                    <div class="col-md-2 mt-30">
                         <p>
-                            <strong class=" badge-info col-md-2" >Compras realizadas: {{ $client->sales->count() }}</strong>
-                        </p>
-                    </div>
-                    <div class="col-md-2 mt-30" >
-                        <p>
-                            <strong class=" badge-primary col-md-2" >Total comprado: {{ $client->sales->sum('total') }}</strong>
+                            <strong class=" badge-info col-md-2">Compras realizadas:
+                                {{ $client->sales->count() }}</strong>
                         </p>
                     </div>
                     <div class="col-md-2 mt-30">
                         <p>
-                            <strong class=" badge-success col-md-2" >Pagado: $ {{ $client->sales->sum('paid_out') }} </strong>
+                            <strong class=" badge-primary col-md-2">Total comprado:
+                                {{ $client->sales->sum('total') }}</strong>
                         </p>
                     </div>
                     <div class="col-md-2 mt-30">
                         <p>
-                            <strong class=" badge-warning col-md-2">Por pagar: $ {{ $client->sales->sum('total') - $client->sales->sum('paid_out') }} </strong>
+                            <strong class=" badge-success col-md-2">Pagado: $ {{ $client->sales->sum('paid_out') }}
+                            </strong>
                         </p>
                     </div>
                     <div class="col-md-2 mt-30">
                         <p>
-                            <strong class=" badge-secondary col-md-2">Saldo a favor: $ @if($client->positive_balance) {{ $client->positive_balance }} @else 0 @endif </strong>
+                            <strong class=" badge-warning col-md-2">Por pagar: $
+                                {{ $client->sales->sum('total') - $client->sales->sum('paid_out') }} </strong>
+                        </p>
+                    </div>
+                    <div class="col-md-2 mt-30">
+                        <p>
+                            <strong class=" badge-secondary col-md-2">Saldo a favor: $ @if($client->positive_balance)
+                                {{ $client->positive_balance }} @else 0 @endif </strong>
                         </p>
                     </div>
                     <div class="col-md-2 mt-30">
@@ -83,39 +90,36 @@ ALTA BITACORAS
         </div>
         <div class="panel">
             <div class="panel-body">
-                <div class="row">
-                  <div class=" col-lg">
+                <div class=" col-lg">
                     <div class="panel-info">
-                      <div class="panel-heading">
-                        <h2 class="panel-title" style="color:white" align="center"> Historial de Compras y Abonos</h2>
-                      </div>
+                        <div class="panel-heading">
+                            <h2 class="panel-title" style="color:white" align="center"> Historial de Compras y
+                                Abonos</h2>
+                        </div>
                     </div>
-                  </div>
-                </div>   
+                </div>
             </div>
             @foreach($client->sales as $sale)
             <div class="panel-body">
                 <div class=" col-md-12">
-                    <h2 class="panel-title" align="left">Fecha de compra: {{ date('d/m/Y', strtotime($sale->created_at)) }}</h2>
+                    <h2 class="panel-title" align="left">Fecha de compra:
+                        {{ date('d/m/Y', strtotime($sale->created_at)) }}</h2>
                 </div>
-                <div class="row">
-                    <div class=" col-md-12">
-                        <div class="row">
-                        <div class=" col-lg">
+                <div>
+                    <div class=" col-md">
                         <div class="panel-warning">
-                        <div class="panel-heading">
-                        <h2 class="panel-title" style="color:white" align="center"> Productos Comprados</h2>
+                            <div class="panel-heading">
+                                <h2 class="panel-title" style="color:white" align="center"> Productos Comprados
+                                </h2>
+                            </div>
                         </div>
-                        </div>
-                        </div>
-                        </div>
-                        <table class="table table-condensed">
+                        <table class="table " data-plugin="dataTable">
                             <thead>
                                 <tr>
                                     <th>Clave</th>
                                     <th>Descripción</th>
                                     <th>Peso</th>
-                                    <th class="text-right">Precio</th>
+                                    <th>Precio</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -124,32 +128,34 @@ ALTA BITACORAS
                                     <td>{{ $item->clave }}</td>
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
-                                    <td class="text-right">$ {{ $item->final_price }}</td>
+                                    <td>$ {{ $item->final_price }}</td>
                                 </tr>
                                 @endforeach
-                                <tr>
-                                    <td colspan="3"></td>
-                                    <td class="text-right">
-                                        <strong>$ {{ $sale->total }}</strong>
-                                    </td>
-                                </tr>
                             </tbody>
+                        </table>
+                        <table>
+                            <tr>
+                                <td colspan="6">
+                                <th>
+                                    <strong>Total Comprado:</strong>
+                                </th>
+                                <td>
+                                    <strong>$ {{ $sale->total }}</strong>
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div>
-                    <!--TABLA DE PRODUCTOS DEVUELTOS-->
-                  <div class="row">  
-                    <div class=" col-md-12">
-                        <div class="row">
-                        <div class=" col-lg">
-                        <div class="panel-danger">
-                        <div class="panel-heading">
-                        <h2 class="panel-title" style="color:white" align="center"> Productos Devueltos</h2>
+                <!--TABLA DE PRODUCTOS DEVUELTOS-->
+                <div>
+                    <div class=" col-lg">
+                        <div class="panel-info">
+                            <div class="panel-heading">
+                                <h2 class="panel-title" style="color:withe" align="center"> Productos Devueltos
+                                </h2>
+                            </div>
                         </div>
-                        </div>
-                        </div>
-                        </div>
-                        <table class="table table-condensed">
+                        <table class="table " data-plugin="dataTable">
                             <thead>
                                 <tr>
                                     <th>Clave</th>
@@ -164,39 +170,42 @@ ALTA BITACORAS
                                     <td>{{ $product->clave }}</td>
                                     <td>{{ $product->description }}</td>
                                     <td>{{ $product->weigth }}</td>
-                                    <!--<td> {{ $product->updated_at }} </td>-->
+                                    <td> {{ $product->updated_at }} </td>
                                     <td class="text-right">${{ $product->price }}</td>
                                 </tr>
                                 @endforeach
-                                <tr>
-                                    <th colspan="3"> Total devuelto</th>
-                                    <td class="text-right">
-                                        <strong>$ {{ $products->sum('total') }} </strong>
-                                    </td>
-                                </tr>    
                             </tbody>
                         </table>
+                        <table>
+                            <tr>
+                                <td colspan="6">
+                                <th>
+                                    <strong>Total Devuelto:</strong>
+                                </th>
+                                <td>
+                                    <strong>$ {{ $products->sum('total') }}</strong>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                   </div> 
-		<!-- FIN TABLA PRODUCTOS DEVUELTOS-->
-                <div class="row">
-                    <div class=" col-md-12">
-                        <div class="row">
-                          <div class=" col-lg">
-                            <div class="panel-success">
-                              <div class="panel-heading">
-                                 <h2 class="panel-title" style="color:white" align="center"> Abonos Realizados</h2>
-                              </div>
+                </div>
+
+                <!-- FIN TABLA PRODUCTOS DEVUELTOS-->
+                <div>
+                    <div class=" col-lg">
+                        <div class="panel-success">
+                            <div class="panel-heading">
+                                <h2 class="panel-title" style="color:withe" align="center"> Abonos Realizados
+                                </h2>
                             </div>
-                          </div>
                         </div>
-                        <table class="table table-condensed">
+                        <table class="table " data-plugin="dataTable">
                             <thead>
                                 <tr>
                                     <th>Fecha</th>
                                     <th>Tipo de pago</th>
-                                    <th>Referencia</th>
-                                    <th class="text-right">Monto</th>
+                                    <th>Ticket</th>
+                                    <th>Monto</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -205,22 +214,25 @@ ALTA BITACORAS
                                     <td>{{ $partial->created_at }}</td>
                                     <td>{{ ($partial->type == 1) ? 'Efectivo' : 'Tarjeta' }} </td>
                                     <td>{{ $partial->reference }}</td>
-                                    <td class="text-right">$ {{ $partial->amount }}</td>
+                                    <td>$ {{ $partial->amount }}</td>
                                 </tr>
                                 @endforeach
-                                <tr>
-                                    <td colspan="3"></td>
-                                    <td class="text-right">
-                                        <strong>$ {{ $sale->partials->sum('amount') }}</strong>
-                                    </td>
-                                </tr>
                             </tbody>
+                        </table>
+                        <table>
+                            <tr>
+                                <td colspan="6">
+                                <th>
+                                    <strong>Total Abonado:</strong>
+                                </th>
+                                <td>
+                                    <strong>$ {{ $sale->partials->sum('amount') }}</strong>
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div>
-            </div>
-            @endforeach
         </div>
-    </form>
-</div>
+        @endforeach
+</form>
 @endsection

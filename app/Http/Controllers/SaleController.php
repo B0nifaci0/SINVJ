@@ -115,9 +115,13 @@ class SaleController extends Controller
         $user = Auth::user();
 
         if ($user->branch) {
-            $clients = Client::where('branch_id', $user->branch->id)->get();
+            $clients = Client::where('branch_id', $user->branch->id)
+                ->where('type_client', Client::M)
+                ->get();
         } else {
-            $clients = Client::where('shop_id', $user->shop->id)->get();
+            $clients = Client::where('shop_id', $user->shop->id)
+                ->where('type_client', Client::M)
+                ->get();
         }
 
         if ($user->branch) {
@@ -245,6 +249,15 @@ class SaleController extends Controller
             ]);
         }
 
+        if ($request->user_type == 1) {
+            $client = Client::create([
+                'name' => $request->customer_name,
+                'branch_id' => $user->branch_id ? $user->branch_id : null,
+                'phone_number' => $request->telephone,
+                'shop_id' => $user->shop_id,
+                'type_client' => Client::P,
+            ]);
+        }
 
         if ($request->card_income) {
             $adapter = Storage::disk('s3')->getDriver()->getAdapter();

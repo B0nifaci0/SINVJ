@@ -63,7 +63,7 @@ return [
     'required_unless'      => 'El campo :attribute es obligatorio a menos que :other esté en :values.',
     'required_with'        => 'El campo :attribute es obligatorio cuando :values está presente.',
     'required_with_all'    => 'El campo :attribute es obligatorio cuando :values está presente.',
-    'required_without'     => 'El campo :attribute es obligatorio cuando :values no está presente.', 
+    'required_without'     => 'El campo :attribute es obligatorio cuando :values no está presente.',
     'required_without_all' => 'El campo :attribute es obligatorio cuando ninguno de :values estén presentes.',
     'same'                 => ':attribute y :other deben coincidir.',
     'size'                 => [
@@ -140,6 +140,7 @@ return [
         'second_lastname'       => 'Segundo Apellido',
         'phone_number'          => 'Número Telefónico',
         'phone_number'          => 'Telefono',
+        'image'                 => 'Imagen',
         'credit'                => 'Límite de crédito',
         'telephone'             => 'Telefono',
     ],

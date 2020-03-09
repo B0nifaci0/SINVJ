@@ -21,6 +21,7 @@ class ClientController extends Controller
     {
         $user = Auth::user();
         $query = Client::with(['sales', 'branch'])
+            ->where('type_client', Client::M)
             ->where('shop_id', $user->shop->id);
         $clients = $query->get();
         return view('clients.index', compact('clients'));
@@ -35,7 +36,7 @@ class ClientController extends Controller
     {
         $user = Auth::user();
         $client = null;
-        if($user->shop) {
+        if ($user->shop) {
             $branches = $user->shop->branches;
         }
         return view('clients.form', compact('client', 'branches'));
@@ -59,7 +60,8 @@ class ClientController extends Controller
             'phone_number' => $request->phone_number,
             'credit' => $request->credit,
             'shop_id' => $user->shop->id,
-            'branch_id' => $request->branch_id
+            'branch_id' => $request->branch_id,
+            'type_client' => Client::M,
         ]);
         //return $client;
         return redirect('/mayoristas')->with('mesage', 'El cliente se ha creado correctamente');
@@ -88,22 +90,20 @@ class ClientController extends Controller
             $cliente = Client::find($id);
 
             //return $cliente;
-            $products = Product::join('sale_details','sale_details.product_id','products.id')
-            ->join('sales', 'sales.id','sale_details.sale_id')
-            ->whereIn('products.discar_cause', [3, 4])
-            ->where('sales.client_id', $id)
-            ->select('products.id as id','products.clave as clave','products.description as description','products.weigth','products.price as price', DB::raw('SUM(products.price) as total'))
-            ->groupBy('products.id','products.clave','products.description','products.weigth','products.price')
-            ->withTrashed()
-            ->get();
+            $products = Product::join('sale_details', 'sale_details.product_id', 'products.id')
+                ->join('sales', 'sales.id', 'sale_details.sale_id')
+                ->whereIn('products.discar_cause', [3, 4])
+                ->where('sales.client_id', $id)
+                ->select('products.id as id', 'products.clave as clave', 'products.description as description', 'products.weigth', 'products.price as price', DB::raw('SUM(products.price) as total'))
+                ->groupBy('products.id', 'products.clave', 'products.description', 'products.weigth', 'products.price')
+                ->withTrashed()
+                ->get();
 
-        //return $products;
+            //return $products;
 
         }
-        
-        return view('clients.show', compact('client','products'));
 
-
+        return view('clients.show', compact('client', 'products'));
     }
 
     /**
@@ -117,13 +117,13 @@ class ClientController extends Controller
         $client = Client::find($id);
         $client_branch_id = $client->branch_id;
         $user = Auth::user();
-        if($user->shop) {
+        if ($user->shop) {
             $branches = $user->shop->branches;
             $selected_branch = $branches->filter(function ($value, $key) use ($client_branch_id) {
                 return $value->id == $client_branch_id;
             })->first();
 
-            
+
             $branches = $branches->reject(function ($value, $key) use ($client_branch_id) {
                 return $value->id == $client_branch_id;
             });

@@ -50,7 +50,7 @@ SUCURSAl
             @if($errors->count() > 0)
             <div class="alert alert-danger" role="alert">
                 <ul>
-                    @foreach($errors->get('imagen') as $error)
+                    @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
                     @endforeach
                 </ul>
