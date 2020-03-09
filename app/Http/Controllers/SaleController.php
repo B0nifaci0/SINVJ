@@ -182,6 +182,7 @@ class SaleController extends Controller
 
         $validator = Validator::make($request->all(), [
             'customer_name' => Rule::requiredIf($request->user_type == 1),
+            'telephone' => Rule::requiredIf($request->user_type == 1 && ($request->income < $request->price)),
             'image' => Rule::requiredIf($request->card_income),
         ]);
         if ($validator->fails()) {

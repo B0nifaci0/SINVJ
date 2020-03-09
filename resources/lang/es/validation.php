@@ -141,6 +141,6 @@ return [
         'phone_number'          => 'Número Telefónico',
         'phone_number'          => 'Telefono',
         'credit'                => 'Límite de crédito',
-
+        'telephone'             => 'Telefono',
     ],
 ];
