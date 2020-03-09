@@ -55,7 +55,7 @@ class SaleController extends Controller
                 ->join('shops', 'shops.id', 'branches.shop_id')
                 ->where('sales.deleted_at', null)
                 ->select('sales.*', 'branches.name as sucursal')
-                ->whereRaw('sales.total = sales.paid_out')
+                ->whereRaw('sales.total <= sales.paid_out')
                 ->where('shops.id', $user->shop_id)
                 ->orderBy('sales.updated_at', 'desc')
                 ->get();
@@ -66,7 +66,7 @@ class SaleController extends Controller
                 ->join('shops', 'shops.id', 'branches.shop_id')
                 ->where('sales.deleted_at', null)
                 ->select('sales.*', 'branches.name as sucursal')
-                ->whereRaw('sales.total <> sales.paid_out')
+                ->whereRaw('sales.total > sales.paid_out')
                 ->where('shops.id', $user->shop_id)
                 ->orderBy('sales.updated_at', 'desc')
                 ->get();
@@ -182,6 +182,7 @@ class SaleController extends Controller
 
         $validator = Validator::make($request->all(), [
             'customer_name' => Rule::requiredIf($request->user_type == 1),
+            'telephone' => Rule::requiredIf($request->user_type == 1 && ($request->income < $request->price)),
             'image' => Rule::requiredIf($request->card_income),
         ]);
         if ($validator->fails()) {

@@ -366,7 +366,7 @@ seleccionado con sus respectivos datos-->
                 if (!Number($('#cashIncome').val()) && !Number($('#cardIncome').val())) {
                     Swal.fire(
                         'No permitido',
-                        'Debe agregar un monto de pago',
+                        'Debe agregar un registro de pago',
                         'error'
                     );
                     e.preventDefault();

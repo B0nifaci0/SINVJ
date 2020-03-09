@@ -379,7 +379,7 @@ SUCURSAl
             let id = $(this).attr("alt");
             Swal.fire({
                 title: 'Confirmación',
-                text: "¿El producto ha sido devuelto?",
+                text: "¿Seguro que quieres devolver el producto?",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#4caf50',
