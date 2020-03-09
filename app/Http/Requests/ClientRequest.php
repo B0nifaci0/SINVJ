@@ -28,6 +28,7 @@ class ClientRequest extends FormRequest
             'first_lastname' => 'required|string|max:30|regex:/^[A-Z,a-z,á,é,í,ó,ú, ]*$/',
             'second_lastname' => 'required|string|max:30|regex:/^[A-Z,a-z,á,é,í,ó,ú, ]*$/',
             'phone_number' =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'credit' => 'required|numeric',
         ];
     }
 }

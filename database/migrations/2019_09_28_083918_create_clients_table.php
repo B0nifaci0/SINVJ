@@ -19,6 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('first_lastname');
             $table->string('second_lastname');
             $table->string('phone_number');
+            $table->integer('credit');
             $table->double('positive_balance', 9, 2);
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops');

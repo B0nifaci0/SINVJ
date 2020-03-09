@@ -57,9 +57,11 @@ class ClientController extends Controller
             'first_lastname' => $request->first_lastname,
             'second_lastname' => $request->second_lastname,
             'phone_number' => $request->phone_number,
+            'credit' => $request->credit,
             'shop_id' => $user->shop->id,
             'branch_id' => $request->branch_id
         ]);
+        //return $client;
         return redirect('/mayoristas')->with('mesage', 'El cliente se ha creado correctamente');
     }
 
@@ -146,6 +148,7 @@ class ClientController extends Controller
             'first_lastname',
             'second_lastname',
             'phone_number',
+            'credit',
             'branch_id'
         ));
         $client->save();

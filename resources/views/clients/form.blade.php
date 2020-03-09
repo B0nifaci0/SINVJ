@@ -56,11 +56,16 @@ ALTA BITACORAS
                 </div>
                 <div class="form-group form-material col-md-6">
                     <label class="form-control-label" for="inputShop">Número telefónico</label>
-                    <input type="text" name="phone_number"
+                    <input type="text" name="phone_number" id="tel"
                         value="{{ isset($client->phone_number) ? $client->phone_number : old('phone_number') }}" class="form-control">
                 </div>
             </div>
             <div class="row">
+                <div class="form-group form-material col-md-6">
+                    <label class="form-control-label" for="inputShop">Límite de Crédito</label>
+                    <input type="text" name="credit" id="credit"
+                        value="{{ isset($client->credit) ? $client->credit : old('credit') }}" class="form-control" >
+                </div>
                 <div class="form-group form-material col-md-6">
                     <label class="form-control-label" for="inputShop">Sucursal</label>
                     <select name="branch_id" id="" class="form-control">
@@ -80,4 +85,24 @@ ALTA BITACORAS
     </div>
   </form>
 </div>
+@section('listado-productos')
+
+<script>
+    $(document).ready(function(){
+
+        $('#credit').on('input', function() {
+            let id = $(this).attr('id');
+            let val = $(this).val();
+            $(`#${id}`).val(val.replace(/\s+/, ""));
+        });
+
+        $('#tel').on('input', function() {
+            let id = $(this).attr('id');
+            let val = $(this).val();
+            $(`#${id}`).val(val.replace(/\s+/, ""));
+        });
+
+    });
+</script>
+@endsection
 @endsection

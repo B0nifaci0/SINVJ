@@ -16,7 +16,8 @@ class Client extends Model
         'phone_number',
         'positive_balance',
         'shop_id',
-        'branch_id'
+        'branch_id',
+        'credit'
     ];
 
     public function sales() {

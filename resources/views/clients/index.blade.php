@@ -67,6 +67,7 @@ LISTA DE  SUCURSALES
                   <th>Primer apellido</th>
                   <th>Segundo apellido</th>
                   <th>Teléfono</th>
+                  <th>Límite de Crédito</th>
                   <th>Sucursal</th>
                   <th>Opciones</th>
                 </tr>
@@ -77,6 +78,7 @@ LISTA DE  SUCURSALES
                   <th>Primer apellido</th>
                   <th>Segundo apellido</th>
                   <th>Teléfono</th>
+                  <th>Límite de Crédito</th>
                   <th>Sucursal</th>
                   <th>Opciones</th>
                 </tr>
@@ -88,6 +90,7 @@ LISTA DE  SUCURSALES
                     <td>{{$client->first_lastname }}</td>
                     <td>{{$client->second_lastname }}</td>
                     <td>{{$client->phone_number }}</td>
+                    <td>{{$client->credit}}</td>
                     <td>{{$client->branch ? $client->branch->name : 'Sin sucursal' }}</td>
                     <td>
                         <!-- Botón para ver cliente-->
