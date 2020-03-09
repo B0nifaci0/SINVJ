@@ -29,9 +29,7 @@ ALTA VENTA
                 </div>
                 @endif
                 <form id="form" method="POST" action="/ventas" enctype="multipart/form-data">
-                    <center>
-                        <h3>Venta</h3>
-                    </center>
+                    <h3 class="text-center">Venta</h3>
                     {{ csrf_field() }}
                     <div class="row mb-10">
                         <div class="col-md-3">
@@ -50,7 +48,8 @@ ALTA VENTA
                                     <div class="form-group form-material">
                                         <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente:
                                         </label>
-                                        <input type="text" class="form-control" required="required" name="customer_name" value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
+                                        <input type="text" class="form-control" required="required" name="customer_name"
+                                            value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
                                     </div>
                                     <!-- END Input-->
                                 </div>
@@ -58,7 +57,8 @@ ALTA VENTA
                                     <!-- Input para Ingresar telefono del cliente-->
                                     <div class="form-group form-material">
                                         <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-                                        <input type="text" class="form-control" required="required" name="telephone" value="{{old('telephone')}}" placeholder="7225674569" />
+                                        <input type="text" class="form-control" required="required" name="telephone"
+                                            value="{{old('telephone')}}" placeholder="7225674569" />
                                     </div>
                                     <!-- END Input-->
                                 </div>
@@ -82,7 +82,8 @@ ALTA VENTA
                         <!-- Select para Seleccionar  producto-->
                         <div class="form-group form-material col-10 col-md-4">
                             <label>Producto</label>
-                            <select id="current_product" name="product_id" class="form-control" data-plugin="select2" data-placeholder="Seleccione Producto" data-allow-clear="true">
+                            <select id="current_product" name="product_id" class="form-control" data-plugin="select2"
+                                data-placeholder="Seleccione Producto" data-allow-clear="true">
                                 <option></option>
                                 <optgroup label="Productos">
                                     @foreach($products as $product)
@@ -104,7 +105,8 @@ ALTA VENTA
                     <!-- END Botón-->
                     <div class="panel-body ">
                         <!-- Tabla para listar productos agregados-->
-                        <table id="ventas" class=" display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                        <table id="ventas" class=" display table table-hover dataTable table-striped w-full"
+                            data-plugin="dataTable">
                             <thead>
                                 <tr>
                                     <th>Clave</th>
@@ -140,7 +142,8 @@ ALTA VENTA
                                 <th>
                                     <strong>Total:</strong>
                                 </th>
-                                <td><strong id="total"></strong><input type="hidden" class="form-control" name="price" id="pagar" /> </td>
+                                <td><strong id="total"></strong><input type="hidden" class="form-control" name="price"
+                                        id="pagar" /> </td>
                             </tr>
 
                             <tr>
@@ -148,7 +151,8 @@ ALTA VENTA
                                 <th>
                                     <strong>Importe:</strong>
                                 </th>
-                                <td><strong id="amount"></strong><input type="hidden" class="form-control" name="income" id="monto" /> </td>
+                                <td><strong id="amount"></strong><input type="hidden" class="form-control" name="income"
+                                        id="monto" /> </td>
                             </tr>
 
                             <tr>
@@ -156,18 +160,20 @@ ALTA VENTA
                                 <th>
                                     <strong>Cambio:</strong>
                                 </th>
-                                <td><strong id="change"></strong><input type="hidden" class="form-control" name="change" id="cambio" /> </td>
+                                <td><strong id="change"></strong><input type="hidden" class="form-control" name="change"
+                                        id="cambio" /> </td>
                             </tr>
                         </table>
 
                         <!-- END Tabla-->
                     </div>
                     <br>
-                <input type="file" name="image" id="image" class="invisible">
+                    <input type="file" name="image" id="image" class="invisible">
                     <div class="row">
                         <!-- Botón para mostar el Modal de Tipos de pago-->
                         <div class="col-6 form-group">
-                            <button class="btn btn-success" data-target="#exampleTabs" data-toggle="modal" type="button">$ Registro de pago</button>
+                            <button class="btn btn-success" data-target="#exampleTabs" data-toggle="modal"
+                                type="button">$ Registro de pago</button>
                         </div>
                         <!-- END Botón-->
                         <input type="hidden" class="form-control" name="partial_pay" id="faltan" />
@@ -191,7 +197,8 @@ ALTA VENTA
                 <div class="example-wrap">
                     <div class="example">
                         <!-- Modal -->
-                        <div class="modal fade modal-success" id="exampleTabs" aria-hidden="true" aria-labelledby="exampleModalTabs" role="dialog" tabindex="-1">
+                        <div class="modal fade modal-success" id="exampleTabs" aria-hidden="true"
+                            aria-labelledby="exampleModalTabs" role="dialog" tabindex="-1">
                             <div class="modal-dialog modal-simple">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -205,15 +212,18 @@ ALTA VENTA
 
                                         <div class="row mt-5">
                                             <div class="form-group form-material col-md-6">
-                                                <label class="form-control-label" for="inputBasicFirstName">Efectivo:</label>
-                                                <input type="text" class="form-control income" name="" id="cashIncome" required="required" placeholder="$" required />
+                                                <label class="form-control-label"
+                                                    for="inputBasicFirstName">Efectivo:</label>
+                                                <input type="text" class="form-control income" name="" id="cashIncome"
+                                                    required="required" placeholder="$" required />
                                             </div>
                                         </div>
                                         <div class="row">
                                             <!-- Input para ingresar cantidad a pagar-->
                                             <div class="form-group form-material col-md-6">
                                                 <label class="form-control-label">Tarjeta:</label>
-                                                <input type="text" class="form-control income" id="cardIncome" placeholder="$" required="required" />
+                                                <input type="text" class="form-control income" id="cardIncome"
+                                                    placeholder="$" required="required" />
                                             </div>
                                             <!-- END Input-->
                                             <!-- Input para seleccionar Imagen del ticket-->
@@ -234,7 +244,9 @@ ALTA VENTA
                                             </div>
                                         </div>
                                         <hr class="mb-4">
-                                        <button type="button" name="continuar" data-dismiss="modal" class="btn btn-success btn-lg btn-block" aria-label="Close">Continuar</button>
+                                        <button type="button" name="continuar" data-dismiss="modal"
+                                            class="btn btn-success btn-lg btn-block"
+                                            aria-label="Close">Continuar</button>
                                         <!-- END PAGO CON TARJETA-->
                                     </div>
                                 </div>
