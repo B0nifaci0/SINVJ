@@ -149,6 +149,7 @@ SUCURSAl
                     <td>$ {{ $item->final_price }}</td>
                     @if($sale->paid_out != $sale->total)
                     @if($sale->client_id)
+                    @if($validacion == 0)
                     <td>
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
                             alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
@@ -156,6 +157,11 @@ SUCURSAl
                             <i class="icon fa-reply-all" aria-hidden="true"></i>
                         </button>
                     </td>
+                    @else
+                    <td>
+                        Tiempo para devolucion expirado
+                    </td>
+                    @endif
                     @endif
                     @endif
                 </tr>

@@ -327,8 +327,21 @@ class SaleController extends Controller
                 $e->image = (string) $result->getUri();
             }
         }
+        $date_limit = $sale->created_at;
+        $date_now = Carbon::now();
+        $date_now = $date_now->format('Y-m-d');
+        //return $date_now;
+        $date_limit->addDays(60);
+        //return $date_created;
+
+        if($date_now >= $date_limit){
+            $validacion = 1;
+        } else {
+            $validacion = 0;
+        }
+        //return $validacion;
         //return $sale;
-        return view('sale.show', compact('finalprice', 'sale', 'lines', 'restan', 'partials'));
+        return view('sale.show', compact('validacion','finalprice', 'sale', 'lines', 'restan', 'partials'));
     }
 
     public function check(Request $request)
