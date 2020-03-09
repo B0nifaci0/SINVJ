@@ -48,29 +48,34 @@ ALTA BITACORAS
                     </div>
                 </div>
                 <div class="row" >
-                    <div class="col-md-3 mt-40" align="center">
+                    <div class="col-md-2 mt-30" >
                         <p>
-                            <strong class=" badge-info col-md-3" >Compras realizadas: {{ $client->sales->count() }}</strong>
+                            <strong class=" badge-info col-md-2" >Compras realizadas: {{ $client->sales->count() }}</strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-40" align="center">
+                    <div class="col-md-2 mt-30" >
                         <p>
-                            <strong class=" badge-primary col-md-3" >Total comprado: {{ $client->sales->sum('total') }}</strong>
+                            <strong class=" badge-primary col-md-2" >Total comprado: {{ $client->sales->sum('total') }}</strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-40" align="center">
+                    <div class="col-md-2 mt-30">
                         <p>
-                            <strong class=" badge-success col-md-3" >Pagado: $ {{ $client->sales->sum('paid_out') }} </strong>
+                            <strong class=" badge-success col-md-2" >Pagado: $ {{ $client->sales->sum('paid_out') }} </strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-40">
+                    <div class="col-md-2 mt-30">
                         <p>
-                            <strong class=" badge-warning col-md-3">Por pagar: $ {{ $client->sales->sum('total') - $client->sales->sum('paid_out') }} </strong>
+                            <strong class=" badge-warning col-md-2">Por pagar: $ {{ $client->sales->sum('total') - $client->sales->sum('paid_out') }} </strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-40">
+                    <div class="col-md-2 mt-30">
                         <p>
-                            <strong class=" badge-secondary col-md-3">Saldo a favor: $ @if($client->positive_balance) {{ $client->positive_balance }} @else 0 @endif </strong>
+                            <strong class=" badge-secondary col-md-2">Saldo a favor: $ @if($client->positive_balance) {{ $client->positive_balance }} @else 0 @endif </strong>
+                        </p>
+                    </div>
+                    <div class="col-md-2 mt-30">
+                        <p>
+                            <strong class=" badge-light col-md-2">Límite de Crédito: $ {{ $client->credit }} </strong>
                         </p>
                     </div>
                 </div>
