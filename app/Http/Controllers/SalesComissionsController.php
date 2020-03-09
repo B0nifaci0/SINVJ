@@ -46,7 +46,7 @@ class SalesComissionsController extends Controller
         // return $branch_ids;
 
         $users = User::where('id', '!=', $user->id)
-            ->where('branch_id', $branch_ids)
+            ->whereIn('branch_id', $branch_ids)
             ->get();
         // return $users;
 

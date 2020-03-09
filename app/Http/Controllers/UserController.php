@@ -224,9 +224,16 @@ class UserController extends Controller
 
     public function indexReceipt()
     {
+
         $branch = Auth::user()->shop->id;
         $user = Auth::user();
+
         $branch = Shop::find($branch)->branches()->get();
+        if (!$branch) {
+            return redirect('/sucursales/create')->with('mesage', 'Primero debes crear una Sucursal!');
+        }
+
+
         return view('Payroll/recibo', compact('branch', 'user'));
     }
 

@@ -99,7 +99,7 @@ TRANSFERENCIAS
                                                 <th>Quien recibio</th>
                                                 <th>Status</th>
                                                 <th>Opciones</th>
-                                                <th>Reporte</th>
+                                                <th>Ticket</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -115,7 +115,7 @@ TRANSFERENCIAS
                                                 <th>Quien recibio</th>
                                                 <th>Status</th>
                                                 <th>Opciones</th>
-                                                <th>Reporte</th>
+                                                <th>Ticket</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -150,10 +150,7 @@ TRANSFERENCIAS
                                                 <td>
                                                     <!-- Botón para Aceptar o Rechazar Traspaso -->
                                                     @if($transferin->status_product === null)
-                                                    @if(Auth::user()->id == $transferin->user_id)
-                                                    <button class="btn btn-warning cancel"
-                                                        alt="{{ $transferin->id }}">Cancelar</button>
-                                                    @else
+                                                    @if(Auth::user()->id == $transferin->destinationUser->id)
                                                     <button class="btn btn-primary accept"
                                                         alt="{{ $transferin->id }}">Aceptar</button>
                                                     <button class="btn btn-warning reject"
@@ -163,8 +160,7 @@ TRANSFERENCIAS
                                                     @if(!$transferin->paid_at)
                                                     @if(Auth::user()->id == $transferin->user_id &&
                                                     $transferin->status_product == 1)
-                                                    <button class="btn btn-danger give-back"
-                                                        alt="{{ $transferin->id }}">Devolver</button>
+
                                                     @else
                                                     @if($transferin->status_product === null)
                                                     <span class="text-center badge badge-success">Pendiente</span>
@@ -176,15 +172,15 @@ TRANSFERENCIAS
                                                     <span class="text-center badge badge-info">No se paga</span>
                                                     @endif
                                                     @endif
-                                                    @else
-                                                    <span class="text-center badge badge-success">Pagado</span>
                                                     @endif
                                                     @endif
                                                     <!-- END Botón-->
                                                 </td>
+                                                @if ($transferin->status_product !== null && $transferin->paid_at ==
+                                                null && Auth::user()->id == $transferin->destinationUser->id )
                                                 <td>
                                                     <!-- Botón para generar Traspaso por (ID)-->
-                                                    <a href="traspasopdf/{{$transferin->id}}"><button type="button"
+                                                    <a href="traspasoEntrante/{{$transferin->id}}"><button type="button"
                                                             class="btn btn-icon btn-danger waves-effect waves-light"
                                                             data-toggle="tooltip"
                                                             data-original-title="Generar reporte PDF">
@@ -193,6 +189,9 @@ TRANSFERENCIAS
                                                     </a>
                                                     <!-- END Botón-->
                                                 </td>
+                                                @else
+                                                <td></td>
+                                                @endif
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -217,7 +216,7 @@ TRANSFERENCIAS
                                             <th>Quien recibio</th>
                                             <th>Status</th>
                                             <th>Opciones</th>
-                                            <th>Reporte</th>
+                                            <th>Tickey</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -232,7 +231,7 @@ TRANSFERENCIAS
                                             <th>Quien recibio</th>
                                             <th>Status</th>
                                             <th>Opciones</th>
-                                            <th>Reporte</th>
+                                            <th>Ticket</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>

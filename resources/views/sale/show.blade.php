@@ -11,20 +11,20 @@ SUCURSAl
 @section('content')
 <div class="page-content">
     @if (session('mesage'))
-	    <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ session('mesage') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-	    </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     @endif
     @if (session('mesage-givedback'))
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>{{ session('mesage-givedback') }}</strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage-givedback') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     @endif
     <div class="panel panel-primary panel-bordered" data-plugin="appear" data-animate="fade">
         <header class="panel-heading">
@@ -88,11 +88,12 @@ SUCURSAl
                             @if($sale->client_id)
                             <tr>
                                 <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
-                                <td> $  @if($sale->total == 0 || $sale->total == $sale->paid_out || $sale->client->positive_balance == null)
-                                            0 
-                                        @else
-                                            {{ $sale->client->positive_balance }}
-                                        @endif
+                                <td> $ @if($sale->total == 0 || $sale->total == $sale->paid_out ||
+                                    $sale->client->positive_balance == null)
+                                    0
+                                    @else
+                                    {{ $sale->client->positive_balance }}
+                                    @endif
                                 </td>
                             </tr>
                             @endif
@@ -111,10 +112,10 @@ SUCURSAl
         </div>
 
         <div class="panel-success">
-                <div class="panel-heading">
-                    <h2 class="panel-title" style="color:white" align="center"> Productos Comprados</h2>
-                </div>
+            <div class="panel-heading">
+                <h2 class="panel-title" style="color:white" align="center"> Productos Comprados</h2>
             </div>
+        </div>
         <table id="items" class="table">
             <thead>
                 <tr>
@@ -170,11 +171,11 @@ SUCURSAl
         </table>
 
         @if($sale->client_id)
-            <div class="panel-warning">
-                <div class="panel-heading">
-                    <h2 class="panel-title" style="color:white" align="center"> Productos Devueltos</h2>
-                </div>
+        <div class="panel-warning">
+            <div class="panel-heading">
+                <h2 class="panel-title" style="color:white" align="center"> Productos Devueltos</h2>
             </div>
+        </div>
 
 
         <table id="items" class="table">
@@ -394,6 +395,7 @@ SUCURSAl
         });
 
         $('#savePartial').click(function(e) {
+            console.log("Diste click");
             e.preventDefault();
             let valor = Number($('#valor').val());
             let amount = Number($('#amount').val());
