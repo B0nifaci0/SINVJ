@@ -87,6 +87,12 @@
                                     <td><strong>$ {{ $sale->total - $sale->partials->sum('amount') }}</strong></td>
                                 </tr>
                             @endif
+                            @if($sale->income > $sale->total)
+                                <tr>
+                                    <td colspan="2">Cambio</td>
+                                    <td><strong>$ {{ $sale->change }}</strong></td>
+                                </tr>
+                            @endif
                         </tbody>
                 </table>
         </div>
