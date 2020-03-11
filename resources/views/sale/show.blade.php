@@ -97,6 +97,16 @@ SUCURSAl
                                 </td>
                             </tr>
                             @endif
+                            @if($sale->change > 0)
+                            <tr>
+                                <td>
+                                    <strong class="text-center badge badge-secondary">Cambio:</strong>
+                                </td>
+                                <td> 
+                                    $ {{ $sale->change }}
+                                </td>
+                            </tr>
+                            @endif
                             <tr>
                                 <td><strong class="text-center badge badge-success">Restan:</strong></td>
                                 @if(($sale->total - $sale->partials->sum('amount')) > 0)

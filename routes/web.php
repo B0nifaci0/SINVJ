@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('traspasoEntrante/{id}', 'TranferProductsController@exportPdfIn');
     Route::get('traspasoSaliente/{id}', 'TranferProductsController@exportPdfOut');
     //Ventas CO
-    Route::get('ventasCO', 'SaleController@indexCO');
+    Route::get('ventasCO', 'SaleController@index');
 
     //Pagos
     Route::resource('pagos', 'PaymentsController');
