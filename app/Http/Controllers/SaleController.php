@@ -205,6 +205,17 @@ class SaleController extends Controller
             $cliente = Client::find($request->client_id);
         }
 
+        if ($request->user_type == 1) {
+            $client = Client::create([
+                'name' => $request->customer_name,
+                'branch_id' => $user->branch_id ? $user->branch_id : null,
+                'phone_number' => $request->telephone,
+                'shop_id' => $user->shop_id,
+                'type_client' => Client::P,
+            ]);
+            $clientid = $client->id;
+        }
+
         if ($sale) {
             $sale->total += $request->total_pay;
             if($sale->total > $cliente->credit && $cliente->type_client == 1){
@@ -220,7 +231,7 @@ class SaleController extends Controller
                 'income' => $request->income,
                 'user_id' => $user->id,
                 'branch_id' => $user->branch_id ? $user->branch_id : null,
-                'client_id' => $request->user_type == 2 ? $request->client_id : null,
+                'client_id' => $request->user_type == 2 ? $request->client_id : $clientid,
                 'paid_out' => 0,
                 'folio' => $folio
             ]);
@@ -250,16 +261,6 @@ class SaleController extends Controller
                 'sale_id' => $sale->id,
                 'amount' => ($request->cash_income) ? $request->cash_income : 0,
                 'type' => Partial::CASH,
-            ]);
-        }
-
-        if ($request->user_type == 1) {
-            $client = Client::create([
-                'name' => $request->customer_name,
-                'branch_id' => $user->branch_id ? $user->branch_id : null,
-                'phone_number' => $request->telephone,
-                'shop_id' => $user->shop_id,
-                'type_client' => Client::P,
             ]);
         }
 
