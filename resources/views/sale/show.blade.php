@@ -85,19 +85,16 @@ SUCURSAl
                                 <td><strong class="text-center badge badge-danger">Pagado:</strong></td>
                                 <td>$ {{ $sale->paid_out }}</td>
                             </tr>
-                            @if($sale->client_id)
-                            <tr>
-                                <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
-                                <td> $ @if($sale->total == 0 || $sale->total == $sale->paid_out ||
-                                    $sale->client->positive_balance == null)
-                                    0
-                                    @else
-                                    {{ $sale->client->positive_balance }}
-                                    @endif
-                                </td>
-                            </tr>
-                            @endif
-                            @if($sale->change > 0)
+                                <tr>
+                                    <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
+                                    <td> $  @if($sale->total == 0 || $sale->total == $sale->paid_out || $sale->client->positive_balance == null)
+                                                0
+                                            @else
+                                                {{ $sale->client->positive_balance }}
+                                            @endif
+                                    </td>
+                                </tr>
+                            @if($sale->change > 0 && $sale->client->type_client == 0)
                             <tr>
                                 <td>
                                     <strong class="text-center badge badge-secondary">Cambio:</strong>
@@ -135,10 +132,12 @@ SUCURSAl
                     <th>Categoria</th>
                     <th>Peso</th>
                     <th>Precio</th>
-                    @if($sale->paid_out != $sale->total)
-                    @if($sale->client_id)
-                    <th>Devolver</th>
-                    @endif
+                    @if($sale->client->type_client == 0)
+                        @if($sale->paid_out <> $sale->total)
+                            @if($sale->change == 0)
+                                <th>Devolver</th>
+                            @endif
+                        @endif
                     @endif
                 </tr>
             </thead>
@@ -157,42 +156,62 @@ SUCURSAl
                     <td>{{$item->category_name}}</td>
                     <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                     <td>$ {{ $item->final_price }}</td>
-                    @if($sale->paid_out != $sale->total)
-                    @if($sale->client_id)
-                    @if($validacion == 0)
-                    <td>
-                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
-                            alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
-                            data-original-title="Devolver">
-                            <i class="icon fa-reply-all" aria-hidden="true"></i>
-                        </button>
-                    </td>
+                    @if($sale->client->type_client == 0)
+                        @if($sale->paid_out <> $sale->total)
+                            @if($sale->change == 0)
+                                @if($validacion == 0)
+                                    <td>
+                                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
+                                            alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
+                                            data-original-title="Devolver">
+                                            <i class="icon fa-reply-all" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                @else
+                                    <td>
+                                        Tiempo para devolucion expirado
+                                    </td>
+                                @endif
+                            @endif
+                        @endif
                     @else
-                    <td>
-                        Tiempo para devolucion expirado
-                    </td>
-                    @endif
-                    @endif
+                        @if($sale->paid_out <> $sale->total)
+                            @if($validacion == 0)
+                                <td>
+                                    <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
+                                        alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
+                                        data-original-title="Devolver">
+                                        <i class="icon fa-reply-all" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            @else
+                                <td>
+                                    Tiempo para devolucion expirado
+                                </td>
+                            @endif
+                        @endif
                     @endif
                 </tr>
                 @endforeach
                 <tr>
                     <td colspan="5"></td>
                     <td><strong>$ {{ $sale->total }}</strong></td>
-                    @if($sale->paid_out != $sale->total)
-                    <td></td>
+                    @if($sale->client->type_client == 0)
+                        @if($sale->paid_out <> $sale->total)
+                            @if($sale->change == 0)
+                                <td></td>
+                            @endif
+                        @endif
                     @endif
                 </tr>
             </tbody>
         </table>
 
-        @if($sale->client_id)
         <div class="panel-warning">
             <div class="panel-heading">
                 <h2 class="panel-title" style="color:white" align="center"> Productos Devueltos</h2>
             </div>
         </div>
-
 
         <table id="items" class="table">
             <thead>
@@ -228,8 +247,6 @@ SUCURSAl
                 </tr>
             </tbody>
         </table>
-        @endif
-
     </div>
 </div>
 </div>

@@ -115,14 +115,21 @@ class SaleController extends Controller
         $user = Auth::user();
 
         if ($user->branch) {
-            $clients = Client::where('branch_id', $user->branch->id)
-                ->where('type_client', Client::M)
+            $public = Client::where('branch_id', $user->branch->id)
+                ->WhereNotNull('positive_balance')
+                ->get();
+            $wholesaler = Client::where('branch_id', $user->branch->id)
+                ->Where('type_client', Client::M)
                 ->get();
         } else {
-            $clients = Client::where('shop_id', $user->shop->id)
-                ->where('type_client', Client::M)
+            $public = Client::where('shop_id', $user->shop->id)
+                ->WhereNotNull('positive_balance')
+                ->get();
+            $wholesaler = Client::where('shop_id', $user->shop->id)
+                ->Where('type_client', Client::M)
                 ->get();
         }
+        $clients = $public->merge($wholesaler);
 
         if ($user->branch) {
             $branch_id = $user->branch->id;
@@ -338,6 +345,7 @@ class SaleController extends Controller
         $date_limit->addDays(60);
         //return $date_created;
 
+        //VALIDACION PARA DEVOLUCION DE PRODUCTOS CON UN MAXIMO DE 60 DIAS
         if($date_now >= $date_limit){
             $validacion = 1;
         } else {
