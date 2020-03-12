@@ -29,7 +29,7 @@ SUCURSAl
     <div class="panel panel-primary panel-bordered" data-plugin="appear" data-animate="fade">
         <header class="panel-heading">
             <div class="row">
-                <h1 class=" panel-title col-9">Detalle de ventas</h1>
+                <h1 class=" panel-title col-md-12" align="center">Detalle de ventas</h1>
                 <div class="panel-actions float-right col-">
                     <button onclick="window.location.href='/ventas'" class="btn btn-sm small btn-floating
                     btn-primary waves-light float-right" data-original-title="Ir a mis vent"> <i
@@ -238,7 +238,7 @@ SUCURSAl
     <div class="panel panel-info panel-bordered" data-plugin="appear" data-animate="fade">
         <header class="panel-heading">
             <div class="row">
-                <h3 class="panel-title col-9">Historial de pagos</h3>
+                <h3 class="panel-title col-12" align="center">Historial de pagos</h3>
 
                 <div class="panel-actions float-right">
 
