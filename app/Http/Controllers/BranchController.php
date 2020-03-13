@@ -616,7 +616,10 @@ class BranchController extends Controller
       ->join('products','sale_details.product_id', '=', 'products.id')
       ->where('partials.updated_at','>=',$fecini,'AND','partials.updated_at','<=',$fecter)
       ->where('branch_id','=',$request->branch_id)
+      ->WhereIn('partials.type', [1, 2])
       ->select('partials.amount')->sum('amount');
+
+      //return $branch->total;
       $branch->tarjeta  = DB::table('partials')
       ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
       ->join('products','sale_details.product_id', '=', 'products.id')
@@ -639,7 +642,8 @@ class BranchController extends Controller
       ->select('price')
       ->where('branch_id',$request->branch_id)
       ->sum('price');
-      $branch->totalFin = $branch->total - $branch->gastos;
+      $branch->totalFin = $branch->total-$branch->tarjeta - $branch->gastos;
+      //return $branch->totalFin;
       $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch','shop'));
      return $pdf->stream('CorteSucursal.pdf');
     }

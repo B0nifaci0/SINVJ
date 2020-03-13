@@ -115,14 +115,21 @@ class SaleController extends Controller
         $user = Auth::user();
 
         if ($user->branch) {
-            $clients = Client::where('branch_id', $user->branch->id)
-                ->where('type_client', Client::M)
+            $public = Client::where('branch_id', $user->branch->id)
+                ->WhereNotNull('positive_balance')
+                ->get();
+            $wholesaler = Client::where('branch_id', $user->branch->id)
+                ->Where('type_client', Client::M)
                 ->get();
         } else {
-            $clients = Client::where('shop_id', $user->shop->id)
-                ->where('type_client', Client::M)
+            $public = Client::where('shop_id', $user->shop->id)
+                ->WhereNotNull('positive_balance')
+                ->get();
+            $wholesaler = Client::where('shop_id', $user->shop->id)
+                ->Where('type_client', Client::M)
                 ->get();
         }
+        $clients = $public->merge($wholesaler);
 
         if ($user->branch) {
             $branch_id = $user->branch->id;
@@ -203,6 +210,7 @@ class SaleController extends Controller
             $sale = Sale::where('client_id', $request->client_id)
                 ->whereRaw('paid_out <> total')
                 ->first();
+            $cliente = Client::find($request->client_id);
         }
 
         if ($request->user_type == 1) {
@@ -218,6 +226,9 @@ class SaleController extends Controller
 
         if ($sale) {
             $sale->total += $request->total_pay;
+            if ($sale->total > $cliente->credit && $cliente->type_client == 1) {
+                return redirect('/ventas/create')->with('mesage-limit', 'El cliente ha excedido su limite de credito!');
+            }
         } else {
             $sale = Sale::create([
                 'telephone' => $request->telephone,
@@ -335,6 +346,7 @@ class SaleController extends Controller
         $date_limit->addDays(60);
         //return $date_created;
 
+        //VALIDACION PARA DEVOLUCION DE PRODUCTOS CON UN MAXIMO DE 60 DIAS
         if ($date_now >= $date_limit) {
             $validacion = 1;
         } else {
