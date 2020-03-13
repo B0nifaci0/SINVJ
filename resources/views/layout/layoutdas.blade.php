@@ -87,7 +87,7 @@
         Breakpoints();
     </script>
 
-
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
     <script>

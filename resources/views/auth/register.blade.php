@@ -115,6 +115,18 @@
                 <!-- END checkbox-->
                 <p class="ml-35">Al hacer clic en Registrarse, usted acepta nuestros <a href="#"> Términos.</a>.</p>
               </div>
+              <!-- INICIA CAPTCHA -->
+              <div class="form-group row">
+                <div class="col-md-6 ">
+                  <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
+                    @if($errors->has('g-recaptcha-response'))
+                        <span class="invalid-feedback" style="display:block">
+                          <strong>{{$errors->first('g-captcha-response')}}</strong>
+                        </span>
+                    @endif 
+                  </div>  
+              </div>  
+              <!--TERMINA CAPTCHA-->
               <!-- Botón para  Registrarse-->
               <button id="register" type="submit" class="btn btn-primary"class="btn btn-primary btn-block registro" alt="reg">
                 {{ __('Register') }}
