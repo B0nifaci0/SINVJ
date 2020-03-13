@@ -285,6 +285,11 @@ seleccionado con sus respectivos datos-->
         var cardIncome = 0;
         var totalIncome = 0;
 
+        var clients = {!! $clients!!};
+        var sales = {!! $sales !!}
+
+        console.log("Clienets ", clients)
+
 
         $(function() {
 
@@ -318,7 +323,15 @@ seleccionado con sus respectivos datos-->
                 e.preventDefault();
                 overDiscount = [];
                 console.log("selectedProducts", selectedProducts);
-
+                let id_user = $('#user-id').val();
+                console.log('id: ',id_user)
+                var client = clients.filter(c => c.id == id_user )[0];
+                var sale = sales.filter(s => s.client_id == client.id && s.paid_out != s.total)[0];
+                console.log("el total es: ", total)
+                var totaltotal = sale.total + total;
+                console.log("el totatotal es: ", totaltotal)
+                console.log("el cliente es: ", client.name)
+                console.log('venta: ', sale)
                 if (!overDiscountAuth) {
                     selectedProducts.forEach(element => {
                         var product = products.filter(p => p.id == element.id);
@@ -413,7 +426,7 @@ seleccionado con sus respectivos datos-->
                 $('#cardPayment').val(cardPayment);
                 console.log("productsList", $('#productsList').val());
 
-                $('#form').submit();
+                //$('#form').submit();
             });
 
             $(document).ready(function() {

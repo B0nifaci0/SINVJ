@@ -41,8 +41,9 @@ Route::group(['middleware' => ['auth']], function () {
     //Taspasos
     //Route::group(['middleware' => ['admin']],function(){
 
-    Route::resource('traspasos', 'TranferProductsController')->middleware('admin');
-    Route::resource('traspasosAA', 'TrasferUserController')->middleware('admin');
+    Route::resource('traspasos', 'TranferProductsController');
+    Route::resource('traspasosAA', 'TrasferUserController');
+    Route::resource('traspasosExt', 'TransferExtController');
 
     Route::get('traspasospdf', 'TranferProductsController@exportPdfall');
 
@@ -50,7 +51,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('traspasoEntrante/{id}', 'TranferProductsController@exportPdfIn');
     Route::get('traspasoSaliente/{id}', 'TranferProductsController@exportPdfOut');
     //Ventas CO
-    Route::get('ventasCO', 'SaleController@index');
 
     //Pagos
     Route::resource('pagos', 'PaymentsController');

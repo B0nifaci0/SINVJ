@@ -21,7 +21,8 @@ class Shop extends Model
         'municipality_id',
         'state_id',
         'description',
-        'shop_group_id'
+        'shop_group_id',
+        'shop_code'
     ];
 
     public function branches()

@@ -154,6 +154,7 @@ class SaleController extends Controller
                 ->with('status')
                 ->get();
         }
+        $sales = Sale::all();
         // $products = Product::where([
         //   'branch_id' => $user->branch_id,
         //   'status_id' => 2
@@ -163,7 +164,7 @@ class SaleController extends Controller
         // 	->with('category')
         // 	->with('status')
         // 	->get();
-        return view('sale/add', compact('products', 'user', 'branches', 'clients'));
+        return view('sale/add', compact('products', 'user', 'branches', 'clients', 'sales'));
     }
 
     /**
@@ -225,7 +226,7 @@ class SaleController extends Controller
 
         if ($sale) {
             $sale->total += $request->total_pay;
-            if($sale->total > $cliente->credit && $cliente->type_client == 1){
+            if ($sale->total > $cliente->credit && $cliente->type_client == 1) {
                 return redirect('/ventas/create')->with('mesage-limit', 'El cliente ha excedido su limite de credito!');
             }
         } else {
@@ -346,14 +347,14 @@ class SaleController extends Controller
         //return $date_created;
 
         //VALIDACION PARA DEVOLUCION DE PRODUCTOS CON UN MAXIMO DE 60 DIAS
-        if($date_now >= $date_limit){
+        if ($date_now >= $date_limit) {
             $validacion = 1;
         } else {
             $validacion = 0;
         }
         //return $validacion;
         //return $sale;
-        return view('sale.show', compact('validacion','finalprice', 'sale', 'lines', 'restan', 'partials'));
+        return view('sale.show', compact('validacion', 'finalprice', 'sale', 'lines', 'restan', 'partials'));
     }
 
     public function check(Request $request)

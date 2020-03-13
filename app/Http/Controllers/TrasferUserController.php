@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
-use Auth;
 use App\Shop;
 use App\User;
 use App\Branch;
 use App\Product;
 use Carbon\Carbon;
-use App\;
 use App\TransferProduct;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use App\Traits\S3ImageManager;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 class TrasferUserController extends Controller
 {
@@ -144,15 +144,15 @@ class TrasferUserController extends Controller
         return redirect('/traspasosAA')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
     }
 
-    public function exportPdf()
-    {
-        // $trans = TrasferUser::all();
-        $trans = TransferProduct::where('user_id', $user->id)
-            ->orWhere('destination_user_id', $user->id)
-            ->with('user')->with('branch')->get();
-        $pdf  = PDF::loadView('transfer.TrasferUser.PdfTranferUser', compact('trans'));
-        return $pdf->stream('Traspasos.pdf');
-    }
+    // public function exportPdf()
+    // {
+    //     // $trans = TrasferUser::all();
+    //     $trans = TransferProduct::where('user_id', $user->id)
+    //         ->orWhere('destination_user_id', $user->id)
+    //         ->with('user')->with('branch')->get();
+    //     $pdf  = PDF::loadView('transfer.TrasferUser.PdfTranferUser', compact('trans'));
+    //     return $pdf->stream('Traspasos.pdf');
+    // }
 
     public function reportTransfer()
     {
