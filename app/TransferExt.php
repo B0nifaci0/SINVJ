@@ -2,14 +2,14 @@
 
 namespace App;
 
+use App\Shop;
+use App\User;
 use App\Branch;
 use App\Product;
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class TransferProduct extends Model
+class TransferExt extends Model
 {
     use SoftDeletes;
 

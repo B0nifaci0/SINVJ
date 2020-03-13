@@ -147,6 +147,7 @@ class SaleController extends Controller
                 ->with('status')
                 ->get();
         }
+        $sales = Sale::all();
         // $products = Product::where([
         //   'branch_id' => $user->branch_id,
         //   'status_id' => 2
@@ -156,7 +157,7 @@ class SaleController extends Controller
         // 	->with('category')
         // 	->with('status')
         // 	->get();
-        return view('sale/add', compact('products', 'user', 'branches', 'clients'));
+        return view('sale/add', compact('products', 'user', 'branches', 'clients', 'sales'));
     }
 
     /**
@@ -334,14 +335,14 @@ class SaleController extends Controller
         $date_limit->addDays(60);
         //return $date_created;
 
-        if($date_now >= $date_limit){
+        if ($date_now >= $date_limit) {
             $validacion = 1;
         } else {
             $validacion = 0;
         }
         //return $validacion;
         //return $sale;
-        return view('sale.show', compact('validacion','finalprice', 'sale', 'lines', 'restan', 'partials'));
+        return view('sale.show', compact('validacion', 'finalprice', 'sale', 'lines', 'restan', 'partials'));
     }
 
     public function check(Request $request)
