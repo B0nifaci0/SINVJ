@@ -14,7 +14,7 @@ ALTA BITACORAS
     <form autocomplete="off" method="POST" action="/mayoristas">
         {{ csrf_field() }}
         <div class="panel">
-            <div class="panel-body">
+            <div class="panel">
                 @if (session('mesage'))
                 <div class="alert alert-success">
                     <strong>{{ session('mesage') }}</strong>
@@ -29,20 +29,21 @@ ALTA BITACORAS
                     </ul>
                 </div>
                 @endif
-                <div class="row">
-                    <div class=" col-lg">
-                        <div class="panel-primary">
-                            <div class="panel-heading">
-                                <h2 class="panel-title" style="color:white" align="center"> Perfil Cliente Mayorista
-                                </h2>
-                            </div>
+                <div class="panel">
+                  <div class="col-lg">
+                    <div class="panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title" style="color:white" align="center"> Perfil Cliente Mayorista
+                            </h2>
                         </div>
                     </div>
+                  </div>  
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
-                        <h2 class="panel-title" align="center"> Cliente: {{ $client->name }} {{ $client->first_lastname }}
+                        <h2 class="panel-title" align="center"> Cliente: {{ $client->name }}
+                            {{ $client->first_lastname }}
                             {{ $client->second_lastname }}</h2>
                     </div>
                     <div class="col-md-6">
@@ -89,22 +90,21 @@ ALTA BITACORAS
             </div>
         </div>
         <div class="panel">
-            <div class="panel-body">
-                <div class=" col-lg">
-                    <div class="panel-info">
-                        <div class="panel-heading">
-                            <h2 class="panel-title" style="color:white" align="center"> Historial de Compras y
-                                Abonos</h2>
-                        </div>
+            <div class=" col-lg">
+                <div class="panel-info">
+                    <div class="panel-heading">
+                        <h2 class="panel-title" style="color:white" align="center"> Historial de Compras y
+                            Abonos</h2>
                     </div>
                 </div>
             </div>
             @foreach($client->sales as $sale)
-            <div class="panel-body">
-                <div class=" col-md-12">
+            <div class="panel">
+                <div class="">
                     <h2 class="panel-title" align="left">Fecha de compra:
                         {{ date('d/m/Y', strtotime($sale->created_at)) }}</h2>
                 </div>
+                <!--INICIA TABLA PRODUCTOS COMPRADOS-->
                 <div>
                     <div class=" col-md">
                         <div class="panel-success">
@@ -148,6 +148,7 @@ ALTA BITACORAS
                         </table>
                     </div>
                 </div>
+                <!--FIN TABLA PRODUCTOS COMPRADOS-->
                 <!--TABLA DE PRODUCTOS DEVUELTOS-->
                 <div>
                     <div class=" col-lg">
@@ -193,8 +194,8 @@ ALTA BITACORAS
                         </table>
                     </div>
                 </div>
-
                 <!-- FIN TABLA PRODUCTOS DEVUELTOS-->
+                <!--INICIA TABLA ABONOS REALIZADOS-->
                 <div>
                     <div class=" col-lg">
                         <div class="panel-primary">
@@ -218,12 +219,12 @@ ALTA BITACORAS
                                     <td>{{ $partial->created_at }}</td>
                                     <td>{{ ($partial->type == 1) ? 'Efectivo' : 'Tarjeta' }} </td>
                                     <td>
-                                    <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
-                                    data-close-btn-inside="false" data-fixed-contentPos="true"
-                                    data-main-class="mfp-margin-0s mfp-with-zoom"
-                                    data-zoom='{"enabled": "true","duration":"300"}'>
-                                    <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200"
-                                        height="150" />
+                                        <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
+                                            data-close-btn-inside="false" data-fixed-contentPos="true"
+                                            data-main-class="mfp-margin-0s mfp-with-zoom"
+                                            data-zoom='{"enabled": "true","duration":"300"}'>
+                                            <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200"
+                                                height="150" />
                                     </td>
                                     <td>$ {{ $partial->amount }}</td>
                                 </tr>
@@ -243,7 +244,9 @@ ALTA BITACORAS
                         </table>
                     </div>
                 </div>
-        </div>
+                <!--TERMINA TABLA DE ABONOS REALIZADOS-->
+            </div>
+</div>
         @endforeach
-</form>
-@endsection
+    </form>
+    @endsection
