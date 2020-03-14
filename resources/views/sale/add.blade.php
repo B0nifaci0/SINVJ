@@ -464,7 +464,7 @@ seleccionado con sus respectivos datos-->
                 $('#cardPayment').val(cardPayment);
                 console.log("productsList", $('#productsList').val());
 
-                //$('#form').submit();
+                $('#form').submit();
             });
 
             $(document).ready(function() {
