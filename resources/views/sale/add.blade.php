@@ -65,7 +65,7 @@ ALTA VENTA
                                     <!-- Input para Ingresar telefono del cliente-->
                                     <div class="form-group form-material">
                                         <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-                                        <input type="text" class="form-control" required="required" name="telephone"
+                                        <input type="text" class="form-control" required="required" id="phone" name="telephone"
                                             value="{{old('telephone')}}" placeholder="7225674569" />
                                     </div>
                                     <!-- END Input-->
@@ -77,9 +77,9 @@ ALTA VENTA
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="user-type">Seleccionar cliente</label>
-                                    <select name="client_id" id="user-id" class="form-control">
+                                    <select name="client_id" id="user-id" class="form-control" data-plugin="select2">
                                         @foreach($clients as $client)
-                                        <option value="{{ $client->id }}">{{ $client->name }}
+                                        <option id="client{{$client->id}}" value="{{ $client->id }}" alt="{{ $client->credit }}">{{ $client->name }}
                                             {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
                                         @endforeach
                                     </select>
@@ -289,6 +289,7 @@ seleccionado con sus respectivos datos-->
         var sales = {!! $sales !!}
 
         console.log("Clienets ", clients)
+        console.log('Ventas: ', sales);
 
 
         $(function() {
@@ -323,15 +324,52 @@ seleccionado con sus respectivos datos-->
                 e.preventDefault();
                 overDiscount = [];
                 console.log("selectedProducts", selectedProducts);
+                var type_sale = $('#user-type').val();
+                console.log(type_sale);
+                var phone_number = $('#phone').val();
+                console.log(phone_number);
+                var validation = false;
                 let id_user = $('#user-id').val();
                 console.log('id: ',id_user)
+                var limit = $('#client' + id_user).attr("alt");
                 var client = clients.filter(c => c.id == id_user )[0];
                 var sale = sales.filter(s => s.client_id == client.id && s.paid_out != s.total)[0];
+                console.log('EL limite es: ', limit);
                 console.log("el total es: ", total)
-                var totaltotal = sale.total + total;
-                console.log("el totatotal es: ", totaltotal)
-                console.log("el cliente es: ", client.name)
-                console.log('venta: ', sale)
+                if(sale != undefined && client.type_client == 1 && type_sale == 2){
+                    var old_credit = sale.total + total;
+                    var credito = old_credit + total;
+                    console.log("Credito Despues de sumar: ", credito)
+                    console.log("Credito Antes de sumar: ", old_credit)
+                    if(credito > limit){
+                        validation = true;
+                    }
+                }
+
+                if(validation)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        client.name + ' ha excedido su limite de credito de ' + limit,
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                let cellphone = phone_number.length;
+
+                if(total > totalIncome && cellphone != 10 && type_sale == 1)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un numero telefonico válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+                
                 if (!overDiscountAuth) {
                     selectedProducts.forEach(element => {
                         var product = products.filter(p => p.id == element.id);
@@ -426,7 +464,7 @@ seleccionado con sus respectivos datos-->
                 $('#cardPayment').val(cardPayment);
                 console.log("productsList", $('#productsList').val());
 
-                //$('#form').submit();
+                $('#form').submit();
             });
 
             $(document).ready(function() {

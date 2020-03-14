@@ -154,7 +154,15 @@ class SaleController extends Controller
                 ->with('status')
                 ->get();
         }
-        $sales = Sale::all();
+
+        $clientsIds = $clients->map(function ($c) {
+            return $c->id;
+        });
+
+        //return $clientsIds;
+
+        $sales = Sale::whereIn('client_id', $clientsIds)->get();
+        //return $sales;
         // $products = Product::where([
         //   'branch_id' => $user->branch_id,
         //   'status_id' => 2

@@ -495,7 +495,7 @@
                                     <li class="site-menu-item">
                                         <a class="animsition-link" href="/mayoristas">
                                             <i class="site-menu-icon icon fa-user-circle" aria-hidden="true"></i>
-                                            <span class="site-menu-title">Mayoristas</span>
+                                            <span class="site-menu-title">Clientes</span>
                                         </a>
                                     </li>
                                 </ul>
