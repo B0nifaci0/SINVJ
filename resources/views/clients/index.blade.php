@@ -75,10 +75,7 @@ LISTA DE  SUCURSALES
                       {{ csrf_field() }}
                       <tr>
                         <th>Nombre</th>
-                        <th>Primer apellido</th>
-                        <th>Segundo apellido</th>
                         <th>Teléfono</th>
-                        <th>Límite de Crédito</th>
                         <th>Sucursal</th>
                         <th>Opciones</th>
                       </tr>
@@ -86,10 +83,7 @@ LISTA DE  SUCURSALES
                     <tfoot>
                       <tr>
                         <th>Nombre</th>
-                        <th>Primer apellido</th>
-                        <th>Segundo apellido</th>
                         <th>Teléfono</th>
-                        <th>Límite de Crédito</th>
                         <th>Sucursal</th>
                         <th>Opciones</th>
                       </tr>
@@ -98,10 +92,7 @@ LISTA DE  SUCURSALES
                     @foreach ($public as $client)
                   <tr id = "row{{ $client->id }}">
                     <td>{{$client->name}}</td>
-                    <td>{{$client->first_lastname }}</td>
-                    <td>{{$client->second_lastname }}</td>
                     <td>{{$client->phone_number }}</td>
-                    <td>{{$client->credit}}</td>
                     <td>{{$client->branch ? $client->branch->name : 'Sin sucursal' }}</td>
                     <td>
                         <!-- Botón para ver cliente-->

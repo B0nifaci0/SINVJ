@@ -65,7 +65,7 @@ ALTA VENTA
                                     <!-- Input para Ingresar telefono del cliente-->
                                     <div class="form-group form-material">
                                         <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-                                        <input type="text" class="form-control" required="required" name="telephone"
+                                        <input type="text" class="form-control" required="required" id="phone" name="telephone"
                                             value="{{old('telephone')}}" placeholder="7225674569" />
                                     </div>
                                     <!-- END Input-->
@@ -324,6 +324,10 @@ seleccionado con sus respectivos datos-->
                 e.preventDefault();
                 overDiscount = [];
                 console.log("selectedProducts", selectedProducts);
+                var type_sale = $('#user-type').val();
+                console.log(type_sale);
+                var phone_number = $('#phone').val();
+                console.log(phone_number);
                 var validation = false;
                 let id_user = $('#user-id').val();
                 console.log('id: ',id_user)
@@ -332,7 +336,7 @@ seleccionado con sus respectivos datos-->
                 var sale = sales.filter(s => s.client_id == client.id && s.paid_out != s.total)[0];
                 console.log('EL limite es: ', limit);
                 console.log("el total es: ", total)
-                if(sale != undefined){
+                if(sale != undefined && client.type_client == 1 && type_sale == 2){
                     var old_credit = sale.total + total;
                     var credito = old_credit + total;
                     console.log("Credito Despues de sumar: ", credito)
@@ -347,6 +351,19 @@ seleccionado con sus respectivos datos-->
                     Swal.fire(
                         'No permitido',
                         client.name + ' ha excedido su limite de credito de ' + limit,
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                let cellphone = phone_number.length;
+
+                if(total > totalIncome && cellphone != 10 && type_sale == 1)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un numero telefonico válido',
                         'error'
                     );
                     e.preventDefault();
@@ -447,7 +464,7 @@ seleccionado con sus respectivos datos-->
                 $('#cardPayment').val(cardPayment);
                 console.log("productsList", $('#productsList').val());
 
-                $('#form').submit();
+                //$('#form').submit();
             });
 
             $(document).ready(function() {
