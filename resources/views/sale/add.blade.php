@@ -56,7 +56,7 @@ ALTA VENTA
                                     <div class="form-group form-material">
                                         <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente:
                                         </label>
-                                        <input type="text" class="form-control" required="required" name="customer_name"
+                                        <input type="text" class="form-control" required="required" id="customer" name="customer_name"
                                             value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
                                     </div>
                                     <!-- END Input-->
@@ -328,6 +328,8 @@ seleccionado con sus respectivos datos-->
                 console.log(type_sale);
                 var phone_number = $('#phone').val();
                 console.log(phone_number);
+                var name_customer = $('#customer').val();
+                console.log(name_customer);
                 var validation = false;
                 let id_user = $('#user-id').val();
                 console.log('id: ',id_user)
@@ -337,11 +339,13 @@ seleccionado con sus respectivos datos-->
                 console.log('EL limite es: ', limit);
                 console.log("el total es: ", total)
                 if(sale != undefined && client.type_client == 1 && type_sale == 2){
-                    var old_credit = sale.total + total;
-                    var credito = old_credit + total;
-                    console.log("Credito Despues de sumar: ", credito)
-                    console.log("Credito Antes de sumar: ", old_credit)
-                    if(credito > limit){
+                    var credito = sale.total + total;
+                    var paids = sale.paid_out + totalIncome;
+                    var deduct = credito - paids;
+                    console.log("Totales credito: ", sale.total, ' + ', total, ' = ', credito)
+                    console.log("Totales pagado: ", sale.paid_out, ' + ', totalIncome, ' = ', paids)
+                    console.log('Restan: ', deduct)
+                    if(deduct > limit){
                         validation = true;
                     }
                 }
@@ -364,6 +368,19 @@ seleccionado con sus respectivos datos-->
                     Swal.fire(
                         'No permitido',
                         'Para continuar, ingresa un numero telefonico válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                let nombre = name_customer.length;
+
+                if(nombre == '' && type_sale == 1)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un nombre válido',
                         'error'
                     );
                     e.preventDefault();
