@@ -161,7 +161,9 @@ class SaleController extends Controller
 
         //return $clientsIds;
 
-        $sales = Sale::whereIn('client_id', $clientsIds)->get();
+        $sales = Sale::whereIn('client_id', $clientsIds)
+        ->whereRaw('paid_out <> total')
+        ->get();
         //return $sales;
         // $products = Product::where([
         //   'branch_id' => $user->branch_id,
@@ -220,9 +222,6 @@ class SaleController extends Controller
 
         if ($sale) {
             $sale->total += $request->total_pay;
-            if ($sale->total > $cliente->credit && $cliente->type_client == 1) {
-                return redirect('/ventas/create')->with('mesage-limit', 'El cliente ha excedido su limite de credito!');
-            }
         } else {
             $sale = Sale::create([
                 'telephone' => $request->telephone,
