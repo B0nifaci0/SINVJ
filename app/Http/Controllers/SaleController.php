@@ -200,20 +200,6 @@ class SaleController extends Controller
             $folio++;
         }
 
-        $validator = Validator::make($request->all(), [
-            'customer_name' => Rule::requiredIf($request->user_type == 1),
-            'telephone' => Rule::requiredIf($request->user_type == 1 && ($request->income < $request->price)),
-            'image' => Rule::requiredIf($request->card_income),
-        ]);
-        if ($validator->fails()) {
-            $response = [
-                'success' => false,
-                'errors' => $validator->errors(),
-                'error' => 'Error en alguno de los campos'
-            ];
-            return back()->withErrors($validator->errors());
-        }
-
         if ($request->user_type == 2 && $request->client_id) {
             $sale = Sale::where('client_id', $request->client_id)
                 ->whereRaw('paid_out <> total')
