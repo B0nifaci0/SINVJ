@@ -94,6 +94,16 @@ SUCURSAl
                                             @endif
                                     </td>
                                 </tr>
+                            @if($sale->client->type_client == 1)
+                            <tr>
+                                <td>
+                                    <strong class="text-center badge badge-secondary">Limite de credito</strong>
+                                </td>
+                                <td> 
+                                    $ {{ $sale->client->credit }}
+                                </td>
+                            </tr>
+                            @endif
                             @if($sale->change > 0 && $sale->client->type_client == 0)
                             <tr>
                                 <td>
