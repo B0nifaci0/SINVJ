@@ -642,8 +642,14 @@ class BranchController extends Controller
       ->select('price')
       ->where('branch_id',$request->branch_id)
       ->sum('price');
+      $branch->cambio = Sale::where('branch_id', $request->branch_id)
+      ->where('updated_at','>=',$fecini,'AND','updated_at','<=',$fecter)
+      ->sum('change');
+      $branch->efectivo -= $branch->cambio;
+      $branch->total -= $branch->cambio;
       $branch->totalFin = $branch->total-$branch->tarjeta - $branch->gastos;
       //return $branch->totalFin;
+      //return $branch;
       $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch','shop'));
      return $pdf->stream('CorteSucursal.pdf');
     }
