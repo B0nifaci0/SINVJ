@@ -30,14 +30,14 @@ ALTA BITACORAS
                 </div>
                 @endif
                 <div class="panel">
-                  <div class="col-lg">
+
                     <div class="panel-primary">
                         <div class="panel-heading">
                             <h2 class="panel-title" style="color:white" align="center"> Perfil Cliente Mayorista
                             </h2>
                         </div>
                     </div>
-                  </div>  
+
                 </div>
 
                 <div class="row">
@@ -89,164 +89,168 @@ ALTA BITACORAS
                 </div>
             </div>
         </div>
+
+
+
         <div class="panel">
-            <div class=" col-lg">
-                <div class="panel-info">
-                    <div class="panel-heading">
-                        <h2 class="panel-title" style="color:white" align="center"> Historial de Compras y
-                            Abonos</h2>
-                    </div>
+            <div class="panel-info">
+                <div class="panel-heading">
+                    <h2 class="panel-title" style="color:white" align="center"> Historial de Compras y
+                        Abonos</h2>
                 </div>
             </div>
+        </div>
             @foreach($client->sales as $sale)
+            <!--INICIA TABLA PRODUCTOS COMPRADOS-->
+        <div class="panel">
             <div class="panel">
-                <div class="">
-                    <h2 class="panel-title" align="left">Fecha de compra:
-                        {{ date('d/m/Y', strtotime($sale->created_at)) }}</h2>
-                </div>
-                <!--INICIA TABLA PRODUCTOS COMPRADOS-->
-                <div>
-                    <div class=" col-md">
-                        <div class="panel-success">
-                            <div class="panel-heading">
-                                <h2 class="panel-title" style="color:white" align="center"> Productos Comprados
-                                </h2>
-                            </div>
-                        </div>
-                        <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Clave</th>
-                                    <th>Descripción</th>
-                                    <th>Peso</th>
-                                    <th>Precio</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($sale->itemsSold as $item)
-                                <tr>
-                                    <td>{{ $item->sold_at }}</td>
-                                    <td>{{ $item->clave }}</td>
-                                    <td>{{ $item->description }}</td>
-                                    <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
-                                    <td>$ {{ $item->final_price }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <table>
-                            <tr>
-                                <td colspan="6">
-                                <th>
-                                    <strong>Total Comprado:</strong>
-                                </th>
-                                <td>
-                                    <strong>$ {{ $sale->total }}</strong>
-                                </td>
-                            </tr>
-                        </table>
+                <div class="panel-success">
+                    <div class="panel-heading">
+                        <h2 class="panel-title" style="color:white" align="center"> Productos Comprados
+                        </h2>
                     </div>
                 </div>
-                <!--FIN TABLA PRODUCTOS COMPRADOS-->
-                <!--TABLA DE PRODUCTOS DEVUELTOS-->
-                <div>
-                    <div class=" col-lg">
-                        <div class="panel-warning">
-                            <div class="panel-heading">
-                                <h2 class="panel-title" style="color:withe" align="center"> Productos Devueltos
-                                </h2>
-                            </div>
-                        </div>
-                        <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Clave</th>
-                                    <th>Descripción</th>
-                                    <th>Peso</th>
-                                    <th>Precio</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($products as $product)
-                                <tr>
-                                    <td>{{ $product->updated_at }}</td>
-                                    <td>{{ $product->clave }}</td>
-                                    <td>{{ $product->description }}</td>
-                                    <td>{{ $product->weigth }}</td>
-                                    <!--<td> {{ $product->updated_at }} </td>-->
-                                    <td>${{ $product->price }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <table>
-                            <tr>
-                                <td colspan="6">
-                                <th>
-                                    <strong>Total Devuelto:</strong>
-                                </th>
-                                <td>
-                                    <strong>$ {{ $products->sum('total') }}</strong>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <!-- FIN TABLA PRODUCTOS DEVUELTOS-->
-                <!--INICIA TABLA ABONOS REALIZADOS-->
-                <div>
-                    <div class=" col-lg">
-                        <div class="panel-primary">
-                            <div class="panel-heading">
-                                <h2 class="panel-title" style="color:dark" align="center"> Abonos Realizados
-                                </h2>
-                            </div>
-                        </div>
-                        <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Tipo de pago</th>
-                                    <th>Ticket</th>
-                                    <th>Monto</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($sale->partials as $partial)
-                                <tr>
-                                    <td>{{ $partial->created_at }}</td>
-                                    <td>{{ ($partial->type == 1) ? 'Efectivo' : 'Tarjeta' }} </td>
-                                    <td>
-                                        <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
-                                            data-close-btn-inside="false" data-fixed-contentPos="true"
-                                            data-main-class="mfp-margin-0s mfp-with-zoom"
-                                            data-zoom='{"enabled": "true","duration":"300"}'>
-                                            <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200"
-                                                height="150" />
-                                    </td>
-                                    <td>$ {{ $partial->amount }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <table>
-                            <tr>
-                                <td colspan="6">
-                                <th>
-                                    <strong>Total Abonado:</strong>
-                                </th>
-                                <td>
-                                    <strong>$ {{ $sale->partials->sum('amount') }}</strong>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <!--TERMINA TABLA DE ABONOS REALIZADOS-->
             </div>
-</div>
+            <div class="panel">
+                <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Clave</th>
+                            <th>Descripción</th>
+                            <th>Peso</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($sale->itemsSold as $item)
+                        <tr>
+                            <td>{{ $item->created_at }}</td>
+                            <td>{{ $item->clave }}</td>
+                            <td>{{ $item->description }}</td>
+                            <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
+                            <td>$ {{ $item->final_price }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <table>
+                    <tr>
+                        <td colspan="6">
+                        <th>
+                            <strong>Total Comprado:</strong>
+                        </th>
+                        <td>
+                            <strong>$ {{ $sale->total }}</strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+         </div>
+         <!--FIN TABLA PRODUCTOS COMPRADOS-->
+         <!--TABLA DE PRODUCTOS DEVUELTOS-->
+         <div class="panel">
+            <div class="panel">
+                <div class="panel-warning">
+                    <div class="panel-heading">
+                        <h2 class="panel-title" style="color:withe" align="center"> Productos Devueltos
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div clasS="panel">
+                <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Clave</th>
+                            <th>Descripción</th>
+                            <th>Peso</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($products as $product)
+                        <tr>
+                            <td>{{ $product->updated_at }}</td>
+                            <td>{{ $product->clave }}</td>
+                            <td>{{ $product->description }}</td>
+                            <td>{{ $product->weigth }}</td>
+                            <!--<td> {{ $product->updated_at }} </td>-->
+                            <td>${{ $product->price }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <table>
+                    <tr>
+                        <td colspan="6">
+                        <th>
+                            <strong>Total Devuelto:</strong>
+                        </th>
+                        <td>
+                            <strong>$ {{ $products->sum('total') }}</strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+         </div>
+         <!-- FIN TABLA PRODUCTOS DEVUELTOS-->
+         <!--INICIA TABLA ABONOS REALIZADOS-->
+         <div class="panel">
+            <div class=" panel">
+                <div class="panel-primary">
+                    <div class="panel-heading">
+                        <h2 class="panel-title" style="color:dark" align="center"> Abonos Realizados
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Tipo de pago</th>
+                            <th>Ticket</th>
+                            <th>Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($sale->partials as $partial)
+                        <tr>
+                            <td>{{ $partial->created_at }}</td>
+                            <td>{{ ($partial->type == 1) ? 'Efectivo' : 'Tarjeta' }} </td>
+                            <td>
+                                <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
+                                    data-close-btn-inside="false" data-fixed-contentPos="true"
+                                    data-main-class="mfp-margin-0s mfp-with-zoom"
+                                    data-zoom='{"enabled": "true","duration":"300"}'>
+                                    <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200"
+                                        height="150" />
+                            </td>
+                            <td>$ {{ $partial->amount }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <table>
+                    <tr>
+                        <td colspan="6">
+                        <th>
+                            <strong>Total Abonado:</strong>
+                        </th>
+                        <td>
+                            <strong>$ {{ $sale->partials->sum('amount') }}</strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--TERMINA TABLA DE ABONOS REALIZADOS-->
         @endforeach
-    </form>
-    @endsection
+</div>
+</div>
+
+</form>
+@endsection
