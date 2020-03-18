@@ -33,7 +33,7 @@ ALTA BITACORAS
 
                     <div class="panel-primary">
                         <div class="panel-heading">
-                            <h2 class="panel-title" style="color:white" align="center"> Perfil Cliente Mayorista
+                            <h2 class="panel-title" style="color:white" align="center"> Perfil De Cliente
                             </h2>
                         </div>
                     </div>
@@ -115,7 +115,7 @@ ALTA BITACORAS
                 <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
-                            <th>Fecha</th>
+                            <th>Fecha compra</th>
                             <th>Clave</th>
                             <th>Descripción</th>
                             <th>Peso</th>
@@ -125,7 +125,7 @@ ALTA BITACORAS
                     <tbody>
                         @foreach($sale->itemsSold as $item)
                         <tr>
-                            <td>{{ $item->created_at }}</td>
+                            <td>{{ $sale->created_at }}</td>
                             <td>{{ $item->clave }}</td>
                             <td>{{ $item->description }}</td>
                             <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
@@ -162,7 +162,7 @@ ALTA BITACORAS
                 <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
-                            <th>Fecha</th>
+                            <th>Fecha Devolucion</th>
                             <th>Clave</th>
                             <th>Descripción</th>
                             <th>Peso</th>
@@ -172,7 +172,7 @@ ALTA BITACORAS
                     <tbody>
                         @foreach($products as $product)
                         <tr>
-                            <td>{{ $product->updated_at }}</td>
+                            <td>{{ $product->devol}}</td>
                             <td>{{ $product->clave }}</td>
                             <td>{{ $product->description }}</td>
                             <td>{{ $product->weigth }}</td>
