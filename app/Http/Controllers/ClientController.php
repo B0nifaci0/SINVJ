@@ -87,6 +87,8 @@ class ClientController extends Controller
             $sale->partials = $sale->partials;
             $sale->total = $sale->itemsSold->sum('final_price');
         }
+
+        //return $client;
         // return response()->json([
         //     'client' => $client
         // ]);
@@ -99,8 +101,8 @@ class ClientController extends Controller
                 ->join('sales', 'sales.id', 'sale_details.sale_id')
                 ->whereIn('products.discar_cause', [3, 4])
                 ->where('sales.client_id', $id)
-                ->select('products.id as id', 'products.clave as clave', 'products.description as description', 'products.weigth', 'products.price as price', DB::raw('SUM(products.price) as total'))
-                ->groupBy('products.id', 'products.clave', 'products.description', 'products.weigth', 'products.price')
+                ->select('products.id as id', 'products.clave as clave', 'products.description as description', 'products.weigth', 'products.price as price', 'products.deleted_at as devol', DB::raw('SUM(products.price) as total'))
+                ->groupBy('products.id', 'products.clave', 'products.description', 'products.weigth', 'products.price','products.deleted_at')
                 ->withTrashed()
                 ->get();
 
