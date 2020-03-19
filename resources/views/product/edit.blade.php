@@ -98,13 +98,13 @@ ALTA PRODUCTO
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
-              <input type="text" id="pricepzt" class="form-control" readonly name="pricepzt" value="{{($product->price) ? $product->price: old('pricepzt')}}">
+              <input type="text" id="pricepzt" class="form-control"  name="pricepzt" value="{{($product->price) ? $product->price: old('pricepzt')}}">
             </div>
 
             <!-- Input para ingresar precio con descuento-->
             <div id="discountpz" class="form-group form-material col-md-3 remove">
               <label>Precio con descuentopz</label>
-              <input type="text"  class="form-control" id="pcdpz" readonly name="max_discountpz" value="{{($product->discount) ? $product->discount :old('max_discountpz')}}">
+              <input type="text"  class="form-control" id="pcdpz"  name="max_discountpz" value="{{($product->discount) ? $product->discount :old('max_discountpz')}}">
             </div>
             <!-- END Input-->
             <div   class="col-md-3 form-material remove">
@@ -350,25 +350,6 @@ $('#multiplicador').keyup(function(){
   $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
 });
 
-//multilicacion para sacar el precio venta por produt pz
-$('#pricePurchase').keyup(function(){
-  var cuatro = $(this).val();
-  var total = $(this).val() * 4 ;
-  var descuentoxpz = total / 2;
-  console.log("precio xpz",total);
-  console.log("descuentoxpz",descuentoxpz );
-        if(!Number($('#pricepzt').val()) || !Number($('#pricePurchase').val()) || !Number($('#pcdpz').val())) {
-        $('#pricepzt').val(total);
-        $('#pcdpz').val(descuentoxpz);
-        return;
-      }
-
-    //console.log("pricePurchase", Number($('#pricepzt').val()) * Number($('#pricePurchase').val()))
-  $('#pricepzt').val(total);
-  $('#pcdpz').val(descuentoxpz);
-
-
-    });
 </script>
 @endsection
 <!-- END Función-->

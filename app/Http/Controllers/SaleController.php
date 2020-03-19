@@ -270,11 +270,12 @@ class SaleController extends Controller
             $image = file_get_contents($request->file('image')->path());
             $base64Image = base64_encode($image);
             $path = 'payment-tickets';
-            $consulta = Partial::orderby('id', 'desc')
-                ->take(1)
-                ->get();
-            $conteo = $consulta[0]->id + 1;
-            $imagen = $this->saveImages($base64Image, $path, $conteo);
+
+            $partial= Partial::all()->last();
+
+            $count = $partial->id +1;
+
+            $imagen = $this->saveImages($base64Image, $path, $count);
             $partial = Partial::create([
                 'sale_id' => $sale->id,
                 'amount' => ($request->card_income) ? $request->card_income : 0,
