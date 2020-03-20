@@ -123,7 +123,7 @@ LISTA DE VENTAS
                                                         {{$sale->customer_name}}
                                                         @endif
                                                     </td>
-                                                    <td>{{ ($sale->client) ? 'Mayorista' : 'Publico' }}</td>
+                                                    <td>{{ ($sale->client->type_client == 1) ? 'Mayorista' : 'Publico' }}</td>
                                                     <td>{{ $sale->telephone }}</td>
                                                     <td>{{ $sale->items->count() }}</td>
                                                     <td>$ {{ $sale->total }}</td>
@@ -214,7 +214,7 @@ LISTA DE VENTAS
                                                         {{$sale->customer_name}}
                                                         @endif
                                                     </td>
-                                                    <td>{{ ($sale->client) ? 'Mayorista' : 'Publico' }}</td>
+                                                    <td>{{ ($sale->client->type_client == 1) ? 'Mayorista' : 'Publico' }}</td>
                                                     <td>{{ $sale->telephone }}</td>
                                                     <td>{{ $sale->items->count() }}</td>
                                                     <td>$ {{ $sale->total }}</td>

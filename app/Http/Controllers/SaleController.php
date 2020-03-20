@@ -50,26 +50,54 @@ class SaleController extends Controller
         $user = Auth::user();
         if ($user->type_user == User::AA) {
             //VENDIDOS
-            $sold = Sale::with('client')
+            $sold_public = Sale::with('client')
                 ->join('branches', 'branches.id', 'sales.branch_id')
                 ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
                 ->where('sales.deleted_at', null)
                 ->select('sales.*', 'branches.name as sucursal')
                 ->whereRaw('sales.total <= sales.paid_out')
                 ->where('shops.id', $user->shop_id)
+                ->where('clients.type_client', 0)
                 ->orderBy('sales.updated_at', 'desc')
                 ->get();
-
-            //APARTADOS
-            $apart = Sale::with('client')
+            $sold_wholesaler = Sale::with('client')
                 ->join('branches', 'branches.id', 'sales.branch_id')
                 ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->where('sales.deleted_at', null)
+                ->select('sales.*', 'branches.name as sucursal')
+                ->whereRaw('sales.total = sales.paid_out')
+                ->where('shops.id', $user->shop_id)
+                ->where('clients.type_client', 1)
+                ->orderBy('sales.updated_at', 'desc')
+                ->get(); 
+            $sold = $sold_public->merge($sold_wholesaler);   
+
+            //APARTADOS
+            $apart_public = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
                 ->where('sales.deleted_at', null)
                 ->select('sales.*', 'branches.name as sucursal')
                 ->whereRaw('sales.total > sales.paid_out')
                 ->where('shops.id', $user->shop_id)
+                ->where('clients.type_client', 0)
                 ->orderBy('sales.updated_at', 'desc')
                 ->get();
+            $apart_wholesaler = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->where('sales.deleted_at', null)
+                ->select('sales.*', 'branches.name as sucursal')
+                ->whereRaw('sales.total != sales.paid_out')
+                ->where('shops.id', $user->shop_id)
+                ->where('clients.type_client', 1)
+                ->orderBy('sales.updated_at', 'desc')
+                ->get(); 
+            $apart = $apart_public->merge($apart_wholesaler);   
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             //VENDIDOS
             $sold = Sale::with('client')
