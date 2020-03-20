@@ -158,10 +158,6 @@ TRANSFERENCIAS
                                                     @endif
                                                     @else
                                                     @if(!$transferin->paid_at)
-                                                    @if(Auth::user()->id == $transferin->user_id &&
-                                                    $transferin->status_product == 1)
-
-                                                    @else
                                                     @if($transferin->status_product === null)
                                                     <span class="text-center badge badge-success">Pendiente</span>
                                                     @elseif($transferin->status_product == 1)
@@ -170,7 +166,6 @@ TRANSFERENCIAS
                                                     $transferin->status_product
                                                     == 3)
                                                     <span class="text-center badge badge-info">No se paga</span>
-                                                    @endif
                                                     @endif
                                                     @endif
                                                     @endif

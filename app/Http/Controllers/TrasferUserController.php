@@ -8,7 +8,7 @@ use App\Branch;
 use App\Product;
 use Carbon\Carbon;
 use App\TransferProduct;
-use Barryvdh\DomPDF\PDF;
+use PDF;
 use Illuminate\Http\Request;
 use App\Traits\S3ImageManager;
 use Illuminate\Routing\Controller;
@@ -230,7 +230,7 @@ class TrasferUserController extends Controller
             ->whereBetween('updated_at', [$fecini, $fecter])
             ->get();
 
-        //return $trans;
+       //return "Hola general";
 
         $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransferGeneral', compact('trans', 'dates', 'hour', 'shop', 'category', 'type', 'branches'));
         return $pdf->stream('Traspasos.pdf');
@@ -292,8 +292,8 @@ class TrasferUserController extends Controller
         }
 
         $trans = $query->with('user')->with('branch')->with('product')->get();
-
-        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransfer', compact('status', 'trans', 'dates', 'hour', 'shop', 'categoria', 'branches', 'type', 'branch', 'branchesIds'));
+           // return "hola";
+        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransfer', compact('status', 'trans', 'dates', 'hour', 'shop', 'categoria', 'branches', 'type', 'branch'));
         return $pdf->stream('Traspasos.pdf');
     }
 }

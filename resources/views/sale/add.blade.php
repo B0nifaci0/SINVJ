@@ -374,7 +374,24 @@ seleccionado con sus respectivos datos-->
                     return
                 }
 
+                let lengthImage = image.files.length;
+
                 let nombre = name_customer.length;
+
+                console.log('longitud: ', lengthImage);
+
+                let card= $('#cardIncome').val();;
+
+                if(card>0 && lengthImage == 0)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingrese el comprobante del pago realizado con tarjeta',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
 
                 if(nombre == '' && type_sale == 1)
                 {
@@ -661,8 +678,6 @@ seleccionado con sus respectivos datos-->
                         console.log("========> entra función", $(this).attr('alt'))
                         var table = $('#ventas').DataTable();
                         var row = $(this).parents('tr');
-
-
 
                         var productId = $(this).attr('alt');
                         var product = products.filter(p => p.id == productId)[0];
