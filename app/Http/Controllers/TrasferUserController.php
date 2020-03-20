@@ -230,7 +230,7 @@ class TrasferUserController extends Controller
             ->whereBetween('updated_at', [$fecini, $fecter])
             ->get();
 
-       return "Hola general";
+       //return "Hola general";
 
         $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransferGeneral', compact('trans', 'dates', 'hour', 'shop', 'category', 'type', 'branches'));
         return $pdf->stream('Traspasos.pdf');
