@@ -67,6 +67,9 @@ LISTA DE VENTAS
                                 <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab"
                                         href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">Apartados</a>
                                 </li>
+                                <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab"
+                                        href="#exampleTabsThree" aria-controls="exampleTabsThree" role="tab">Devueltos</a>
+                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
@@ -247,6 +250,96 @@ LISTA DE VENTAS
                                         <!-- END Table-->
                                     </div>
                                 </div>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
+                                    <div class="page-content panel-body container-fluid">
+                                        <table id="sale_table_givedback"
+                                            class="table table-hover dataTable table-striped w-full"
+                                            data-plugin="dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Fecha</th>
+                                                    <th>Folio</th>
+                                                    <th>Nombre del cliente</th>
+                                                    <th>Tipo</th>
+                                                    <th>Teléfono</th>
+                                                    <th>Productos</th>
+                                                    <th>Total</th>
+                                                    <th>Total Pagado</th>
+                                                    @if(Auth::user()->type_user == 1 )
+                                                    <th>Sucursal</th>
+                                                    @endif
+                                                    <th>Estatus</th>
+                                                    <th>Opciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Fecha</th>
+                                                    <th>Folio</th>
+                                                    <th>Nombre del cliente</th>
+                                                    <th>Tipo</th>
+                                                    <th>Teléfono</th>
+                                                    <th>Productos</th>
+                                                    <th>Total</th>
+                                                    <th>Total Pagado</th>
+                                                    @if(Auth::user()->type_user == 1 )
+                                                    <th>Sucursal</th>
+                                                    @endif
+                                                    <th>Estatus</th>
+                                                    <th>Opciones</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                @foreach ($givedback as $sale)
+                                                <tr>
+                                                    <td data-sort='YYYYMMDD'>{{ $sale->updated_at->format('m-d-Y')}}
+                                                    </td>
+                                                    <td>{{$sale->folio}}</td>
+                                                    <td>
+                                                        @if($sale->client)
+                                                        <a href="/mayoristas/{{$sale->client->id}}">
+                                                            {{ "{$sale->client->name} {$sale->client->first_lastname} {$sale->client->second_lastname}" }}
+                                                        </a>
+                                                        @else
+                                                        {{$sale->customer_name}}
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ ($sale->client->type_client == 1) ? 'Mayorista' : 'Publico' }}</td>
+                                                    <td>{{ $sale->telephone }}</td>
+                                                    <td>{{ $sale->items->count() }}</td>
+                                                    <td>$ {{ $sale->total }}</td>
+                                                    <td>$ {{ $sale->paid_out }}</td>
+                                                    @if(Auth::user()->type_user == 1 )
+                                                    <td>{{ $sale->sucursal }}</td>
+                                                    @endif
+                                                    <td><span class="text-center badge badge-warning">Devuelto</span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/ventas/{{ $sale->id }}"><button type="button"
+                                                                class="btn btn-icon btn-primary waves-effect waves-light"
+                                                                data-toggle="tooltip"
+                                                                data-original-title="Detalle de la Venta">
+                                                                <i class="icon fa-search"
+                                                                    aria-hidden="true"></i></button>
+                                                        </a>
+                                                        <a href="ventapdf/{{$sale->id}}"><button type="button"
+                                                                class="btn btn-icon btn-danger waves-effect waves-light"
+                                                                data-toggle="tooltip"
+                                                                data-original-title="Generar reporte PDF">
+                                                                <i class="icon fa-file-pdf-o"
+                                                                    aria-hidden="true"></i></button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <!-- END Table-->
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
