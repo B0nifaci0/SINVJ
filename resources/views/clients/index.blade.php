@@ -95,7 +95,7 @@ LISTA DE  SUCURSALES
                         <!-- Botón para ver cliente-->
                         <a href="/mayoristas/{{ $client->id }}" type="button"
                         class="btn btn-icon btn-primary waves-effect waves-light waves-round"
-                        data-toggle="tooltip" data-original-title="ver">
+                        data-toggle="tooltip" data-original-title="Ver Perfil">
                         <i class="icon fa-search" aria-hidden="true"></i></button></a>
                         <!--END Botón -->
                         <!-- Botón para editar cliente-->
@@ -160,7 +160,7 @@ LISTA DE  SUCURSALES
                         <!-- Botón para ver cliente-->
                         <a href="/mayoristas/{{ $client->id }}" type="button"
                         class="btn btn-icon btn-primary waves-effect waves-light waves-round"
-                        data-toggle="tooltip" data-original-title="Perfil del cliente">
+                        data-toggle="tooltip" data-original-title="Ver Perfil">
                         <i class="icon fa-search" aria-hidden="true"></i></button></a>
                         <!--END Botón -->
                         <!-- Botón para editar cliente-->

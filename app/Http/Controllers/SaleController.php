@@ -199,17 +199,20 @@ class SaleController extends Controller
     public function create()
     {
         $user = Auth::user();
+        $new_id = Client::max('id');
+        $new_id += 1;
+        //return $new_id;
 
         if ($user->branch) {
             $public = Client::where('branch_id', $user->branch->id)
-                ->WhereNotNull('positive_balance')
+                ->Where('type_client', Client::P)
                 ->get();
             $wholesaler = Client::where('branch_id', $user->branch->id)
                 ->Where('type_client', Client::M)
                 ->get();
         } else {
             $public = Client::where('shop_id', $user->shop->id)
-                ->WhereNotNull('positive_balance')
+                ->Where('type_client', Client::P)
                 ->get();
             $wholesaler = Client::where('shop_id', $user->shop->id)
                 ->Where('type_client', Client::M)
@@ -260,7 +263,7 @@ class SaleController extends Controller
         // 	->with('category')
         // 	->with('status')
         // 	->get();
-        return view('sale/add', compact('products', 'user', 'branches', 'clients', 'sales'));
+        return view('sale/add', compact('new_id' ,'public', 'wholesaler','products', 'user', 'branches', 'clients', 'sales'));
     }
 
     /**
@@ -295,17 +298,6 @@ class SaleController extends Controller
             $cliente = Client::find($request->client_id);
         }
 
-        if ($request->user_type == 1) {
-            $client = Client::create([
-                'name' => $request->customer_name,
-                'branch_id' => $user->branch_id ? $user->branch_id : null,
-                'phone_number' => $request->telephone,
-                'shop_id' => $user->shop_id,
-                'type_client' => Client::P,
-            ]);
-            $clientid = $client->id;
-        }
-
         if ($sale) {
             $sale->total += $request->total_pay;
         } else {
@@ -318,7 +310,7 @@ class SaleController extends Controller
                 'income' => $request->income,
                 'user_id' => $user->id,
                 'branch_id' => $user->branch_id ? $user->branch_id : null,
-                'client_id' => $request->user_type == 2 ? $request->client_id : $clientid,
+                'client_id' => $request->user_type == 2 ? $request->client_id : $request->cliente_id,
                 'paid_out' => 0,
                 'folio' => $folio
             ]);
