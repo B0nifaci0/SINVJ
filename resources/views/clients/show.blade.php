@@ -111,7 +111,8 @@ ALTA BITACORAS
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="container">
+              <div class="container">
                 <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
@@ -146,6 +147,7 @@ ALTA BITACORAS
                         </td>
                     </tr>
                 </table>
+              </div>
             </div>
          </div>
          <!--FIN TABLA PRODUCTOS COMPRADOS-->
@@ -159,7 +161,8 @@ ALTA BITACORAS
                     </div>
                 </div>
             </div>
-            <div clasS="panel-body">
+            <div clasS="container">
+              <div class="container">
                 <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
@@ -194,6 +197,7 @@ ALTA BITACORAS
                         </td>
                     </tr>
                 </table>
+              </div>
             </div>
          </div>
          <!-- FIN TABLA PRODUCTOS DEVUELTOS-->
@@ -207,7 +211,8 @@ ALTA BITACORAS
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="container">
+              <div class="container">
                 <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
@@ -246,6 +251,7 @@ ALTA BITACORAS
                         </td>
                     </tr>
                 </table>
+              </div>
             </div>
         </div>
         <!--TERMINA TABLA DE ABONOS REALIZADOS-->
