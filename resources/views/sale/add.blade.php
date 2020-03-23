@@ -66,7 +66,7 @@ ALTA VENTA
                                     <!-- Input para Ingresar telefono del cliente-->
                                     <div class="form-group">
                                         <br>
-                                        <button class="btn btn-primary" data-target="#exampleTabs2" data-toggle="modal"
+                                        <button class="btn btn-primary" data-target="#exampleTabs3" data-toggle="modal"
                                             type="button"><i class="fa fa-user" aria-hidden="true"></i></button>
                                     </div>
                                     <!-- END Input-->
@@ -84,6 +84,15 @@ ALTA VENTA
                                             {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Input para Ingresar telefono del cliente-->
+                                    <div class="form-group">
+                                        <br>
+                                        <button class="btn btn-primary" data-target="#exampleTabs2" data-toggle="modal"
+                                            type="button"><i class="fa fa-user" aria-hidden="true"></i></button>
+                                    </div>
+                                    <!-- END Input-->
                                 </div>
                             </div>
                         </div>
@@ -214,7 +223,89 @@ ALTA VENTA
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
-                                        <h4 class="modal-title" id="exampleModalTabs">Registrar Nuevo Cliente</h4>
+                                        <h4 class="modal-title" id="exampleModalTabs">Registrar Nuevo Cliente Mayorista</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Input para ingresar nombre del cliente-->
+                                        <div class="row">
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label" for="inputBasicFirstName">Nombre:
+                                                </label>
+                                                <input type="text" class="form-control" required="required" id="customer_name" name="customer_name"
+                                                    value="{{old('customer_name')}}" placeholder="Alejandro" />
+                                            </div>
+                                            <!-- END Input-->
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label" for="inputBasicFirstLastName">Primer Apellido:
+                                                </label>
+                                                <input type="text" class="form-control" required="required" id="first_last" name="customer_name"
+                                                    value="{{old('customer_name')}}" placeholder="Lorenzo" />
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label" for="inputBasicSecondLastName">Segundo Apellido:
+                                                </label>
+                                                <input type="text" class="form-control" required="required" id="second_last" name="customer_name"
+                                                    value="{{old('customer_name')}}" placeholder="Soteno" />
+                                            </div>
+                                            <!-- END Input-->
+                                            <!-- Input para ingresar telefono del cliente-->
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
+                                                <input type="text" class="form-control" required="required" id="phone_number" name="telephone"
+                                                    value="{{old('telephone')}}" placeholder="7225674569" />
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label" for="inputBasicFirstName">Limite De Credito:
+                                                </label>
+                                                <input type="text" class="form-control" required="required" id="credit_limit" name="customer_name"
+                                                    value="{{old('customer_name')}}" placeholder="150000" />
+                                            </div>
+                                            <!-- END Input-->
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label" for="inputBasicFirstName">Sucursal:
+                                                </label>
+                                                <select name="branch_id" id="branch" class="form-control">
+                                                    @foreach($branches as $branch)
+                                                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <input type="hidden" id="shop" value="{{$user->shop->id}}">
+                                        <hr class="mb-4">
+                                        <button type="button" id="registrar_M" name="registrar" data-dismiss="modal"
+                                            class="btn btn-success btn-lg btn-block">Registrar</button>
+                                        <!-- END REGISTRO CLIENTE-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Modal -->
+                    </div>
+                </div>
+                <!-- End Example Tab In Modal -->
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <!-- Example Tab In Modal -->
+                <div class="example-wrap">
+                    <div class="example">
+                        <!-- Modal -->
+                        <div class="modal fade modal-success" id="exampleTabs3" aria-hidden="true"
+                            aria-labelledby="exampleModalTabs" role="dialog" tabindex="-1">
+                            <div class="modal-dialog modal-simple">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title" id="exampleModalTabs">Registrar Nuevo Cliente Menudista</h4>
                                     </div>
                                     <div class="modal-body">
                                         <!-- Input para ingresar nombre del cliente-->
@@ -238,7 +329,7 @@ ALTA VENTA
                                         </div>
                                         <input type="hidden" id="shop" value="{{$user->shop->id}}">
                                         <hr class="mb-4">
-                                        <button type="button" id="registrar" name="registrar" data-dismiss="modal"
+                                        <button type="button" id="registrar_P" name="registrar" data-dismiss="modal"
                                             class="btn btn-success btn-lg btn-block">Registrar</button>
                                         <!-- END REGISTRO CLIENTE-->
                                     </div>
@@ -371,7 +462,105 @@ seleccionado con sus respectivos datos-->
                 }
             });
 
-            $('#registrar').click(function(e) {
+            $('#registrar_M').click(function(e) {
+                let name = $('#customer_name').val();
+                let branch = $('#branch').val();
+                let first_last = $('#first_last').val();
+                let second_last = $('#second_last').val();
+                let phone = $('#phone_number').val();
+                let shop = $('#shop').val();
+                let type = 1;
+                let credit_limit = $('#credit_limit').val();
+                console.log("Nombre: ", name ," y Telefono: ", phone, " ID de Tienda: ", shop, " branch_id: ",branch);
+                console.log("apellido p: ",first_last, " apellido_m: ",second_last, " tipo: ",type," limite: ",credit_limit);
+
+                let apellido_p = first_last.length;
+                let apellido_m = second_last.length;
+
+                if(apellido_p == '' || apellido_m == '')
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un apellido válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                if(credit_limit <= 0)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un limite de credito válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                let nombre = name.length;
+
+                if(nombre == '')
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un nombre válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                let cellphone = phone.length;
+
+                if(cellphone != 10)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un numero telefonico válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                //Construimos la variable que se guardará en el data del Ajax para pasar al archivo php que procesará los datos
+		        var dataString = 'branch_id=' + branch + '&name=' + name + '&first_lastname=' + first_last +  '&second_lastname=' + second_last +   '&phone_number=' + phone + '&shop_id=' + shop + '&credit=' + credit_limit + '&type_client=' + type;
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+
+		        $.ajax({
+			        url: '/mayoristas',
+                    method: 'POST',
+                    dataType: "HTML",
+			        data: dataString,
+			        success: function() {
+		    	        let $option = $('<option />', {
+                            text: name + ' ' + first_last + ' ' + second_last,
+                            value: new_id,
+                            id: 'client'+new_id,
+                            alt: credit_limit,
+                        });
+                        $('#user-id').prepend($option);
+                        new_id += 1;
+                        Swal.fire(
+                            'Registro Existoso',
+                            'El cliente ha sido registrado exitosamente',
+                            'success'
+                        );
+                        e.preventDefault();
+                        return
+		            }
+		        });
+
+            });
+
+            $('#registrar_P').click(function(e) {
                 let name = $('#customer').val();
                 let phone = $('#phone').val();
                 let shop = $('#shop').val();
@@ -422,8 +611,10 @@ seleccionado con sus respectivos datos-->
 		    	        let $option = $('<option />', {
                             text: name,
                             value: new_id,
+                            id: 'client'+new_id,
                         });
                         $('#public-id').prepend($option);
+                        new_id += 1;
                         Swal.fire(
                             'Registro Existoso',
                             'El cliente ha sido registrado exitosamente',
@@ -442,65 +633,52 @@ seleccionado con sus respectivos datos-->
                 console.log("selectedProducts", selectedProducts);
                 var type_sale = $('#user-type').val();
                 console.log(type_sale);
-                var phone_number = $('#phone').val();
-                console.log(phone_number);
-                var name_customer = $('#customer').val();
-                console.log(name_customer);
-                var validation = false;
-                let id_user = $('#user-id').val();
-                console.log('id: ',id_user)
-                var limit = $('#client' + id_user).attr("alt");
-                var client = clients.filter(c => c.id == id_user )[0];
-                var sale = sales.filter(s => s.client_id == client.id && s.paid_out != s.total)[0];
-                console.log('EL limite es: ', limit);
-                console.log("el total es: ", total)
-                if(sale != undefined && client.type_client == 1 && type_sale == 2){
-                    var credito = sale.total + total;
-                    var paids = sale.paid_out + totalIncome;
-                    var restante = credito - paids;
-                    var deduct = limit - restante;
-                    console.log("Totales credito: ", sale.total, ' + ', total, ' = ', credito)
-                    console.log("Totales pagado: ", sale.paid_out, ' + ', totalIncome, ' = ', paids)
-                    console.log('Credito Disponible: ', deduct)
-                    if(deduct < 0){
-                        validation = true;
-                    }
-                } else {
-                    var restante = total - totalIncome; 
-                    var disponible = limit - restante;
-                    console.log("Credito Disponible: ",disponible)
-                    if(disponible < 0){
-                        validation = true;
-                    }
-                }
-
-                if(validation)
+                if(type_sale == 2)
                 {
-                    Swal.fire(
-                        'No permitido',
-                        client.name + ' ha excedido su limite de credito de ' + limit,
-                        'error'
-                    );
-                    e.preventDefault();
-                    return
-                }
+                    var phone_number = $('#phone').val();
+                    console.log(phone_number);
+                    var name_customer = $('#customer').val();
+                    console.log(name_customer);
+                    var validation = false;
+                    let id_user = $('#user-id').val();
+                    console.log('id: ',id_user)
+                    var limit = $('#client' + id_user).attr("alt");
+                    var sale = sales.filter(s => s.client_id == id_user && s.paid_out != s.total)[0];
+                    console.log('EL limite es: ', limit);
+                    console.log("el total es: ", total)
+                    if(sale != undefined && client.type_client == 1 && type_sale == 2){
+                        var credito = sale.total + total;
+                        var paids = sale.paid_out + totalIncome;
+                        var restante = credito - paids;
+                        var deduct = limit - restante;
+                        console.log("Totales credito: ", sale.total, ' + ', total, ' = ', credito)
+                        console.log("Totales pagado: ", sale.paid_out, ' + ', totalIncome, ' = ', paids)
+                        console.log('Credito Disponible: ', deduct)
+                        if(deduct < 0){
+                            validation = true;
+                        }
+                    } else {
+                        var restante = total - totalIncome; 
+                        var disponible = limit - restante;
+                        console.log("Credito Disponible: ",disponible)
+                        if(disponible < 0){
+                            validation = true;
+                        }
+                    }
 
-                let cellphone = phone_number.length;
-
-                if(total > totalIncome && cellphone != 10 && type_sale == 1)
-                {
-                    Swal.fire(
-                        'No permitido',
-                        'Para continuar, ingresa un numero telefonico válido',
-                        'error'
-                    );
-                    e.preventDefault();
-                    return
+                    if(validation)
+                    {
+                        Swal.fire(
+                            'No permitido',
+                            'El cliente ha excedido su limite de credito de ' + limit,
+                            'error'
+                        );
+                        e.preventDefault();
+                        return
+                    }
                 }
 
                 let lengthImage = image.files.length;
-
-                let nombre = name_customer.length;
 
                 console.log('longitud: ', lengthImage);
 
@@ -511,17 +689,6 @@ seleccionado con sus respectivos datos-->
                     Swal.fire(
                         'No permitido',
                         'Para continuar, ingrese el comprobante del pago realizado con tarjeta',
-                        'error'
-                    );
-                    e.preventDefault();
-                    return
-                }
-
-                if(nombre == '' && type_sale == 1)
-                {
-                    Swal.fire(
-                        'No permitido',
-                        'Para continuar, ingresa un nombre válido',
                         'error'
                     );
                     e.preventDefault();
