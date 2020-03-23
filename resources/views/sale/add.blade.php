@@ -398,6 +398,13 @@ seleccionado con sus respectivos datos-->
                             value: new_id,
                         });
                         $('#public-id').prepend($option);
+                        Swal.fire(
+                            'Registro Existoso',
+                            'El cliente ha sido registrado exitosamente',
+                            'success'
+                        );
+                        e.preventDefault();
+                        return
 		            }
 		        });
 

@@ -25,11 +25,15 @@ class ClientController extends Controller
         
         $wholesaler = Client::with(['sales', 'branch'])
             ->where('type_client', Client::M)
-            ->where('shop_id', $user->shop->id)->get();
+            ->where('shop_id', $user->shop->id)
+            ->orderBy('updated_at','DESC')
+            ->get();
 
         $public = Client::with(['sales', 'branch'])
             ->where('type_client', Client::P)
-            ->where('shop_id', $user->shop->id)->get();
+            ->where('shop_id', $user->shop->id)
+            ->orderBy('updated_at','DESC')
+            ->get();
 
         return view('clients.index', compact('wholesaler','public'));
     }
