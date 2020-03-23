@@ -93,7 +93,7 @@ ALTA BITACORAS
 
 
         <div class="panel">
-            <div class="panel-info">
+            <div class="panel-primary">
                 <div class="panel-heading">
                     <h2 class="panel-title" style="color:white" align="center"> Historial de Compras y
                         Abonos</h2>
@@ -104,14 +104,14 @@ ALTA BITACORAS
             <!--INICIA TABLA PRODUCTOS COMPRADOS-->
         <div class="panel">
             <div class="panel">
-                <div class="panel-success">
+                <div class="panel-primary">
                     <div class="panel-heading">
                         <h2 class="panel-title" style="color:white" align="center"> Productos Comprados
                         </h2>
                     </div>
                 </div>
             </div>
-            <div class="panel">
+            <div class="panel-body">
                 <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
@@ -134,6 +134,7 @@ ALTA BITACORAS
                         @endforeach
                     </tbody>
                 </table>
+             
                 <table>
                     <tr>
                         <td colspan="6">
@@ -151,14 +152,14 @@ ALTA BITACORAS
          <!--TABLA DE PRODUCTOS DEVUELTOS-->
          <div class="panel">
             <div class="panel">
-                <div class="panel-warning">
+                <div class="panel-primary">
                     <div class="panel-heading">
                         <h2 class="panel-title" style="color:withe" align="center"> Productos Devueltos
                         </h2>
                     </div>
                 </div>
             </div>
-            <div clasS="panel">
+            <div clasS="panel-body">
                 <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
@@ -206,7 +207,7 @@ ALTA BITACORAS
                     </div>
                 </div>
             </div>
-            <div class="panel">
+            <div class="panel-body">
                 <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>

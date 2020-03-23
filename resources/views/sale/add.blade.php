@@ -341,11 +341,19 @@ seleccionado con sus respectivos datos-->
                 if(sale != undefined && client.type_client == 1 && type_sale == 2){
                     var credito = sale.total + total;
                     var paids = sale.paid_out + totalIncome;
-                    var deduct = credito - paids;
+                    var restante = credito - paids;
+                    var deduct = limit - restante;
                     console.log("Totales credito: ", sale.total, ' + ', total, ' = ', credito)
                     console.log("Totales pagado: ", sale.paid_out, ' + ', totalIncome, ' = ', paids)
-                    console.log('Restan: ', deduct)
-                    if(deduct > limit){
+                    console.log('Credito Disponible: ', deduct)
+                    if(deduct < 0){
+                        validation = true;
+                    }
+                } else {
+                    var restante = total - totalIncome; 
+                    var disponible = limit - restante;
+                    console.log("Credito Disponible: ",disponible)
+                    if(disponible < 0){
                         validation = true;
                     }
                 }
