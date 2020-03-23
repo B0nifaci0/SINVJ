@@ -34,7 +34,9 @@ ALTA BITACORAS
                     </ul>
                 </div>
             @endif
-            <h2 class="panel-title">Registar nuevo cliente mayorista</h2>
+            @if($client)
+            @if($client->type_client == 0)
+            <h2 class="panel-title">Editar Cliente</h2>
 
             <div class="row">
                 <div class="form-group form-material col-md-6">
@@ -43,39 +45,12 @@ ALTA BITACORAS
                         value="{{ isset($client->name) ? $client->name : old('name') }}" class="form-control">
                 </div>
                 <div class="form-group form-material col-md-6">
-                    <label class="form-control-label" for="inputShop">Primer apellido</label>
-                    <input type="text" name="first_lastname"
-                        value="{{ isset($client->first_lastname) ? $client->first_lastname : old('first_lastname') }}" class="form-control">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group form-material col-md-6">
-                    <label class="form-control-label" for="inputShop">Segundo apellido</label>
-                    <input type="text" name="second_lastname"
-                        value="{{ isset($client->second_lastname) ? $client->second_lastname : old('second_lastname') }}" class="form-control">
-                </div>
-                <div class="form-group form-material col-md-6">
                     <label class="form-control-label" for="inputShop">Número telefónico</label>
                     <input type="text" name="phone_number" id="tel"
                         value="{{ isset($client->phone_number) ? $client->phone_number : old('phone_number') }}" class="form-control">
                 </div>
             </div>
-            <div class="row">
-                <div class="form-group form-material col-md-6">
-                    <label class="form-control-label" for="inputShop">Límite de Crédito</label>
-                    <input type="text" name="credit" id="credit"
-                        value="{{ isset($client->credit) ? $client->credit : old('credit') }}" class="form-control" >
-                </div>
-                <div class="form-group form-material col-md-6">
-                    <label class="form-control-label" for="inputShop">Sucursal</label>
-                    <select name="branch_id" id="" class="form-control">
-                        @foreach($branches as $branch)
-                        <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
-                        @endforeach
-                    </select>
-                </div>
-               </div> 
-            </div>
+            </div> 
             <div class="row">
                 <div class="col-md-12 form-group">
                     <button type="submit" name="button" class="btn btn-info">Guardar</button>
@@ -83,6 +58,109 @@ ALTA BITACORAS
             </div>
       </div>
     </div>
+    @else 
+    <h2 class="panel-title">Editar Cliente</h2>
+
+<div class="row">
+    <div class="form-group form-material col-md-6">
+        <label class="form-control-label" for="inputShop">Nombre</label>
+        <input type="text" name="name"
+            value="{{ isset($client->name) ? $client->name : old('name') }}" class="form-control">
+    </div>
+    <div class="form-group form-material col-md-6">
+        <label class="form-control-label" for="inputShop">Primer apellido</label>
+        <input type="text" name="first_lastname"
+            value="{{ isset($client->first_lastname) ? $client->first_lastname : old('first_lastname') }}" class="form-control">
+    </div>
+</div>
+<div class="row">
+    <div class="form-group form-material col-md-6">
+        <label class="form-control-label" for="inputShop">Segundo apellido</label>
+        <input type="text" name="second_lastname"
+            value="{{ isset($client->second_lastname) ? $client->second_lastname : old('second_lastname') }}" class="form-control">
+    </div>
+    <div class="form-group form-material col-md-6">
+        <label class="form-control-label" for="inputShop">Número telefónico</label>
+        <input type="text" name="phone_number" id="tel"
+            value="{{ isset($client->phone_number) ? $client->phone_number : old('phone_number') }}" class="form-control">
+    </div>
+</div>
+<div class="row">
+    <div class="form-group form-material col-md-6">
+        <label class="form-control-label" for="inputShop">Límite de Crédito</label>
+        <input type="text" name="credit" id="credit"
+            value="{{ isset($client->credit) ? $client->credit : old('credit') }}" class="form-control" >
+</div>
+<div class="form-group form-material col-md-6">
+    <label class="form-control-label" for="inputShop">Sucursal</label>
+    <select name="branch_id" id="" class="form-control">
+    @foreach($branches as $branch)
+        <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
+    @endforeach
+    </select>
+</div>
+</div> 
+</div>
+<div class="row">
+    <div class="col-md-12 form-group">
+        <button type="submit" name="button" class="btn btn-info">Guardar</button>
+    </div>
+</div>
+</div>
+</div>
+@endif
+@else
+<h2 class="panel-title">Registrar Nuevo Cliente</h2>
+
+<div class="row">
+    <div class="form-group form-material col-md-6">
+        <label class="form-control-label" for="inputShop">Nombre</label>
+        <input type="text" name="name"
+            value="{{ isset($client->name) ? $client->name : old('name') }}" class="form-control">
+    </div>
+    <div class="form-group form-material col-md-6">
+        <label class="form-control-label" for="inputShop">Primer apellido</label>
+        <input type="text" name="first_lastname"
+            value="{{ isset($client->first_lastname) ? $client->first_lastname : old('first_lastname') }}" class="form-control">
+    </div>
+</div>
+<div class="row">
+    <div class="form-group form-material col-md-6">
+        <label class="form-control-label" for="inputShop">Segundo apellido</label>
+        <input type="text" name="second_lastname"
+            value="{{ isset($client->second_lastname) ? $client->second_lastname : old('second_lastname') }}" class="form-control">
+    </div>
+    <div class="form-group form-material col-md-6">
+        <label class="form-control-label" for="inputShop">Número telefónico</label>
+        <input type="text" name="phone_number" id="tel"
+            value="{{ isset($client->phone_number) ? $client->phone_number : old('phone_number') }}" class="form-control">
+    </div>
+</div>
+<div class="row">
+    <div class="form-group form-material col-md-6">
+        <label class="form-control-label" for="inputShop">Límite de Crédito</label>
+        <input type="text" name="credit" id="credit"
+            value="{{ isset($client->credit) ? $client->credit : old('credit') }}" class="form-control" >
+</div>
+<input type="hidden" name="type_client" value="1">
+<div class="form-group form-material col-md-6">
+    <label class="form-control-label" for="inputShop">Sucursal</label>
+    <select name="branch_id" id="" class="form-control">
+    @foreach($branches as $branch)
+        <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
+    @endforeach
+    </select>
+</div>
+</div> 
+</div>
+<div class="row">
+    <div class="col-md-12 form-group">
+        <button type="submit" name="button" class="btn btn-info">Guardar</button>
+    </div>
+</div>
+</div>
+</div>
+@endif
   </form>
 </div>
 @section('listado-productos')

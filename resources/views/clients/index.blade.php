@@ -76,7 +76,6 @@ LISTA DE  SUCURSALES
                       <tr>
                         <th>Nombre</th>
                         <th>Teléfono</th>
-                        <th>Sucursal</th>
                         <th>Opciones</th>
                       </tr>
                     </thead>
@@ -84,7 +83,6 @@ LISTA DE  SUCURSALES
                       <tr>
                         <th>Nombre</th>
                         <th>Teléfono</th>
-                        <th>Sucursal</th>
                         <th>Opciones</th>
                       </tr>
                     </tfoot>
@@ -92,13 +90,12 @@ LISTA DE  SUCURSALES
                     @foreach ($public as $client)
                   <tr id = "row{{ $client->id }}">
                     <td>{{$client->name}}</td>
-                    <td>{{$client->phone_number }}</td>
-                    <td>{{$client->branch ? $client->branch->name : 'Sin sucursal' }}</td>
+                    <td>{{$client->phone_number ? $client->phone_number : 'Sin Telefono' }}</td>
                     <td>
                         <!-- Botón para ver cliente-->
                         <a href="/mayoristas/{{ $client->id }}" type="button"
                         class="btn btn-icon btn-primary waves-effect waves-light waves-round"
-                        data-toggle="tooltip" data-original-title="ver">
+                        data-toggle="tooltip" data-original-title="Ver Perfil">
                         <i class="icon fa-search" aria-hidden="true"></i></button></a>
                         <!--END Botón -->
                         <!-- Botón para editar cliente-->
@@ -163,7 +160,7 @@ LISTA DE  SUCURSALES
                         <!-- Botón para ver cliente-->
                         <a href="/mayoristas/{{ $client->id }}" type="button"
                         class="btn btn-icon btn-primary waves-effect waves-light waves-round"
-                        data-toggle="tooltip" data-original-title="Perfil del cliente">
+                        data-toggle="tooltip" data-original-title="Ver Perfil">
                         <i class="icon fa-search" aria-hidden="true"></i></button></a>
                         <!--END Botón -->
                         <!-- Botón para editar cliente-->

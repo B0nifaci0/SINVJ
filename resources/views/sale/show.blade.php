@@ -87,7 +87,7 @@ SUCURSAl
                             </tr>
                                 <tr>
                                     <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
-                                    <td> $  @if($sale->total == 0 || $sale->total == $sale->paid_out || $sale->client->positive_balance == null)
+                                    <td> $  @if($sale->client->positive_balance == null)
                                                 0
                                             @else
                                                 {{ $sale->client->positive_balance }}
@@ -142,11 +142,9 @@ SUCURSAl
                     <th>Categoria</th>
                     <th>Peso</th>
                     <th>Precio</th>
-                    @if($sale->client->type_client == 0)
-                        @if($sale->paid_out <> $sale->total)
-                            @if($sale->change == 0)
-                                <th>Devolver</th>
-                            @endif
+                    @if($sale->paid_out != $sale->total)
+                        @if($sale->change == 0)
+                            <th>Devolver</th>
                         @endif
                     @endif
                 </tr>
@@ -169,7 +167,7 @@ SUCURSAl
                     @if($sale->client->type_client == 0)
                         @if($sale->paid_out <> $sale->total)
                             @if($sale->change == 0)
-                                @if($validacion == 0)
+                                @if($item->limit == 0)
                                     <td>
                                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
                                             alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
@@ -186,7 +184,7 @@ SUCURSAl
                         @endif
                     @else
                         @if($sale->paid_out <> $sale->total)
-                            @if($validacion == 0)
+                            @if($item->limit == 0)
                                 <td>
                                     <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
                                         alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
@@ -206,11 +204,9 @@ SUCURSAl
                 <tr>
                     <td colspan="5"></td>
                     <td><strong>$ {{ $sale->total }}</strong></td>
-                    @if($sale->client->type_client == 0)
-                        @if($sale->paid_out <> $sale->total)
-                            @if($sale->change == 0)
-                                <td></td>
-                            @endif
+                    @if($sale->paid_out != $sale->total)
+                        @if($sale->change == 0)
+                            <td></td>
                         @endif
                     @endif
                 </tr>

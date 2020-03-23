@@ -53,20 +53,21 @@ ALTA VENTA
                             <div class="row">
                                 <div class="col-md-6">
                                     <!-- Input para Ingresar Nombre del cliente-->
-                                    <div class="form-group form-material">
-                                        <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente:
-                                        </label>
-                                        <input type="text" class="form-control" required="required" id="customer" name="customer_name"
-                                            value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
-                                    </div>
+                                    <label for="user-type">Seleccionar cliente</label>
+                                    <select name="cliente_id" id="public-id" class="form-control" data-plugin="select2">
+                                        @foreach($public as $client)
+                                            <option id="client{{$client->id}}" value="{{ $client->id }}">{{ $client->name }}
+                                                {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
+                                        @endforeach
+                                    </select>
                                     <!-- END Input-->
                                 </div>
                                 <div class="col-md-6">
                                     <!-- Input para Ingresar telefono del cliente-->
-                                    <div class="form-group form-material">
-                                        <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-                                        <input type="text" class="form-control" required="required" id="phone" name="telephone"
-                                            value="{{old('telephone')}}" placeholder="7225674569" />
+                                    <div class="form-group">
+                                        <br>
+                                        <button class="btn btn-primary" data-target="#exampleTabs2" data-toggle="modal"
+                                            type="button"><i class="fa fa-user" aria-hidden="true"></i></button>
                                     </div>
                                     <!-- END Input-->
                                 </div>
@@ -78,7 +79,7 @@ ALTA VENTA
                                 <div class="col-md-6">
                                     <label for="user-type">Seleccionar cliente</label>
                                     <select name="client_id" id="user-id" class="form-control" data-plugin="select2">
-                                        @foreach($clients as $client)
+                                        @foreach($wholesaler as $client)
                                         <option id="client{{$client->id}}" value="{{ $client->id }}" alt="{{ $client->credit }}">{{ $client->name }}
                                             {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
                                         @endforeach
@@ -180,7 +181,7 @@ ALTA VENTA
                     <div class="row">
                         <!-- Botón para mostar el Modal de Tipos de pago-->
                         <div class="col-6 form-group">
-                            <button class="btn btn-success" data-target="#exampleTabs" data-toggle="modal"
+                            <button class="btn btn-success" data-target="#exampleTabs1" data-toggle="modal"
                                 type="button">$ Registro de pago</button>
                         </div>
                         <!-- END Botón-->
@@ -205,7 +206,56 @@ ALTA VENTA
                 <div class="example-wrap">
                     <div class="example">
                         <!-- Modal -->
-                        <div class="modal fade modal-success" id="exampleTabs" aria-hidden="true"
+                        <div class="modal fade modal-success" id="exampleTabs2" aria-hidden="true"
+                            aria-labelledby="exampleModalTabs" role="dialog" tabindex="-1">
+                            <div class="modal-dialog modal-simple">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title" id="exampleModalTabs">Registrar Nuevo Cliente</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Input para ingresar nombre del cliente-->
+                                        <div class="row">
+                                            <div class="form-group form-material col-12">
+                                                <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente:
+                                                </label>
+                                                <input type="text" class="form-control" required="required" id="customer" name="customer_name"
+                                                    value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <div class="row">
+                                            <!-- Input para ingresar telefono del cliente-->
+                                            <div class="form-group form-material col-12">
+                                                <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
+                                                <input type="text" class="form-control" required="required" id="phone" name="telephone"
+                                                    value="{{old('telephone')}}" placeholder="7225674569" />
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <input type="hidden" id="shop" value="{{$user->shop->id}}">
+                                        <hr class="mb-4">
+                                        <button type="button" id="registrar" name="registrar" data-dismiss="modal"
+                                            class="btn btn-success btn-lg btn-block">Registrar</button>
+                                        <!-- END REGISTRO CLIENTE-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Modal -->
+                    </div>
+                </div>
+                <!-- End Example Tab In Modal -->
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <!-- Example Tab In Modal -->
+                <div class="example-wrap">
+                    <div class="example">
+                        <!-- Modal -->
+                        <div class="modal fade modal-success" id="exampleTabs1" aria-hidden="true"
                             aria-labelledby="exampleModalTabs" role="dialog" tabindex="-1">
                             <div class="modal-dialog modal-simple">
                                 <div class="modal-content">
@@ -287,6 +337,7 @@ seleccionado con sus respectivos datos-->
 
         var clients = {!! $clients!!};
         var sales = {!! $sales !!}
+        var new_id = {!! $new_id !!};
 
         console.log("Clienets ", clients)
         console.log('Ventas: ', sales);
@@ -320,6 +371,38 @@ seleccionado con sus respectivos datos-->
                 }
             });
 
+            $('#registrar').click(function(e) {
+                let name = $('#customer').val();
+                let phone = $('#phone').val();
+                let shop = $('#shop').val();
+                let type = 0;
+                console.log("Nombre: ", name ," y Telefono: ", phone, " ID de Tienda: ", shop);
+
+                //Construimos la variable que se guardará en el data del Ajax para pasar al archivo php que procesará los datos
+		        var dataString = 'name=' + name + '&phone_number=' + phone + '&shop_id=' + shop + '&type_client=' + type;
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+
+		        $.ajax({
+			        url: '/mayoristas',
+                    method: 'POST',
+                    dataType: "HTML",
+			        data: dataString,
+			        success: function() {
+		    	        let $option = $('<option />', {
+                            text: name,
+                            value: new_id,
+                        });
+                        $('#public-id').prepend($option);
+		            }
+		        });
+
+            });
+
             $('#submit').click(function(e) {
                 e.preventDefault();
                 overDiscount = [];
@@ -341,11 +424,19 @@ seleccionado con sus respectivos datos-->
                 if(sale != undefined && client.type_client == 1 && type_sale == 2){
                     var credito = sale.total + total;
                     var paids = sale.paid_out + totalIncome;
-                    var deduct = credito - paids;
+                    var restante = credito - paids;
+                    var deduct = limit - restante;
                     console.log("Totales credito: ", sale.total, ' + ', total, ' = ', credito)
                     console.log("Totales pagado: ", sale.paid_out, ' + ', totalIncome, ' = ', paids)
-                    console.log('Restan: ', deduct)
-                    if(deduct > limit){
+                    console.log('Credito Disponible: ', deduct)
+                    if(deduct < 0){
+                        validation = true;
+                    }
+                } else {
+                    var restante = total - totalIncome; 
+                    var disponible = limit - restante;
+                    console.log("Credito Disponible: ",disponible)
+                    if(disponible < 0){
                         validation = true;
                     }
                 }

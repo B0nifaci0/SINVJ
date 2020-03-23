@@ -122,10 +122,12 @@ class TranferProductsController extends Controller
             $transfer->save();
             if ($request->answer) {
                 $product->branch_id = $transfer->new_branch_id;
-                // $product->status_id = 2;
-                // $product->status_id = 3;
+
                 $product->shop_id = $user->shop->id;
                 $product->date_creation = Now();
+                $product->save();
+            }else{
+                $product->status_id = Product::EXISTING;
                 $product->save();
             }
         }

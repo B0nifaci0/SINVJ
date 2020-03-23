@@ -7,6 +7,8 @@ use App\Branch;
 use App\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ClientRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -66,7 +68,7 @@ class ClientController extends Controller
             'credit' => $request->credit,
             'shop_id' => $user->shop->id,
             'branch_id' => $request->branch_id,
-            'type_client' => Client::M,
+            'type_client' => $request->type_client,
         ]);
         //return $client;
         return redirect('/mayoristas')->with('mesage', 'El cliente se ha creado correctamente');
@@ -150,15 +152,38 @@ class ClientController extends Controller
     public function update(ClientRequest $request, $id)
     {
         $client = Client::find($id);
-        $client->fill($request->only(
-            'name',
-            'first_lastname',
-            'second_lastname',
-            'phone_number',
-            'credit',
-            'branch_id'
-        ));
+        //return $client;
+        $validator = Validator::make($request->all(), [
+            'first_lastname' => Rule::requiredIf($client->type_client == 1),
+            'second_lastname' => Rule::requiredIf($client->type_client == 1),
+            'credit' => Rule::requiredIf($client->type_client == 1),
+        ]);
+        if ($validator->fails()) {
+            $response = [
+                'success' => false,
+                'errors' => $validator->errors(),
+                'error' => 'Error en alguno de los campos'
+            ];
+            //return response()->json($response, $this->unprocessable);
+            return back()->withErrors($validator->errors());
+        }
+
+        $client->name = $request->name;
+        $client->phone_number = $request->phone_number;
+
+        if($client->type_client == 1)
+        {
+            $client->first_lastname = $request->first_lastname;
+            $client->second_lastname = $request->second_lastname;
+            $client->credit = $request->credit;
+        } else {
+            $client->first_lastname = null;
+            $client->second_lastname = null;
+            $client->credit = null;
+        }
+
         $client->save();
+
         return redirect('/mayoristas')->with('mesage-update', 'El cliente se ha actualizado correctamente');
     }
 
