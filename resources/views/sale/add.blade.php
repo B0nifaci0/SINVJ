@@ -378,6 +378,32 @@ seleccionado con sus respectivos datos-->
                 let type = 0;
                 console.log("Nombre: ", name ," y Telefono: ", phone, " ID de Tienda: ", shop);
 
+                let nombre = name.length;
+
+                if(nombre == '')
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un nombre válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                let cellphone = phone.length;
+
+                if(cellphone != 10)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un numero telefonico válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
                 //Construimos la variable que se guardará en el data del Ajax para pasar al archivo php que procesará los datos
 		        var dataString = 'name=' + name + '&phone_number=' + phone + '&shop_id=' + shop + '&type_client=' + type;
 
