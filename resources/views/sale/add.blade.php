@@ -646,7 +646,7 @@ seleccionado con sus respectivos datos-->
                     var sale = sales.filter(s => s.client_id == id_user && s.paid_out != s.total)[0];
                     console.log('EL limite es: ', limit);
                     console.log("el total es: ", total)
-                    if(sale != undefined && client.type_client == 1 && type_sale == 2){
+                    if(sale != undefined && type_sale == 2){
                         var credito = sale.total + total;
                         var paids = sale.paid_out + totalIncome;
                         var restante = credito - paids;
