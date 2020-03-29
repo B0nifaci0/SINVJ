@@ -53,8 +53,8 @@ ALTA PRODUCTO
             @endif
             </div>
             <!-- END Select-->
-          <!-- Input para ingresar clave del producto-->
-          <div class="form-group form-material col-md-3">
+<!-- Input para ingresar clave del producto-->
+<div class="form-group form-material col-md-3">
             <label>Clave</label>
             <input type="text" class="form-control" name="clave"  value="{{old('clave')}}" required>
           </div>
@@ -78,21 +78,21 @@ ALTA PRODUCTO
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricecp" class="form-group form-material col-md-3 remove">
               <label>Precio Compra</label>
-              <input type="text"  class="form-control compra" id="pricePurchase"  name="price_purchase" value="{{old('price_purchase')}}">
+              <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{old('price_purchase')}}">
             </div>
             <!-- END Input-->
-            
+
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
-              <input type="text" id="pricepzt" class="form-control" name="pricepzt" value="{{old('pricepzt')}}" required>
+              <input type="text"  class="form-control"  name="pricepzt" value="{{old('pricepzt')}}">
             </div>
 
 
             <!-- Input para ingresar precio con descuento-->
             <div id="discountpz" class="form-group form-material col-md-3 remove">
               <label>Precio con descuentopz</label>
-              <input type="text"  class="form-control" id="pcdpz" name="max_discountpz" value="{{old('max_discountpz')}}" >
+              <input type="text"  class="form-control"  name="max_discountpz" value="{{old('max_discountpz')}}">
             </div>
             <!-- END Input-->
             <div   class="col-md-3 form-material remove">
@@ -103,22 +103,21 @@ ALTA PRODUCTO
             <!-- Input para ingresar Peso del producto-->
             <div class="form-group form-material col-md-3 remove">
               <label>Gramos</label>
-              <input type="text" id="multiplicador"  class="form-control gramoss" name="weigth">
+              <input type="text" id="multiplicador"  class="form-control" name="weigth" >
             </div>
             <!-- END Input-->
             <!-- Input para ingresar precio del producto-->
             <div id="show" class="form-group form-material col-md-3 remove">
               <label>Precio del Producto</label>
-              <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price" value="{{old('price')}}" required>
+              <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price" value="{{old('price')}}">
             </div>
             <!-- END Input-->
             <!-- Input para ingresar Tope de descuento -->
             <div class="form-group form-material col-md-3 remove">
               <label>Precio con descuentogr</label>
-              <input type="text" readonly="readonly" class="form-control" id="discount" readonly name="max_discount" value="{{old('max_discount')}}">
+              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount" value="{{old('max_discount')}}">
             </div>
             <!-- END Input-->
-
             <div>
                 @foreach ($shops as $shop)
                 <input type="hidden" name="shop_id" value="{{$shop->id}}">

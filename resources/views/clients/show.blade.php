@@ -111,8 +111,8 @@ ALTA BITACORAS
                     </div>
                 </div>
             </div>
-            <div class="container">
-              <div class="container">
+            <div class="container-fluid">
+              <div class="container-fluid">
                 <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
@@ -161,8 +161,8 @@ ALTA BITACORAS
                     </div>
                 </div>
             </div>
-            <div clasS="container">
-              <div class="container">
+            <div clasS="container-fluid">
+              <div class="container-fluid">
                 <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
@@ -211,8 +211,8 @@ ALTA BITACORAS
                     </div>
                 </div>
             </div>
-            <div class="container">
-              <div class="container">
+            <div class="container-fluid">
+              <div class="container-fluid">
                 <table class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead>
                         <tr>
