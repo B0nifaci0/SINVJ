@@ -346,7 +346,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'price_purchase' => Rule::requiredIf($category->type_product == 1),
             'pricepzt' => Rule::requiredIf($category->type_product == 1),
-            'price_discount' => Rule::requiredIf($category->type_product == 1),
+            'max_discountpz' => Rule::requiredIf($category->type_product == 1),
             'weigth' => Rule::requiredIf($category->type_product == 2),
             'price' => Rule::requiredIf($category->type_product == 2),
         ]);
