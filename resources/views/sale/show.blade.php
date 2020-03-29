@@ -164,41 +164,13 @@ SUCURSAl
                     <td>{{$item->category_name}}</td>
                     <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                     <td>$ {{ $item->final_price }}</td>
-                    @if($sale->client->type_client == 0)
-                        @if($sale->paid_out <> $sale->total)
-                            @if($sale->change == 0)
-                                @if($item->limit == 0)
-                                    <td>
-                                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
-                                            alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
-                                            data-original-title="Devolver">
-                                            <i class="icon fa-reply-all" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                @else
-                                    <td>
-                                        Tiempo para devolucion expirado
-                                    </td>
-                                @endif
-                            @endif
-                        @endif
-                    @else
-                        @if($sale->paid_out <> $sale->total)
-                            @if($item->limit == 0)
-                                <td>
-                                    <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
-                                        alt="{{$item->id_product}}" role="button" data-toggle="tooltip"
-                                        data-original-title="Devolver">
-                                        <i class="icon fa-reply-all" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            @else
-                                <td>
-                                    Tiempo para devolucion expirado
-                                </td>
-                            @endif
-                        @endif
-                    @endif
+                    <td>
+                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
+                            alt="{{$item->id_product}}" id="{{$item->limit}}" role="button" data-toggle="tooltip"
+                            data-original-title="Devolver">
+                            <i class="icon fa-reply-all" aria-hidden="true"></i>
+                        </button>
+                    </td>
                 </tr>
                 @endforeach
                 <tr>
@@ -414,24 +386,80 @@ SUCURSAl
 <script>
     $(document).ready(function() {
 
+        var overLimitAuth = false;
+
         $('#items').on('click', '.give-back', function() {
             let id = $(this).attr("alt");
-            Swal.fire({
-                title: 'Confirmación',
-                text: "¿Seguro que quieres devolver el producto?",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#4caf50',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si'
-            }).then((result) => {
+            var over = $(this).attr("id");
+            if(over == 1 && overLimitAuth == false)
+            {
+                var message = `El tiempo de devolucion del producto ha expirado.
+		        Ingrese la contraseña de seguridad para continuar`;
+                Swal.fire({
+                    title: message,
+                    input: 'password',
+                    inputAttributes: {
+                    autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Aceptar',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (password) => {
+                    return fetch(`/check-password`, {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                password: password
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(
+                                `Contraseña incorrecta`
+                            )
+                        })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
                 if (result.value) {
-                    $('#discar_cause').val(3);
-                    $('#product_id').val(id);
-                    $('#form').submit();
+                    Swal.fire({
+                        title: `La contraseña es correcta`
+                    })
+                    overLimitAuth = true;
+                    console.log("overLimitAuth: ",overLimitAuth);
                 }
-            })
+                })
+            return;
+            }
+            console.log("ID: ",id," y Limit: ",over);
+
+                Swal.fire({
+                    title: 'Confirmación',
+                    text: "¿Seguro que quieres devolver el producto?",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#4caf50',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si'
+                }).then((result) => {
+                    if (result.value) {
+                        $('#discar_cause').val(3);
+                        $('#product_id').val(id);
+                        $('#form').submit();
+                    }
+                })
+
         });
+
+            
 
         $('#savePartial').click(function(e) {
             console.log("Diste click");

@@ -291,9 +291,8 @@ class SaleController extends Controller
             $folio++;
         }
 
-        if ($request->user_type == 2 && $request->client_id) {
+        if ($request->user_type == 2) {
             $sale = Sale::where('client_id', $request->client_id)
-                ->whereRaw('paid_out <> total')
                 ->first();
             $cliente = Client::find($request->client_id);
         }
@@ -414,8 +413,7 @@ class SaleController extends Controller
             }
         }
 
-        if($sale->client->type_client == 0)
-        {
+
             $date_now = Carbon::now();
             $date_now = $date_now->format('Y-m-d');
             //return $sale;
@@ -434,9 +432,8 @@ class SaleController extends Controller
                     $item->limit = 0;
                 }
             }
-        }
 
-        //return $sale;
+        //return $sale->itemsSold;
         return view('sale.show', compact('finalprice', 'sale', 'lines', 'restan', 'partials'));
     }
 
@@ -463,12 +460,10 @@ class SaleController extends Controller
         if ($sale->total == 0) {
             //$balance = $sale->paid_out - $sale->total;
             $sale->positive_balance = $sale->positive_balance + $sale->paid_out;
-            if ($sale->client_id) {
-                $client->positive_balance = $client->positive_balance + $sale->paid_out;
-                if ($client->positive_balance < 0) {
-                    $client->positive_balance = $client->positive_balance * -1;
-                }
-                $client->save();
+            $client->positive_balance = $client->positive_balance + $sale->paid_out;
+            if ($client->positive_balance < 0) {
+                $client->positive_balance = $client->positive_balance * -1;
+            $client->save();
             }
             $sale->paid_out = 0;
         }
