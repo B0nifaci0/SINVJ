@@ -253,7 +253,7 @@ setTimeout(() => {
 $('#categorie_id').change(function(){
     $('#pricepz').val(0);
     $('#pricecp').val(0);
-    $('#discountpz').val(0);
+    //$('#discountpz').val(0);
 
     var categoryTypeproduct = {!! $categories !!};
     var categoryId = $(this).val();
@@ -265,16 +265,16 @@ $('#categorie_id').change(function(){
       $('#pricecp').css('display', 'initial');
       $('#discountpz').css('display', 'initial');
 
-      // set purchase price for Pza products
+   /*    // set purchase price for Pza products
       console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
       console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
 
         console.log(!Number($('#line_price').val()) , !Number($('#multiplicador').val()))
       if(!Number($('#line_price').val()) || !Number($('#multiplicador').val())) {
-        $('#pricePurchase').val(0);
+        $('#pricePurchase').val('');
       } else {
         $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
-      }
+      } */
     } else if(categoryTypeproduct.type_product == 2){
       // Gramos
       $('.remove').css('display', 'initial');

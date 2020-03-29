@@ -345,29 +345,21 @@ class ProductController extends Controller
         //return $category;
         $validator = Validator::make($request->all(), [
             'price_purchase' => Rule::requiredIf($category->type_product == 1),
-        ]);
-        if ($validator->fails()) {
-            $response = [
-                'success' => false,
-                'errors' => $validator->errors(),
-                'error' => 'Error en alguno de los campos'
-            ];
-            //return response()->json($response, $this->unprocessable);
-            return back()->withErrors($validator->errors());
-        }
-
-        $validator = Validator::make($request->all(), [
+            'pricepzt' => Rule::requiredIf($category->type_product == 1),
+            'price_discount' => Rule::requiredIf($category->type_product == 1),
             'weigth' => Rule::requiredIf($category->type_product == 2),
+            'price' => Rule::requiredIf($category->type_product == 2),
         ]);
+     
         if ($validator->fails()) {
             $response = [
                 'success' => false,
                 'errors' => $validator->errors(),
                 'error' => 'Error en alguno de los campos'
             ];
-            //return response()->json($response, $this->unprocessable);
-            return back()->withErrors($validator->errors());
-        }
+            //return response()->json($response, $this->unprocessable); 
+            return redirect()->back()->withErrors($validator->errors())->withInput($request->all());        
+}
         $date = date("Y-m-d");
         $branches = Auth::user()->shop->branches;
         $user = Auth::user();
