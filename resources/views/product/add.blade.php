@@ -306,8 +306,10 @@ $('.gramos').on('input', function() {
 $('#line_price').val(lines[0].sale_price);
 
 $('#line_id').change(function() {
-  /* Si el hay un cmabio de selec el input gramos se limpia para recalcular el precio del producto*/
+  /* Si el hay un cmabio de selec el input gramos se limpia para recalcular*/
   $('#multiplicador').val('');
+  $('#total').val('');
+  $('#discount').val('');
   var id = $(this).val();
   line = lines.filter(l => l.id == id)[0];
   $('#line_price').val(line.sale_price);
