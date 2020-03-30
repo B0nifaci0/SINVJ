@@ -615,9 +615,10 @@ class BranchController extends Controller
       ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
       ->join('products','sale_details.product_id', '=', 'products.id')
       ->where('partials.updated_at','>=',$fecini,'AND','partials.updated_at','<=',$fecter)
+      ->select('partials.amount')
       ->where('branch_id','=',$request->branch_id)
-      ->WhereIn('partials.type', [1, 2])
-      ->select('partials.amount')->sum('amount');
+      ->WhereIn('type',[1,2])
+      ->distinct()->sum('amount');
 
       //return $branch->total;
       $branch->tarjeta  = DB::table('partials')
@@ -628,6 +629,7 @@ class BranchController extends Controller
       ->where('branch_id',$request->branch_id)
       ->where('type',2)
       ->distinct()->sum('amount');
+
       $branch->efectivo = DB::table('partials')
       ->join('sale_details','partials.sale_id', '=', 'sale_details.sale_id')
       ->join('products','sale_details.product_id', '=', 'products.id')
@@ -636,6 +638,9 @@ class BranchController extends Controller
       ->where('branch_id',$request->branch_id)
       ->where('type',1)
       ->distinct()->sum('amount');
+
+      //return $branch->efectivo;
+
       $branch->gastos = DB::table('expenses')
       ->join('branches','expenses.branch_id','=', 'branches.id')
       ->where('expenses.updated_at','>=',$fecini,'AND','partials.updated_at','<=',$fecter)
