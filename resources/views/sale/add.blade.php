@@ -429,6 +429,7 @@ seleccionado con sus respectivos datos-->
         var clients = {!! $clients!!};
         var sales = {!! $sales !!}
         var new_id = {!! $new_id !!};
+        var old_id = new_id;
 
         console.log("Clienets ", clients)
         console.log('Ventas: ', sales);
@@ -580,6 +581,20 @@ seleccionado con sus respectivos datos-->
                     return
                 }
 
+                console.log("TAM NUMERO: ",phone.length);
+                if(phone == '' || phone.length == 10)
+                {
+                    console.log("Numero telefonico valido: ",phone);
+                } else {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un numero telefonico válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
                 if(phone == '')
                 {
                     phone = '0000000000';
@@ -668,9 +683,16 @@ seleccionado con sus respectivos datos-->
                         return
                     }
                 }
-                console.log("TAM NUMERO: ",phoneNumber.length);
-                if(type_sale == 1 && phoneNumber.length != 10 && total > totalIncome)
+
+                console.log("TAM NUMERO: ",phone.length);
+                if(old_id == new_id)
                 {
+                    if(phoneNumber == '' || phoneNumber.length == 10 )
+                    {
+                        console.log("Venta Permitida");
+                    }
+                } else if(type_sale == 1 && total > totalIncome && phoneNumber == '') {
+                    console.log("OLD ID: ",old_id," New ID: ",new_id);
                     Swal.fire(
                         'No permitido',
                         'Para continuar, ingrese un numero telefonico valido',
@@ -678,6 +700,7 @@ seleccionado con sus respectivos datos-->
                     );
                     e.preventDefault();
                     return
+
                 }
 
                 let lengthImage = image.files.length;

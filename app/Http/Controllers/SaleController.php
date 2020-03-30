@@ -204,7 +204,7 @@ class SaleController extends Controller
         //return $new_id;
 
         if ($user->branch) {
-            $public = Client::where('branch_id', $user->branch->id)
+            $public = Client::where('shop_id', $user->shop->id)
                 ->Where('type_client', Client::P)
                 ->get();
             $wholesaler = Client::where('branch_id', $user->branch->id)
