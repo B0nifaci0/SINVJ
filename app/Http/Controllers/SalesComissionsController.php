@@ -83,7 +83,9 @@ class SalesComissionsController extends Controller
             ->where('sales.branch_id', $branch)
             ->get();
 
-        $pdf  = PDF::loadView('User.Comission.ComisionBranchPDF', compact('sales', 'users', 'branches', 'shop', 'hour', 'dates', 'shops'));
+        $fecini->addDay();
+        $fecter->subDay();
+        $pdf  = PDF::loadView('User.Comission.ComisionBranchPDF', compact('sales', 'users', 'branches', 'shop', 'hour', 'dates', 'shops','fecini','fecter'));
         return $pdf->stream('ReporteComisionUsuario.pdf');
     }
 
@@ -118,8 +120,10 @@ class SalesComissionsController extends Controller
             ->groupBy('users.id', 'users.name')
             ->get();
         //return $sales;
+        $fecini->addDay();
+        $fecter->subDay();
 
-        $pdf  = PDF::loadView('User.Comission.ComisionUserPDF', compact('dates', 'branches', 'sales', 'user', 'branch', 'shop', 'hour', 'dates', 'shops'));
+        $pdf  = PDF::loadView('User.Comission.ComisionUserPDF', compact('fecini','fecter','dates', 'branches', 'sales', 'user', 'branch', 'shop', 'hour', 'dates', 'shops'));
         return $pdf->stream('ReporteComisionUsuario.pdf');
     }
 }

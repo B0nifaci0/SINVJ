@@ -11,123 +11,6 @@
     font-family: 'Times New Roman';
 }
 
-td,
-th,
-tr,
-table {
-    border-collapse: collapse;
-}
-
-td.sucursal{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.nota{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.fecha{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.hora{
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.cliente {
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-td.vendedor {
-    width: 85px;
-    max-width: 85px;
-    text-align: left;
-}
-
-
-td.sucursal1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-td.nota1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-td.fecha1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-td.hora1 {
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-
-td.cliente1{
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-td.vendedor1{
-    width: 85px;
-    max-width: 85px;
-    text-align: right;
-}
-
-th.clave{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-th.producto{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-th.precio{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-td.clave1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-td.producto1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-td.precio1{
-    width: 80px;
-    max-width: 80px;
-    text-align: left;
-}
-
-
-.centrado {
-    text-align: center;
-    align-content: center;
-}
-
 .ticket {
     width: 200px;
     max-width: 200px;
@@ -147,16 +30,26 @@ img {
 
 
 <div border="">
-        <img align = "left" width="140px" height="120px" src="{{ $shop->image }}">
-            <p align="right">Fecha: {{$dates}}</p>
-          
-            <p align="right">Hora: {{$hour}}</p>
-  
-            <p>
-            @foreach($branches as $branch)
-            Sucursal: {{$branch->name}}
-            <br>
-            @endforeach
+    <img class="img-responsive" width="140px" height="120px" src="{{ $shop->image }}">
+
+    <table class="table-sm table-bordered" width="100%">
+      <thead>
+        <tr>
+          <th>De la fecha:</th>
+          <th>A la fecha:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{$fecini->format('d/m/Y')}}</td>
+          <td>{{$fecter->format('d/m/Y')}}</td>
+        </tr>
+      </tbody>
+    </table>
+    @foreach($branches as $branch)
+
+    <p class="text-center">Sucursal: {{$branch->name}}</p>
+    @endforeach
             <table class="table-sm table-bordered" width="100%">
               <thead>
                 <tr>
@@ -175,7 +68,7 @@ img {
             @endforeach
             </tbody>
             </table>
-        </div> 
+        </div>
           </div>
     </body>
 </html>

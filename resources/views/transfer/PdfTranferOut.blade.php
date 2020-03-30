@@ -52,8 +52,8 @@
         <p class="text-center">{{$transfer->lastBranch->name}}</p>
         <p class="text-center">{{$transfer->user->name}}</p>
         <p class="producto">{{ $transfer->product->clave }}</p>
-        {{-- <p class="text-center">{{ $transfer->product->weigth }}
-        gr,{{ $transfer->product->line ? $transfer->product->line->name : '' }}</p> --}}
+        <p class="text-center">{{ $transfer->product->weigth }}
+        gr,{{ $transfer->product->line ? $transfer->product->line->name : '' }}</p>
         <p class="text-center">Destino</p>
         <p class="text-center">{{$transfer->newBranch->name}}</p>
         <p class="text-center">{{$transfer->destinationUser->name}}</p>
