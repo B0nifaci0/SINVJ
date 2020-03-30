@@ -468,8 +468,8 @@ class SaleController extends Controller
             $client->positive_balance = $client->positive_balance + $sale->paid_out;
             if ($client->positive_balance < 0) {
                 $client->positive_balance = $client->positive_balance * -1;
-            $client->save();
             }
+            $client->save();
             $sale->paid_out = 0;
         }
 
