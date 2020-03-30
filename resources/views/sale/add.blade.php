@@ -580,17 +580,9 @@ seleccionado con sus respectivos datos-->
                     return
                 }
 
-                let cellphone = phone.length;
-
-                if(cellphone != 10)
+                if(phone == '')
                 {
-                    Swal.fire(
-                        'No permitido',
-                        'Para continuar, ingresa un numero telefonico válido',
-                        'error'
-                    );
-                    e.preventDefault();
-                    return
+                    phone = '0000000000';
                 }
 
                 //Construimos la variable que se guardará en el data del Ajax para pasar al archivo php que procesará los datos
@@ -631,12 +623,11 @@ seleccionado con sus respectivos datos-->
                 e.preventDefault();
                 overDiscount = [];
                 console.log("selectedProducts", selectedProducts);
+                var phoneNumber = $('#phone').val();
                 var type_sale = $('#user-type').val();
                 console.log(type_sale);
                 if(type_sale == 2)
                 {
-                    var phone_number = $('#phone').val();
-                    console.log(phone_number);
                     var name_customer = $('#customer').val();
                     console.log(name_customer);
                     var validation = false;
@@ -676,6 +667,17 @@ seleccionado con sus respectivos datos-->
                         e.preventDefault();
                         return
                     }
+                }
+                console.log("TAM NUMERO: ",phoneNumber.length);
+                if(type_sale == 1 && phoneNumber.length != 10 && total > totalIncome)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingrese un numero telefonico valido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
                 }
 
                 let lengthImage = image.files.length;
