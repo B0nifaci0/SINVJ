@@ -48,18 +48,25 @@ TRANSFERENCIAS
                             @if(Auth::user()->type_user == 1 )
                             <!-- Botón para Generar PDF de productos-->
                             @if(Auth::user()->type_user == 1)
-                            <div class="col-6">
+                            <div class="col-4">
                                 <button onclick="window.location.href='traspasospdf'" type="button" class=" btn btn-sm small btn-floating
                   toggler-left  btn-danger waves-effect waves-light waves-round float-right" data-toggle="tooltip"
                                     data-original-title="Generar reporte PDF">
                                     <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                                 </button>
                             </div>
+                            <div class="col-4">
+                                <button onclick="window.location.href='/traspasosExt/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left
+                  btn-primary waves-effect waves-light waves-round float-left " data-toggle="tooltip"
+                                    data-original-title="Agregar Traspaso Externo">
+                                    <i class="icon md-plus" aria-hidden="true"></i>
+                                </button>
+                            </div>
                             @endif
-                            <div class="col-6">
+                            <div class="col-4">
                                 <button onclick="window.location.href='/traspasosAA/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left
                   btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip"
-                                    data-original-title="Agregar">
+                                    data-original-title="Agregar Trapaso">
                                     <i class="icon md-plus" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -281,7 +288,7 @@ TRANSFERENCIAS
                                             @if ($transferout->status_product !== null && $transferout->paid_at == null
                                             && (Auth::user()->id == $transferout->user_id || Auth::user()->type_user == 1))
                                             <td>
-                                                
+
                                                 <a href="traspasoSaliente/{{$transferout->id}}"><button type="button"
                                                         class="btn btn-icon btn-danger waves-effect waves-light"
                                                         data-toggle="tooltip" data-original-title="Generar reporte PDF">
