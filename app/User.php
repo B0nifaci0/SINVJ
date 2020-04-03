@@ -19,6 +19,8 @@ class User extends Authenticatable implements MustVerifyEmail
   const SA = '2';
   // CO = collaborator
   const CO = '3';
+  const NO_REGISTER = '4';
+
 
 
   // Tipos de suscripcion

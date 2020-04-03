@@ -64,14 +64,39 @@ class TransferExtController extends Controller
         $product = Product::find($request->product_id);
 
         $user = Auth::user();
-        $transfer_product = new TransferProduct([
-            'user_id' => $user->id,
-            'last_branch_id' => $request->branch_id,
-            'new_branch_id' => $request->new_branch_id,
-            'product_id' => $request->product_id,
-            'destination_user_id' => $request->destination_user_id,
-            'status_product' => null
-        ]);
+
+        if ($request->type == 1) {
+
+            $transfer_product = new TransferProduct([
+                'user_id' => $user->id,
+                'last_branch_id' => $request->branch_id,
+                'new_branch_id' => $request->new_branch_id,
+                'product_id' => $request->product_id,
+                'destination_user_id' => $request->destination_user_id,
+                'status_product' => null,
+            ]);
+        } else {
+
+            $branch = Branch::create([
+                'name' => $request->new_branch,
+            ]);
+            $branchid = $branch->id;
+            $newUser = User::create([
+                'name' => $request->destination_user,
+                'branch_id' => $branchid,
+                'type_user' => User::NO_REGISTER
+            ]);
+            $userId = $newUser->id;
+            $transfer_product = new TransferProduct([
+                'user_id' => $user->id,
+                'last_branch_id' => $request->branch_id,
+                'new_branch_id' => $branchid,
+                'product_id' => $request->product_id,
+                'destination_user_id' => $userId,
+                'status_product' => 1,
+            ]);
+        }
+
         $transfer_product->save();
 
         $product->status_id = Product::TRANSFER;
@@ -79,7 +104,6 @@ class TransferExtController extends Controller
 
         return redirect('/traspasosAA')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
     }
-
     /**
      * Display the specified resource.
      *

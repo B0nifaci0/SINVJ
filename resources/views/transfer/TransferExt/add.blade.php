@@ -34,19 +34,25 @@ ALTA PRODUCTO
             <br>
             <form action="/traspasosExt" method="POST">
                 {{ csrf_field() }}
-                <div class="row justify-content-md-center">
+                <div class="row justify-content-md-center ">
                     <div class="col-md-3 col-md-offset-1">
+                        <label>Enviar a </label>
+                        <select name="type" id="type" class="form-control">
+                            <option value="1" selected="selected" id="cash">Tienda con codigo</option>
+                            <option value="2" id="card">Tienda sin Codigo</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1 code">
                         <label for="shop_code" class="floating-label">Codigo tienda destino</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="shop_code" id="shop_code">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" id="validar">Buscar</button>
+                                <button class="btn btn-primary" type="button" id="validar">Buscar</button>
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class='row'>
-
                     <!-- Select para Seleccionar producto-->
                     <div class="col-md-3 col-md-offset-1">
                         <label>Producto</label>
@@ -67,7 +73,7 @@ ALTA PRODUCTO
                         <input type="text" class="form-control" id="branch" readonly>
                         <input type="text" class="form-control invisible" name="branch_id" id="branch_id" readonly>
                     </div>
-                    <div class="col-md-3 col-md-offset-1 visible-md visible-lg">
+                    <div class="col-md-3 col-md-offset-1 visible-md visible-lg code">
                         <label class="floating-label" for="inputBranch">{{ __('Destino') }}</label>
                         <select id="branches" class="form-control" name="new_branch_id" data-plugin="select2"
                             data-placeholder="Seleccione Sucursal" data-allow-clear="true" required>
@@ -75,13 +81,24 @@ ALTA PRODUCTO
                         </select>
                     </div>
                     <!-- Select para Seleccionar Quien lo recibe (Usuario)-->
-                    <div class="col-md-3 col-md-offset-1 visible-md visible-lg mb-4">
+                    <div class="col-md-3 col-md-offset-1 visible-md visible-lg mb-4 code">
                         <label class="floating-label" for="inputUser">{{ __('Quien lo recibe') }}</label>
                         <input type="text" class="form-control" id="destination" readonly>
                         <input type="text" class="form-control invisible" name="destination_user_id"
                             id="destination_user_id" readonly>
                     </div>
                     <!-- END Select-->
+
+                    <div class="col-md-3 col-md-offset-1 visible-md visible-lg remove">
+                        <label class="floating-label" >{{ __('Destino') }}</label>
+                        <input id="newBranch" type="text" class="form-control" name="new_branch" required>
+                    </div>
+                    <!-- Select para Seleccionar Quien lo recibe (Usuario)-->
+                    <div class="col-md-3 col-md-offset-1 visible-md visible-lg mb-4 remove">
+                        <label class="floating-label" >{{ __('Quien lo recibe') }}</label>
+                        <input id="newUser" type="text" class="form-control" name="destination_user" required>
+                    </div>
+
                 </div>
                 <div class="form-group col-md-12 mt-5">
                     <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
@@ -142,8 +159,36 @@ ALTA PRODUCTO
             }
 
         });
+        $('.code').show();
+        $('.remove').hide();
+        $('#branches').prop("required", true);
+        $('#destination').prop("required", true);
+        $('#newBranch').removeAttr("required");
+        $('#newUser').removeAttr("required");
 
-});
+         $('#type').change(function(){
+            var type = $(this).val();
+            if(type == 1 ){
+                console.log("Con codigo");
+                $('.code').show();
+                $('.remove').hide();
+                $('#branches').prop("required", true);
+                $('#destination').prop("required", true);
+                $('#newBranch').removeAttr("required");
+                $('#newUser').removeAttr("required");
+            }else{
+                console.log("Sin codigo");
+                $('.code').hide();
+                $('.remove').show();
+                $('#branches').removeAttr("required");
+                $('#destination').removeAttr("required");
+                $('#newBranch').prop("required", true);
+                $('#newUser').prop("required", true);
+                //$('.code').prop('disabled',false);
+            }
+        });
+
+    });
 
 </script>
 @endsection
