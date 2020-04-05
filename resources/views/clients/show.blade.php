@@ -11,30 +11,20 @@ ALTA BITACORAS
 @endsection
 @section('content')
 <div class="page-content container-fluid">
-    <form autocomplete="off" method="POST" action="/mayoristas">
         {{ csrf_field() }}
         <div class="panel">
             <div class="panel">
-                @if (session('mesage'))
-                <div class="alert alert-success">
-                    <strong>{{ session('mesage') }}</strong>
-                </div>
-                @endif
-                @if($errors->count() > 0)
-                <div class="alert alert-danger" role="alert">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
                 <div class="panel">
 
                     <div class="panel-primary">
                         <div class="panel-heading">
                             <h2 class="panel-title" style="color:white" align="center"> Perfil De Cliente
                             </h2>
+                            <div class="panel-actions float-right col-">
+                    <button onclick="window.location.href='/mayoristas'" class="btn btn-sm small btn-floating
+                    btn-primary waves-light float-right" data-original-title="Ir a mis vent"> <i
+                            class="icon fa-reply-all " aria-hidden="true"></i></button>
+                </div>
                         </div>
                     </div>
 
@@ -259,5 +249,4 @@ ALTA BITACORAS
 </div>
 </div>
 
-</form>
 @endsection
