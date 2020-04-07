@@ -14,25 +14,32 @@ class Category extends Authenticatable
     const shop_id = '';
 
 
-    public  function scopeLast($query){
-      return $query->orderBy("id");
+    public  function scopeLast($query)
+    {
+        return $query->orderBy("id");
     }
     use Notifiable;
 
-   use SoftDeletes;
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
-     */  
+     */
     protected $fillable = [
         'name',
         'shop_id',
-        'type_product'
+        'type_product',
+        'shop_group_id'
     ];
 
-    public function product(){
-      return $this->hasMany(Product::class);
- }
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
 
+    public function shop_group()
+    {
+        return $this->belongsTo(ShopGroup::class);
+    }
 }

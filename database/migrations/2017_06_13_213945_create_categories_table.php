@@ -19,6 +19,8 @@ class CreateCategoriesTable extends Migration
             $table->integer('type_product');
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
+            $table->integer('shop_group_id')->unsigned();
+            $table->foreign('shop_group_id')->references('id')->on('shop_groups');
             $table->softDeletes();
             $table->timestamps();
         });

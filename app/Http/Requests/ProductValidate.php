@@ -25,39 +25,32 @@ class ProductValidate extends FormRequest
     {
         return [
             'clave' => 'required|string|max:50',
-            //'name' => 'required|alpha|unique:products,name',
             'description' => 'required|string|max:25',
-            //'weigth'=> 'required_if:product,is:true',
-            //'weigth' => 'required|numeric|max:200',
             'image' => 'image',
             'price' => 'required|numeric',
             'pricepzt' => 'numeric',
-            'price_purchase' => 'numeric|nullable', 
+            'price_purchase' => 'numeric|nullable',
             'max_discountpz' => 'numeric|nullable',
-            //'category_id' => 'required',
-            //'category_id' => 'required_if:product,is:true',
             'line_id' => 'required',
-            'shop_id' => 'required',
             'branch_id' => 'required',
         ];
     }
 
     public function attributes()
-{
-    return [
-        'price' => 'Precio del Producto',
-        'pricepzt' => 'Precio del Producto pz',
-        'price_purchase' => 'Precio Compra',
-        'max_discountpz' => 'Precio con descuento',
-        'description' => 'descripción', //This will replace any instance of 'username' in validation messages with 'email'
-        'image' => 'imagen', //This will replace any instance of 'username' in validation messages with 'email'
-        //'price_purchase' => 'precio compra', //This will replace any instance of 'username' in validation messages with 'email'
-        //'price' => 'precio del producto', //This will replace any instance of 'username' in validation messages with 'email'
-        //'weigth' => 'precio del producto', //This will replace any instance of 'username' in validation messages with 'email'
-        //'anyinput' => 'Nice Name',
-    ];
-
-}
+    {
+        return [
+            'price' => 'Precio del Producto',
+            'pricepzt' => 'Precio del Producto pz',
+            'price_purchase' => 'Precio Compra',
+            'max_discountpz' => 'Precio con descuento',
+            'description' => 'descripción', //This will replace any instance of 'username' in validation messages with 'email'
+            'image' => 'imagen', //This will replace any instance of 'username' in validation messages with 'email'
+            //'price_purchase' => 'precio compra', //This will replace any instance of 'username' in validation messages with 'email'
+            //'price' => 'precio del producto', //This will replace any instance of 'username' in validation messages with 'email'
+            //'weigth' => 'precio del producto', //This will replace any instance of 'username' in validation messages with 'email'
+            //'anyinput' => 'Nice Name',
+        ];
+    }
 
     //  public function messages(){
     //     return[

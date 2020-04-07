@@ -11,158 +11,153 @@ ALTA PRODUCTO
 @endsection
 @section('content')
 <div class="page-content">
-  <div class="panel">
-    <div class="panel-body">
-      @if (session('mesage'))
-        <div class="alert alert-success">
-          <strong>{{ session('mesage') }}</strong>
-        </div>
-      @endif
-      @if($errors->count() > 0)
-        <div class="alert alert-danger" role="alert">
-          <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-          </ul>
-        </div>
-      @endif
-      <h2 align="center">Nuevo Producto</h2>
-      <br>
-      <form id="multiplicar" class="" action="/productos" method="POST" enctype="multipart/form-data">
-        {{ csrf_field() }}
-        <input type="text" value="2" class="form-control d-none"  name="status_id">
-        <div class='row'>
-        <!-- Select para Seleccionar categoria-->
-          <div class="col-md-3">
-            <label>Seleccione Categoria </label>
-            @if(null !== session('categories'))
-            <select id="categorie_id" name="category_id" class="form-control round">
-            @foreach( $categories as $category)
-            <option value="{{ $category->id}}" required>{{ $category->name }} - @if($category->type_product == 1) pza @else gr @endif</option>
-            <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-            @endforeach
-            </select>
-            @else
-            <select  id="categorie_id" name="category_id" class="form-control round">
-            @foreach($categories as $category)
-            <option value="{{ $category->id }}" required>{{ $category->name }} - @if($category->type_product == 1) pza @else gr @endif</option>
-            <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-            @endforeach
-            </select>
+    <div class="panel">
+        <div class="panel-body">
+            @if (session('mesage'))
+            <div class="alert alert-success">
+                <strong>{{ session('mesage') }}</strong>
+            </div>
             @endif
+            @if($errors->count() > 0)
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-            <!-- END Select-->
-<!-- Input para ingresar clave del producto-->
-<div class="form-group form-material col-md-3">
-            <label>Clave</label>
-            <input type="text" class="form-control" name="clave"  value="{{old('clave')}}" required>
-          </div>
-            <!-- Input para ingresar descripcion-->
-            <div class="form-group form-material col-md-3">
-              <label>Descripcion</label>
-              <input type="text" class="form-control" name="description"  value="{{old('description')}}" required>
-            </div>
-            <!-- END Input-->
-            <!-- Select para Seleccionar linea-->
-            <div class="col-md-3 remove">
-               <label  class="control-label">Seleccione Linea</label>
-              <select id="line_id"   name="line_id"  class="form-control round">
-                @foreach($lines as $line)
-                  <option value="{{ $line->id }}" required>{{ $line->name }}</option>
-                @endforeach
-              </select>
-            </div>
-            <!-- END Select-->
+            @endif
+            <h2 align="center">Nuevo Producto</h2>
+            <br>
+            <form id="multiplicar" class="" action="/productos" method="POST" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <input type="text" value="2" class="form-control d-none" name="status_id">
+                <div class='row'>
+                    <!-- Select para Seleccionar categoria-->
+                    <div class="col-md-3">
+                        <label>Seleccione Categoria </label>
+                        @if(null !== session('categories'))
+                        <select id="categorie_id" name="category_id" class="form-control round">
+                            @foreach( $categories as $category)
+                            <option value="{{ $category->id}}" required>{{ $category->name }} -
+                                @if($category->type_product == 1) pza @else gr @endif</option>
+                            <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
+                            @endforeach
+                        </select>
+                        @else
+                        <select id="categorie_id" name="category_id" class="form-control round">
+                            @foreach($categories as $category)
+                            <option value="{{ $category->id }}" required>{{ $category->name }} -
+                                @if($category->type_product == 1) pza @else gr @endif</option>
+                            <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
+                            @endforeach
+                        </select>
+                        @endif
+                    </div>
+                    <!-- END Select-->
+                    <!-- Input para ingresar clave del producto-->
+                    <div class="form-group form-material col-md-3">
+                        <label>Clave</label>
+                        <input type="text" class="form-control" name="clave" value="{{old('clave')}}" required>
+                    </div>
+                    <!-- Input para ingresar descripcion-->
+                    <div class="form-group form-material col-md-3">
+                        <label>Descripcion</label>
+                        <input type="text" class="form-control" name="description" value="{{old('description')}}"
+                            required>
+                    </div>
+                    <!-- END Input-->
+                    <!-- Select para Seleccionar linea-->
+                    <div class="col-md-3 remove">
+                        <label class="control-label">Seleccione Linea</label>
+                        <select id="line_id" name="line_id" class="form-control round">
+                            @foreach($lines as $line)
+                            <option value="{{ $line->id }}" required>{{ $line->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- END Select-->
+                    <!-- Input para ingresar precio del producto pz-->
+                    <div id="pricecp" class="form-group form-material col-md-3 remove">
+                        <label>Precio Compra</label>
+                        <input type="text" class="form-control" id="pricePurchase" name="price_purchase"
+                            value="{{old('price_purchase')}}">
+                    </div>
+                    <!-- END Input-->
+                    <!-- Input para ingresar precio del producto pz-->
+                    <div id="pricepz" class="form-group form-material col-md-3">
+                        <label>Precio del Producto</label>
+                        <input type="text" class="form-control" name="pricepzt" value="{{old('pricepzt')}}">
+                    </div>
+                    <!-- Input para ingresar precio con descuento-->
+                    <div id="discountpz" class="form-group form-material col-md-3 remove">
+                        <label>Precio con descuentopz</label>
+                        <input type="text" class="form-control" name="max_discountpz" value="{{old('max_discountpz')}}">
+                    </div>
+                    <!-- END Input-->
+                    <div class="col-md-3 form-material remove">
+                        <label class="control-label">Precio de la linea</label>
+                        <input type="text" name="" id="line_price" class="form-control" readonly>
+                    </div>
+                    <!-- END Select-->
+                    <!-- Input para ingresar Peso del producto-->
+                    <div class="form-group form-material col-md-3 remove">
+                        <label>Gramos</label>
+                        <input type="text" id="multiplicador" class="form-control" name="weigth">
+                    </div>
+                    <!-- END Input-->
+                    <!-- Input para ingresar precio del producto-->
+                    <div id="show" class="form-group form-material col-md-3 remove">
+                        <label>Precio del Producto</label>
+                        <input type="text" readonly="readonly" class="form-control" id="total" readonly name="price"
+                            value="{{old('price')}}">
+                    </div>
+                    <!-- END Input-->
+                    <!-- Input para ingresar Tope de descuento -->
+                    <div class="form-group form-material col-md-3 remove">
+                        <label>Precio con descuentogr</label>
+                        <input type="text" readonly="readonly" class="form-control" id="discount" readonly
+                            name="max_discount" value="{{old('max_discount')}}">
+                    </div>
+                    <!-- END Input-->
 
-            <!-- Input para ingresar precio del producto pz-->
-            <div id="pricecp" class="form-group form-material col-md-3 remove">
-              <label>Precio Compra</label>
-              <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{old('price_purchase')}}">
-            </div>
-            <!-- END Input-->
-
-            <!-- Input para ingresar precio del producto pz-->
-            <div id="pricepz" class="form-group form-material col-md-3">
-              <label>Precio del Producto</label>
-              <input type="text"  class="form-control"  name="pricepzt" value="{{old('pricepzt')}}">
-            </div>
-
-
-            <!-- Input para ingresar precio con descuento-->
-            <div id="discountpz" class="form-group form-material col-md-3 remove">
-              <label>Precio con descuentopz</label>
-              <input type="text"  class="form-control"  name="max_discountpz" value="{{old('max_discountpz')}}">
-            </div>
-            <!-- END Input-->
-            <div   class="col-md-3 form-material remove">
-              <label  class="control-label">Precio de la linea</label>
-              <input type="text" name="" id="line_price" class="form-control" readonly>
-            </div>
-            <!-- END Select-->
-            <!-- Input para ingresar Peso del producto-->
-            <div class="form-group form-material col-md-3 remove">
-              <label>Gramos</label>
-              <input type="text" id="multiplicador"  class="form-control" name="weigth" >
-            </div>
-            <!-- END Input-->
-            <!-- Input para ingresar precio del producto-->
-            <div id="show" class="form-group form-material col-md-3 remove">
-              <label>Precio del Producto</label>
-              <input type="text"readonly="readonly" class="form-control" id="total" readonly name="price" value="{{old('price')}}">
-            </div>
-            <!-- END Input-->
-            <!-- Input para ingresar Tope de descuento -->
-            <div class="form-group form-material col-md-3 remove">
-              <label>Precio con descuentogr</label>
-              <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount" value="{{old('max_discount')}}">
-            </div>
-            <!-- END Input-->
-            <div>
-                @foreach ($shops as $shop)
-                <input type="hidden" name="shop_id" value="{{$shop->id}}">
-                @endforeach
-            </div>
-            <!-- Select para Seleccionar sucursal-->
-            <div class="col-md-3">
-              <label>Seleccione Sucursal</label>
-              <select name="branch_id" class="form-control round">
-                @php
-                    $branches = $user->shop->branches;
-                @endphp
-                  @foreach($branches as $branch)
-                    <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
-                  @endforeach
-              </select>
-            </div>
-            <!-- END Select-->
-            <!-- Input para ingresar Observaciones-->
-            <div class="form-group form-material col-md-3">
-              <label>Observaciones</label>
-              <input type="text" class="form-control" name="observations"  value="{{old('observations')}}">
-            </div>
-            <!-- END Input-->
-            <!-- Input para Seleccionar Imagen del producto-->
-            <div class="form-group form-material col-md-3">
-              <label for="image" class="btn btn-primary">Imagen</label>
-              <input type="file" name="image" id="image" class="hidden">
-            </div>
-            <!-- END Input-->
-          </div>
-          <!-- Botón para guardar Producto-->
-          <div class="form-group col-md-4">
-           <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
-          </div>
-          <!-- END Botón-->
+                    <!-- Select para Seleccionar sucursal-->
+                    <div class="col-md-3">
+                        <label>Seleccione Sucursal</label>
+                        <select name="branch_id" class="form-control round">
+                            @foreach($branches as $branch)
+                            <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- END Select-->
+                    <!-- Input para ingresar Observaciones-->
+                    <div class="form-group form-material col-md-3">
+                        <label>Observaciones</label>
+                        <input type="text" class="form-control" name="observations" value="{{old('observations')}}">
+                    </div>
+                    <!-- END Input-->
+                    <!-- Input para Seleccionar Imagen del producto-->
+                    <div class="form-group form-material col-md-3">
+                        <label for="image" class="btn btn-primary">Imagen</label>
+                        <input type="file" name="image" id="image" class="hidden">
+                    </div>
+                    <!-- END Input-->
+                </div>
+                <!-- Botón para guardar Producto-->
+                <div class="form-group col-md-4">
+                    <button id="submit" type="submit" name="button" class="btn btn-primary">Guardar</button>
+                </div>
+                <!-- END Botón-->
         </div>
-      </form>
+        </form>
     </div>
-  </div>
+</div>
 @endsection
 
 @section('disabled-submit')
 <script type="text/javascript">
-$(document).ready(function(){
+    $(document).ready(function(){
 
   $("#categories").change(function(){
     if ($(this).val() == "" || $("#file").val() == "") {
@@ -203,7 +198,7 @@ $(document).ready(function(){
 <!-- Función para obtener el precio de linea-->
 @section('precio-linea')
 <script type="text/javascript">
-//detecta el tipo de categoria y depediento al tipo renderea el formulario
+    //detecta el tipo de categoria y depediento al tipo renderea el formulario
   var categoryTypeproduct = {!! $categories !!};
 
   let defaul = categoryTypeproduct[0]
@@ -344,7 +339,7 @@ $('#multiplicador').keyup(function(){
 (peso del producto por el precio de la linea)-->
 @section('calcular-precio')
 <script type="text/javascript">
-function multiplicar(){
+    function multiplicar(){
   m1 = document.getElementById("secondary").value;
   m2 = document.getElementById("multiplicador").value;
   r = m1*m2;

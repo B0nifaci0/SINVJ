@@ -42,19 +42,9 @@ class ProductController extends Controller
                 'branch_id' => $user->branch_id,
                 'status_id' => 2
             ])
-                ->whereNull('products.deleted_at')
                 ->orderBy('clave', 'asc')->get();
         } else {
-            $branches = Branch::where('shop_id', $user->shop->id)->get();
-            $branch_ids = $branches->map(function ($item) {
-                return $item->id;
-            });
-            $products = Product::with('line')
-                ->where('shop_id', $shop_id)
-                ->whereNull('products.deleted_at')
-                ->whereIn('branch_id', $branch_ids)
-                ->whereIn('status_id', [1, 2, 3, 4])
-                ->get();
+            $products = $user->shop->products;
         }
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
@@ -67,19 +57,7 @@ class ProductController extends Controller
 
             $product->image = $this->getS3URL($path);
         }
-
-        $shops = Auth::user()->shop()->get();
-        //return $shops;
-        $category = Auth::user()->shop->id;
-        $categories = Shop::find($category)->categories()->get();
-        $line = Auth::user()->shop->id;
-        $lines = Shop::find($line)->lines()->get();
-        //return $lines;
-        $status = Auth::user()->shop->id;
-        $statuses = Status::all();
-        // $title = 'Productos De Tienda';
-        //  return $products;
-        return view('product/index', compact('user', 'categories', 'lines', 'shops', 'statuses', 'products'));
+        return view('product/index', compact('products'));
     }
 
     public function reportProductSeparated()
@@ -216,7 +194,6 @@ class ProductController extends Controller
                     'branch_id' => $user->branch_id
                 ])
                 ->whereIn('status_id', [2, 3, 4])
-                ->whereNull('products.deleted_at')
                 ->orderBy('clave', 'asc')
                 ->get();
         } else {
@@ -225,7 +202,6 @@ class ProductController extends Controller
                     'branch_id' => $user->branch_id
                 ])
                 ->whereIn('status_id', [2, 3, 4])
-                ->whereNull('products.deleted_at')
                 ->orderBy('clave', 'asc')
                 ->get();
         }
@@ -270,14 +246,7 @@ class ProductController extends Controller
 
         $categories = Shop::find($shop_id)->categories()->get();
         $lines = Shop::find($shop_id)->lines()->get();
-        //$statuses = Shop::find($shop_id)->statuss()->get();
         $statuses = Status::all();
-
-        // if($grupo==null){
-        // $products = Shop::find($shop_id)->products()->get();
-        // }else{
-        // $products = Product::join('shops', 'shops.id','=', 'products.shop_id')->where('shops.shop_group_id',$grupo)->get();
-        // }
 
         $products = Product::where([
             'branch_id' => $user->branch_id
@@ -315,21 +284,17 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $category = Auth::user()->shop->id;
-        //return $category;
         $user = Auth::user();
-        $line = Auth::user()->shop->id;
-        $shops = Auth::user()->shop()->get();
-        //return $shops;
-        //$categories = Shop::find($category)->categories()->get();
-        $categories = Category::where('shop_id', '=', NULL)->get();
-        //$categories;
-        //$lines = Shop::find($line)->lines()->get();
-        $lines = Line::where('shop_id', '=', NULL)->get();
-        //return $lines;
-        $status = Auth::user()->shop->id;
-        $statuses = Status::all();
-        return view('product/add', compact('user', 'categories', 'lines', 'shops', 'statuses'));
+        $branches = $user->shop->branches;
+        if ($user->shop->shop_group_id) {
+            $group = $user->shop->shop_group_id;
+            $categories = Category::where('shop_group_id', $group)->get();
+            $lines = Line::where('shop_group_id', $group)->get();
+        } else {
+            $categories = $user->shop->categories;
+            $lines = $user->shop->lines;
+        }
+        return view('product/add', compact('branches', 'categories', 'lines'));
     }
 
     /**
@@ -341,6 +306,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //return $request;
+        $user = Auth::user();
         $category = Category::find($request->category_id);
         //return $category;
         $validator = Validator::make($request->all(), [
@@ -350,22 +316,20 @@ class ProductController extends Controller
             'weigth' => Rule::requiredIf($category->type_product == 2),
             'price' => Rule::requiredIf($category->type_product == 2),
         ]);
-     
+
         if ($validator->fails()) {
             $response = [
                 'success' => false,
                 'errors' => $validator->errors(),
                 'error' => 'Error en alguno de los campos'
             ];
-            //return response()->json($response, $this->unprocessable); 
-            return redirect()->back()->withErrors($validator->errors())->withInput($request->all());        
-}
+            //return response()->json($response, $this->unprocessable);
+            return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
+        }
         $date = date("Y-m-d");
-        $branches = Auth::user()->shop->branches;
-        $user = Auth::user();
         $branches = $user->shop->branches;
         $exist = Product::where('clave', $request->clave)
-            ->where('shop_id', Auth::user()->shop->id)
+            ->where('shop_id', $user->shop->id)
             ->first();
         if ($exist) {
             return redirect('/productos')->with('mesage', 'La Clave que intentas registrar ya existe!');
@@ -383,6 +347,7 @@ class ProductController extends Controller
         $data['user_id'] = Auth::user()->id;
         $data['price_purchase'] = $request->price_purchase;
         $data['status_id'] = $request->status_id;
+        $data['shop_id'] = $user->shop->id;
 
         $category = Category::find($request->category_id);
         if ($category->type_product == 1) {
@@ -394,7 +359,7 @@ class ProductController extends Controller
             $data['price_purchase'] = $line->purchase_price * $request->weigth;
         }
 
-        $categories = Auth::user()->shop->categories()->get();
+        $categories = $user->shop->categories()->get();
         $client_category_id = $request->category_id;
 
         $selected_category = $categories->filter(function ($value, $key) use ($client_category_id) {
@@ -464,36 +429,18 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $category = Auth::user()->shop->id;
         $user = Auth::user();
-        $line = Auth::user()->shop->id;
-
-        $shops = Auth::user()->shop()->get();
-        //return $shops;
         $product = Product::find($id);
-        //return $product;
-
-        $shop_categories = Category::where('shop_id', $category)->where('id', '!=', $product->category_id)->get();
-        $categories = Category::where('id', $product->category_id)->get();
-
-        // $categories = $categories->merge($shop_categories);
-        $categories = Category::where('shop_id', '=', NULL)->get();
-        /*
-        if ($product->tipo == 1) {
-            $categories = Category::where('shop_id', '=', NULL)->where('type_product', 1)->get();
+        $branches = $user->shop->branches;
+        if ($user->shop->shop_group_id) {
+            $group = $user->shop->shop_group_id;
+            $categories = Category::where('shop_group_id', $group)->get();
+            $lines = Line::where('shop_group_id', $group)->get();
         } else {
-            $categories = Category::where('shop_id', '=', NULL)->where('type_product', 2)->get();
+            $categories = $user->shop->categories;
+            $lines = $user->shop->lines;
         }
-        */
-
-        $lines = Line::where('shop_id', '=', NULL)->get();
-        // $lines = Shop::find($line)->lines()->get();
-        $branch = Auth::user()->shop->id;
-        $branches = Shop::find($branch)->branches()->get();
-        $statuses = Status::all();
-        // return $product;
-
-        return view('product/edit', compact('product', 'categories', 'lines', 'shops', 'branches', 'statuses', 'user'));
+        return view('product/edit', compact('product', 'categories', 'lines', 'branches'));
     }
 
     /**
@@ -506,7 +453,7 @@ class ProductController extends Controller
     public function update(ProductValidate $request, $id)
     {
         $product = Product::findOrFail($id);
-        //return $request;
+        $user = Auth::user();
 
         if ($request->hasFile('image')) {
             $adapter = Storage::disk('s3')->getDriver()->getAdapter();
@@ -515,26 +462,19 @@ class ProductController extends Controller
             $path = 'products';
             $product->image = $this->saveImages($base64Image, $path, $product->clave);
         }
-
-
         $product->clave = $request->clave;
         $product->description = $request->description;
         $product->category_id = $request->category_id;
         $product->line_id = $request->line_id;
-        //$product->price = ($request->pricepzt) ? $request->pricepzt : $request->price;
         $product->discount = $request->max_discountpz ? $request->max_discountpz : 0;
-        //$product->price= ($request->pricepzt) ? $request->pricepzt :0 ;
         $product->discount = $request->max_discount ? $request->max_discount : 0;
         $product->weigth = $request->weigth;
         $product->observations = $request->observations;
-
         $product->price_purchase = $request->price_purchase;
-        //$product->discount = $request->discount;
         $product->price = $request->pricepzt;
-        //$product->max_discountpz = $request->max_discountpz;
         $product->status_id = $request->status_id;
         $product->branch_id = $request->branch_id;
-        //$product->inventory = $request->inventory;
+        $product->shop_id = $user->shop->id;
 
         $category = Category::find($request->category_id);
         if ($category->type_product == 1) {
@@ -546,11 +486,8 @@ class ProductController extends Controller
             $product->price = $request->price;
             $data['price_purchase'] = $line->purchase_price * $request->weigth;
         }
-
-
         $product->save();
 
-        //return $request->all();
         return redirect('/productos')->with('mesage-update', 'El producto se ha actualizado  exitosamente!');
     }
 
@@ -613,39 +550,29 @@ class ProductController extends Controller
 
     public function reetiquetado($id)
     {
-        $category = Auth::user()->shop->id;
         $user = Auth::user();
-        $line = Auth::user()->shop->id;
-
         $date = Carbon::now();
         $date = $date->format('Y-m-d');
-
-        $shops = Auth::user()->shop()->get();
-        //return $shops;
-        $products = Product::join('categories', 'categories.id', 'products.category_id')
-            ->where('products.id', $id)
-            ->withTrashed()
-            ->select('products.*', 'categories.type_product as tipo')
-            ->get();
-        //return $products;
-        foreach ($products as $p) {
-            if ($p->tipo == 1) {
-                $categories = Category::where('shop_id', '=', NULL)->where('type_product', 1)->get();
-            } else {
-                $categories = Category::where('shop_id', '=', NULL)->where('type_product', 2)->get();
-            }
-            $p->restored_at = $date;
+        $product = Product::onlyTrashed()
+            ->where('id', $id)
+            ->first();
+        $category = Category::where('id', $product->category_id)->first();
+        $branches = $user->shop->branches;
+        if ($user->shop->shop_group_id) {
+            $group = $user->shop->shop_group_id;
+            $categories = Category::where('shop_group_id', $group)
+                ->where('type_product', $category->type_product)
+                ->get();
+            $lines = Line::where('shop_group_id', $group)->get();
+            //            return $categories;
+        } else {
+            $categories = $user->shop->categories;
+            $categories = $categories->where('type_product', $category->type_product)->values();
+            $lines = $user->shop->lines;
+            //  return $categories;
         }
-        //return $categories;
-
-        $lines = Line::where('shop_id', '=', NULL)->get();
-        // $lines = Shop::find($line)->lines()->get();<div class="">5555</div>
-        $branch = Auth::user()->shop->id;
-        $branches = Shop::find($branch)->branches()->get();
-        $statuses = Status::all();
-        //return $products;
-
-        return view('product/reetiquetado', compact('products', 'categories', 'lines', 'shops', 'branches', 'statuses', 'user'));
+        $product->restored_at = $date;
+        return view('product/reetiquetado', compact('product', 'categories', 'lines', 'branches'));
     }
 
     public function restore($id)
@@ -739,7 +666,7 @@ class ProductController extends Controller
     {
 
         /**Codigo para hacer las validaciones de los campos para realizar las consultas para el reporte */
-        $idshop = Auth::user()->shop->id;
+        $user = Auth::user()->shop->id;
         //$status = Shop::find($idshop)->statuss()->get();
         $status = Status::all();
         $line = Shop::find($idshop)->lines()->get();
@@ -756,14 +683,14 @@ class ProductController extends Controller
         /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
 
         if ($request->estatus_id == 3) {
-            $products = Product::join('transfer_products', 'transfer_products.product_id', 'products.id')
-                ->where("products.branch_id", $request->branch_id)
-                ->whereBetween('products.updated_at', [$fecini, $fecter])
-                ->where("products.status_id", $request->estatus_id)
-                ->where("products.category_id", $request->category_id)
-                ->where("products.line_id", "=", $request->id)
-                ->orderBy('products.clave', 'asc')
-                ->get();
+            // $products = Product::join('transfer_products', 'transfer_products.product_id', 'products.id')
+            //     ->where("products.branch_id", $request->branch_id)
+            //     ->whereBetween('products.updated_at', [$fecini, $fecter])
+            //     ->where("products.status_id", $request->estatus_id)
+            //     ->where("products.category_id", $request->category_id)
+            //     ->where("products.line_id", "=", $request->id)
+            //     ->orderBy('products.clave', 'asc')
+            //     ->get();
         }
         $branches = Branch::where("id", $request->branch_id)->get();
         foreach ($branches as $branch) {
@@ -1507,15 +1434,6 @@ class ProductController extends Controller
 
         $compra = $precio;
         $utilidad = $venta - $compra;
-
-
-        /**Finalizan consultas de folio de la venta, la hora y el dia */
-
-        /**Variable para retornar los archivos que podran ser descargados en pdf
-         * contiene las variables de las cuales se hicieron las consultas para poder
-         * hacer uso de la informacion de cada consulta
-         */
-
         $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop', 'shops', 'products', 'branches', 'sales', 'hour', 'dates', 'total', 'cash', 'compra', 'utilidad', 'lines', 'venta', 'categoria'));
         return $pdf->stream('ReporteUtilidad.pdf');
     }
