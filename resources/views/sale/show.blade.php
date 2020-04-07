@@ -174,7 +174,7 @@ SUCURSAl
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5" align="center">Total</td>
                     <td><strong>$ {{ $sale->total }}</strong></td>
                     @if($sale->paid_out != $sale->total)
                         @if($sale->change == 0)
@@ -220,7 +220,7 @@ SUCURSAl
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5" align="center">Total</td>
                     <td><strong>$ {{ $finalprice }}</strong></td>
                 </tr>
             </tbody>
@@ -300,18 +300,23 @@ SUCURSAl
                             </td>
                             <td>$ {{ $partial->amount }}</td>
                             <td>
-                                <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
-                                    data-close-btn-inside="false" data-fixed-contentPos="true"
-                                    data-main-class="mfp-margin-0s mfp-with-zoom"
-                                    data-zoom='{"enabled": "true","duration":"300"}'>
-                                    <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200"
-                                        height="150" />
+                                @if($partial->image)
+                                    <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
+                                        data-close-btn-inside="false" data-fixed-contentPos="true"
+                                        data-main-class="mfp-margin-0s mfp-with-zoom"
+                                        data-zoom='{"enabled": "true","duration":"300"}'>
+                                        <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200"
+                                            height="150" />
+                                @else
+                                    Sin Imagen
+                                @endif
                             </td>
                         </tr>
                         @endforeach
                         <tr>
                             <td colspan="2"></td>
                             <td><strong>$ {{ $sale->partials->sum('amount') }}</strong></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
