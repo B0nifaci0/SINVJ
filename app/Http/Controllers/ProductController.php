@@ -374,9 +374,6 @@ class ProductController extends Controller
         if ($category->type_product == 1 && (!$data['price_purchase']) || !is_numeric($data['price_purchase'])) {
             return back()->with('categories', $categories)->withErrors(['el precio compra es requerido']);
         }
-        /*if($category->type_product == 2 && (!$data['weigth']) || !is_numeric($data['weigth'])){
-          return back()->with('categories', $categories)->withErrors(['Los gramos son requeridos']);
-        }*/
 
         $product = new Product($data);
         $product->date_creation = $date;
@@ -391,12 +388,6 @@ class ProductController extends Controller
             }
             //return $restored_product;
         }
-
-        // if ($request->hasFile('image')){
-        //    $filename = $request->image->getCLientOriginalName();
-        //    $request->image->storeAs('public/upload/products',$filename);
-        //    $product->image = $filename;
-        // }
 
         if ($request->hasFile('image')) {
             $adapter = Storage::disk('s3')->getDriver()->getAdapter();

@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\ShopGroupsController;
+
 Route::get('/', function () {
     return view('auth/login');
 });
@@ -294,6 +296,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('reportes-traspasos', 'TrasferUserController@reportTransfer');
     Route::get('reportTransferG', 'TrasferUserController@reportTransferG');
     Route::get('reportTransfer', 'TrasferUserController@reportTransferBranch');
+    Route::get('groupCategories', 'ShopGroupsController@categories');
+    Route::get('groupLines', 'ShopGroupsController@lines');
+    Route::post('groupCategories/enable', 'ShopGroupsController@activateCategory');
+    Route::post('groupLines/enable', 'ShopGroupsController@activateLine');
 });
 
 Auth::routes(['verify' => true]);
