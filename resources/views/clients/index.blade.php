@@ -90,7 +90,13 @@ LISTA DE  SUCURSALES
                     @foreach ($public as $client)
                   <tr id = "row{{ $client->id }}">
                     <td>{{$client->name}}</td>
-                    <td>{{$client->phone_number ? $client->phone_number : 'Sin Telefono' }}</td>
+                    <td>
+                    @if($client->phone_number == null || $client->phone_number == 0000000000)
+                      Sin Telefono
+                    @else
+                    {{$client->phone_number }}
+                    @endif
+                    </td>
                     <td>
                         <!-- Botón para ver cliente-->
                         <a href="/mayoristas/{{ $client->id }}" type="button"

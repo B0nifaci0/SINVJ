@@ -427,6 +427,7 @@ seleccionado con sus respectivos datos-->
         var totalIncome = 0;
 
         var clients = {!! $clients!!};
+        var usuario = {!! $user->type_user!!};
         var sales = {!! $sales !!}
         var new_id = {!! $new_id !!};
         var old_id = new_id;
@@ -754,6 +755,10 @@ seleccionado con sus respectivos datos-->
                         product = product[0]
 
                         if (selectedPrice < product.discount) {
+                            overDiscount.push(product)
+                            overDiscountAuth = false;
+                        }
+                        if (selectedPrice > product.price && usuario == 3) {
                             overDiscount.push(product)
                             overDiscountAuth = false;
                         }
