@@ -294,6 +294,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('reportes-traspasos', 'TrasferUserController@reportTransfer');
     Route::get('reportTransferG', 'TrasferUserController@reportTransferG');
     Route::get('reportTransfer', 'TrasferUserController@reportTransferBranch');
+
+
+    //RUTAS MODULO ADMINISTRACION
+    Route::get('ajustes', 'SettingController@index');
+    Route::get('ajustes/create', 'SettingController@store');
+    Route::get('ajustes/{id}/edit', 'SettingController@update');
 });
 
 Auth::routes(['verify' => true]);

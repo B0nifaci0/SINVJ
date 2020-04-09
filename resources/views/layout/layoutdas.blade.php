@@ -528,6 +528,12 @@
                                         </a>
                                     </li>
                                 </ul>
+                                <li class="site-menu-item">
+                                    <a class="animsition-link" href="/ajustes">
+                                        <i class="site-menu-icon icon fa-cog" aria-hidden="true"></i>
+                                        <span class="site-menu-title">Ajustes</span>
+                                    </a>
+                                </li>                             
                             </li>
                         </ul>
                         @endif
