@@ -21,7 +21,7 @@ ALTA BITACORAS
                             <h2 class="panel-title" style="color:white" align="center"> Perfil De Cliente
                             </h2>
                             <div class="panel-actions float-right col-">
-                    <button onclick="window.location.href='/mayoristas'" class="btn btn-sm small btn-floating
+                    <button onclick="window.location.href='/ventas'" class="btn btn-sm small btn-floating
                     btn-primary waves-light float-right" data-original-title="Ir a mis vent"> <i
                             class="icon fa-reply-all " aria-hidden="true"></i></button>
                 </div>
