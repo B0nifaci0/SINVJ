@@ -638,7 +638,20 @@ seleccionado con sus respectivos datos-->
                 e.preventDefault();
                 overDiscount = [];
                 console.log("selectedProducts", selectedProducts);
+                var val_phone = false;
                 var phoneNumber = $('#phone').val();
+                var id_client = $('#public-id').val();
+                if(old_id == new_id)
+                {
+                    var client = clients.filter(c => c.id == id_client)[0];
+                    console.log(client);
+                    if(client.phone_number == null)
+                    {
+                        console.log("telefono del cliente nulo");
+                        val_phone = true;
+                    }
+
+                }
                 var type_sale = $('#user-type').val();
                 console.log(type_sale);
                 if(type_sale == 2)
@@ -689,10 +702,13 @@ seleccionado con sus respectivos datos-->
                 {
                     if(phoneNumber == '' || phoneNumber.length == 10 )
                     {
+                        if(val_phone == false)
+                        {
                         console.log("Venta Permitida");
+                        }
                     }
                 } else if(type_sale == 1 && total > totalIncome && phoneNumber == '') {
-                    console.log("OLD ID: ",old_id," New ID: ",new_id);
+                    console.log("Venta No Permitida");
                     Swal.fire(
                         'No permitido',
                         'Para continuar, ingrese un numero telefonico valido',
@@ -700,7 +716,17 @@ seleccionado con sus respectivos datos-->
                     );
                     e.preventDefault();
                     return
+                }
 
+                if(type_sale == 1 && total > totalIncome && phoneNumber == '' && val_phone == true) {
+                    console.log("Venta No Permitida");
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingrese un numero telefonico valido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
                 }
 
                 let lengthImage = image.files.length;
@@ -1006,7 +1032,9 @@ seleccionado con sus respectivos datos-->
                         console.log("Indice", index);
 
                         total -= Number($(`#finalPrice${product.id}`).val());
-                        $("#totalCash").val(total);
+                        $("#totalCash").html(total);
+                        $('#totalPay').val(total);
+                        $('#pagar').val(total);
 
                         $(`#raw-${product.id}`).remove();
 
@@ -1037,6 +1065,11 @@ seleccionado con sus respectivos datos-->
 
             });
 
+            $('#credit_limit').on('input', function() {
+            let id = $(this).attr('id');
+            let val = $(this).val();
+            $(`#${id}`).val(val.replace(/\s+/, ""));
+            });
 
             // $('#continuar').click(function(e) {
             // e.preventDefault();
