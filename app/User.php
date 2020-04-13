@@ -29,6 +29,9 @@ class User extends Authenticatable implements MustVerifyEmail
     const PREMIUM = '1';
     const PRO = '2';
 
+    const ADMIN_GROUP = true;
+    const NO_ADMIN_GROUP = false;
+
 
     public  function scopeLast($query)
     {

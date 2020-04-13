@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->foreign('shop_id')->references('id')->on('shops');
             $table->integer('branch_id')->unsigned()->nullable();
             $table->foreign('branch_id')->references('id')->on('branches');
+            $table->boolean('admin_group')->default(User::NO_ADMIN_GROUP);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

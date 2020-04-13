@@ -19,9 +19,9 @@ class CreateLinesTable extends Migration
             $table->string('purchase_price');
             $table->string('sale_price');
             $table->integer('discount_percentage');
-            $table->integer('shop_id')->unsigned();
+            $table->integer('shop_id')->unsigned()->nullable();
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
-            $table->integer('shop_group_id')->unsigned();
+            $table->integer('shop_group_id')->unsigned()->nullable();
             $table->foreign('shop_group_id')->references('id')->on('shop_groups');
             $table->softDeletes();
             $table->timestamps();

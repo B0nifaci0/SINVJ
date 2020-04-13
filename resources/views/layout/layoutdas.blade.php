@@ -146,9 +146,7 @@
                             <!--Pantalla Completa-->
                             <li class="nav-item hidden-sm-down" id="toggleFullscreen">
                                 <a class="nav-link icon icon-fullscreen" data-toggle="fullscreen" href="#"
-                                    role="button">
-                                    <span class="sr-only">Toggle fullscreen</span>
-                                </a>
+                                    role="button"> </a>
                             </li>
                         </ul>
                         <!-- End Navbar Toolbar -->
@@ -518,34 +516,39 @@
                                 <li class="site-menu-item has-sub">
                                     <a href="javascript:void(0)">
                                         <i class="site-menu-icon fa-group" aria-hidden="true"></i>
-                                        <span class="site-menu-title">Grupos</span>
+                                        <span class="site-menu-title">Grupo</span>
                                         <span class="site-menu-arrow"></span>
                                     </a>
                                     <ul class="site-menu-sub">
                                         <li class="site-menu-item">
                                             <a class="animsition-link" href="/grupos">
                                                 <i class="site-menu-icon icon fa-address-card-o" aria-hidden="true"></i>
-                                                <span class="site-menu-title">Mis grupos</span>
+                                                <span class="site-menu-title">Mi grupo</span>
                                             </a>
                                         </li>
+                                        @if (Auth::user()->admin_group == 1)
+                                        <li class="site-menu-item">
+                                            <a class="animsition-link" href="/groupCategories">
+                                                <i class="site-menu-icon fa-pie-chart" aria-hidden="true"></i>
+                                                <span class="site-menu-title">Categorias de mi grupo</span>
+                                            </a>
+                                        </li>
+                                        <li class="site-menu-item">
+                                            <a class="animsition-link" href="/groupLines">
+                                                <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
+                                                <span class="site-menu-title">Lineas de mi grupo</span>
+                                            </a>
+                                        </li>
+                                        @else
+                                        @if (!Auth::user()->shop->shop_group_id)
                                         <li class="site-menu-item">
                                             <a class="animsition-link" href="/grupos/invitacion">
                                                 <i class="site-menu-icon icon fa-wechat" aria-hidden="true"></i>
                                                 <span class="site-menu-title">Unirme a un grupo</span>
                                             </a>
                                         </li>
-                                        <li class="site-menu-item">
-                                            <a class="animsition-link" href="/groupCategories">
-                                                <i class="site-menu-icon fa-pie-chart" aria-hidden="true"></i>
-                                                <span class="site-menu-title">Categorias del Grupo</span>
-                                            </a>
-                                        </li>
-                                        <li class="site-menu-item">
-                                            <a class="animsition-link" href="/groupLines">
-                                                <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
-                                                <span class="site-menu-title">Mis lineas</span>
-                                            </a>
-                                        </li>
+                                        @endif
+                                        @endif
                                     </ul>
                                 </li>
                             </ul>

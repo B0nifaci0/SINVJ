@@ -25,15 +25,16 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {  // Codigo para determinar el tipo de usuario y la tienda a la que pertenece
+    {
         $user = Auth::user();
         if ($user->shop->shop_group_id) {
             $group = $user->shop->shop_group_id;
-            $categories = Category::where('shop_group_id', $group)->get();
-        } else {
-            $categories = $user->shop->categories;
+            $categories_group = Category::where('shop_group_id', $group)->get();
+            $categories_shop = $user->shop->categories;
+            return view('category/index', compact('categories_shop', 'categories_group', 'user'));
         }
-        return view('category/index', compact('categories'));
+        $categories_shop = $user->shop->categories;
+        return view('category/index', compact('categories_shop', 'user'));
     }
 
 
@@ -56,11 +57,17 @@ class CategoryController extends Controller
      */
     public function store(CategoriesRequest $request)
     {
+        $user = Auth::user();
         $category = new Category($request->all());
-        $category->shop_id = Auth::user()->shop->id;
-        $category->save();
-
-        return redirect('/categorias')->with('mesage', 'la categoria se ha agregado exitosamente!');
+        if ($user->admin_group) {
+            $category->shop_group_id = $user->shop->shop_group_id;
+            $category->save();
+            return redirect('/groupCategories')->with('mesage', 'La categoria se ha agregado exitosamente!');
+        } else {
+            $category->shop_id = $user->shop->id;
+            $category->save();
+            return redirect('/categorias')->with('mesage', 'La categoria se ha agregado exitosamente!');
+        }
     }
 
     /**

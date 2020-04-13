@@ -32,11 +32,12 @@ class LineController extends Controller
         $user = Auth::User();
         if ($user->shop->shop_group_id) {
             $group = $user->shop->shop_group_id;
-            $lines = Line::where('shop_group_id', $group)->get();
-        } else {
-            $lines = $user->shop->lines;
+            $lines_group = Line::where('shop_group_id', $group)->get();
+            $lines_shop = $user->shop->lines;
+            return view('line/index', compact('lines_shop', 'lines_group', 'user'));
         }
-        return view('line/index', compact('lines'));
+        $lines_shop = $user->shop->lines;
+        return view('line/index', compact('lines_shop', 'user'));
     }
 
     /**
@@ -58,13 +59,17 @@ class LineController extends Controller
      */
     public function store(LineRequest $request)
     {
-        //$nombre = $request->input("name");
-        //return $nombre;
+        $user = Auth::user();
         $line = new Line($request->all());
-        $line->shop_id = Auth::user()->shop->id;
-        $line->save();
-
-        return redirect('/lineas')->with('mesage', 'la linea se ha agregado exitosamente!');
+        if ($user->admin_group) {
+            $line->shop_group_id = $user->shop->shop_group_id;
+            $line->save();
+            return redirect('/groupLines')->with('mesage', 'La linea se ha agregado exitosamente!');
+        } else {
+            $line->shop_id = $user->shop->id;
+            $line->save();
+            return redirect('/lineas')->with('mesage', 'La linea se ha agregado exitosamente!');
+        }
     }
 
     /**

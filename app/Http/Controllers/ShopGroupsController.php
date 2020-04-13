@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Line;
 use App\Shop;
+use App\User;
 use App\Category;
 use App\ShopGroup;
 use Illuminate\Support\Str;
@@ -35,6 +36,8 @@ class ShopGroupsController extends Controller
             'password' => Str::random(10),
         ]);
         $user->shop->shop_group_id = $shopGroup->id;
+        $user->admin_group = User::ADMIN_GROUP;
+        $user->save();
         $user->shop->save();
         return redirect('/grupos')->with('mesage', 'Se ha creado el grupo correctamente');
     }
@@ -68,70 +71,17 @@ class ShopGroupsController extends Controller
     {
         $user = Auth::user();
         $group = $user->shop->shop_group_id;
+        $categories = Category::where('shop_group_id', $group)->get();
 
-        $nonActiveCategories = Shop::with('categories')
-            ->where('shop_group_id', $group)
-            ->get()
-            ->pluck('categories')
-            ->collapse();
-
-        $shops = Shop::where('shop_group_id', $group)
-            ->select('name', 'id')
-            ->get();
-        $activeCategories = Category::where('shop_group_id', $group)->get();
-
-        return view('shop_groups/categories', compact('activeCategories', 'shops', 'nonActiveCategories'));
+        return view('shop_groups/categories', compact('categories', 'user'));
     }
-
-    function activateCategory(Request $request)
-    {
-        $user = Auth::user();
-        $group = $user->shop->shop_group_id;
-        $category = Category::findOrFail($request->category_id);
-        if (!$category->shop_group_id) {
-            $category->shop_group_id = $group;
-            $category->save();
-            return redirect('/groupCategories')->with('mesage-update', 'La categoria ha sido habilitada exitosamente');
-        } else {
-            $category->shop_group_id = NULL;
-            $category->save();
-            return redirect('/groupCategories')->with('mesage-update', 'La categoria ha sido deshabilitada exitosamente');
-        }
-    }
-
 
     function lines()
     {
         $user = Auth::user();
         $group = $user->shop->shop_group_id;
+        $lines = Line::where('shop_group_id', $group)->get();
 
-        $nonActiveLines = Shop::with('lines')
-            ->where('shop_group_id', $group)
-            ->get()
-            ->pluck('lines')
-            ->collapse();
-
-        $shops = Shop::where('shop_group_id', $group)
-            ->select('name', 'id')
-            ->get();
-        $activeLines = Line::where('shop_group_id', $group)->get();
-
-        return view('shop_groups/lines', compact('activeLines', 'shops', 'nonActiveLines'));
-    }
-
-    function activateLine(Request $request)
-    {
-        $user = Auth::user();
-        $group = $user->shop->shop_group_id;
-        $line = Line::findOrFail($request->line_id);
-        if (!$line->shop_group_id) {
-            $line->shop_group_id = $group;
-            $line->save();
-            return redirect('/groupLines')->with('mesage-update', 'La linea ha sido habilitada exitosamente');
-        } else {
-            $line->shop_group_id = NULL;
-            $line->save();
-            return redirect('/groupLines')->with('mesage-update', 'La linea ha sido deshabilitada exitosamente');
-        }
+        return view('shop_groups/lines', compact('lines', 'user'));
     }
 }
