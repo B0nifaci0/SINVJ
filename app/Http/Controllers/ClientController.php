@@ -132,7 +132,7 @@ class ClientController extends Controller
         $user = Auth::user();
         if ($user->shop) {
             $branches = $user->shop->branches;
-            $selected_branch = $branches->filter(function ($value, $key) use ($client_branch_id) {
+        /*    $selected_branch = $branches->filter(function ($value, $key) use ($client_branch_id) {
                 return $value->id == $client_branch_id;
             })->first();
 
@@ -141,7 +141,7 @@ class ClientController extends Controller
                 return $value->id == $client_branch_id;
             });
             $branches->prepend($selected_branch);
-            // return $branches;
+        */
         }
         return view('clients.form', compact('client', 'branches'));;
     }
@@ -153,38 +153,29 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(ClientRequest $request, $id)
+    public function update(Request $request, $id)
     {
+        //return $request;
         $client = Client::find($id);
-        //return $client;
-        $validator = Validator::make($request->all(), [
-            'first_lastname' => Rule::requiredIf($client->type_client == 1),
-            'second_lastname' => Rule::requiredIf($client->type_client == 1),
-            'credit' => Rule::requiredIf($client->type_client == 1),
-        ]);
-        if ($validator->fails()) {
-            $response = [
-                'success' => false,
-                'errors' => $validator->errors(),
-                'error' => 'Error en alguno de los campos'
-            ];
-            //return response()->json($response, $this->unprocessable);
-            return back()->withErrors($validator->errors());
-        }
 
         $client->name = $request->name;
         $client->phone_number = $request->phone_number;
+        $client->type_client = $request->type_client;
 
         if($client->type_client == 1)
         {
             $client->first_lastname = $request->first_lastname;
             $client->second_lastname = $request->second_lastname;
             $client->credit = $request->credit;
+            $client->branch_id = $request->branch_id;
         } else {
             $client->first_lastname = null;
             $client->second_lastname = null;
             $client->credit = null;
+            $client->branch_id = null;
         }
+
+        //return $client;
 
         $client->save();
 
