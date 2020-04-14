@@ -37,12 +37,12 @@ LISTA DE  LINEA
       </button>
     </div>
     @endif
-    <div class="page-content">
+    <div class="">
       <!-- Panel Basic -->
       <div class="panel">
         <div class="panel-body">
             <div class="example-wrap">
-              <h1 class="text-center panel-title">Lineas</h1>
+              <h1 class="text-center panel-title">Líneas</h1>
               <div class="panel-actions float-right">
                 <div class="container-fluid row float-right">
                   @if(Auth::user()->type_user == 1 )

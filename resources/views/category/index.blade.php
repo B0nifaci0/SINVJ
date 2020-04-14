@@ -34,12 +34,12 @@ LISTA DE  CATEGORIA
       </button>
     </div>
   @endif
-  <div class="page-content">
+  <div class="">
     <!-- Panel Basic -->
     <div class="panel">
         <div class="panel-body">
             <div class="example-wrap">
-              <h1 class="text-center panel-title">Categorias</h1>
+              <h1 class="text-center panel-title">Categorías</h1>
               <div class="panel-actions float-right">
                 <div class="container-fluid row float-right">
                   @if(Auth::user()->type_user == 1 )

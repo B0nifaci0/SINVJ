@@ -53,13 +53,13 @@ EDITAR SUCURSALES
         <!-- END Input-->
         <!-- Input Para editar Telefono-->
         <div class="form-group form-material col-md-6">
-          <label>Telefono:</label>
+          <label>Teléfono:</label>
           <input type="text" class="form-control" value="{{$branch->phone_number}}" name="phone_number" required> 
         </div>
         <!-- END Input-->
         <!-- Input Para editar Direccion-->
         <div class="form-group form-material col-md-6">
-          <label>Direccion:</label>
+          <label>Dirección:</label>
           <input type="text" class="form-control" value="{{$branch->address}}" name="address" required> 
         </div>
         <!-- END Input-->

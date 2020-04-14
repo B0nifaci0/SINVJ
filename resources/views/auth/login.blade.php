@@ -9,7 +9,7 @@
                 <img class="brand-img" src="../../assets/images/logo@2x.png" alt="...">
                 <h2 class="brand-text font-size-40">SINVJ</h2>
             </div>
-            <p class="font-size-20">Sistema De Inventarios Para Joyeria Fina.</p>
+            <p class="font-size-20">Sistema De Inventarios Para Joyería Fina.</p>
         </div>
         <div class="page-login-main">
             <div class="brand hidden-md-up">

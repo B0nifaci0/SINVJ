@@ -35,7 +35,7 @@ ALTA PRODUCTO
         <div class='row'>
         <!-- Select para Seleccionar categoria-->
           <div class="col-md-3">
-            <label>Seleccione Categoria </label>
+            <label>Seleccione Categoría </label>
             @if(null !== session('categories'))
             <select id="categorie_id" name="category_id" class="form-control round">
             @foreach( $categories as $category)
@@ -60,13 +60,13 @@ ALTA PRODUCTO
           </div>
             <!-- Input para ingresar descripcion-->
             <div class="form-group form-material col-md-3">
-              <label>Descripcion</label>
+              <label>Descripción</label>
               <input type="text" class="form-control" name="description"  value="{{old('description')}}" required>
             </div>
             <!-- END Input-->
             <!-- Select para Seleccionar linea-->
             <div class="col-md-3 remove">
-               <label  class="control-label">Seleccione Linea</label>
+               <label  class="control-label">Seleccione Línea</label>
               <select id="line_id"   name="line_id"  class="form-control round">
                 @foreach($lines as $line)
                   <option value="{{ $line->id }}" required>{{ $line->name }}</option>
@@ -96,7 +96,7 @@ ALTA PRODUCTO
             </div>
             <!-- END Input-->
             <div   class="col-md-3 form-material remove">
-              <label  class="control-label">Precio de la linea</label>
+              <label  class="control-label">Precio de la línea</label>
               <input type="text" name="" id="line_price" class="form-control" readonly>
             </div>
             <!-- END Select-->

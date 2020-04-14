@@ -12,7 +12,7 @@ LISTA PRODUCTO
 @endsection
 @section('content')
 <div class="panel-body">
-  <div class="page-content">
+  <div class="">
     <!-- Mesage-Muestra mensaje De que el producto se a agregado exitosamente-->
     @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -63,7 +63,7 @@ LISTA PRODUCTO
               <div class="col-6">
                 <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating
                  btn-info waves-effect waves-light waves-round float-left"
-                  data-toggle="tooltip" data-original-title="Agregar">
+                  data-toggle="tooltip" data-original-title="Agregar Nuevo Producto">
                   <i class="icon md-plus" aria-hidden="true"></i>
                 </button>
               </div>
@@ -95,7 +95,7 @@ LISTA PRODUCTO
                         <th data-hide="phone, tablet">Observaciones</th>
                         <th data-hide="phone, tablet">Imagen</th>
                         <th data-hide="phone, tablet">Categoría</th>
-                        <th data-hide="phone, tablet">Linea</th>
+                        <th data-hide="phone, tablet">Línea</th>
                         <th data-hide="phone, tablet">Sucursal</th>
                         <th data-hide="phone, tablet">Status</th>
                         @if(Auth::user()->type_user == 1 )
@@ -116,7 +116,7 @@ LISTA PRODUCTO
                         <th>Observaciónes</th>
                         <th>Imagen</th>
                         <th>Categoría</th>
-                        <th></th>
+                        <th>Línea</th>
                         <th>Sucursal</th>
                         <th>Status</th>
                         @if(Auth::user()->type_user == 1 )

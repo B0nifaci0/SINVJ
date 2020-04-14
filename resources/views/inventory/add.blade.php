@@ -16,7 +16,7 @@ ALTA LíNEAS
         <strong>{{ session('mesage') }}</strong>
       </div>
     @endif
-  <div class="page-content">
+  <div class="">
     <div class="panel">
       <div class="panel-body">
       @if($errors->count() > 0)

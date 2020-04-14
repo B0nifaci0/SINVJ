@@ -9,8 +9,8 @@
             <img class="brand-img" src="../../assets/images/logo@2x.png" alt="...">
             <h2 class="brand-text font-size-40">SINVJ</h2>
           </div>
-          <p class="font-size-20">Sistema De Invetarios Para Joyeria Fina.
-            Registrate Y Toma El Control De Tu Empresa.</p>
+          <p class="font-size-20">Sistema De Inventarios Para Joyería Fina.
+            Regístrate Y Toma El Control De Tu Empresa.</p>
         </div>
 
         <div class="page-register-main">
@@ -18,7 +18,7 @@
             <img class="brand-img" src="../../assets/images/logo-colored@2x.png" alt="...">
             <h3 class="brand-text font-size-40">Remark</h3>
           </div>
-          <h3 class="font-size-24">Registrate</h3>
+          <h3 class="font-size-24">Regístrate</h3>
           <p>Ingresa Los Siguientes Datos Para Completar Tu Registro.</p>
            <!-- Form,Method "POST" Envia los datos del formulario a la base de datos-->
            <form method="POST" action="{{ route('register') }}">
@@ -132,9 +132,9 @@
                 {{ __('Register') }}
             </button>
               <!-- END Botón-->
-              <p>¿Tienes cuenta ya?  Por favor, vaya a <a href="{{url('login')}}">Iniciar sesión</a></p>
+              <p>¿Ya tienes cuenta? <a href="{{url('login')}}">Iniciar sesión</a></p>
               <footer class="page-copyright">
-                <p>WEBSITE BY Digital-PineApple</p>
+                <p>WEBSITE BY Digital-Pineapple</p>
                 <p>© 2019. All RIGHT RESERVED.</p>
                 <div class="social">
                   <a class="btn btn-icon btn-round social-twitter mx-5" href="javascript:void(0)">

@@ -331,7 +331,7 @@
                                         <li class="site-menu-item">
                                             <a class="animsition-link" href="/categorias">
                                                 <i class="site-menu-icon fa-pie-chart" aria-hidden="true"></i>
-                                                <span class="site-menu-title">Mis Categorias</span>
+                                                <span class="site-menu-title">Mis Categorías</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -339,7 +339,7 @@
                                         <li class="site-menu-item">
                                             <a class="animsition-link" href="/lineas">
                                                 <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
-                                                <span class="site-menu-title">Mis lineas</span>
+                                                <span class="site-menu-title">Mis líneas</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -622,14 +622,14 @@
                                     <li class="site-menu-item">
                                         <a class="animsition-link" href="/categorias">
                                             <i class="site-menu-icon md-collection-bookmark" aria-hidden="true"></i>
-                                            <span class="site-menu-title">Categorias</span>
+                                            <span class="site-menu-title">Categorías</span>
                                         </a>
                                     </li>
 
                                     <li class="site-menu-item">
                                         <a class="animsition-link" href="/lineas">
                                             <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>
-                                            <span class="site-menu-title">Lineas</span>
+                                            <span class="site-menu-title">Líneas</span>
                                         </a>
                                     </li>
 

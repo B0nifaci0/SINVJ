@@ -12,7 +12,7 @@ LISTA PRODUCTO
 @endsection
 @section('content')
 <div class="panel-body">
-  <div class="page-content">
+  <div class="">
     <!-- Mesage-Muestra mensaje De que el producto se a agregado exitosamente-->
     @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
