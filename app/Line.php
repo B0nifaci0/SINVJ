@@ -31,4 +31,9 @@ class Line extends Model
         'discount_percentage',
 
     ];
+
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

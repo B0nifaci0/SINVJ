@@ -27,13 +27,12 @@ class CategoryController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $categories_shop = $user->shop->categories;
         if ($user->shop->shop_group_id) {
             $group = $user->shop->shop_group_id;
             $categories_group = Category::where('shop_group_id', $group)->get();
-            $categories_shop = $user->shop->categories;
             return view('category/index', compact('categories_shop', 'categories_group', 'user'));
         }
-        $categories_shop = $user->shop->categories;
         return view('category/index', compact('categories_shop', 'user'));
     }
 

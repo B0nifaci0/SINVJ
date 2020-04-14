@@ -62,18 +62,15 @@ class Shop extends Model
     }
     public function expenses()
     {
-
         return $this->hasMany(Expense::class);
     }
     public function groups()
     {
-
         return $this->hasMany(ShopGroup::class);
     }
 
     public function inventories()
     {
-
         return $this->hasMany(InventoryReport::class);
     }
 }

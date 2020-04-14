@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Line;
-use App\Shop;
 use App\User;
 use App\Category;
 use App\ShopGroup;
@@ -64,7 +63,7 @@ class ShopGroupsController extends Controller
         $shop->shop_group_id = $shopGroup->id;
         $shop->save();
 
-        return redirect('/grupos')->with('mesage', "Te has unido al grupo {$shopGroup->name} exitosamente");
+        return redirect('/changeCategoriesAndLines')->with('mesage', "Te has unido al grupo {$shopGroup->name} exitosamente, ahora es necesario actualizar las lineas y categorias de tus productos existentes.");
     }
 
     function categories()
@@ -83,5 +82,54 @@ class ShopGroupsController extends Controller
         $lines = Line::where('shop_group_id', $group)->get();
 
         return view('shop_groups/lines', compact('lines', 'user'));
+    }
+
+    function changeCategoriesAndLines()
+    {
+        $user = Auth::user();
+        $lines = $user->shop->lines()
+            ->whereHas('product')
+            ->get();
+        $categories = $user->shop->categories()
+            ->whereHas('product')
+            ->get();
+        if (!$lines->count() && !$categories->count()) {
+            return redirect('productos')->with('mesage', "No tienes productos por actualizar.");
+        }
+
+        $group = $user->shop->shop_group_id;
+        $lines_group = Line::where('shop_group_id', $group)->get();
+        $categories_group = Category::where('shop_group_id', $group)->get();
+
+        return view('shop_groups/changeCategoriesAndLines', compact('categories', 'lines', 'categories_group', 'lines_group'));
+    }
+
+    function updateCategories(Request $request)
+    {
+        $user = Auth::user();
+        $products = $user->shop->products
+            ->where('category_id', $request->category_id)
+            ->where('status_id', 2);
+        foreach ($products as $product) {
+            $product->category_id = $request->new_category_id;
+            $product->update();
+        }
+        return redirect('changeCategoriesAndLines')->with('mesage', "Los productos han sido actualizados exitosamente");
+    }
+
+    function updateLines(Request $request)
+    {
+        $user = Auth::user();
+        $newLine = Line::where('id', $request->new_line_id);
+        $products = $user->shop->products
+            ->where('line_id', $request->line_id)
+            ->where('status_id', 2);
+        foreach ($products as $product) {
+            $product->line_id = $newLine->id;
+            $product->purchase_price = $product->weigth * $newLine->purchase_price;
+            $product->sale_price = $product->weigth * $newLine->sale_price;
+            $product->update();
+        }
+        return redirect('changeCategoriesAndLines')->with('mesage', "Los productos han sido actualizados exitosamente");
     }
 }

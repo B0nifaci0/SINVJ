@@ -297,7 +297,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('reportTransferG', 'TrasferUserController@reportTransferG');
     Route::get('reportTransfer', 'TrasferUserController@reportTransferBranch');
     Route::get('groupCategories', 'ShopGroupsController@categories');
-    Route::get('groupLines', 'ShopGroupsController@lines');;
+    Route::get('groupLines', 'ShopGroupsController@lines');
+    Route::get('changeCategoriesAndLines', 'ShopGroupsController@changeCategoriesAndLines');
+    Route::PUT('updateCategories', 'ShopGroupsController@updateCategories');
+    Route::PUT('updateLines', 'ShopGroupsController@updateLines');
 });
 
 Auth::routes(['verify' => true]);
