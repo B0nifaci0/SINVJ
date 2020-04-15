@@ -87,7 +87,7 @@ Panel Sucursales
       <div class="col-sm-12 col-lg-12">
       <div class="panel-success">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:black">Lineas de Sucursal</h2>
+        <h2 class="panel-title" style="color:black">Líneas de Sucursal</h2>
         </div>
         <div>
 
@@ -236,7 +236,7 @@ Panel Sucursales
       <div class="col-sm-12 col-lg-12">
       <div class="panel-success">
       <div class="panel-heading">
-        <h2 class="panel-title" style="color:black">Categorias de Sucursal</h2>
+        <h2 class="panel-title" style="color:black">Categorías de Sucursal</h2>
         </div>
         <div>
 

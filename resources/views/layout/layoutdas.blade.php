@@ -448,7 +448,7 @@
                             </li>
                             <li class="site-menu-item has-sub">
                                 <a href="javascript:void(0)">
-                                    <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
+                                    <i class="site-menu-icon fa-user" aria-hidden="true"></i>
                                     <span class="site-menu-title">Usuarios</span>
                                     <span class="site-menu-arrow"></span>
                                 </a>
@@ -463,7 +463,7 @@
                                 <ul class="site-menu-sub">
                                     <li class="site-menu-item">
                                         <a class="animsition-link" href="/usuarios/create">
-                                            <i class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                                            <i class="site-menu-icon fa-user-plus" aria-hidden="true"></i>
                                             <span class="site-menu-title">Agregar Usuario</span>
                                         </a>
                                     </li>
@@ -480,21 +480,21 @@
                                 <ul class="site-menu-sub">
                                     <li class="site-menu-item">
                                         <a class="animsition-link" href="recibo">
-                                            <i class="site-menu-icon icon md-money-box" aria-hidden="true"></i>
+                                            <i class="site-menu-icon icon md-money" aria-hidden="true"></i>
                                             <span class="site-menu-title">Recibo de Nomina</span>
                                         </a>
                                     </li>
                                 </ul>
                             <li class="site-menu-item has-sub">
                                 <a href="javascript:void(0)">
-                                    <i class="site-menu-icon fa-group" aria-hidden="true"></i>
+                                    <i class="site-menu-icon fa-address-book" aria-hidden="true"></i>
                                     <span class="site-menu-title">Clientes</span>
                                     <span class="site-menu-arrow"></span>
                                 </a>
                                 <ul class="site-menu-sub">
                                     <li class="site-menu-item">
                                         <a class="animsition-link" href="/mayoristas">
-                                            <i class="site-menu-icon icon fa-user-circle" aria-hidden="true"></i>
+                                            <i class="site-menu-icon icon fa-id-badge" aria-hidden="true"></i>
                                             <span class="site-menu-title">Clientes</span>
                                         </a>
                                     </li>

@@ -11,7 +11,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
 @endsection
 @section('content')
   <div class="panel-body">
-	<div class="page-content">
+	<div class="">
         <!-- Panel Basic -->
     <div class="panel">
             <div class="panel-body">

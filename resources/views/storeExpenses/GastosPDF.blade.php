@@ -59,7 +59,7 @@
               <thead>
                 <tr>
                   <th>Nombre</th>
-                  <th>Descripcion</th>
+                  <th>Descripción</th>
                   <th>Usuario</th>
                   <th>Sucursal</th>
                   <th>Fecha</th>

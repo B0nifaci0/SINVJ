@@ -8,7 +8,7 @@ TRANSFERENCIAS
 @endsection
 @section('content')
 <div class="panel-body">
-    <div class="page-content">
+    <div class="">
         <!-- Mesage-Muestra mensaje De que el producto se a agregado exitosamente-->
         @if (session('mesage'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -59,7 +59,7 @@ TRANSFERENCIAS
                             <div class="col-6">
                                 <button onclick="window.location.href='/traspasosAA/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left
                   btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip"
-                                    data-original-title="Agregar">
+                                    data-original-title="Nuevo traspaso">
                                     <i class="icon md-plus" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -92,11 +92,11 @@ TRANSFERENCIAS
                                                 <th>Clave</th>
                                                 <th>Peso</th>
                                                 <th>Categoría</th>
-                                                <th>Linea</th>
+                                                <th>Línea</th>
                                                 <th>S.Origen</th>
                                                 <th>Quien lo mando</th>
                                                 <th>S.Destino</th>
-                                                <th>Quien recibio</th>
+                                                <th>Quien recibió</th>
                                                 <th>Status</th>
                                                 <th>Opciones</th>
                                                 <th>Ticket</th>
@@ -108,11 +108,11 @@ TRANSFERENCIAS
                                                 <th>Clave</th>
                                                 <th>Peso</th>
                                                 <th>Categoría</th>
-                                                <th>Linea</th>
+                                                <th>Línea</th>
                                                 <th>S.Origen</th>
                                                 <th>Quien lo mando</th>
                                                 <th>S.Destino</th>
-                                                <th>Quien recibio</th>
+                                                <th>Quien recibió</th>
                                                 <th>Status</th>
                                                 <th>Opciones</th>
                                                 <th>Ticket</th>
@@ -205,11 +205,11 @@ TRANSFERENCIAS
                                             <th>Clave</th>
                                             <th>Peso</th>
                                             <th>Categoría</th>
-                                            <th>Linea</th>
+                                            <th>Línea</th>
                                             <th>S.Origen</th>
                                             <th>Quien lo mando</th>
                                             <th>S.Destino</th>
-                                            <th>Quien recibio</th>
+                                            <th>Quien recibió</th>
                                             <th>Status</th>
                                             <th>Opciones</th>
                                             <th>Ticket</th>
@@ -221,11 +221,11 @@ TRANSFERENCIAS
                                             <th>Clave</th>
                                             <th>Peso</th>
                                             <th>Categoría</th>
-                                            <th>Linea</th>
+                                            <th>Línea</th>
                                             <th>S.Origen</th>
                                             <th>Quien lo mando</th>
                                             <th>S.Destino</th>
-                                            <th>Quien recibio</th>
+                                            <th>Quien recibió</th>
                                             <th>Status</th>
                                             <th>Opciones</th>
                                             <th>Ticket</th>

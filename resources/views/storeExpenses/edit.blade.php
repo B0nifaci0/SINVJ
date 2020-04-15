@@ -29,14 +29,14 @@ MODIFICACIÓ PRODUCTO
           {{ method_field('PUT') }}
           <div class='row'>
             <!-- Input para editar el nombre del gasto -->
-            <div class="form-group form-material col-md-4">
+            <div class="form-group form-material col-md-6">
               <label>Nombre</label>
               <input type="text" class="form-control"value="{{$expense->name}}" name="name">
             </div>
             <!-- END Input-->
             <!-- Input para editar descripcion-->
-            <div class="form-group form-material col-md-4 ">
-              <label>Descripcion</label>
+            <div class="form-group form-material col-md-6 ">
+              <label>Descripción</label>
               <input type="text" class="form-control"value="{{$expense->descripcion}}" name="descripcion">
             </div>
             <!-- END Input-->

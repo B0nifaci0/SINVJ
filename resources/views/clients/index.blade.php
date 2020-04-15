@@ -38,7 +38,7 @@ LISTA DE  SUCURSALES
   </button>
 	</div>
 		@endif
-  <div class="page-content">
+  <div class="">
         <!-- Panel Basic -->
     <div class="panel">
         <div class="panel-body">
@@ -49,7 +49,7 @@ LISTA DE  SUCURSALES
                   @if(Auth::user()->type_user == 1 )
                   <!-- Botón para Generar PDF de productos-->
                   <div class="col-6">
-                    <button onclick="window.location.href='/mayoristas/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip" data-original-title="Agregar">
+                    <button onclick="window.location.href='/mayoristas/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip" data-original-title="Nuevo cliente">
                         <i class="icon md-plus" aria-hidden="true"></i></button>
                   </div>
                   <!-- END Botón-->
@@ -101,13 +101,13 @@ LISTA DE  SUCURSALES
                         <!-- Botón para ver cliente-->
                         <a href="/mayoristas/{{ $client->id }}" type="button"
                         class="btn btn-icon btn-primary waves-effect waves-light waves-round"
-                        data-toggle="tooltip" data-original-title="Ver Perfil">
+                        data-toggle="tooltip" data-original-title="Ver Perfil Cliente">
                         <i class="icon fa-search" aria-hidden="true"></i></button></a>
                         <!--END Botón -->
                         <!-- Botón para editar cliente-->
                         <a href="/mayoristas/{{$client->id}}/edit"> <button type="button"
                         class="btn btn-icon btn-info waves-effect waves-light waves-round"
-                      data-toggle="tooltip" data-original-title="Editar">
+                      data-toggle="tooltip" data-original-title="Editar Cliente">
                       <i class=" icon md-edit" aria-hidden="true"></i></button></a>
                       <!--END Botón -->
                         <!-- Botón para eliminar cliente -->
@@ -166,13 +166,13 @@ LISTA DE  SUCURSALES
                         <!-- Botón para ver cliente-->
                         <a href="/mayoristas/{{ $client->id }}" type="button"
                         class="btn btn-icon btn-primary waves-effect waves-light waves-round"
-                        data-toggle="tooltip" data-original-title="Ver Perfil">
+                        data-toggle="tooltip" data-original-title="Ver Perfil Cliente">
                         <i class="icon fa-search" aria-hidden="true"></i></button></a>
                         <!--END Botón -->
                         <!-- Botón para editar cliente-->
                         <a href="/mayoristas/{{$client->id}}/edit"> <button type="button"
                         class="btn btn-icon btn-info waves-effect waves-light waves-round"
-                      data-toggle="tooltip" data-original-title="Editar">
+                      data-toggle="tooltip" data-original-title="Editar Cliente">
                       <i class=" icon md-edit" aria-hidden="true"></i></button></a>
                       <!--END Botón -->
                         <!-- Botón para eliminar cliente -->
@@ -240,7 +240,7 @@ $(document).ready(function() {
             $("#row" + id).remove();
             Swal.fire(
               'Eliminado',
-              'El registro ha sido eliminado.',
+              'El registro ha sido eliminado con éxito.',
               'success'
             )
           },

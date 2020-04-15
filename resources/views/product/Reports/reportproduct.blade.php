@@ -12,7 +12,7 @@ Panel Principal
 @section('content')
 <!-- Formulario de Reporte de Productos por estatus-->
 
-<div class="page">
+<div class="">
     <div class="page-content container-fluid">
         <div class="examle-wrap">
             <h4 class="example-title">Panel De Reportes de Productos</h4>
@@ -38,7 +38,7 @@ Panel Principal
                                                     aria-controls="producstatusOne" role="tab">Gramos</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#producstatusTwo"
-                                                    aria-controls="producstatusTwo" role="tab">Pieza</a></li>
+                                                    aria-controls="producstatusTwo" role="tab">Piezas</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#exampleTabsThree"
                                                     aria-controls="exampleTabsThree" role="tab">General Gramos</a></li>
@@ -77,7 +77,7 @@ Panel Principal
                                                                             {{$onestatus->name}}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                    <label>Seleccione Categoria</label>
+                                                                    <label>Seleccione Categoría</label>
                                                                     <select id="" name="category_id" alt="1"
                                                                         class="form-control round sucursales">
                                                                         @foreach($categorias as $categories)
@@ -92,7 +92,7 @@ Panel Principal
                                                                         data-plugin="datepicker" value="2" required>
                                                                 </div>
                                                                 <div class="col-12 col-sm-6">
-                                                                    <label>Seleccione Linea</label>
+                                                                    <label>Seleccione Línea</label>
                                                                     <select id="" name="id" alt="1"
                                                                         class="form-control round sucursales">
                                                                         @foreach($lineas as $linea)
@@ -172,7 +172,7 @@ Panel Principal
                                                                         {{$onestatus->name}}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                <label>Seleccione Categoria</label>
+                                                                <label>Seleccione Categoría</label>
                                                                 <select id="" name="category_id" alt="1"
                                                                     class="form-control round sucursales">
                                                                     @foreach($categorias as $categories)
@@ -347,7 +347,7 @@ Panel Principal
                             role="tab">
                             <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultTwo"
                                 data-parent="#exampleAccordionDefault" aria-expanded="false"
-                                aria-controls="exampleCollapseDefaultTwo">Gramos y precio por Linea</a>
+                                aria-controls="exampleCollapseDefaultTwo">Gramos y precio por Línea</a>
                         </div>
                         <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo"
                             aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">
@@ -364,16 +364,16 @@ Panel Principal
                                                     aria-controls="exampleTabsTwo" role="tab">General Gramos</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#exampleTabsThree"
-                                                    aria-controls="exampleTabsThree" role="tab">Pieza</a></li>
+                                                    aria-controls="exampleTabsThree" role="tab">Piezas</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#exampleTabsFour"
-                                                    aria-controls="exampleTabsFour" role="tab">General Pieza</a></li>
+                                                    aria-controls="exampleTabsFour" role="tab">General Piezas</a></li>
                                         </ul>
                                         <div class="tab-content pt-20">
                                             <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                                                 <div class="container-fluid row">
                                                     <div class="col-">
-                                                        <h4>Reporte Productos por Linea </h4>
+                                                        <h4>Reporte Productos por Línea </h4>
                                                     </div>
                                                 </div>
                                                 <form action="reportLinea">
@@ -391,7 +391,7 @@ Panel Principal
                                                                             {{$branch->name}}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                    <label>Seleccione Linea</label>
+                                                                    <label>Seleccione Línea</label>
                                                                     <select id="" name="id" alt="1"
                                                                         class="form-control round sucursales">
                                                                         <!-- <option value="">Selecciona Linea</option> -->
@@ -498,7 +498,7 @@ Panel Principal
                                         <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
                                             <div class="container-fluid row">
                                                 <div class="col-">
-                                                    <h4>Reporte Productos Por Pieza</h4>
+                                                    <h4>Reporte Productos Por Piezas</h4>
                                                 </div>
                                             </div>
                                             <form action="reportPz">
@@ -515,7 +515,7 @@ Panel Principal
                                                                         {{$branch->name}}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                <label>Seleccione Categoria</label>
+                                                                <label>Seleccione Categoría</label>
                                                                 <select id="" name="category_id" alt="1"
                                                                     class="form-control round sucursales">
                                                                     @foreach($categorias as $category)
@@ -647,10 +647,10 @@ Panel Principal
                                                     aria-controls="exampleTabsTwo" role="tab">General Gramos</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#exampleTabsThree"
-                                                    aria-controls="exampleTabsThree" role="tab">Pieza</a></li>
+                                                    aria-controls="exampleTabsThree" role="tab">Piezas</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#exampleTabsFour"
-                                                    aria-controls="exampleTabsFour" role="tab">General Pieza</a></li>
+                                                    aria-controls="exampleTabsFour" role="tab">General Piezas</a></li>
                                         </ul>
                                         <div class="tab-content pt-20">
                                             <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
@@ -673,7 +673,7 @@ Panel Principal
                                                                             {{$branch->name}}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                    <label>Seleccione Linea</label>
+                                                                    <label>Seleccione Línea</label>
                                                                     <select id="" name="line_id" alt="1"
                                                                         class="form-control round sucursales">
                                                                         @foreach($lineas as $line)
@@ -788,7 +788,7 @@ Panel Principal
                         <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
                             <div class="container-fluid row">
                                 <div class="col-">
-                                    <h4>Reporte Entradas Productos Por Pieza</h4>
+                                    <h4>Reporte Entradas Productos Por Piezas</h4>
                                 </div>
                             </div>
                             <form action="reportEntradasPpz">
@@ -804,7 +804,7 @@ Panel Principal
                                                     <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                                     @endforeach
                                                 </select>
-                                                <label>Seleccione Categoria</label>
+                                                <label>Seleccione Categoría</label>
                                                 <select id="" name="category_id" alt="1"
                                                     class="form-control round sucursales">
                                                     @foreach($categorias as $categories)
@@ -853,7 +853,7 @@ Panel Principal
 
                             <div class="container-fluid row">
                                 <div class="col-">
-                                    <h4>Reporte Entradas Productos General Por Pieza</h4>
+                                    <h4>Reporte Entradas Productos General Por Piezas</h4>
                                 </div>
                             </div>
                             <form action="reportEntradasPrgppz">
@@ -928,7 +928,7 @@ Panel Principal
                             <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab"
                                     href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">Gramos</a></li>
                             <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab"
-                                    href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">Pieza</a></li>
+                                    href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">Piezas</a></li>
                         </ul>
                         <div class="tab-content pt-20">
                             <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">

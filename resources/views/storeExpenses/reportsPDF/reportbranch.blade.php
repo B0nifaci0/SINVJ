@@ -66,7 +66,7 @@
                 <tr>
                   <th>Clave</th>
                   <th>Nombre</th>
-                  <th>Descripcion</th>
+                  <th>Descripción</th>
                   <th>Fecha</th>
                   <th>Precio</th>
                 </tr>

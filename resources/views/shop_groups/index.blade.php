@@ -11,7 +11,6 @@ GRUPOS
 
 @endsection
 @section('content')
-<div class="panel-body">
 
 	@if (session('mesage'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -21,7 +20,6 @@ GRUPOS
             </button>
         </div>
     @endif
-</div>
 
 <div class="page-content">
         <!-- Panel Basic -->
@@ -32,14 +30,13 @@ GRUPOS
          
                 </div>
             </div>
-            <h3 class="panel-title">Grupos de tiendas </h3>
+            <h2 class="panel-title" align="center">Grupos de tiendas </h2>
         </header>
         <div class="panel-body">
             @if($shop_groups->count() > 0)
                 <table class="table table-hover dataTable table-striped w-full">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Nombre</th>
                             <th>Código de grupo</th>
                             <th>Contraseña</th>
@@ -49,7 +46,6 @@ GRUPOS
                     <tbody>
                         @foreach($shop_groups as $shop_group)
                         <tr>
-                            <td>{{ $shop_group->id }}</td>
                             <td>{{ $shop_group->name }}</td>
                             <td>{{ $shop_group->group_code }}</td>
                             <td>{{ $shop_group->password }}</td>

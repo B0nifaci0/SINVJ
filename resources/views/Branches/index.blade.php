@@ -112,13 +112,6 @@ LISTA DE  SUCURSALES
                       data-toggle="tooltip" data-original-title="Editar">
                       <i class=" icon md-edit" aria-hidden="true"></i></button></a>
                       <!--END Botón -->
-                      <!-- Botón para borrar sucursal-->
-                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                        alt="{{$branch->id}}" role="button"
-                        data-toggle="tooltip" data-original-title="Borrar">
-                        <i class="icon md-delete" aria-hidden="true"></i>
-                      </button>
-                      <!--END Botón -->
                       @endif
                       <!-- Botón para ver productos por sucursal-->
                       @if($branch->num_products == 0)
@@ -131,6 +124,15 @@ LISTA DE  SUCURSALES
                       class="btn btn-icon btn-warning waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Productos">
                       <i class="icon md-label-heart" aria-hidden="true"></i></button></a>
+                      @endif
+                      <!--END Botón -->
+                      <!-- Botón para borrar sucursal-->
+                      @if(Auth::user()->type_user == 1 )
+                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                        alt="{{$branch->id}}" role="button"
+                        data-toggle="tooltip" data-original-title="Borrar">
+                        <i class="icon md-delete" aria-hidden="true"></i>
+                      </button>
                       @endif
                       <!--END Botón -->
 
