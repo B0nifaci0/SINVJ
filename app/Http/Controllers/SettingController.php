@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Setting;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -14,8 +15,9 @@ class SettingController extends Controller
     public function index()
     {
         //
-       // return 'incio ajustes';
-       return view('settings/index');
+       $setting = Setting::all();
+       //return $setting;
+       return view('settings.index', compact('setting'));
     }
 
     /**
@@ -26,6 +28,7 @@ class SettingController extends Controller
     public function create()
     {
         //
+        return view ('settings.add');
     }
 
     /**
@@ -36,7 +39,11 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
-        return view('settings/add');
+        $setting = new Setting($request->all());
+        
+        $setting ->save();
+
+        return redirect('/ajustes')->with('message','el ajuste se guardo exitosamente');
     }
 
     /**

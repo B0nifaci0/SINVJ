@@ -15,7 +15,8 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->Increments('id');
-            
+            $table->integer('min_day_re');
+            $table->integer('max_day_re');
             $table->softDeletes();
             $table->timestamps();
         });

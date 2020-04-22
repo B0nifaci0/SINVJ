@@ -15,8 +15,8 @@ class Setting extends Model
     protected $fillable = [
 
         'setting_id',
-        
-
+        'min_day_re',
+        'max_day_re',
     ];
     
 }

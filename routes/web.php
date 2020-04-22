@@ -297,9 +297,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 
     //RUTAS MODULO ADMINISTRACION
+    Route::resource('/ajustes','SettingController');
     Route::get('ajustes', 'SettingController@index');
-    Route::get('ajustes/create', 'SettingController@store');
+    Route::get('ajustes/create', 'SettingController@create');
     Route::get('ajustes/{id}/edit', 'SettingController@update');
+    Route::Post('/ajustes','SettingController@store');
 });
 
 Auth::routes(['verify' => true]);

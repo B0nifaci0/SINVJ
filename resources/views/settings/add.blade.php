@@ -1,6 +1,6 @@
 @extends('layout.layoutdas')
 @section('title')
-LISTA DE  LINEA
+AJUSTES
 @endsection
 
 @section('admin-section')
@@ -12,52 +12,68 @@ LISTA DE  LINEA
 
 @endsection
 @section('content')
-<div class="panel-body">
-@if (session('mesage'))
-<div class="alert alert-success">
-      <strong>{{ session('mesage') }}</strong>
-    </div>
+<div class="">
+  @if (session('mesage'))
+  <div class="alert alert-success">
+    <strong>{{ session('mesage') }}</strong>
+  </div>
   @endif
-<div class="page-content">
-  <div class="panel">
-    <div class="panel-body">
-    @if($errors->count() > 0)
+  <div class="page-content">
+    <div class="panel">
+      <div class="panel-body">
+        @if($errors->count() > 0)
         <div class="alert alert-danger" role="alert">
           <ul>
             @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
+            <li>{{ $error }}</li>
             @endforeach
           </ul>
-        </div> 
-    @endif
-      <center><h3>Registrar nuevo ajuste</h3></center>
-
-      <form class="" action="/lineas" method="post">
-      {{ csrf_field() }} 
-      <div class="row">
-      <div class="form-group form-material col-md-4">
-               <label class="form-control-label" for="inputBasicLastName"> </label>
-               <input type="text" class="form-control" name="name" value="{{old('name')}}" required="required" placeholder="" />
-      </div> 
-
-      <div class="form-group form-material col-md-4">
-               <label class="form-control-label" for="inputBasicLastName"></label>
-               <input type="text" class="form-control" name="purchase_price" value="{{old('purchase_price')}}" required="required" placeholder="" />
-      </div>
-      <div class="form-group form-material col-md-4">
-               <label class="form-control-label" for="inputBasicLastName"></label>
-               <input type="text" class="form-control" name="sale_price" value="{{old('sale_price')}}" required="required" placeholder="" />
-      </div>
-      <div class="form-group form-material col-md-4">
-               <label class="form-control-label" for="inputBasicLastName"></label>
-               <input type="text" class="form-control" name="discount_percentage" value="{{old('discount_percentage')}}" required="required" placeholder="" />
-      </div>
-        <div class="form-group col-md-12">
-          <button type="submit" name="button" class="btn btn-primary">Guardar</button>
+        </div>
+        @endif
+        <h3 align="center">Registrar nuevo ajuste</h3>
+        <form class="" action="/ajustes" method="post">
+          {{ csrf_field() }}
+          <div class="row">
+            <!-- Select -->
+            <div class="col-md-6">
+              <label>Seleccione El minimo de dias</label>
+              <select name="min_day_re" class="form-control round">
+                <option value="">Selecciona un numero</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+              </select>
+            </div>
+            <!-- END Select-->
+            <!-- Select-->
+            <div class="col-md-6">
+              <label>Seleccione El maximo de dias</label>
+              <select name="max_day_re" class="form-control round">
+                <option value="">selecciona un numero</option>
+                <option value="55">55</option>
+                <option value="60">60</option>
+                <option value="61">61</option>
+                <option value="62">62</option>
+                <option value="63">63</option>
+                <option value="64">64</option>
+                <option value="65">65</option>
+              </select>
+            </div>
+            <!-- END Select-->
+            <!--boton guardar-->
+            <div class=" col-md-6">
+              <button type="submit" name="button" class="btn btn-primary">Guardar</button>
+            </div>
+            <!--fin boton-->
+          </div>
         </div>
       </form>
     </div>
   </div>
-</div>
 </div>
 @endsection
