@@ -55,7 +55,7 @@
                     <!--<a class="float-right" href="href=¡"{{route('password.request') }}">{{ __('Olvidaste tu contraseña?')}}</a>-->
                 </div>
                 <!-- END CheckBox-->
-              <!-- INICIA CAPTCHA -->
+              <!-- INICIA CAPTCHA --
               <div class="form-group row">
                 <div class="col-md-6 ">
                   <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
@@ -66,7 +66,7 @@
                     @endif 
                   </div>  
               </div>  
-              <!--TERMINA CAPTCHA-->
+              <--TERMINA CAPTCHA-->
 
                 <!-- Botón para ingresar Iniciar Sesion-->
                 <button type="submit" class="btn btn-primary btn-block">Iniciar</button>

@@ -38,6 +38,6 @@ class Captcha implements Rule
      */
     public function message()
     {
-        return 'Por Favor Marque la Casilla';
+        return 'Marque la Casilla de verificación';
     }
 }
