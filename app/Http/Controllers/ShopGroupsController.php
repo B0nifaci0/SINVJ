@@ -15,8 +15,8 @@ class ShopGroupsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $shop_groups = ShopGroup::where('id', $user->shop->shop_group_id)->get();
-        return view('shop_groups.index', compact('shop_groups', 'user'));
+        $shop_group = ShopGroup::where('id', $user->shop->shop_group_id)->first();
+        return view('shop_groups.index', compact('shop_group', 'user'));
     }
 
     public function create()
@@ -87,12 +87,22 @@ class ShopGroupsController extends Controller
     function changeCategoriesAndLines()
     {
         $user = Auth::user();
-        $lines = $user->shop->lines()
-            ->whereHas('product')
-            ->get();
-        $categories = $user->shop->categories()
-            ->whereHas('product')
-            ->get();
+
+        $products = $user->shop->products()
+            ->where('products.status_id', 2);
+
+        $categories = $products->with('category')
+            ->get()
+            ->pluck('category')
+            ->unique()
+            ->where('shop_id', $user->shop->id);
+
+        $lines = $products->with('line')
+            ->get()
+            ->pluck('line')
+            ->unique()
+            ->where('shop_id', $user->shop->id);
+
         if (!$lines->count() && !$categories->count()) {
             return redirect('productos')->with('mesage', "No tienes productos por actualizar.");
         }

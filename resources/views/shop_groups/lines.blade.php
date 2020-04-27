@@ -46,13 +46,6 @@ LISTA DE LINEA
                     <div class="panel-actions float-right">
                         <div class="container-fluid row float-right">
                             <div class="col-6">
-                                <button onclick="window.location.href='lineaspdf'" type="button" class=" btn btn-sm small btn-floating
-                    toggler-left  btn-danger waves-effect waves-light waves-round float-right" data-toggle="tooltip"
-                                    data-original-title="Generar reporte PDF">
-                                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="col-6">
                                 <button onclick="window.location.href='/lineas/create'" type="button" class=" btn btn-sm small btn-floating
                     toggler-left  btn-info waves-effect waves-light waves-round float-left" data-toggle="tooltip"
                                     data-original-title="Agregar">

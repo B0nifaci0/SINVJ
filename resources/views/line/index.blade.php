@@ -47,6 +47,17 @@
                                     <i class="icon md-plus" aria-hidden="true"></i>
                                 </button>
                             </div>
+                            @else
+                            @if($quantity)
+                            <div class="col-6">
+                                <button onclick="window.location.href='/changeCategoriesAndLines'" type="button"
+                                    class="btn btn-sm small btn-floating btn-info waves-effect waves-light waves-round float-left"
+                                    data-toggle="tooltip" data-original-title="Actualizar Productos">
+                                    <i class="icon md-refresh" aria-hidden="true"></i>
+                                </button>
+
+                            </div>
+                            @endif
                             @endif
                             @endif
                         </div>

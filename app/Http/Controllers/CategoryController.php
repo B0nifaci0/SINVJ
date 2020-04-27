@@ -29,9 +29,27 @@ class CategoryController extends Controller
         $user = Auth::user();
         $categories_shop = $user->shop->categories;
         if ($user->shop->shop_group_id) {
+            $quantity = true;
+            $products = $user->shop->products()
+                ->where('products.status_id', 2);
+            $categories = $products->with('category')
+                ->get()
+                ->pluck('category')
+                ->unique()
+                ->where('shop_id', $user->shop->id);
+
+            $lines = $products->with('line')
+                ->get()
+                ->pluck('line')
+                ->unique()
+                ->where('shop_id', $user->shop->id);
+
+            if (!$lines->count() && !$categories->count()) {
+                $quantity = false;
+            }
             $group = $user->shop->shop_group_id;
             $categories_group = Category::where('shop_group_id', $group)->get();
-            return view('category/index', compact('categories_shop', 'categories_group', 'user'));
+            return view('category/index', compact('categories_shop', 'categories_group', 'user', 'quantity'));
         }
         return view('category/index', compact('categories_shop', 'user'));
     }

@@ -30,13 +30,31 @@ class LineController extends Controller
     public function index()
     {
         $user = Auth::User();
+
+        $lines_shop = $user->shop->lines;
         if ($user->shop->shop_group_id) {
+            $quantity = true;
+            $products = $user->shop->products()
+                ->where('products.status_id', 2);
+            $categories = $products->with('category')
+                ->get()
+                ->pluck('category')
+                ->unique()
+                ->where('shop_id', $user->shop->id);
+
+            $lines = $products->with('line')
+                ->get()
+                ->pluck('line')
+                ->unique()
+                ->where('shop_id', $user->shop->id);
+
+            if (!$lines->count() && !$categories->count()) {
+                $quantity = false;
+            }
             $group = $user->shop->shop_group_id;
             $lines_group = Line::where('shop_group_id', $group)->get();
-            $lines_shop = $user->shop->lines;
-            return view('line/index', compact('lines_shop', 'lines_group', 'user'));
+            return view('line/index', compact('lines_shop', 'lines_group', 'user', 'quantity'));
         }
-        $lines_shop = $user->shop->lines;
         return view('line/index', compact('lines_shop', 'user'));
     }
 
