@@ -10,9 +10,10 @@ Panel Principal
 
 @endsection
 @section('content')
+
 <!-- Page -->
 <div class="col-sm-12 col-lg-12">
-  <div class="page"></div>
+  <div class="page-content"></div>
   @if (session('mesage'))
   <div class="alert alert-success alert-dismissible fade show" role="alert">
     <strong>{{ session('mesage') }}</strong>
