@@ -10,9 +10,9 @@ use App\Branch;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Providers\RouteServiceProvider;
+//use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Rules\Captcha;
+//use App\Rules\Captcha;
 
 class RegisterController extends Controller
 {
@@ -67,7 +67,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'g-recaptcha-response' => new Captcha(),
+            //'g-recaptcha-response' => new Captcha(),
         ]);
     }
 
