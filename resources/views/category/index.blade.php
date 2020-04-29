@@ -1,212 +1,277 @@
-@extends('layout.layoutdas')
-@section('title')
-LISTA DE  CATEGORIA
-@endsection
-
-@section('nav')
-@endsection
-@section('menu')
-
-@endsection
-@section('content')
+@extends('layout.layoutdas') @section('title') LISTA DE CATEGORIA @endsection
+@section('nav') @endsection @section('menu') @endsection @section('content')
 <div class="panel-body">
-  @if (session('mesage'))
+    @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <strong>{{ session('mesage') }}</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-  </div>
-  @endif
-  @if (session('mesage-update'))
+        <strong>{{ session('mesage') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif @if (session('mesage-update'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>{{ session('mesage-update') }}</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+        <strong>{{ session('mesage-update') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
-  @endif
-  @if (session('mesage-delete'))
+    @endif @if (session('mesage-delete'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      <strong>{{ session('mesage-delete') }}</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-      </button>
+        <strong>{{ session('mesage-delete') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
-  @endif
-  <div class="page-content">
-    <!-- Panel Basic -->
-    <div class="panel">
-        <div class="panel-body">
-            <div class="example-wrap">
-              <h1 class="text-center panel-title">Categorias</h1>
-              <div class="panel-actions float-right">
-                <div class="container-fluid row float-right">
-                  @if(Auth::user()->type_user == 1 )
-                  <!-- Botón para Generar PDF de productos-->
-                  <div class="col-6">
-                    <button onclick="window.location.href='categoriaspdf'"
-                    type="button" class=" btn btn-sm small btn-floating
-                    toggler-left  btn-danger waves-effect waves-light waves-round float-right"
-                    data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
-                  </button>
-                  </div>
-                  <!-- Botón para Generar PDF de productos
-                  <div class="col-6">
-                    <button onclick="window.location.href='/categorias/create'" type="button"
-                class=" btn btn-sm small btn-floating  toggler-left
-                btn-info waves-effect waves-light waves-round float-left "
-                data-toggle="tooltip" data-original-title="Agregar">
-                <i class="icon md-plus" aria-hidden="true"></i>
-              </button>
-                  </div>
-                   END Botón-->
-                  @endif
+    @endif
+    <div class="page-content">
+        <!-- Panel Basic -->
+        <div class="panel">
+            <div class="panel-body">
+                <div class="example-wrap">
+                    <h1 class="text-center panel-title">Categorias</h1>
+                    <div class="panel-actions float-right">
+                        <div class="container-fluid row float-right">
+                            @if($user->type_user == 1 )
+                            <div class="col-6">
+                                <button onclick="window.location.href='categoriaspdf'" type="button"
+                                    class="btn btn-sm small btn-floating toggler-left btn-danger waves-effect waves-light waves-round float-right"
+                                    data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            @if (!$user->shop->shop_group_id)
+                            <div class="col-6">
+                                <button onclick="window.location.href='/categorias/create'" type="button"
+                                    class="btn btn-sm small btn-floating btn-info waves-effect waves-light waves-round float-left"
+                                    data-toggle="tooltip" data-original-title="Agregar">
+                                    <i class="icon md-plus" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            @else
+                            @if($quantity)
+                            <div class="col-6">
+                                <button onclick="window.location.href='/changeCategoriesAndLines'" type="button"
+                                    class="btn btn-sm small btn-floating btn-info waves-effect waves-light waves-round float-left"
+                                    data-toggle="tooltip" data-original-title="Actualizar Productos">
+                                    <i class="icon md-refresh" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            @endif
+                            @endif
+                            @endif
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        <div class="panel-body">         
-
-        <!-- Tabla listar las categorias-->
-          <table id='categorias'  class="table table-hover dataTable table-striped w-full text-center" data-plugin="dataTable">
-            <thead>
-              <tr>
-               <!-- <th>Clave</th>-->
-                <th>Nombre</th>
-                <th>Tipo de Producto</th>
-                <!--@if(Auth::user()->type_user == 1 )
-                <th>Opciones</th>
-                @endif -->
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-                <!--<th>Clave</th>-->
-                <th>Nombre</th>
-                <th>Tipo de Porducto</th>
-                <!--@if(Auth::user()->type_user == 1 )
-                <th>Opciones</th>
-                @endif -->
-              </tr>
-            </tfoot>
-            <tbody>
-              @foreach ($categories as $category)
-              <tr id = "row{{ $category->id }}">
-                <!--<td>{{ $category->id}}</td>-->
-                <td>{{ $category->name }}</td>
-                @if($category->type_product == 1 )
-                    <td><span class="text-center badge badge-success">Pieza</span></td>
-                @endif
-                @if($category->type_product == 2 )
-                    <td><span class="text-center badge badge-primary">Gramos</span></td>
-                @endif
-                <!--@if(Auth::user()->type_user == 1 )
-                <td>
-                  <a type="button" href="/categorias/{{$category->id}}/edit"
-                    class="btn btn-icon btn-info waves-effect waves-light waves-round invisible"
-                    data-toggle="tooltip" data-original-title="Editar">
-                    <i class="icon md-edit" aria-hidden="true"></i></a>
-
-                  <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete invisible"
-                    alt="{{$category->id}}" role="button"
-                    data-toggle="tooltip" data-original-title="Borrar">
-                    <i class="icon md-delete" aria-hidden="true"></i>
-                  </button>
-                </td>
-                @endif
-                -->
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-          <!-- END Tabla-->
+            <div class="panel-body">
+                <div class="example-wrap">
+                    <div class="nav-tabs-horizontal" data-plugin="tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            @if (!$user->shop->shop_group_id)
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" data-toggle="tab" href="#exampleTabsOne"
+                                    aria-controls="exampleTabsOne" role="tab">Tienda</a>
+                            </li>
+                            @else
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" data-toggle="tab" href="#exampleTabsTwo"
+                                    aria-controls="exampleTabsTwo" role="tab">Grupo</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" data-toggle="tab" href="#exampleTabsOne"
+                                    aria-controls="exampleTabsOne" role="tab">Tienda</a>
+                            </li>
+                            @endif
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
+                                <div class="page-content panel-body container-fluid">
+                                    <table id="categories_shop"
+                                        class="table table-hover dataTable table-striped w-full text-center"
+                                        data-plugin="dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nombre</th>
+                                                <th>Tipo de Producto</th>
+                                                @if ($user->type_user && !$user->shop->shop_group_id)
+                                                <th>Opciones</th>
+                                                @endif
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Nombre</th>
+                                                <th>Tipo de Producto</th>
+                                                @if ($user->type_user && !$user->shop->shop_group_id)
+                                                <th>Opciones</th>
+                                                @endif
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @foreach ($categories_shop as
+                                            $category)
+                                            <tr class="categories_shop">
+                                                <td>{{ $category->id}}</td>
+                                                <td>{{ $category->name }}</td>
+                                                @if($category->type_product == 1
+                                                )
+                                                <td>
+                                                    <span class="text-center badge badge-success">Pieza</span>
+                                                </td>
+                                                @else
+                                                <td>
+                                                    <span class="text-center badge badge-primary">Gramos</span>
+                                                </td>
+                                                @endif
+                                                @if ($user->type_user && !$user->shop->shop_group_id)
+                                                <td>
+                                                    <a type="button" href="/categorias/{{$category->id}}/edit"
+                                                        class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                                                        data-toggle="tooltip" data-original-title="Editar">
+                                                        <i class="icon md-edit" aria-hidden="true"></i></a>
+                                                    <button
+                                                        class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                                                        alt="{{$category->id}}" role="button" data-toggle="tooltip"
+                                                        data-original-title="Borrar">
+                                                        <i class="icon md-delete" aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                                @endif
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        @if ($user->shop->shop_group_id)
+                        <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+                            <div class="page-content panel-body container-fluid">
+                                <table id="categories_group"
+                                    class="table table-hover dataTable table-striped w-full text-center"
+                                    data-plugin="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Tipo de Producto</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Tipo de Producto</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach ($categories_group as
+                                        $category)
+                                        <tr class="categories_shop">
+                                            <td>{{ $category->id}}</td>
+                                            <td>{{ $category->name }}</td>
+                                            @if($category->type_product == 1 )
+                                            <td>
+                                                <span class="text-center badge badge-success">Pieza</span>
+                                            </td>
+                                            @else
+                                            <td>
+                                                <span class="text-center badge badge-primary">Gramos</span>
+                                            </td>
+                                            @endif
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <!-- End Panel Basic -->
+</div>
+<!-- End Panel Basic -->
 
-@endsection
-
-@section('barcode-product')
-  <script type="text/javascript">
-  //inicializa la tabla para resposnive
-    $(document).ready(function(){
-        $('#categorias').DataTable({
+@endsection @section('barcode-product')
+<script type="text/javascript">
+    //inicializa la tabla para resposnive
+    $(document).ready(function () {
+        $("#categories_shop").DataTable({
+            retrieve: true,
+        });
+        $("#categories_group").DataTable({
             retrieve: true,
         });
 
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            $($.fn.dataTable.tables(true)).DataTable()
-              .columns.adjust()
-              .responsive.recalc();
+        $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
+            $($.fn.dataTable.tables(true))
+                .DataTable()
+                .columns.adjust()
+                .responsive.recalc();
         });
     });
-    </script>
-  @endsection
-
+</script>
+@endsection
 
 <!-- Función Sweet Alert para eliminar linea-->
 @section('delete-lineas')
 <script type="text/javascript">
-console.log("a")
-$(document).ready(function() {
-  console.log("b")
-  $(".delete").click(function() {
-    var id = $(this).attr("alt");
-    console.log(id);
-    Swal.fire({
-      title: 'Confirmación',
-      text: "¿Seguro que desea eliminar este registro?",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33' ,
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Si, Borralo!'
-    }).then((result) => {
-      if (result.value) {
-        $.ajaxSetup({
-         headers: {
-             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-          }
+    $(document).ready(function () {
+        $('#categories_shop').on('click', '.delete', function(){
+            var id = $(this).attr("alt");
+            console.log(id);
+            Swal.fire({
+                title: "Confirmación",
+                text: "¿Seguro que desea eliminar este registro?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Si, Borralo!",
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="_token"]').attr(
+                                "content"
+                            ),
+                        },
+                    });
+                    $.ajax({
+                        url: "/categorias/" + id,
+                        method: "DELETE",
+
+                        success: function (response) {
+                            if (response.success) {
+                                $("#row" + id).remove();
+                                Swal.fire(
+                                    "Eliminado",
+                                    "El registro ha sido eliminado.",
+                                    "success"
+                                );
+                            } else {
+                                Swal.fire(
+                                    "No Eliminado",
+                                    "El registro no ha sido eliminado por que tiene productos activos",
+                                    "error"
+                                );
+                            }
+                        },
+                        error: function (error) {
+                            Swal.fire(
+                                "No Eliminado",
+                                "El registro no ha sido eliminado por que tiene productos activos",
+                                "error"
+                            );
+                        },
+                    });
+                }
+            });
         });
-        $.ajax({
-          url:  '/categorias/' + id,
-          method: 'DELETE',
-
-          success: function (response) {
-            if(response.success) {
-              $("#row" + id).remove();
-              Swal.fire(
-                'Eliminado',
-                'El registro ha sido eliminado.',
-                'success'
-              )
-            }else{
-                Swal.fire(
-                  'No Eliminado',
-                  'El registro no ha sido eliminado por que tiene productos activos',
-                  'error'
-                )
-            }
-
-          },
-          error: function(error){
-              Swal.fire(
-                  'No Eliminado',
-                  'El registro no ha sido eliminado por que tiene productos activos',
-                  'error'
-                )
-          }
-
-        })
-      }
-    })
-
-  });
-});
-
+    });
 </script>
 @endsection

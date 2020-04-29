@@ -17,11 +17,11 @@ class CreateBranchesTable extends Migration
             $table->increments('id');
             $table->string('name', 50);
             $table->string('name_legal_re')->nullable();
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('other')->nullable();
-            $table->string('rfc');
-            $table->string('phone_number');
-            $table->string('address');
+            $table->string('rfc')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('address')->nullable();
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
             $table->softDeletes();

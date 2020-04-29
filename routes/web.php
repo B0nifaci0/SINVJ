@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\ShopGroupsController;
+
 Route::get('/', function () {
     return view('auth/login');
 });
@@ -294,6 +296,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('reportes-traspasos', 'TrasferUserController@reportTransfer');
     Route::get('reportTransferG', 'TrasferUserController@reportTransferG');
     Route::get('reportTransfer', 'TrasferUserController@reportTransferBranch');
+<<<<<<< HEAD
 
 
     //RUTAS MODULO ADMINISTRACION
@@ -302,6 +305,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('ajustes/create', 'SettingController@create');
     Route::get('ajustes/{id}/edit', 'SettingController@update');
     Route::Post('/ajustes','SettingController@store');
+=======
+    Route::get('groupCategories', 'ShopGroupsController@categories');
+    Route::get('groupLines', 'ShopGroupsController@lines');
+    Route::get('changeCategoriesAndLines', 'ShopGroupsController@changeCategoriesAndLines');
+    Route::PUT('updateCategories', 'ShopGroupsController@updateCategories');
+    Route::PUT('updateLines', 'ShopGroupsController@updateLines');
+>>>>>>> 04a5b43af5293ae37de825331fccb878e4762412
 });
 
 Auth::routes(['verify' => true]);

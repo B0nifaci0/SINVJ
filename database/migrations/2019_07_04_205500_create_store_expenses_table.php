@@ -15,17 +15,14 @@ class CreateStoreExpensesTable extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 15)->nullable();
+            $table->string('name', 15);
             $table->string('descripcion', 200)->nullable();
             $table->integer('price');
             $table->string('image')->nullable();
-
             $table->integer('shop_id')->unsigned()->nullable();
             $table->foreign('shop_id')->references('id')->on('shops');
-            
             $table->integer('branch_id')->unsigned()->nullable();
             $table->foreign('branch_id')->references('id')->on('branches');
-            
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->softDeletes();
