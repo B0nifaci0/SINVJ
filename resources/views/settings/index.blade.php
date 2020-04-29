@@ -34,7 +34,7 @@ LISTA DE LINEA
     <strong>{{ session('mesage-delete') }}</strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
-    </button>
+    </button> 
   </div>
   @endif
   <div class="">
@@ -70,7 +70,7 @@ LISTA DE LINEA
       </div>
       <div class="panel-body">
         <!-- Tabla para listar lineas-->
-        <table id='example' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+        <table id='table_setting' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
           <thead>
             <th>Minimo de dias</th>
             <th>Maximo de dias</th>
@@ -80,22 +80,6 @@ LISTA DE LINEA
           <tbody>
             <td>{{$s->min_day_re}}</td>
             <td>{{$s->max_day_re}}</td>
-            <td>
-              @if(Auth::user()->type_user == 1 )
-              <!-- Botón para editar sucursal-->
-              <a href=""><button type="button"
-                  class="btn btn-icon btn-primary waves-effect waves-light waves-round" data-toggle="tooltip"
-                  data-original-title="Editar">
-                  <i class=" icon md-edit" aria-hidden="true"></i></button></a>
-              <!--END Botón -->
-              <!-- Botón para borrar sucursal-->
-              <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                role="button" data-toggle="tooltip" data-original-title="Borrar">
-                <i class="icon md-delete" aria-hidden="true"></i>
-              </button>
-              <!--END Botón -->
-              @endif
-            </td>
           </tbody>
           @endforeach
           <tfoot>
@@ -111,3 +95,22 @@ LISTA DE LINEA
 </div>
 </div>
 @endsection
+
+@section('barcode-product')
+  <script type="text/javascript">
+  //inicializa la tabla para resposnive
+    $(document).ready(function(){
+        $('#table_setting').DataTable({
+            retrieve: true,
+            //  responsive: true,
+            //paging: false,
+            //searching: false
+        });
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+              .columns.adjust()
+              .responsive.recalc();
+        });    
+    });
+    </script>
+  @endsection
