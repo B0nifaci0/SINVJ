@@ -54,7 +54,15 @@
     
     <img align = "left" width="140px" height="120px" src="{{ $shop->image }}">
              
-    <p align="right">@foreach($dates as $d) Fecha: {{$d->fecha}}  @endforeach</p> 
+    <p align="right">Fecha de Inicio del Inventario: {{$details->created_at}}</p> 
+    @if($details->status_report == 3)
+      <p align="right">Status: Terminado</p>
+      <p align="right">Fecha de Termino: {{$details->end_date}}</p>
+    @else
+      <p align="right">Status: En proceso</p>
+      <p align="right">Fecha Actual: {{$date}}</p>
+    @endif 
+
 
   
   
@@ -167,6 +175,37 @@
                 </tbody>    
             </table>
             <br>
+            <h3 align="center">Productos Existentes Por Gramo al Dia @if($details->status_report == 3) {{$details->end_date}} @else {{$date}} @endif </h3>
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                <thead>
+                    <tr>
+                      <th scope="col">Linea</th>
+                      <th scope="col">Clave Del Producto</th>
+                      <th scope="col">Descripcion</th>
+                      <th scope="col">Peso</th>
+                      <th scope="col">Dinero Existente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($prod_exis as $prod)
+                <tr>
+                 <td>{{ $prod->name_line }}</td> 
+                 <td>{{ $prod->clave }}</td> 
+                 <td>{{ $prod->description }}</td>
+                 <td>{{ $prod->weigth }} gr</td>
+                 <td>$ {{ $prod->money }}</td>
+                </tr>
+                @endforeach 
+                @foreach ($totales_g as $totals)
+                <tr>
+                 <td colspan="3">Total</td> 
+                 <td>{{$totals->g_existente}} gr</td>   
+                 <td>$ {{$totals->d_existente}}</td>  
+                </tr>
+                @endforeach 
+                </tbody>    
+            </table>
+            <br>
             <h3 align="center">Inventario Por Categorias</h3>
             <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                 <thead>
@@ -228,7 +267,7 @@
                       <td>{{$fal->cat_name}}</td>
                       <td>{{$fal->clave}}</td>
                       <td>{{$fal->description}}</td>
-                      <td>$ {{$fal->price}}</td>
+                      <td>$ {{$fal->discount}}</td>
                     </tr>
                 @endforeach 
                 @foreach ($totales_piezas as $p)
@@ -256,13 +295,41 @@
                       <td>{{$fal->cat_name}}</td>
                       <td>{{$fal->clave}}</td>
                       <td>{{$fal->description}}</td>
-                      <td>$ {{$fal->price}}</td>
+                      <td>$ {{$fal->discount}}</td>
                     </tr>
                 @endforeach 
                 @foreach ($totales_piezas as $p)
                     <tr>
                       <td colspan="3">Total</td>
                       <td>$ {{$p->din_da}}</td>
+                    </tr>
+                @endforeach 
+                </tbody>    
+            </table>
+            <br>
+            <h3 align="center">Productos Existentes Por PZ al Dia @if($details->status_report == 3) {{$details->end_date}} @else {{$date}} @endif </h3>
+            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                <thead>
+                    <tr>
+                      <th scope="col">Categoria</th>
+                      <th scope="col">Clave Del Producto</th>
+                      <th scope="col">Descripcion</th>
+                      <th scope="col">Dinero Existente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($p_existentes as $fal)
+                    <tr>
+                      <td>{{$fal->cat_name}}</td>
+                      <td>{{$fal->clave}}</td>
+                      <td>{{$fal->description}}</td>
+                      <td>$ {{$fal->discount}}</td>
+                    </tr>
+                @endforeach 
+                @foreach ($totales_piezas as $p)
+                    <tr>
+                      <td colspan="3">Total</td>
+                      <td>$ {{$p->din_exis}}</td>
                     </tr>
                 @endforeach 
                 </tbody>    

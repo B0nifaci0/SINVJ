@@ -159,6 +159,9 @@ LISTA PRODUCTO
                         @if($product->status_id == 4)
                         <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
                         @endif
+                        @if($product->status_id == 5)
+                        <td><span class="text-center badge badge-danger">{{$product->status->name}}</span></td>
+                        @endif
                        
                         
                         @if(Auth::user()->type_user == 1)
@@ -252,19 +255,20 @@ LISTA PRODUCTO
                       </td>
                       <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                       @if($product->status_id == 1)
-                        <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 2)
-                        <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 3)
-                        <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 4)
-                        <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
-                        @endif
-                       
-                      
+                      <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
+                      @endif
+                      @if($product->status_id == 2)
+                      <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
+                      @endif
+                      @if($product->status_id == 3)
+                      <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                      @endif
+                      @if($product->status_id == 4)
+                      <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
+                      @endif
+                      @if($product->status_id == 5)
+                      <td><span class="text-center badge badge-danger">{{$product->status->name}}</span></td>
+                      @endif                                           
                       @if(Auth::user()->type_user == 1)
                       <td>${{$product->price_purchase}}</td>
                       @endif

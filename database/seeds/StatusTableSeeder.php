@@ -35,5 +35,10 @@ class StatusTableSeeder extends Seeder
             'created_at' => '2019-01-01 16:00:00',
             'updated_at' => '2019-01-01 16:00:00',
         ]);
+        DB::table('statuss')->insert([
+            'name' =>  'Faltante',
+            'created_at' => '2019-01-01 16:00:00',
+            'updated_at' => '2019-01-01 16:00:00',
+        ]);
     }
 }
