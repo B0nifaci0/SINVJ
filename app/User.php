@@ -14,6 +14,8 @@ class User extends Authenticatable implements MustVerifyEmail
 {
 
     // Tipos de usuario
+    //SAD = Super Admin Aplicacion
+    const SAD = '0';
     //AA = application administrator
     const AA = '1';
     // SA = sub administrator

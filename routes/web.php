@@ -305,6 +305,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('ajustes/{id}/edit', 'SettingController@update');
     Route::Post('/ajustes','SettingController@store');
 
+    //RUTAS MODULO SUPERADMINISTRACION
+
+    Route::get('/tiendas', 'SadminController@index');
+    Route::get('/usuarios', 'SadminController@indexusers');
+    Route::get('/usuarios/{id}/delete', 'SadminController@destroyuser');
+    Route::get('/tiendas/{id}/delete', 'SadminController@destroyshop');
+    Route::get('/usuarios/{id}/restore', 'SadminController@restoreuser');
+    Route::get('/tiendas/{id}/restore', 'SadminController@restoreshop');
+
     //Rutas Actualizacion de categorias
     Route::get('groupCategories', 'ShopGroupsController@categories');
     Route::get('groupLines', 'ShopGroupsController@lines');

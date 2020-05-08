@@ -74,7 +74,6 @@ LISTA DE LINEA
           <thead>
             <th>Minimo de dias</th>
             <th>Maximo de dias</th>
-            <th>Opciones</th>
           </thead>
           @foreach($setting as $s)
           <tbody>
@@ -85,7 +84,6 @@ LISTA DE LINEA
           <tfoot>
             <th>Minimo de dias</th>
             <th>Maximo de dias</th>
-            <th>Opciones</th>
           </tfoot>
         </table>
         <!-- END Tabla-->
@@ -97,8 +95,8 @@ LISTA DE LINEA
 @endsection
 
 @section('barcode-product')
-  <script type="text/javascript">
-  //inicializa la tabla para resposnive
+<script type="text/javascript">
+    //inicializa la tabla para resposnive
     $(document).ready(function(){
         $('#table_setting').DataTable({
             retrieve: true,
@@ -106,11 +104,12 @@ LISTA DE LINEA
             //paging: false,
             //searching: false
         });
+
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             $($.fn.dataTable.tables(true)).DataTable()
               .columns.adjust()
               .responsive.recalc();
-        });    
+        });
     });
-    </script>
-  @endsection
+</script>
+@endsection

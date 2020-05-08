@@ -51,10 +51,16 @@ Panel Principal
                   <i class="icon md-edit" aria-hidden="true" align="right"></i>
                 </button>
               </div>
-              @endif
+              
               <div class="col-md-12">
                 <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
               </div>
+              @endif
+              @if(Auth::user()->type_user == 0)
+              <div class="col-md-12">
+                <h2>Bienvenido al Panel de Super Administrador</h2>
+              </div>
+              @endif
               <!--<div class="col-md-6">
                   <h2 style="color:white">
                      {{$shop->name}}
