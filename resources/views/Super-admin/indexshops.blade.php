@@ -97,13 +97,24 @@ LISTA DE  TIENDAS
                       <!-- END Botón-->
             
                       @else
-                      <!-- Botón para restaurar usuario eliminado-->
+                      <!-- Botón para restaurar Tienda eliminado-->
                       <a type="button" href="/tiendas/{{$shop->id}}/restore"
                       class="btn btn-icon btn-success waves-effect waves-light waves-round fas md-redo"
                       data-toggle="tooltip"
                       data-original-title="Restaurar"></a>
                       <!-- END Botón-->
                       @endif
+                      <!-- Botón para Ver sucursales-->
+                      <a type="button" href="/tiendas/{{$shop->id}}/sucursales"
+                      class="btn btn-icon btn-info waves-effect waves-light waves-round md-store "
+                      data-toggle="tooltip"
+                      data-original-title="Ver sucursales"></a>
+                      <!-- END Botón-->
+                      <!-- Botón para Ver sucursales-->
+                      <a type="button" href="/tiendas/{{$shop->id}}/usuarios"
+                      class="btn btn-icon btn-secondary waves-effect waves-light waves-round fa-user "
+                      data-toggle="tooltip"
+                      data-original-title="Ver usuarios"></a>
                       <!-- END Botón-->
                     </td>
                   @endif
