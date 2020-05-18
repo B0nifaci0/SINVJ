@@ -313,6 +313,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/tiendas/{id}/delete', 'SadminController@destroyshop');
     Route::get('/usuarios/{id}/restore', 'SadminController@restoreuser');
     Route::get('/tiendas/{id}/restore', 'SadminController@restoreshop');
+    Route::get('/tiendas/{id}/sucursales', 'SadminController@indexbranches');
+    Route::get('/tiendas/{id}/usuarios', 'SadminController@indexusershop');
 
     //Rutas Actualizacion de categorias
     Route::get('groupCategories', 'ShopGroupsController@categories');

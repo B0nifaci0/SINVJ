@@ -18,25 +18,59 @@ class SadminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //FUNCION PARA INDEX DE TIENDAS//
     public function index()
     {
         $shops = Shop::withTrashed()
         ->get();
         //return $shops;
 
+
         return view('Super-admin.indexshops', compact('shops'));
     }
-
+    //FUNCION PARA USUARIOS UNICAMENTE ADMINISTRADORES DE LAS TIENDAS
     public function indexusers()
     {
         $users = User::withTrashed()
+        ->where('type_user', 1)
         ->get();
-        //$shops = Shop()->get;;
-        //return $shops;
+
         $branches= Auth::user()->shop->branches;
+        
         //return $branches;
         //return $users;
         return view('Super-admin.indexusers', compact('branches', 'users'));
+    }
+
+    //FUNCION PARA INDEX SUCURSALES POR TIENDA
+    public function indexbranches($id){
+
+        $shop = Shop::where('id',$id)
+        ->get();
+
+        $branch = Branch::where('shop_id', $id)
+        ->withTrashed()
+        ->get();
+        
+        //return $branch;
+        
+        return view('Super-admin.indexbranches', compact('branch','shop'));
+    }
+
+    //FUNCION PARA USUARIOS POR TIENDA
+    public function indexusershop($id){
+        $shop = Shop::where('id',$id)
+        ->get();
+
+        $users = User::where('shop_id', $id)
+        ->whereIn ('type_user', [2,3])
+        ->withTrashed()
+        ->get();
+
+        //return $users;
+
+        return view('Super-admin.usershop', compact('shop','users'));
     }
 
     /**
@@ -45,6 +79,7 @@ class SadminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    //FUNCION PARA BAJA LÓGICA DE USUARIOS
     public function destroyuser($id)
     {
         User::destroy($id);
@@ -52,13 +87,15 @@ class SadminController extends Controller
         return  back()->with('mesage', 'El usuario ha sido dado de baja de forma exitosa!');
     }
 
+    //FUNCION PARA BAJA LÓGICA DE TIENDAS
     public function destroyshop( $id)
     {
         Shop::destroy($id);
 
-        return back()->with('mesage', 'La tienda ha sido dada de baja de forma exitosa!');
+        return back()->with('mesage-delete', 'La tienda ha sido dada de baja de forma exitosa!');
     }
 
+    //FUNCION PARA RESTAURAR USUARIOS
     public function restoreuser( $id )
     {
 
@@ -74,6 +111,7 @@ class SadminController extends Controller
         return back()->with('mesage', 'El usuario ha sido reactivado de forma exitosa!');   
     }
 
+    //FUNCION PARA RESTAURAR TIENDAS
     public function restoreshop( $id)
     {
         $shop = Shop::withTrashed()->where('id', $id)->get();
