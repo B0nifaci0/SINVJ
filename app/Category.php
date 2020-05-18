@@ -30,7 +30,8 @@ class Category extends Authenticatable
         'name',
         'shop_id',
         'type_product',
-        'shop_group_id'
+        'shop_group_id',
+        'businessrule_id'
     ];
 
     public function product()
@@ -41,5 +42,10 @@ class Category extends Authenticatable
     public function shop_group()
     {
         return $this->belongsTo(ShopGroup::class);
+    }
+
+    public function business_rule()
+    {
+        return $this->belongsTo(BusinessRule::class);
     }
 }

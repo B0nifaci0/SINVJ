@@ -320,6 +320,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('changeCategoriesAndLines', 'ShopGroupsController@changeCategoriesAndLines');
     Route::PUT('updateCategories', 'ShopGroupsController@updateCategories');
     Route::PUT('updateLines', 'ShopGroupsController@updateLines');
+
+    //RUTAS MODULO REGLAS DE NEGOCIOS
+    Route::get('businessrules/create', 'BusinessRulesController@create');
+    Route::get('/businessrules', 'BusinessRulesController@index');
+    Route::post('/businessrules', 'BusinessRulesController@store');
+    Route::put('/businessrules/{id}/update', 'BusinessRulesController@update')->name('businessrule.update');
 });
 
 Auth::routes(['verify' => true]);

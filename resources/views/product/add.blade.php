@@ -77,12 +77,12 @@ ALTA PRODUCTO
                     <!-- Input para ingresar precio del producto pz-->
                     <div id="pricepz" class="form-group form-material col-md-3">
                         <label>Precio del Producto</label>
-                        <input type="text" class="form-control" name="pricepzt" value="{{old('pricepzt')}}">
+                        <input type="text" class="form-control" id="pricepzt" name="pricepzt" value="{{old('pricepzt')}}" readonly>
                     </div>
                     <!-- Input para ingresar precio con descuento-->
                     <div id="discountpz" class="form-group form-material col-md-3 remove">
                         <label>Precio con descuentopz</label>
-                        <input type="text" class="form-control" name="max_discountpz" value="{{old('max_discountpz')}}">
+                        <input type="text" class="form-control" id="max_discountpz" name="max_discountpz" value="{{old('max_discountpz')}}" readonly>
                     </div>
                     <!-- END Input-->
                     <div class="col-md-3 form-material remove">
@@ -320,7 +320,46 @@ $('#multiplicador').keyup(function(){
   $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
 });
 
-//multilicacion para sacar el precio venta por produt pz
+var rules = {!! $rules !!}; 
+//multiplicacion para sacar el precio venta y descuento para productos por pz
+$('#pricePurchase').keyup(function(){
+  var category = $('#categorie_id').val();
+  var rule = rules.filter(r => r.category_id == category)[0];
+  if(rule.operator == "+")
+  {
+    var totalpz = Number($(this).val()) + Number(rule.price);
+  }
+  if(rule.operator == "-")
+  {
+    var totalpz = $(this).val() - rule.price;
+  }
+  if(rule.operator == "*")
+  {
+    var totalpz = $(this).val() * rule.price;
+  }
+  if(rule.operator == "/")
+  {
+    var totalpz = $(this).val() / rule.price;
+  }
+  console.log("Venta:",$(this).val(),rule.operator,rule.price,"=",totalpz);
+        if(!Number($('#pricePurchase').val())) {
+        $('#pricepzt').val(0);
+        $('#max_discountpz').val(0);
+        return;
+      }
+  var discountpz = totalpz - (totalpz * (Number(rule.discount_percentage) / 100))
+  console.log("Descuento:",totalpz,"-",totalpz * (rule.discount_percentage / 100),"=",discountpz);
+  // var discount = total - Number(line.discount_percentage)
+  $('#pricepzt').val(totalpz);
+  if(rule.discount_percentage == 0)
+  {
+    $('#max_discountpz').val(0);
+  } else {
+  $('#max_discountpz').val(discountpz);
+  } 
+
+  
+});
 
 </script>
 @endsection
