@@ -31,7 +31,7 @@ class Category extends Authenticatable
         'shop_id',
         'type_product',
         'shop_group_id',
-        'businessrule_id'
+        'business_rule_id'
     ];
 
     public function product()

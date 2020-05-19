@@ -161,11 +161,14 @@ class BusinessRulesController extends Controller
             $c->save();
         }
         
-        foreach($request->category_id as $category)
+        if($request->category_id)
         {
-            $cat = Category::find($category);
-            $cat->business_rule_id = $id;
-            $cat->save();
+            foreach($request->category_id as $category)
+            {
+                $cat = Category::find($category);
+                $cat->business_rule_id = $id;
+                $cat->save();
+            }
         }
         //return $categories;
 
