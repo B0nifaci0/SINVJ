@@ -35,7 +35,7 @@ GRUPOS
             <h3 class="panel-title">Grupos de tiendas </h3>
         </header>
         <div class="panel-body">
-            @if($shop_group->count() > 0)
+            @if($shop_group)
             <table class="table table-hover dataTable table-striped w-full">
                 <thead>
                     <tr>

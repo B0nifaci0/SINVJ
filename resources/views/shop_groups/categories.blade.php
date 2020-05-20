@@ -68,7 +68,7 @@ LISTA DE CATEGORIA
                         <tr>
                             <th>id</th>
                             <th>Nombre</th>
-                            <th>Tipo de Porducto</th>
+                            <th>Tipo de Producto</th>
                             <th>Opciones</th>
                         </tr>
                     </tfoot>

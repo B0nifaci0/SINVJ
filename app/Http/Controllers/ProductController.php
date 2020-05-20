@@ -290,11 +290,20 @@ class ProductController extends Controller
             $group = $user->shop->shop_group_id;
             $categories = Category::where('shop_group_id', $group)->get();
             $lines = Line::where('shop_group_id', $group)->get();
+            $rules = Category::join('business_rules','business_rules.id','categories.business_rule_id')
+            ->select('business_rules.*','categories.id as category_id')
+            ->where('categories.shop_group_id', $group)
+            ->get();
         } else {
             $categories = $user->shop->categories;
             $lines = $user->shop->lines;
+            $rules = Category::join('business_rules','business_rules.id','categories.business_rule_id')
+            ->select('business_rules.*','categories.id as category_id')
+            ->where('categories.shop_id', $user->shop_id)
+            ->get();
         }
-        return view('product/add', compact('branches', 'categories', 'lines'));
+        //return $rules;
+        return view('product/add', compact('branches', 'categories', 'lines', 'rules'));
     }
 
     /**

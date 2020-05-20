@@ -15,7 +15,7 @@ class ShopGroupsController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $shop_group = ShopGroup::where('id', $user->shop->shop_group_id)->first();
+        $shop_group = ShopGroup::find($user->shop->shop_group_id);
         return view('shop_groups.index', compact('shop_group', 'user'));
     }
 

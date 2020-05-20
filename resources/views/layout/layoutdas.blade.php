@@ -270,6 +270,16 @@
                                         </a>
                                     </li>
                                 </ul>
+                                @if (Auth::user()->admin_group == 1 || Auth::user()->shop->shop_group_id == null)
+                                <ul class="site-menu-sub">
+                                    <li class="site-menu-item">
+                                        <a class="animsition-link" href="/businessrules">
+                                            <i class="site-menu-icon fa-cog" aria-hidden="true"></i>
+                                            <span class="site-menu-title">Reglas de Negocios</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                @endif
                                 <ul class="site-menu-sub">
                                     <li class="site-menu-item has-sub">
                                         <a href="javascript:void(0)">
