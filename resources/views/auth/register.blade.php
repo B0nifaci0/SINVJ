@@ -21,7 +21,7 @@
           <h3 class="font-size-24">Registrate</h3>
           <p>Ingresa Los Siguientes Datos Para Completar Tu Registro.</p>
            <!-- Form,Method "POST" Envia los datos del formulario a la base de datos-->
-           <form method="POST" action="{{ route('register') }}">
+           <form method="POST" onsubmit="return submitUserForm();" action="{{ route('register') }}">
             @csrf
             <!-- Input para ingresar Nombre-->
             <div class="form-group form-material floating" data-plugin="formMaterial">
@@ -115,18 +115,11 @@
                 <!-- END checkbox-->
                 <p class="ml-35">Al hacer clic en Registrarse, usted acepta nuestros <a href="#"> Términos.</a>.</p>
               </div>
-              <!-- INICIA CAPTCHA -->
-              <div class="form-group row">
-                <div class="col-md-6 ">
-                  <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_KEY')}}"></div>
-                    @if($errors->has('g-recaptcha-response'))
-                        <span class="invalid-feedback" style="display:block">
-                          <strong>{{$errors->first('g-captcha-response')}}</strong>
-                        </span>
-                    @endif 
-                  </div>  
-              </div>  
-              <!--TERMINA CAPTCHA-->
+                <!-- INICIA CAPTCHA -->
+                <div class="g-recaptcha" data-sitekey="6LceneAUAAAAAC1It9wnjrO7H8wHYRujfzM2zQme"
+                    data-callback="verifyCaptcha"></div>
+                <div id="g-recaptcha-error"></div>
+                <!--TERMINA CAPTCHA-->
               <!-- Botón para  Registrarse-->
               <button id="register" type="submit" class="btn btn-primary"class="btn btn-primary btn-block registro" alt="reg">
                 {{ __('Register') }}
@@ -148,6 +141,21 @@
               </a>
             </div>
           </footer>
+         </form>
+         <script>
+                function submitUserForm() {
+                    var response = grecaptcha.getResponse();
+                    if (response.length == 0) {
+                        document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">Por favor marque la casilla.</span>';
+                        return false;
+                    }
+                    return true;
+                }
+
+                function verifyCaptcha() {
+                    document.getElementById('g-recaptcha-error').innerHTML = '';
+                }
+            </script> 
         </div>
       </div>
     </div>
