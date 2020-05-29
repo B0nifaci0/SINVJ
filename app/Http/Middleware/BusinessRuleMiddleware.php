@@ -4,12 +4,13 @@ namespace App\Http\Middleware;
 use App\User;
 use App\Category;
 use App\Shop;
+use App\BusinessRule;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
 
-class CategoryMiddleware
+class BusinessRuleMiddleware
 {
     /**
      * Handle an incoming request.
@@ -24,12 +25,12 @@ class CategoryMiddleware
             return redirect('/index');
        }**/
        $user = Auth::user();
-       if (Auth::user()->shop->categories->count() == 0){
-           return redirect('/categorias/create')->with('mesage', 'Primero debes configurar una categoria!');
+       if (BusinessRule::where('shop_id', $user->shop_id)->count() == 0){
+           return redirect('/businessrules/create')->with('mesage', 'Primero debes configurar una regla de negocio para tu tienda!');
        }
        $group = $user->shop->shop_group_id;
-       if (Category::where('shop_group_id', $group)->count() == 0 && $user->admin_group == User::ADMIN_GROUP){
-           return redirect('/categorias/create')->with('mesage', 'Primero debes configurar una categoria para tu grupo!');
+       if (BusinessRule::where('shop_group_id', $group)->count() == 0 && $user->admin_group == User::ADMIN_GROUP){
+           return redirect('/businessrules/create')->with('mesage', 'Primero debes configurar una regla de negocio para tu grupo!');
        }
         return $next($request);
     }

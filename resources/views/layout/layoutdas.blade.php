@@ -270,16 +270,6 @@
                                         </a>
                                     </li>
                                 </ul>
-                                @if (Auth::user()->admin_group == 1 || Auth::user()->shop->shop_group_id == null)
-                                <ul class="site-menu-sub">
-                                    <li class="site-menu-item">
-                                        <a class="animsition-link" href="/businessrules">
-                                            <i class="site-menu-icon fa-cog" aria-hidden="true"></i>
-                                            <span class="site-menu-title">Reglas de Negocios</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                @endif
                                 <ul class="site-menu-sub">
                                     <li class="site-menu-item has-sub">
                                         <a href="javascript:void(0)">
@@ -370,6 +360,14 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <ul class="site-menu-sub">
+                                        <li class="site-menu-item">
+                                            <a class="animsition-link" href="/businessrules">
+                                                <i class="site-menu-icon fa-cog" aria-hidden="true"></i>
+                                                <span class="site-menu-title">Mis Reglas de Negocio</span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                     <ul class="site-menu-sub">
                                         <li class="site-menu-item">
                                             <a class="animsition-link" href="/categorias">
@@ -571,6 +569,14 @@
                                             <span class="site-menu-title">Categorias de mi grupo</span>
                                         </a>
                                     </li>
+                                    <ul class="site-menu-sub">
+                                        <li class="site-menu-item">
+                                            <a class="animsition-link" href="/groupBusinessrules">
+                                                <i class="site-menu-icon fa-cog" aria-hidden="true"></i>
+                                                <span class="site-menu-title">Reglas de Negocio de mi grupo</span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                     <li class="site-menu-item">
                                         <a class="animsition-link" href="/groupLines">
                                             <i class="site-menu-icon md-accounts-list" aria-hidden="true"></i>

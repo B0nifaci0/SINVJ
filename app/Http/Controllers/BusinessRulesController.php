@@ -26,7 +26,7 @@ class BusinessRulesController extends Controller
         ->where('type_product',1)
         ->get();
 
-        $rules = BusinessRule::where('shop_id', $user->shop_id)
+        $rules_shop = BusinessRule::where('shop_id', $user->shop_id)
         ->get();
         //return $user->shop;
         //return $rules;
@@ -34,16 +34,13 @@ class BusinessRulesController extends Controller
         if ($user->shop->shop_group_id) 
         {
             $group = $user->shop->shop_group_id;
-            $rules = BusinessRule::where('shop_group_id', $group)
-            ->get();
-            $categories = Category::where('shop_group_id', $group)
-            ->whereNull('business_rule_id')
-            ->where('type_product',1)
+            $rules_group = BusinessRule::where('shop_group_id', $group)
             ->get();
             //return $rules;
+            return view('business_rules.index', compact('categories', 'rules_group','rules_shop','user'));
         }
 
-        foreach($rules as $r)
+        foreach($rules_shop as $r)
         {
             $r->category = Category::where('business_rule_id',$r->id)
             ->select('id as category_id','name as category_name')
@@ -51,7 +48,7 @@ class BusinessRulesController extends Controller
         }
         //return $rules;
 
-        return view('business_rules.index', compact('categories','rules','user'));
+        return view('business_rules.index', compact('categories','rules_shop','user'));
     }
 
     /**
@@ -75,10 +72,6 @@ class BusinessRulesController extends Controller
             ->where('type_product',1)
             ->get();
             $lines = $user->shop->lines;
-        }
-        if($categories->count() == 0)
-        {
-            return redirect('/businessrules')->with('mesage-update', 'Todas las categorias ya tienen una regla asignada');
         }
         return view('business_rules.add', compact('categories'));
     }
@@ -110,11 +103,14 @@ class BusinessRulesController extends Controller
                 'shop_id' => $user->shop_id
             ]);
         }
-        foreach($request->category_id as $category)
+        if($request->category_id)
         {
-            $categories = Category::find($category);
-            $categories->business_rule_id = $rules->id;
-            $categories->save();
+            foreach($request->category_id as $category)
+            {
+                $categories = Category::find($category);
+                $categories->business_rule_id = $rules->id;
+                $categories->save();
+            }
         }
         return redirect('/businessrules')->with('mesage', 'Regla creada correctamente');
     }
@@ -190,6 +186,17 @@ class BusinessRulesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $exist = Category::where('business_rule_id', $id)->get()->count();
+        //return $exist;
+        if ($exist > 0) {
+            return response()->json([
+                'success' => false
+            ]);
+        } else {
+            BusinessRule::destroy($id);
+            return response()->json([
+                'success' => true
+            ]);
+        }
     }
 }

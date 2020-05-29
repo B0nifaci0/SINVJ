@@ -288,20 +288,36 @@ class ProductController extends Controller
         $branches = $user->shop->branches;
         if ($user->shop->shop_group_id) {
             $group = $user->shop->shop_group_id;
-            $categories = Category::where('shop_group_id', $group)->get();
-            $lines = Line::where('shop_group_id', $group)->get();
+            $categories_gr = Category::where('shop_group_id', $group)
+            ->where('type_product',2)
+            ->get();
+            $categories_pz = Category::where('shop_group_id', $group)
+            ->where('type_product',1)
+            ->whereNotNull('business_rule_id')
+            ->get();
+            $lines = Line::where('shop_group_id', $group)
+            ->get();
             $rules = Category::join('business_rules','business_rules.id','categories.business_rule_id')
             ->select('business_rules.*','categories.id as category_id')
             ->where('categories.shop_group_id', $group)
             ->get();
         } else {
-            $categories = $user->shop->categories;
+            $categories_gr = Category::where('shop_id', $user->shop_id)
+            ->where('type_product',2)
+            ->get();
+            $categories_pz = Category::where('shop_id', $user->shop_id)
+            ->where('type_product',1)
+            ->whereNotNull('business_rule_id')
+            ->get();
             $lines = $user->shop->lines;
             $rules = Category::join('business_rules','business_rules.id','categories.business_rule_id')
             ->select('business_rules.*','categories.id as category_id')
             ->where('categories.shop_id', $user->shop_id)
+            ->whereNotNull('categories.business_rule_id')
             ->get();
         }
+        $categories = $categories_pz->merge($categories_gr);
+        //return $categories;
         //return $rules;
         return view('product/add', compact('branches', 'categories', 'lines', 'rules'));
     }

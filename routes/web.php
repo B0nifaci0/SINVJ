@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/usuarios/activo/{id}', 'UserController@soft');
 
 
-    Route::group(['middleware' => ['auth', 'CategoryMiddleware', 'LineMiddleware']], function () {
+    Route::group(['middleware' => ['auth', 'BusinessRuleMiddleware', 'CategoryMiddleware', 'LineMiddleware']], function () {
 
         //Sucursales Producto
         Route::resource('sucursales.producto', 'BranchProductsController');
@@ -178,7 +178,7 @@ Route::resource('tiendas','ShopController');
 });
 */
 //PRODUCTS
-Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware', 'LineMiddleware', 'InventoryMiddleware']], function () {
+Route::group(['middleware' => ['auth', 'BranchMiddleware', 'BusinessRuleMiddleware', 'CategoryMiddleware', 'LineMiddleware', 'InventoryMiddleware']], function () {
 
     //Ventas
     Route::resource('ventas', 'SaleController');
@@ -319,6 +319,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     //Rutas Actualizacion de categorias
     Route::get('groupCategories', 'ShopGroupsController@categories');
     Route::get('groupLines', 'ShopGroupsController@lines');
+    Route::get('groupBusinessrules', 'ShopGroupsController@business_rules');
     Route::get('changeCategoriesAndLines', 'ShopGroupsController@changeCategoriesAndLines');
     Route::PUT('updateCategories', 'ShopGroupsController@updateCategories');
     Route::PUT('updateLines', 'ShopGroupsController@updateLines');
@@ -328,6 +329,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/businessrules', 'BusinessRulesController@index');
     Route::post('/businessrules', 'BusinessRulesController@store');
     Route::put('/businessrules/{id}/update', 'BusinessRulesController@update')->name('businessrule.update');
+    Route::delete('/businessrules/{id}', 'BusinessRulesController@destroy');
 });
 
 Auth::routes(['verify' => true]);

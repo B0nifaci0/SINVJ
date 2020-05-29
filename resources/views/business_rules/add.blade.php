@@ -30,20 +30,23 @@ ALTA CONFIGURACIÓN DE NEGOCIO
       @endif
         <center><h3>Registrar Regla</h3></center>
         <br><br>
-        <center><h4>Añadir Categorias</h4></center>
+        @if($categories->count() > 0)
+          <center><h4>Añadir Categorias</h4></center>
+        @else
+          <center><h4>No hay categorias disponibles para asignar</h4></center>
+        @endif
 
         <form action="/businessrules" method="post" name="form">
         {{ csrf_field() }} 
           <div class="row">
-
-            @foreach($categories as $category)
-
-              <div class="checkbox-custom checkbox-primary col-md-2">
-                <input class="categorias" type="checkbox" id="category" name="category_id[]" value="{{$category->id}}">
-                <label class="form-control-label">{{$category->name}}</label>
-              </div>
-
-            @endforeach
+            @if($categories->count() > 0)
+              @foreach($categories as $category)
+                <div class="checkbox-custom checkbox-primary col-md-2">
+                  <input class="categorias" type="checkbox" id="category" name="category_id[]" value="{{$category->id}}">
+                  <label class="form-control-label">{{$category->name}}</label>
+                </div>
+              @endforeach
+            @endif
 
           </div>
 
@@ -88,30 +91,6 @@ ALTA CONFIGURACIÓN DE NEGOCIO
 <script type="text/javascript">
     $(document).ready(function () {
 
-        //variable para controlar cuantos checks hay marcados
-        var casillas = 0;
-        var checks = document.getElementsByClassName("categorias");
-        for (let check of checks) {
-            check.addEventListener("click", function () {
-                if (this.checked) {
-                  casillas++;
-                } else {
-                    if (casillas != 1) {
-                      casillas--;
-                    } else {
-                      this.checked = true;
-                      Swal.fire(
-                          'No permitido',
-                          'Debes seleccionar al menos una categoria',
-                          'error'
-                      );
-                      e.preventDefault();
-                      return
-                    }
-                }
-            })
-        }
-
         $('#save').click(function(e) {
         let discount = $('#discount_percentage').val();
         console.log("Descuento:",discount);
@@ -126,18 +105,6 @@ ALTA CONFIGURACIÓN DE NEGOCIO
           e.preventDefault();
           return
         }
-
-        if(casillas <= 0)
-        {
-          Swal.fire(
-              'No permitido',
-              'Debes seleccionar al menos una categoria',
-              'error'
-          );
-          e.preventDefault();
-          return
-        }
-
 
       });
 

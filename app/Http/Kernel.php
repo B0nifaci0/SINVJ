@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         
         'ShopMiddleware' => \App\Http\Middleware\ShopMiddleware::class,
         'CategoryMiddleware' => \App\Http\Middleware\CategoryMiddleware::class,
+        'BusinessRuleMiddleware' => \App\Http\Middleware\BusinessRuleMiddleware::class,
         'BranchMiddleware' => \App\Http\Middleware\BranchMiddleware::class,
         'ProductBranchMiddleware' => \App\Http\Middleware\ProductBranchMiddleware::class,
         'Authentication' => \App\Http\Middleware\Authentication::class,

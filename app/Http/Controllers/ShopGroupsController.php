@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Line;
 use App\User;
 use App\Category;
+use App\BusinessRule;
 use App\ShopGroup;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -73,6 +74,28 @@ class ShopGroupsController extends Controller
         $categories = Category::where('shop_group_id', $group)->get();
 
         return view('shop_groups/categories', compact('categories', 'user'));
+    }
+
+    function business_rules()
+    {
+        $user = Auth::user();
+        $group = $user->shop->shop_group_id;
+
+        $categories = Category::where('shop_group_id', $group)
+        ->whereNull('business_rule_id')
+        ->where('type_product',1)
+        ->get();
+
+        $rules = BusinessRule::where('shop_group_id', $group)->get();
+
+        foreach($rules as $r)
+        {
+            $r->category = Category::where('business_rule_id',$r->id)
+            ->select('id as category_id','name as category_name')
+            ->get();
+        }
+
+        return view('shop_groups/business_rules', compact('rules', 'user', 'categories'));
     }
 
     function lines()

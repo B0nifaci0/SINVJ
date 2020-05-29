@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Product;
+use App\BusinessRule;
 use Carbon\Carbon;
 use PDF;
 
@@ -63,7 +64,16 @@ class CategoryController extends Controller
     public function create(Request  $request)
     {
         $user = Auth::user();
-        return view('category/add', compact('user'));
+        $rules = BusinessRule::where('shop_id', $user->shop_id)
+        ->get();
+        if ($user->shop->shop_group_id) 
+        {
+            $group = $user->shop->shop_group_id;
+            $rules = BusinessRule::where('shop_group_id', $group)
+            ->get();
+            //return $rules;
+        }
+        return view('category/add', compact('user','rules'));
     }
 
     /**
@@ -74,8 +84,10 @@ class CategoryController extends Controller
      */
     public function store(CategoriesRequest $request)
     {
+        //return $request;
         $user = Auth::user();
         $category = new Category($request->all());
+        //return $category;
         if ($user->admin_group) {
             $category->shop_group_id = $user->shop->shop_group_id;
             $category->save();
@@ -109,7 +121,16 @@ class CategoryController extends Controller
         $user = Auth::user();
         $category = Category::findOrFail($id);
         //return $category;
-        return view('category/edit', compact('category', 'user'));
+        $rules = BusinessRule::where('shop_id', $user->shop_id)
+        ->get();
+        if ($user->shop->shop_group_id) 
+        {
+            $group = $user->shop->shop_group_id;
+            $rules = BusinessRule::where('shop_group_id', $group)
+            ->get();
+            //return $rules;
+        }
+        return view('category/edit', compact('category', 'user', 'rules'));
     }
 
 
@@ -125,6 +146,11 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->name = $request->name;
         $category->type_product = $request->type_product;
+        if($request->business_rule_id)
+        {
+            $category->business_rule_id = $request->business_rule_id;
+        }
+        //return $category;
         $category->save();
         return redirect('/categorias')->with('mesage-update', 'La categoria se ha modificado exitosamente!');
     }
