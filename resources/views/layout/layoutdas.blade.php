@@ -362,14 +362,6 @@
                                     </li>
                                     <ul class="site-menu-sub">
                                         <li class="site-menu-item">
-                                            <a class="animsition-link" href="/businessrules">
-                                                <i class="site-menu-icon fa-cog" aria-hidden="true"></i>
-                                                <span class="site-menu-title">Mis Reglas de Negocio</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="site-menu-sub">
-                                        <li class="site-menu-item">
                                             <a class="animsition-link" href="/categorias">
                                                 <i class="site-menu-icon fa-pie-chart" aria-hidden="true"></i>
                                                 <span class="site-menu-title">Mis Categorias</span>
@@ -485,6 +477,37 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <li class="site-menu-item has-sub">
+                                        <a href="javascript:void(0)">
+                                            <i class="site-menu-icon icon fa-cogs" aria-hidden="true"></i>
+                                            <span class="site-menu-title">Reglas de Negocio</span>
+                                            <span class="site-menu-arrow"></span>
+                                        </a>
+                                        <ul class="site-menu-sub">
+                                            <li class="site-menu-item">
+                                                <a class="animsition-link" href="/businessrules">
+                                                    <i class="site-menu-icon fa-cog" aria-hidden="true"></i>
+                                                    <span class="site-menu-title">Mis Reglas de Negocio</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <ul class="site-menu-sub">
+                                            <li class="site-menu-item">
+                                                <a class="animsition-link" href="/ajustes">
+                                                    <i class="site-menu-icon fa-wrench" aria-hidden="true"></i>
+                                                    <span class="site-menu-title">Ajustes</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <!--<ul class="site-menu-sub">
+                                            <li class="site-menu-item">
+                                                <a class="animsition-link" href="/gastos/create">
+                                                    <i class="site-menu-icon fa-plus" aria-hidden="true"></i>
+                                                    <span class="site-menu-title">Agregar gasto</span>
+                                                </a>
+                                            </li>
+                                        </ul>-->
+                                    </li>
                                 </ul>
                             </li>
                             <li class="site-menu-item has-sub">
@@ -594,13 +617,6 @@
                                     @endif
                                     @endif
                                 </ul>
-                                <ul class="site-menu" data-plugin="menu">
-                            <li class="site-menu-item active">
-                                <a class="animsition-link" href="/ajustes">
-                                    <i class="site-menu-icon fa-cog" aria-hidden="true"></i>
-                                    <span class="site-menu-title">Ajustes</span>
-                                </a>
-                            </li>
                             </li>
                         </ul>
                         @endif
