@@ -26,11 +26,11 @@ class BusinessRuleMiddleware
        }**/
        $user = Auth::user();
        if (BusinessRule::where('shop_id', $user->shop_id)->count() == 0){
-           return redirect('/businessrules/create')->with('mesage', 'Primero debes configurar una regla de negocio para tu tienda!');
+           return redirect('/businessrules/create')->with('mesage', 'Primero debes configurar una regla de descuento para tus categorias!');
        }
        $group = $user->shop->shop_group_id;
        if (BusinessRule::where('shop_group_id', $group)->count() == 0 && $user->admin_group == User::ADMIN_GROUP){
-           return redirect('/businessrules/create')->with('mesage', 'Primero debes configurar una regla de negocio para tu grupo!');
+           return redirect('/businessrules/create')->with('mesage', 'Primero debes configurar una regla de descuento para las categorias del grupo!');
        }
         return $next($request);
     }

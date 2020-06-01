@@ -30,27 +30,9 @@ ALTA CONFIGURACIÓN DE NEGOCIO
       @endif
         <center><h3>Registrar Regla</h3></center>
         <br><br>
-        @if($categories->count() > 0)
-          <center><h4>Añadir Categorias</h4></center>
-        @else
-          <center><h4>No hay categorias disponibles para asignar</h4></center>
-        @endif
 
-        <form action="/businessrules" method="post" name="form">
+        <form id="form" action="/businessrules" method="post" name="form">
         {{ csrf_field() }} 
-          <div class="row">
-            @if($categories->count() > 0)
-              @foreach($categories as $category)
-                <div class="checkbox-custom checkbox-primary col-md-2">
-                  <input class="categorias" type="checkbox" id="category" name="category_id[]" value="{{$category->id}}">
-                  <label class="form-control-label">{{$category->name}}</label>
-                </div>
-              @endforeach
-            @endif
-
-          </div>
-
-          <br>
 
           <div class="row">
 
@@ -66,7 +48,7 @@ ALTA CONFIGURACIÓN DE NEGOCIO
 
             <div class="form-group form-material col-md-4">
               <label class="form-control-label">Multiplicador:</label>
-              <input type="text" class="form-control" name="price" value="{{old('price')}}" required placeholder="4" />
+              <input type="text" class="form-control" id="price" name="price" value="{{old('price')}}" required placeholder="4" />
             </div>
 
             <div class="form-group form-material col-md-4">
@@ -77,7 +59,7 @@ ALTA CONFIGURACIÓN DE NEGOCIO
             </div>
 
             <div class="form-group col-md-12">
-              <button type="submit" id="save" class="btn btn-primary">Guardar</button>
+              <button id="save" class="btn btn-primary">Guardar</button>
             </div>
 
         </form>
@@ -93,13 +75,33 @@ ALTA CONFIGURACIÓN DE NEGOCIO
 
         $('#save').click(function(e) {
         let discount = $('#discount_percentage').val();
-        console.log("Descuento:",discount);
 
         if(discount < 0 || discount > 50)
         {
           Swal.fire(
               'No permitido',
               'El descuento mínimo es 0 y el máximo es el 50',
+              'error'
+          );
+          e.preventDefault();
+          return
+        }
+        
+        if(discount.length == 0)
+        {
+          Swal.fire(
+              'No permitido',
+              'Introduce un porcentaje de descuento',
+              'error'
+          );
+          e.preventDefault();
+          return
+        }
+        if($('#price').val().length == 0)
+        {
+          Swal.fire(
+              'No permitido',
+              'Introduce un multiplicador válido',
               'error'
           );
           e.preventDefault();

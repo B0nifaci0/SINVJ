@@ -61,22 +61,24 @@ EDITAR CATEGORIA
               </ul>
           </div>
           <!-- END Input-->
-          @if($category->type_product == 1)
-          <!-- Input Para asignar regla-->
-          <div id="pz" class="form-group form-material col-md-3">
-            <label class="form-control-label" for="inputBasicLastName"> Asignar Regla:</label><br>
-            <button class="btn btn-primary" data-target="#exampleTabs" data-toggle="modal" type="button">
-            <i class="icon fa-cog" aria-hidden="true"></i></button>
-          </div>
-          <!-- END Input-->
-          @else
-          <!-- Input Para asignar regla-->
-          <div id="pz" class="form-group form-material d-none">
-            <label class="form-control-label" for="inputBasicLastName"> Asignar Regla:</label><br>
-            <button class="btn btn-primary" data-target="#exampleTabs" data-toggle="modal" type="button">
-            <i class="icon fa-cog" aria-hidden="true"></i></button>
-          </div>
-          <!-- END Input-->
+          @if($rules->count() != 0)
+            @if($category->type_product == 1)
+              <!-- Input Para asignar regla-->
+              <div id="pz" class="form-group form-material col-md-3">
+                <label class="form-control-label" for="inputBasicLastName"> Asignar Regla:</label><br>
+                <button class="btn btn-primary" data-target="#exampleTabs" data-toggle="modal" type="button">
+                <i class="icon fa-cog" aria-hidden="true"></i></button>
+              </div>
+              <!-- END Input-->
+            @else
+              <!-- Input Para asignar regla-->
+              <div id="pz" class="form-group form-material d-none">
+                <label class="form-control-label" for="inputBasicLastName"> Asignar Regla:</label><br>
+                <button class="btn btn-primary" data-target="#exampleTabs" data-toggle="modal" type="button">
+                <i class="icon fa-cog" aria-hidden="true"></i></button>
+              </div>
+              <!-- END Input-->
+            @endif
           @endif
           <!-- Modal para asignar regla de negocio -->
           <div class="col-xl-4 col-lg-6">
@@ -125,7 +127,11 @@ EDITAR CATEGORIA
                                                 <td> {{ $rule->discount_percentage }} %</td>
                                                 <td>
                                                   <div class="col-md-12">
+                                                  @if($rule->id == $actual_rule)
+                                                    <input type="radio" name="business_rule_id" value="{{$rule->id}}" checked>
+                                                  @else
                                                     <input type="radio" name="business_rule_id" value="{{$rule->id}}">
+                                                  @endif
                                                   </div>
                                                 </td>
                                             </tr>
@@ -180,6 +186,8 @@ EDITAR CATEGORIA
 <script type="text/javascript">
     $(document).ready(function () {
 
+      var num_rules = {!! $rules->count() !!}
+
       $('input[name=type_product]').change(function() {
         let type = $(this).val();
         if (type == 1) {
@@ -195,7 +203,7 @@ EDITAR CATEGORIA
         let type = $('input:radio[name=type_product]:checked').val();
         let rule = $('input:radio[name=business_rule_id]:checked').val();
         console.log(type,rule);
-        if(type == 1 && rule == undefined)
+        if(type == 1 && rule == undefined && num_rules > 0)
         {
           Swal.fire({
             title: 'Confirmación',

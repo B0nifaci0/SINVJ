@@ -21,10 +21,6 @@ class BusinessRulesController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $categories = Category::where('shop_id', $user->shop_id)
-        ->whereNull('business_rule_id')
-        ->where('type_product',1)
-        ->get();
 
         $rules_shop = BusinessRule::where('shop_id', $user->shop_id)
         ->get();
@@ -37,18 +33,10 @@ class BusinessRulesController extends Controller
             $rules_group = BusinessRule::where('shop_group_id', $group)
             ->get();
             //return $rules;
-            return view('business_rules.index', compact('categories', 'rules_group','rules_shop','user'));
+            return view('business_rules.index', compact('rules_group','rules_shop','user'));
         }
 
-        foreach($rules_shop as $r)
-        {
-            $r->category = Category::where('business_rule_id',$r->id)
-            ->select('id as category_id','name as category_name')
-            ->get();
-        }
-        //return $rules;
-
-        return view('business_rules.index', compact('categories','rules_shop','user'));
+        return view('business_rules.index', compact('rules_shop','user'));
     }
 
     /**
@@ -59,21 +47,7 @@ class BusinessRulesController extends Controller
     public function create()
     {
         $user = Auth::user();
-        if ($user->shop->shop_group_id) {
-            $group = $user->shop->shop_group_id;
-            $categories = Category::where('shop_group_id', $group)
-            ->whereNull('business_rule_id')
-            ->where('type_product',1)
-            ->get();
-            $lines = Line::where('shop_group_id', $group)->get();
-        } else {
-            $categories = Category::where('shop_id', $user->shop_id)
-            ->whereNull('business_rule_id')
-            ->where('type_product',1)
-            ->get();
-            $lines = $user->shop->lines;
-        }
-        return view('business_rules.add', compact('categories'));
+        return view('business_rules.add', compact('user'));
     }
 
     /**
@@ -86,6 +60,7 @@ class BusinessRulesController extends Controller
     {
         //return $request;
         $user = Auth::user();
+        
         if ($user->shop->shop_group_id)
         {
             $group = $user->shop->shop_group_id;
@@ -95,6 +70,7 @@ class BusinessRulesController extends Controller
                 'discount_percentage' => $request->discount_percentage,
                 'shop_group_id' => $group
             ]);
+            return redirect('/groupBusinessrules')->with('mesage', 'Regla creada correctamente');
         } else {
             $rules = BusinessRule::create([
                 'operator' => $request->operator,
@@ -102,17 +78,9 @@ class BusinessRulesController extends Controller
                 'discount_percentage' => $request->discount_percentage,
                 'shop_id' => $user->shop_id
             ]);
+            return redirect('/businessrules')->with('mesage', 'Regla creada correctamente');
         }
-        if($request->category_id)
-        {
-            foreach($request->category_id as $category)
-            {
-                $categories = Category::find($category);
-                $categories->business_rule_id = $rules->id;
-                $categories->save();
-            }
-        }
-        return redirect('/businessrules')->with('mesage', 'Regla creada correctamente');
+
     }
 
     /**
@@ -147,26 +115,7 @@ class BusinessRulesController extends Controller
     public function update(Request $request, $id)
     {
         //return $request;
-
-        $categories = Category::where('business_rule_id',$id)
-        ->get();
-        
-        foreach($categories as $c)
-        {
-            $c->business_rule_id = null;
-            $c->save();
-        }
-        
-        if($request->category_id)
-        {
-            foreach($request->category_id as $category)
-            {
-                $cat = Category::find($category);
-                $cat->business_rule_id = $id;
-                $cat->save();
-            }
-        }
-        //return $categories;
+        $user = Auth::user();
 
         $rule = BusinessRule::find($id);
         $rule->operator = $request->operator;
@@ -174,7 +123,12 @@ class BusinessRulesController extends Controller
         $rule->discount_percentage = $request->discount_percentage;
         $rule->save();
 
-        return redirect('/businessrules')->with('mesage-update', 'La regla ha sido actualizada exitosamente');
+        if ($user->shop->shop_group_id)
+        {
+            return redirect('/groupBusinessrules')->with('mesage-update', 'La regla ha sido actualizada exitosamente');
+        } else {
+            return redirect('/businessrules')->with('mesage-update', 'La regla ha sido actualizada exitosamente');
+        }
 
     }
 
