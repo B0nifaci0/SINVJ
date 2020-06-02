@@ -55,14 +55,14 @@ ALTA PRODUCTO
                     </div>
                     <!-- Input para ingresar descripcion-->
                     <div class="form-group form-material col-md-3">
-                        <label>Descripcion</label>
+                        <label>Descripción</label>
                         <input type="text" class="form-control" name="description"
                             value="{{($product->description) ? $product->description: old('description')}}" required>
                     </div>
                     <!-- END Input-->
                     <!-- Select para Seleccionar linea-->
                     <div class="col-md-3 remove">
-                        <label class="control-label">Seleccione Linea</label>
+                        <label class="control-label">Seleccione Línea</label>
                         <select id="line_id" name="line_id" class="form-control round">
                             @foreach($lines as $line)
                             <option value="{{ $line->id }}" required>{{($line->name) ? $line->name :old('$line->name')}}
@@ -96,7 +96,7 @@ ALTA PRODUCTO
                     </div>
                     <!-- END Input-->
                     <div class="col-md-3 form-material remove">
-                        <label class="control-label">Precio de la linea</label>
+                        <label class="control-label">Precio de la línea</label>
                         <input type="text" name="" id="line_price" class="form-control" readonly>
                     </div>
                     <!-- END Select-->
@@ -133,7 +133,7 @@ ALTA PRODUCTO
                     <!-- END Select-->
                     <!-- Select para Editar Estatus-->
                     <div class="col-md-3">
-                        <label>Seleccione El Estatus Actual</label>
+                        <label>Seleccionar estatus actual</label>
                         <select name="status_id" class="form-control round">
                             <option value="2">Existente</option>
                             <option value="4">Dañado</option>

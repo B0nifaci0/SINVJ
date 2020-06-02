@@ -38,7 +38,7 @@ LISTA DE  SUCURSALES
   </button>
 	</div>
 		@endif
-  <div class="page-content">
+  <div class="">
         <!-- Panel Basic -->
     <div class="panel">
         <div class="panel-body">
@@ -52,12 +52,12 @@ LISTA DE  SUCURSALES
                     <button onclick="window.location.href='sucursales/corte'"
                 type="button" class="btn btn-sm small btn-floating
                 toggler-left  btn-secondary waves-effect waves-light waves-round float-right"
-                data-toggle="tooltip" data-original-title="Corte">
+                data-toggle="tooltip" data-original-title="Corte de caja">
                 <i class="iicon md-money" aria-hidden="true"></i>
               </button>
                   </div>
                   <div class="col-6">
-                    <button onclick="window.location.href='/sucursales/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip" data-original-title="Agregar">
+                    <button onclick="window.location.href='/sucursales/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip" data-original-title="Agregar Sucursal">
                         <i class="icon md-plus" aria-hidden="true"></i></button>
                   </div>
                   <!-- END Botón-->
@@ -76,8 +76,8 @@ LISTA DE  SUCURSALES
                   <th>Representate Legal</th>
                   <th>RFC</th>
                   <th>Correo</th>
-                  <th>Telefono</th>
-                  <th>Direccion</th>
+                  <th>Teléfono </th>
+                  <th>Dirección</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
@@ -88,8 +88,8 @@ LISTA DE  SUCURSALES
                   <th>Representate Legal</th>
                   <th>RFC</th>
                   <th>Correo</th>
-                  <th>Telefono</th>
-                  <th >Direccion</th>
+                  <th>Teléfono </th>
+                  <th >Dirección</th>
                   <th>Opciones</th>
                 </tr>
               </tfoot>
@@ -112,13 +112,6 @@ LISTA DE  SUCURSALES
                       data-toggle="tooltip" data-original-title="Editar">
                       <i class=" icon md-edit" aria-hidden="true"></i></button></a>
                       <!--END Botón -->
-                      <!-- Botón para borrar sucursal-->
-                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                        alt="{{$branch->id}}" role="button"
-                        data-toggle="tooltip" data-original-title="Borrar">
-                        <i class="icon md-delete" aria-hidden="true"></i>
-                      </button>
-                      <!--END Botón -->
                       @endif
                       <!-- Botón para ver productos por sucursal-->
                       @if($branch->num_products == 0)
@@ -131,6 +124,15 @@ LISTA DE  SUCURSALES
                       class="btn btn-icon btn-warning waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Productos">
                       <i class="icon md-label-heart" aria-hidden="true"></i></button></a>
+                      @endif
+                      <!--END Botón -->
+                      <!-- Botón para borrar sucursal-->
+                      @if(Auth::user()->type_user == 1 )
+                      <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                        alt="{{$branch->id}}" role="button"
+                        data-toggle="tooltip" data-original-title="Borrar">
+                        <i class="icon md-delete" aria-hidden="true"></i>
+                      </button>
                       @endif
                       <!--END Botón -->
 

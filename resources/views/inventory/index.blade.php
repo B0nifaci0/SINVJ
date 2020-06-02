@@ -37,7 +37,7 @@ LISTA DE Inventarios
       </button>
     </div>
     @endif
-    <div class="page-content">
+    <div class="">
       <!-- Panel Basic -->
       <div class="panel">
         <div class="panel-body">
@@ -65,7 +65,7 @@ LISTA DE Inventarios
                     <button onclick="window.location.href='/inventarios/create'"
                     type="button" class=" btn btn-sm small btn-floating
                     toggler-left  btn-info waves-effect waves-light waves-round float-left"
-                    data-toggle="tooltip" data-original-title="Agregar">
+                    data-toggle="tooltip" data-original-title="Crear nuevo Inventario">
                     <i class="icon md-plus" aria-hidden="true"></i>
                   </button>
                   </div>

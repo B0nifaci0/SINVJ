@@ -10,16 +10,16 @@ Panel Principal
 
 @endsection
 @section('content')
-<div class="page">
+<div class="">
     <div class="page-content container-fluid">
         <form action="/recibopdf">
-            <div class=" col-12"> 
+            <div class="panel-bofy"> 
                 <div class="panel panel-bordered">
                 <div class="panel-heading">
                     <h3 class="bg-info panel-title text-center text-white">RECIBO DE NOMINA</h3>
                 </div>
-                <div class="panel-body row col-12">
-                    <div class="row col-12">
+                <div class="panel-body">
+                    <div class="row">
                     <div class="col-6">
                         <label>Seleccione Sucursal</label>
                             <select id="sucursales_1"  name="branch_id" alt="1" class="form-control round sucursales">

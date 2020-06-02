@@ -33,7 +33,6 @@ LISTA TIENDAS
         </button>
     </div>
     @endif
-    <div class="page-content">
         <!-- Panel Basic -->
         <div class="panel">
             <header class="panel-heading">
@@ -41,7 +40,7 @@ LISTA TIENDAS
                     <div class="row">
                     </div>
                 </div>
-                <h3 class="panel-title">Tienda</h3>
+                <h2 align="center">Tienda</h2>
             </header>
             <div class="panel-body">
                 <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
@@ -82,7 +81,7 @@ LISTA TIENDAS
                 </table>
             </div>
         </div>
-    </div>
+
 </div>
 <!-- End Panel Basic -->
 @endsection

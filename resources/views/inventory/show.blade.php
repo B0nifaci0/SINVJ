@@ -107,10 +107,10 @@ LISTA DE LINEA
                                     Existente
                                     <i class="icon md-check"></i>
                                 </button>
-                                <button class="btn btn-warning lost" alt="{{ $item->id }}">
+                                <button class="btn btn-warning damaged" alt="{{ $item->id }}">
                                     Dañado
                                 </button>
-                                <button class="btn btn-danger damaged" alt="{{ $item->id }}">
+                                <button class="btn btn-danger lost" alt="{{ $item->id }}">
                                     Faltante
                                 </button>
                                 @else
@@ -149,6 +149,7 @@ LISTA DE LINEA
             <input type="text" name="inventory_id" id="inventory_id">
             <input type="text" name="status" id="status">
             <input type="text" name="discar_cause" id="discar_cause">
+            <input type="text" name="status_product" id="status_product">
         </form>
     </div>
 </div>
@@ -185,6 +186,7 @@ LISTA DE LINEA
             }).then((result) => {
                 if (result.value) {
                     $('#inventory_id').val(id);
+                    $('#status_product').val(2);
                     $('#status').val(1);
                     $('#form').submit();
                 }
@@ -192,27 +194,6 @@ LISTA DE LINEA
         });
 
         $('#example').on('click', '.lost', function () {
-            let id = $(this).attr("alt");
-
-            Swal.fire({
-                title: 'Confirmación',
-                text: "¿El producto se encuentra dañado?",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#4caf50',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si'
-            }).then((result) => {
-                if (result.value) {
-                    $('#inventory_id').val(id);
-                    $('#status').val(2);
-                    $('#discar_cause').val(2);
-                    $('#form').submit();
-                }
-            })
-        });
-
-        $('#example').on('click', '.damaged', function () {
             let id = $(this).attr("alt");
 
             Swal.fire({
@@ -228,9 +209,34 @@ LISTA DE LINEA
                     $('#inventory_id').val(id);
                     $('#status').val(3);
                     $('#discar_cause').val(1);
+                    $('#status_product').val(5);
                     $('#form').submit();
                 }
             })
+
+        });
+
+        $('#example').on('click', '.damaged', function () {
+            let id = $(this).attr("alt");
+
+            Swal.fire({
+                title: 'Confirmación',
+                text: "¿El producto se encuentra dañado?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4caf50',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.value) {
+                    $('#inventory_id').val(id);
+                    $('#status').val(2);
+                    $('#discar_cause').val(2);
+                    $('#status_product').val(4);
+                    $('#form').submit();
+                }
+            })
+
         });
         $('#example').on('click', '.restart', function () {
             let id = $(this).attr("alt");
@@ -270,6 +276,7 @@ LISTA DE LINEA
             }).then((result) => {
                 if (result.value) {
                     $('#inventory_id').val(id);
+                    $('#status_product').val(2);
                     $('#status').val(null);
                     $('#discar_cause').val(null);
                     $('#form').submit();

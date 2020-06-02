@@ -57,7 +57,7 @@ ALTA SUCURSALES
                 <!-- END Input-->
                 <!-- Input Para ingresar telefono-->
                 <div class="form-group form-material col-md-6">
-                  <label class="form-control-label">Telefono: </label>
+                  <label class="form-control-label">Teléfono: </label>
                   <input type="text" class="form-control" name="phone_number" value="{{old('phone_number')}}" required="required" placeholder="5516785248" />
                 </div>
                 <!-- END Input-->
