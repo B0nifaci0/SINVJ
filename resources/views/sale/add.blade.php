@@ -186,7 +186,7 @@ ALTA VENTA
                         <!-- END Tabla-->
                     </div>
                     <br>
-                    <input type="file" name="image" id="image" class="invisible">
+                    <input type="file" name="image" id="image" class="invisible" accept="image/gif,image/jpeg,image/jpg,image/png">
                     <div class="row">
                         <!-- Botón para mostar el Modal de Tipos de pago-->
                         <div class="col-6 form-group">
@@ -379,7 +379,7 @@ ALTA VENTA
                                             <div class="form-group form-material col-md-6">
                                                 <label>Selecciona Ticket de la venta</label>
                                                 <br>
-                                                <label for="image" class="btn btn-success">Explorar</label>
+                                                <label  for="image" class="btn btn-success">Explorar</label>
                                             </div>
                                             <!-- END Input-->
                                         </div>

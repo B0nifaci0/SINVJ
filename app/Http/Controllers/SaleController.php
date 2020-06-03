@@ -272,7 +272,7 @@ class SaleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaleRequest $request)
     {
         //return $request;
         $sale = null;
@@ -383,7 +383,7 @@ class SaleController extends Controller
      * @param  \App\Sale  $sale
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( $id)
     {
         $sale = Sale::with(['partials', 'client'])->findOrFail($id);
         $sale->itemsSold = $sale->itemsSold();

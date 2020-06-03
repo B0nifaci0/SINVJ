@@ -154,7 +154,7 @@ ALTA PRODUCTO
                     <!-- Input para Seleccionar Imagen del producto-->
                     <div class="form-group form-material col-md-3">
                         <label for="image" class="btn btn-primary">Imagen</label>
-                        <input type="file" name="image" id="image" class="hidden">
+                        <input type="file" name="image" id="image" class="hidden" accept="image/gif,image/jpeg,image/jpg,image/png">
                     </div>
                     <!-- END Input-->
                 </div>

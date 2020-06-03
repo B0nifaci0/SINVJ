@@ -27,6 +27,7 @@ class ExpensesRequest extends FormRequest
             'name' => 'required|string|max:25',
             'descripcion' => 'required|string|max:25',
             'price' => 'required|numeric|min:2',
+            'image' => 'image',
         ];
     }
     public function messages(){

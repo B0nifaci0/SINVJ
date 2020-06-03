@@ -328,7 +328,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductValidate $request)
     {
         //return $request;
         $user = Auth::user();
@@ -341,6 +341,7 @@ class ProductController extends Controller
             'weigth' => Rule::requiredIf($category->type_product == 2),
             'price' => Rule::requiredIf($category->type_product == 2),
         ]);
+
 
         if ($validator->fails()) {
             $response = [

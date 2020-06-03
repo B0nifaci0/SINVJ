@@ -74,7 +74,7 @@ MODIFICACIÓN TIENDA
               <label>Selecciona el logo de tu tienda</label>
               <br>
               <label for="image" class="btn btn-info">Explorar</label>
-              <input type="file" name="image" id="image" class="hidden" >
+              <input type="file" name="image" id="image" class="hidden" accept="image/gif,image/jpeg,image/jpg,image/png">
             </div>
           </div>
           <div class="row">

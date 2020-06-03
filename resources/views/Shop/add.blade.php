@@ -55,7 +55,7 @@ ALTA TIENDAS
                         <div class='form-group form-material col-md-6'>
                             <div class="example-wrap">
                               <label>Ingresa Imagen de tu Tienda.</label>
-                              <input type="file" name="image" data-plugin="dropify"  required>
+                              <input type="file" name="image" data-plugin="dropify" accept="image/gif,image/jpeg,image/jpg,image/png" required>
                         </div>
                   </div>
                     <div class="col-md-12 form-group">

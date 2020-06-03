@@ -364,7 +364,7 @@ SUCURSAl
                     <div class="form-group form-material col-md-6 remove">
                         <label>Selecciona Ticket de la venta</label>
                         <label for="image" class="btn btn-primary">Explorar</label>
-                        <input type="file" name="image" id="image" class="invisible">
+                        <input type="file" name="image" id="image" class="invisible" accept="image/gif,image/jpeg,image/jpg,image/png">
                     </div>
                 </form>
             </div>
