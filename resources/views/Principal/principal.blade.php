@@ -10,9 +10,10 @@ Panel Principal
 
 @endsection
 @section('content')
+
 <!-- Page -->
 <div class="col-sm-12 col-lg-12">
-  <div class="page"></div>
+  <div class="page-content"></div>
   @if (session('mesage'))
   <div class="alert alert-success alert-dismissible fade show" role="alert">
     <strong>{{ session('mesage') }}</strong>
@@ -37,7 +38,8 @@ Panel Principal
     </button>
   </div>
   @endif
-  <div class="page-content container-fluid">
+<div class="col-sm-12 col-lg-12">
+  <div class="container-fluid">
     <div class="row" data-plugin="matchHeight" data-by-row="true">
       <div class="col-md-12">
         <div class="panel">
@@ -51,16 +53,10 @@ Panel Principal
                   <i class="icon md-edit" aria-hidden="true" align="right"></i>
                 </button>
               </div>
-              
+              @endif
               <div class="col-md-12">
                 <img class="img-responsive " width="225px" height="160px" src="{{ $shop->image }}">
               </div>
-              @endif
-              @if(Auth::user()->type_user == 0)
-              <div class="col-md-12">
-                <h2>Bienvenido al Panel de Super Administrador</h2>
-              </div>
-              @endif
               <!--<div class="col-md-6">
                   <h2 style="color:white">
                      {{$shop->name}}
@@ -111,11 +107,8 @@ Panel Principal
 
 @if(Auth::user()->type_user == 1 )
 <div class="col-sm-12 col-lg-12">
-
-  <div class="container-fluid" style="background-color:white">
-
+  <div class="container-fluid">
     <div class="row">
-
       <div class="col-12">
         <div class="panel-warning">
           <div class="panel-heading">
@@ -415,7 +408,8 @@ Panel Principal
                     <div class="grey-800 float-left py-10">
                       <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Dinero (Devueltos)
                     </div>
-                    <span class="float-right grey-700 font-size-30">@if($ventas_devueltos) $ {{number_format($ventas_devueltos,2)}}
+                    <span class="float-right grey-700 font-size-30">@if($ventas_devueltos) $
+                      {{number_format($ventas_devueltos,2)}}
                       @else $ 0 @endif</span>
                   </div>
                   <!--  <div class="ct-chart h-50"></div>   -->
@@ -427,17 +421,13 @@ Panel Principal
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
-
 </div>
-
 <br>
 
 <div class="col-sm-12 col-lg-12">
-  <div class="container-fluid" style="background-color:white">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-12">
         <div class="bg-primary">
@@ -705,7 +695,8 @@ Panel Principal
                     <div class="grey-800 float-left py-10">
                       <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas Devueltas
                     </div>
-                    <span class="float-right grey-700 font-size-30">@if($piezas_devueltos) {{$piezas_devueltos}} pzs @else 0 pzs
+                    <span class="float-right grey-700 font-size-30">@if($piezas_devueltos) {{$piezas_devueltos}} pzs
+                      @else 0 pzs
                       @endif</span>
                   </div>
                   <!--  <div class="ct-chart h-50"></div>   -->

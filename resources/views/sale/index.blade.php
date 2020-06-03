@@ -27,7 +27,7 @@ LISTA DE VENTAS
         </button>
     </div>
     @endif
-    <div class="page-content">
+    <div class="">
         <!-- Panel Basic -->
         <div class="panel">
             <div class="panel-body">
@@ -45,7 +45,8 @@ LISTA DE VENTAS
                             </div>
                             <div class="col-6">
                                 <button onclick="window.location.href='/ventas/create'" type="button"
-                                    class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left">
+                                    class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left"
+                                    data-toggle="tooltip" data-original-title="Agregar nueva venta">
                                     <i class="icon md-plus" aria-hidden="true"></i>
                                 </button>
                             </div>

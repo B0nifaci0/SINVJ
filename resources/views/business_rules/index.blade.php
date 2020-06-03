@@ -134,41 +134,10 @@
                                                                         <h4 class="modal-title" id="exampleModalTabs">Editar Regla</h4>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        @if($categories->count() > 0 || $rule->category->count() > 0)
-                                                                            <h1 class="text-center panel-title">Añadir/Quitar Categorias</h1>
-                                                                        @else
-                                                                            <h1 class="text-center panel-title">No hay Categorias Asignadas o Disponibles</h1>
-                                                                        @endif
                                                                         <form action="{{route('businessrule.update',['id' => $rule->id])}}"
                                                                             method="post">
                                                                             {{ csrf_field() }}
                                                                             {{ method_field('PUT') }}
-                                                                            <div class="row">
-
-                                                                            @if($categories->count() > 0 || $rule->category->count() > 0)
-                                                                                @foreach($categories as $category)
-                                                                                <div class="checkbox-custom checkbox-primary col-md-3">
-                                                                                    <input type="checkbox" id="category"
-                                                                                        name="category_id[]" value="{{$category->id}}">
-                                                                                    <label
-                                                                                        class="form-control-label">{{ $category->name }}</label>
-                                                                                </div>
-                                                                                @endforeach
-
-                                                                                @foreach($rule->category as $c)
-                                                                                <div class="checkbox-custom checkbox-primary col-md-3">
-                                                                                    <input type="checkbox" id="category" checked
-                                                                                        name="category_id[]"
-                                                                                        value="{{$c->category_id}}">
-                                                                                    <label
-                                                                                        class="form-control-label">{{$c->category_name}}</label>
-                                                                                </div>
-                                                                                @endforeach
-                                                                            @endif
-
-                                                                            </div>
-
-                                                                            <br>
 
                                                                             <div class="row">
                                                                                 <div class="col-md-4">
@@ -185,7 +154,8 @@
                                                                                 <div class="form-group form-material col-md-4">
                                                                                     <label
                                                                                         class="form-control-label">Multiplicador:</label>
-                                                                                    <input type="text" class="form-control" name="price"
+                                                                                    <input type="text" class="form-control" id="price{{$rule->id}}"
+                                                                                        name="price"
                                                                                         value="{{$rule->price}}" required
                                                                                         placeholder="4" />
                                                                                 </div>
@@ -193,7 +163,8 @@
                                                                                 <div class="form-group form-material col-md-4">
                                                                                     <label class="form-control-label">Porcentaje de
                                                                                         Descuento:</label>
-                                                                                    <input type="text" class="form-control discount"
+                                                                                    <input type="text" id="discount_percentage{{$rule->id}}" 
+                                                                                        class="form-control discount"
                                                                                         name="discount_percentage" required
                                                                                         value="{{$rule->discount_percentage}}"
                                                                                         placeholder="%" />
@@ -201,7 +172,11 @@
 
                                                                                 <div class="form-group col-md-12">
                                                                                     <button
-                                                                                        class="btn btn-primary save">Guardar</button>
+                                                                                        class="btn btn-primary save"
+                                                                                        alt="{{$rule->id}}" role="button" data-toggle="tooltip"
+                                                                                        data-original-title="Guardar">
+                                                                                        Guardar
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
 
@@ -285,6 +260,44 @@
 @section('listado-productos')
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $('button.save').click(function(e){
+            let id = $(this).attr("alt");
+            console.log(id);
+            let discount = $('#discount_percentage'+id).val();
+
+            if(discount < 0 || discount > 50)
+            {
+              Swal.fire(
+                  'No permitido',
+                  'El descuento mínimo es 0 y el máximo es el 50',
+                  'error'
+              );
+              e.preventDefault();
+              return
+            }
+
+            if(discount.length == 0)
+            {
+              Swal.fire(
+                  'No permitido',
+                  'Introduce un porcentaje de descuento',
+                  'error'
+              );
+              e.preventDefault();
+              return
+            }
+            if($('#price'+id).val().length == 0)
+            {
+              Swal.fire(
+                  'No permitido',
+                  'Introduce un multiplicador válido',
+                  'error'
+              );
+              e.preventDefault();
+              return
+            }
+        });
 
         $('#rules').on('click', '.delete', function(){
             var id = $(this).attr("alt");

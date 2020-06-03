@@ -11,7 +11,7 @@ Panel Principal
 @endsection
 @section('content')
 <!-- Formulario de Reporte de Productos por estatus-->
-<div class="page">
+<div class="">
     <div class="page-content container-fluid">
         <div class="examle-wrap">
             <h4 class="example-title">Panel De Comisiones de Usuarios</h4>

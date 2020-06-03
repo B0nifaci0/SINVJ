@@ -71,8 +71,8 @@ class CategoryController extends Controller
             $group = $user->shop->shop_group_id;
             $rules = BusinessRule::where('shop_group_id', $group)
             ->get();
-            //return $rules;
         }
+        //return $rules;
         return view('category/add', compact('user','rules'));
     }
 
@@ -121,6 +121,10 @@ class CategoryController extends Controller
         $user = Auth::user();
         $category = Category::findOrFail($id);
         //return $category;
+        $actual_rule = Category::join('business_rules','business_rules.id','categories.business_rule_id')
+        ->where('categories.id', $id)
+        ->sum('categories.business_rule_id');
+        //return $actual_rule;
         $rules = BusinessRule::where('shop_id', $user->shop_id)
         ->get();
         if ($user->shop->shop_group_id) 
@@ -128,9 +132,9 @@ class CategoryController extends Controller
             $group = $user->shop->shop_group_id;
             $rules = BusinessRule::where('shop_group_id', $group)
             ->get();
-            //return $rules;
         }
-        return view('category/edit', compact('category', 'user', 'rules'));
+        //return $rules;
+        return view('category/edit', compact('category', 'user', 'rules', 'actual_rule'));
     }
 
 
@@ -149,6 +153,8 @@ class CategoryController extends Controller
         if($request->business_rule_id)
         {
             $category->business_rule_id = $request->business_rule_id;
+        } else {
+            $category->business_rule_id = null;
         }
         //return $category;
         $category->save();

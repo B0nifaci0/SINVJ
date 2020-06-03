@@ -174,8 +174,10 @@ LISTA PRODUCTO
                                                         class="text-center badge badge-warning">{{$product->status->name}}</span>
                                                 </td>
                                                 @endif
-
-
+                                                @if($product->status_id == 5)
+                                                <td><span class="text-center badge badge-danger">{{$product->status->name}}</span></td>
+                                                @endif
+                                                
                                                 @if(Auth::user()->type_user == 1)
                                                 <td>${{$product->price_purchase }}</td>
                                                 @endif
@@ -291,7 +293,9 @@ LISTA PRODUCTO
                                                     class="text-center badge badge-warning">{{$product->status->name}}</span>
                                             </td>
                                             @endif
-
+                                            @if($product->status_id == 5)
+                                            <td><span class="text-center badge badge-danger">{{$product->status->name}}</span></td>
+                                            @endif
 
                                             @if(Auth::user()->type_user == 1)
                                             <td>${{$product->price_purchase}}</td>

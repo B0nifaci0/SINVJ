@@ -97,7 +97,7 @@ SUCURSAl
                             @if($sale->client->type_client == 1)
                             <tr>
                                 <td>
-                                    <strong class="text-center badge badge-secondary">Limite de credito</strong>
+                                    <strong class="text-center badge badge-secondary">Límite de crédito</strong>
                                 </td>
                                 <td> 
                                     $ {{ $sale->client->credit }}
@@ -138,13 +138,13 @@ SUCURSAl
                 <tr>
                     <th>Clave</th>
                     <th>Descripción</th>
-                    <th>Linea</th>
-                    <th>Categoria</th>
+                    <th>Línea</th>
+                    <th>Categoría</th>
                     <th>Peso</th>
                     <th>Precio</th>
                     @if($sale->paid_out != $sale->total)
                         @if($sale->change == 0)
-                            <th>Devolver</th>
+                            <th>Opciones</th>
                         @endif
                     @endif
                 </tr>
@@ -174,11 +174,11 @@ SUCURSAl
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5" align="center">Total</td>
                     <td><strong>$ {{ $sale->total }}</strong></td>
                     @if($sale->paid_out != $sale->total)
                         @if($sale->change == 0)
-                            <td></td>
+                            <td>Opciones</td>
                         @endif
                     @endif
                 </tr>
@@ -196,8 +196,8 @@ SUCURSAl
                 <tr>
                     <th>Clave</th>
                     <th>Descripción</th>
-                    <th>Linea</th>
-                    <th>Categoria</th>
+                    <th>Línea</th>
+                    <th>Categoría</th>
                     <th>Peso</th>
                     <th>Precio</th>
                 </tr>
@@ -220,7 +220,7 @@ SUCURSAl
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="5" align="center">Total</td>
                     <td><strong>$ {{ $finalprice }}</strong></td>
                 </tr>
             </tbody>
@@ -255,17 +255,17 @@ SUCURSAl
             <div class="panel-body">
 
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <p>
-                            <strong>Abonos totales: </strong>{{ $sale->partials->count() }}
+                            <strong>Abonos Realizados: </strong>{{ $sale->partials->count() }}
                         </p>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <p>
                             <strong>Total abonado: </strong>$ {{ $sale->partials->sum('amount') }}
                         </p>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <p>
                             @if(($sale->total - $sale->paid_out) > 0)
                             <strong>Restan: </strong>$ {{ $sale->total - $sale->paid_out }}
@@ -300,18 +300,23 @@ SUCURSAl
                             </td>
                             <td>$ {{ $partial->amount }}</td>
                             <td>
-                                <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
-                                    data-close-btn-inside="false" data-fixed-contentPos="true"
-                                    data-main-class="mfp-margin-0s mfp-with-zoom"
-                                    data-zoom='{"enabled": "true","duration":"300"}'>
-                                    <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200"
-                                        height="150" />
+                                @if($partial->image)
+                                    <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
+                                        data-close-btn-inside="false" data-fixed-contentPos="true"
+                                        data-main-class="mfp-margin-0s mfp-with-zoom"
+                                        data-zoom='{"enabled": "true","duration":"300"}'>
+                                        <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200"
+                                            height="150" />
+                                @else
+                                    Sin Imagen
+                                @endif
                             </td>
                         </tr>
                         @endforeach
                         <tr>
                             <td colspan="2"></td>
                             <td><strong>$ {{ $sale->partials->sum('amount') }}</strong></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>

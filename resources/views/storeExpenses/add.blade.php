@@ -57,7 +57,7 @@ ALTA GASTOS
               <!-- END Input-->
               <!-- Input para ingresar descripcion-->
               <div class="form-group form-material col-md-6">
-                <label class="form-control-label" for="inputBasicLastName"> Descripcion:</label>
+                <label class="form-control-label" for="inputBasicLastName"> Descripción:</label>
                 <input type="text" class="form-control" name="descripcion" value="{{old('descripcion')}}" />
               </div>
               <!-- END Input-->

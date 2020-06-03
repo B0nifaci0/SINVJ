@@ -54,6 +54,7 @@ ALTA CATEGORIA
               </ul>
           </div>
           <!-- END Input-->
+          @if($rules->count() != 0)
           <!-- Input Para ingresar Nombre de categoria-->
           <div id="pz" class="form-group form-material d-none">
             <label class="form-control-label" for="inputBasicLastName"> Asignar Regla:</label><br>
@@ -61,6 +62,7 @@ ALTA CATEGORIA
             <i class="icon fa-cog" aria-hidden="true"></i></button>
           </div>
           <!-- END Input-->
+          @endif
         </div>
           <!-- Modal para asignar regla de negocio -->
           <div class="col-xl-4 col-lg-6">
@@ -163,6 +165,8 @@ ALTA CATEGORIA
 <script type="text/javascript">
     $(document).ready(function () {
 
+      var num_rules = {!! $rules->count() !!}
+
       $('input[name=type_product]').change(function() {
         let type = $(this).val();
         if (type == 1) {
@@ -178,10 +182,10 @@ ALTA CATEGORIA
         let type = $('input:radio[name=type_product]:checked').val();
         let rule = $('input:radio[name=business_rule_id]:checked').val();
         console.log(type,rule);
-        if(type == 1 && rule == undefined)
+        if(type == 1 && rule == undefined && num_rules > 0)
         {
           Swal.fire({
-            title: 'Confirmación',
+            title: 'Advertencia',
             text: "Si no asignas una regla a esta categoria no podrás usarla hasta asignarle una, ¿Quieres Continuar?",
             type: 'warning',
             showCancelButton: true,
