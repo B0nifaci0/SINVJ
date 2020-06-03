@@ -107,7 +107,14 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        return view('category.show', ['category' => Category::findOrFail($id)]);
+        $category = Category::findOrFail($id);
+        $rule = BusinessRule::join('categories','categories.business_rule_id','business_rules.id')
+        ->where('categories.id',$id)
+        ->select('business_rules.operator','business_rules.price','business_rules.discount_percentage')
+        ->first();
+        //return $rule;
+        //return $category;
+        return view('category.show', compact('category', 'rule'));
     }
 
     /**

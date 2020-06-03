@@ -103,6 +103,9 @@ ALTA BITACORAS
 <script>
     $(document).ready(function(){
 
+        var clients = {!! $clients !!};
+        var ids = {!! $id !!};
+
         $('#credit').on('input', function() {
             let id = $(this).attr('id');
             let val = $(this).val();
@@ -130,7 +133,29 @@ ALTA BITACORAS
             let type = $('#user-type').val();
             let name = $('#name').val();
             let phone = $('#phone_number').val();
-
+            let client = clients.filter(c => c.phone_number == phone)[0];
+            let client_phone = clients.filter(c => c.id == ids)[0];
+            console.log(client);
+            if(client != undefined && client_phone.phone_number != phone)
+            {
+                Swal.fire(
+                    'No permitido',
+                    'El telefono que intentas ingresar ya esta registrado con otro cliente',
+                    'error'
+                );
+                e.preventDefault();
+                return
+            }
+            if(client != undefined && ids == 0)
+            {
+                Swal.fire(
+                    'No permitido',
+                    'El telefono que intentas ingresar ya esta registrado con otro cliente',
+                    'error'
+                );
+                e.preventDefault();
+                return
+            }
             if(name.length == '')
             {
                 Swal.fire(

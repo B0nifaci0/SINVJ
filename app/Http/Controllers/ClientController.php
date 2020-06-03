@@ -46,11 +46,16 @@ class ClientController extends Controller
     public function create()
     {
         $user = Auth::user();
+        $id = 0;
         $client = null;
+        //Consulta para saber cuantos cleintes existen en la tienda
+        $clients = Client::with(['sales', 'branch'])
+        ->where('shop_id', $user->shop->id)
+        ->get();
         if ($user->shop) {
             $branches = $user->shop->branches;
         }
-        return view('clients.form', compact('client', 'branches'));
+        return view('clients.form', compact('client', 'branches', 'clients', 'id'));
     }
 
 
@@ -127,8 +132,13 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $client = Client::find($id);
         $client_branch_id = $client->branch_id;
+        //Consulta para sabaer los datos de los clientes de la tienda
+        $clients = Client::with(['sales', 'branch'])
+        ->where('shop_id', $user->shop->id)
+        ->get();
         $user = Auth::user();
         if ($user->shop) {
             $branches = $user->shop->branches;
@@ -143,7 +153,7 @@ class ClientController extends Controller
             $branches->prepend($selected_branch);
         */
         }
-        return view('clients.form', compact('client', 'branches'));;
+        return view('clients.form', compact('client', 'branches', 'id', 'clients'));;
     }
 
     /**

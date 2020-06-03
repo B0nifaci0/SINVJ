@@ -83,6 +83,12 @@ LISTA DE CATEGORIA
                             <td><span class="text-center badge badge-primary">Gramos</span></td>
                             @endif
                             <td>
+                                <!-- Botón para ver categoria-->
+                                <a href="/categorias/{{ $category->id }}/show" type="button"
+                                class="btn btn-icon btn-primary waves-effect waves-light waves-round"
+                                data-toggle="tooltip" data-original-title="Ver Categoria">
+                                <i class="icon fa-search" aria-hidden="true"></i></button></a>
+                                <!--END Botón -->
                                 <a type="button" href="/categorias/{{$category->id}}/edit"
                                     class="btn btn-icon btn-info waves-effect waves-light waves-round "
                                     data-toggle="tooltip" data-original-title="Editar">

@@ -127,6 +127,12 @@
                                                 @endif
                                                 @if ($user->type_user && !$user->shop->shop_group_id)
                                                 <td>
+                                                    <!-- Botón para ver cliente-->
+                                                    <a href="/categorias/{{ $category->id }}/show" type="button"
+                                                    class="btn btn-icon btn-primary waves-effect waves-light waves-round"
+                                                    data-toggle="tooltip" data-original-title="Ver Categoria">
+                                                    <i class="icon fa-search" aria-hidden="true"></i></button></a>
+                                                    <!--END Botón -->
                                                     <a type="button" href="/categorias/{{$category->id}}/edit"
                                                         class="btn btn-icon btn-info waves-effect waves-light waves-round"
                                                         data-toggle="tooltip" data-original-title="Editar">
