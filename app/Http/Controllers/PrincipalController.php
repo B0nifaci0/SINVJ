@@ -36,7 +36,10 @@ class PrincipalController extends Controller
         }
 
         $branches= Auth::user()->shop->branches;
+
+        //Consulta para sacar el id de la sucursal a la que pertenezca el usuario
         $ids = $user->branch_id;
+
         $branches_col = Branch::select('*')
         ->where('id',$ids)
         ->get();
@@ -44,10 +47,7 @@ class PrincipalController extends Controller
 
     //CONSULTAS PARA ADMINISTRADORES
        //SUMA TOTAL DE GRAMOS EXISTENTES
-      $gramos_existentes = Shop::join('products','products.shop_id','shops.id')
-      ->join('categories','categories.id','products.category_id')
-      ->join('statuss','statuss.id','products.status_id')
-      ->join('branches','branches.id','products.branch_id')
+      $gramos_existentes = Product::join('categories','categories.id','products.category_id')
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
       ->where('products.deleted_at', NULL)
@@ -57,10 +57,7 @@ class PrincipalController extends Controller
       ->sum('products.weigth');
 
     //SUMA TOTAL DE GRAMOS TRASPASADOS
-      $gramos_traspasado = Shop::join('products','products.shop_id','shops.id')
-      ->join('categories','categories.id','products.category_id')
-      ->join('statuss','statuss.id','products.status_id')
-      ->join('branches','branches.id','products.branch_id')
+      $gramos_traspasado = Product::join('categories','categories.id','products.category_id')
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
       ->where('products.deleted_at', NULL)
@@ -70,10 +67,7 @@ class PrincipalController extends Controller
       //return $gramos_traspasado;
 
       //SUMA TOTAL DE GRAMOS DAÑADOS
-      $gramos_dañados = Shop::join('products','products.shop_id','shops.id')
-      ->join('categories','categories.id','products.category_id')
-      ->join('statuss','statuss.id','products.status_id')
-      ->join('branches','branches.id','products.branch_id')
+      $gramos_dañados = Product::join('categories','categories.id','products.category_id')
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
       ->where('products.status_id',4)
@@ -85,7 +79,7 @@ class PrincipalController extends Controller
       $gramos_devueltos = Product::join('categories','categories.id','products.category_id')
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
-      ->whereIn('products.discar_cause', [3, 4])
+      ->where('products.discar_cause', 3)
       ->where('products.restored_at', null)
       ->withTrashed()
       ->sum('products.weigth');
@@ -105,10 +99,7 @@ class PrincipalController extends Controller
        //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS
 
         //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS EXISTENTES
-       $ventas_e = Shop::join('products','products.shop_id','shops.id')
-       ->join('categories','categories.id','products.category_id')
-       ->join('statuss','statuss.id','products.status_id')
-       ->join('branches','branches.id','products.branch_id')
+       $ventas_e = Product::join('categories','categories.id','products.category_id')
        ->where('products.status_id',2)
        ->where('products.deleted_at', NULL)
        ->where('products.shop_id', Auth::user()->shop->id)
@@ -116,10 +107,7 @@ class PrincipalController extends Controller
        ->sum('products.discount');
 
        //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS TRASPASADOS
-       $ventas_t = Shop::join('products','products.shop_id','shops.id')
-       ->join('categories','categories.id','products.category_id')
-       ->join('statuss','statuss.id','products.status_id')
-       ->join('branches','branches.id','products.branch_id')
+       $ventas_t = Product::join('categories','categories.id','products.category_id')
        ->where('products.status_id',3)
        ->where('products.deleted_at', NULL)
        ->where('products.shop_id', Auth::user()->shop->id)
@@ -127,10 +115,7 @@ class PrincipalController extends Controller
        ->sum('products.discount');
 
        //SUMA TOTAL DE DINERO EN PRODUCTOS POR GRAMOS DAÑADOS
-       $ventas_d = Shop::join('products','products.shop_id','shops.id')
-       ->join('categories','categories.id','products.category_id')
-       ->join('statuss','statuss.id','products.status_id')
-       ->join('branches','branches.id','products.branch_id')
+       $ventas_d = Product::join('categories','categories.id','products.category_id')
        ->where('products.status_id',4)
        ->where('products.deleted_at', NULL)
        ->where('products.shop_id', Auth::user()->shop->id)
@@ -141,7 +126,7 @@ class PrincipalController extends Controller
       $ventas_devueltos = Product::join('categories','categories.id','products.category_id')
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
-      ->whereIn('products.discar_cause', [3, 4])
+      ->where('products.discar_cause', 3)
       ->where('products.restored_at', null)
       ->withTrashed()
       ->sum('products.discount');
@@ -153,10 +138,7 @@ class PrincipalController extends Controller
        //SUMA TOTAL DE GRAMOS
 
       //SUMA TOTAL DE GRAMOS EXISTENTES
-      $gramos_cole = Shop::join('products','products.shop_id','shops.id')
-      ->join('categories','categories.id','products.category_id')
-      ->join('statuss','statuss.id','products.status_id')
-      ->join('branches','branches.id','products.branch_id')
+      $gramos_cole = Product::join('categories','categories.id','products.category_id')
       ->where('products.status_id',2)
       ->where('products.deleted_at', NULL)
       ->where('products.shop_id', Auth::user()->shop->id)
@@ -165,10 +147,7 @@ class PrincipalController extends Controller
       ->sum('products.weigth');
 
       //SUMA TOTAL DE GRAMOS TRASPASADOS
-      $gramos_colt = Shop::join('products','products.shop_id','shops.id')
-      ->join('categories','categories.id','products.category_id')
-      ->join('statuss','statuss.id','products.status_id')
-      ->join('branches','branches.id','products.branch_id')
+      $gramos_colt = Product::join('categories','categories.id','products.category_id')
       ->where('products.status_id',3)
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
@@ -177,10 +156,7 @@ class PrincipalController extends Controller
       ->sum('products.weigth');
 
       //SUMA TOTAL DE GRAMOS DAÑADOS
-      $gramos_cold = Shop::join('products','products.shop_id','shops.id')
-      ->join('categories','categories.id','products.category_id')
-      ->join('statuss','statuss.id','products.status_id')
-      ->join('branches','branches.id','products.branch_id')
+      $gramos_cold = Product::join('categories','categories.id','products.category_id')
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
       ->where('products.branch_id',$ids)
@@ -193,7 +169,7 @@ class PrincipalController extends Controller
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
       ->where('products.branch_id',$ids)
-      ->whereIn('products.discar_cause', [3, 4])
+      ->where('products.discar_cause', 3)
       ->where('products.restored_at', null)
       ->withTrashed()
       ->sum('products.weigth');
@@ -204,10 +180,7 @@ class PrincipalController extends Controller
     //CONSULTAS PARA ADMINISTRADORES
 
        //SUMA TOTAL DE PIEZAS EXISTENTES
-       $piezas_e = Shop::join('products','products.shop_id','shops.id')
-       ->join('categories','categories.id','products.category_id')
-       ->join('statuss','statuss.id','products.status_id')
-       ->join('branches','branches.id','products.branch_id')
+       $piezas_e = Product::join('categories','categories.id','products.category_id')
        ->where('products.deleted_at', NULL)
        ->where('categories.type_product',1)
        ->where('products.shop_id', Auth::user()->shop->id)
@@ -215,10 +188,7 @@ class PrincipalController extends Controller
        ->count('products.id');
 
        //SUMA TOTAL DE PIEZAS TRASPASADAS
-       $piezas_t = Shop::join('products','products.shop_id','shops.id')
-       ->join('categories','categories.id','products.category_id')
-       ->join('statuss','statuss.id','products.status_id')
-       ->join('branches','branches.id','products.branch_id')
+       $piezas_t = Product::join('categories','categories.id','products.category_id')
        ->where('products.status_id',3)
        ->where('products.deleted_at', NULL)
        ->where('products.shop_id', Auth::user()->shop->id)
@@ -226,10 +196,7 @@ class PrincipalController extends Controller
        ->count('products.id');
 
        //SUMA TOTAL DE PIEZAS DAÑADAS
-       $piezas_d = Shop::join('products','products.shop_id','shops.id')
-       ->join('categories','categories.id','products.category_id')
-       ->join('statuss','statuss.id','products.status_id')
-       ->join('branches','branches.id','products.branch_id')
+       $piezas_d = Product::join('categories','categories.id','products.category_id')
        ->where('products.status_id',4)
        ->where('products.deleted_at', NULL)
        ->where('products.shop_id', Auth::user()->shop->id)
@@ -239,7 +206,7 @@ class PrincipalController extends Controller
        $piezas_devueltos = Product::join('categories','categories.id','products.category_id')
        ->where('products.shop_id', Auth::user()->shop->id)
        ->where('categories.type_product',1)
-       ->whereIn('products.discar_cause', [3, 4])
+       ->where('products.discar_cause', 3)
        ->where('products.restored_at', null)
        ->withTrashed()
        ->count('products.id');
@@ -250,10 +217,7 @@ class PrincipalController extends Controller
         //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA
 
          //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA EXISTENTES
-        $pieza_vente = Shop::join('products','products.shop_id','shops.id')
-        ->join('categories','categories.id','products.category_id')
-        ->join('statuss','statuss.id','products.status_id')
-        ->join('branches','branches.id','products.branch_id')
+        $pieza_vente = Product::join('categories','categories.id','products.category_id')
         ->where('products.status_id',2)
         ->where('products.deleted_at', NULL)
         ->where('products.shop_id', Auth::user()->shop->id)
@@ -261,10 +225,7 @@ class PrincipalController extends Controller
         ->sum('products.discount');
 
         //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA TRASPASADOS
-        $pieza_ventt = Shop::join('products','products.shop_id','shops.id')
-        ->join('categories','categories.id','products.category_id')
-        ->join('statuss','statuss.id','products.status_id')
-        ->join('branches','branches.id','products.branch_id')
+        $pieza_ventt = Product::join('categories','categories.id','products.category_id')
         ->where('products.status_id',3)
         ->where('products.deleted_at', NULL)
         ->where('products.shop_id', Auth::user()->shop->id)
@@ -272,10 +233,7 @@ class PrincipalController extends Controller
         ->sum('products.discount');
 
         //SUMA TOTAL DE DINERO EN PRODUCTOS POR PIEZA DAÑADOS
-        $pieza_ventd = Shop::join('products','products.shop_id','shops.id')
-        ->join('categories','categories.id','products.category_id')
-        ->join('statuss','statuss.id','products.status_id')
-        ->join('branches','branches.id','products.branch_id')
+        $pieza_ventd = Product::join('categories','categories.id','products.category_id')
         ->where('products.status_id',4)
         ->where('products.deleted_at', NULL)
         ->where('products.shop_id', Auth::user()->shop->id)
@@ -285,7 +243,7 @@ class PrincipalController extends Controller
         $piezas_ventdev = Product::join('categories','categories.id','products.category_id')
        ->where('products.shop_id', Auth::user()->shop->id)
        ->where('categories.type_product',1)
-       ->whereIn('products.discar_cause', [3, 4])
+       ->where('products.discar_cause', 3)
        ->where('products.restored_at', null)
        ->withTrashed()
        ->sum('products.discount');
@@ -297,10 +255,7 @@ class PrincipalController extends Controller
         //SUMA TOTAL DE PIEZAS
 
        //SUMA TOTAL DE PIEZAS EXISTENTES
-       $piezas_cole = Shop::join('products','products.shop_id','shops.id')
-       ->join('categories','categories.id','products.category_id')
-       ->join('statuss','statuss.id','products.status_id')
-       ->join('branches','branches.id','products.branch_id')
+       $piezas_cole = Product::join('categories','categories.id','products.category_id')
        ->where('products.status_id',2)
        ->where('products.deleted_at', NULL)
        ->where('products.shop_id', Auth::user()->shop->id)
@@ -309,10 +264,7 @@ class PrincipalController extends Controller
        ->count('products.id');
 
        //SUMA TOTAL DE PIEZAS TRASPASADAS
-       $piezas_colt = Shop::join('products','products.shop_id','shops.id')
-       ->join('categories','categories.id','products.category_id')
-       ->join('statuss','statuss.id','products.status_id')
-       ->join('branches','branches.id','products.branch_id')
+       $piezas_colt = Product::join('categories','categories.id','products.category_id')
        ->where('products.status_id',3)
        ->where('products.shop_id', Auth::user()->shop->id)
        ->where('categories.type_product',1)
@@ -321,10 +273,7 @@ class PrincipalController extends Controller
        ->count('products.id');
 
        //SUMA TOTAL DE PIEZAS DAÑADAS
-       $piezas_cold = Shop::join('products','products.shop_id','shops.id')
-       ->join('categories','categories.id','products.category_id')
-       ->join('statuss','statuss.id','products.status_id')
-       ->join('branches','branches.id','products.branch_id')
+       $piezas_cold = Product::join('categories','categories.id','products.category_id')
        ->where('products.shop_id', Auth::user()->shop->id)
        ->where('categories.type_product',1)
        ->where('products.branch_id',$ids)
@@ -337,7 +286,7 @@ class PrincipalController extends Controller
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
-      ->whereIn('products.discar_cause', [3, 4])
+      ->where('products.discar_cause', 3)
       ->where('products.restored_at', null)
       ->withTrashed()
       ->count('products.id');

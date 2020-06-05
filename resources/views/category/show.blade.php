@@ -11,16 +11,16 @@ SUCURSAl
 @section('content')
 
 <div class="page-content">
-  <div class="panel panel-info panel-bordered" data-plugin="appear" data-animate="fade">
+  <div class="panel panel-primary panel-bordered" data-plugin="appear" data-animate="fade">
     <header class="panel-heading">
       <div class="panel-actions">
         <a href="/categorias/{{$category->id}}/edit">
-          <button class="btn-raised btn btn-primary btn-floating btn-sm" data-toggle="tooltip" data-original-title="Editar">
+          <button class="btn-raised btn btn-floating btn-sm" data-toggle="tooltip" data-original-title="Editar">
             <i class="icon md-edit" aria-hidden="true"></i>
           </button>
         </a>
       </div>
-      <div class="panel-title text-center"><h3>Categoria <br> {{$category->name}}</h3></div>
+      <div class="panel-title text-center"><h3 style="color:white">Categoria <br> {{$category->name}}</h3></div>
     </header>
     <div class="container-fluid">
 			<div class="panel-body">
@@ -43,9 +43,9 @@ SUCURSAl
         @if($category->type_product == 1)
           @if($category->business_rule_id)
           <div class="col-sm-12 col-lg-12">
-            <div class="panel-success">
+            <div class="panel-primary">
               <div class="panel-heading">
-                <h2 class="panel-title text-center" style="color:black">Regla a la que pertenece</h2>
+                <h2 class="panel-title text-center" style="color:white">Regla a la que pertenece</h2>
               </div>
               <div class="row">
                 <div class="col-sm-12 col-lg-12">
