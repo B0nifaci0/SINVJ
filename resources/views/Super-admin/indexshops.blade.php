@@ -90,7 +90,7 @@ LISTA DE  TIENDAS
                       <!-- Botón para eliminar usuario-->
                       @if($shop->deleted_at == NULL)
                       <!-- Botón para restaurar usuario eliminado-->
-                      <a type="button" href="/tiendas/{{$shop->id}}/delete"
+                      <a type="button" href="/tiendas-admin/{{$shop->id}}/delete"
                       class="btn btn-icon btn-danger waves-effect waves-light waves-round fas fa-trash "
                       data-toggle="tooltip"
                       data-original-title="Eliminar"></a>
@@ -98,20 +98,20 @@ LISTA DE  TIENDAS
             
                       @else
                       <!-- Botón para restaurar Tienda eliminado-->
-                      <a type="button" href="/tiendas/{{$shop->id}}/restore"
+                      <a type="button" href="/tiendas-admin/{{$shop->id}}/restore"
                       class="btn btn-icon btn-success waves-effect waves-light waves-round fas md-redo"
                       data-toggle="tooltip"
                       data-original-title="Restaurar"></a>
                       <!-- END Botón-->
                       @endif
                       <!-- Botón para Ver sucursales-->
-                      <a type="button" href="/tiendas/{{$shop->id}}/sucursales"
+                      <a type="button" href="/tiendas-admin/{{$shop->id}}/sucursales"
                       class="btn btn-icon btn-info waves-effect waves-light waves-round md-store "
                       data-toggle="tooltip"
                       data-original-title="Ver sucursales"></a>
                       <!-- END Botón-->
                       <!-- Botón para Ver sucursales-->
-                      <a type="button" href="/tiendas/{{$shop->id}}/usuarios"
+                      <a type="button" href="/tiendas-admin/{{$shop->id}}/usuarios"
                       class="btn btn-icon btn-secondary waves-effect waves-light waves-round fa-user "
                       data-toggle="tooltip"
                       data-original-title="Ver usuarios"></a>

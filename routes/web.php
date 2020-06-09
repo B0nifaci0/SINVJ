@@ -307,14 +307,19 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     //RUTAS MODULO SUPERADMINISTRACION
 
-    Route::get('/tiendas', 'SadminController@index');
-    Route::get('/usuarios', 'SadminController@indexusers');
-    Route::get('/usuarios/{id}/delete', 'SadminController@destroyuser');
-    Route::get('/tiendas/{id}/delete', 'SadminController@destroyshop');
-    Route::get('/usuarios/{id}/restore', 'SadminController@restoreuser');
-    Route::get('/tiendas/{id}/restore', 'SadminController@restoreshop');
-    Route::get('/tiendas/{id}/sucursales', 'SadminController@indexbranches');
-    Route::get('/tiendas/{id}/usuarios', 'SadminController@indexusershop');
+    Route::get('/tiendas-admin', 'SadminController@index');
+    Route::get('/usuarios-admin', 'SadminController@indexusers');
+    Route::get('/usuarios-admin/{id}/delete', 'SadminController@destroyuser');
+    Route::get('/tiendas-admin/{id}/delete', 'SadminController@destroyshop');
+    Route::get('/usuarios-admin/{id}/restore', 'SadminController@restoreuser');
+    Route::get('/tiendas-admin/{id}/restore', 'SadminController@restoreshop');
+    Route::get('/tiendas-admin/{id}/sucursales', 'SadminController@indexbranches');
+    Route::get('/tiendas-admin/{id}/usuarios', 'SadminController@indexusershop');
+
+    //RUTAS CHART
+    //Route::get('/principal-admin', 'ChartController@index');
+    //Route::get('/principal-admin', 'ChartController@chartbranches');
+   // Route::get('/testchart', 'ChartController@indexcharts');
 
     //Rutas Actualizacion de categorias
     Route::get('groupCategories', 'ShopGroupsController@categories');

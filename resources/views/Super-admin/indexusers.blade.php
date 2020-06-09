@@ -107,7 +107,7 @@ LISTA DE  USUARIOS
                       <!-- Botón para eliminar usuario-->
                       @if($user->deleted_at == NULL)
                       <!-- Botón para restaurar usuario eliminado-->
-                      <a type="button" href="/usuarios/{{$user->id}}/delete"
+                      <a type="button" href="/usuarios-admin/{{$user->id}}/delete"
                       class="btn btn-icon btn-danger waves-effect waves-light waves-round fas fa-trash"
                       data-toggle="tooltip"
                       data-original-title="Eliminar"></a>
@@ -115,7 +115,7 @@ LISTA DE  USUARIOS
                       <!--fin boton-->
                       @else
                       <!-- Botón para restaurar usuario eliminado-->
-                      <a type="button" href="/usuarios/{{$user->id}}/restore"
+                      <a type="button" href="/usuarios-admin/{{$user->id}}/restore"
                       class="btn btn-icon btn-success waves-effect waves-light waves-round fas md-redo"
                       data-toggle="tooltip"
                       data-original-title="Restaurar"></a>

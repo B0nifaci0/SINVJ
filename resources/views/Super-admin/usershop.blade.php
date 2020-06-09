@@ -50,7 +50,7 @@
                             <!-- Botón para Generar PDF de productos-->
                             <div class="col-6">
                                 <button
-                                    onclick="window.location.href='/tiendas'"
+                                    onclick="window.location.href='/tiendas-admin'"
                                     type="button"
                                     class="btn btn-sm small btn-floating toggler-left btn-primary waves-effect waves-light waves-round float-left"
                                     data-toggle="tooltip"

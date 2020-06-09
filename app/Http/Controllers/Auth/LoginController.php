@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/principal';
+    //protected $redirectTo = '/principal-admin';
 
     /**
      * Create a new controller instance.
@@ -37,5 +37,14 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function redirectPath(){
+        
+        if(Auth::User()->type_user == 0){
+            return '/principal-admin';
+        }else{
+            return '/principal';
+        }
     }
 }

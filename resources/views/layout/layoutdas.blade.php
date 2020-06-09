@@ -88,6 +88,7 @@
     </script>
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>    
 
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
     <script>
@@ -220,7 +221,7 @@
                         @if(Auth::user()->type_user == 0)
                         <ul class="site-menu" data-plugin="menu">
                             <li class="site-menu-item active">
-                                <a class="animsition-link" href="/principal">
+                                <a class="animsition-link" href="/principal-admin">
                                     <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
                                     <span class="site-menu-title">Inicio</span>
                                 </a>
@@ -228,7 +229,7 @@
                             <!-- Productos-->
                             <ul class="site-menu-sub">
                                 <li class="site-menu-item">
-                                    <a class="animsition-link" href="/tiendas">
+                                    <a class="animsition-link" href="/tiendas-admin">
                                         <i class="site-menu-icon md-store" aria-hidden="true"></i>
                                         <span class="site-menu-title">Tiendas</span>
                                     </a>
@@ -237,7 +238,7 @@
                             <!--END-Productos-->
                             <ul class="site-menu-sub">
                                 <li class="site-menu-item">
-                                    <a class="animsition-link" href="/usuarios">
+                                    <a class="animsition-link" href="/usuarios-admin">
                                         <i class="site-menu-icon fa-address-card-o" aria-hidden="true"></i>
                                         <span class="site-menu-title">Usuarios</span>
                                     </a>
