@@ -317,7 +317,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/tiendas-admin/{id}/usuarios', 'SadminController@indexusershop');
 
     //RUTAS CHART
-    //Route::get('/principal-admin', 'ChartController@index');
+    Route::get('/principal-admin', 'ChartController@index');
+    //Route::get('/principal-admin', 'ChartController@indexBranches');
     //Route::get('/principal-admin', 'ChartController@chartbranches');
    // Route::get('/testchart', 'ChartController@indexcharts');
 
