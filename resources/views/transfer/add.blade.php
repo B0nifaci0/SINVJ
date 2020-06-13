@@ -31,7 +31,7 @@ ALTA PRODUCTO
             </div>
             @endif
             <center>
-                <h3>Nuevo Traspasos</h3>
+                <h2>Nuevo Traspasos</h2>
             </center>
             <form class="" action="/traspasos" method="POST">
                 {{ csrf_field() }}

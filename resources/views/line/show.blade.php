@@ -20,7 +20,7 @@ SUCURSAl
           </button>
         </a>
       </div>
-      <h3 class="panel-title">Promoción</h3>
+      <h2 class="panel-title">Promoción</h2>
     </header>
       <div class="table-responsive container-fluid">
 				<div class="panel-body">

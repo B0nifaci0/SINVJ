@@ -23,7 +23,7 @@ EDITAR CATEGORIA
           </ul>
         </div>
       @endif
-      <center><h3> Categoria</h3></center>
+      <center><h2> Categoria</h2></center>
       <form id="form" action="{{ route('categorias.update', ['id' => $category->id]) }}" method="POST">
         {{ csrf_field() }}
         {{ method_field('PUT') }}

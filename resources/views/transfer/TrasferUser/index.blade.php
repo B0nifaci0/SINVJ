@@ -42,7 +42,7 @@ TRANSFERENCIAS
         <div class="panel">
             <div class="panel-body">
                 <div class="example-wrap">
-                    <h1 class="text-center panel-title">Traspasos de Tienda</h1>
+                    <h2 class="text-center panel-title">Traspasos de Tienda</h2>
                     <div class="panel-actions float-right">
                         <div class="container-fluid row float-right">
                             @if(Auth::user()->type_user == 1 )

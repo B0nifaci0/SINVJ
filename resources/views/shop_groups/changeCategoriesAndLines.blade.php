@@ -22,7 +22,7 @@ TRANSFERENCIAS
         <div class="panel">
             <div class="panel-body">
                 <div class="example-wrap">
-                    <h1 class="text-center panel-title">Actualiza tus productos</h1>
+                    <h2 class="text-center panel-title">Actualiza tus productos</h2>
                 </div>
             </div>
             <div class="col-xl-12 col-md-12 col-sl">

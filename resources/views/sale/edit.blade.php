@@ -23,7 +23,7 @@ EDITA VENTA
           </ul>
         </div>
       @endif
-      <center><h3> Venta</h3></center>
+      <center><h2> Venta</h2></center>
       <form action="{{ route('ventas.update',$sale->id) }}" method="POST">
         <form id="multiplicar" class="" action="{{route('ventas.update', $sale->id) }} ">
         {{ csrf_field() }}

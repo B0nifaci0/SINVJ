@@ -734,7 +734,8 @@ Panel Principal
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
                                                         <div class="row">
-                                                            <div class="col-12 col-sm-6">
+
+                                                            <div class="col-sm-6">
                                                                 <label>Seleccione Sucursal</label>
                                                                 <select id="sucursales_1" name="branch_id" alt="1"
                                                                     class="form-control round sucursales">
@@ -745,45 +746,44 @@ Panel Principal
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                            <div class="col-12 col-sm-6">
-                                                                <div class="input-group">
-                                                                    <div class="row container"><label>De la
-                                                                            Fecha:</label></div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="input-group-3">
+                                                                    <div class="row container"><label>De la Fecha:</label></div>
                                                                     <div class="input-group">
                                                                         <div class="input-group-prepend">
                                                                             <span class="input-group-text">
-                                                                                <i class="icon md-calendar"
-                                                                                    aria-hidden="true"></i>
+                                                                                <i class="icon md-calendar" aria-hidden="true"></i>
                                                                             </span>
                                                                         </div>
-                                                                        <input name="fecini" type="text"
-                                                                            class="form-control fecini round"
-                                                                            data-plugin="datepicker" required>
+                                                                        <input name="fecini" type="text"  class="form-control fecini round"
+                                                                          data-plugin="datepicker" required>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
                                                                 <div class="input-group">
-                                                                    <div class="row container"><label>Hasta la
-                                                                            Fecha:</label></div>
-                                                                    <div class="input-group-prepend">
+                                                                    <div class="row container"><label>Hasta la Fecha:</label></div>
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
                                                                         <span class="input-group-text">
-                                                                            <i class="icon md-calendar"
-                                                                                aria-hidden="true"></i>
+                                                                            <i class="icon md-calendar" aria-hidden="true"></i>
                                                                         </span>
                                                                     </div>
-                                                                    <input name="fecter" type="text"
-                                                                        class="form-control round"
-                                                                        data-plugin="datepicker" required>
+                                                                    <input name="fecter" type="text" class="form-control round" data-plugin="datepicker" 
+                                                                      required>
                                                                 </div>
-                                            </form>
-                                        </div>
+                                                            </div>
+                                                
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="input-group col-3 col-6 col-12">
+                                                <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
+                                                  reporte</button>
+                                            </div>
                                     </div>
-                                </div>
-                                <div class="input-group col-3 col-6 col-12">
-                                    <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
-                                        reporte</button>
-                                </div>
-                            </div>
-                            </form>
+                                </form>
                         </div>
                         <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
                             <div class="container-fluid row">
@@ -860,48 +860,54 @@ Panel Principal
                                 <div class="panel panel-bordered">
                                     <div class="panel-body">
                                         <div class="row">
-                                            <div class="col-12 col-sm-6">
-                                                <label>Seleccione Sucursallll</label>
-                                                <select id="sucursales_1" name="branch_id" alt="1"
-                                                    class="form-control round sucursales">
-                                                    <!-- <option value="*">Seleccione Sucursal</option> -->
-                                                    @foreach($tienda as $branch)
-                                                    <option value="{{$branch->id}}" required>{{$branch->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-12 col-sm-6">
-                                                <div class="input-group">
-                                                    <div class="row container"><label>De la Fecha:</label></div>
+
+                                                <div class="col-sm-6">
+                                                    <label>Seleccione Sucursal</label>
+                                                    <select id="sucursales_1" name="branch_id" alt="1"
+                                                        class="form-control round sucursales">
+                                                        <!-- <option value="*">Seleccione Sucursal</option> -->
+                                                        @foreach($tienda as $branch)
+                                                        <option value="{{$branch->id}}" required>{{$branch->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-sm-3">
                                                     <div class="input-group">
-                                                        <div class="input-group-prepend">
+                                                        <div class="row container"><label>De la Fecha:</label></div>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                    <i class="icon md-calendar" aria-hidden="true"></i>
+                                                                </span>
+                                                            </div>
+                                                            <input name="fecini" type="text" class="form-control fecini round"
+                                                             data-plugin="datepicker" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="input-group">
+                                                        <div class="row container"><label>Hasta la Fecha:</label></div>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
                                                             <span class="input-group-text">
                                                                 <i class="icon md-calendar" aria-hidden="true"></i>
                                                             </span>
                                                         </div>
-                                                        <input name="fecini" type="text"
-                                                            class="form-control fecini round" data-plugin="datepicker"
-                                                            required>
+                                                        <input name="fecter" type="text" class="form-control round" data-plugin="datepicker" 
+                                                          required>
                                                     </div>
                                                 </div>
-                                                <div class="input-group">
-                                                    <div class="row container"><label>Hasta la Fecha:</label></div>
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="icon md-calendar" aria-hidden="true"></i>
-                                                        </span>
-                                                    </div>
-                                                    <input name="fecter" type="text" class="form-control round"
-                                                        data-plugin="datepicker" required>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
-                                    <div class="input-group col-3 col-6 col-12">
-                                        <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
-                                            reporte</button>
-                                    </div>
                                 </div>
+                                <div class="input-group col-3 col-6 col-12">
+                                    <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
+                                      reporte</button>
+                                </div>
+                            </div>
                             </form>
                         </div>
                     </div>
@@ -941,7 +947,8 @@ Panel Principal
                                     <div class="panel panel-bordered">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-12 col-sm-6">
+
+                                                <div class="col-sm-6">
                                                     <label>Seleccione Sucursal</label>
                                                     <select id="sucursales_1" name="branch_id" alt="1"
                                                         class="form-control round sucursales">
@@ -952,8 +959,9 @@ Panel Principal
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="input-group">
+
+                                                <div class="col-sm-3">
+                                                    <div class="input-group-3">
                                                         <div class="row container"><label>De la Fecha:</label></div>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
@@ -961,31 +969,32 @@ Panel Principal
                                                                     <i class="icon md-calendar" aria-hidden="true"></i>
                                                                 </span>
                                                             </div>
-                                                            <input name="fecini" type="text"
-                                                                class="form-control fecini round"
-                                                                data-plugin="datepicker" required>
+                                                            <input name="fecini" type="text" class="form-control fecini round"
+                                                              data-plugin="datepicker" required>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="col-sm-3">
                                                     <div class="input-group">
                                                         <div class="row container"><label>Hasta la Fecha:</label></div>
-                                                        <div class="input-group-prepend">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
                                                             <span class="input-group-text">
                                                                 <i class="icon md-calendar" aria-hidden="true"></i>
                                                             </span>
                                                         </div>
-                                                        <input name="fecter" type="text" class="form-control round"
-                                                            data-plugin="datepicker" required>
+                                                        <input name="fecter" type="text" class="form-control round" data-plugin="datepicker" 
+                                                          required>
                                                     </div>
                                                 </div>
-                                            </div>
+
                                         </div>
                                     </div>
-                                    <input type="int" name="cat" class="form-control invisible round"
-                                        data-plugin="datepicker" value="2" required>
-                                    <div class="input-group col-3 col-6 col-12">
-                                        <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
-                                            reporte</button>
-                                    </div>
+                                </div>
+                                <div class="input-group col-3 col-6 col-12">
+                                    <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
+                                      reporte</button>
+                                </div>
                             </div>
                             </form>
                         </div>
@@ -999,7 +1008,8 @@ Panel Principal
                                 <div class="panel panel-bordered">
                                     <div class="panel-body">
                                         <div class="row">
-                                            <div class="col-12 col-sm-6">
+
+                                            <div class="col-sm-6">
                                                 <label>Seleccione Sucursal</label>
                                                 <select id="sucursales_1" name="branch_id" alt="2"
                                                     class="form-control round sucursales">
@@ -1010,8 +1020,9 @@ Panel Principal
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-12 col-sm-6">
-                                                <div class="input-group">
+
+                                            <div class="col-sm-3">
+                                                <div class="input-group-3">
                                                     <div class="row container"><label>De la Fecha:</label></div>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
@@ -1019,39 +1030,38 @@ Panel Principal
                                                                 <i class="icon md-calendar" aria-hidden="true"></i>
                                                             </span>
                                                         </div>
-                                                        <input name="fecini" type="text"
-                                                            class="form-control fecini round" data-plugin="datepicker"
-                                                            required>
+                                                        <input name="fecini" type="text" class="form-control fecini round" 
+                                                            data-plugin="datepicker" required>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-sm-3">
                                                 <div class="input-group">
                                                     <div class="row container"><label>Hasta la Fecha:</label></div>
-                                                    <div class="input-group-prepend">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
                                                         <span class="input-group-text">
                                                             <i class="icon md-calendar" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
-                                                    <input name="fecter" type="text" class="form-control round"
-                                                        data-plugin="datepicker" required>
+                                                    <input name="fecter" type="text" class="form-control round" data-plugin="datepicker" 
+                                                      required>
                                                 </div>
-                                                <input type="int" name="cat" class="form-control invisible round"
-                                                    data-plugin="datepicker" value="1" required>
-                            </form>
+                                            </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group col-3 col-6 col-12">
+                              <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
+                                reporte</button>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="input-group col-3 col-6 col-12">
-                    <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
-                        reporte</button>
+                    </form>
                 </div>
             </div>
-            </form>
         </div>
     </div>
-</div>
-<!-- End Example Tabs -->
-</form>
-</div>
 @endif
 <!-- Termina formulario de Prueba -->
 @endsection

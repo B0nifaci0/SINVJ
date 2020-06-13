@@ -28,7 +28,7 @@ ALTA CONFIGURACIÓN DE NEGOCIO
             </ul>
           </div> 
       @endif
-        <center><h3>Registrar Regla</h3></center>
+        <center><h2>Registrar Regla</h2></center>
         <br><br>
 
         <form id="form" action="/businessrules" method="post" name="form">

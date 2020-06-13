@@ -23,7 +23,7 @@ EDITAR LINEA
           </ul>
         </div>
       @endif
-      <center><h3> Linea</h3></center>  
+      <center><h2> Linea</h2></center>  
       <form action="{{ route('lineas.update', ['id' => $line->id]) }}" id="FormLines" method="POST">
         {{ csrf_field() }}
         {{ method_field('PUT') }}

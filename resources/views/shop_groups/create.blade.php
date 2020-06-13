@@ -15,7 +15,7 @@ GRUPOS
     <!-- Panel Basic -->
     <div class="panel">
         <header class="panel-heading">
-            <h3 class="panel-title">Crear nuevo grupo de tiendas </h3>
+            <h2 class="panel-title">Crear nuevo grupo de tiendas </h2>
         </header>
         <div class="panel-body">
             <form action="/grupos" method="post">

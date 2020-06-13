@@ -42,7 +42,7 @@ TRANSFERENCIAS
         <div class="panel">
             <div class="panel-body">
                 <div class="example-wrap">
-                    <h1 class="text-center panel-title">Traspasos Externos</h1>
+                    <h2 class="text-center panel-title">Traspasos Externos</h2>
                     <div class="panel-actions float-right">
                         <div class="col-6">
                             <button onclick="window.location.href='/traspasosExt/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left

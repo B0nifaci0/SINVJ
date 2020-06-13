@@ -15,7 +15,7 @@ LISTA DE  LINEA
 
 
 <div class="page-content">
-    <h1 align="center">AQUI SE EDITAN LOS AJUSTES</h1>
+    <h2 align="center">AQUI SE EDITAN LOS AJUSTES</h2>
 </div>
 
 

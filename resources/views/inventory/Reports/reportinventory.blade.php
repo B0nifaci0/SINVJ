@@ -46,7 +46,7 @@ LISTA DE  LINEA
             <div class="row">
             </div>
           </div>
-          <h3 class="panel-title">Inventarios</h3>
+          <h2 class="panel-title">Inventarios</h2>
         </header>
         <div class="panel-body">
         <!-- Tabla para listar inventarios-->

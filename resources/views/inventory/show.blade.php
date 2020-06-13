@@ -19,7 +19,7 @@ LISTA DE LINEA
             <div class="panel-body">
                 <div class="example-wrap">
                     @foreach($name_branch as $branch)
-                    <h1 class="text-center panel-title">Inventarios {{$branch->name}}</h1>
+                    <h2 class="text-center panel-title">Inventarios {{$branch->name}}</h2>
                     @endforeach
                     <div class="panel-actions float-right">
                         <div class="container-fluid row float-right">

@@ -40,7 +40,7 @@ LISTA DE  USUARIOS
       <div class="panel">
         <div class="panel-body">
             <div class="example-wrap">
-              <h1 class="text-center panel-title">Usuarios</h1>
+              <h2 class="text-center panel-title">Usuarios</h2>
             </div>
           </div>
         <div class="panel-body">

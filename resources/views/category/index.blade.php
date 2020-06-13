@@ -28,7 +28,7 @@
         <div class="panel">
             <div class="panel-body">
                 <div class="example-wrap">
-                    <h1 class="text-center panel-title">Categorías</h1>
+                    <h2 class="text-center panel-title">Categorías</h2>
                     <div class="panel-actions float-right">
                         <div class="container-fluid row float-right">
                             @if($user->type_user == 1 )

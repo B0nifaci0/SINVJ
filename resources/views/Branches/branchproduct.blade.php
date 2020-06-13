@@ -16,7 +16,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
     <div class="panel">
             <div class="panel-body">
               <div class="example-wrap">
-                  <h1 class="text-center panel-title">Productos De Sucursal {{$branch->name}}</h1>
+                  <h2 class="text-center panel-title">Productos De Sucursal {{$branch->name}}</h2>
               </div>
               <div class="panel-actions">
 

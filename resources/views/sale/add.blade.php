@@ -37,7 +37,7 @@ ALTA VENTA
                 </div>
                 @endif
                 <form id="form" method="POST" action="/ventas" enctype="multipart/form-data">
-                    <h3 class="text-center">Venta</h3>
+                    <h2 class="text-center">Venta</h2>
                     {{ csrf_field() }}
                     <div class="row mb-10">
                         <div class="col-md-3">

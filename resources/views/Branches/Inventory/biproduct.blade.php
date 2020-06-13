@@ -30,7 +30,7 @@ LISTA DE PRODUCTOS POR SUCURSAL
                 @endif
               </div>
             </div>
-          <h4 class="panel-title text-center">Inventario {{$branches->name}}</h4>
+          <h2 class="panel-title text-center">Inventario {{$branches->name}}</h2>
       </header>
       <div class="panel-body">
             <!-- Tabla para listar productos por sucursal-->

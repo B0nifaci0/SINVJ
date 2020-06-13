@@ -30,7 +30,7 @@ PAGOS
           <div class="panel-body container-fluid">
             <!-- Example Pricing List -->
             <div class="example-wrap">
-              <h4 class="example-title">Tipo de Pago</h4>
+              <h2 class="example-title">Tipo de Pago</h2>
               <div class="example">
                 <div class="row">
                   <div class="col-md-6 col-xl-4">

@@ -39,7 +39,7 @@ LISTA DE CATEGORIA
         <div class="panel">
             <div class="panel-body">
                 <div class="example-wrap">
-                    <h1 class="text-center panel-title">Categorias de mi grupo</h1>
+                    <h2 class="text-center panel-title">Categorias de mi grupo</h2>
                     <div class="panel-actions float-right">
                         <div class="container-fluid row float-right">
                             <div class="col-6">

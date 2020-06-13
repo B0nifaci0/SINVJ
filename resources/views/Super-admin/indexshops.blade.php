@@ -40,7 +40,7 @@ LISTA DE  TIENDAS
       <div class="panel">
         <div class="panel-body">
             <div class="example-wrap">
-              <h1 class="text-center panel-title">Tiendas</h1>
+              <h2 class="text-center panel-title">Tiendas</h2>
             </div>
           </div>
         <div class="panel-body">

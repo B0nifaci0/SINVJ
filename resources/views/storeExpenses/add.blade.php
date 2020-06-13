@@ -29,7 +29,7 @@ ALTA GASTOS
               </ul>
             </div>
           @endif
-          <center><h3>Registrar Gasto Realizado</h3></center>
+          <center><h2>Registrar Gasto Realizado</h2></center>
           <form class="" action="/gastos" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}   
             <div class="row">

@@ -28,7 +28,7 @@ ALTA LíNEAS
             </ul>
           </div>
       @endif
-        <center><h3>Creación de inventario</h3></center>
+        <center><h2>Creación de inventario</h2></center>
 
         <form class="" action="/inventarios" method="post">
         {{ csrf_field() }}

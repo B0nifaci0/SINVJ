@@ -46,7 +46,7 @@ LISTA DE  VENTAS
             </div>
           </div>
         </div>
-        <h3 class="panel-title">Ventas</h3>
+        <h2 class="panel-title">Ventas</h2>
       </header>
       <div class="panel-body">
             <table id='example'  class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">

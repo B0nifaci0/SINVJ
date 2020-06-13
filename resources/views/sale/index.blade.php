@@ -32,7 +32,7 @@ LISTA DE VENTAS
         <div class="panel">
             <div class="panel-body">
                 <div class="example-wrap">
-                    <h1 class="text-center panel-title">Ventas</h1>
+                    <h2 class="text-center panel-title">Ventas</h2>
                     <div class="panel-actions float-right">
                         <div class="container-fluid row float-right">
                             <!-- Botón para Generar PDF de productos-->

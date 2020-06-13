@@ -46,7 +46,7 @@ LISTA DE Inventarios
               <h1 class="text-center panel-title">Inventarios</h1>
             @else
             @foreach ($branch_user as $b)
-              <h1 class="text-center panel-title">Mis Inventarios - {{ $b->branch }}</h1>
+              <h2 class="text-center panel-title">Mis Inventarios - {{ $b->branch }}</h2>
             @endforeach
             @endif
               <div class="panel-actions float-right">

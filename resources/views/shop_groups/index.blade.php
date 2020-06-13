@@ -32,7 +32,7 @@ GRUPOS
 
                 </div>
             </div>
-            <h3 class="panel-title">Grupos de tiendas </h3>
+            <h2 class="panel-title">Grupos de tiendas </h2>
         </header>
         <div class="panel-body">
             @if($shop_group)

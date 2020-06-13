@@ -15,7 +15,7 @@ Panel Principal
 <div class="page">
     <div class="page-content container-fluid">
         <div class="examle-wrap">
-            <h4 class="example-title">Panel De Reportes de Traspasos</h4>
+            <h2 class="example-title">Panel De Reportes de Traspasos</h2>
             <div class="panel-group" id="exampleAccordionDefault" aria-multiselectable="true" role="tablist">
                 @if(Auth::user()->type_user == 1 )
                 <div class="panel">

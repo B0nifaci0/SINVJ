@@ -29,7 +29,7 @@ GRUPOS
         <header class="panel-heading">
             <div class="panel-actions">
             </div>
-            <h3 class="panel-title">Unirse a un grupo </h3>
+            <h2 class="panel-title">Unirse a un grupo </h2>
         </header>
         <div class="panel-body">
             <div class="row justify-content-md-center">

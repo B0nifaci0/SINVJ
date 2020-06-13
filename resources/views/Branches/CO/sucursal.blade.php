@@ -13,7 +13,7 @@ Panel Principal
 <!-- Page -->
 <div class="">
   <div class="page-content container-fluid">
-  <h6 class="panel-title">{{ $branch->name }}</h6>
+  <h2 class="panel-title">{{ $branch->name }}</h2>
     <div class="row" data-plugin="matchHeight" data-by-row="true">
       <div class="col-xl-3 col-md-6">
         <!-- Widget Linearea One-->

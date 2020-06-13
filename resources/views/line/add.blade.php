@@ -28,7 +28,7 @@ ALTA LíNEAS
           </ul>
         </div> 
     @endif
-      <center><h3>Registrar Linea</h3></center>
+      <center><h2>Registrar Linea</h2></center>
 
       <form class="" action="/lineas" method="post">
       {{ csrf_field() }} 

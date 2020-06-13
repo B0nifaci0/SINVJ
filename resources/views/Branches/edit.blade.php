@@ -22,7 +22,7 @@ EDITAR SUCURSALES
           </ul>
         </div>
     @endif
-      <center><h3>Sucursales</h3></center>
+      <center><h2>Editar Sucursal</h2></center>
       <form action="{{ route('sucursales.update', ['id' => $branch->id]) }}" method="POST">
         {{ csrf_field() }}
         {{ method_field('PUT') }}

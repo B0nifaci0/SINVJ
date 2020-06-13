@@ -14,7 +14,7 @@ Panel Principal
 <div class="">
     <div class="page-content container-fluid">
         <div class="examle-wrap">
-            <h4 class="example-title">Panel De Reportes de Cortes Por Sucursal</h4>
+            <h2 class="example-title">Panel De Reportes de Cortes Por Sucursal</h2>
             <div class="example">
                 <div class="panel-group" id="exampleAccordionDefault" aria-multiselectable="true" role="tablist">
                     <div class="panel">

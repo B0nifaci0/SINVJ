@@ -30,7 +30,7 @@ AJUSTES
           </ul>
         </div>
         @endif
-        <h3 align="center">Registrar nuevo ajuste</h3>
+        <h2 align="center">Registrar nuevo ajuste</h2>
         <form class="" action="/ajustes" method="post">
           {{ csrf_field() }}
           <div class="row">
