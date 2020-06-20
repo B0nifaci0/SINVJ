@@ -55,6 +55,7 @@ ALTA VENTA
                                     <!-- Input para Ingresar Nombre del cliente-->
                                     <label for="user-type">Seleccionar cliente</label>
                                     <select name="cliente_id" id="public-id" class="form-control" data-plugin="select2">
+                                        <option value="0">Seleccione un Cliente Menudista</option>
                                         @foreach($public as $client)
                                             <option id="client{{$client->id}}" value="{{ $client->id }}">{{ $client->name }}
                                                 {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
@@ -79,6 +80,7 @@ ALTA VENTA
                                 <div class="col-md-6">
                                     <label for="user-type">Seleccionar cliente</label>
                                     <select name="client_id" id="user-id" class="form-control" data-plugin="select2">
+                                        <option value="0">Seleccione un Cliente Mayorista</option>
                                         @foreach($wholesaler as $client)
                                         <option id="client{{$client->id}}" value="{{ $client->id }}" alt="{{ $client->credit }}">{{ $client->name }}
                                             {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
@@ -186,7 +188,7 @@ ALTA VENTA
                         <!-- END Tabla-->
                     </div>
                     <br>
-                    <input type="file" name="image" id="image" class="invisible">
+                    <input type="file" name="image" id="image" class="invisible" accept="image/gif,image/jpeg,image/jpg,image/png">
                     <div class="row">
                         <!-- Botón para mostar el Modal de Tipos de pago-->
                         <div class="col-6 form-group">
@@ -223,7 +225,7 @@ ALTA VENTA
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
-                                        <h4 class="modal-title" id="exampleModalTabs">Registrar Nuevo Cliente Mayorista</h4>
+                                        <h4 class="modal-title" id="exampleModalTabs">Registrar o Editar Cliente Mayorista</h4>
                                     </div>
                                     <div class="modal-body">
                                         <!-- Input para ingresar nombre del cliente-->
@@ -305,7 +307,7 @@ ALTA VENTA
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
-                                        <h4 class="modal-title" id="exampleModalTabs">Registrar Nuevo Cliente Menudista</h4>
+                                        <h4 class="modal-title" id="exampleModalTabs">Registrar o Editar Cliente Menudista</h4>
                                     </div>
                                     <div class="modal-body">
                                         <!-- Input para ingresar nombre del cliente-->
@@ -379,7 +381,7 @@ ALTA VENTA
                                             <div class="form-group form-material col-md-6">
                                                 <label>Selecciona Ticket de la venta</label>
                                                 <br>
-                                                <label for="image" class="btn btn-success">Explorar</label>
+                                                <label  for="image" class="btn btn-success">Explorar</label>
                                             </div>
                                             <!-- END Input-->
                                         </div>
@@ -464,15 +466,72 @@ seleccionado con sus respectivos datos-->
                 }
             });
 
-            $('#registrar_M').click(function(e) {
+            $('#public-id').change(function() {
+                let id_client = $(this).val();
+                let name = $('#customer').val();
+                let phone = $('#phone').val();
+
+                if(id_client != 0)
+                {
+                    let client = clients.filter(c => c.id == id_client)[0];
+                    $('#customer').val(client.name);
+                    $('#phone').val(client.phone_number);
+                } else {
+                    $('#customer').val('');
+                    $('#phone').val('');
+                }
+
+            });
+
+            $('#user-id').change(function() {
+                let id_client = $(this).val();
                 let name = $('#customer_name').val();
-                let branch = $('#branch').val();
                 let first_last = $('#first_last').val();
                 let second_last = $('#second_last').val();
+                let phone = $('#phone_number').val();
+                let credit_limit = $('#credit_limit').val();
+
+                if(id_client != 0)
+                {
+                    let client = clients.filter(c => c.id == id_client)[0];
+                    $('#customer_name').val(client.name);
+                    $('#first_last').val(client.first_lastname);
+                    $('#second_last').val(client.second_lastname);
+                    $('#phone_number').val(client.phone_number);
+                    $('#credit_limit').val(client.credit);
+                } else {
+                    $('#customer_name').val('');
+                    $('#first_last').val('');
+                    $('#second_last').val('');
+                    $('#phone_number').val('');
+                    $('#credit_limit').val('');
+                }
+
+            });
+
+            $('#registrar_M').click(function(e) {
+                let id_client = $('#user-id').val();
+                var name = $('#customer_name').val();
+                let branch = $('#branch').val();
+                var first_last = $('#first_last').val();
+                var second_last = $('#second_last').val();
                 let phone = $('#phone_number').val();
                 let shop = $('#shop').val();
                 let type = 1;
                 let credit_limit = $('#credit_limit').val();
+                let client_phone = clients.filter(c => c.phone_number == phone && c.id != id_client)[0];
+
+                if(client_phone != undefined)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'El telefono que intentas ingresar ya esta registrado con otro cliente',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
                 console.log("Nombre: ", name ," y Telefono: ", phone, " ID de Tienda: ", shop, " branch_id: ",branch);
                 console.log("apellido p: ",first_last, " apellido_m: ",second_last, " tipo: ",type," limite: ",credit_limit);
 
@@ -527,46 +586,94 @@ seleccionado con sus respectivos datos-->
                     return
                 }
 
-                //Construimos la variable que se guardará en el data del Ajax para pasar al archivo php que procesará los datos
-		        var dataString = 'branch_id=' + branch + '&name=' + name + '&first_lastname=' + first_last +  '&second_lastname=' + second_last +   '&phone_number=' + phone + '&shop_id=' + shop + '&credit=' + credit_limit + '&type_client=' + type;
-
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     }
                 });
 
-		        $.ajax({
-			        url: '/mayoristas',
-                    method: 'POST',
-                    dataType: "HTML",
-			        data: dataString,
-			        success: function() {
-		    	        let $option = $('<option />', {
-                            text: name + ' ' + first_last + ' ' + second_last,
-                            value: new_id,
-                            id: 'client'+new_id,
-                            alt: credit_limit,
-                        });
-                        $('#user-id').prepend($option);
-                        new_id += 1;
-                        Swal.fire(
-                            'Registro Existoso',
-                            'El cliente ha sido registrado exitosamente',
-                            'success'
-                        );
-                        e.preventDefault();
-                        return
-		            }
-		        });
+                //Construimos la variable que se guardará en el data del Ajax para pasar al controlador que procesará los datos
+                var dataString = {
+                    branch_id: branch,
+                    name: name,
+                    first_lastname: first_last,
+                    second_lastname: second_last,
+                    phone_number: phone,
+                    shop_id: shop,
+                    credit: credit_limit,
+                    type_client: type
+                };
+
+                if(id_client == 0){
+
+		            $.ajax({
+			            url: '/mayoristas',
+                        method: 'POST',
+                        //dataType: "JSON",
+			            data: dataString,
+			            success: function() {
+		    	            let $option = $('<option />', {
+                                text: name + ' ' + first_last + ' ' + second_last,
+                                value: new_id,
+                                id: 'client'+new_id,
+                                alt: credit_limit,
+                            });
+                            $('#user-id').prepend($option);
+                            new_id += 1;
+                            Swal.fire(
+                                'Registro Existoso',
+                                'El cliente ha sido registrado exitosamente',
+                                'success'
+                            );
+                            e.preventDefault();
+                            return
+		                }
+		            });
+                    
+                } else {
+
+                    $.ajax({
+			            url: '/mayoristas/' + id_client,
+                        method: 'PUT',
+                        //dataType: "JSON",
+			            data: dataString,
+			            beforeSend: function() {
+                            $('#user-id option:selected').text(name + ' ' + first_last + ' ' + second_last);
+                            Swal.fire(
+                                'Actualización Existosa',
+                                'Los datos del cliente han sido actualizados exitosamente',
+                                'success'
+                            );
+                            e.preventDefault();
+                            return
+		                }
+		            });
+
+                }
+
 
             });
 
             $('#registrar_P').click(function(e) {
+                let id_client = $('#public-id').val();
                 let name = $('#customer').val();
                 let phone = $('#phone').val();
                 let shop = $('#shop').val();
                 let type = 0;
+
+                let client_phone = clients.filter(c => c.phone_number == phone)[0];
+
+                if(client_phone != undefined)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'El telefono que intentas ingresar ya esta registrado con otro cliente',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
                 console.log("Nombre: ", name ," y Telefono: ", phone, " ID de Tienda: ", shop);
 
                 let nombre = name.length;
@@ -598,11 +705,16 @@ seleccionado con sus respectivos datos-->
 
                 if(phone == '')
                 {
-                    phone = '0000000000';
+                    phone = null;
                 }
 
-                //Construimos la variable que se guardará en el data del Ajax para pasar al archivo php que procesará los datos
-		        var dataString = 'name=' + name + '&phone_number=' + phone + '&shop_id=' + shop + '&type_client=' + type;
+                //Construimos la variable que se guardará en el data del Ajax para pasar al controlador que procesará los datos
+                var dataString = {
+                    name: name,
+                    phone_number: phone,
+                    shop_id: shop,
+                    type_client: type
+                };
 
                 $.ajaxSetup({
                     headers: {
@@ -610,38 +722,77 @@ seleccionado con sus respectivos datos-->
                     }
                 });
 
-		        $.ajax({
-			        url: '/mayoristas',
-                    method: 'POST',
-                    dataType: "HTML",
-			        data: dataString,
-			        success: function() {
-		    	        let $option = $('<option />', {
-                            text: name,
-                            value: new_id,
-                            id: 'client'+new_id,
-                        });
-                        $('#public-id').prepend($option);
-                        new_id += 1;
-                        Swal.fire(
-                            'Registro Existoso',
-                            'El cliente ha sido registrado exitosamente',
-                            'success'
-                        );
-                        e.preventDefault();
-                        return
-		            }
-		        });
+                if(id_client == 0){
+
+		            $.ajax({
+			            url: '/mayoristas',
+                        method: 'POST',
+                        //dataType: "JSON",
+			            data: dataString,
+			            success: function() {
+		    	            let $option = $('<option />', {
+                                text: name,
+                                value: new_id,
+                                id: 'client'+new_id,
+                            });
+                            $('#public-id').prepend($option);
+                            new_id += 1;
+                            Swal.fire(
+                                'Registro Existoso',
+                                'El cliente ha sido registrado exitosamente',
+                                'success'
+                            );
+                            e.preventDefault();
+                            return
+		                }
+		            });
+
+                } else {
+                    
+                    $.ajax({
+                        url: '/mayoristas/' + id_client,
+                        method: 'PUT',
+                        //dataType: "JSON",
+                        data: dataString,
+                        beforeSend: function() {
+                            $('#public-id option:selected').text(name);
+                            Swal.fire(
+                                'Actualización Existosa',
+                                'Los datos del cliente han sido actualizados exitosamente',
+                                'success'
+                            );
+                            e.preventDefault();
+                            return
+                        }
+                    });
+
+                    }
+
 
             });
 
             $('#submit').click(function(e) {
-                e.preventDefault();
                 overDiscount = [];
                 console.log("selectedProducts", selectedProducts);
                 var val_phone = false;
+                var type_sale = $('#user-type').val();
+                if(type_sale == 1)
+                {
+                    var id_client = $('#public-id').val();
+                } else {
+                    var id_client = $('#user-id').val();
+                }
+                if(id_client == 0)
+                {
+                    Swal.fire(
+                            'No permitido',
+                            'Por Favor Selecciona Un Cliente',
+                            'error'
+                        );
+                        e.preventDefault();
+                        return
+                }
                 var phoneNumber = $('#phone').val();
-                var id_client = $('#public-id').val();
                 if(old_id == new_id)
                 {
                     var client = clients.filter(c => c.id == id_client)[0];
@@ -653,7 +804,6 @@ seleccionado con sus respectivos datos-->
                     }
 
                 }
-                var type_sale = $('#user-type').val();
                 console.log(type_sale);
                 if(type_sale == 2)
                 {
