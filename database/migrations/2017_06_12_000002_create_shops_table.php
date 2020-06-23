@@ -21,15 +21,14 @@ class CreateShopsTable extends Migration
             $table->string('email')->default('NULL');
             $table->string('phone_number')->default('NULL');
             $table->string('password')->nullable();
-
+            $table->string('shop_code');
             $table->integer('shop_group_id')->unsigned()->nullable();
             $table->foreign('shop_group_id')->references('id')->on('shop_groups');
-
             $table->integer('municipality_id')->unsigned();
             $table->foreign('municipality_id')->references('id')->on('municipalities');
             $table->integer('state_id')->unsigned();
             $table->foreign('state_id')->references('id')->on('states');
-            
+
             $table->softDeletes();
             $table->timestamps();
         });

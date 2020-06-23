@@ -34,19 +34,19 @@ class RegisterController extends Controller
      * @var string
      */
 
-        protected $redirectTo = '/login';
-        
+    protected $redirectTo = '/login';
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function index(){
+    public function index()
+    {
         $states = State::all();
-        $municipalities = Municipality:: all();   
-        
-        return view('auth/register', compact('municipalities','states'));
-         
+        $municipalities = Municipality::all();
+
+        return view('auth/register', compact('municipalities', 'states'));
     }
 
     public function __construct()
@@ -77,21 +77,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        
-        $shop= Shop::create([
+
+        $shop = Shop::create([
             'name' => $data['name_shop'],
             'municipality_id' => $data['municipality_id'],
-            'state_id' => $data['state_id']
+            'state_id' => $data['state_id'],
+            'shop_code' => time(),
         ]);
-       return User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'type_user' => $data['type_user'],
             'shop_id' => $shop->id,
-            'terms_conditions' =>$data['terms_conditions'],
-            'municipality_id' =>$shop->municipality_id,
-            'state_id' =>$shop->state_id,
+            'terms_conditions' => $data['terms_conditions'],
+            'municipality_id' => $shop->municipality_id,
+            'state_id' => $shop->state_id,
 
         ]);
     }
