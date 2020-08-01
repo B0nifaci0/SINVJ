@@ -1,57 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Reporte de Productos</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-    <style>
-        .page-break {
-            width: 980px;
-            margin: 0 auto;
-        }
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Reporte general estatus gr</title>
 
-        .sale-head {
-            margin: 40px 0;
-            text-align: center;
-        }
+        <style>
+            . {
+                font: 12px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
 
-        .sale-head h1,
-        .sale-head strong {
-            padding: 10px 20px;
-            display: block;
-        }
+            table {
+                border-collapse: separate;
+                border-spacing: 0;
+                color: #4a4a4d;
+                table-layout: fixed;
+                width: 100%;
+            }
 
-        .sale-head h1 {
-            margin: 0;
-            border-bottom: 1px solid #212121;
-        }
+            th,
+            td {
+                padding: 10px 15px;
+                vertical-align: middle;
+            }
 
-        .table>thead:first-child>tr:first-child>th {
-            border-top: 1px solid #000;
-        }
+            thead {
+                background: #395870;
+                background: linear-gradient(#49708f, #293f50);
+                color: #fff;
+            }
 
-        table thead tr th {
-            text-align: center;
-            border: 1px solid #ededed;
-        }
+            th:first-child {
+                border-top-left-radius: 5px;
+                text-align: left;
+            }
 
-        table tbody tr td {
-            vertical-align: middle;
-        }
+            th:last-child {
+                border-top-right-radius: 5px;
+            }
 
-        .sale-head,
-        table.table thead tr th,
-        table tbody tr td,
-        table tfoot tr td {
-            border: 1px solid #212121;
-        }
-    </style>
-</head>
+            tbody tr:nth-child(even) {
+                background: #f0f0f2;
+            }
 
-<body>
-    <div class="page-content">
-        <div class="panel">
+            td {
+                border-bottom: 1px solid #cecfd5;
+                border-right: 1px solid #cecfd5;
+            }
+
+            td:first-child {
+                border-left: 1px solid #cecfd5;
+            }
+
+            .book-title {
+                color: #395870;
+                display: block;
+            }
+
+            .text-offset {
+                color: #7c7c80;
+                font-size: 12px;
+            }
+
+            .item-stock,
+            .item-qty {
+                text-align: center;
+            }
+
+            .item-price {
+                text-align: right;
+            }
+
+            .item-multiple {
+                display: block;
+            }
+
+            tfoot {
+                text-align: right;
+            }
+
+            tfoot tr:last-child {
+                background: #f0f0f2;
+                color: #395870;
+                font-weight: bold;
+            }
+
+            tfoot tr:last-child td:first-child {
+                border-bottom-left-radius: 5px;
+            }
+
+            tfoot tr:last-child td:last-child {
+                border-bottom-right-radius: 5px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div>
             <img align="left" width="140px" height="120px" src="{{ $shop->image }}">
             <p align="right">Fecha: {{$dates}}</p>
             <p align="right">Hora: {{$hour}}</p>
@@ -66,29 +111,29 @@
             <table class="table table-condensed">
                 <thead>
                     <tr>
-                        <th scope="col">Clave</th>
-                        <th scope="col">Categoria</th>
-                        <th scope="col">Estatus</th>
-                        <th scope="col">Descripción</th>
+                        <th>Clave</th>
+                        <th width="11%">Categoria</th>
+                        <th width="10%">Estatus</th>
+                        <th width="16%">Descripción</th>
                         @if ($categoria == 2)
-                        <th scope="col">Linea</th>
-                        <th scope="col">Peso</th>
+                        <th>Linea</th>
+                        <th>Peso</th>
                         @endif
-                        <th scope="col">Precio</th>
-                        <th scope="col">Observaciones</th>
+                        <th>Precio</th>
+                        <th width="15%">Observaciones</th>
                         <th>Fecha de Alta</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($productsg as $i => $product)
-                    <tr id="row{{$product->id}}">
+                    <tr>
                         <td>{{ $product->clave }}</td>
                         <td>{{ $product->name_category }}</td>
                         <td>{{ $product->name_status }}</td>
                         <td>{{ $product->description }}</td>
                         @if ($categoria == 2)
                         <td>{{ ($product->name_line) ? $product->name_line : ''}}</td>
-                        <td>{{ ($product->weigth) ? $product->weigth : ''}} gr</td>
+                        <td>{{ ($product->weigth) ? $product->weigth : ''}}</td>
                         @endif
                         <td>$ {{ $product->price }}</td>
                         <td>{{ $product->observations }}</td>
@@ -98,16 +143,16 @@
                 </tbody>
             </table>
             <br>
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table>
                 <thead>
                     <tr>
                         @foreach ($productsg as $i => $product)
                         @if($product->type_product == 2 )
-                        <th scope="col">Total de Gramos</th>
+                        <th>Total de Gramos</th>
                         @break
                         @endif
                         @endforeach
-                        <th scope="col">Total precio Venta</th>
+                        <th>Total precio Venta</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -124,7 +169,6 @@
                 <br>
             </table>
         </div>
-    </div>
-</body>
+    </body>
 
 </html>
