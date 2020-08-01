@@ -31,6 +31,12 @@ class ProductController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::user();
+
+            return $next($request);
+        });
     }
     /** FUNCIONES PARA CRUD DE PRODUCTO */
     public function index()
@@ -350,16 +356,16 @@ class ProductController extends Controller
             'weigth' => Rule::requiredIf($category->type_product == 2),
             'price' => Rule::requiredIf($category->type_product == 2),
         ]);
-     
+
         if ($validator->fails()) {
             $response = [
                 'success' => false,
                 'errors' => $validator->errors(),
                 'error' => 'Error en alguno de los campos'
             ];
-            //return response()->json($response, $this->unprocessable); 
-            return redirect()->back()->withErrors($validator->errors())->withInput($request->all());        
-}
+            //return response()->json($response, $this->unprocessable);
+            return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
+        }
         $date = date("Y-m-d");
         $branches = Auth::user()->shop->branches;
         $user = Auth::user();
@@ -672,71 +678,45 @@ class ProductController extends Controller
     /**FUNCIONES DE REPORTES DE PDF */
     public function exportPdf()
     {
-        $shop_id = Auth::user()->shop->id;
-        $products = Shop::find($shop_id)->products()->get();
-        //return $products;
-        $user = Auth::user();
-        //$categories = Category::all();
-        $shops = Auth::user()->shop()->get();
-        //return $shops;
-        $categories = Shop::find($shop_id)->categories()->get();
-        $lines = Shop::find($shop_id)->lines()->get();
-        //return $lines;
-        //$status = Auth::user()->shop->id;
-        $statuses = Status::all();
-        $shop = Auth::user()->shop;
-        $shops = Auth::user()->shop()->get();
+        $shop = $this->user->shop;
+        $products = $shop->products;
         $hour = Carbon::now();
         $hour = date('H:i:s');
 
         $dates = Carbon::now();
         $dates = $dates->format('d-m-Y');
 
-
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
-        $pdf  = PDF::loadView('product.pdf', compact('shop', 'shops', 'dates', 'hour', 'user', 'categories', 'lines', 'shops', 'statuses', 'products'));
+
+        //return view('product.pdf', compact('dates', 'hour', 'products', 'shop'));
+        $pdf = PDF::loadview(
+            'product.pdf',
+            compact('dates', 'hour', 'products', 'shop')
+        );
+        //->setPaper('A3', 'landscape');
         return $pdf->stream('Productos.pdf');
     }
     /**
      * Funcion para la vista del Reporte por Producto por Sucursal status
      *
      ***/
-    public function reportProduct()
+    public function indexReports()
     {
-
-        if (Auth::user()->shop->products->count() == 0) {
-            return redirect('/productos/create')->with('mesage', 'Primero debes crear productos!');
-        }
-        $idshop = Auth::user()->shop->id;
-        $user = Auth::user();
-        $tienda = Shop::find($idshop)->branches()->get();
+        $shop = $this->user->shop;
+        $branches = $shop->branches;
         $statuses = Status::all();
-        //$line = Shop::find($idshop)->lines()->get();
-        $lineas = Line::where('shop_id', NULL)->get();
-        $category = Auth::user()->shop->id;
-        //$categories = Shop::find($category)->categories()->get();
-        $categorias = Category::where('shop_id', NULL)->get();
+        $lines = Line::where('shop_id', NULL)->get();
+        $categories = Category::where('shop_id', NULL)->get();
         $shop = Auth::user()->shop;
-        $shops = Auth::user()->shop()->get();
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
 
-        $dates = Carbon::now();
-        $dates = $dates->format('d-m-Y');
-
-
-        if ($shop->image) {
-            $shop->image = $this->getS3URL($shop->image);
-        }
-        //return $categories;
-
-        return view('product.Reports.reportproduct', compact('hour', 'dates', 'shop', 'shops', 'tienda', 'user', 'statuses', 'lineas', 'categorias'));
+        return view('product.Reports.index', compact('shop', 'branches', 'statuses', 'lines', 'categories'));
     }
 
     public function reportEstatus(Request $request)
     {
+
 
         /**Codigo para hacer las validaciones de los campos para realizar las consultas para el reporte */
         $idshop = Auth::user()->shop->id;
@@ -839,9 +819,10 @@ class ProductController extends Controller
          * hacer uso de la informacion de cada consulta
          */
 
-        $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop', 'shops', 'estado', 'products', 'branch', 'sales', 'hour', 'dates', 'total', 'cash', 'compra', 'utilidad', 'trans', 'detalle', 'venta', 'type'))->setPaper('a4', 'landscape');
-        //$pdf = $pdf->set_paper('a4', 'landscape');
-        return $pdf->stream('ReporteEstatus.pdf');
+        return view('product.Reports.reportEstatus', compact('shop', 'shops', 'estado', 'products', 'branch', 'sales', 'hour', 'dates', 'total', 'cash', 'compra', 'utilidad', 'trans', 'detalle', 'venta', 'type'));
+
+        // $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop', 'shops', 'estado', 'products', 'branch', 'sales', 'hour', 'dates', 'total', 'cash', 'compra', 'utilidad', 'trans', 'detalle', 'venta', 'type'))->setPaper('a4', 'landscape');
+        // return $pdf->stream('ReporteEstatus.pdf');
     }
     /**Termina el retorno del pdf */
     public function reportLinea(Request $request)
@@ -896,6 +877,8 @@ class ProductController extends Controller
     //**Reporte de Entradas De Prosuctos Por Fechas */
     public function reportEntradas(Request $request)
     {
+
+        // return $request->all();
         $hour = Carbon::now();
         $hour = date('H:i:s');
         $dates = Carbon::now();
@@ -923,7 +906,7 @@ class ProductController extends Controller
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
-
+        return view('product.Reports.reportEntradas', compact('shop', 'shops', 'products', 'branch', 'line', 'hour', 'dates'));
         $pdf  = PDF::loadView('product.Reports.reportEntradas', compact('shop', 'shops', 'products', 'branch', 'line', 'hour', 'dates'));
         return $pdf->stream('ReporteEntradas.pdf');
     }
@@ -1088,7 +1071,6 @@ class ProductController extends Controller
                 ->get();
         }
 
-
         $hour = Carbon::now();
         $hour = date('H:i:s');
 
@@ -1120,7 +1102,7 @@ class ProductController extends Controller
         $compra = $total * $precio;
         $utilidad = $cash - $compra;
 
-
+        //return view('product.Reports.reportEstatusG', compact('shop', 'shops', 'branches', 'categories', 'id_shop', 'lines', 'productsg', 'total', 'cash', 'precio', 'hour', 'dates', 'compra', 'utilidad', 'categoria', 'categoria'));
         $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('shop', 'shops', 'branches', 'categories', 'id_shop', 'lines', 'productsg', 'total', 'cash', 'precio', 'hour', 'dates', 'compra', 'utilidad', 'categoria', 'categoria'));
         return $pdf->stream('ReporteEstatusGeneral.pdf');
     }
@@ -1128,6 +1110,7 @@ class ProductController extends Controller
     //** función que genera el reporte  general de productos por gramos-entradas */
     public function reportEntradasG_pgr(Request $request)
     {
+
         $branches = Auth::user()->shop->branches;
         $shop_id = Auth::user()->shop->id;
         #pasar fecha actual
@@ -1192,6 +1175,8 @@ class ProductController extends Controller
     //** función que genera el reporte  general de productos por gramos */
     public function reportEntradasPr_gpgr(Request $request)
     {
+
+        // return "reporte entradas grl gramo";
         $branches = Auth::user()->shop->branches;
         //return $request;
         $branch = Branch::find($request->branch_id);
@@ -1268,7 +1253,7 @@ class ProductController extends Controller
         $utilidad = $cash - $compra;
 
         //return $products;
-
+        return  view('product.Reports.reportEntradasPr_gpgr', compact('branch', 'shop', 'shops', 'branches', 'lines', 'products', 'total', 'shop', 'shops', 'cash', 'precio', 'hour', 'dates', 'compra', 'utilidad'));
         $pdf  = PDF::loadView('product.Reports.reportEntradasPr_gpgr', compact('branch', 'shop', 'shops', 'branches', 'lines', 'products', 'total', 'shop', 'shops', 'cash', 'precio', 'hour', 'dates', 'compra', 'utilidad'));
         return $pdf->stream('R.EntradasGeneral_ppgr.pdf');
     }
