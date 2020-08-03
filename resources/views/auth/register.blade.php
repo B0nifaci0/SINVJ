@@ -121,9 +121,11 @@
           <p class="ml-35">Al hacer clic en Registrarse, usted acepta nuestros <a href="#"> Términos.</a>.</p>
         </div>
         <!-- INICIA CAPTCHA -->
+        <!--
         <div class="g-recaptcha" data-sitekey="6LceneAUAAAAAC1It9wnjrO7H8wHYRujfzM2zQme" data-callback="verifyCaptcha">
         </div>
         <div id="g-recaptcha-error"></div>
+        -->
         <!--TERMINA CAPTCHA-->
         <!-- Botón para  Registrarse-->
         <button id="register" type="submit" class="btn btn-primary" class="btn btn-primary btn-block registro"
