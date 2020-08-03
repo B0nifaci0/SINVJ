@@ -1,70 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.pdf')
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Reporte de Productos</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
-    <style>
-        .page-break {
-            width: 980px;
-            margin: 0 auto;
-        }
-
-        table thead tr th {
-            text-align: center;
-            border: 1px solid #ededed;
-        }
-
-        table tbody tr td {
-            vertical-align: middle;
-        }
-
-        .sale-head,
-        table.table thead tr th,
-        table tbody tr td,
-        table tfoot tr td {
-            border: 1px solid #212121;
-        }
-
-        .sale-head h1,
-        table thead tr th,
-        table tfoot tr td {
-            background-color: #f8f8f8;
-        }
-
-        tfoot {
-            color: #000;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-    </style>
-</head>
+@section('body')
 
 <body>
-    <div class="page-content">
-        <div class="panel">
-            <img align="left" width="140px" height="120px" src="{{ $shop->image }}">
-            <p align="right">Fecha: {{$dates}}</p>
-            <p align="right">Hora: {{$hour}}</p>
-            <h2 align="center">Reporte {{$estado->name}}s por {{$type}}
-            </h2>
-            <h3 align="center" style="color:red"> @if($estado->name == 'Traspaso') Destino: @endif Sucursal: {{$branch}}
-            </h3>
+    <div>
+        <div>
+            <img src="{{ $shop->image }}">
+            <div class="date">
+                <p>Fecha: {{$dates}} </p>
+                <p>Hora: {{$hour}}</p>
+            </div>
+        </div>
+        <div>
+            <h1>Reporte {{$estado->name}}s por {{$type}}
+            </h1>
+            <h1 style="color:red"> @if($estado->name == 'Traspaso') Destino: @endif Sucursal: {{$branch}}
+            </h1>
             @if($type == "Gr")
-            <h4 align="center">Linea:
+            <h1>Linea:
                 @foreach ($products as $i => $product)
                 {{ $product->line->name }}
                 @break
                 @endforeach
                 @endif
-            </h4>
-            <table class="table table-condensed ">
+            </h1>
+            <table>
                 <thead>
                     <tr>
                         <th>Clave</th>
                         <th>Categoria</th>
-                        @foreach ($products as $i => $product)
+                        @foreach ($products as $product)
                         @if($product->category->type_product == 2 )
                         <th>Peso</th>
                         @break;
@@ -84,7 +49,7 @@
                 </thead>
                 <tbody>
                     @foreach ($products as $i => $product)
-                    <tr id="row{{$product->id}}">
+                    <tr>
                         <td>{{ $product->clave }}</td>
                         <td>{{ $product->category->name }}</td>
                         @if($product->category->type_product == 2 )
@@ -118,7 +83,7 @@
                 </tbody>
             </table>
             <br>
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table>
                 <thead>
                     <tr>
                         @foreach ($products as $product)
@@ -140,14 +105,14 @@
                     <tr>
                         @foreach ($products as $product)
                         @if($product->category->type_product == 2 )
-                        <td align="center">{{$total}} gr</td>
+                        <td>{{$total}} gr</td>
                         @break
                         @endif
                         @endforeach
-                        <td align="center">$ {{$compra}}</td>
+                        <td>$ {{$compra}}</td>
                         @foreach ($products as $product)
                         @if ($estado->name == 'Vendido')
-                        <td align="center">$ {{$venta}}</td>
+                        <td>$ {{$venta}}</td>
                         @break
                         @endif
                         @endforeach
@@ -156,7 +121,7 @@
                 <br>
             </table>
             @if ($estado->name == 'Vendido')
-            <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+            <table>
                 <thead>
                     <tr>
                         <th scope="col">Utilidad</th>
@@ -164,13 +129,16 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td align="center">$ {{$utilidad}}</td>
+                        <td>$ {{$utilidad}}</td>
                     </tr>
                 </tbody>
             </table>
             @endif
         </div>
     </div>
+
 </body>
 
 </html>
+
+@endsection

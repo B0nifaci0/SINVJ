@@ -49,9 +49,6 @@ Panel Principal
                                         <div class="tab-content pt-20">
                                             <div class="tab-pane active" id="producstatusOne" role="tabpanel">
                                                 <div class="container-fluid row">
-                                                    <div class="col-">
-                                                        <h4>Reporte Productos Estatus Por Gramos </h4>
-                                                    </div>
                                                 </div>
                                                 <form action="reportEstatus">
                                                     <div class="panel panel-bordered">
@@ -61,7 +58,6 @@ Panel Principal
                                                                     <label>Seleccione Sucursal</label>
                                                                     <select id="sucursales_1" name="branch_id" alt="1"
                                                                         class="form-control round sucursales">
-                                                                        <!-- <option value="*">Seleccione Sucursal</option> -->
                                                                         @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}" required>
                                                                             {{$branch->name}}</option>
@@ -70,8 +66,6 @@ Panel Principal
                                                                     <label>Seleccione Estatus</label>
                                                                     <select id="" name="estatus_id" alt="1"
                                                                         class="form-control round sucursales">
-                                                                        <!-- <option value="">Selecciona Estatus</option>
-                                          <option value="*" name="todos">Tod@s</option> -->
                                                                         @foreach($statuses as $onestatus)
                                                                         <option value="{{$onestatus->id}}" required>
                                                                             {{$onestatus->name}}</option>
@@ -145,9 +139,6 @@ Panel Principal
                                             <form action="reportEstatus">
                                                 <div class="panel panel-bordered">
                                                     <div class="container-fluid row">
-                                                        <div class="col-">
-                                                            <h4>Reporte Productos Estatus Por Pieza </h4>
-                                                        </div>
                                                     </div>
                                                     <div class="panel-body">
                                                         <div class="row">
@@ -165,8 +156,6 @@ Panel Principal
                                                                 <label>Seleccione Estatus</label>
                                                                 <select id="" name="estatus_id" alt="1"
                                                                     class="form-control round sucursales">
-                                                                    <!-- <option value="">Selecciona Estatus</option>
-                                                <option value="*" name="todos">Tod@s</option> -->
                                                                     @foreach($statuses as $onestatus)
                                                                     <option value="{{$onestatus->id}}" required>
                                                                         {{$onestatus->name}}</option>
@@ -226,11 +215,8 @@ Panel Principal
                                         <!-- Termina tab 2 de product status-->
                                         <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
                                             <div class="container-fluid row">
-                                                <div class="col-">
-                                                    <h4>Reporte General Estatus Por Gramos </h4>
-                                                </div>
                                             </div>
-                                            <form action="reportEstatusG">
+                                            <form action="general-estatus">
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
                                                         <div class="row">
@@ -281,11 +267,8 @@ Panel Principal
                                         </div>
                                         <div class="tab-pane" id="exampleTabsFour" role="tabpanel">
                                             <div class="container-fluid row">
-                                                <div class="col-">
-                                                    <h4>Reporte General Estatus Por Pieza </h4>
-                                                </div>
                                             </div>
-                                            <form action="reportEstatusG">
+                                            <form action="general-estatus">
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
                                                         <div class="row">

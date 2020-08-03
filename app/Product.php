@@ -2,11 +2,15 @@
 
 namespace App;
 
+use App\Line;
+use App\Sale;
+use App\Shop;
+use App\Branch;
+use App\Status;
+use App\Category;
 use App\TransferProduct;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Branch;
-
 
 class Product extends Model
 {
