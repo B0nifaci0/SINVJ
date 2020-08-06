@@ -2,8 +2,8 @@
 
 @section('body')
 <div>
-    <h1>Reporte de Productos por Piezas y Dinero por Categorias.</h1>
-    <h1 style="color:red">{{$shop->name}}</h1>
+    <h1>Categoria {{ $category->name }}</h1>
+    <h1 style="color:red">{{$branch->name}}</h1>
     <table>
         <thead>
             <tr>
@@ -12,9 +12,6 @@
                 <th scope="col">Precio Compra</th>
                 <th scope="col">Precio Venta</th>
                 <th scope="col">Observaciones</th>
-                <th scope="col">Categoria</th>
-                <th scope="col">Estatus</th>
-                <th scope="col">Sucursal</th>
             </tr>
         </thead>
         <tbody>
@@ -25,9 +22,6 @@
                 <td>$ {{ $product->price_purchase }}</td>
                 <td>$ {{ $product->price }}</td>
                 <td>{{ $product->observations }}</td>
-                <td>{{ $product->name_category }}</td>
-                <td>{{ $product->name_status }}</td>
-                <td>{{ $product->name_branch }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -36,19 +30,17 @@
     <table>
         <thead>
             <tr>
-                <th scope="col">Categoria</th>
                 <th scope="col">Total Precio Venta</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($cash as $i => $c)
             <tr>
-                <td>{{$c->name}}</td>
-                <td>$ {{$c->total}}</td>
+                <td>$ {{$total}}</td>
             </tr>
-            @endforeach
         </tbody>
     </table>
 </div>
 </div>
+
+
 @endsection

@@ -8,6 +8,7 @@ use App\Shop;
 use App\Branch;
 use App\Status;
 use App\Category;
+use App\SaleDetails;
 use App\TransferProduct;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -66,18 +67,18 @@ class Product extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public function sales()
+    public function transfer_products()
     {
-        return $this->belongsTo(Sale::class);
-    }
-
-    public function tranfer()
-    {
-        return $this->belongsTo(TransferProduct::class);
+        return $this->hasMany(TransferProduct::class);
     }
 
     public function sale()
     {
         return $this->belongsTo(Sale::class);
+    }
+
+    public function sale_details()
+    {
+        return $this->hasMany(SaleDetails::class);
     }
 }

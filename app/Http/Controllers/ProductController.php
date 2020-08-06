@@ -687,12 +687,10 @@ class ProductController extends Controller
             $shop->image = $this->getS3URL($shop->image);
         }
 
-        //return view('product.pdf', compact('dates', 'hour', 'products', 'shop'));
         $pdf = PDF::loadview(
             'product.pdf',
             compact('date', 'hour', 'products', 'shop')
         );
-        //->setPaper('A3', 'landscape');
         return $pdf->stream('Productos.pdf');
     }
     /**
@@ -711,158 +709,113 @@ class ProductController extends Controller
         return view('product.Reports.index', compact('shop', 'branches', 'statuses', 'lines', 'categories'));
     }
 
-    public function reportEstatus(Request $request)
-    {
-        /**Codigo para hacer las validaciones de los campos para realizar las consultas para el reporte */
-        $idshop = Auth::user()->shop->id;
-        //$status = Shop::find($idshop)->statuss()->get();
-        $status = Status::all();
-        $line = Shop::find($idshop)->lines()->get();
-        $category = Auth::user()->shop->id;
-        $categories = Shop::find($category)->categories()->get();
-
-        $trans = TransferProduct::all();
-
-        /**Termina codigo de validacion de campos */
-
-        $fecini = Carbon::parse($request->fecini)->subDay();
-        $fecter = Carbon::parse($request->fecter)->addDay();
-
-        /**Codigo de las consultas de acuerdo a los campos que fueron seleccionados en los combos */
-
-        if ($request->estatus_id == 3) {
-            $products = Product::join('transfer_products', 'transfer_products.product_id', 'products.id')
-                ->where("products.branch_id", $request->branch_id)
-                ->whereBetween('products.updated_at', [$fecini, $fecter])
-                ->where("products.status_id", $request->estatus_id)
-                ->where("products.category_id", $request->category_id)
-                ->where("products.line_id", "=", $request->id)
-                ->orderBy('products.clave', 'asc')
-                ->get();
-        }
-        $branches = Branch::where("id", $request->branch_id)->get();
-        foreach ($branches as $branch) {
-            $branch = $branch->name;
-        }
-
-        $products = Product::where("branch_id", $request->branch_id)
-            ->whereBetween('products.updated_at', [$fecini, $fecter])
-            ->where("status_id", $request->estatus_id)
-            ->where("category_id", $request->category_id)
-            ->where("line_id", "=", $request->id)
-            ->orderBy('clave', 'asc')
-            ->get();
-
-
-        $detalle = SaleDetails::all();
-
-        $estado = Status::findOrFail($request->estatus_id);
-
-
-        if ($request->type_product == 2)
-            $type = "Gr";
-        else
-            $type = "Pz";
-
-        /**Finaliza codigo de las consultas por campos seleccionados */
-
-        /**Consultas para obtener el folio de la venta, la hora y el dia Uso de Carbon para las fechas y hora*/
-        $sales = Sale::where("id", "=", "sale_id")->get();
-        // $detalles = SaleDetail::where("sale_id",$sales->id);
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
-
-        $dates = Carbon::now();
-        $dates = $dates->format('d-m-Y');
-
-        $total = 0;
-        foreach ($products as $product) {
-            $total = $product->weigth + $total;
-        }
-
-        $shop = Auth::user()->shop;
-        $shops = Auth::user()->shop()->get();
-
+    public function statusReport(Request $request)
+    {        //reporte completado
+        $fecini = Carbon::parse($request->fecini);
+        $fecter = Carbon::parse($request->fecter);
+        $hour = $this->getHour();
+        $date = $this->getDate();
+        $branch = Branch::findOrFail($request->branch_id);
+        $status = Status::findOrFail($request->status_id);
+        $line = Line::find($request->line_id);
+        $category = Category::findOrFail($request->category_id);
+        $type = $request->type_product;
+        $shop = $this->user->shop;
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
 
-        $cash = 0;
-        foreach ($products as $product) {
-            $cash = $product->price + $cash;
+        $products = $this->user->shop->products()
+            ->whereCategory_id($category->id)
+            ->whereBranch_id($branch->id)
+            ->whereStatus_id($status->id);
+
+        if ($line) {
+            $products = $products->whereLine_id($line->id);
         }
 
-        $lines = Line::where("id", "=", $request->id)->get();
-
-        $precio = 0;
-        $venta = 0;
-        foreach ($products as $product) {
-            $precio = $product->price_purchase + $precio;
-            foreach ($detalle as $det)
-                if ($det->product_id == $product->id) {
-                    $venta = $venta + $det->final_price;
-                }
+        if ($fecini == $fecter) {
+            $products = $products->whereDate('updated_at', $fecini);
+        } else {
+            $fecini = $fecini->subDay();
+            $fecter = $fecter->addDay();
+            $products = $products->whereBetween('updated_at', [$fecini, $fecter]);
         }
-        $compra = $precio;
 
-        $utilidad = $venta - $compra;
+        if ($status->id == 1) { //vendidos
+            $products = $products->has('sale_details')
+                //->with('sale_details.sale.partials')
+                ->with('sale_details')
+                ->get();
+            $products_by_status = $products
+                ->pluck('sale_details')
+                ->collapse();
+            $utility = $products_by_status->sum('profit');
+            $price = $products_by_status->sum('final_price');
+        } else if ($status->id == 3) { //transfer
+            $products = $products->has('transfer_products')
+                ->with('transfer_products')
+                ->get();
+            $products_by_status = $products
+                ->pluck('transfer_products')
+                ->collapse();
+        } else {
+            $products = $products->get();
+            $products_by_status = $products;
+        }
 
-        /**Finalizan consultas de folio de la venta, la hora y el dia */
+        $price_purchase = $products->sum('price_purchase');
+        $weigth = $products->sum('weigth');
 
-        /**Variable para retornar los archivos que podran ser descargados en pdf
-         * contiene las variables de las cuales se hicieron las consultas para poder
-         * hacer uso de la informacion de cada consulta
-         */
+        if ($status->id != 1) { //vendidos
+            $price = $products->sum('final_price');
+            $utility = $price_purchase - $price;
+        }
 
-        $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop', 'shops', 'estado', 'products', 'branch', 'sales', 'hour', 'dates', 'total', 'cash', 'compra', 'utilidad', 'trans', 'detalle', 'venta', 'type'));
+        if ($products->isEmpty()) {
+            return back()->with('message', 'El reporte que se intento generar no contiene información');
+        }
+
+        $pdf  = PDF::loadView('product.Reports.reportEstatus', compact('shop', 'line', 'category', 'status', 'products', 'hour', 'date', 'weigth', 'price_purchase', 'utility', 'products_by_status', 'price', 'type', 'branch'));
         return $pdf->stream('ReporteEstatus.pdf');
     }
     /**Termina el retorno del pdf */
     public function reportLinea(Request $request)
     {
-        $branches = Branch::where("id", "=", $request->branch_id)->get();
-        $fecini = Carbon::parse($request->fecini)->subDay();
-        $fecter = Carbon::parse($request->fecter)->addDay();
-        $lines = Line::where("id", "=", $request->id)->get();
-        $products = Product::where("branch_id", "=", $request->branch_id)
-            ->where("line_id", "=", $request->id)
-            ->whereBetween('products.updated_at', [$fecini, $fecter])
-            ->orderBy('clave', 'asc')
-            ->get();
-        // return $products;
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
+        $fecini = Carbon::parse($request->fecini);
+        $fecter = Carbon::parse($request->fecter);
+        $hour = $this->getHour();
+        $date = $this->getDate();
+        $branch = Branch::findOrfail($request->branch_id);
+        $line = Line::findOrfail($request->line_id);
+        $shop = $this->user->shop;
 
-        $dates = Carbon::now();
-        $dates = $dates->format('d-m-Y');
+        $products = $this->user->shop->products()
+            ->whereBranch_id($branch->id)
+            ->whereLine_id($line->id);
 
-        $shop = Auth::user()->shop;
-        $shops = Auth::user()->shop()->get();
+        if ($fecini == $fecter) {
+            $products = $products->whereDate('updated_at', $fecini)->get();
+        } else {
+            $fecini = $fecini->subDay();
+            $fecter = $fecter->addDay();
+            $products = $products->whereBetween('updated_at', [$fecini, $fecter])->get();
+        }
+
+        if ($products->isEmpty()) {
+            return back()->with('message', 'El reporte que se intento generar no contiene información');
+        }
 
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
 
-        $total = 0;
-        foreach ($products as $product) {
-            $total = $product->weigth + $total;
-        }
+        $weigth = $products->sum('weigth');
+        $price = $products->sum('price');
+        $price_purchase = $products->sum('price_purchase');
+        $utility = $price - $price_purchase;
 
-        $cash = 0;
-        foreach ($products as $product) {
-            $cash = $product->price + $cash;
-        }
-
-        $precio = 0;
-        foreach ($lines as $line) {
-            $precio = $line->purchase_price;
-        }
-
-        $compra = $total * $precio;
-        $utilidad = $cash - $compra;
-
-
-        $pdf  = PDF::loadView('product.Reports.reportLinea', compact('shop', 'shops', 'products', 'branches', 'lines', 'total', 'cash', 'compra', 'utilidad', 'dates', 'hour'));
+        $pdf = PDF::loadView('product.Reports.reportLinea', compact('shop', 'products', 'line', 'branch', 'weigth', 'price', 'price_purchase', 'utility', 'date', 'hour'));
         return $pdf->stream('ReporteLineas.pdf');
     }
 
@@ -905,66 +858,36 @@ class ProductController extends Controller
     //**  */
     public function reportLineaG(Request $request)
     {
-        $branches = Auth::user()->shop->branches;
-        $product = Auth::user()->shop->id;
-        $products = Shop::find($product)->products()->get();
-        $line = Auth::user()->shop->id;
-        $lines = Shop::find($line)->lines()->get();
-        $fecini = Carbon::parse($request->fecini)->subDay();
-        $fecter = Carbon::parse($request->fecter)->addDay();
-        // FUNCION PARA SACAR LAS CATEGORIAS SIN REPETIRSE
-        $categories = Shop::join('products', 'products.shop_id', 'shops.id')
-            ->join('categories', 'categories.id', 'products.category_id')
-            ->join('statuss', 'statuss.id', 'products.status_id')
-            ->whereBetween('products.updated_at', [$fecini, $fecter])
-            ->select('categories.name', 'categories.type_product')
-            ->distinct('categories.name')
-            ->where('categories.type_product', 1)
+        $fecini = Carbon::parse($request->fecini);
+        $fecter = Carbon::parse($request->fecter);
+        $hour = $this->getHour();
+        $date = $this->getDate();
+        $shop = $this->user->shop;
+
+        $lines = $shop->products()
+            ->join('lines', 'lines.id', 'products.line_id');
+        if ($fecini == $fecter) {
+            $lines = $lines->whereDate('products.updated_at', $fecini);
+        } else {
+            $fecini = $fecini->subDay();
+            $fecter = $fecter->addDay();
+            $lines = $lines->whereBetween('products.updated_at', [$fecini, $fecter]);
+        }
+        $products = $lines->get();
+        $lines = $lines->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as weigth, SUM(products.price) as price'))
+            ->distinct('lines.name')
+            ->groupBy('lines.id', 'lines.name')
             ->get();
-        // FUNCION PARA SACAR LOS PRODUCTOS PERTENECIENTES A CATEGORIAS POR GRAMO
-        $products = Shop::join('products', 'products.shop_id', 'shops.id')
-            ->join('categories', 'categories.id', 'products.category_id')
-            ->join('statuss', 'statuss.id', 'products.status_id')
-            ->join('branches', 'branches.id', 'products.branch_id')
-            ->join('lines', 'lines.id', 'products.line_id')
-            ->select('products.*', 'lines.name as name_line', 'branches.name as name_branch', 'categories.name as name_category', 'categories.type_product', 'statuss.name as name_status')
-            ->whereBetween('products.updated_at', [$fecini, $fecter])
-            ->where('categories.type_product', 2)
-            ->where('products.deleted_at', NULL)
-            ->where('products.status_id', 2)
-            ->where('products.shop_id', Auth::user()->shop->id)
-            ->orderBy('products.clave', 'ASC')
-            ->orderBy('name_branch', 'ASC')
-            ->orderBy('name_line', 'ASC')
-            ->get();
-        //return $products;
-        $shop = Auth::user()->shop;
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
-        $dates = Carbon::now();
-        $dates = $dates->format('d-m-Y');
-        $shops = Auth::user()->shop()->get();
+        if ($products->isEmpty()) {
+            return back()->with('message', 'El reporte que se intento generar no contiene información');
+        }
+
 
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
 
-        $totals = Shop::join('products', 'products.shop_id', 'shops.id')
-            ->join('categories', 'categories.id', 'products.category_id')
-            ->join('statuss', 'statuss.id', 'products.status_id')
-            ->join('lines', 'lines.id', 'products.line_id')
-            ->where('products.deleted_at', NULL)
-            ->whereBetween('products.updated_at', [$fecini, $fecter])
-            ->where('products.status_id', 2)
-            ->where('lines.shop_id', NULL)
-            ->where('products.shop_id', Auth::user()->shop->id)
-            ->where('categories.type_product', 2)
-            ->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as total_w, SUM(products.price) as total_p'))
-            ->distinct('lines.name')
-            ->groupBy('lines.id', 'lines.name')
-            ->get();
-
-        $pdf  = PDF::loadView('product.Reports.reportLineaGeneral', compact('shop', 'hour', 'dates', 'shops', 'branches', 'lines', 'products', 'totals'));
+        $pdf  = PDF::loadView('product.Reports.reportLineaGeneral', compact('shop', 'hour', 'date', 'products', 'lines'));
         return $pdf->stream('ReporteLineasGeneral.pdf');
     }
 
@@ -976,7 +899,7 @@ class ProductController extends Controller
         $hour = date('H:i:s');
 
         $dates = Carbon::now();
-        $dates = $dates->format('d-m-Y');
+        $date = $dates->format('d-m-Y');
 
         $branches = Auth::user()->shop->branches;
         $product = Auth::user()->shop->id;
@@ -1003,10 +926,7 @@ class ProductController extends Controller
             ->get();
         //return $products;
         $shop = Auth::user()->shop;
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
-        $dates = Carbon::now();
-        $dates = $dates->format('d-m-Y');
+
         $shops = Auth::user()->shop()->get();
 
         if ($shop->image) {
@@ -1021,20 +941,21 @@ class ProductController extends Controller
             ->groupBy('categories.id', 'categories.name')
             ->get();
 
-        $pdf  = PDF::loadView('product.Reports.reportCategoriaGeneral', compact('categories', 'shop', 'hour', 'dates', 'shops', 'branches', 'lines', 'products', 'cash'));
+        $pdf  = PDF::loadView('product.Reports.reportCategoriaGeneral', compact('categories', 'shop', 'hour', 'date', 'shops', 'branches', 'lines', 'products', 'cash'));
         return $pdf->stream('ReporteCategoriasPGeneral.pdf');
     }
 
     //** funcion para generar reporte general de todas las sucursales por productos gramos */
     public function generalStatusReport(Request $request)
     {
-        $fecini = Carbon::parse($request->fecini)->subDay()->format('Y-m-d');
-        $fecter = Carbon::parse($request->fecter)->addDay()->format('Y-m-d');
+        $fecini = Carbon::parse($request->fecini);
+        $fecter = Carbon::parse($request->fecter);
+        $hour = $this->getHour();
+        $date = $this->getDate();
         $shop = $this->user->shop;
         $category_type = $request->cat;
 
         $products = $this->user->shop()
-            ->with('products')
             ->with('products.category')
             ->get()
             ->pluck('products')
@@ -1042,19 +963,18 @@ class ProductController extends Controller
             ->whereBetween('updated_at', [$fecini, $fecter])
             ->where('category.type_product', $category_type);
 
-        $hour = $this->getHour();
-        $date = $this->getDate();
+        if ($products->isEmpty()) {
+            return back()->with('message', 'El reporte que se intento generar no contiene información');
+        }
 
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
-        //return $products;
-        $weight = 0;
-        $price = 0;
-        foreach ($products as $product) {
-            $weight = $product->weigth + $weight;
-            $price = $product->price + $price;
-        }
+
+        $weight = $products->sum('weigth');
+        $price = $products->sum('price');
+
+
 
         $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('shop', 'products', 'hour', 'date', 'category_type', 'weight', 'price'));
         return $pdf->stream('ReporteEstatusGeneral.pdf');
@@ -1458,61 +1378,39 @@ class ProductController extends Controller
 
     public function reportPz(Request $request)
     {
-        $branches = Branch::where("id", "=", $request->branch_id)->get();
-        $categoria = Category::where("id", $request->category_id)->get();
 
-        //return $categories;
-        //return $categories;
+        $branch = Branch::findOrFail($request->branch_id);
+        $category = Category::findOrfail($request->category_id);
+        $shop = $this->user->shop;
+        $fecini = Carbon::parse($request->fecini);
+        $fecter = Carbon::parse($request->fecter);
+        $hour = $this->getHour();
+        $date = $this->getDate();
 
-        $fecini = Carbon::parse($request->fecini)->subDay();
-        $fecter = Carbon::parse($request->fecter)->addDay();
+        $products = $shop->products()
+            ->whereCategory_id($category->id)
+            ->whereBranch_id($branch->id)
+            ->whereStatus_id(2);
 
-        $products = Product::where('branch_id', $request->branch_id)
-            ->whereBetween('updated_at', [$fecini, $fecter])
-            ->where('category_id', $request->category_id)
-            ->orderBy('clave', 'asc')
-            ->get();
-        //return $products;
+        if ($fecini == $fecter) {
+            $products = $products->whereDate('updated_at', $fecini)->get();
+        } else {
+            $fecini = $fecini->subDay();
+            $fecter = $fecter->addDay();
+            $products = $products->whereBetween('updated_at', [$fecini, $fecter])->get();
+        }
 
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
-
-        $dates = Carbon::now();
-        $dates = $dates->format('d-m-Y');
-        $shop_id = Auth::user()->shop->id;
-        $shop = Auth::user()->shop;
-        $shops = Auth::user()->shop()->get();
+        if ($products->isEmpty()) {
+            return back()->with('message', 'El reporte que se intento generar no contiene información');
+        }
 
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
 
+        $total  = $products->sum('price');
 
-        $cash = Category::join('products', 'products.category_id', 'categories.id')
-            ->where('categories.shop_id', null)
-            //->where('categories.type_product', $request->cat)
-            ->where('categories.id', $request->category_id)
-            ->where('products.shop_id', Auth::user()->shop->id)
-            ->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as total'))
-            ->groupBy('categories.id', 'categories.name')
-            ->get();
-        //return $cash;
-
-
-        $categories = Category::join('products', 'products.category_id', 'categories.id')
-            ->where('categories.shop_id', NULL)
-            ->where('products.shop_id', $shop_id)
-            ->where('categories.type_product', 1)
-            ->where('products.branch_id', $request->branch_id)
-            ->whereBetween('products.updated_at', [$fecini, $fecter])
-            ->where('products.status_id', 2)
-            ->where('products.deleted_at', NULL)
-            ->select('categories.name as nombre_categoria', DB::raw('COUNT(products.id) as producto'))
-            ->groupBy('categories.name')
-            ->get();
-        //return $categories;
-
-        $pdf  = PDF::loadView('product.Reports.reportCategoria', compact('categoria', 'categories', 'shop', 'shops', 'products', 'branches', 'dates', 'hour', 'cash'));
+        $pdf  = PDF::loadView('product.Reports.reportPz', compact('category', 'shop', 'products', 'date', 'hour', 'total', 'branch'));
         return $pdf->stream('ReporteLineas.pdf');
     }
 

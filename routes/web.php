@@ -54,8 +54,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Pagos
     Route::resource('pagos', 'PaymentsController');
-    //Productos
-    Route::get('productospdf', 'ProductController@exportPdf');
 
     // Sucursal CO
     Route::get('sucursal', 'BranchController@indexCo');
@@ -265,15 +263,19 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/grupos/invitacion', 'ShopGroupsController@groupJoinForm');
     Route::post('/grupos/invitacion', 'ShopGroupsController@groupJoin');
 
-    /**Reportes Rutas y Vistas */
-
+    /**Reportes actualizados*/
     Route::get('reportes-productos', 'ProductController@indexReports');
-    Route::get('reportEstatus', 'ProductController@reportEstatus');
+    Route::get('productospdf', 'ProductController@exportPdf');
+    Route::get('estatus', 'ProductController@statusReport');
     Route::get('general-estatus', 'ProductController@generalStatusReport');
     Route::get('reportLinea', 'ProductController@reportLinea');
     Route::get('reportLineaG', 'ProductController@reportLineaG');
-    Route::get('reportPzG', 'ProductController@reportCategoriaGeneral');
+
+
+    /**Fin reportes actualizados*/
     Route::get('reportPz', 'ProductController@reportPz');
+
+    Route::get('reportPzG', 'ProductController@reportCategoriaGeneral');
 
 
 

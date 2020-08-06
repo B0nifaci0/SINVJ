@@ -99,7 +99,33 @@
             tfoot tr:last-child td:last-child {
                 border-bottom-right-radius: 5px;
             }
+
+            .footer {
+                width: 100%;
+                text-align: center;
+                position: fixed;
+                bottom: 0px;
+            }
+
+            .pagenum:before {
+                content: counter(page);
+            }
         </style>
     </head>
 
-    @yield('body')
+    <body>
+        <div>
+            <div>
+                <img src="{{ $shop->image }}">
+                <div class="date">
+                    <p>Fecha: {{$date}} </p>
+                    <p>Hora: {{$hour}}</p>
+                </div>
+            </div>
+            @yield('body')
+            <div class="footer">
+                Pagina: <span class="pagenum"></span>
+            </div>
+    </body>
+
+</html>

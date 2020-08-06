@@ -1,7 +1,10 @@
 <?php
-use App\Product;
+
+
 namespace App;
 
+use App\Sale;
+use App\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class SaleDetails extends Model
@@ -15,13 +18,10 @@ class SaleDetails extends Model
 
     public function sale()
     {
-      return $this->belongsTo(Sale::class);
+        return $this->belongsTo(Sale::class);
     }
     public function product()
     {
-      return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class);
     }
-
 }
-
-
