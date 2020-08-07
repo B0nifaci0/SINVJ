@@ -616,12 +616,7 @@ Panel Principal
                                         </ul>
                                         <div class="tab-content pt-20">
                                             <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
-                                                <div class="container-fluid row">
-                                                    <div class="col-">
-                                                        <h4>Reporte Entradas Productos Por Gramos </h4>
-                                                    </div>
-                                                </div>
-                                                <form action="entradasproducto">
+                                                <form action="entradas-linea">
                                                     <div class="panel panel-bordered">
                                                         <div class="panel-body">
                                                             <div class="row">
@@ -683,16 +678,11 @@ Panel Principal
                                                             class="btn btn-primary">Generar
                                                             reporte</button>
                                                     </div>
+                                                </form>
                                             </div>
-                                            </form>
                                         </div>
                                         <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-                                            <div class="container-fluid row">
-                                                <div class="col-">
-                                                    <h4>Reporte General Productos Por Gramos</h4>
-                                                </div>
-                                            </div>
-                                            <form action="reportEntradasPrgpgr">
+                                            <form action="entradas-general-gramos">
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
                                                         <div class="row">
@@ -748,12 +738,7 @@ Panel Principal
                             </form>
                         </div>
                         <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
-                            <div class="container-fluid row">
-                                <div class="col-">
-                                    <h4>Reporte Entradas Productos Por Pieza</h4>
-                                </div>
-                            </div>
-                            <form action="reportEntradasPpz">
+                            <form action="reportEntradaspz">
                                 <div class="panel panel-bordered">
                                     <div class="panel-body">
                                         <div class="row">
@@ -894,11 +879,6 @@ Panel Principal
                         </ul>
                         <div class="tab-content pt-20">
                             <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
-                                <div class="container-fluid row">
-                                    <div class="col-">
-                                        <h4>Reporte Utilidad Productos por Gr </h4>
-                                    </div>
-                                </div>
                                 <form action="reportUtility">
                                     <div class="panel panel-bordered">
                                         <div class="panel-body">
@@ -948,15 +928,10 @@ Panel Principal
                                         <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
                                             reporte</button>
                                     </div>
+                                </form>
                             </div>
-                            </form>
                         </div>
                         <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12">
-                                    <h4>Reporte Utilidad Productos por Pz</h4>
-                                </div>
-                            </div>
                             <form action="reportUtility">
                                 <div class="panel panel-bordered">
                                     <div class="panel-body">
