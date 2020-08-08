@@ -203,7 +203,6 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
     //Ventas PDF
-    Route::get('ventaspdf', 'SaleController@exportPdfall');
     Route::get('/reportes_venta', 'saleController@reporstSale');
     Route::get('ventapdf/{id}', 'SaleController@exportPdf')->name('ventapdf');
     Route::resource('principal', 'PrincipalController');
@@ -276,10 +275,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('entradas-linea', 'ProductController@reportInputLine');
     Route::get('entradas-general-gramos', 'ProductController@reportInputGeneralGr');
     Route::get('reportEntradaspz', 'ProductController@reportEntradaspz');
+    Route::get('reportEntradasPrgppz', 'ProductController@reportEntradasPr_gppz');
 
+    Route::get('ventaspdf', 'SaleController@exportPdfall');
 
     /**Fin reportes actualizados*/
-    Route::get('reportEntradasPrgppz', 'ProductController@reportEntradasPr_gppz');
 
     Route::get('/reportes-productos-apartados', 'ProductController@reportProductSeparated');
     Route::get('reportEntradasGpgr', 'ProductController@reportEntradasG_pgr');
@@ -288,7 +288,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('piezascategoriageneral', 'ProductController@reportCategoriaPGeneral');
     Route::get('reportProductspzs', 'ProductController@reportProductpzs');
 
-    Route::get('reportes-traspasos', 'TrasferUserController@reportTransfer');
+    Route::get('reportes-traspasos', 'TrasferUserController@indexReportTransfer');
     Route::get('reportTransferG', 'TrasferUserController@reportTransferG');
     Route::get('reportTransfer', 'TrasferUserController@reportTransferBranch');
 });
