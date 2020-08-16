@@ -48,18 +48,12 @@ class ProductController extends Controller
                 'branch_id' => $user->branch_id,
                 'status_id' => 2
             ])
-                ->whereNull('products.deleted_at')
                 ->orderBy('clave', 'asc')->get();
         } else {
-            $branches = Branch::where('shop_id', $user->shop->id)->get();
-            $branch_ids = $branches->map(function ($item) {
-                return $item->id;
-            });
-            $products = Product::with('line')
-                ->where('shop_id', $shop_id)
-                ->whereNull('products.deleted_at')
-                ->whereIn('branch_id', $branch_ids)
-                ->whereIn('status_id', [1, 2, 3, 4, 5])
+
+            $products = $this->user->shop->products()
+                ->orderByRaw('CHAR_LENGTH(clave)')
+                ->orderBy('clave')
                 ->get();
         }
 
@@ -73,19 +67,7 @@ class ProductController extends Controller
 
             $product->image = $this->getS3URL($path);
         }
-
-        $shops = Auth::user()->shop()->get();
-        //return $shops;
-        $category = Auth::user()->shop->id;
-        $categories = Shop::find($category)->categories()->get();
-        $line = Auth::user()->shop->id;
-        $lines = Shop::find($line)->lines()->get();
-        //return $lines;
-        $status = Auth::user()->shop->id;
-        $statuses = Status::all();
-        // $title = 'Productos De Tienda';
-        //  return $products;
-        return view('product/index', compact('user', 'categories', 'lines', 'shops', 'statuses', 'products'));
+        return view('product/index', compact('products'));
     }
 
     public function reportProductSeparated()
@@ -679,7 +661,10 @@ class ProductController extends Controller
     public function exportPdf()
     {
         $shop = $this->user->shop;
-        $products = $shop->products;
+        $products = $shop->products()
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
+            ->get();
 
         $hour = $this->getHour();
         $date = $this->getDate();
