@@ -89,13 +89,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('sucursalproducto.update', 'BranchProductsController@update')->name('sucursalproducto.update');
         Route::get('sucursalproducto/{id}/edit', 'BranchProductsController@edit');
         Route::get('sucursales/{id}/inventario', 'BranchProductsController@inventory');
-        Route::get('sucursal', 'BranchController@indexCo');
-        //Route::get('sucursalespdf{id}', 'TestController@exportPdf')->name('sucursalespdf');
+        Route::get('productos-sucursal/{id}', 'BranchProductsController@exportPdf')->name('sucursalpdf');
 
+        Route::get('sucursal', 'BranchController@indexCo');
+        Route::get('sucursalespdf{id}', 'BranchProducts@exportPdf')->name('sucursalespdf');
     });
 
     //Sucursal Producto PDF
-    Route::get('sucursales/{id}/sucursalespdf', 'BranchProductsController@exportPdf');
 
     //Productod AA
     Route::get('productoAA/{id}/', 'ProductController@soft');

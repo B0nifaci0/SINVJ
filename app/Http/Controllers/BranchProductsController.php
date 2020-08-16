@@ -2,22 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Product;
+use PDF;
 use App\Shop;
 use App\Branch;
 use App\Status;
-use PDF;
+use App\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Traits\S3ImageManager;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class BranchProductsController extends Controller
 
 {
+
+    use S3ImageManager;
+
     /** Función para listar los productos por sucursal pra el usuario administrador y sub-administrador  */
     public function index($id)
     {
+
+
         $user = Auth::user();
         $branch = Branch::find($id);
         $shop_id = Auth::user()->shop->id;
@@ -103,9 +110,23 @@ class BranchProductsController extends Controller
     }
     public function exportPdf($id)
     {
-        $branches = Branch::find($id);
-        $products = Product::withTrashed()->where('branch_id', '=', $id)->get();
-        $pdf  = PDF::loadView('Branches.sucursalespdf', compact('branches', 'products'));
+        $shop = Auth::user()->shop;
+        $date = Carbon::now();
+        $date = $date->format('d-m-Y');
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+
+        if ($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
+
+        $branch = Branch::findOrFail($id);
+        $products = $branch->products()
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
+            ->get();
+        //return $products;
+        $pdf  = PDF::loadView('Branches.sucursalespdf', compact('branch', 'products', 'date', 'hour', 'shop'));
         return $pdf->stream('productossucursal.pdf');
     }
 

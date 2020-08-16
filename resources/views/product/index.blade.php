@@ -315,14 +315,14 @@ LISTA PRODUCTO
     $(document).ready(function(){
         $('#product_table_gr').DataTable({
             retrieve: true,
-            aaSorting: []
+            order: [],
             //  responsive: true,
             //paging: false,
             //searching: false
         });
         $('#product_table_pz').DataTable({
             retrieve: true,
-            aaSorting: []
+            order: [],
             //responsive: true,
             //paging: false,
             //searching: false
