@@ -980,8 +980,6 @@ class ProductController extends Controller
             ->orderByRaw('CHAR_LENGTH(clave)')
             ->orderBy('clave')->get();
 
-        return $products;
-
         $lines = $lines->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as weigth, SUM(products.price) as price'))
             ->distinct('lines.name')
             ->groupBy('lines.id', 'lines.name')
