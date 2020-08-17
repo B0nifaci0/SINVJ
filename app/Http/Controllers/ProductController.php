@@ -970,6 +970,7 @@ class ProductController extends Controller
             ->orderByRaw('CHAR_LENGTH(products.clave)')
             ->orderBy('products.clave');
 
+
         if ($fecini == $fecter) {
             $lines = $lines->whereDate('products.date_creation', $fecini);
         } else {
@@ -983,6 +984,9 @@ class ProductController extends Controller
             ->distinct('lines.name')
             ->groupBy('lines.id', 'lines.name')
             ->get();
+
+
+        return $products;
         if ($products->isEmpty()) {
             return back()->with('message', 'El reporte que se intento generar no contiene información');
         }
