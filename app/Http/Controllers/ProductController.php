@@ -964,27 +964,27 @@ class ProductController extends Controller
         $date = $this->getDate();
         $shop = $this->user->shop;
 
-        $lines = $shop->products()
+        $query = $shop->products()
+            // ->has('line')
             ->join('lines', 'lines.id', 'products.line_id')
-            ->whereBranch_id($branch->id);
+            ->whereBranch_id($branch->id)
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave');
 
         if ($fecini == $fecter) {
-            $lines = $lines->whereDate('products.date_creation', $fecini);
+            $query = $query->whereDate('date_creation', $fecini);
         } else {
-            $fecini = $fecini->subDay();
-            $fecter = $fecter->addDay();
-            $lines = $lines->whereBetween('products.date_creation', [$fecini, $fecter]);
+            $query = $query->whereBetween('date_creation', [$fecini->subDay(), $fecter->addDay()]);
         }
 
-        $products = $lines
-            ->orderByRaw('CHAR_LENGTH(clave)')
-            ->orderBy('clave')->get();
+        $products = $query->get();
 
-        $lines = $lines->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as weigth, SUM(products.price) as price'))
+        $lines = $query->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as weigth, SUM(products.price) as price'))
             ->distinct('lines.name')
             ->groupBy('lines.id', 'lines.name')
             ->get();
 
+        // return  $products;
         if ($products->isEmpty()) {
             return back()->with('message', 'El reporte que se intento generar no contiene información');
         }
