@@ -966,9 +966,7 @@ class ProductController extends Controller
 
         $lines = $shop->products()
             ->join('lines', 'lines.id', 'products.line_id')
-            ->whereBranch_id($branch->id)
-            ->orderByRaw('CHAR_LENGTH(products.clave)')
-            ->orderBy('products.clave');
+            ->whereBranch_id($branch->id);
 
 
         if ($fecini == $fecter) {
@@ -978,7 +976,9 @@ class ProductController extends Controller
             $fecter = $fecter->addDay();
             $lines = $lines->whereBetween('products.date_creation', [$fecini, $fecter]);
         }
-        $products = $lines->get();
+        $products = $lines
+            ->orderByRaw('CHAR_LENGTH(products.clave)')
+            ->orderBy('products.clave')->get();
 
         $lines = $lines->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as weigth, SUM(products.price) as price'))
             ->distinct('lines.name')
@@ -986,7 +986,6 @@ class ProductController extends Controller
             ->get();
 
 
-        return $products;
         if ($products->isEmpty()) {
             return back()->with('message', 'El reporte que se intento generar no contiene información');
         }
