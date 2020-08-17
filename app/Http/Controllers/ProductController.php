@@ -820,6 +820,8 @@ class ProductController extends Controller
         $products = $this->user->shop->products()
             ->whereBranch_id($branch->id)
             ->whereLine_id($line->id)
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
             ->get();
 
         if ($fecini == $fecter) {
@@ -828,6 +830,10 @@ class ProductController extends Controller
             $fecini = $fecini->subDay();
             $fecter = $fecter->addDay();
             $products = $products->whereBetween('date_creation', [$fecini, $fecter]);
+        }
+
+        if ($products->isEmpty()) {
+            return back()->with('message', 'El reporte que se intento generar no contiene información');
         }
 
         if ($shop->image) {
@@ -960,7 +966,10 @@ class ProductController extends Controller
 
         $lines = $shop->products()
             ->join('lines', 'lines.id', 'products.line_id')
-            ->whereBranch_id($branch->id);
+            ->whereBranch_id($branch->id)
+            ->orderByRaw('CHAR_LENGTH(products.clave)')
+            ->orderBy('products.clave');
+
         if ($fecini == $fecter) {
             $lines = $lines->whereDate('products.date_creation', $fecini);
         } else {
@@ -990,7 +999,6 @@ class ProductController extends Controller
     public function reportEntradasPr_gppz(Request $request)
     {
 
-        // return $request->all();
         $fecini = Carbon::parse($request->fecini);
         $fecter = Carbon::parse($request->fecter);
         $branch = Branch::findOrFail($request->branch_id);
@@ -1002,6 +1010,8 @@ class ProductController extends Controller
         $categories = $shop->products()
             ->join('categories', 'categories.id', 'products.category_id')
             ->whereStatus_id(2)
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
             ->where('line_id', NULL);
 
         if ($fecini == $fecter) {
@@ -1048,6 +1058,8 @@ class ProductController extends Controller
             ->whereCategory_id($category->id)
             ->whereBranch_id($branch->id)
             ->whereStatus_id(2)
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
             ->get();
 
 
