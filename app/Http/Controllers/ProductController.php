@@ -328,7 +328,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request;
+        // return $request->all();.
+        $branch = $request->branch_id;
         $category = Category::find($request->category_id);
         //return $category;
         $validator = Validator::make($request->all(), [
@@ -356,12 +357,12 @@ class ProductController extends Controller
             ->where('shop_id', Auth::user()->shop->id)
             ->first();
         if ($exist) {
-            return redirect('/productos')->with('mesage', 'La Clave que intentas registrar ya existe!');
+            return redirect('/sucursales/' . $branch . '/producto')->with('mesage', 'La Clave que intentas registrar ya existe!');
         }
         foreach ($branches as $product) {
             $total = $product->description;
             if ($total == $request->description) {
-                return redirect('/products')->with('mesage', 'El nombre que intentas registrar ya existe!');
+                return redirect('/sucursales/' . $branch . '/producto')->with('mesage', 'El nombre que intentas registrar ya existe!');
             }
         }
 
@@ -415,12 +416,6 @@ class ProductController extends Controller
             //return $restored_product;
         }
 
-        // if ($request->hasFile('image')){
-        //    $filename = $request->image->getCLientOriginalName();
-        //    $request->image->storeAs('public/upload/products',$filename);
-        //    $product->image = $filename;
-        // }
-
         if ($request->hasFile('image')) {
             $adapter = Storage::disk('s3')->getDriver()->getAdapter();
             $image = file_get_contents($request->file('image')->path());
@@ -428,9 +423,9 @@ class ProductController extends Controller
             $path = 'products';
             $product->image = $this->saveImages($base64Image, $path, $product->clave);
         }
-        //return $product;
+
         $product->save();
-        return redirect('/productos')->with('mesage', 'El Producto  se ha agregado exitosamente!');
+        return redirect('/sucursales/' . $branch . '/producto')->with('mesage', 'El Producto  se ha agregado exitosamente!');
     }
 
     /**
@@ -1071,6 +1066,10 @@ class ProductController extends Controller
             $fecini = $fecini->subDay();
             $fecter = $fecter->addDay();
             $products = $products->whereBetween('date_creation', [$fecini, $fecter]);
+        }
+
+        if ($products->isEmpty()) {
+            return back()->with('message', 'El reporte que se intento generar no contiene información');
         }
 
         $price = $products->sum('price');

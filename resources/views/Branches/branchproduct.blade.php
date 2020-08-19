@@ -11,6 +11,14 @@ LISTA DE PRODUCTOS POR SUCURSAL
 @endsection
 @section('content')
 <div class="panel-body">
+  @if (session('mesage'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ session('mesage') }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif
   <div class="">
     <!-- Panel Basic -->
     <div class="panel">
