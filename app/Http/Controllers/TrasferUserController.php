@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Shop;
 use App\User;
 use App\Branch;
+use App\Status;
 use App\Product;
 use Carbon\Carbon;
 use App\TransferProduct;
-use PDF;
 use Illuminate\Http\Request;
 use App\Traits\S3ImageManager;
 use Illuminate\Routing\Controller;
@@ -23,8 +24,12 @@ class TrasferUserController extends Controller
     public function __construct()
     {
         $this->middleware('admin');
-    }
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::user();
 
+            return $next($request);
+        });
+    }
     public function index()
     {
         $user = Auth::user();
@@ -154,36 +159,32 @@ class TrasferUserController extends Controller
     //     return $pdf->stream('Traspasos.pdf');
     // }
 
-    public function reportTransfer()
+    public function indexReportTransfer()
     {
-        $idshop = Auth::user()->shop->id;
-        $user = Auth::user();
-        $tienda = Shop::find($idshop)->branches()->get();
-        $shop = Auth::user()->shop;
 
-        $shops = Auth::user()->shop()->get();
+        $shop = $this->user->shop;
+        $branches = $shop->branches()->get();
 
-        $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
+        $usersIds = User::where('shop_id', $shop->id)->get()->map(function ($u) {
             return $u->id;
         });
         $transout = TransferProduct::whereIn('user_id', $usersIds)->count();
         $transint = TransferProduct::whereIn('destination_user_id', $usersIds)->count();
-        // return $trans;
+
         if ($transout <= 0 && $transint <= 0) {
             return redirect('/traspasosAA/create')->with('mesage', 'No se tiene ningun traspaso registrado, primero debes crear uno !');
         }
-        return view('transfer.TrasferUser.Reports.indexReportTransfer', compact('shop', 'shops', 'tienda', 'user'));
+        return view('transfer.TrasferUser.Reports.index', compact('shop', 'branches'));
     }
 
     public function reportTransferG(Request $request)
     {
-        $user = Auth::user();
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
-        $dates = Carbon::now();
-        $dates = $dates->format('d-m-Y');
-        $shop = Auth::user()->shop;
+        $fecini = Carbon::parse($request->fecini);
+        $fecter = Carbon::parse($request->fecter);
+        $hour = $this->getHour();
+        $date = $this->getDate();
 
+        $shop = $this->user->shop;
 
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
@@ -202,9 +203,14 @@ class TrasferUserController extends Controller
             return $u->id;
         });
 
-        $branches = Branch::whereIn('id', $branchesIds)->get();
+        $branches = $shop
+            ->products()->has('transfer_products')
+            ->with('branch')
+            ->get()
+            ->pluck('branch')
+            ->unique();
 
-        //return $branches;
+        // return $branches;
 
         if ($request->type == 0) {
             $query = TransferProduct::whereIn('destination_user_id', $usersIds)->OrderBy('new_branch_id', 'asc');
@@ -230,46 +236,43 @@ class TrasferUserController extends Controller
             ->whereBetween('updated_at', [$fecini, $fecter])
             ->get();
 
-       //return "Hola general";
 
-        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransferGeneral', compact('trans', 'dates', 'hour', 'shop', 'category', 'type', 'branches'));
+        if ($trans->isEmpty()) {
+            return back()->with('message', 'El reporte que se intento generar no contiene información');
+        }
+
+        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransferGeneral', compact('trans', 'date', 'hour', 'shop', 'category', 'type', 'branches'));
         return $pdf->stream('Traspasos.pdf');
     }
 
     public function reportTransferBranch(Request $request)
     {
-        $user = Auth::user();
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
-        $dates = Carbon::now();
-        $dates = $dates->format('d-m-Y');
-        $branches = $user->shop->branches;
-        $shop = Auth::user()->shop;
 
+        $fecini = Carbon::parse($request->fecini);
+        $fecter = Carbon::parse($request->fecter);
+        $hour = $this->getHour();
+        $date = $this->getDate();
+        $branch = Branch::findOrFail($request->branch_id);
+        $status = $request->status_product;
+        $type = $request->type;
+        $shop = $this->user->shop;
+        $type_product = $request->category_id;
+        $branches = $shop->branches;
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
-        //return $shop;
-        $fecini = Carbon::parse($request->fecini)->subDay();
-        $fecter = Carbon::parse($request->fecter)->addDay();
 
-        $categoria = $request->category_id;
-
-        $status = $request->status_product;
-
-        $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
+        $usersIds = User::where('shop_id', $shop->id)->get()->map(function ($u) {
             return $u->id;
         });
 
-
-        $type = $request->type;
-        if ($request->type == 0) {  //Entradas
+        if ($type == 0) {  //Entradas
             $query = TransferProduct::whereIn('destination_user_id', $usersIds)
-                ->where('new_branch_id', $request->branch_id)
+                ->where('new_branch_id', $branch->id)
                 ->whereBetween('transfer_products.updated_at', [$fecini, $fecter]);
         } else {    //Salidas
             $query = TransferProduct::whereIn('user_id', $usersIds)
-                ->where('last_branch_id', $request->branch_id)
+                ->where('last_branch_id', $branch->id)
                 ->whereBetween('transfer_products.updated_at', [$fecini, $fecter]);
         }
 
@@ -285,15 +288,26 @@ class TrasferUserController extends Controller
             }
         }
 
-        $branch = Branch::where('id', $request->branch_id)->get();
-        //return $branch;
-        foreach ($branch as $bra) {
-            $branch = $bra->name;
-        }
+        $trans = $query->with('product.category')
+            ->get()
+            ->where('product.category.type_product', $type_product);
 
-        $trans = $query->with('user')->with('branch')->with('product')->get();
-           // return "hola";
-        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransfer', compact('status', 'trans', 'dates', 'hour', 'shop', 'categoria', 'branches', 'type', 'branch'));
+        if ($trans->isEmpty()) {
+            return back()->with('message', 'El reporte que se intento generar no contiene información');
+        }
+        $pdf  = PDF::loadView('transfer.TrasferUser.Reports.reportTransfer', compact('status', 'trans', 'date', 'hour', 'shop', 'type_product', 'type', 'branch'));
         return $pdf->stream('Traspasos.pdf');
+    }
+    protected function getDate()
+    {
+        $date = Carbon::now();
+        $date = $date->format('d-m-Y');
+        return $date;
+    }
+    protected function getHour()
+    {
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+        return $hour;
     }
 }

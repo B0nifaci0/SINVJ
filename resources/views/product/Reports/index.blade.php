@@ -12,8 +12,16 @@ Panel Principal
 @section('content')
 <!-- Formulario de Reporte de Productos por estatus-->
 
-<div class="">
+<div class="page">
     <div class="page-content container-fluid">
+        @if (session('message'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ session('message') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
         <div class="examle-wrap">
             <h4 class="example-title">Panel De Reportes de Productos</h4>
             <div class="example">
@@ -38,7 +46,7 @@ Panel Principal
                                                     aria-controls="producstatusOne" role="tab">Gramos</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#producstatusTwo"
-                                                    aria-controls="producstatusTwo" role="tab">Piezas</a></li>
+                                                    aria-controls="producstatusTwo" role="tab">Pieza</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#exampleTabsThree"
                                                     aria-controls="exampleTabsThree" role="tab">General Gramos</a></li>
@@ -48,12 +56,7 @@ Panel Principal
                                         </ul>
                                         <div class="tab-content pt-20">
                                             <div class="tab-pane active" id="producstatusOne" role="tabpanel">
-                                                <div class="container-fluid row">
-                                                    <div class="col-">
-                                                        <h4>Reporte Productos Estatus Por Gramos </h4>
-                                                    </div>
-                                                </div>
-                                                <form action="reportEstatus">
+                                                <form action="estatus">
                                                     <div class="panel panel-bordered">
                                                         <div class="panel-body">
                                                             <div class="row">
@@ -61,29 +64,26 @@ Panel Principal
                                                                     <label>Seleccione Sucursal</label>
                                                                     <select id="sucursales_1" name="branch_id" alt="1"
                                                                         class="form-control round sucursales">
-                                                                        <!-- <option value="*">Seleccione Sucursal</option> -->
-                                                                        @foreach($tienda as $branch)
+                                                                        @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}" required>
                                                                             {{$branch->name}}</option>
                                                                         @endforeach
                                                                     </select>
                                                                     <label>Seleccione Estatus</label>
-                                                                    <select id="" name="estatus_id" alt="1"
+                                                                    <select id="" name="status_id" alt="1"
                                                                         class="form-control round sucursales">
-                                                                        <!-- <option value="">Selecciona Estatus</option>
-                                          <option value="*" name="todos">Tod@s</option> -->
-                                                                        @foreach($statuses as $onestatus)
-                                                                        <option value="{{$onestatus->id}}" required>
-                                                                            {{$onestatus->name}}</option>
+                                                                        @foreach($statuses as $status)
+                                                                        <option value="{{$status->id}}" required>
+                                                                            {{$status->name}}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                    <label>Seleccione Categoría</label>
+                                                                    <label>Seleccione Categoria</label>
                                                                     <select id="" name="category_id" alt="1"
                                                                         class="form-control round sucursales">
-                                                                        @foreach($categorias as $categories)
-                                                                        @if($categories->type_product == 2 )
-                                                                        <option value="{{$categories->id}}" required>
-                                                                            {{$categories->name}}</option>
+                                                                        @foreach($categories as $category)
+                                                                        @if($category->type_product == 2 )
+                                                                        <option value="{{$category->id}}" required>
+                                                                            {{$category->name}}</option>
                                                                         @endif
                                                                         @endforeach
                                                                     </select>
@@ -92,10 +92,10 @@ Panel Principal
                                                                         data-plugin="datepicker" value="2" required>
                                                                 </div>
                                                                 <div class="col-12 col-sm-6">
-                                                                    <label>Seleccione Línea</label>
-                                                                    <select id="" name="id" alt="1"
+                                                                    <label>Seleccione Linea</label>
+                                                                    <select id="" name="line_id" alt="1"
                                                                         class="form-control round sucursales">
-                                                                        @foreach($lineas as $linea)
+                                                                        @foreach($lines as $linea)
                                                                         <option value="{{$linea->id}}" required>
                                                                             {{$linea->name}}</option>
                                                                         @endforeach
@@ -137,18 +137,13 @@ Panel Principal
                                                             class="btn btn-primary">Generar
                                                             reporte</button>
                                                     </div>
+                                                </form>
                                             </div>
-                                            </form>
                                         </div>
                                         <!-- Inicia TAB2 STATUS PRODUCT-->
                                         <div class="tab-pane" id="producstatusTwo" role="tabpanel">
-                                            <form action="reportEstatus">
+                                            <form action="estatus">
                                                 <div class="panel panel-bordered">
-                                                    <div class="container-fluid row">
-                                                        <div class="col-">
-                                                            <h4>Reporte Productos Estatus Por Pieza </h4>
-                                                        </div>
-                                                    </div>
                                                     <div class="panel-body">
                                                         <div class="row">
                                                             <div class="col-12 col-sm-6">
@@ -157,28 +152,26 @@ Panel Principal
                                                                     class="form-control round sucursales">
                                                                     <!-- <option value="*">Seleccione Sucursal</option> -->
 
-                                                                    @foreach($tienda as $branch)
+                                                                    @foreach($branches as $branch)
                                                                     <option value="{{$branch->id}}" required>
                                                                         {{$branch->name}}</option>
                                                                     @endforeach
                                                                 </select>
                                                                 <label>Seleccione Estatus</label>
-                                                                <select id="" name="estatus_id" alt="1"
+                                                                <select id="" name="status_id" alt="1"
                                                                     class="form-control round sucursales">
-                                                                    <!-- <option value="">Selecciona Estatus</option>
-                                                <option value="*" name="todos">Tod@s</option> -->
-                                                                    @foreach($statuses as $onestatus)
-                                                                    <option value="{{$onestatus->id}}" required>
-                                                                        {{$onestatus->name}}</option>
+                                                                    @foreach($statuses as $status)
+                                                                    <option value="{{$status->id}}" required>
+                                                                        {{$status->name}}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                <label>Seleccione Categoría</label>
+                                                                <label>Seleccione Categoria</label>
                                                                 <select id="" name="category_id" alt="1"
                                                                     class="form-control round sucursales">
-                                                                    @foreach($categorias as $categories)
-                                                                    @if($categories->type_product == 1 )
-                                                                    <option value="{{$categories->id}}" required>
-                                                                        {{$categories->name}}</option>
+                                                                    @foreach($categories as $category)
+                                                                    @if($category->type_product == 1 )
+                                                                    <option value="{{$category->id}}" required>
+                                                                        {{$category->name}}</option>
                                                                     @endif
                                                                     @endforeach
                                                                 </select>
@@ -225,12 +218,7 @@ Panel Principal
                                         </div>
                                         <!-- Termina tab 2 de product status-->
                                         <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
-                                            <div class="container-fluid row">
-                                                <div class="col-">
-                                                    <h4>Reporte General Estatus Por Gramos </h4>
-                                                </div>
-                                            </div>
-                                            <form action="reportEstatusG">
+                                            <form action="general-estatus">
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
                                                         <div class="row">
@@ -280,12 +268,7 @@ Panel Principal
                                             </form>
                                         </div>
                                         <div class="tab-pane" id="exampleTabsFour" role="tabpanel">
-                                            <div class="container-fluid row">
-                                                <div class="col-">
-                                                    <h4>Reporte General Estatus Por Pieza </h4>
-                                                </div>
-                                            </div>
-                                            <form action="reportEstatusG">
+                                            <form action="general-estatus">
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
                                                         <div class="row">
@@ -347,7 +330,7 @@ Panel Principal
                             role="tab">
                             <a class="panel-title collapsed" data-toggle="collapse" href="#exampleCollapseDefaultTwo"
                                 data-parent="#exampleAccordionDefault" aria-expanded="false"
-                                aria-controls="exampleCollapseDefaultTwo">Gramos y precio por Línea</a>
+                                aria-controls="exampleCollapseDefaultTwo">Gramos y precio por Linea</a>
                         </div>
                         <div class="panel-collapse collapse" id="exampleCollapseDefaultTwo"
                             aria-labelledby="exampleHeadingDefaultTwo" role="tabpanel" style="">
@@ -364,18 +347,13 @@ Panel Principal
                                                     aria-controls="exampleTabsTwo" role="tab">General Gramos</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#exampleTabsThree"
-                                                    aria-controls="exampleTabsThree" role="tab">Piezas</a></li>
+                                                    aria-controls="exampleTabsThree" role="tab">Pieza</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#exampleTabsFour"
-                                                    aria-controls="exampleTabsFour" role="tab">General Piezas</a></li>
+                                                    aria-controls="exampleTabsFour" role="tab">General Pieza</a></li>
                                         </ul>
                                         <div class="tab-content pt-20">
                                             <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
-                                                <div class="container-fluid row">
-                                                    <div class="col-">
-                                                        <h4>Reporte Productos por Línea </h4>
-                                                    </div>
-                                                </div>
                                                 <form action="reportLinea">
                                                     <div class="panel panel-bordered">
                                                         <div class="panel-body">
@@ -385,18 +363,17 @@ Panel Principal
                                                                     <select id="sucursales_1" name="branch_id" alt="1"
                                                                         class="form-control round sucursales">
                                                                         <!-- <option value="*">Seleccione Sucursal</option> -->
-
-                                                                        @foreach($tienda as $branch)
+                                                                        @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}" required>
                                                                             {{$branch->name}}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                    <label>Seleccione Línea</label>
-                                                                    <select id="" name="id" alt="1"
+                                                                    <label>Seleccione Linea</label>
+                                                                    <select id="" name="line_id" alt="1"
                                                                         class="form-control round sucursales">
                                                                         <!-- <option value="">Selecciona Linea</option> -->
                                                                         <!-- <option value="*">Tod@s</option> -->
-                                                                        @foreach($lineas as $line)
+                                                                        @foreach($lines as $line)
                                                                         <option value="{{$line->id}}" required>
                                                                             {{$line->name}}</option>
                                                                         @endforeach
@@ -440,15 +417,10 @@ Panel Principal
                                                             class="btn btn-primary">Generar
                                                             reporte</button>
                                                     </div>
+                                                </form>
                                             </div>
-                                            </form>
                                         </div>
                                         <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-                                            <div class="container-fluid row">
-                                                <div class="col-">
-                                                    <h4>Reporte General productos por Gr</h4>
-                                                </div>
-                                            </div>
                                             <form action="reportLineaG">
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
@@ -496,11 +468,6 @@ Panel Principal
                                             </form>
                                         </div>
                                         <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
-                                            <div class="container-fluid row">
-                                                <div class="col-">
-                                                    <h4>Reporte Productos Por Piezas</h4>
-                                                </div>
-                                            </div>
                                             <form action="reportPz">
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
@@ -510,15 +477,15 @@ Panel Principal
                                                                 <select id="sucursales_1" name="branch_id" alt="3"
                                                                     class="form-control round sucursales">
                                                                     <!-- <option value="*">Seleccione Sucursal</option> -->
-                                                                    @foreach($tienda as $branch)
+                                                                    @foreach($branches as $branch)
                                                                     <option value="{{$branch->id}}" required>
                                                                         {{$branch->name}}</option>
                                                                     @endforeach
                                                                 </select>
-                                                                <label>Seleccione Categoría</label>
+                                                                <label>Seleccione Categoria</label>
                                                                 <select id="" name="category_id" alt="1"
                                                                     class="form-control round sucursales">
-                                                                    @foreach($categorias as $category)
+                                                                    @foreach($categories as $category)
                                                                     @if($category->type_product == 1 )
                                                                     <option value="{{$category->id}}" required>
                                                                         {{$category->name}}</option>
@@ -567,11 +534,6 @@ Panel Principal
                                             </form>
                                         </div>
                                         <div class="tab-pane" id="exampleTabsFour" role="tabpanel">
-                                            <div class="container-fluid row">
-                                                <div class="col-">
-                                                    <h4>Reporte General productos por Pz</h4>
-                                                </div>
-                                            </div>
                                             <form action="reportPzG">
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
@@ -647,19 +609,14 @@ Panel Principal
                                                     aria-controls="exampleTabsTwo" role="tab">General Gramos</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#exampleTabsThree"
-                                                    aria-controls="exampleTabsThree" role="tab">Piezas</a></li>
+                                                    aria-controls="exampleTabsThree" role="tab">Pieza</a></li>
                                             <li class="nav-item" role="presentation"><a class="nav-link"
                                                     data-toggle="tab" href="#exampleTabsFour"
-                                                    aria-controls="exampleTabsFour" role="tab">General Piezas</a></li>
+                                                    aria-controls="exampleTabsFour" role="tab">General Pieza</a></li>
                                         </ul>
                                         <div class="tab-content pt-20">
                                             <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
-                                                <div class="container-fluid row">
-                                                    <div class="col-">
-                                                        <h4>Reporte Entradas Productos Por Gramos </h4>
-                                                    </div>
-                                                </div>
-                                                <form action="entradasproducto">
+                                                <form action="entradas-linea">
                                                     <div class="panel panel-bordered">
                                                         <div class="panel-body">
                                                             <div class="row">
@@ -668,15 +625,15 @@ Panel Principal
                                                                     <select id="sucursales_1" name="branch_id" alt="1"
                                                                         class="form-control round sucursales">
                                                                         <!-- <option value="*">Seleccione Sucursal</option> -->
-                                                                        @foreach($tienda as $branch)
+                                                                        @foreach($branches as $branch)
                                                                         <option value="{{$branch->id}}" required>
                                                                             {{$branch->name}}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                    <label>Seleccione Línea</label>
+                                                                    <label>Seleccione Linea</label>
                                                                     <select id="" name="line_id" alt="1"
                                                                         class="form-control round sucursales">
-                                                                        @foreach($lineas as $line)
+                                                                        @foreach($lines as $line)
                                                                         <option value="{{$line->id}}" required>
                                                                             {{$line->name}}</option>
                                                                         @endforeach
@@ -721,16 +678,11 @@ Panel Principal
                                                             class="btn btn-primary">Generar
                                                             reporte</button>
                                                     </div>
+                                                </form>
                                             </div>
-                                            </form>
                                         </div>
                                         <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-                                            <div class="container-fluid row">
-                                                <div class="col-">
-                                                    <h4>Reporte General Productos Por Gramos</h4>
-                                                </div>
-                                            </div>
-                                            <form action="reportEntradasPrgpgr">
+                                            <form action="entradas-general-gramos">
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
                                                         <div class="row">
@@ -739,7 +691,7 @@ Panel Principal
                                                                 <select id="sucursales_1" name="branch_id" alt="1"
                                                                     class="form-control round sucursales">
                                                                     <!-- <option value="*">Seleccione Sucursal</option> -->
-                                                                    @foreach($tienda as $branch)
+                                                                    @foreach($branches as $branch)
                                                                     <option value="{{$branch->id}}" required>
                                                                         {{$branch->name}}</option>
                                                                     @endforeach
@@ -786,12 +738,7 @@ Panel Principal
                             </form>
                         </div>
                         <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
-                            <div class="container-fluid row">
-                                <div class="col-">
-                                    <h4>Reporte Entradas Productos Por Piezas</h4>
-                                </div>
-                            </div>
-                            <form action="reportEntradasPpz">
+                            <form action="reportEntradaspz">
                                 <div class="panel panel-bordered">
                                     <div class="panel-body">
                                         <div class="row">
@@ -800,16 +747,16 @@ Panel Principal
                                                 <select id="sucursales_1" name="branch_id" alt="3"
                                                     class="form-control round sucursales">
                                                     <!-- <option value="*">Seleccione Sucursal</option> -->
-                                                    @foreach($tienda as $branch)
+                                                    @foreach($branches as $branch)
                                                     <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                                     @endforeach
                                                 </select>
-                                                <label>Seleccione Categoría</label>
+                                                <label>Seleccione Categoria</label>
                                                 <select id="" name="category_id" alt="1"
                                                     class="form-control round sucursales">
-                                                    @foreach($categorias as $categories)
-                                                    @if($categories->type_product == 1 )
-                                                    <option value="{{$categories->id}}" required>{{$categories->name}}
+                                                    @foreach($categories as $category)
+                                                    @if($category->type_product == 1 )
+                                                    <option value="{{$category->id}}" required>{{$category->name}}
                                                     </option>
                                                     @endif
                                                     @endforeach
@@ -853,7 +800,7 @@ Panel Principal
 
                             <div class="container-fluid row">
                                 <div class="col-">
-                                    <h4>Reporte Entradas Productos General Por Piezas</h4>
+                                    <h4>Reporte Entradas Productos General Por Pieza</h4>
                                 </div>
                             </div>
                             <form action="reportEntradasPrgppz">
@@ -865,7 +812,7 @@ Panel Principal
                                                 <select id="sucursales_1" name="branch_id" alt="1"
                                                     class="form-control round sucursales">
                                                     <!-- <option value="*">Seleccione Sucursal</option> -->
-                                                    @foreach($tienda as $branch)
+                                                    @foreach($branches as $branch)
                                                     <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                                     @endforeach
                                                 </select>
@@ -928,15 +875,10 @@ Panel Principal
                             <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab"
                                     href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">Gramos</a></li>
                             <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab"
-                                    href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">Piezas</a></li>
+                                    href="#exampleTabsTwo" aria-controls="exampleTabsTwo" role="tab">Pieza</a></li>
                         </ul>
                         <div class="tab-content pt-20">
                             <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
-                                <div class="container-fluid row">
-                                    <div class="col-">
-                                        <h4>Reporte Utilidad Productos por Gr </h4>
-                                    </div>
-                                </div>
                                 <form action="reportUtility">
                                     <div class="panel panel-bordered">
                                         <div class="panel-body">
@@ -946,7 +888,7 @@ Panel Principal
                                                     <select id="sucursales_1" name="branch_id" alt="1"
                                                         class="form-control round sucursales">
                                                         <!-- <option value="*">Seleccione Sucursal</option> -->
-                                                        @foreach($tienda as $branch)
+                                                        @foreach($branches as $branch)
                                                         <option value="{{$branch->id}}" required>{{$branch->name}}
                                                         </option>
                                                         @endforeach
@@ -986,15 +928,10 @@ Panel Principal
                                         <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
                                             reporte</button>
                                     </div>
+                                </form>
                             </div>
-                            </form>
                         </div>
                         <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-12">
-                                    <h4>Reporte Utilidad Productos por Pz</h4>
-                                </div>
-                            </div>
                             <form action="reportUtility">
                                 <div class="panel panel-bordered">
                                     <div class="panel-body">
@@ -1005,7 +942,7 @@ Panel Principal
                                                     class="form-control round sucursales">
                                                     <!-- <option value="*">Seleccione Sucursal</option> -->
 
-                                                    @foreach($tienda as $branch)
+                                                    @foreach($branches as $branch)
                                                     <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                                     @endforeach
                                                 </select>

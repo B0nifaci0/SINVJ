@@ -54,8 +54,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     //Pagos
     Route::resource('pagos', 'PaymentsController');
-    //Productos
-    Route::get('productospdf', 'ProductController@exportPdf');
 
     // Sucursal CO
     Route::get('sucursal', 'BranchController@indexCo');
@@ -91,13 +89,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::put('sucursalproducto.update', 'BranchProductsController@update')->name('sucursalproducto.update');
         Route::get('sucursalproducto/{id}/edit', 'BranchProductsController@edit');
         Route::get('sucursales/{id}/inventario', 'BranchProductsController@inventory');
-        Route::get('sucursal', 'BranchController@indexCo');
-        //Route::get('sucursalespdf{id}', 'TestController@exportPdf')->name('sucursalespdf');
+        Route::get('productos-sucursal/{id}', 'BranchProductsController@exportPdf')->name('sucursalpdf');
 
+        Route::get('sucursal', 'BranchController@indexCo');
+        Route::get('sucursalespdf{id}', 'BranchProducts@exportPdf')->name('sucursalespdf');
     });
 
     //Sucursal Producto PDF
-    Route::get('sucursales/{id}/sucursalespdf', 'BranchProductsController@exportPdf');
 
     //Productod AA
     Route::get('productoAA/{id}/', 'ProductController@soft');
@@ -205,7 +203,6 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
     //Ventas PDF
-    Route::get('ventaspdf', 'SaleController@exportPdfall');
     Route::get('/reportes_venta', 'saleController@reporstSale');
     Route::get('ventapdf/{id}', 'SaleController@exportPdf')->name('ventapdf');
     Route::resource('principal', 'PrincipalController');
@@ -265,33 +262,33 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/grupos/invitacion', 'ShopGroupsController@groupJoinForm');
     Route::post('/grupos/invitacion', 'ShopGroupsController@groupJoin');
 
-    /**Reportes Rutas y Vistas */
-
-    Route::get('reportes-productos', 'ProductController@reportProduct');
-    Route::get('reportEstatus', 'ProductController@reportEstatus');
-    Route::get('reportEstatusG', 'ProductController@reportEstatusG');
+    /**Reportes actualizados*/
+    Route::get('reportes-productos', 'ProductController@indexReports');
+    Route::get('productospdf', 'ProductController@exportPdf');
+    Route::get('estatus', 'ProductController@statusReport');
+    Route::get('general-estatus', 'ProductController@generalStatusReport');
     Route::get('reportLinea', 'ProductController@reportLinea');
     Route::get('reportLineaG', 'ProductController@reportLineaG');
-    Route::get('reportPzG', 'ProductController@reportCategoriaGeneral');
     Route::get('reportPz', 'ProductController@reportPz');
+    Route::get('reportPzG', 'ProductController@reportPzGeneral');
+    Route::get('reportUtility', 'ProductController@reportUtility');
+    Route::get('entradas-linea', 'ProductController@reportInputLine');
+    Route::get('entradas-general-gramos', 'ProductController@reportInputGeneralGr');
+    Route::get('reportEntradaspz', 'ProductController@reportEntradaspz');
+    Route::get('reportEntradasPrgppz', 'ProductController@reportEntradasPr_gppz');
 
+    Route::get('ventaspdf', 'SaleController@exportPdfall');
 
+    /**Fin reportes actualizados*/
 
     Route::get('/reportes-productos-apartados', 'ProductController@reportProductSeparated');
-
-
-    Route::get('entradasproducto', 'ProductController@reportEntradas');
-    Route::get('reportEntradasPrgpgr', 'ProductController@reportEntradasPr_gpgr');
-    Route::get('reportEntradasPpz', 'ProductController@reportEntradasP_pz');
     Route::get('reportEntradasGpgr', 'ProductController@reportEntradasG_pgr');
 
-    Route::get('reportUtility', 'ProductController@reportUtility');
     Route::get('sucursales/sucursalcorte', 'BranchController@reportBox_cutDate')->name('sucursalcorte');
     Route::get('piezascategoriageneral', 'ProductController@reportCategoriaPGeneral');
-    Route::get('reportEntradasPrgppz', 'ProductController@reportEntradasPr_gppz');
     Route::get('reportProductspzs', 'ProductController@reportProductpzs');
 
-    Route::get('reportes-traspasos', 'TrasferUserController@reportTransfer');
+    Route::get('reportes-traspasos', 'TrasferUserController@indexReportTransfer');
     Route::get('reportTransferG', 'TrasferUserController@reportTransferG');
     Route::get('reportTransfer', 'TrasferUserController@reportTransferBranch');
 });

@@ -2,10 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Shop;
+use App\Product;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Category extends Authenticatable
 {
@@ -14,25 +15,31 @@ class Category extends Authenticatable
     const shop_id = '';
 
 
-    public  function scopeLast($query){
-      return $query->orderBy("id");
+    public  function scopeLast($query)
+    {
+        return $query->orderBy("id");
     }
     use Notifiable;
 
-   use SoftDeletes;
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
-     */  
+     */
     protected $fillable = [
         'name',
         'shop_id',
         'type_product'
     ];
 
-    public function product(){
-      return $this->hasMany(Product::class);
- }
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
 }

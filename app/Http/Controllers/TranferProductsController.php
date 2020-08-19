@@ -126,7 +126,7 @@ class TranferProductsController extends Controller
                 $product->shop_id = $user->shop->id;
                 $product->date_creation = Now();
                 $product->save();
-            }else{
+            } else {
                 $product->status_id = Product::EXISTING;
                 $product->save();
             }
@@ -183,7 +183,6 @@ class TranferProductsController extends Controller
             ->with('user')->with('branch')->get();
 
         $pdf  = PDF::loadView('transfer.PdfTranferall', compact('trans', 'date', 'hour', 'shop'));
-        $pdf->setpaper('letter', 'landscape');
         return $pdf->stream('Traspasos.pdf');
     }
 

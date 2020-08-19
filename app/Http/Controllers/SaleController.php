@@ -72,8 +72,8 @@ class SaleController extends Controller
                 ->where('shops.id', $user->shop_id)
                 ->where('clients.type_client', 1)
                 ->orderBy('sales.updated_at', 'desc')
-                ->get(); 
-            $sold = $sold_public->merge($sold_wholesaler);   
+                ->get();
+            $sold = $sold_public->merge($sold_wholesaler);
 
             //APARTADOS
             $apart_public = Sale::with('client')
@@ -97,10 +97,10 @@ class SaleController extends Controller
                 ->where('shops.id', $user->shop_id)
                 ->where('clients.type_client', 1)
                 ->orderBy('sales.updated_at', 'desc')
-                ->get(); 
+                ->get();
 
             $apart = $apart_public->merge($apart_wholesaler);
-            
+
             //DEVUELTOS
             $givedback = Sale::with('client')
                 ->join('branches', 'branches.id', 'sales.branch_id')
@@ -112,7 +112,6 @@ class SaleController extends Controller
                 ->where('shops.id', $user->shop_id)
                 ->orderBy('sales.updated_at', 'desc')
                 ->get();
-
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             //VENDIDOS
             $sold_public = Sale::with('client')
@@ -137,8 +136,8 @@ class SaleController extends Controller
                 ->where('sales.branch_id', $user->branch_id)
                 ->where('clients.type_client', 1)
                 ->orderBy('sales.updated_at', 'desc')
-                ->get(); 
-            $sold = $sold_public->merge($sold_wholesaler);   
+                ->get();
+            $sold = $sold_public->merge($sold_wholesaler);
 
             //APARTADOS
             $apart_public = Sale::with('client')
@@ -162,8 +161,8 @@ class SaleController extends Controller
                 ->where('sales.branch_id', $user->branch_id)
                 ->where('clients.type_client', 1)
                 ->orderBy('sales.updated_at', 'desc')
-                ->get(); 
-            $apart = $apart_public->merge($apart_wholesaler); 
+                ->get();
+            $apart = $apart_public->merge($apart_wholesaler);
 
             //DEVUELTOS
             $givedback = Sale::with('client')
@@ -251,8 +250,8 @@ class SaleController extends Controller
         //return $clientsIds;
 
         $sales = Sale::whereIn('client_id', $clientsIds)
-        ->whereRaw('paid_out <> total')
-        ->get();
+            ->whereRaw('paid_out <> total')
+            ->get();
         //return $sales;
         // $products = Product::where([
         //   'branch_id' => $user->branch_id,
@@ -263,7 +262,7 @@ class SaleController extends Controller
         // 	->with('category')
         // 	->with('status')
         // 	->get();
-        return view('sale/add', compact('new_id' ,'public', 'wholesaler','products', 'user', 'branches', 'clients', 'sales'));
+        return view('sale/add', compact('new_id', 'public', 'wholesaler', 'products', 'user', 'branches', 'clients', 'sales'));
     }
 
     /**
@@ -350,9 +349,9 @@ class SaleController extends Controller
             $base64Image = base64_encode($image);
             $path = 'payment-tickets';
 
-            $partial= Partial::all()->last();
+            $partial = Partial::all()->last();
 
-            $count = $partial->id +1;
+            $count = $partial->id + 1;
 
             $imagen = $this->saveImages($base64Image, $path, $count);
             $partial = Partial::create([
@@ -365,7 +364,7 @@ class SaleController extends Controller
 
         $sale->paid_out = Partial::where('sale_id', $sale->id)->sum('amount');
         $client = Client::find($sale->client_id);
-        if($client->phone_number == '0000000000'){
+        if ($client->phone_number == '0000000000') {
             $client->phone_number = null;
             $client->save();
         }
@@ -419,24 +418,20 @@ class SaleController extends Controller
         }
 
 
-            $date_now = Carbon::now();
-            $date_now = $date_now->format('Y-m-d');
-            //return $sale;
-            foreach($sale->itemsSold as $item)
-            {
-                $date_limit = $item->sold_at;
-                $item->date_limit = (new Carbon($date_limit))->addDays(60);
+        $date_now = Carbon::now();
+        $date_now = $date_now->format('Y-m-d');
+        //return $sale;
+        foreach ($sale->itemsSold as $item) {
+            $date_limit = $item->sold_at;
+            $item->date_limit = (new Carbon($date_limit))->addDays(60);
 
-                //VALIDACION PARA DEVOLUCION DE PRODUCTOS CON UN MAXIMO DE 60 DIAS
-                if($date_now >= $item->date_limit)
-                {
-                    $item->limit = 1;
-                } 
-                else 
-                {
-                    $item->limit = 0;
-                }
+            //VALIDACION PARA DEVOLUCION DE PRODUCTOS CON UN MAXIMO DE 60 DIAS
+            if ($date_now >= $item->date_limit) {
+                $item->limit = 1;
+            } else {
+                $item->limit = 0;
             }
+        }
 
         //return $sale->itemsSold;
         return view('sale.show', compact('finalprice', 'sale', 'lines', 'restan', 'partials'));
@@ -558,16 +553,6 @@ class SaleController extends Controller
         $pdf  = PDF::loadView('sale.PDFVentas', compact('sales', 'date', 'hour', 'shop', 'branches'));
         return $pdf->stream('venta.pdf');
     }
-
-    // public function exportPdf($id){
-    //   $user = Auth::user();
-    //   $sales = Sale::all();
-    //   $sales = Sale::where("id","=",$id)->get();
-    //   $shops = Auth::user()->shop()->get();
-    //   $branches = Branch::where('id', '!=', $user->branch_id)->get();
-    //   $pdf  = PDF::loadView('sale.PDFVenta', compact('sales','branches','user','shops'));
-    //   return $pdf->stream('venta.pdf');
-    // }
 
     public function exportPdf(Request $request, $id)
     {
