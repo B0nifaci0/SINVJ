@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use PDF;
+use App\Line;
 use App\Shop;
 use App\Branch;
 use App\Status;
@@ -64,7 +65,7 @@ class BranchProductsController extends Controller
         $line = Auth::user()->shop->id;
         $shops = Auth::user()->shop()->get();
         $categorys = Shop::find($category)->categories()->get();
-        $lines = Shop::find($line)->lines()->get();
+        $lines = Line::where('shop_id', NULL)->get();
         $branch = Auth::user()->shop->id;
         $branches = Shop::find($branch)->branches()->get();
         $status = Auth::user()->shop->id;

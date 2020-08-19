@@ -820,8 +820,8 @@ class ProductController extends Controller
         $products = $this->user->shop->products()
             ->whereBranch_id($branch->id)
             ->whereLine_id($line->id)
-            ->orderByRaw('CHAR_LENGTH(clave)')
-            ->orderBy('clave')
+            // ->orderByRaw('CHAR_LENGTH(clave)')
+            // ->orderBy('clave')
             ->get();
 
         if ($fecini == $fecter) {
@@ -967,9 +967,9 @@ class ProductController extends Controller
         $query = $shop->products()
             // ->has('line')
             ->join('lines', 'lines.id', 'products.line_id')
-            ->whereBranch_id($branch->id)
-            ->orderByRaw('CHAR_LENGTH(clave)')
-            ->orderBy('clave');
+            ->whereBranch_id($branch->id);
+        // ->orderByRaw('CHAR_LENGTH(clave)')
+        // ->orderBy('clave');
 
         if ($fecini == $fecter) {
             $query = $query->whereDate('date_creation', $fecini);
@@ -1012,8 +1012,8 @@ class ProductController extends Controller
         $categories = $shop->products()
             ->join('categories', 'categories.id', 'products.category_id')
             ->whereStatus_id(2)
-            ->orderByRaw('CHAR_LENGTH(clave)')
-            ->orderBy('clave')
+            // ->orderByRaw('CHAR_LENGTH(clave)')
+            // ->orderBy('clave')
             ->where('line_id', NULL);
 
         if ($fecini == $fecter) {
@@ -1060,8 +1060,8 @@ class ProductController extends Controller
             ->whereCategory_id($category->id)
             ->whereBranch_id($branch->id)
             ->whereStatus_id(2)
-            ->orderByRaw('CHAR_LENGTH(clave)')
-            ->orderBy('clave')
+            // ->orderByRaw('CHAR_LENGTH(clave)')
+            // ->orderBy('clave')
             ->get();
 
 

@@ -30,13 +30,21 @@ MODIFICACIÓ PRODUCTO
         {{ method_field('PUT') }}
         <div class='row'>
           <!-- Input para ingresar clave del producto-->
-          <div class="form-group form-material col-md-4">
+          <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
+            <label>Categoria</label>
+            <select id="categorie_id" name="category_id" class="form-control round">
+              @foreach($categorys as $category)
+              <option value="{{ $category->id }}" required>{{ $category->name }}</option>
+              @endforeach
+            </select>
+          </div>
+          <!-- END Input-->
+          <div class="form-group form-material col-md-3">
             <label>Clave</label>
             <input type="text" class="form-control" name="clave" value="{{$product->clave}}" required>
           </div>
-          <!-- END Input-->
           <!-- Input para ingresar descripcion-->
-          <div class="form-group form-material col-md-4 ">
+          <div class="form-group form-material col-md-3">
             <label>Descripcion</label>
             <input type="text" class="form-control" value="{{$product->description}}" name="description">
           </div>
@@ -58,24 +66,22 @@ MODIFICACIÓ PRODUCTO
           <!-- END Input-->
           <!-- Input para ingresar Peso del producto-->
           <div class="form-group form-material col-md-3">
-            <label>Peso</label>
+            <label>Gramos</label>
             <input type="text" id="multiplicador" class="form-control" name="weigth" value="{{$product->weigth}}">
           </div><!-- END Input-->
           <!-- Input para ingresar precio del producto-->
           <div class="form-group form-material col-md-3">
             <label>Precio del Producto</label>
-            <input type="text" readonly="readonly" class="form-control" id="total" readonly name="price">
+            <input type="text" readonly="readonly" class="form-control" id="total" readonly name="price"
+              value="{{($product->price) ? $product->price: old('price')}}">
+          </div>
+          <div class="form-group form-material col-md-3">
+            <label>Precio con Descuento</label>
+            <input type="text" readonly="readonly" class="form-control" id="discount" readonly name="discountmax"
+              value="{{($product->discount) ? $product->discount: old('discountmax')}}">
           </div>
           <!-- END Input-->
           <!-- Select para Seleccionar categoria-->
-          <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
-            <label>Categoria</label>
-            <select id="categorie_id" name="category_id" class="form-control round">
-              @foreach($categorys as $category)
-              <option value="{{ $category->id }}" required>{{ $category->name }}</option>
-              @endforeach
-            </select>
-          </div>
           <!-- END Select-->
           <div>
             @foreach ($shops as $shop)
@@ -83,7 +89,7 @@ MODIFICACIÓ PRODUCTO
             @endforeach
           </div>
           <!-- Select para Seleccionar sucursal-->
-          <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
+          <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
             <label>Sucursal</label>
             <select name="branch_id" class="form-control round">
               @foreach($branches as $branch)
@@ -93,7 +99,7 @@ MODIFICACIÓ PRODUCTO
           </div>
           <!-- END Select-->
           <!-- Select para Seleccionar status-->
-          <div class="col-md-4  col-md-offset-1 visible-md visible-lg">
+          <div class="col-md-3  col-md-offset-1 visible-md visible-lg">
             <label>Status</label>
             <select name="status_id" class="form-control round">
               @foreach($statuses as $status)
@@ -103,12 +109,12 @@ MODIFICACIÓ PRODUCTO
           </div>
           <!-- END Select-->
           <!-- Input para ingresar Observaciones-->
-          <div class="form-group form-material col-md-6">
+          <div class="form-group form-material col-md-3">
             <label>Observaciones</label>
             <input type="text" class="form-control" value="{{$product->observations}}" name="observations">
           </div><!-- END Input-->
           <!-- Input para Seleccionar Imagen del producto-->
-          <div class="form-group form-material col-md-6">
+          <div class="form-group form-material col-md-3">
             <label>Selecciona imagen del producto</label>
             <br>
             <label for="image" class="btn btn-primary">Explorar</label>
@@ -252,7 +258,7 @@ $('#line_id').change(function() {
 
 $(document).ready(function(){
 $('#multiplicador').keyup(function(){
-  alert('multi');
+  // alert('multi');
   var total = $('#line_price').val() * $(this).val();
   // var discount = total - (total * (Number(line.discount_percentage) / 100))
   var discount = total - Number(line.discount_percentage)
@@ -282,7 +288,7 @@ setTimeout(() => {
   document.getElementById("resultado").value = r;
   });
 setTimeout(() => {
-  alert('entra a set');
+ // alert('entra a set');
   multiplicar();
 },2000);
 </script>
