@@ -381,7 +381,7 @@ LISTA PRODUCTO
                   'El producto no ha sido eliminado por que esta activo en un traspaso',
                   'error'
                 )
-            }
+                }
               },
               error: function () {
                 Swal.fire(
