@@ -80,9 +80,9 @@ LISTA DE  LINEA
                 <th>Precio compra</th>
                 <th>Precio venta</th>
                 <th>Descuento</th>
-               <!-- @if(Auth::user()->type_user == 1 )
+               @if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif-->
+                @endif
               </tr>
             </thead>
             <tfoot>
@@ -92,9 +92,9 @@ LISTA DE  LINEA
                 <th>Precio compra</th>
                 <th>Precio venta</th>
                 <th>Descuento</th>
-               <!-- @if(Auth::user()->type_user == 1 )
+               @if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif-->
+                @endif
               </tr>
             </tfoot>
             <tbody>
@@ -106,7 +106,6 @@ LISTA DE  LINEA
                   <td>$ {{ $line->sale_price }}</td>
                   <!--discount_percentage descuenta dinero-->
                   <td>% {{ $line->discount_percentage }}</td>
-                  <!--
                   @if(Auth::user()->type_user == 1 )
                   <td>
                     <a type="button" href="/lineas/{{$line->id}}/edit"
@@ -114,7 +113,7 @@ LISTA DE  LINEA
                       data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></a>
                   </td>
-                  @endif -->
+                  @endif
                   <!--
                     <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
                       alt="{{$line->id}}" role="button"
