@@ -527,13 +527,11 @@ class ProductController extends Controller
         } else if ($category->type_product == 2) {
             $line = Line::find($request->line_id);
             $product->price = $request->price;
-            $data['price_purchase'] = $line->purchase_price * $request->weigth;
+            $product['price_purchase'] = $line->purchase_price * $request->weigth;
         }
-
 
         $product->save();
 
-        //return $request->all();
         return redirect('/productos')->with('mesage-update', 'El producto se ha actualizado  exitosamente!');
     }
 
@@ -1206,5 +1204,11 @@ class ProductController extends Controller
         $hour = Carbon::now();
         $hour = date('H:i:s');
         return $hour;
+    }
+
+
+    public function index2()
+    {
+        return view('product/index2');
     }
 }
