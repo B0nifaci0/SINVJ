@@ -62,7 +62,7 @@
               <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                 <div class="page-content panel-body container-fluid">
                   <!-- Tabla para listar productos-->
-                  <table id="product_table_gr" class="table table-hover dataTable table-striped w-full"
+                  <table id="product_table_gr" class=" display table table-hover dataTable table-striped w-full"
                     data-plugin="dataTable">
                     <thead>
                       {{ csrf_field() }}
@@ -73,7 +73,6 @@
                         <th>Observaciónes</th>
                         <th>Imagen</th>
                         <th>Categoría</th>
-                        <th>Sucursal</th>
                         <th>Linea</th>
                         <th>Status</th>
                         <th>Precio</th>
@@ -90,7 +89,6 @@
                         <th>Observaciónes</th>
                         <th>Imagen</th>
                         <th>Categoría</th>
-                        <th>Sucursal</th>
                         <th>Linea</th>
                         <th>Status</th>
                         <th>Precio</th>
@@ -102,7 +100,7 @@
                     <tbody>
                       @foreach ($products as $i => $product)
                       @if($product->category->type_product == 2 )
-                      <tr id="row{{$product->id}}">
+                      <tr id="row{{$product->id}}" class="row{{$product->id}}">
                         <td>{{ $product->clave }}</td>
                         <td>{{ $product->description }}</td>
                         <td>{{$product->weigth}}</td>
@@ -111,7 +109,6 @@
                           <img width="100px" height="100px" src="{{ $product->image }}" />
                         </td>
                         <td>{{$product->category->name}}</td>
-                        <th>{{$product->branch->name}}</th>
                         <td>{{$product->line->name}}</td>
                         @if($product->status_id == 1)
                         <td>
@@ -142,7 +139,7 @@
                           <!-- END Botón-->
                           <!-- Botón Para eliminar producto por sucursal-->
                           <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                            alt="{{ $product->id }}" role="button" data-toggle="tooltip" data-original-title="Borrar">
+                            alt="{{$product->id}}" role="button" data-toggle="tooltip" data-original-title="Borrar">
                             <i class="icon md-delete" aria-hidden="true"></i>
                           </button>
                           <!-- END Botón-->
@@ -166,7 +163,6 @@
                     <th>Clave</th>
                     <th>Descripción</th>
                     <th>Categoría</th>
-                    <th>Sucursal</th>
                     <th>Observaciónes</th>
                     <th>Imagen</th>
                     <th>Status</th>
@@ -182,7 +178,6 @@
                     <th>Clave</th>
                     <th>Descripción</th>
                     <th>Categoría</th>
-                    <th>Sucursal</th>
                     <th>Observaciónes</th>
                     <th>Imagen</th>
                     <th>Status</th>
@@ -196,15 +191,12 @@
                 <tbody>
                   @foreach ($products as $i => $branchproduct)
                   @if($branchproduct->category->type_product == 1 )
-                  <tr id="row{{$branchproduct->id}}">
+                  <tr id="row{{$product->id}}" class="row{{$product->id}}">
                     <td>{{ $branchproduct->clave }}</td>
                     <td>{{ $branchproduct->description }}</td>
                     <td>
                       {{ ($branchproduct->category) ?
                       $branchproduct->category->name : '' }}
-                    </td>
-                    <td>
-                      {{ ($product->branch) ? $product->branch->name : '' }}
                     </td>
                     <td>{{ $branchproduct->observations }}</td>
                     <td>
@@ -261,30 +253,30 @@
     </div>
   </div>
 </div>
-@endsection @section('barcode-product')
+@endsection
+@section('barcode-product')
 <script type="text/javascript">
   //inicializa la tabla para resposnive
-  $(document).ready(function () {
-    $("#product_table_gr").DataTable({
-      retrieve: true,
-      //  responsive: true,
-      //paging: false,
-      //searching: false
-    });
-    $("#product_table_pz").DataTable({
-      retrieve: true,
-      //responsive: true,
-      //paging: false,
-      //searching: false
-    });
+    $(document).ready(function(){
+        $('#product_table_gr').DataTable({
+            retrieve: true,
+            //  responsive: true,
+            //paging: false,
+            //searching: false
+        });
+        $('#product_table_pz').DataTable({
+            retrieve: true,
+            //responsive: true,
+            //paging: false,
+            //searching: false
+        });
 
-    $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
-      $($.fn.dataTable.tables(true))
-        .DataTable()
-        .columns.adjust()
-        .responsive.recalc();
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+              .columns.adjust()
+              .responsive.recalc();
+        });    
     });
-  });
 </script>
 @endsection
 
@@ -292,104 +284,111 @@
 @section('delete-productos')
 <script type="text/javascript">
   $(document).ready(function () {
-    setTimeout(() => {
-      console.log("config datatable");
-      $("#product_table_gr").on("click", ".delete", function () {
+  setTimeout(() => {
+    console.log("config datatable")
+    $('#product_table_gr').on('click', '.delete', function(){
         var id = $(this).attr("alt");
         console.log(id);
         Swal.fire({
-          title: "Confirmación",
+          title: 'Confirmación',
           text: "¿Seguro que desea eliminar este registro?",
-          type: "warning",
+          type: 'warning',
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Si, Borralo!",
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Borralo!'
         }).then((result) => {
           if (result.value) {
             $.ajaxSetup({
               headers: {
-                "X-CSRF-TOKEN": $('meta[name="_token"]').attr("content"),
-              },
-            });
-            $.ajax({
-              url: '/productos/' + id,
-              method: "DELETE",
-success: function (response) {
-              if(response.success){
-              $('#product_table_gr').DataTable()
-              .rows('.row' + id)
-              .remove()
-              .draw();
-              Swal.fire(
-              'Eliminado',
-              'El registro ha sido eliminado.',
-              'success'
-              )
-              }else{
-              Swal.fire(
-              'No Eliminado',
-              'El producto no ha sido eliminado por que esta activo en un traspaso',
-              'error'
-              )
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
               }
+            });
+            $.ajax({
+              url: '/productos/' + id,
+              method: 'DELETE',
+               success: function (response) {
+                if(response.success){
+                $('#product_table_gr').DataTable()
+                .rows('.row' + id)
+                .remove()
+                .draw();
+                Swal.fire(
+                  'Eliminado',
+                  'El registro ha sido eliminado.',
+                  'success'
+                )
+                }else{
+                Swal.fire(
+                  'No Eliminado',
+                  'El producto no ha sido eliminado por que esta activo en un traspaso',
+                  'error'
+                )
+                }
               },
               error: function () {
                 Swal.fire(
-                  "Eliminado",
-                  "El registro no ha sido eliminadoooo." + id,
-                  "error"
-                );
-              },
-            });
+                  'Eliminado',
+                  'El registro no ha sido eliminado.' + id,
+                  'error'
+                )
+              }
+            })
           }
-        });
+        })
       });
-      $("#product_table_pz").on("click", ".delete", function () {
+      $('#product_table_pz').on('click', '.delete', function(){
         var id = $(this).attr("alt");
         console.log(id);
         Swal.fire({
-          title: "Confirmación",
+          title: 'Confirmación',
           text: "¿Seguro que desea eliminar este registro?",
-          type: "warning",
+          type: 'warning',
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Si, Borralo!",
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Borralo!'
         }).then((result) => {
           if (result.value) {
             $.ajaxSetup({
               headers: {
-                "X-CSRF-TOKEN": $('meta[name="_token"]').attr("content"),
-              },
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
             });
             $.ajax({
               url: '/productos/' + id,
-              method: "DELETE",
-              success: function () {
-                $("#product_table_pz")
-                  .DataTable()
-                  .rows(".row" + id)
-                  .remove()
-                  .draw();
+              method: 'DELETE',
+              success: function (response) {
+                if(response.success){
+                $('#product_table_pz').DataTable()
+                .rows('.row' + id)
+                .remove()
+                .draw();
                 Swal.fire(
-                  "Eliminado",
-                  "El registro ha sido eliminado.",
-                  "success"
-                );
+                  'Eliminado',
+                  'El registro ha sido eliminado.',
+                  'success'
+                )
+                }else{
+                Swal.fire(
+                  'No Eliminado',
+                  'El producto no ha sido eliminado por que esta activo en un traspaso',
+                  'error'
+                )
+                }
               },
               error: function () {
                 Swal.fire(
-                  "Eliminado",
-                  "El registro no ha sido eliminado." + id,
-                  "error"
-                );
-              },
-            });
+                  'Eliminado',
+                  'El registro no ha sido eliminado.' + id,
+                  'error'
+                )
+              }
+            })
           }
-        });
+        })
       });
-    }, 500);
+  },500)
   });
 </script>
 @endsection
