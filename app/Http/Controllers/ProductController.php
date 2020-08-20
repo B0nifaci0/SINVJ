@@ -532,7 +532,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect('/productos')->with('mesage-update', 'El producto se ha actualizado  exitosamente!');
+        return redirect('/sucursales/' . $product->branch_id . '/producto')->with('mesage', 'El producto se ha actualizado  exitosamente!');
     }
 
 
