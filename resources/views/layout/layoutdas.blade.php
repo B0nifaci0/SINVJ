@@ -128,7 +128,7 @@
 
             }
 
-            @media (min-width: 40em) {
+            @media (min-width: 30em) {
                 .midatatable .peque {
                     display: none;
                 }
