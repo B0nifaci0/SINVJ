@@ -103,6 +103,39 @@
       });
     </script> -->
 
+        <style>
+            /* .midatatable tr {
+                cursor: pointer;
+            } */
+
+            .hiddenRow {
+                padding: 0 4px !important;
+                font-size: 14px;
+            }
+
+
+            @media (max-width: 40em) {
+                .midatatable .desktop {
+                    display: none;
+                }
+
+            }
+
+            @media (min-width: 40em) {
+                .midatatable .movil {
+                    display: none;
+                }
+
+            }
+
+            @media (min-width: 40em) {
+                .midatatable .peque {
+                    display: none;
+                }
+
+            }
+        </style>
+
     </head>
 
     <body class="animsition dashboard">

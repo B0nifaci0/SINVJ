@@ -41,6 +41,24 @@ class ProductController extends Controller
         });
     }
 
+    public function allProducts()
+    {
+        $products = Product::orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
+            ->paginate(10);
+
+        return view('product/indexAll', compact('products'));
+    }
+
+    public function search(Request $request)
+    {
+        $products = Product::where('description', 'like', "%" . $request->text . "%")
+            ->orWhere('clave', 'like', "%" . $request->text . "%")
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')->get();
+
+        return view('product/table', compact(('products')));
+    }
     // public function productsAjax()
     // {
     //     return view('product/indexAjax');
