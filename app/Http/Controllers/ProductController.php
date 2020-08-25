@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
 use Illuminate\Support\Facades\Storage;
 
+use Yajra\Datatables\Datatables;
+
 class ProductController extends Controller
 {
 
@@ -38,9 +40,82 @@ class ProductController extends Controller
             return $next($request);
         });
     }
+
+    public function allProducts()
+    {
+        $products = Product::orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
+            ->paginate(10);
+
+        return view('product/indexAll', compact('products'));
+    }
+
+    public function search(Request $request)
+    {
+        $products = Product::where('description', 'like', "%" . $request->text . "%")
+            ->orWhere('clave', 'like', "%" . $request->text . "%")
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')->get();
+
+        return view('product/table', compact(('products')));
+    }
+    // public function productsAjax()
+    // {
+    //     return view('product/indexAjax');
+    // }
+
+    // /**
+    //  * Process datatables ajax request.
+    //  *
+    //  * @return \Illuminate\Http\JsonResponse
+    //  */
+    // public function getProducts()
+    // {
+
+    //     $user = Auth::user();
+    //     if ($user->type_user == User::CO) {
+    //         $products = Product::where([
+    //             'branch_id' => $user->branch_id,
+    //             'status_id' => 2
+    //         ])
+    //             ->orderBy('clave', 'asc')->get();
+    //     } else {
+
+    //         $products = $this->user->shop->products()
+    //             ->whereNotNull('line_id')
+    //             ->orderBy('clave')
+    //             ->get();
+    //     }
+
+    //     $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+    //     foreach ($products as $product) {
+    //         if ($product->image) {
+    //             $path = env('S3_ENVIRONMENT') . '/products/' . $product->clave;
+    //         } else {
+    //             $path = 'products/default';
+    //         }
+
+    //         $product->image = $this->getS3URL($path);
+    //     }
+
+    //     return Datatables::of($products)
+    //         ->editColumn('category_id', function (Product $products) {
+    //             return $products->category->name;
+    //         })
+    //         ->editColumn('line_id', function (Product $products) {
+    //             return $products->line->name;
+    //         })
+    //         ->editColumn('branch_id', function (Product $products) {
+    //             return $products->branch->name;
+    //         })
+    //         ->make();
+    // }
+
     /** FUNCIONES PARA CRUD DE PRODUCTO */
     public function index()
     {
+        // return view('product/index');
+
         $user = Auth::user();
         $shop_id = $user->shop->id;
         if ($user->type_user == User::CO) {
@@ -60,7 +135,7 @@ class ProductController extends Controller
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($products as $product) {
             if ($product->image) {
-                $path = 'products/' . $product->clave;
+                $path = env('S3_ENVIRONMENT') . '/products/' . $product->clave;
             } else {
                 $path = 'products/default';
             }

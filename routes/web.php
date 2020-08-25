@@ -11,6 +11,16 @@
 |
 */
 
+// Route::get('/home', 'ProductController@productsAjax')->name('home');
+
+// Route::get('products', 'ProductController@getProducts')->name('get.products');
+
+Route::get('/todos', 'ProductController@allProducts');
+
+Route::get('/buscador', 'ProductController@search');
+
+
+
 Route::get('/', function () {
     return view('auth/login');
 });

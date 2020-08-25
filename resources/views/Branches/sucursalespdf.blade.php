@@ -20,7 +20,7 @@
       @foreach ($products as $product)
       <tr>
         <td>{{ $product->clave}}</td>
-        <td>{{ $product->line->name  }}</td>
+        <td>{{ ($product->line) ? $product->line->name : '' }}</td>
         <td>{{ $product->weigth }}</td>
         <td>{{ $product->description }}</td>
         <td>{{ $product->category->name  }}</td>
