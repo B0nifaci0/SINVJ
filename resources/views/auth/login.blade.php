@@ -56,11 +56,11 @@
                 </div>
                 <!-- END CheckBox-->
                 <!-- INICIA CAPTCHA -->
-                <!--
+                
                 <div class="g-recaptcha" data-sitekey="6LceneAUAAAAAC1It9wnjrO7H8wHYRujfzM2zQme"
                     data-callback="verifyCaptcha"></div>
                 <div id="g-recaptcha-error"></div>
-                -->
+                
                 <!--TERMINA CAPTCHA-->
 
                 <!-- Botón para ingresar Iniciar Sesion-->
