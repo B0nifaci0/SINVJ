@@ -41,6 +41,16 @@ Route::resource('estados.municipios', 'StateMunicipalityController');
 Route::group(['middleware' => ['auth']], function () {
     Route::get('test', 'BranchController@test');
 
+    Route::group(
+        [
+            'namespace' => 'Branch'
+        ],
+        function () {
+            Route::get('sucursal/{id}/productos-gramo', 'ProductBranchController@productsWithLine');
+            Route::get('sucursal/{id}/productos-pieza', 'ProductBranchController@productsWithoutLine');
+        }
+    );
+
     //Tiendas
     //Route::resource('tiendas', 'ShopController');
 
@@ -76,14 +86,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('traspasos/respuesta', 'TranferProductsController@answerTransferRequest');
     Route::post('traspasos/pagar', 'TranferProductsController@payTransfer');
     Route::post('traspasos/cancelar', 'TranferProductsController@giveBack');
-    //Excel
-    //Route::resource('excel','ExcelController');
-
-    //Reporte Excel Productos Sucursal
-    Route::get('productossucursalreporte/{id}', 'BranchProductsExcelController@index')->name('productossucursalreporte');
-
-    //Usuarios Excel
-    //Route::resource('usuariosexcel','UserExcelController');
 
     //Reporte
     Route::get('homepdf', 'HomeController@exportPdf');
@@ -102,7 +104,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('productos-sucursal/{id}', 'BranchProductsController@exportPdf')->name('sucursalpdf');
 
         Route::get('sucursal', 'BranchController@indexCo');
-        Route::get('sucursalespdf{id}', 'BranchProducts@exportPdf')->name('sucursalespdf');
+        // Route::get('sucursalespdf{id}', 'BranchProductsController@exportPdf')->name('sucursalespdf');
     });
 
     //Sucursal Producto PDF

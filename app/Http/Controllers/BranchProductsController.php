@@ -109,27 +109,6 @@ class BranchProductsController extends Controller
         // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
 
     }
-    public function exportPdf($id)
-    {
-        $shop = Auth::user()->shop;
-        $date = Carbon::now();
-        $date = $date->format('d-m-Y');
-        $hour = Carbon::now();
-        $hour = date('H:i:s');
-
-        if ($shop->image) {
-            $shop->image = $this->getS3URL($shop->image);
-        }
-
-        $branch = Branch::findOrFail($id);
-        $products = $branch->products()
-            ->orderByRaw('CHAR_LENGTH(clave)')
-            ->orderBy('clave')
-            ->get();
-        //return $products;
-        $pdf  = PDF::loadView('Branches.sucursalespdf', compact('branch', 'products', 'date', 'hour', 'shop'));
-        return $pdf->stream('productossucursal.pdf');
-    }
 
     /**fucntion for inventory index */
     public function inventory($id)

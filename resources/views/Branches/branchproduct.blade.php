@@ -23,16 +23,22 @@
               @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
               <!-- Botón para Generar PDF de productos-->
               @if(Auth::user()->type_user == 1)
-              <div class="col-6">
-                <button onclick="window.location.href='/productos-sucursal/{{$branch->id}}'" type="button" id="pdf01"
-                  name="pdf01"
+              <div class="col-4">
+                <button onclick="window.location.href='/sucursal/{{$branch->id}}/productos-gramo'" type="button"
                   class="btn btn-sm small btn-floating btn-danger waves-effect waves-light waves-round float-right"
-                  data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                  data-toggle="tooltip" data-original-title="Reporte productos gramo">
+                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="col-4">
+                <button onclick="window.location.href='/sucursal/{{$branch->id}}/productos-pieza'" type="button"
+                  class="btn btn-sm small btn-floating btn-danger waves-effect waves-light waves-round float-right"
+                  data-toggle="tooltip" data-original-title="Reporte productos pieza">
                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                 </button>
               </div>
               @endif
-              <div class="col-6">
+              <div class="col-4">
                 <button onclick="window.location.href='/productos/create'" type="button"
                   class="btn btn-sm small btn-floating btn-info waves-effect waves-light waves-round float-left"
                   data-toggle="tooltip" data-original-title="Agregar Nuevo Producto">
