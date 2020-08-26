@@ -276,7 +276,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     /**Reportes actualizados*/
     Route::get('reportes-productos', 'ProductController@indexReports');
-    Route::get('productospdf', 'ProductController@exportPdf');
+    // Route::get('productospdf', 'ProductController@exportPdf');
     Route::get('estatus', 'ProductController@statusReport');
     Route::get('general-estatus', 'ProductController@generalStatusReport');
     Route::get('reportLinea', 'ProductController@reportLinea');
