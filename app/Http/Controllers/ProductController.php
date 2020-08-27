@@ -52,10 +52,10 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $products = Product::where('description', 'like', "%" . $request->text . "%")
-            ->orWhere('clave', 'like', "%" . $request->text . "%")
+        $products = Product::where('description', 'like', "%$request->text%")
+            ->orWhere('clave', 'like', "%$request->text%")
             ->orderByRaw('CHAR_LENGTH(clave)')
-            ->orderBy('clave')->get();
+            ->orderBy('clave')->paginate(10)->appends($request->all());
 
         return view('product/table', compact(('products')));
     }
@@ -888,8 +888,8 @@ class ProductController extends Controller
         $products = $this->user->shop->products()
             ->whereBranch_id($branch->id)
             ->whereLine_id($line->id)
-            // ->orderByRaw('CHAR_LENGTH(clave)')
-            // ->orderBy('clave')
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
             ->get();
 
         if ($fecini == $fecter) {

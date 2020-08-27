@@ -68,7 +68,7 @@
         </div>
         <div id="mostrar"></div>
         <div id="prueba">
-          @include('product.table') {{ $products->onEachSide(1)->links() }}
+          @include('product.table')
         </div>
       </div>
     </div>
@@ -80,9 +80,11 @@
 @section('delete-productos')
 <script type="text/javascript">
   $(document).ready(function () {
+
     actual = '#prueba'
     document.getElementById('text').addEventListener('keyup',()=>{
     if((document.getElementById('text').value.length)>0){
+      console.log(text.value)
       fetch(`/buscador/?text=${document.getElementById("text").value}`,{
         method: 'get'
       })
@@ -91,10 +93,16 @@
         document.getElementById('mostrar').innerHTML = html
         document.getElementById('prueba').hidden = true;
       })
+
+      $("#mostrar li a.page-link").each((index, element) =>{
+        console.log($(this).data('href'))
+        console.log("hola"+text.value)
+        })
+
     }else{
       document.getElementById('mostrar').innerHTML = ""
       document.getElementById('prueba').hidden = false;
-    }
+    }   
   })
 
     $(document).on('click','.delete', function(){
