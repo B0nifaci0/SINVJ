@@ -139,7 +139,7 @@ Panel Principal
                       </div>
                       
                       <span class="float-right grey-700 font-size-30">
-                        @if($total) {{$total}} gr @else 0 gr
+                        @if($total) {{number_format($total,2)}} gr @else 0 gr
                         @endif
                       </span>
                     </div>
@@ -201,8 +201,8 @@ Panel Principal
                       <div class="grey-800 float-left py-10">
                         <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Existentes
                       </div>
-                      <span class="float-right grey-700 font-size-30">@if($gramos_existentes) {{$gramos_existentes}}
-                        gr
+                      <span class="float-right grey-700 font-size-30">@if($gramos_existentes) 
+                        {{number_format($gramos_existentes,2)}} gr
                         @else 0 gr @endif</span>
                     </div>
                     <!--  <div class="ct-chart h-50"></div>   -->
@@ -262,8 +262,8 @@ Panel Principal
                       <div class="grey-800 float-left py-10">
                         <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Traspasados
                       </div>
-                      <span class="float-right grey-700 font-size-30">@if($gramos_traspasado) {{$gramos_traspasado}}
-                        gr
+                      <span class="float-right grey-700 font-size-30">@if($gramos_traspasado) 
+                        {{number_format($gramos_traspasado,2)}} gr
                         @else 0 gr @endif</span>
                     </div>
                     <!--  <div class="ct-chart h-50"></div>   -->
@@ -322,7 +322,8 @@ Panel Principal
                       <div class="grey-800 float-left py-10">
                         <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Dañados
                       </div>
-                      <span class="float-right grey-700 font-size-30">@if($gramos_dañados) {{$gramos_dañados}} gr
+                      <span class="float-right grey-700 font-size-30">@if($gramos_dañados) 
+                        {{number_format($gramos_dañados,2)}} gr
                         @else
                         0 gr @endif</span>
                     </div>
@@ -381,7 +382,8 @@ Panel Principal
                       <div class="grey-800 float-left py-10">
                         <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Gramos Devueltos
                       </div>
-                      <span class="float-right grey-700 font-size-30">@if($gramos_devueltos) {{$gramos_devueltos}} gr
+                      <span class="float-right grey-700 font-size-30">@if($gramos_devueltos) 
+                      {{number_format($gramos_devueltos,2)}} gr
                         @else
                         0 gr @endif</span>
                     </div>
@@ -580,7 +582,7 @@ Panel Principal
                       <div class="grey-800 float-left py-10">
                         <i class="icon md-map grey-600 font-size-24 vertical-align-bottom mr-5"></i>Piezas Traspasadas
                       </div>
-                      <span class="float-right grey-700 font-size-30">@if($piezas_t) {{$piezas_t}} gr @else 0 pzs
+                      <span class="float-right grey-700 font-size-30">@if($piezas_t) {{$piezas_t}} pzs @else 0 pzs
                         @endif</span>
                     </div>
                     <!--  <div class="ct-chart h-50"></div>   -->

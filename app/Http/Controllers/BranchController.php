@@ -224,12 +224,9 @@ class BranchController extends Controller
 
 
       //SUMA TOTAL DE PRECIOS Y GRAMOS POR LINEAS
-      $total = Shop::join('products','products.shop_id','shops.id')
-      ->join('categories','categories.id','products.category_id')
+      $total = Product::join('categories','categories.id','products.category_id')
       ->join('lines','lines.id','products.line_id')
       ->where('products.branch_id',$ids)
-      //->where('lines.shop_id', Auth::user()->shop->id)
-      ->where('lines.shop_id', NULL)
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
       ->whereIn('products.status_id', [1, 2, 3, 4])
@@ -241,12 +238,9 @@ class BranchController extends Controller
       ->get();
 
       foreach($total as $t){
-        $t->total_exis = Shop::join('products','products.shop_id','shops.id')
-        ->join('categories','categories.id','products.category_id')
+        $t->total_exis = Product::join('categories','categories.id','products.category_id')
         ->join('lines','lines.id','products.line_id')
         ->where('products.branch_id',$ids)
-        //->where('lines.shop_id', Auth::user()->shop->id)
-        ->where('lines.shop_id', NULL)
         ->where('products.shop_id', Auth::user()->shop->id)
         ->where('categories.type_product',2)
         ->where('products.deleted_at',null)
@@ -256,12 +250,9 @@ class BranchController extends Controller
         ->get()
         ->sum('weigth');
 
-        $t->total_tras = Shop::join('products','products.shop_id','shops.id')
-        ->join('categories','categories.id','products.category_id')
+        $t->total_tras = Product::join('categories','categories.id','products.category_id')
         ->join('lines','lines.id','products.line_id')
         ->where('products.branch_id',$ids)
-        //->where('lines.shop_id', Auth::user()->shop->id)
-        ->where('lines.shop_id', NULL)
         ->where('products.shop_id', Auth::user()->shop->id)
         ->where('categories.type_product',2)
         ->where('products.deleted_at',null)
@@ -271,12 +262,9 @@ class BranchController extends Controller
         ->get()
         ->sum('weigth');
 
-        $t->total_damage = Shop::join('products','products.shop_id','shops.id')
-        ->join('categories','categories.id','products.category_id')
+        $t->total_damage = Product::join('categories','categories.id','products.category_id')
         ->join('lines','lines.id','products.line_id')
         ->where('products.branch_id',$ids)
-        //->where('lines.shop_id', Auth::user()->shop->id)
-        ->where('lines.shop_id', NULL)
         ->where('products.shop_id', Auth::user()->shop->id)
         ->where('categories.type_product',2)
         ->where('products.deleted_at',null)
@@ -286,18 +274,14 @@ class BranchController extends Controller
         ->get()
         ->sum('weigth');
         
-        $t->total_giveback = Shop::join('products','products.shop_id','shops.id')
-        ->join('categories','categories.id','products.category_id')
+        $t->total_giveback = Product::join('categories','categories.id','products.category_id')
         ->join('lines','lines.id','products.line_id')
-        //->where('categories.shop_id', Auth::user()->shop->id)
         ->withTrashed()
-        ->where('lines.shop_id', NULL)
         ->where('products.shop_id', Auth::user()->shop->id)
         ->where('products.branch_id',$ids)
         ->where('categories.type_product',2)
         ->where('products.discar_cause', 3)
         ->where('products.line_id', $t->ids)
-        //->where('products.status_id', 1)
         ->select('products.id', 'products.price', 'products.line_id', 'products.status_id')
         ->get()
         ->sum('weigth');
@@ -415,7 +399,7 @@ class BranchController extends Controller
         ->where('products.branch_id',$ids)
         ->where('categories.type_product',1)
         ->where('products.deleted_at',null)
-        ->where('products.status_id', 2)
+        ->where('products.status_id', 2) 
         ->where('products.category_id', $c->ids)
         ->select('products.id', 'products.price', 'products.line_id', 'products.status_id')
         ->get()
