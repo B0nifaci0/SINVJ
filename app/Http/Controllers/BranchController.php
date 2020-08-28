@@ -229,8 +229,7 @@ class BranchController extends Controller
       ->where('products.branch_id',$ids)
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',2)
-      ->whereIn('products.status_id', [1, 2, 3, 4])
-      ->withTrashed()
+      ->whereIn('products.status_id', [2, 3, 4])
       ->select('lines.id as ids', 'lines.name as name_line', 'lines.sale_price as precio_linea', 'lines.discount_percentage as descuento', DB::raw('SUM(products.weigth) as total_w, SUM(products.weigth * lines.sale_price) as total_line_p, SUM(products.discount * lines.sale_price) as total_tope, SUM(products.weigth * lines.sale_price - (products.weigth * lines.sale_price * (lines.discount_percentage/100))) as total_discount'))
       ->distinct('lines.name')
       ->orderBy('name_line','ASC')
@@ -373,16 +372,12 @@ class BranchController extends Controller
       //return $total_devueltos;
 
      //SUMA TOTAL DE CATEGORIAS POR PIEZAS
-      $category = Shop::join('products','products.shop_id','shops.id')
-      ->join('categories','categories.id','products.category_id')
-      //->where('categories.shop_id', Auth::user()->shop->id)
-      ->where('categories.shop_id', NULL)
+      $category = Product::join('categories','categories.id','products.category_id')
       ->where('products.shop_id', Auth::user()->shop->id)
       ->where('categories.type_product',1)
       ->where('products.branch_id',$ids)
-      ->withTrashed()
       ->select('categories.id as ids', 'categories.name as cat_name', DB::raw('SUM(products.price) as total, count(products.id) as num_pz'))
-      ->whereIn('products.status_id', [1, 2, 3, 4])
+      ->whereIn('products.status_id', [2, 3, 4])
       ->distinct('categories.name')
       ->groupBy('categories.id','categories.name')
       ->orderBy('cat_name', 'ASC')
