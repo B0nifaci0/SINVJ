@@ -12,7 +12,7 @@ LISTA PRODUCTO
 @endsection
 @section('content')
 <div class="panel-body">
-    <div class="page-content">
+    <div class="">
         <!-- Mesage-Muestra mensaje De que el producto se a agregado exitosamente-->
         @if (session('mesage'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -50,21 +50,19 @@ LISTA PRODUCTO
                     <div class="panel-actions float-right">
                         <div class="container-fluid row float-right">
                             @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
-                            <!-- Botón para Generar PDF de productos-->
-                            @if(Auth::user()->type_user == 1)
-                            <div class="col-6">
-                                <button onclick="window.location.href='productospdf'" type="button" id='pdf01'
-                                    name='pdf01' class=" btn btn-sm small btn-floating
+                            <!-- Botón para Generar PDF de productos--> {{-- @if(Auth::user()->type_user == 1)
+              <div class="col-6">
+                <button onclick="window.location.href='productospdf'" type="button" id='pdf01' name='pdf01' class=" btn btn-sm small btn-floating
                  btn-danger waves-effect waves-light waves-round float-right" data-toggle="tooltip"
-                                    data-original-title="Generar reporte PDF">
-                                    <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            @endif
+                  data-original-title="Generar reporte PDF">
+                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+                </button>
+              </div>
+              @endif --}}
                             <div class="col-6">
                                 <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating
                  btn-info waves-effect waves-light waves-round float-left" data-toggle="tooltip"
-                                    data-original-title="Agregar">
+                                    data-original-title="Agregar Nuevo Producto">
                                     <i class="icon md-plus" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -100,7 +98,7 @@ LISTA PRODUCTO
                                                 <th data-hide="phone, tablet">Observaciones</th>
                                                 <th data-hide="phone, tablet">Imagen</th>
                                                 <th data-hide="phone, tablet">Categoría</th>
-                                                <th data-hide="phone, tablet">Linea</th>
+                                                <th data-hide="phone, tablet">Línea</th>
                                                 <th data-hide="phone, tablet">Sucursal</th>
                                                 <th data-hide="phone, tablet">Status</th>
                                                 @if(Auth::user()->type_user == 1 )
@@ -121,7 +119,7 @@ LISTA PRODUCTO
                                                 <th>Observaciónes</th>
                                                 <th>Imagen</th>
                                                 <th>Categoría</th>
-                                                <th></th>
+                                                <th>Línea</th>
                                                 <th>Sucursal</th>
                                                 <th>Status</th>
                                                 @if(Auth::user()->type_user == 1 )
@@ -175,9 +173,12 @@ LISTA PRODUCTO
                                                 </td>
                                                 @endif
                                                 @if($product->status_id == 5)
-                                                <td><span class="text-center badge badge-danger">{{$product->status->name}}</span></td>
+                                                <td><span
+                                                        class="text-center badge badge-danger">{{$product->status->name}}</span>
+                                                </td>
                                                 @endif
-                                                
+
+
                                                 @if(Auth::user()->type_user == 1)
                                                 <td>${{$product->price_purchase }}</td>
                                                 @endif
@@ -294,9 +295,10 @@ LISTA PRODUCTO
                                             </td>
                                             @endif
                                             @if($product->status_id == 5)
-                                            <td><span class="text-center badge badge-danger">{{$product->status->name}}</span></td>
+                                            <td><span
+                                                    class="text-center badge badge-danger">{{$product->status->name}}</span>
+                                            </td>
                                             @endif
-
                                             @if(Auth::user()->type_user == 1)
                                             <td>${{$product->price_purchase}}</td>
                                             @endif
@@ -343,12 +345,14 @@ LISTA PRODUCTO
     $(document).ready(function(){
         $('#product_table_gr').DataTable({
             retrieve: true,
+            order: [],
             //  responsive: true,
             //paging: false,
             //searching: false
         });
         $('#product_table_pz').DataTable({
             retrieve: true,
+            order: [],
             //responsive: true,
             //paging: false,
             //searching: false
@@ -358,7 +362,7 @@ LISTA PRODUCTO
             $($.fn.dataTable.tables(true)).DataTable()
               .columns.adjust()
               .responsive.recalc();
-        });
+        });    
     });
 </script>
 @endsection
@@ -407,7 +411,7 @@ LISTA PRODUCTO
                   'El producto no ha sido eliminado por que esta activo en un traspaso',
                   'error'
                 )
-            }
+                }
               },
               error: function () {
                 Swal.fire(

@@ -2,8 +2,12 @@
 
 namespace App;
 
+use App\Line;
+use App\User;
 use App\Branch;
+use App\Status;
 use App\Product;
+use App\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -62,15 +66,18 @@ class Shop extends Model
     }
     public function expenses()
     {
+
         return $this->hasMany(Expense::class);
     }
     public function groups()
     {
+
         return $this->hasMany(ShopGroup::class);
     }
 
     public function inventories()
     {
+
         return $this->hasMany(InventoryReport::class);
     }
 }

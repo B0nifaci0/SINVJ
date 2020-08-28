@@ -25,17 +25,18 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:25',
-            'email' => 'required|email',
+            'email' => ['required', 'email', 'unique:users'],
             'password' => 'required|string|min:6',
             'branch_id' => 'required|numeric',
             'type_user' => 'required|numeric',
             'salary' => 'required|numeric',
         ];
     }
-    public function messages(){
-        return[
+    public function messages()
+    {
+        return [
             'name.required' => 'El nombre es requerido ',
-            'email.required' => 'El correo es requerido ', 
+            'email.required' => 'El correo es requerido ',
             'password.required' => 'La contraseña es requerida ',
             'branch_id.required' => 'La sucursal es requerida ',
             'type_user.required' => 'El tipo de usuario es requerido ',

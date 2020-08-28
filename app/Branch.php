@@ -2,8 +2,11 @@
 
 namespace App;
 
+use App\Sale;
 use App\Shop;
+use App\User;
 use App\Product;
+use App\TrasferUser;
 use App\TranferProducts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,16 +24,16 @@ class Branch extends Model
         'name_legal_re',
         'email',
         'other',
-        'rfc',        
+        'rfc',
     ];
 
     protected $hidden = [
-		'password',
-	];
+        'password',
+    ];
 
     public function shop()
     {
-    	return $this->belongsTo(Shop::class);
+        return $this->belongsTo(Shop::class);
     }
 
     public function trans()
@@ -43,10 +46,18 @@ class Branch extends Model
         return $this->hasMany(TrasferUser::class);
     }
 
-    public function users(){
+    public function users()
+    {
         return $this->hasMany(User::class);
-      }
-     
+    }
 
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

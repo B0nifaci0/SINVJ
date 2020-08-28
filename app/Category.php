@@ -2,10 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Shop;
+use App\Product;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Category extends Authenticatable
 {
@@ -34,9 +35,14 @@ class Category extends Authenticatable
         'business_rule_id'
     ];
 
-    public function product()
+    public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
     }
 
     public function shop_group()

@@ -14,8 +14,16 @@ Panel Principal
 
 <div class="page">
     <div class="page-content container-fluid">
+        @if (session('message'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ session('message') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
         <div class="examle-wrap">
-            <h2 class="example-title">Panel De Reportes de Traspasos</h2>
+            <h4 class="example-title">Panel De Reportes de Traspasos</h4>
             <div class="panel-group" id="exampleAccordionDefault" aria-multiselectable="true" role="tablist">
                 @if(Auth::user()->type_user == 1 )
                 <div class="panel">
@@ -50,18 +58,13 @@ Panel Principal
                                                 <input type="hidden" name="category_id" class="form-control round"
                                                     data-plugin="datepicker" value="2" required>
                                                 <div class="panel panel-bordered">
-                                                    <div class="row">
-                                                        <div class="col-sm">
-                                                            <h4>Reporte Traspasos Por Gramos </h4>
-                                                        </div>
-                                                    </div>
                                                     <div class="panel-body">
                                                         <div class="row">
                                                             <div class="col-12 col-sm-6">
                                                                 <label>Seleccione Sucursal</label>
                                                                 <select id="sucursales_1" name="branch_id" alt="1"
                                                                     class="form-control round sucursales">
-                                                                    @foreach($tienda as $branch)
+                                                                    @foreach($branches as $branch)
                                                                     <option value="{{$branch->id}}" required>
                                                                         {{$branch->name}}</option>
                                                                     @endforeach
@@ -120,25 +123,20 @@ Panel Principal
                                                             reporte</button>
                                                     </div>
                                                 </div>
+                                            </form>
                                         </div>
-                                        </form>
                                     </div>
                                     <!-- Inicia TAB2 STATUS PRODUCT-->
                                     <div class="tab-pane" id="producstatusTwo" role="tabpanel">
                                         <form action="reportTransfer">
                                             <div class="panel panel-bordered">
-                                                <div class="row">
-                                                    <div class="col-md col-sm-12">
-                                                        <h4>Reporte Traspasos Por Pieza </h4>
-                                                    </div>
-                                                </div>
                                                 <div class="panel-body">
                                                     <div class="row">
                                                         <div class="col-12 col-sm-6">
                                                             <label>Seleccione Sucursal</label>
                                                             <select id="sucursales_1" name="branch_id" alt="1"
                                                                 class="form-control round sucursales">
-                                                                @foreach($tienda as $branch)
+                                                                @foreach($branches as $branch)
                                                                 <option value="{{$branch->id}}" required>
                                                                     {{$branch->name}}</option>
                                                                 @endforeach
@@ -201,11 +199,6 @@ Panel Principal
                                     </div>
                                     <!-- Termina tab 2 de product status-->
                                     <div class="tab-pane" id="exampleTabsThree" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <h4>Reporte General Traspasos Por Gramos </h4>
-                                            </div>
-                                        </div>
                                         <form action="reportTransferG">
                                             <div class="panel panel-bordered">
                                                 <div class="panel-body">
@@ -270,11 +263,6 @@ Panel Principal
                                         </form>
                                     </div>
                                     <div class="tab-pane" id="exampleTabsFour" role="tabpanel">
-                                        <div class="row">
-                                            <div class=" col-sm-12">
-                                                <h4>Reporte General Traspasos Por Pieza </h4>
-                                            </div>
-                                        </div>
                                         <form action="reportTransferG">
                                             <div class="panel panel-bordered">
                                                 <div class="panel-body">
