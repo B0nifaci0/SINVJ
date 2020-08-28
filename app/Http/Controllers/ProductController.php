@@ -297,6 +297,7 @@ class ProductController extends Controller
     public function create()
     {
         $user = Auth::user();
+        $shop = Auth::user()->shop->id;
         $branches = $user->shop->branches;
         if ($user->shop->shop_group_id) {
             $group = $user->shop->shop_group_id;
@@ -331,7 +332,7 @@ class ProductController extends Controller
         $categories = $categories_pz->merge($categories_gr);
         //return $categories;
         //return $rules;
-        return view('product/add', compact('branches', 'categories', 'lines', 'rules'));
+        return view('product/add', compact('branches', 'categories', 'lines', 'rules', 'shop'));
     }
 
     /**

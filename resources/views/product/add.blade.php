@@ -110,7 +110,9 @@ ALTA PRODUCTO
                             name="max_discount" value="{{old('max_discount')}}">
                     </div>
                     <!-- END Input-->
-
+                    <div>
+                        <input type="hidden" name="shop_id" value="{{$shop}}">
+                    </div>
                     <!-- Select para Seleccionar sucursal-->
                     <div class="col-md-3">
                         <label>Seleccione Sucursal</label>
