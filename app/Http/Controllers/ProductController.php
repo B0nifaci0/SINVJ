@@ -781,6 +781,8 @@ class ProductController extends Controller
         $products = $this->user->shop->products()
             ->whereCategory_id($category->id)
             ->whereBranch_id($branch->id)
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
             ->whereStatus_id($status->id);
 
         if ($line) {
@@ -845,14 +847,14 @@ class ProductController extends Controller
 
         $products = $this->user->shop->products()
             ->whereBranch_id($branch->id)
-            ->whereLine_id($line->id);
+            ->whereLine_id($line->id)
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave');
 
         if ($fecini == $fecter) {
             $products = $products->whereDate('updated_at', $fecini)->get();
         } else {
-            $fecini = $fecini->subDay();
-            $fecter = $fecter->addDay();
-            $products = $products->whereBetween('updated_at', [$fecini, $fecter])->get();
+            $products = $products->whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()])->get();
         }
 
         if ($products->isEmpty()) {
@@ -920,13 +922,14 @@ class ProductController extends Controller
         $shop = $this->user->shop;
 
         $lines = $shop->products()
-            ->join('lines', 'lines.id', 'products.line_id');
+            ->join('lines', 'lines.id', 'products.line_id')
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave');
+
         if ($fecini == $fecter) {
             $lines = $lines->whereDate('products.updated_at', $fecini);
         } else {
-            $fecini = $fecini->subDay();
-            $fecter = $fecter->addDay();
-            $lines = $lines->whereBetween('products.updated_at', [$fecini, $fecter]);
+            $lines = $lines->whereBetween('products.updated_at', [$fecini->subDay(), $fecter->addDay()]);
         }
         $products = $lines->get();
         $lines = $lines->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as weigth, SUM(products.price) as price'))
@@ -958,6 +961,8 @@ class ProductController extends Controller
 
         $categories = $shop->products()
             ->join('categories', 'categories.id', 'products.category_id')
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
             // ->whereStatus_id(2);
             ->where('line_id', NULL);
         if ($fecini == $fecter) {
@@ -996,13 +1001,17 @@ class ProductController extends Controller
         $shop = $this->user->shop;
         $category_type = $request->cat;
 
-        $products = $this->user->shop()
-            ->with('products.category')
-            ->get()
-            ->pluck('products')
-            ->collapse()
+        $products = $this->user->shop->products()
+            ->has('line')
             ->whereBetween('updated_at', [$fecini, $fecter])
-            ->where('category.type_product', $category_type);
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave');
+
+        if ($fecini == $fecter) {
+            $products = $products->whereDate('updated_at', $fecini)->get();
+        } else {
+            $products = $products->whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()])->get();
+        }
 
         if ($products->isEmpty()) {
             return back()->with('message', 'El reporte que se intento generar no contiene información');
@@ -1014,8 +1023,6 @@ class ProductController extends Controller
 
         $weight = $products->sum('weigth');
         $price = $products->sum('price');
-
-
 
         $pdf  = PDF::loadView('product.Reports.reportEstatusG', compact('shop', 'products', 'hour', 'date', 'category_type', 'weight', 'price'));
         return $pdf->stream('ReporteEstatusGeneral.pdf');
@@ -1080,8 +1087,8 @@ class ProductController extends Controller
         $categories = $shop->products()
             ->join('categories', 'categories.id', 'products.category_id')
             ->whereStatus_id(2)
-            // ->orderByRaw('CHAR_LENGTH(clave)')
-            // ->orderBy('clave')
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
             ->where('line_id', NULL);
 
         if ($fecini == $fecter) {
@@ -1128,8 +1135,8 @@ class ProductController extends Controller
             ->whereCategory_id($category->id)
             ->whereBranch_id($branch->id)
             ->whereStatus_id(2)
-            // ->orderByRaw('CHAR_LENGTH(clave)')
-            // ->orderBy('clave')
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
             ->get();
 
 
@@ -1198,15 +1205,15 @@ class ProductController extends Controller
             ->with('sale_details')
             ->with('category')
             ->whereBranch_id($branch->id)
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
             ->get()
             ->where('category.type_product', $category_type);
 
         if ($fecini == $fecter) {
             $products = $products->whereDate('updated_at', $fecini);
         } else {
-            $fecini = $fecini->subDay();
-            $fecter = $fecter->addDay();
-            $products = $products->whereBetween('updated_at', [$fecini, $fecter]);
+            $products = $products->whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()]);
         }
 
         if ($products->isEmpty()) {
@@ -1244,14 +1251,14 @@ class ProductController extends Controller
         $products = $shop->products()
             ->whereCategory_id($category->id)
             ->whereBranch_id($branch->id)
-            ->whereStatus_id(2);
+            ->whereStatus_id(2)
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave');
 
         if ($fecini == $fecter) {
             $products = $products->whereDate('updated_at', $fecini)->get();
         } else {
-            $fecini = $fecini->subDay();
-            $fecter = $fecter->addDay();
-            $products = $products->whereBetween('updated_at', [$fecini, $fecter])->get();
+            $products = $products->whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()])->get();
         }
 
         if ($products->isEmpty()) {
