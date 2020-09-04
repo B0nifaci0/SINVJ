@@ -7,8 +7,8 @@ use App\Sale;
 use App\Shop;
 use App\User;
 use App\Branch;
-use App\Partial;
-use App\SaleDetails;
+use App\State;
+use App\Municipality;
 use App\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,12 +34,18 @@ class BranchController extends Controller
     public function index()
     {
       $user = Auth::user();
-      $branches= Auth::user()->shop->branches;
+      $states = State::all();
+      $municipalities = Municipality:: all();   
+      $branches= Branch::join('states','states.id','branches.state_id')
+      ->join('municipalities','municipalities.id','branches.municipality_id')
+      ->where('shop_id',$user->shop_id)
+      ->select('branches.*','states.name as state','municipalities.name as municipality')
+      ->get();
       foreach($branches as $b){
         $b->num_products = Product::withTrashed()->where('branch_id','=',$b->id)->where('deleted_at','=',NULL)->count();
       }
       
-     // return $branches;
+      //return $branches;
       
         return view('Branches/index', compact('branches','user'));
     }
@@ -78,7 +84,9 @@ class BranchController extends Controller
     {
       $user = Auth::user();
       $shops = Shop::all();
-      return view('Branches/add', compact('shops','user'));
+      $states = State::all();
+      $municipalities = Municipality:: all();   
+      return view('Branches/add', compact('shops','user','states','municipalities'));
     }
 
     /**
@@ -103,7 +111,9 @@ class BranchController extends Controller
           'other' => $request->other,
           'rfc' => $request->rfc,
           'phone_number' => $request->phone_number,
-          'address' => $request->address
+          'address' => $request->address,
+          'state_id' => $request->state_id,
+          'municipality_id' => $request->municipality_id
         ]);
         $branch->shop_id = Auth::user()->shop->id;
         $branch->save();
@@ -149,9 +159,11 @@ class BranchController extends Controller
     public function edit($id)
     {
       $user = Auth::user();
-        $branch = Branch::find($id);
+      $branch = Branch::find($id);
+      $states = State::all();
+      $municipalities = Municipality:: all(); 
       //return $category;
-      return view('Branches/edit', compact('branch','user'));
+      return view('Branches/edit', compact('branch','user','states','municipalities'));
     }
 
     /**
@@ -173,6 +185,8 @@ class BranchController extends Controller
             $branch->rfc =$request->rfc;
             $branch->phone_number =$request->phone_number;
             $branch->shop_id = Auth::user()->shop->id;
+            $branch->state_id = $request->state_id;
+            $branch->municipality_id = $request->municipality_id;
             $branch->save();
 
             //return $request->all();
