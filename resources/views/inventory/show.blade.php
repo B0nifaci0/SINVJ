@@ -83,16 +83,23 @@ LISTA DE LINEA
                 <!-- END Tabla-->
             </div>
         </div>
-        
+        <form method="post" action="/inventory/check" id="form" class="d-none">
+    {{ csrf_field() }}
+    <input type="text" name="inventory_id" id="inventory_id">
+    <input type="text" name="status" id="status">
+    <input type="text" name="discar_cause" id="discar_cause">
+    <input type="text" name="status_product" id="status_product">
+</form>
     </div>
 </div>
+
 @endsection
 
 @section('delete-productos')
 <script type="text/javascript">
-  $(document).ready(function () {
+$(document).ready(function () {
     var id_inventory = {!! $inventory->id !!};
-    actual = '#prueba'
+    actual = '#prueba';
     document.getElementById('text').addEventListener('keyup',()=>{
         console.log(document.getElementById('text').value.length)
     if((document.getElementById('text').value.length)>0){
@@ -121,6 +128,109 @@ LISTA DE LINEA
     }   
   })
 
+  $(document).on('click', '.exist', function () {
+        let id = $(this).attr("alt");
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿El producto se encuentra en inventario?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4caf50',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+        }).then((result) => {
+            if (result.value) {
+                $('#inventory_id').val(id);
+                $('#status_product').val(2);
+                $('#status').val(1);
+                $('#form').submit();
+            }
+        })
+    });
+    $(document).on('click', '.lost', function () {
+        let id = $(this).attr("alt");
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿El producto NO se encuentra en inventario?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4caf50',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+        }).then((result) => {
+            if (result.value) {
+                $('#inventory_id').val(id);
+                $('#status').val(3);
+                $('#discar_cause').val(1);
+                $('#status_product').val(5);
+                $('#form').submit();
+            }
+        })
+    });
+    $(document).on('click', '.damaged', function () {
+        let id = $(this).attr("alt");
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿El producto se encuentra dañado?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4caf50',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+        }).then((result) => {
+            if (result.value) {
+                $('#inventory_id').val(id);
+                $('#status').val(2);
+                $('#discar_cause').val(2);
+                $('#status_product').val(4);
+                $('#form').submit();
+            }
+        })
+    });
+    $(document).on('click', '.restart', function () {
+        let id = $(this).attr("alt");
+        var message = "¿Desea restablecer este producto?";
+        Swal.fire({
+            title: message,
+            input: 'password',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            showLoaderOnConfirm: true,
+            preConfirm: (password) => {
+                return fetch('/check-user', {
+                    method: 'POST',
+                    body: JSON.stringify({ password: password }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(response.statusText)
+                        }
+                        return response.json()
+                    })
+                    .catch(error => {
+                        Swal.showValidationMessage(
+                            `Contraseña incorrecta`
+                        )
+                    })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.value) {
+                $('#inventory_id').val(id);
+                $('#status_product').val(2);
+                $('#status').val(null);
+                $('#discar_cause').val(null);
+                $('#form').submit();
+            }
+        })
+    });
 });
 </script>
 @endsection
