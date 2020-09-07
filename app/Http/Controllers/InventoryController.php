@@ -75,20 +75,7 @@ class InventoryController extends Controller
         $name_branch = InventoryReport::join('branches', 'branches.id', 'inventory_reports.branch_id')
             ->where('inventory_reports.id', $id)->select('branches.name')->get();
         $inventory = InventoryReport::where('id', $id)->first();
-        $inventory->products = InventoryDetail::join('products', 'products.id', 'inventory_details.product_id')
-            ->where('inventory_details.inventory_report_id', $inventory->id)
-            ->where('products.branch_id', $branch)
-            ->where('products.deleted_at', NULL)
-            ->whereIn('products.status_id', [2, 4, 5])
-            ->select(
-                'inventory_details.id',
-                'inventory_details.status',
-                'inventory_details.product_id',
-                'products.clave',
-                'products.description',
-                'products.weigth'
-            )
-            ->get();
+        
         //QUERY PARA SABER SI HAY PRODUCTOS SIN LISTAR EN EL INVENTARIO
         $finalizar = InventoryDetail::where('inventory_report_id', $id)
             ->where('status', null)
@@ -103,10 +90,44 @@ class InventoryController extends Controller
             $inventorie->status_report = 2;
             $inventorie->save();
         }
+        $validation = 0;
         //return $finalizar;
         //return $inventory->products;
-        return view('inventory.show', compact('inventory', 'name_branch', 'finalizar', 'id_inventory'));
+        return view('inventory.show', compact('validation','inventory', 'name_branch', 'finalizar', 'id_inventory'));
     }
+
+    public function search(Request $request, $id)
+    {
+        //return $products;
+        $branch = InventoryReport::where('id', $id)->select('branch_id')->sum('branch_id');
+        $inventory = InventoryReport::findOrFail($id);
+        
+        $inventory->products = InventoryDetail::join('products','products.id','inventory_details.product_id')
+            ->where('inventory_details.inventory_report_id', $inventory->id)
+            ->where('products.branch_id', $branch)
+            ->where('products.deleted_at', NULL)    
+            ->where('products.description', 'like', "%$request->text%")
+            ->orWhere('products.clave', 'like', "%$request->text%")
+            ->select(
+                'inventory_details.id',
+                'inventory_details.status',
+                'inventory_details.product_id',
+                'products.clave',
+                'products.description',
+                'products.weigth'
+            )
+            ->orderByRaw('CHAR_LENGTH(products.clave)')
+            ->orderBy('products.clave')
+            ->get();
+
+        if($request->validacion && $inventory->products->count() > 0){
+            $validation = $request->validacion;
+        } else {
+            $validation = 0;
+        }
+
+        return view('inventory/inventory_products', compact('inventory','validation'));
+    } 
 
     public function store(Request $request)
     {
