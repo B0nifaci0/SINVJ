@@ -123,4 +123,3 @@
         </tbody>
     </table>
 </div>
-{{ $products->onEachSide(1)->links() }}
