@@ -18,9 +18,31 @@ LISTA DE LINEA
         <div class="panel">
             <div class="panel-body">
                 <div class="example-wrap">
+                <div class="row" style ="text-align:right;">
+                    <div class="col-md-7">
                     @foreach($name_branch as $branch)
-                    <h1 class="text-center panel-title">Inventarios {{$branch->name}}</h1>
+                    <h1 class="text-right panel-title">Inventarios {{$branch->name}}</h1>
                     @endforeach
+                    </div>
+                    <div class="col-md-5">
+                        @foreach ($id_inventory as $i)
+                            @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
+                                @if($inventory->status_report == 3)
+                                <button class="btn btn-primary" name="id_report" disabled>
+                                    Status: Terminado
+                                    @elseif($finalizar > 0)
+                                    <button class="btn btn-primary" name="id_report" disabled>
+                                        Status: En Proceso
+                                    </button>
+                                    @elseif($finalizar == 0)
+                                    <button class="btn btn-primary" name="id_report" onclick=" location.href='terminar/{{$i->id}}' ">
+                                        Terminar Inventario
+                                    </button>
+                                @endif
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
                     <div class="panel-actions float-right">
                         <div class="container-fluid row float-right">
                             @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
@@ -49,30 +71,8 @@ LISTA DE LINEA
                     </div>
                 </div>
             </div>
-            <div class="row" style ="text-align:center;">
-                <div class="col-md-6">
-                    @foreach ($id_inventory as $i)
-                        @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
-                            @if($inventory->status_report == 3)
-                            <button class="btn btn-primary" name="id_report" disabled>
-                                Inventario Terminado
-                                @elseif($finalizar > 0)
-                                <button class="btn btn-primary" name="id_report" disabled>
-                                    Aun No Has Acabado El Inventario
-                                </button>
-                                @elseif($finalizar == 0)
-                                <button class="btn btn-primary" name="id_report" onclick=" location.href='terminar/{{$i->id}}' ">
-                                    Terminar Inventario
-                                </button>
-                            @endif
-                        @endif
-                    @endforeach
-                </div>
-                <div class="col-md-6">
-                    <div class="input-group mb-3" id="actualizar">
-                        <input class="form-control col-md-6" type="search" id="text" placeholder="Introduce la clave del producto" aria-label="Search" />
-                    </div>
-                </div>
+            <div class="col-md-4 input-group mb-3" id="actualizar" style ="margin:0 auto;">
+                <input class="form-control" type="search" id="text" placeholder="Introduce la clave del producto" aria-label="Search" />
             </div>
             <div class="panel-body">
                 <!-- Tabla para listar inventarios-->
@@ -142,7 +142,7 @@ $(document).ready(function () {
             if (result.value) {
                 $('#inventory_id').val(id);
                 $('#status_product').val(2);
-                $('#status').val(1);
+                $('#status').val(2);
                 $('#form').submit();
             }
         })
@@ -160,7 +160,7 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.value) {
                 $('#inventory_id').val(id);
-                $('#status').val(3);
+                $('#status').val(4);
                 $('#discar_cause').val(1);
                 $('#status_product').val(5);
                 $('#form').submit();
@@ -180,7 +180,7 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.value) {
                 $('#inventory_id').val(id);
-                $('#status').val(2);
+                $('#status').val(3);
                 $('#discar_cause').val(2);
                 $('#status_product').val(4);
                 $('#form').submit();
@@ -225,7 +225,7 @@ $(document).ready(function () {
             if (result.value) {
                 $('#inventory_id').val(id);
                 $('#status_product').val(2);
-                $('#status').val(null);
+                $('#status').val(1);
                 $('#discar_cause').val(null);
                 $('#form').submit();
             }

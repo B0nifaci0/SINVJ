@@ -7,9 +7,9 @@
             <th>Descripcion</th>
             <th>Status</th>
             @if($inventory->status_report == 1 OR $inventory->status_report == 2)
-            @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
-            <th>Opciones</th>
-            @endif
+                @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
+                    <th>Opciones</th>
+                @endif
             @endif
         </tr>
     </thead>
@@ -20,9 +20,9 @@
             <th>Descripcion</th>
             <th>Status</th>
             @if($inventory->status_report == 1 OR $inventory->status_report == 2)
-            @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
-            <th>Opciones</th>
-            @endif
+                @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
+                    <th>Opciones</th>
+                @endif
             @endif
         </tr>
     </tfoot>
@@ -37,37 +37,37 @@
             @endif
             <td>{{ $item->description }}</td>
             <td>
-                @if( $item->status === null )
+                @if( $item->status === 1 )
                 <span class="text-center badge badge-secondary">Pendiente</span>
-                @elseif( $item->status === 1)
-                <span class="text-center badge badge-success">Existente</span>
                 @elseif( $item->status === 2)
-                <span class="text-center badge badge-warning">Dañado</span>
+                <span class="text-center badge badge-success">Existente</span>
                 @elseif( $item->status === 3)
+                <span class="text-center badge badge-warning">Dañado</span>
+                @elseif( $item->status === 4)
                 <span class="text-center badge badge-danger">Faltante</span>
                 @endif
             </td>
             @if($inventory->status_report == 1 OR $inventory->status_report == 2)
-            @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
-            <td>
-                @if( $item->status === null )
-                <button class="btn btn-success exist" alt="{{ $item->id }}">
-                    Existente
-                    <i class="icon md-check"></i>
-                </button>
-                <button class="btn btn-warning damaged" alt="{{ $item->id }}">
-                    Dañado
-                </button>
-                <button class="btn btn-danger lost" alt="{{ $item->id }}">
-                    Faltante
-                </button>
-                @else
-                <button class="btn btn-info restart" alt="{{ $item->id }}">
-                    Restaurar
-                </button>
+                @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
+                    <td>
+                        @if( $item->status === 1 )
+                        <button class="btn btn-success exist" alt="{{ $item->id }}">
+                            Existente
+                            <i class="icon md-check"></i>
+                        </button>
+                        <button class="btn btn-warning damaged" alt="{{ $item->id }}">
+                            Dañado
+                        </button>
+                        <button class="btn btn-danger lost" alt="{{ $item->id }}">
+                            Faltante
+                        </button>
+                        @else
+                        <button class="btn btn-info restart" alt="{{ $item->id }}">
+                            Restaurar
+                        </button>
+                        @endif
+                    </td>
                 @endif
-                @endif
-            </td>
             @endif
         </tr>
         @endforeach
