@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use PDF;
 use App\Line;
-use App\Sale;
 use App\Shop;
 use App\User;
 use App\Branch;
@@ -12,7 +11,6 @@ use App\Status;
 use App\Product;
 use App\Category;
 use Carbon\Carbon;
-use App\SaleDetails;
 use App\TransferProduct;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -24,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
 use Illuminate\Support\Facades\Storage;
 
-use Yajra\Datatables\Datatables;
+// use Yajra\Datatables\Datatables;
 
 class ProductController extends Controller
 {
@@ -43,9 +41,9 @@ class ProductController extends Controller
 
     public function allProducts()
     {
-        $products = Product::orderByRaw('CHAR_LENGTH(clave)')
-            ->orderBy('clave')
-            ->paginate(10);
+        $products = Product::orderBy('updated_at', 'desc')
+            // orderByRaw('CHAR_LENGTH(clave)')
+            ->take(50)->get();
 
         return view('product/indexAll', compact('products'));
     }
@@ -55,7 +53,7 @@ class ProductController extends Controller
         $products = Product::where('description', 'like', "%$request->text%")
             ->orWhere('clave', 'like', "%$request->text%")
             ->orderByRaw('CHAR_LENGTH(clave)')
-            ->orderBy('clave')->paginate(10)->appends($request->all());
+            ->orderBy('clave')->get();
 
         return view('product/table', compact(('products')));
     }
@@ -1211,7 +1209,7 @@ class ProductController extends Controller
             ->where('category.type_product', $category_type);
 
         if ($fecini == $fecter) {
-            $products = $products->whereDate('updated_at', $fecini);
+            $products = $products->where('updated_at', $fecini);
         } else {
             $products = $products->whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()]);
         }

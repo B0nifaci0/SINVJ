@@ -69,6 +69,7 @@
         <div id="mostrar"></div>
         <div id="prueba">
           @include('product.table')
+          {{-- {{ $products->onEachSide(1)->links() }} --}}
         </div>
       </div>
     </div>
