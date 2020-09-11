@@ -112,7 +112,7 @@ Panel Principal
                                                                             </div>
                                                                             <input name="fecini" type="text"
                                                                                 class="form-control fecini round"
-                                                                                data-plugin="datepicker" required>
+                                                                                data-plugin="datepicker">
                                                                         </div>
                                                                     </div>
                                                                     <div class="input-group">
@@ -126,7 +126,7 @@ Panel Principal
                                                                         </div>
                                                                         <input name="fecter" type="text"
                                                                             class="form-control round"
-                                                                            data-plugin="datepicker" required>
+                                                                            data-plugin="datepicker">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -189,7 +189,7 @@ Panel Principal
                                                                         </div>
                                                                         <input name="fecini" type="text"
                                                                             class="form-control fecini round"
-                                                                            data-plugin="datepicker" required>
+                                                                            data-plugin="datepicker">
                                                                     </div>
                                                                 </div>
                                                                 <div class="input-group">
@@ -203,7 +203,7 @@ Panel Principal
                                                                     </div>
                                                                     <input name="fecter" type="text"
                                                                         class="form-control round"
-                                                                        data-plugin="datepicker" required>
+                                                                        data-plugin="datepicker">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -235,7 +235,7 @@ Panel Principal
                                                                         </div>
                                                                         <input name="fecini" type="text"
                                                                             class="form-control fecini round"
-                                                                            data-plugin="datepicker" required>
+                                                                            data-plugin="datepicker">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -301,7 +301,7 @@ Panel Principal
                                                                     </div>
                                                                     <input name="fecter" type="text"
                                                                         class="form-control round"
-                                                                        data-plugin="datepicker" required>
+                                                                        data-plugin="datepicker">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -392,7 +392,7 @@ Panel Principal
                                                                             </div>
                                                                             <input name="fecini" type="text"
                                                                                 class="form-control fecini round"
-                                                                                data-plugin="datepicker" required>
+                                                                                data-plugin="datepicker">
                                                                         </div>
                                                                     </div>
                                                                     <div class="input-group">
@@ -406,7 +406,7 @@ Panel Principal
                                                                         </div>
                                                                         <input name="fecter" type="text"
                                                                             class="form-control round"
-                                                                            data-plugin="datepicker" required>
+                                                                            data-plugin="datepicker">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -438,7 +438,7 @@ Panel Principal
                                                                         </div>
                                                                         <input name="fecini" type="text"
                                                                             class="form-control fecini round"
-                                                                            data-plugin="datepicker" required>
+                                                                            data-plugin="datepicker">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -454,7 +454,7 @@ Panel Principal
                                                                     </div>
                                                                     <input name="fecter" type="text"
                                                                         class="form-control round"
-                                                                        data-plugin="datepicker" required>
+                                                                        data-plugin="datepicker">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -506,7 +506,7 @@ Panel Principal
                                                                         </div>
                                                                         <input name="fecini" type="text"
                                                                             class="form-control fecini round"
-                                                                            data-plugin="datepicker" required>
+                                                                            data-plugin="datepicker">
                                                                     </div>
                                                                 </div>
                                                                 <div class="input-group">
@@ -520,7 +520,7 @@ Panel Principal
                                                                     </div>
                                                                     <input name="fecter" type="text"
                                                                         class="form-control round"
-                                                                        data-plugin="datepicker" required>
+                                                                        data-plugin="datepicker">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -551,7 +551,7 @@ Panel Principal
                                                                         </div>
                                                                         <input name="fecini" type="text"
                                                                             class="form-control fecini round"
-                                                                            data-plugin="datepicker" required>
+                                                                            data-plugin="datepicker">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -567,7 +567,7 @@ Panel Principal
                                                                     </div>
                                                                     <input name="fecter" type="text"
                                                                         class="form-control round"
-                                                                        data-plugin="datepicker" required>
+                                                                        data-plugin="datepicker">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -653,7 +653,7 @@ Panel Principal
                                                                             </div>
                                                                             <input name="fecini" type="text"
                                                                                 class="form-control fecini round"
-                                                                                data-plugin="datepicker" required>
+                                                                                data-plugin="datepicker">
                                                                         </div>
                                                                     </div>
                                                                     <div class="input-group">
@@ -667,7 +667,7 @@ Panel Principal
                                                                         </div>
                                                                         <input name="fecter" type="text"
                                                                             class="form-control round"
-                                                                            data-plugin="datepicker" required>
+                                                                            data-plugin="datepicker">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -710,7 +710,7 @@ Panel Principal
                                                                         </div>
                                                                         <input name="fecini" type="text"
                                                                             class="form-control fecini round"
-                                                                            data-plugin="datepicker" required>
+                                                                            data-plugin="datepicker">
                                                                     </div>
                                                                 </div>
                                                                 <div class="input-group">
@@ -724,7 +724,7 @@ Panel Principal
                                                                     </div>
                                                                     <input name="fecter" type="text"
                                                                         class="form-control round"
-                                                                        data-plugin="datepicker" required>
+                                                                        data-plugin="datepicker">
                                                                 </div>
                                             </form>
                                         </div>
@@ -772,8 +772,7 @@ Panel Principal
                                                             </span>
                                                         </div>
                                                         <input name="fecini" type="text"
-                                                            class="form-control fecini round" data-plugin="datepicker"
-                                                            required>
+                                                            class="form-control fecini round" data-plugin="datepicker">
                                                     </div>
                                                 </div>
                                                 <div class="input-group">
@@ -784,7 +783,7 @@ Panel Principal
                                                         </span>
                                                     </div>
                                                     <input name="fecter" type="text" class="form-control round"
-                                                        data-plugin="datepicker" required>
+                                                        data-plugin="datepicker">
                                                 </div>
                                             </div>
                                         </div>
@@ -797,18 +796,12 @@ Panel Principal
                             </form>
                         </div>
                         <div class="tab-pane" id="exampleTabsFour" role="tabpanel">
-
-                            <div class="container-fluid row">
-                                <div class="col-">
-                                    <h4>Reporte Entradas Productos General Por Pieza</h4>
-                                </div>
-                            </div>
                             <form action="reportEntradasPrgppz">
                                 <div class="panel panel-bordered">
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
-                                                <label>Seleccione Sucursallll</label>
+                                                <label>Seleccione Sucursal</label>
                                                 <select id="sucursales_1" name="branch_id" alt="1"
                                                     class="form-control round sucursales">
                                                     <!-- <option value="*">Seleccione Sucursal</option> -->
@@ -827,8 +820,7 @@ Panel Principal
                                                             </span>
                                                         </div>
                                                         <input name="fecini" type="text"
-                                                            class="form-control fecini round" data-plugin="datepicker"
-                                                            required>
+                                                            class="form-control fecini round" data-plugin="datepicker">
                                                     </div>
                                                 </div>
                                                 <div class="input-group">
@@ -839,7 +831,7 @@ Panel Principal
                                                         </span>
                                                     </div>
                                                     <input name="fecter" type="text" class="form-control round"
-                                                        data-plugin="datepicker" required>
+                                                        data-plugin="datepicker">
                                                 </div>
                                             </div>
                                         </div>
@@ -905,7 +897,7 @@ Panel Principal
                                                             </div>
                                                             <input name="fecini" type="text"
                                                                 class="form-control fecini round"
-                                                                data-plugin="datepicker" required>
+                                                                data-plugin="datepicker">
                                                         </div>
                                                     </div>
                                                     <div class="input-group">
@@ -916,14 +908,14 @@ Panel Principal
                                                             </span>
                                                         </div>
                                                         <input name="fecter" type="text" class="form-control round"
-                                                            data-plugin="datepicker" required>
+                                                            data-plugin="datepicker">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="int" name="cat" class="form-control invisible round"
-                                        data-plugin="datepicker" value="2" required>
+                                    <input type="int" name="cat" class="form-control invisible round" value="2"
+                                        required>
                                     <div class="input-group col-3 col-6 col-12">
                                         <button id="submit" type="submit" name="button" class="btn btn-primary">Generar
                                             reporte</button>
@@ -941,7 +933,6 @@ Panel Principal
                                                 <select id="sucursales_1" name="branch_id" alt="2"
                                                     class="form-control round sucursales">
                                                     <!-- <option value="*">Seleccione Sucursal</option> -->
-
                                                     @foreach($branches as $branch)
                                                     <option value="{{$branch->id}}" required>{{$branch->name}}</option>
                                                     @endforeach
@@ -957,8 +948,7 @@ Panel Principal
                                                             </span>
                                                         </div>
                                                         <input name="fecini" type="text"
-                                                            class="form-control fecini round" data-plugin="datepicker"
-                                                            required>
+                                                            class="form-control fecini round" data-plugin="datepicker">
                                                     </div>
                                                 </div>
                                                 <div class="input-group">
@@ -968,11 +958,11 @@ Panel Principal
                                                             <i class="icon md-calendar" aria-hidden="true"></i>
                                                         </span>
                                                     </div>
-                                                    <input name="fecter" type="text" class="form-control round"
-                                                        data-plugin="datepicker" required>
+                                                    <input name="fecter" type="text" class="form-control round date"
+                                                        data-plugin="datepicker">
                                                 </div>
                                                 <input type="int" name="cat" class="form-control invisible round"
-                                                    data-plugin="datepicker" value="1" required>
+                                                    value="1" required>
                             </form>
                         </div>
                     </div>
@@ -991,4 +981,16 @@ Panel Principal
 </div>
 @endif
 <!-- Termina formulario de Prueba -->
+@endsection
+
+@section('example')
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('.btn').click(function() {
+            $(this).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Cargando...`);
+        });
+    })
+</script>
 @endsection

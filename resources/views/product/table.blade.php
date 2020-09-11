@@ -2,12 +2,13 @@
     <table class="table table-striped midatatable">
         <thead>
             <tr>
+                <th class="tablet"></th>
                 <th>Clave</th>
                 <th>Descripción</th>
                 <th>Categoría</th>
                 <th>Observaciónes</th>
-                <th class="peque">Sucursal</th>
-                <th class="peque">Estatus</th>
+                <th class="desktop">Sucursal</th>
+                <th class="desktop">Estatus</th>
                 <th class="desktop">Linea</th>
                 <th class="desktop">Precio compra</th>
                 <th class="desktop">Precio</th>
@@ -18,12 +19,13 @@
             </tr>
         </thead>
         <tfoot>
+            <th class="tablet"></th>
             <th>Clave</th>
             <th>Descripción</th>
             <th>Categoría</th>
             <th>Observaciónes</th>
-            <th class="peque">Sucursal</th>
-            <th class="peque">Estatus</th>
+            <th class="desktop">Sucursal</th>
+            <th class="desktop">Estatus</th>
             <th class="desktop">Linea</th>
             <th class="desktop">Precio compra</th>
             <th class="desktop">Precio</th>
@@ -36,12 +38,14 @@
         <tbody>
             @forelse ($products as $product)
             <tr colspan="6" data-toggle="collapse" data-target="#num{{$product->id}}" class="accordion-toggle">
+                <td class="tablet"><i class="fas fa-angle-down rotate-icon"></i></td>
                 <td>{{$product->clave}}</td>
                 <td>{{ $product->description }}</td>
                 <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                 <td>{{ $product->observations }}</td>
-                <td class="peque">{{ $product->branch->name }}</td>
-                <td class="peque">
+
+                <td class="desktop">{{ $product->branch->name }}</td>
+                <td class="desktop">
                     @if($product->status_id == 1)
                     <span class="text-center badge badge-secondary">{{$product->status->name}}</span>
                     @elseif($product->status_id == 2)
@@ -75,9 +79,30 @@
                 @endif
             </tr>
             <tr>
-            <tr class="movil">
+            <tr class="tablet">
                 <td colspan="6" class="hiddenRow">
                     <div class="accordian-body collapse p-3" id="num{{$product->id}}">
+
+
+                        <p>
+                            <strong>Sucursal:</strong>
+                            {{ $product->branch->name }}
+                        </p>
+                        <p>
+                            <strong>Estatus:</strong>
+                            @if($product->status_id == 1)
+                            <span class="text-center badge badge-secondary">{{$product->status->name}}</span>
+                            @elseif($product->status_id == 2)
+                            <span class="text-center badge badge-success">{{$product->status->name}}</span>
+                            @elseif($product->status_id == 3)
+                            <span class="text-center badge badge-primary">{{$product->status->name}}</span>
+                            @elseif($product->status_id == 4)
+                            <span class="text-center badge badge-warning">{{$product->status->name}}</span>
+                            @elseif($product->status_id == 5)
+                            <span class="text-center badge badge-danger">{{$product->status->name}}</span>
+                            @endif
+                        </p>
+
                         <p>
                             <strong>Linea:</strong>
                             {{($product->line) ? $product->line->name : 'N/A' }}
@@ -123,4 +148,3 @@
         </tbody>
     </table>
 </div>
-{{ $products->onEachSide(1)->links() }}
