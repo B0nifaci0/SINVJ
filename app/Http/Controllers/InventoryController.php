@@ -180,21 +180,25 @@ class InventoryController extends Controller
         //return $request;
         $inventory = InventoryDetail::find($request->inventory_id);
         // return [$request->status];
+        $product = Product::withTrashed()->where('id', $inventory->product_id)->first();
         if (!$request->status) {
-            $product = Product::withTrashed()->where('id', $inventory->product_id)->first();
             $product->discar_cause = $request->discar_cause;
             //$product->delete();
         } else {
-            $product = Product::withTrashed()->where('id', $inventory->product_id)->first();
             $product->discar_cause = null;
             $product->deleted_at = null;
         }
         $product->status_id = $request->status_product;
-        //return $product;
         $product->save();
-
+        
         InventoryDetail::where('id', $request->inventory_id)->update(['status_id' => $request->status]);
-        return back();
+        $status = InventoryDetail::join('status_inventories','status_inventories.id','inventory_details.status_id')
+        ->where("inventory_details.product_id", $product->id)
+        ->select('status_inventories.name as name')
+        ->first();
+        //return $status;
+        return back()->with('message', "El producto $product->clave ahora tiene un status: $status->name!")
+        ->with('validar_restaurado_o_inventariado',1);
     }
 
     public function checkPassword(Request $request)

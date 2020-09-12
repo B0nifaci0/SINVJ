@@ -12,35 +12,45 @@ LISTA DE LINEA
 
 @endsection
 @section('content')
+@if (session('message'))
+  <div>
+    <label id="message" alt='{{ session('message') }}'></label>
+  </div>
+  @else
+  <label id="message" alt="0"></label>
+@endif
 <div class="panel-body">
     <div class="page-content">
         <!-- Panel Basic -->
         <div class="panel">
             <div class="panel-body">
                 <div class="example-wrap">
-                <div class="row" style ="text-align:right;">
-                    <div class="col-md-7">
-                    @foreach($name_branch as $branch)
-                    <h1 class="text-right panel-title">Inventarios {{$branch->name}}</h1>
+                    <div class="col-md-12" style ="text-align:right;">
+                        <strong>Inventario:</strong>
+                    </div>
+                <div class="row">
+                    <div class="col-md-12" style ="text-align:right;">
+                    @foreach ($id_inventory as $i)
+                        @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
+                            @if($inventory->status_report == 3)
+                            <button class="btn btn-primary" name="id_report" disabled>
+                                    Terminado
+                                @elseif($finalizar > 0)
+                                <button class="btn btn-primary" name="id_report" disabled>
+                                    En Proceso
+                                </button>
+                                @elseif($finalizar == 0)
+                                <button class="btn btn-primary" name="id_report" onclick=" location.href='terminar/{{$i->id}}' ">
+                                    Terminar
+                                </button>
+                            @endif
+                        @endif
                     @endforeach
                     </div>
-                    <div class="col-md-5">
-                        @foreach ($id_inventory as $i)
-                            @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
-                                @if($inventory->status_report == 3)
-                                <button class="btn btn-primary" name="id_report" disabled>
-                                    Status: Terminado
-                                    @elseif($finalizar > 0)
-                                    <button class="btn btn-primary" name="id_report" disabled>
-                                        Status: En Proceso
-                                    </button>
-                                    @elseif($finalizar == 0)
-                                    <button class="btn btn-primary" name="id_report" onclick=" location.href='terminar/{{$i->id}}' ">
-                                        Terminar Inventario
-                                    </button>
-                                @endif
-                            @endif
-                        @endforeach
+                    <div class="col-md">
+                    @foreach($name_branch as $branch)
+                    <h1 class="panel-title" style ="text-align:center;">Inventarios {{$branch->name}}</h1>
+                    @endforeach
                     </div>
                 </div>
                     <div class="panel-actions float-right">
@@ -71,6 +81,10 @@ LISTA DE LINEA
                     </div>
                 </div>
             </div>
+            <div class="text-center">
+                <strong>Buscar:</strong>
+            </div>
+            <br>
             <div class="col-md-4 input-group mb-3" id="actualizar" style ="margin:0 auto;">
                 <input class="form-control" type="search" id="text" placeholder="Introduce la clave del producto" aria-label="Search" />
             </div>
@@ -99,7 +113,18 @@ LISTA DE LINEA
 <script type="text/javascript">
 $(document).ready(function () {
     var id_inventory = {!! $inventory->id !!};
-    actual = '#prueba';
+    var message = $("#message").attr("alt");
+    console.log(message);
+    if(message != 0) {
+    Swal.fire({
+            title: 'Exitoso',
+            text: message,
+            type: 'success',
+            confirmButtonColor: '#4caf50',
+            confirmButtonText: 'Siguiente'
+        });
+    }
+    
     document.getElementById('text').addEventListener('keyup',()=>{
         console.log(document.getElementById('text').value.length)
     if((document.getElementById('text').value.length)>0){
