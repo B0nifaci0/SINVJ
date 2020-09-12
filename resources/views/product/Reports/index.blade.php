@@ -796,18 +796,12 @@ Panel Principal
                             </form>
                         </div>
                         <div class="tab-pane" id="exampleTabsFour" role="tabpanel">
-
-                            <div class="container-fluid row">
-                                <div class="col-">
-                                    <h4>Reporte Entradas Productos General Por Pieza</h4>
-                                </div>
-                            </div>
                             <form action="reportEntradasPrgppz">
                                 <div class="panel panel-bordered">
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-12 col-sm-6">
-                                                <label>Seleccione Sucursallll</label>
+                                                <label>Seleccione Sucursal</label>
                                                 <select id="sucursales_1" name="branch_id" alt="1"
                                                     class="form-control round sucursales">
                                                     <!-- <option value="*">Seleccione Sucursal</option> -->
@@ -995,7 +989,7 @@ Panel Principal
 
         $('.btn').click(function() {
             $(this).html(`<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                Loading...`);
+                Cargando...`);
         });
     })
 </script>

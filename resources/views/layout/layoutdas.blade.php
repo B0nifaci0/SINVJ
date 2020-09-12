@@ -114,22 +114,15 @@
             }
 
 
-            @media (max-width: 40em) {
+            @media (max-width: 55em) {
                 .midatatable .desktop {
                     display: none;
                 }
 
             }
 
-            @media (min-width: 40em) {
-                .midatatable .movil {
-                    display: none;
-                }
-
-            }
-
-            @media (min-width: 30em) {
-                .midatatable .peque {
+            @media (min-width: 55em) {
+                .midatatable .tablet {
                     display: none;
                 }
 

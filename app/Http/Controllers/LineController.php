@@ -113,7 +113,7 @@ class LineController extends Controller
         $discount = $line->discount_percentage / 100;
         //return $line;
         $products = Product::where('line_id', $id)
-        ->where('shop_id', $user->shop_id)
+        //->where('shop_id', $user->shop_id)
         ->get();
         //return $products;
         foreach($products as $p){
