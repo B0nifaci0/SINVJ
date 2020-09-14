@@ -63,40 +63,13 @@
         </div>
       </div>
       <div class="col-xl-12 col-md-12 col-sl">
-        {{-- <div class="input-group mb-3" id="actualizar">
-
-        </div> --}}
-
-        <div class="col-md-3">
-          <div class="input-group">
-            <input type="text" name="search" id="search" class="form-control" placeholder="Search" />
-          </div>
+        <div class="input-group mb-3" id="actualizar">
+          <input class="form-control col-3" type="search" id="text" placeholder="Search" aria-label="Search" />
         </div>
-        <div class="example-wrap">
-          <table class="table table-striped midatatable">
-            <thead>
-              <tr>
-                <th class="tablet"></th>
-                <th>Clave</th>
-                <th>Descripción</th>
-                <th>Categoría</th>
-                <th>Observaciónes</th>
-                <th class="desktop">Sucursal</th>
-                <th class="desktop">Estatus</th>
-                <th class="desktop">Linea</th>
-                <th class="desktop">Precio compra</th>
-                <th class="desktop">Precio</th>
-                @if(Auth::user()->type_user == 1)
-                <th class="desktop">Precio descuento</th>
-                <th class="desktop">Opciones</th>
-                @endif
-              </tr>
-            </thead>
-            <tbody>
-              @include('product.table')
-            </tbody>
-          </table>
-          <input type="hidden" name="hidden_page" id="hidden_page" value="1" />
+        <div id="mostrar"></div>
+        <div id="prueba">
+          @include('product.table')
+          {{-- {{ $products->onEachSide(1)->links() }} --}}
         </div>
       </div>
     </div>
@@ -106,86 +79,85 @@
 @endsection
 
 @section('delete-productos')
-<script>
-  $(document).ready(function(){
+<script type="text/javascript">
+  $(document).ready(function () {
 
- function search(page, query)
- {
-  $.ajax({
-   url:"/buscador?page="+page+"&query="+query,
-   success:function(data)
-   {
-    $('tbody').html('');
-    $('tbody').html(data);
-   }
-  })
- }
+    actual = '#prueba'
+    document.getElementById('text').addEventListener('keyup',()=>{
+    if((document.getElementById('text').value.length)>0){
+      console.log(text.value)
+      fetch(`/buscador/?text=${document.getElementById("text").value}`,{
+        method: 'get'
+      })
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('mostrar').innerHTML = html
+        document.getElementById('prueba').hidden = true;
+      })
 
- $(document).on('keyup', '#search', function(){
-  var query = $('#search').val();
-  search(1, query);
- });
+      $("#mostrar li a.page-link").each((index, element) =>{
+        console.log($(this).data('href'))
+        console.log("hola"+text.value)
+        })
 
- $(document).on('click', '.pagination a', function(event){
-  event.preventDefault();
-  var page = $(this).attr('href').split('page=')[1];
-  $('#hidden_page').val(page);
-  var query = $('#search').val();
-
-  $('li').removeClass('active');
-        $(this).parent().addClass('active');
-  search(page, query);
- });
-
- $(document).on('click','.delete', function(){
-    var id = $(this).attr("alt");
-    console.log(id);
-    Swal.fire({
-    title: 'Confirmación',
-    text: "¿Seguro que desea eliminar este registro?",
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Si, Borralo!'
-    }).then((result) => {
-    if (result.value) {
-    $.ajaxSetup({
-    headers: {
-    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-    }
-    });
-    $.ajax({
-    url: '/productos/' + id,
-    method: 'DELETE',
-    success: function (response) {
-    if(response.success){
-    Swal.fire(
-    'Eliminado',
-    'El registro ha sido eliminado.',
-    'success'
-    )
     }else{
-    Swal.fire(
-    'No Eliminado',
-    'El producto no ha sido eliminado por que esta activo en un traspaso',
-    'error'
-    )
-    }
-    },
-    error: function () {
-    Swal.fire(
-    'Eliminado',
-    'El registro no ha sido eliminado.' + id,
-    'error'
-    )
-    }
-    })
-    }
-    })
-    });
+      document.getElementById('mostrar').innerHTML = ""
+      document.getElementById('prueba').hidden = false;
+    }   
+  })
 
-});
+    $(document).on('click','.delete', function(){
+        var id = $(this).attr("alt");
+        console.log(id);
+        Swal.fire({
+          title: 'Confirmación',
+          text: "¿Seguro que desea eliminar este registro?",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Borralo!'
+        }).then((result) => {
+          if (result.value) {
+            $.ajaxSetup({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+            });
+            $.ajax({
+              url: '/productos/' + id,
+              method: 'DELETE',
+               success: function (response) {
+                if(response.success){
+                  Swal.fire(
+                  'Eliminado',
+                  'El registro ha sido eliminado.',
+                  'success'
+                  ).then(function (isConfirm){
+                    if(isConfirm)
+                    location.reload()
+                  })
+                  // location.reload();
+                }else{
+                Swal.fire(
+                  'No Eliminado',
+                  'El producto no ha sido eliminado por que esta activo en un traspaso',
+                  'error'
+                )
+                }
+              },
+              error: function () {
+                Swal.fire(
+                  'Eliminado',
+                  'El registro no ha sido eliminado.' + id,
+                  'error'
+                )
+              }
+            })
+          }
+        })
+      });
+  });
 </script>
 @endsection
 <!-- END Función-->
