@@ -15,9 +15,11 @@
 
 // Route::get('products', 'ProductController@getProducts')->name('get.products');
 
-Route::get('/todos', 'ProductController@allProducts');
+Route::get('/productos', 'ProductController@allProducts');
 
 Route::get('/buscador', 'ProductController@search');
+
+Route::get('/buscadorsucursal', 'BranchProductsController@search');
 
 
 
@@ -199,7 +201,7 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
     Route::get('inventarios/terminar/{id}', 'InventoryController@terminar');
     Route::get('/productos-inventario/{id}', 'InventoryController@search');
 
-    Route::get('productos', 'ProductController@index');
+    // Route::get('productos', 'ProductController@index');
     Route::get('productos/create', 'ProductController@create');
     Route::get('productos/devueltos', 'ProductController@devuelto');
     Route::get('/productos/{id}/reetiquetado', 'ProductController@reetiquetado');
