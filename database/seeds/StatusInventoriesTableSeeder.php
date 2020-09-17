@@ -31,5 +31,20 @@ class StatusTableSeeder extends Seeder
             'created_at' => '2019-01-01 16:00:00',
             'updated_at' => '2019-01-01 16:00:00',
         ]);
+        DB::table('status_inventories')->insert([
+            'name' =>  'Traspaso Pendiente',
+            'created_at' => '2019-01-01 16:00:00',
+            'updated_at' => '2019-01-01 16:00:00',
+        ]);
+        DB::table('status_inventories')->insert([
+            'name' =>  'Traspaso Aceptado',
+            'created_at' => '2019-01-01 16:00:00',
+            'updated_at' => '2019-01-01 16:00:00',
+        ]);
+        DB::table('status_inventories')->insert([
+            'name' =>  'Vendido',
+            'created_at' => '2019-01-01 16:00:00',
+            'updated_at' => '2019-01-01 16:00:00',
+        ]);
     }
 }

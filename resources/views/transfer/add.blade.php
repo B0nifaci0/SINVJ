@@ -39,16 +39,18 @@ ALTA PRODUCTO
                     <!-- Select para Seleccionar producto-->
                     <div class="form-group form-material  col-md-3  col-md-offset-1 visible-md visible-lg">
                         <label>Producto</label>
-                        <select id="product" name="product_id" class="form-control " data-plugin="select2"
+                        <select id="product"  class="form-control " data-plugin="select2"
                             data-placeholder="Seleccione Producto" data-allow-clear="true" required>
                             <option></option>
                             <optgroup label="Productos">
                                 @foreach($products as $product)
-                                <option value="{{ $product->id }}" required>
+                                <option value="{{ $product->clave }}" required>
                                     {{$product->clave}}-{{ $product->description }}</option>
                                 @endforeach
                             </optgroup>
                         </select>
+                        <input type="text" name="product_id" class="invisible" id="product_id">
+                        <input type="text" name="product_id" class="invisible" id="product_id">
                     </div>
                     <!-- END Select-->
                     <!-- Select para Seleccionar Sucursal Destino-->
@@ -85,6 +87,7 @@ ALTA PRODUCTO
 <script type="text/javascript">
     var products = {!! $products !!};
 var branches = {!! $branches !!};
+console.log("PPPP", JSON.stringify(products))
 
 $(".sucursales").change(function(){
   var selector =  $(this).attr("alt");
@@ -124,13 +127,13 @@ $(".usuarios").change(function(){
     });
 
     $('#product').change(function() {
-  var id = $(this).val();
-  var p = products.filter(p => p.id == id)[0];
+        var clave = $(this).val();
+  console.log("===> clave", clave);
+  var p = products.filter(p => p.clave == clave)[0];
   console.log(p);
   $('#branch').val(p.branchName)
   $('#branch_id').val(p.branchId)
   $('#product_id').val(p.id);
-  console.log(branches);
   let brancehesList = branches.filter(b => b.id != p.branchId);
 
   $('#branches').empty();

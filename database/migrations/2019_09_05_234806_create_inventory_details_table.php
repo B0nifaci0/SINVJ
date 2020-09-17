@@ -15,7 +15,8 @@ class CreateInventoryDetailsTable extends Migration
     {
         Schema::create('inventory_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('status')->nullable();
+            $table->integer('status_id');
+            $table->foreign('status_id')->references('id')->on('status_inventories');
             $table->integer('inventory_report_id')->unsigned();
             $table->foreign('inventory_report_id')->references('id')->on('inventory_reports');
             $table->integer('product_id')->unsigned();;
