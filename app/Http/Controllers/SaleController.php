@@ -364,7 +364,6 @@ class SaleController extends Controller
         }
 
         $sale->paid_out = Partial::where('sale_id', $sale->id)->sum('amount');
-        $client = Client::find($sale->client_id);
         //return $sale;
         $sale->save();
 

@@ -37,7 +37,7 @@ ALTA VENTA
                 </div>
                 @endif
                 <form id="form" method="POST" action="/ventas" enctype="multipart/form-data">
-                    <h2 class="text-center">Venta</h2>
+                    <h3 class="text-center">Venta</h3>
                     {{ csrf_field() }}
                     <div class="row mb-10">
                         <div class="col-md-3">
@@ -775,7 +775,13 @@ seleccionado con sus respectivos datos-->
                 overDiscount = [];
                 console.log("selectedProducts", selectedProducts);
                 var val_phone = false;
-                var phoneNumber = $('#phone').val();
+                var type_sale = $('#user-type').val();
+                if(type_sale == 1)
+                {
+                    var id_client = $('#public-id').val();
+                } else {
+                    var id_client = $('#user-id').val();
+                }
                 if(id_client == 0)
                 {
                     Swal.fire(
@@ -786,13 +792,7 @@ seleccionado con sus respectivos datos-->
                         e.preventDefault();
                         return
                 }
-                var type_sale = $('#user-type').val();
-                if(type_sale == 1)
-                {
-                    var id_client = $('#public-id').val();
-                } else {
-                    var id_client = $('#user-id').val();
-                }
+                var phoneNumber = $('#phone').val();
                 if(old_id == new_id)
                 {
                     var client = clients.filter(c => c.id == id_client)[0];
