@@ -19,7 +19,7 @@ ALTA PRODUCTO
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
+            </div> 
             @endif
             @if($errors->count() > 0)
             <div class="alert alert-danger" role="alert">
@@ -43,7 +43,7 @@ ALTA PRODUCTO
                             <option></option>
                             <optgroup label="Productos">
                                 @foreach($products as $product)
-                                <option value="{{ $product->description }}" required>
+                                <option value="{{ $product->clave }}" required>
                                     {{$product->clave}}-{{ $product->description }}</option>
                                 @endforeach
                             </optgroup>
@@ -94,7 +94,7 @@ ALTA PRODUCTO
 <script type="text/javascript">
     var products = {!! $products !!};
 var branches = {!! $branches !!};
-console.log("PPPP", products)
+console.log("PPPP", JSON.stringify(products))
 
 
 $(".sucursales").change(function(){
@@ -136,8 +136,9 @@ setInterval(() => {
 }, 2500);
 
 $('#product').change(function() {
-  var name = $(this).val();
-  var p = products.filter(p => p.description == name)[0];
+  var clave = $(this).val();
+  console.log("===> clave", clave);
+  var p = products.filter(p => p.clave == clave)[0];
   console.log(p);
   $('#branch').val(p.branchName)
   $('#branch_id').val(p.branchId)

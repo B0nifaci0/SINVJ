@@ -39,37 +39,71 @@ class ProductController extends Controller
         });
     }
 
+    // public function allProducts()
+    // {
+    //     $products = Product::orderBy('updated_at', 'desc')
+    //         // orderByRaw('CHAR_LENGTH(clave)')
+    //         ->take(50)->get();
+
+    //     return view('product/indexAll', compact('products'));
+    // }
+
+
     public function allProducts()
     {
-        $products = Product::orderBy('updated_at', 'desc')
-            // orderByRaw('CHAR_LENGTH(clave)')
-            ->take(50)->get();
+        $products = Product::orderBy('updated_at', 'desc')->paginate(10);
 
         return view('product/indexAll', compact('products'));
     }
 
-    public function search(Request $request)
+    function search(Request $request)
     {
-        $status = Status::where('name', 'like', "%$request->text%")->first();
-        $branch = Branch::where('name', 'like', "%$request->text%")->first();
+        if ($request->ajax()) {
+            $query = $request->get('query');
+            $query = str_replace(" ", "%", $query);
 
-        $products = Product::where('description', 'like', "%$request->text%")
-            ->orWhere('clave', 'like', "%$request->text%")
-            ->orWhere('observations', 'like', "%$request->text%");
+            $status = Status::where('name', 'like', '%' . $query . '%')->first();
+            $branch = Branch::where('name', 'like', '%' . $query . '%')->first();
 
-        if ($status) {
-            $products = $products->orWhere('status_id', $status->id);
+            $products = Product::where('description', 'like', '%' . $query . '%')
+                ->orWhere('clave', 'like', '%' . $query . '%')
+                ->orWhere('observations', 'like', '%' . $query . '%');
+
+            if ($status) {
+                $products = $products->orWhere('status_id', $status->id);
+            }
+
+            if ($branch) {
+                $products = $products->orWhere('branch_id', $branch->id);
+            }
+
+            $products = $products->orderByRaw('CHAR_LENGTH(clave)')
+                ->orderBy('clave')->paginate(10);
+            return view('product/table', compact('products'))->render();
         }
-
-        if ($branch) {
-            $products = $products->orWhere('branch_id', $branch->id);
-        }
-
-        $products = $products->orderByRaw('CHAR_LENGTH(clave)')
-            // ->orderBy('clave')->paginate(10)->appends($request->all());
-            ->orderBy('clave')->get();
-        return view('product/table', compact(('products')));
     }
+    // public function search(Request $request)
+    // {
+    //     $status = Status::where('name', 'like', "%$request->text%")->first();
+    //     $branch = Branch::where('name', 'like', "%$request->text%")->first();
+
+    //     $products = Product::where('description', 'like', "%$request->text%")
+    //         ->orWhere('clave', 'like', "%$request->text%")
+    //         ->orWhere('observations', 'like', "%$request->text%");
+
+    //     if ($status) {
+    //         $products = $products->orWhere('status_id', $status->id);
+    //     }
+
+    //     if ($branch) {
+    //         $products = $products->orWhere('branch_id', $branch->id);
+    //     }
+
+    //     $products = $products->orderByRaw('CHAR_LENGTH(clave)')
+    //         // ->orderBy('clave')->paginate(10)->appends($request->all());
+    //         ->orderBy('clave')->get();
+    //     return view('product/table', compact(('products')));
+    // }
     // public function productsAjax()
     // {
     //     return view('product/indexAjax');

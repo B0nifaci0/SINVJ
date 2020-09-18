@@ -149,8 +149,19 @@ class InventoryController extends Controller
         ->where('status_id', 2)
         ->where('deleted_at', '=', NULL)->count();
 
+        $active_inventories = InventoryReport::where('branch_id', $branch_id)
+        ->where(function($q) use ($request) {
+            $q->where(function($query) use ($request){
+                    $query->Where('status_report', 1)
+                          ->orWhere('status_report', 2);
+                });
+            })
+        ->count();
+
         if ($num_products == 0) {
-            return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, porque la sucursal no tiene productos existentes!');
+            return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, ya que la sucursal no tiene productos existentes!');
+        } elseif($active_inventories >= 1){
+            return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, ya que la sucursal tiene un inventario en progreso!');
         } else {
             $inventory = InventoryReport::create([
                 'start_date' => Carbon::now()->format('Y-m-d'),
