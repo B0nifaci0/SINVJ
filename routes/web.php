@@ -206,7 +206,7 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
     Route::get('/productos/{id}/restore', 'ProductController@restore');
     Route::post('/productos', 'ProductController@store');
     Route::get('/productos/{id}/edit', 'ProductController@edit');
-    Route::get('/productos/{id}/show', 'ProductController@show');
+    Route::get('/productos/{id}/info', 'ProductController@show');
     Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
     Route::delete('/productos/{id}', 'ProductController@destroy');
 
