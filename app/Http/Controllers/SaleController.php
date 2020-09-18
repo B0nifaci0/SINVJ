@@ -365,10 +365,6 @@ class SaleController extends Controller
 
         $sale->paid_out = Partial::where('sale_id', $sale->id)->sum('amount');
         $client = Client::find($sale->client_id);
-        if($client->phone_number == '0000000000'){
-            $client->phone_number = null;
-            $client->save();
-        }
         //return $sale;
         $sale->save();
 
