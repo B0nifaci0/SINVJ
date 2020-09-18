@@ -25,6 +25,13 @@
     @if(Auth::user()->type_user == 1)
     <td class="desktop">${{$product->discount}}</td>
     <td class="desktop">
+
+                        <!-- Botón para show producto-->
+                          <a type="button" href="/productos/{{$product->id}}/info"
+                          class="btn btn-icon btn-primary waves-effect waves-light waves-round" data-toggle="tooltip"
+                          data-original-title="Info producto">
+                          <i class="icon fa-search" aria-hidden="true"></i></a>
+                        <!-- END Botón-->
         <!-- Botón para editar producto-->
         <a type="button" href="/productos/{{$product->id}}/edit"
             class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
@@ -83,6 +90,12 @@
             <p>
                 <!-- Botón para editar producto-->
                 <strong>Opciones: </strong>
+                      <!-- Botón para show producto-->
+                          <a type="button" href="/productos/{{$product->id}}/info"
+                          class="btn btn-icon btn-primary waves-effect waves-light waves-round" data-toggle="tooltip"
+                          data-original-title="Info producto">
+                          <i class="icon fa-search" aria-hidden="true"></i></a>
+                        <!-- END Botón-->
                 <a type="button" href="/productos/{{$product->id}}/edit"
                     class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
                     data-original-title="Editar">

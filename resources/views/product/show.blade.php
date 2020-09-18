@@ -121,11 +121,13 @@ Panel Sucursales
                                 {{ ($product->line) ? $product->line->name : '' }}</span>
                             </p>
                           </div>
+                          @if(Auth::user()->type_user == 1)
                           <div class="col-md-3">
                             <p class="">
                               <strong>Precio Compra:</strong><span> {{$product->price_purchase}} </span>
                             </p>
                           </div>
+                          @endif
                           <div class="col-md-3">
                             <p class="">
                               <strong>Precio Venta:</strong><span> {{$product->price}} </span>
