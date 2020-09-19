@@ -557,6 +557,14 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::findOrFail($id);
+        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+        if ($product->image) {
+            $path = env('S3_ENVIRONMENT') . '/products/' . $product->clave;
+        } else {
+            $path = 'products/default';
+        }
+
+        $product->image = $this->getS3URL($path);
         //return $product;
 
         return view('product.show', ['product' =>$product]);
