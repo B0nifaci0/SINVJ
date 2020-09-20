@@ -7,6 +7,7 @@ use App\Branch;
 use App\Product;
 use App\InventoryReport;
 use App\InventoryDetail;
+use App\TransferProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -63,6 +64,12 @@ class InventoryController extends Controller
             }
             return $item;
         });
+
+        foreach($branches as $branch) {
+            $branch->inventory_validation = TransferProduct::Where('last_branch_id',$branch->id)
+            ->WhereNull('status_product')
+            ->count();
+        }
         //return $branches;
         $date = Carbon::now()->toFormattedDateString();
 
@@ -138,7 +145,7 @@ class InventoryController extends Controller
     public function store(Request $request)
     {
         $shop = Auth::user()->shop;
-
+        //return $request;
         $branches_ids = $shop->branches->map(function ($b) {
             return $b->id;
         });

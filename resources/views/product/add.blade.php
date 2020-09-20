@@ -127,9 +127,6 @@ ALTA PRODUCTO
             <div class="col-md-3">
               <label>Seleccione Sucursal</label>
               <select name="branch_id" class="form-control round">
-                @php
-                    $branches = $user->shop->branches;
-                @endphp
                   @foreach($branches as $branch)
                     <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
                   @endforeach

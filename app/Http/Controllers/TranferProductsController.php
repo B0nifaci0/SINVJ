@@ -201,6 +201,23 @@ class TranferProductsController extends Controller
         $product->status_id = Product::EXISTING;
         $product->save();
 
+        $inventory = InventoryDetail::join('inventory_reports', 'inventory_details.inventory_report_id','inventory_reports.id')
+        ->where('inventory_reports.branch_id', $product->branch_id)
+        ->where('inventory_details.product_id', $product->id)
+        ->where(function($q) use ($request) {
+            $q->where(function($query) use ($request){
+                    $query->Where('inventory_reports.status_report', 1)
+                          ->orWhere('inventory_reports.status_report', 2);
+                });
+            })
+        ->select('inventory_details.*')
+        ->first();
+
+        if($inventory) {
+            $inventory->status_id = 1;
+            $inventory->save();
+        }
+
         $transfer->status_product = 3;
         $transfer->save();
 

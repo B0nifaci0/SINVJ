@@ -437,7 +437,13 @@ class ProductController extends Controller
         //return $lines;
         $status = Auth::user()->shop->id;
         $statuses = Status::all();
-        return view('product/add', compact('user', 'categories', 'lines', 'shops', 'statuses'));
+        if($user->branch_id){
+            $branches = Branch::where('municipality_id',$user->branch->municipality_id)
+            ->where('shop_id',$user->shop_id)->get();
+        } else {
+            $branches = $user->shop->branches;
+        }
+        return view('product/add', compact('user', 'categories', 'lines', 'shops', 'statuses','branches'));
     }
 
     /**
