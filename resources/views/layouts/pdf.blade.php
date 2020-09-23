@@ -6,8 +6,11 @@
         <title>Reporte de Productos</title>
 
         <style>
-            . {
-                font: 11px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
+            @import 'https://fonts.googleapis.com/css2?family=Archivo&display=swap';
+
+            body {
+                font-size: 14px;
+                font-family: 'Archivo', sans-serif;
             }
 
             h1 {
@@ -21,8 +24,8 @@
 
             img {
                 float: left;
-                width: 140px;
-                height: 120px;
+                width: 150px;
+                height: 129px;
             }
 
             table {
@@ -100,7 +103,7 @@
                 border-bottom-right-radius: 5px;
             }
 
-            .footer {
+            /* .footer {
                 width: 100%;
                 text-align: center;
                 position: fixed;
@@ -109,7 +112,7 @@
 
             .pagenum:before {
                 content: counter(page);
-            }
+            } */
         </style>
     </head>
 
@@ -123,9 +126,9 @@
                 </div>
             </div>
             @yield('body')
-            <div class="footer">
+            {{-- <div class="footer">
                 Pagina: <span class="pagenum"></span>
-            </div>
+            </div> --}}
     </body>
 
 </html>
