@@ -306,6 +306,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('reportes-traspasos', 'TrasferUserController@indexReportTransfer');
     Route::get('reportTransferG', 'TrasferUserController@reportTransferG');
     Route::get('reportTransfer', 'TrasferUserController@reportTransferBranch');
+
+    Route::get('/testTraspaso', 'TranferProductsController@testInterfaz');
 });
 
 Auth::routes(['verify' => true]);

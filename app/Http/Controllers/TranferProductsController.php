@@ -278,6 +278,14 @@ class TranferProductsController extends Controller
         $shops = Auth::user()->shop()->get();
         return view('transfer.Reports.indexReportTransfer', compact('shop', 'shops', 'tienda', 'user', 'statuses'));
     }
+
+    public function testInterfaz()
+    {   
+        $user = Auth::user();
+        $branches = $user->shop->branches;
+        return view('transfer.Traspaso', compact('branches'));
+    }
+
 }
 
 //reporte de gastos
