@@ -7,6 +7,7 @@ use App\Branch;
 use App\Product;
 use App\InventoryReport;
 use App\InventoryDetail;
+use App\TransferProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -63,6 +64,12 @@ class InventoryController extends Controller
             }
             return $item;
         });
+
+        foreach($branches as $branch) {
+            $branch->inventory_validation = TransferProduct::Where('last_branch_id',$branch->id)
+            ->WhereNull('status_product')
+            ->count();
+        }
         //return $branches;
         $date = Carbon::now()->toFormattedDateString();
 
@@ -75,23 +82,10 @@ class InventoryController extends Controller
         $name_branch = InventoryReport::join('branches', 'branches.id', 'inventory_reports.branch_id')
             ->where('inventory_reports.id', $id)->select('branches.name')->get();
         $inventory = InventoryReport::where('id', $id)->first();
-        $inventory->products = InventoryDetail::join('products', 'products.id', 'inventory_details.product_id')
-            ->where('inventory_details.inventory_report_id', $inventory->id)
-            ->where('products.branch_id', $branch)
-            ->where('products.deleted_at', NULL)
-            ->whereIn('products.status_id', [2, 4, 5])
-            ->select(
-                'inventory_details.id',
-                'inventory_details.status',
-                'inventory_details.product_id',
-                'products.clave',
-                'products.description',
-                'products.weigth'
-            )
-            ->get();
+        
         //QUERY PARA SABER SI HAY PRODUCTOS SIN LISTAR EN EL INVENTARIO
         $finalizar = InventoryDetail::where('inventory_report_id', $id)
-            ->where('status', null)
+            ->where('status_id', 1)
             ->count('id');
 
         //return $finalizar;
@@ -103,27 +97,79 @@ class InventoryController extends Controller
             $inventorie->status_report = 2;
             $inventorie->save();
         }
+        $validation = 0;
         //return $finalizar;
         //return $inventory->products;
-        return view('inventory.show', compact('inventory', 'name_branch', 'finalizar', 'id_inventory'));
+        return view('inventory.show', compact('validation','inventory', 'name_branch', 'finalizar', 'id_inventory'));
     }
+
+    public function search(Request $request, $id)
+    {
+        //return $request;
+        $inventory = InventoryReport::findOrFail($id);
+        //return $id;
+
+        $inventory->products = InventoryDetail::join('products','products.id','inventory_details.product_id')
+        ->join('status_inventories','status_inventories.id','inventory_details.status_id')
+        ->Where('inventory_details.inventory_report_id', $id)
+        ->where(function($q) use ($request) {
+            $q->where(function($query) use ($request){
+                    $query->Where('products.description', 'like', "%$request->text%")
+                          ->orWhere('products.clave', 'like', "%$request->text%")
+                          ->orWhere('status_inventories.name', 'like', "%$request->text%");
+                });
+            })
+        ->select(
+            'inventory_details.id',
+            'status_inventories.name as status_name',
+            'inventory_details.product_id',
+            'inventory_details.status_id as status',
+            'inventory_details.inventory_report_id',
+            'products.clave',
+            'products.description',
+            'products.weigth'
+            )
+        ->orderByRaw('CHAR_LENGTH(products.clave)')
+        ->orderBy('products.clave')
+        ->get();
+
+        if($request->validacion && $inventory->products->count() > 0){
+            $validation = $request->validacion;
+        } else {
+            $validation = 0;
+        }
+
+        return view('inventory/inventory_products', compact('inventory','validation'));
+    } 
 
     public function store(Request $request)
     {
         $shop = Auth::user()->shop;
-
+        //return $request;
         $branches_ids = $shop->branches->map(function ($b) {
             return $b->id;
         });
 
         $branch_id = $request->branch_id ? $request->branch_id : Auth::user()->branch_id;
 
-        $num_products = Product::withTrashed()->where('branch_id', '=', $branch_id)->where('deleted_at', '=', NULL)->count();
+        $num_products = Product::where('branch_id', $branch_id)
+        ->where('status_id', 2)
+        ->where('deleted_at', '=', NULL)->count();
+
+        $active_inventories = InventoryReport::where('branch_id', $branch_id)
+        ->where(function($q) use ($request) {
+            $q->where(function($query) use ($request){
+                    $query->Where('status_report', 1)
+                          ->orWhere('status_report', 2);
+                });
+            })
+        ->count();
 
         if ($num_products == 0) {
-            return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, porque la sucursal no tiene productos!');
+            return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, ya que la sucursal no tiene productos existentes!');
+        } elseif($active_inventories >= 1){
+            return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, ya que la sucursal tiene un inventario en progreso!');
         } else {
-            //return $branch_id;
             $inventory = InventoryReport::create([
                 'start_date' => Carbon::now()->format('Y-m-d'),
                 'status_report' => 1,
@@ -138,6 +184,7 @@ class InventoryController extends Controller
                 InventoryDetail::create([
                     'inventory_report_id' => $inventory->id,
                     'product_id' => $p->id,
+                    'status_id' => 1,
                 ]);
             }
             //return $products;
@@ -151,21 +198,25 @@ class InventoryController extends Controller
         //return $request;
         $inventory = InventoryDetail::find($request->inventory_id);
         // return [$request->status];
+        $product = Product::withTrashed()->where('id', $inventory->product_id)->first();
         if (!$request->status) {
-            $product = Product::withTrashed()->where('id', $inventory->product_id)->first();
             $product->discar_cause = $request->discar_cause;
             //$product->delete();
         } else {
-            $product = Product::withTrashed()->where('id', $inventory->product_id)->first();
             $product->discar_cause = null;
             $product->deleted_at = null;
         }
         $product->status_id = $request->status_product;
-        //return $product;
         $product->save();
-
-        InventoryDetail::where('id', $request->inventory_id)->update(['status' => $request->status]);
-        return back();
+        
+        InventoryDetail::where('id', $request->inventory_id)->update(['status_id' => $request->status]);
+        $status = InventoryDetail::join('status_inventories','status_inventories.id','inventory_details.status_id')
+        ->where("inventory_details.product_id", $product->id)
+        ->select('status_inventories.name as name')
+        ->first();
+        //return $status;
+        return back()->with('message', "El producto $product->clave ahora tiene un status: $status->name!")
+        ->with('validar_restaurado_o_inventariado',1);
     }
 
     public function checkPassword(Request $request)
@@ -223,9 +274,12 @@ class InventoryController extends Controller
 
         //CONSULTAS PARA PRODUCTOS POR GRAMOS
         //CONSULTA PARA OBTENER EL TOTAL DE GRAMOS POR LINEA DE LA SUCURSAL
-        $gramos_totales = Product::join('categories', 'categories.id', 'products.category_id')
+        $gramos_totales = Shop::join('products', 'products.shop_id', 'shops.id')
+            ->join('categories', 'categories.id', 'products.category_id')
+            ->join('branches', 'branches.id', 'products.branch_id')
             ->join('lines', 'lines.id', 'products.line_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
+            //->where('lines.shop_id', Auth::user()->shop->id)
             ->where('products.deleted_at', NULL)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('categories.type_product', 2)
@@ -236,67 +290,79 @@ class InventoryController extends Controller
             ->groupBy('lines.id', 'lines.name')
             ->orderBy('name_line', 'DESC')
             ->get();
-        //return $totals;
+        //return $gramos_totales;
 
         foreach ($gramos_totales as $g) {
 
             //CONSULTA PARA OBTENER GRAMOS DAÑADOS POR LINEA
-            $g->gramos_da = Product::join('categories', 'categories.id', 'products.category_id')
+            $g->gramos_da = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('lines', 'lines.id', 'products.line_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('lines.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 4)
                 ->where('products.line_id', $g->ids)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->sum('weigth');
 
             //CONSULTA PARA OBTENER DINERO POR GRAMOS DAÑADOS POR LINEA
-            $g->dinero_da = Product::join('categories', 'categories.id', 'products.category_id')
+            $g->dinero_da = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('lines', 'lines.id', 'products.line_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('lines.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 4)
                 ->where('products.line_id', $g->ids)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->sum('discount');
 
             //CONSULTA PARA OBTENER GRAMOS FALTANTES POR LINEA
-            $g->gramos_fal = Product::join('categories', 'categories.id', 'products.category_id')
+            $g->gramos_fal = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('lines', 'lines.id', 'products.line_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('lines.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 5)
                 ->where('products.line_id', $g->ids)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->sum('weigth');
 
             //CONSULTA PARA OBTENER DINERO POR GRAMOS FALTANTES POR LINEA
-            $g->dinero_fal = Product::join('categories', 'categories.id', 'products.category_id')
+            $g->dinero_fal = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('lines', 'lines.id', 'products.line_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('lines.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 5)
                 ->where('products.line_id', $g->ids)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->sum('discount');
 
@@ -309,15 +375,17 @@ class InventoryController extends Controller
         //return $gramos_totales;
 
         //DESCRIPCION DE PRODUCTOS GRAMOS FALTANTES
-        $prod_fal = Product::join('categories', 'categories.id', 'products.category_id')
+        $prod_fal = Shop::join('products', 'products.shop_id', 'shops.id')
+            ->join('categories', 'categories.id', 'products.category_id')
+            ->join('branches', 'branches.id', 'products.branch_id')
             ->join('lines', 'lines.id', 'products.line_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->where('products.status_id', 5)
+            //->where('lines.shop_id', Auth::user()->shop->id)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('products.deleted_at', NULL)
             ->where('categories.type_product', 2)
             ->where('products.branch_id', $id_branch)
-            ->where('inventory_details.status', 3)
+            ->where('inventory_details.status_id', 4)
             ->where('inventory_details.inventory_report_id', $id)
             ->select('products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
             ->distinct('products.clave')
@@ -330,10 +398,10 @@ class InventoryController extends Controller
         $prod_exis = Product::join('categories', 'categories.id', 'products.category_id')
         ->join('inventory_details', 'inventory_details.product_id', 'products.id')
         ->join('lines', 'lines.id', 'products.line_id')
-        ->where('products.status_id', 2)
         ->where('products.shop_id', Auth::user()->shop->id)
         ->where('products.deleted_at', NULL)
         ->where('categories.type_product', 2)
+        ->whereIn('inventory_details.status_id', [1, 2])
         ->where('products.branch_id', $id_branch)
         ->where('inventory_details.inventory_report_id', $id)
         ->select('products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
@@ -344,15 +412,17 @@ class InventoryController extends Controller
         //return $prod_exis;
 
         //DESCRIPCION DE PRODUCTOS GRAMOS DAÑADOS
-        $prod_da = Product::join('categories', 'categories.id', 'products.category_id')
+        $prod_da = Shop::join('products', 'products.shop_id', 'shops.id')
+            ->join('categories', 'categories.id', 'products.category_id')
+            ->join('branches', 'branches.id', 'products.branch_id')
             ->join('lines', 'lines.id', 'products.line_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->where('products.status_id', 4)
+            //->where('lines.shop_id', Auth::user()->shop->id)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('products.deleted_at', NULL)
             ->where('categories.type_product', 2)
             ->where('products.branch_id', $id_branch)
-            ->where('inventory_details.status', 2)
+            ->where('inventory_details.status_id', 3)
             ->where('inventory_details.inventory_report_id', $id)
             ->select('products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
             ->distinct('products.clave')
@@ -362,10 +432,12 @@ class InventoryController extends Controller
         //return $prod_fal;
 
         //CONSULTA PARA OBTENER EL TOTAL DE GRAMOS Y DINERO EN LINEAS DE LA SUCURSAL
-        $totales_g = Product::join('categories', 'categories.id', 'products.category_id')
+        $totales_g = Shop::join('products', 'products.shop_id', 'shops.id')
+            ->join('categories', 'categories.id', 'products.category_id')
+            ->join('branches', 'branches.id', 'products.branch_id')
             ->join('lines', 'lines.id', 'products.line_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->whereIn('products.status_id', [2, 4, 5])
+            //->where('lines.shop_id', Auth::user()->shop->id)
             ->where('products.deleted_at', NULL)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('categories.type_product', 2)
@@ -377,58 +449,70 @@ class InventoryController extends Controller
 
         foreach ($totales_g as $g) {
             //CONSULTA PARA OBTENER EL TOTAL DE GRAMOS DAÑADOS
-            $g->g_dañados = Product::join('categories', 'categories.id', 'products.category_id')
+            $g->g_dañados = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('lines', 'lines.id', 'products.line_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('lines.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 4)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->sum('weigth');
 
             //CONSULTA PARA OBTENER EL TOTAL EN DINERO POR GRAMOS DAÑADOS
-            $g->d_dañados = Product::join('categories', 'categories.id', 'products.category_id')
+            $g->d_dañados = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('lines', 'lines.id', 'products.line_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('lines.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 4)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->sum('discount');
 
             //CONSULTA PARA OBTENER EL TOTAL DE DINERO EN GRAMOS FALTANTES
-            $g->g_faltantes = Product::join('categories', 'categories.id', 'products.category_id')
+            $g->g_faltantes = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('lines', 'lines.id', 'products.line_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('lines.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 5)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->sum('weigth');
 
             //CONSULTA PARA OBTENER EL TOTAL DE DINERO POR GRAMOS FALTANTES
-            $g->d_faltantes = Product::join('categories', 'categories.id', 'products.category_id')
+            $g->d_faltantes = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('lines', 'lines.id', 'products.line_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('lines.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 5)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->sum('discount');
 
@@ -442,73 +526,89 @@ class InventoryController extends Controller
 
         // CONSULTAS PARA PRODUCTOS POR PIEZA
         //PRODUCTOS PIEZA
-        $cat_totals = Product::join('categories', 'categories.id', 'products.category_id')
+        $cat_totals = Shop::join('products', 'products.shop_id', 'shops.id')
+            ->join('categories', 'categories.id', 'products.category_id')
+            ->join('branches', 'branches.id', 'products.branch_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
+            //->where('categories.shop_id', Auth::user()->shop->id)
             ->where('products.deleted_at', NULL)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('categories.type_product', 1)
             ->where('products.branch_id', $id_branch)
             ->where('inventory_details.inventory_report_id', $id)
+            //->where('inventory_details.status', 1)
             ->select('categories.id as ids', 'categories.name as cat_name', DB::raw('SUM(products.discount) as total, count(products.id) as num_pz'))
-            ->distinct('categories.id')
+            ->distinct('categories.name')
             ->groupBy('categories.id', 'categories.name')
             ->orderBy('cat_name', 'DESC')
             ->get();
 
         foreach ($cat_totals as $c) {
             //CONSULTA PARA OBTENER PIEZAS DAÑADOS POR CATEGORIA
-            $c->pz_da = Product::join('categories', 'categories.id', 'products.category_id')
+            $c->pz_da = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('categories.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 4)
                 ->where('products.category_id', $c->ids)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->count('id');
 
             //CONSULTA PARA OBTENER DINERO POR PIEZAS DAÑADOS POR CATEGORIA
-            $c->d_da = Product::join('categories', 'categories.id', 'products.category_id')
+            $c->d_da = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('categories.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 4)
                 ->where('products.category_id', $c->ids)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->sum('discount');
 
             //CONSULTA PARA OBTENER PIEZAS FALTANTES POR CATEGORIA
-            $c->pz_fal = Product::join('categories', 'categories.id', 'products.category_id')
+            $c->pz_fal = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('categories.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 5)
                 ->where('products.category_id', $c->ids)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->count('id');
 
             //CONSULTA PARA OBTENER DINERO POR PIEZAS FALTANTES POR CATEGORIA
-            $c->d_fal = Product::join('categories', 'categories.id', 'products.category_id')
+            $c->d_fal = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('categories.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 5)
                 ->where('products.category_id', $c->ids)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
+                //->select('products.id', 'products.weigth', 'products.line_id', 'products.status_id')
                 ->get()
                 ->sum('discount');
 
@@ -522,14 +622,16 @@ class InventoryController extends Controller
         //return $cat_totals;
 
         //DESCRIPCION DE PRODUCTOS FALTANTES PIEZA
-        $p_faltantes = Product::join('categories', 'categories.id', 'products.category_id')
+        $p_faltantes = Shop::join('products', 'products.shop_id', 'shops.id')
+            ->join('categories', 'categories.id', 'products.category_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->where('products.status_id', 5)
+            ->withTrashed()
+            //->where('categories.shop_id', Auth::user()->shop->id)
             ->where('products.deleted_at', NULL)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('categories.type_product', 1)
             ->where('products.branch_id', $id_branch)
-            ->where('inventory_details.status', 3)
+            ->where('inventory_details.status_id', 4)
             ->where('inventory_details.inventory_report_id', $id)
             ->select('products.clave', 'products.discount', 'products.description', 'categories.id as id_cat', 'categories.name as cat_name')
             ->groupBy('products.clave', 'products.discount', 'products.description', 'categories.id', 'categories.name')
@@ -538,14 +640,15 @@ class InventoryController extends Controller
         // return $p_faltantes;
 
         //DESCRIPCION DE PRODUCTOS DAÑADOS PIEZA
-        $p_dañados = Product::join('categories', 'categories.id', 'products.category_id')
+        $p_dañados = Shop::join('products', 'products.shop_id', 'shops.id')
+            ->join('categories', 'categories.id', 'products.category_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->where('products.status_id', 4)
+            //->where('categories.shop_id', Auth::user()->shop->id)
             ->where('products.deleted_at', NULL)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('categories.type_product', 1)
             ->where('products.branch_id', $id_branch)
-            ->where('inventory_details.status', 2)
+            ->where('inventory_details.status_id', 3)
             ->where('inventory_details.inventory_report_id', $id)
             ->select('products.clave', 'products.discount', 'products.description', 'categories.id as id_cat', 'categories.name as cat_name')
             ->groupBy('products.clave', 'products.discount', 'products.description', 'categories.id', 'categories.name')
@@ -554,12 +657,15 @@ class InventoryController extends Controller
         //  return $p_dañados;
 
         //DESCRIPCION DE PRODUCTOS EXISTENTES PIEZA
-        $p_existentes = Product::join('categories', 'categories.id', 'products.category_id')
+        $p_existentes = Shop::join('products', 'products.shop_id', 'shops.id')
+            ->join('categories', 'categories.id', 'products.category_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->where('products.status_id', 2)
+            ->where('inventory_details.status_id', 2)
+            //->where('categories.shop_id', Auth::user()->shop->id)
             ->where('products.deleted_at', NULL)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('categories.type_product', 1)
+            ->whereIn('inventory_details.status_id', [1, 2])
             ->where('products.branch_id', $id_branch)
             ->where('inventory_details.inventory_report_id', $id)
             ->select('products.clave', 'products.discount', 'products.description', 'categories.id as id_cat', 'categories.name as cat_name')
@@ -569,8 +675,11 @@ class InventoryController extends Controller
         //return $p_existentes;
 
         //CONSULTA PARA OBTENER LOS TOTALES DE PRODUCTOS POR PIEZAS DE LA SUCURSAL
-        $totales_piezas = Product::join('categories', 'categories.id', 'products.category_id')
+        $totales_piezas = Shop::join('products', 'products.shop_id', 'shops.id')
+            ->join('categories', 'categories.id', 'products.category_id')
+            ->join('branches', 'branches.id', 'products.branch_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
+            //->where('categories.shop_id', Auth::user()->shop->id)
             ->where('products.deleted_at', NULL)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('categories.type_product', 1)
@@ -582,54 +691,62 @@ class InventoryController extends Controller
 
         foreach ($totales_piezas as $p) {
             //CONSULTA PARA OBTENER PIEZAS FALTANTES DE LA SUCURSAL
-            $p->falt = Product::join('categories', 'categories.id', 'products.category_id')
+            $p->falt = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('categories.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 5)
-                ->Where('inventory_details.status', 3)
+                ->Where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->count('id');
 
             //CONSULTA PARA OBTENER DINERO POR PIEZAS FALTANTES DE LA SUCURSAL
-            $p->din_falt = Product::join('categories', 'categories.id', 'products.category_id')
+            $p->din_falt = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('categories.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 5)
-                ->Where('inventory_details.status', 3)
+                ->Where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('discount');
             //return $totales_piezas;
 
             //CONSULTA PARA OBTENER PIEZAS DAÑADAS DE LA SUCURSAL
-            $p->da = Product::join('categories', 'categories.id', 'products.category_id')
+            $p->da = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('categories.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 4)
-                ->Where('inventory_details.status', 2)
+                ->Where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->count('id');
 
             //CONSULTA PARA OBTENER DINERO POR PIEZAS DAÑADAS DE LA SUCURSAL
-            $p->din_da = Product::join('categories', 'categories.id', 'products.category_id')
+            $p->din_da = Shop::join('products', 'products.shop_id', 'shops.id')
+                ->join('categories', 'categories.id', 'products.category_id')
+                ->join('branches', 'branches.id', 'products.branch_id')
                 ->join('inventory_details', 'inventory_details.product_id', 'products.id')
                 ->where('products.branch_id', $id_branch)
+                //->where('categories.shop_id', Auth::user()->shop->id)
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 4)
-                ->Where('inventory_details.status', 2)
+                ->Where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('discount');

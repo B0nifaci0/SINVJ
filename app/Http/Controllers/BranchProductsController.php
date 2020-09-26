@@ -24,39 +24,41 @@ class BranchProductsController extends Controller
     /** Función para listar los productos por sucursal pra el usuario administrador y sub-administrador  */
     public function index($id)
     {
-
         $user = Auth::user();
-        $branch = Branch::find($id);
-        $shop_id = Auth::user()->shop->id;
-        $categories = Shop::find($shop_id)->categories()->get();
-        $lines = Shop::find($shop_id)->lines()->get();
-        $statuses = Status::all();
-        $products = Product::withTrashed()->where('branch_id', '=', $id)->where('deleted_at', '=', NULL)->get();
-        $num_products = Product::withTrashed()->where('branch_id', '=', $id)->where('deleted_at', '=', NULL)->count();
-        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+        $branch = Branch::findOrFail($id);
 
-        foreach ($products as $product) {
-            if ($product->image) {
+        $products = $branch->products()->orderBy('created_at', 'desc')->paginate(10);
 
-                $path = env('S3_ENVIRONMENT') . '/' . 'products/' . $product->clave;
+        return view('Branches/branchproduct', compact('products', 'branch'));
+    }
 
-                $command = $adapter->getClient()->getCommand('GetObject', [
-                    'Bucket' => $adapter->getBucket(),
-                    'Key' => $adapter->getPathPrefix() . $path
-                ]);
+    function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $query = $request->get('query');
+            $query = str_replace(" ", "%", $query);
 
-                $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+            $branch_id = $request->get('branch');
+            $branch = Branch::findOrFail($branch_id);
+            $products = $branch->products();
+            if ($query != "") {
 
-                $product->image = (string) $result->getUri();
+                $status = Status::where('name', 'like', '%' . $query . '%')->first();
+
+                $products = $products->where('description', 'like', '%' . $query . '%')
+                    ->orWhere('clave', 'like', '%' . $query . '%')
+                    ->orWhere('observations', 'like', '%' . $query . '%');
+
+                if ($status) {
+                    $products = $products->orWhere('status_id', $status->id);
+                }
             }
-        }
-
-        if ($num_products == 0) {
-            return redirect('/productos/create')->with('mesage', 'Primero debes crear productos de esta Sucursal!');
-        } else {
-            return view('Branches/branchproduct', compact('branch', 'products', 'user', 'categories', 'lines', 'statuses'));
+            $products = $products->orderByRaw('CHAR_LENGTH(clave)')
+                ->orderBy('clave')->paginate(10);
+            return view('Branches/table', compact('products'))->render();
         }
     }
+
     public function edit($id)
     {
         $user = Auth::user();

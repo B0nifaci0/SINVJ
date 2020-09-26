@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('/buscadorsucursal', 'BranchProductsController@search');
 
 Route::get('/', function () {
     return view('auth/login');
@@ -188,15 +189,16 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'BusinessRuleMiddlewa
     Route::post('inventory/check', 'InventoryController@check');
     Route::post('check-user', 'StateController@checkUser');
     Route::get('inventarios/terminar/{id}', 'InventoryController@terminar');
+    Route::get('/productos-inventario/{id}', 'InventoryController@search');
 
-    Route::get('productos', 'ProductController@index');
+    Route::get('/productos', 'ProductController@allProducts');
     Route::get('productos/create', 'ProductController@create');
     Route::get('productos/devueltos', 'ProductController@devuelto');
     Route::get('/productos/{id}/reetiquetado', 'ProductController@reetiquetado');
     Route::get('/productos/{id}/restore', 'ProductController@restore');
     Route::post('/productos', 'ProductController@store');
     Route::get('/productos/{id}/edit', 'ProductController@edit');
-    Route::get('/productos/{id}/show', 'ProductController@show');
+    Route::get('/productos/{id}/info', 'ProductController@show');
     Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
     Route::delete('/productos/{id}', 'ProductController@destroy');
 
