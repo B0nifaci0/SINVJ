@@ -332,19 +332,19 @@ class SaleController extends Controller
                 'profit' => $p->price - $product->price_purchase
             ]);
 
-            $inventory = InventoryDetail::join('inventory_reports', 'inventory_details.inventory_report_id','inventory_reports.id')
-            ->where('inventory_reports.branch_id', $product->branch_id)
-            ->where('inventory_details.product_id', $product->id)
-            ->where(function($q) use ($request) {
-                $q->where(function($query) use ($request){
+            $inventory = InventoryDetail::join('inventory_reports', 'inventory_details.inventory_report_id', 'inventory_reports.id')
+                ->where('inventory_reports.branch_id', $product->branch_id)
+                ->where('inventory_details.product_id', $product->id)
+                ->where(function ($q) use ($request) {
+                    $q->where(function ($query) use ($request) {
                         $query->Where('inventory_reports.status_report', 1)
-                              ->orWhere('inventory_reports.status_report', 2);
+                            ->orWhere('inventory_reports.status_report', 2);
                     });
                 })
-            ->select('inventory_details.*')
-            ->first();
+                ->select('inventory_details.*')
+                ->first();
 
-            if($inventory) {
+            if ($inventory) {
                 $inventory->status_id = 7;
                 $inventory->save();
             }
@@ -594,7 +594,9 @@ class SaleController extends Controller
         $branch = Branch::find($sale->branch_id);
         $prueba = response()->json(['shop' => $shop, 'sucursal' => $branch, 'sale' => $sale]);
         //return $prueba;
-        $pdf  = PDF::loadView('sale.PDFVenta', compact('shop', 'sale', 'branch', 'user'));
+        $pdf  = PDF::loadView('sale.PDFVenta', compact('shop', 'sale', 'branch', 'user'))
+            ->setOption('page-width', '55')
+            ->setOption('page-height', '150');
         return $pdf->stream('venta.pdf');
         // return $branches;
     }
