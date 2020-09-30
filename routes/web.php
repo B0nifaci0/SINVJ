@@ -12,6 +12,7 @@
 */
 
 Route::get('/buscadorsucursal', 'BranchProductsController@search');
+Route::get('/buscador', 'ProductController@search');
 
 Route::get('/', function () {
     return view('auth/login');
