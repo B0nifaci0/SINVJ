@@ -118,29 +118,22 @@ class SaleController extends Controller
     public function tableGivedback()
     {
         $user = Auth::user();
+        $sales = Sale::with('client')
+            ->join('branches', 'branches.id', 'sales.branch_id')
+            ->join('shops', 'shops.id', 'branches.shop_id')
+            ->join('clients', 'clients.id', 'sales.client_id')
+            ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type');
         if ($user->type_user == User::AA) {
             //DEVUELTOS
-            $givedback = Sale::with('client')
-                ->join('branches', 'branches.id', 'sales.branch_id')
-                ->join('shops', 'shops.id', 'branches.shop_id')
-                ->join('clients', 'clients.id', 'sales.client_id')
-                ->where('sales.deleted_at', null)
-                ->select('sales.*', 'branches.name as sucursal')
+            $givedback = $sales
                 ->whereRaw('sales.total = 0')
                 ->where('shops.id', $user->shop_id)
-                ->orderBy('sales.updated_at', 'desc')
                 ->get();
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             //DEVUELTOS
-            $givedback = Sale::with('client')
-                ->join('branches', 'branches.id', 'sales.branch_id')
-                ->join('shops', 'shops.id', 'branches.shop_id')
-                ->join('clients', 'clients.id', 'sales.client_id')
-                ->where('sales.deleted_at', null)
-                ->select('sales.*', 'branches.name as sucursal')
+            $givedback = $sales
                 ->whereRaw('sales.total = 0')
                 ->where('sales.branch_id', $user->branch_id)
-                ->orderBy('sales.updated_at', 'desc')
                 ->get();
         }
         return datatables()->of($givedback)->toJson();
