@@ -160,6 +160,7 @@
           data: "type",
           render: function (data) {
             if (data == 0) return "Publico";
+            else return "Mayorista";
           },
         },
         { data: "phone" },
@@ -199,6 +200,7 @@
           data: "type",
           render: function (data) {
             if (data == 0) return "Publico";
+            else return "Mayorista";
           },
         },
         { data: "phone" },
@@ -238,6 +240,7 @@
           data: "type",
           render: function (data) {
             if (data == 0) return "Publico";
+            else return "Mayorista";
           },
         },
         { data: "phone" },
