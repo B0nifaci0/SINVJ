@@ -437,10 +437,8 @@ seleccionado con sus respectivos datos-->
         console.log('Ventas: ', sales);
 
         $('#ventas').DataTable( {
-            scrollY:        '50vh',
-            scrollCollapse: true,
-            scrollX:        true,
-            paging:         false
+            paging:         false,
+            responsive:     true
         } );
 
         $(function() {
