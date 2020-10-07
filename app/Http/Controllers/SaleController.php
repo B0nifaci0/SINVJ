@@ -40,33 +40,44 @@ class SaleController extends Controller
     {
 
         $user = Auth::user();
-        $sales = Sale::with('client')
-            ->join('branches', 'branches.id', 'sales.branch_id')
-            ->join('shops', 'shops.id', 'branches.shop_id')
-            ->join('clients', 'clients.id', 'sales.client_id')
-            ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type');
 
         if ($user->type_user == User::AA) {
             //VENDIDOS
-            $sold_public = $sales
-                ->whereRaw('sales.total <= sales.paid_out')
-                ->where('shops.id', $user->shop_id)
-                ->where('clients.type_client', 0)
-                ->get();
-            $sold_wholesaler = $sales
+            $sold_wholesaler = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type')
                 ->whereRaw('sales.total = sales.paid_out')
                 ->whereRaw('sales.total > 0')
                 ->where('shops.id', $user->shop_id)
                 ->where('clients.type_client', 1)
                 ->get();
+            $sold_public = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type')
+                ->whereRaw('sales.total <= sales.paid_out')
+                ->where('shops.id', $user->shop_id)
+                ->where('clients.type_client', 0)
+                ->get();
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             //VENDIDOS
-            $sold_public = $sales
+            $sold_public = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type')
                 ->whereRaw('sales.total <= sales.paid_out')
                 ->where('sales.branch_id', $user->branch_id)
                 ->where('clients.type_client', 0)
                 ->get();
-            $sold_wholesaler = $sales
+            $sold_wholesaler = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type')
                 ->whereRaw('sales.total = sales.paid_out')
                 ->whereRaw('sales.total > 0')
                 ->where('sales.branch_id', $user->branch_id)
@@ -80,31 +91,43 @@ class SaleController extends Controller
     public function tableApart()
     {
         $user = Auth::user();
-        $sales = Sale::with('client')
-            ->join('branches', 'branches.id', 'sales.branch_id')
-            ->join('shops', 'shops.id', 'branches.shop_id')
-            ->join('clients', 'clients.id', 'sales.client_id')
-            ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type');
+
         if ($user->type_user == User::AA) {
             //APARTADOS
-            $apart_public = $sales
+            $apart_public = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type')
                 ->whereRaw('sales.total > sales.paid_out')
                 ->where('shops.id', $user->shop_id)
                 ->where('clients.type_client', 0)
                 ->get();
-            $apart_wholesaler = $sales
+            $apart_wholesaler = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type')
                 ->whereRaw('sales.total != sales.paid_out')
                 ->where('shops.id', $user->shop_id)
                 ->where('clients.type_client', 1)
                 ->get();
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             //APARTADOS
-            $apart_public = $sales
+            $apart_public = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type')
                 ->whereRaw('sales.total > sales.paid_out')
                 ->where('sales.branch_id', $user->branch_id)
                 ->where('clients.type_client', 0)
                 ->get();
-            $apart_wholesaler = $sales
+            $apart_wholesaler = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type')
                 ->whereRaw('sales.total != sales.paid_out')
                 ->where('sales.branch_id', $user->branch_id)
                 ->where('clients.type_client', 1)
@@ -118,20 +141,23 @@ class SaleController extends Controller
     public function tableGivedback()
     {
         $user = Auth::user();
-        $sales = Sale::with('client')
-            ->join('branches', 'branches.id', 'sales.branch_id')
-            ->join('shops', 'shops.id', 'branches.shop_id')
-            ->join('clients', 'clients.id', 'sales.client_id')
-            ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type');
         if ($user->type_user == User::AA) {
             //DEVUELTOS
-            $givedback = $sales
+            $givedback = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type')
                 ->whereRaw('sales.total = 0')
                 ->where('shops.id', $user->shop_id)
                 ->get();
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             //DEVUELTOS
-            $givedback = $sales
+            $givedback = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type')
                 ->whereRaw('sales.total = 0')
                 ->where('sales.branch_id', $user->branch_id)
                 ->get();
