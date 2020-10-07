@@ -35,19 +35,123 @@ class SaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+
+    public function tableSold()
     {
-        /*      $p = SaleDetails::where('product_id','=','1')->first();
-      //return $p;
-      $po = Product::where('id','=','p')->first();
-      return $po;
-      //return $user;
-    $sale = Sale::with(['partials', 'client'])->findOrFail($id);
-    	$sale->itemsSold = $sale->itemsSold();
-      $sale->total = $sale->itemsSold->sum('final_price');
-      $sale->payments = $sale->partials->sum('amount'); */
 
+        $user = Auth::user();
+        $sales = Sale::with('client')
+            ->join('branches', 'branches.id', 'sales.branch_id')
+            ->join('shops', 'shops.id', 'branches.shop_id')
+            ->join('clients', 'clients.id', 'sales.client_id')
+            ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type');
 
+        if ($user->type_user == User::AA) {
+            //VENDIDOS
+            $sold_public = $sales
+                ->whereRaw('sales.total <= sales.paid_out')
+                ->where('shops.id', $user->shop_id)
+                ->where('clients.type_client', 0)
+                ->get();
+            $sold_wholesaler = $sales
+                ->whereRaw('sales.total = sales.paid_out')
+                ->whereRaw('sales.total > 0')
+                ->where('shops.id', $user->shop_id)
+                ->where('clients.type_client', 1)
+                ->get();
+        } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
+            //VENDIDOS
+            $sold_public = $sales
+                ->whereRaw('sales.total <= sales.paid_out')
+                ->where('sales.branch_id', $user->branch_id)
+                ->where('clients.type_client', 0)
+                ->get();
+            $sold_wholesaler = $sales
+                ->whereRaw('sales.total = sales.paid_out')
+                ->whereRaw('sales.total > 0')
+                ->where('sales.branch_id', $user->branch_id)
+                ->where('clients.type_client', 1)
+                ->get();
+        }
+        $sold = $sold_public->merge($sold_wholesaler);
+        return datatables()->of($sold)->toJson();
+    }
+
+    public function tableApart()
+    {
+        $user = Auth::user();
+        $sales = Sale::with('client')
+            ->join('branches', 'branches.id', 'sales.branch_id')
+            ->join('shops', 'shops.id', 'branches.shop_id')
+            ->join('clients', 'clients.id', 'sales.client_id')
+            ->select('sales.*', 'branches.name as branch', 'clients.name as clientName', 'clients.phone_number as phone', 'clients.type_client as type');
+        if ($user->type_user == User::AA) {
+            //APARTADOS
+            $apart_public = $sales
+                ->whereRaw('sales.total > sales.paid_out')
+                ->where('shops.id', $user->shop_id)
+                ->where('clients.type_client', 0)
+                ->get();
+            $apart_wholesaler = $sales
+                ->whereRaw('sales.total != sales.paid_out')
+                ->where('shops.id', $user->shop_id)
+                ->where('clients.type_client', 1)
+                ->get();
+        } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
+            //APARTADOS
+            $apart_public = $sales
+                ->whereRaw('sales.total > sales.paid_out')
+                ->where('sales.branch_id', $user->branch_id)
+                ->where('clients.type_client', 0)
+                ->get();
+            $apart_wholesaler = $sales
+                ->whereRaw('sales.total != sales.paid_out')
+                ->where('sales.branch_id', $user->branch_id)
+                ->where('clients.type_client', 1)
+                ->get();
+        }
+        $apart = $apart_public->merge($apart_wholesaler);
+
+        return datatables()->of($apart)->toJson();
+    }
+
+    public function tableGivedback()
+    {
+        $user = Auth::user();
+        if ($user->type_user == User::AA) {
+            //DEVUELTOS
+            $givedback = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->where('sales.deleted_at', null)
+                ->select('sales.*', 'branches.name as sucursal')
+                ->whereRaw('sales.total = 0')
+                ->where('shops.id', $user->shop_id)
+                ->orderBy('sales.updated_at', 'desc')
+                ->get();
+        } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
+            //DEVUELTOS
+            $givedback = Sale::with('client')
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->join('shops', 'shops.id', 'branches.shop_id')
+                ->join('clients', 'clients.id', 'sales.client_id')
+                ->where('sales.deleted_at', null)
+                ->select('sales.*', 'branches.name as sucursal')
+                ->whereRaw('sales.total = 0')
+                ->where('sales.branch_id', $user->branch_id)
+                ->orderBy('sales.updated_at', 'desc')
+                ->get();
+        }
+        return datatables()->of($givedback)->toJson();
+    }
+    public function index()
+    {
+        return view('sale/index');
+    }
+
+    public function indexOld(Request $request)
+    {
         $user = Auth::user();
         if ($user->type_user == User::AA) {
             //VENDIDOS

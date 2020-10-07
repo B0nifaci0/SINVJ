@@ -15,12 +15,17 @@
 
 // Route::get('products', 'ProductController@getProducts')->name('get.products');
 
+
+
 Route::get('/productos', 'ProductController@allProducts');
 
 Route::get('/buscador', 'ProductController@search');
 
 Route::get('/buscadorsucursal', 'BranchProductsController@search');
 
+Route::get('api/sold', 'SaleController@tableSold');
+Route::get('api/apart', 'SaleController@tableApart');
+Route::get('api/givedback', 'SaleController@tableGivedback');
 
 
 Route::get('/', function () {
