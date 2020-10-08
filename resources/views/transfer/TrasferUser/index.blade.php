@@ -124,9 +124,18 @@ TRANSFERENCIAS
                                                 <td data-sort='YYYYMMDD'>{{$transferin->updated_at->format('m-d-Y')}}
                                                 </td>
                                                 <td>{{ $transferin->product->clave }}</td>
-                                                <td>{{ $transferin->product->weigth }}</td>
+                                                <td>
+                                                @if($transferin->product->weigth == null)
+                                                    <span>$</span>
+                                                @endif
+                                                {{ $transferin->product->weigth ? $transferin->product->weigth :   $transferin->product->price_purchase }}
+                                               
+                                                </td>
                                                 <td>{{ $transferin->product->category->name }}</td>
-                                                <td>{{ $transferin->product->line ? $transferin->product->line->name : '' }}
+                                                <td>{{ $transferin->product->line ? $transferin->product->line->name : ''  }}
+                                                @if($transferin->product->category->type_product == 1 )
+                                                    <span class="text-center badge badge-success">Pieza</span>
+                                                @endif
                                                 </td>
                                                 <td>{{$transferin->lastBranch->name}}</td>
                                                 <td>{{$transferin->user->name}}</td>
@@ -236,10 +245,19 @@ TRANSFERENCIAS
                                         <tr>
                                             <td data-sort='YYYYMMDD'>{{ $transferout->updated_at->format('m-d-Y')}}</td>
                                             <td>{{ $transferout->product->clave }}</td>
-                                            <td>{{ $transferout->product->weigth }}</td>
+                                            <td>
+                                                @if($transferout->product->weigth == null)
+                                                    <span>$</span>
+                                                @endif
+                                                {{ $transferout->product->weigth ? $transferout->product->weigth :   $transferout->product->price_purchase }}
+                                               
+                                                </td>
                                             <td>{{ $transferout->product->category->name }}</td>
-                                            <td>{{ $transferout->product->line ? $transferout->product->line->name : '' }}
-                                            </td>
+                                            <td>{{ $transferout->product->line ? $transferout->product->line->name : ''  }}
+                                                @if($transferout->product->category->type_product == 1 )
+                                                    <span class="text-center badge badge-success">Pieza</span>
+                                                @endif
+                                                </td>
                                             <td>{{$transferout->lastBranch->name}}</td>
                                             <td>{{$transferout->user->name}}</td>
                                             <td>{{$transferout->newBranch->name}}</td>

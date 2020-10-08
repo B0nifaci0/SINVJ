@@ -66,6 +66,7 @@ ALTA VENTA
                                 <div class="col-md-6">
                                     <!-- Input para Ingresar telefono del cliente-->
                                     <div class="form-group">
+                                    <label align="center">Agregar Cliente</label>
                                         <br>
                                         <button class="btn btn-primary" data-target="#exampleTabs3" data-toggle="modal"
                                             type="button"><i class="fa fa-user" aria-hidden="true"></i></button>
@@ -90,8 +91,9 @@ ALTA VENTA
                                 <div class="col-md-6">
                                     <!-- Input para Ingresar telefono del cliente-->
                                     <div class="form-group">
+                                        <label align="right">Agregar Cliente</label>
                                         <br>
-                                        <button class="btn btn-primary" data-target="#exampleTabs2" data-toggle="modal"
+                                        <button align="center" class="btn btn-primary" data-target="#exampleTabs2" data-toggle="modal"
                                             type="button"><i class="fa fa-user" aria-hidden="true"></i></button>
                                     </div>
                                     <!-- END Input-->
@@ -115,7 +117,10 @@ ALTA VENTA
                         </div>
                         <div class="col-1 form-group">
                             <br>
-                            <button type="button" class="btn btn-primary" id="btn-add">+</button>
+                            <button type="button"  id="btn-add" 
+                            class=" btn btn-md medium  toggler-left  btn-primary waves-effect waves-light 
+                            waves-round float-left"
+                            data-toggle="tooltip" data-original-title="Agregar Producto">+</button>
                         </div>
                         <!-- END Select-->
                         <!-- Botón para agregar producto-->

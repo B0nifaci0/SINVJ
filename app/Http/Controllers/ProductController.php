@@ -626,51 +626,60 @@ class ProductController extends Controller
      */
     public function update(ProductValidate $request, $id)
     {
+        $branch = $request->branch_id;
         $product = Product::findOrFail($id);
         //return $request;
 
-        if ($request->hasFile('image')) {
-            $adapter = Storage::disk('s3')->getDriver()->getAdapter();
-            $image = file_get_contents($request->file('image')->path());
-            $base64Image = base64_encode($image);
-            $path = 'products';
-            $product->image = $this->saveImages($base64Image, $path, $product->clave);
+        $exist = Product::where('clave', $request->clave)
+        ->where('shop_id', Auth::user()->shop->id)
+        ->count();
+
+        if ($exist == 1 && $request->clave != $product->clave) {
+            return redirect('/sucursales/' . $product->branch_id . '/producto')->with('mesage', 'La Clave que intentas registrar ya existe!');
+        } else {
+
+            if ($request->hasFile('image')) {
+                $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+                $image = file_get_contents($request->file('image')->path());
+                $base64Image = base64_encode($image);
+                $path = 'products';
+                $product->image = $this->saveImages($base64Image, $path, $product->clave);
+            }
+    
+    
+            $product->clave = $request->clave;
+            $product->description = $request->description;
+            $product->category_id = $request->category_id;
+            $product->line_id = $request->line_id;
+            //$product->price = ($request->pricepzt) ? $request->pricepzt : $request->price;
+            $product->discount = $request->max_discountpz ? $request->max_discountpz : 0;
+            //$product->price= ($request->pricepzt) ? $request->pricepzt :0 ;
+            $product->discount = $request->max_discount ? $request->max_discount : 0;
+            $product->weigth = $request->weigth;
+            $product->observations = $request->observations;
+    
+            $product->price_purchase = $request->price_purchase;
+            //$product->discount = $request->discount;
+            $product->price = $request->pricepzt;
+            //$product->max_discountpz = $request->max_discountpz;
+            $product->status_id = $request->status_id;
+            $product->branch_id = $request->branch_id;
+            //$product->inventory = $request->inventory;
+    
+            $category = Category::find($request->category_id);
+            if ($category->type_product == 1) {
+                $product['line_id'] = null;
+                $product['weigth'] = null;
+                $product['discount'] = $request->max_discountpz ? $request->max_discountpz : 0;
+            } else if ($category->type_product == 2) {
+                $line = Line::find($request->line_id);
+                $product->price = $request->price;
+                $product['price_purchase'] = $line->purchase_price * $request->weigth;
+            }
+    
+            $product->save();
+            return redirect('/sucursales/' . $product->branch_id . '/producto')->with('mesage', 'El producto se ha actualizado  exitosamente!');
         }
-
-
-        $product->clave = $request->clave;
-        $product->description = $request->description;
-        $product->category_id = $request->category_id;
-        $product->line_id = $request->line_id;
-        //$product->price = ($request->pricepzt) ? $request->pricepzt : $request->price;
-        $product->discount = $request->max_discountpz ? $request->max_discountpz : 0;
-        //$product->price= ($request->pricepzt) ? $request->pricepzt :0 ;
-        $product->discount = $request->max_discount ? $request->max_discount : 0;
-        $product->weigth = $request->weigth;
-        $product->observations = $request->observations;
-
-        $product->price_purchase = $request->price_purchase;
-        //$product->discount = $request->discount;
-        $product->price = $request->pricepzt;
-        //$product->max_discountpz = $request->max_discountpz;
-        $product->status_id = $request->status_id;
-        $product->branch_id = $request->branch_id;
-        //$product->inventory = $request->inventory;
-
-        $category = Category::find($request->category_id);
-        if ($category->type_product == 1) {
-            $product['line_id'] = null;
-            $product['weigth'] = null;
-            $product['discount'] = $request->max_discountpz ? $request->max_discountpz : 0;
-        } else if ($category->type_product == 2) {
-            $line = Line::find($request->line_id);
-            $product->price = $request->price;
-            $product['price_purchase'] = $line->purchase_price * $request->weigth;
-        }
-
-        $product->save();
-
-        return redirect('/sucursales/' . $product->branch_id . '/producto')->with('mesage', 'El producto se ha actualizado  exitosamente!');
     }
 
 
