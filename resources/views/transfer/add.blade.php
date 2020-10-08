@@ -31,7 +31,7 @@ ALTA PRODUCTO
             </div>
             @endif
             <center>
-                <h3>Nuevo Traspasos</h3>
+                <h3>Nuevo Traspaso</h3>
             </center>
             <form class="" action="/traspasos" method="POST">
                 {{ csrf_field() }}
@@ -39,7 +39,7 @@ ALTA PRODUCTO
                     <!-- Select para Seleccionar producto-->
                     <div class="form-group form-material  col-md-3  col-md-offset-1 visible-md visible-lg">
                         <label>Producto</label>
-                        <select id="product"  class="form-control " data-plugin="select2"
+                        <select id="product" class="form-control " data-plugin="select2"
                             data-placeholder="Seleccione Producto" data-allow-clear="true" required>
                             <option></option>
                             <optgroup label="Productos">
@@ -49,7 +49,6 @@ ALTA PRODUCTO
                                 @endforeach
                             </optgroup>
                         </select>
-                        <input type="text" name="product_id" class="invisible" id="product_id">
                         <input type="text" name="product_id" class="invisible" id="product_id">
                     </div>
                     <!-- END Select-->

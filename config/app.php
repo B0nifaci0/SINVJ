@@ -160,9 +160,7 @@ return [
         //Pprovider for excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
-
-
-
+        Yajra\DataTables\DataTablesServiceProvider::class
     ],
 
     /*
@@ -216,5 +214,6 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ],
 ];

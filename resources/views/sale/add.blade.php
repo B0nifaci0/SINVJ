@@ -130,8 +130,7 @@ ALTA VENTA
                     <!-- END Botón-->
                     <div class="panel-body ">
                         <!-- Tabla para listar productos agregados-->
-                        <table id="ventas" class=" display table table-hover dataTable table-striped w-full"
-                            data-plugin="dataTable">
+                        <table id="ventas" class=" display table table-hover dataTable table-striped w-full">
                             <thead>
                                 <tr>
                                     <th>Clave</th>
@@ -442,6 +441,10 @@ seleccionado con sus respectivos datos-->
         console.log("Clienets ", clients)
         console.log('Ventas: ', sales);
 
+        $('#ventas').DataTable( {
+            paging:         false,
+            responsive:     true
+        } );
 
         $(function() {
 
@@ -990,6 +993,8 @@ seleccionado con sus respectivos datos-->
                         price: $(`#finalPrice${p.id}`).val()
                     }
                 });
+
+                console.log('productos en total', productIds);
 
                 $('#productsList').val(JSON.stringify(productIds));
 
