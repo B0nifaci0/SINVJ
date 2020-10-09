@@ -30,6 +30,37 @@ class TrasferUserController extends Controller
             return $next($request);
         });
     }
+    public function transInt()
+    {
+        $user = Auth::user();
+
+        if ($user->type_user == User::SA) {
+            $trans_int = TransferProduct::where('new_branch_id', $user->branch->id)
+                ->with('user')->with('branch')->with('product')
+                ->get();
+        } else if ($user->type_user == User::AA) {
+            $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
+                return $u->id;
+            });
+            $trans_int = TransferProduct::whereIn('destination_user_id', $usersIds)
+                ->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')
+                ->get();
+        } else {
+            $trans_int = TransferProduct::where('destination_user_id', $user->id)
+                ->with('user')->with('branch')->with('product')
+                ->get();
+        }
+        // return $trans_int;
+        // $trans_int->cantidad = $trans_int->count();
+        return datatables()->of($trans_int)->toJson();
+    }
+
+    public function indexNew()
+    {
+        return view('transfer/TrasferUser/index');
+    }
+
+
     public function index()
     {
         $user = Auth::user();
@@ -131,26 +162,26 @@ class TrasferUserController extends Controller
     public function store(Request $request)
     {
         $product = Product::find($request->product_id);
-        
+
         $user = Auth::user();
 
-        $inventory = InventoryDetail::join('inventory_reports', 'inventory_details.inventory_report_id','inventory_reports.id')
-        ->where('inventory_reports.branch_id', $product->branch_id)
-        ->where('inventory_details.product_id', $product->id)
-        ->where(function($q) use ($request) {
-            $q->where(function($query) use ($request){
+        $inventory = InventoryDetail::join('inventory_reports', 'inventory_details.inventory_report_id', 'inventory_reports.id')
+            ->where('inventory_reports.branch_id', $product->branch_id)
+            ->where('inventory_details.product_id', $product->id)
+            ->where(function ($q) use ($request) {
+                $q->where(function ($query) use ($request) {
                     $query->Where('inventory_reports.status_report', 1)
-                          ->orWhere('inventory_reports.status_report', 2);
+                        ->orWhere('inventory_reports.status_report', 2);
                 });
             })
-        ->select('inventory_details.*')
-        ->first();
+            ->select('inventory_details.*')
+            ->first();
 
-        if($inventory) {
+        if ($inventory) {
             $inventory->status_id = 5;
             $inventory->save();
         }
-        
+
         $transfer_product = new TransferProduct([
             'user_id' => $user->id,
             'last_branch_id' => $request->branch_id,

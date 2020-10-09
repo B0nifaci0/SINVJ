@@ -26,6 +26,8 @@ Route::get('/buscadorsucursal', 'BranchProductsController@search');
 Route::get('api/sold', 'SaleController@tableSold');
 Route::get('api/apart', 'SaleController@tableApart');
 Route::get('api/givedback', 'SaleController@tableGivedback');
+Route::get('api/transInt', 'TrasferUserController@transInt');
+
 
 
 Route::get('/', function () {
