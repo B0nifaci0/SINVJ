@@ -65,10 +65,10 @@ class InventoryController extends Controller
             return $item;
         });
 
-        foreach($branches as $branch) {
-            $branch->inventory_validation = TransferProduct::Where('last_branch_id',$branch->id)
-            ->WhereNull('status_product')
-            ->count();
+        foreach ($branches as $branch) {
+            $branch->inventory_validation = TransferProduct::Where('last_branch_id', $branch->id)
+                ->WhereNull('status_product')
+                ->count();
         }
         //return $branches;
         $date = Carbon::now()->toFormattedDateString();
@@ -82,7 +82,7 @@ class InventoryController extends Controller
         $name_branch = InventoryReport::join('branches', 'branches.id', 'inventory_reports.branch_id')
             ->where('inventory_reports.id', $id)->select('branches.name')->get();
         $inventory = InventoryReport::where('id', $id)->first();
-        
+
         //QUERY PARA SABER SI HAY PRODUCTOS SIN LISTAR EN EL INVENTARIO
         $finalizar = InventoryDetail::where('inventory_report_id', $id)
             ->where('status_id', 1)
@@ -100,7 +100,7 @@ class InventoryController extends Controller
         $validation = 0;
         //return $finalizar;
         //return $inventory->products;
-        return view('inventory.show', compact('validation','inventory', 'name_branch', 'finalizar', 'id_inventory'));
+        return view('inventory.show', compact('validation', 'inventory', 'name_branch', 'finalizar', 'id_inventory'));
     }
 
     public function search(Request $request, $id)
@@ -109,38 +109,38 @@ class InventoryController extends Controller
         $inventory = InventoryReport::findOrFail($id);
         //return $id;
 
-        $inventory->products = InventoryDetail::join('products','products.id','inventory_details.product_id')
-        ->join('status_inventories','status_inventories.id','inventory_details.status_id')
-        ->Where('inventory_details.inventory_report_id', $id)
-        ->where(function($q) use ($request) {
-            $q->where(function($query) use ($request){
+        $inventory->products = InventoryDetail::join('products', 'products.id', 'inventory_details.product_id')
+            ->join('status_inventories', 'status_inventories.id', 'inventory_details.status_id')
+            ->Where('inventory_details.inventory_report_id', $id)
+            ->where(function ($q) use ($request) {
+                $q->where(function ($query) use ($request) {
                     $query->Where('products.description', 'like', "%$request->text%")
-                          ->orWhere('products.clave', 'like', "%$request->text%")
-                          ->orWhere('status_inventories.name', 'like', "%$request->text%");
+                        ->orWhere('products.clave', 'like', "%$request->text%")
+                        ->orWhere('status_inventories.name', 'like', "%$request->text%");
                 });
             })
-        ->select(
-            'inventory_details.id',
-            'status_inventories.name as status_name',
-            'inventory_details.product_id',
-            'inventory_details.status_id as status',
-            'inventory_details.inventory_report_id',
-            'products.clave',
-            'products.description',
-            'products.weigth'
+            ->select(
+                'inventory_details.id',
+                'status_inventories.name as status_name',
+                'inventory_details.product_id',
+                'inventory_details.status_id as status',
+                'inventory_details.inventory_report_id',
+                'products.clave',
+                'products.description',
+                'products.weigth'
             )
-        ->orderByRaw('CHAR_LENGTH(products.clave)')
-        ->orderBy('products.clave')
-        ->get();
+            ->orderByRaw('CHAR_LENGTH(products.clave)')
+            ->orderBy('products.clave')
+            ->get();
 
-        if($request->validacion && $inventory->products->count() > 0){
+        if ($request->validacion && $inventory->products->count() > 0) {
             $validation = $request->validacion;
         } else {
             $validation = 0;
         }
 
-        return view('inventory/inventory_products', compact('inventory','validation'));
-    } 
+        return view('inventory/inventory_products', compact('inventory', 'validation'));
+    }
 
     public function store(Request $request)
     {
@@ -153,21 +153,21 @@ class InventoryController extends Controller
         $branch_id = $request->branch_id ? $request->branch_id : Auth::user()->branch_id;
 
         $num_products = Product::where('branch_id', $branch_id)
-        ->where('status_id', 2)
-        ->where('deleted_at', '=', NULL)->count();
+            ->where('status_id', 2)
+            ->where('deleted_at', '=', NULL)->count();
 
         $active_inventories = InventoryReport::where('branch_id', $branch_id)
-        ->where(function($q) use ($request) {
-            $q->where(function($query) use ($request){
+            ->where(function ($q) use ($request) {
+                $q->where(function ($query) use ($request) {
                     $query->Where('status_report', 1)
-                          ->orWhere('status_report', 2);
+                        ->orWhere('status_report', 2);
                 });
             })
-        ->count();
+            ->count();
 
         if ($num_products == 0) {
             return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, ya que la sucursal no tiene productos existentes!');
-        } elseif($active_inventories >= 1){
+        } elseif ($active_inventories >= 1) {
             return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, ya que la sucursal tiene un inventario en progreso!');
         } else {
             $inventory = InventoryReport::create([
@@ -177,8 +177,8 @@ class InventoryController extends Controller
             ]);
 
             $products = Product::where('branch_id', $branch_id)
-            ->where('status_id', 2)
-            ->get();
+                ->where('status_id', 2)
+                ->get();
 
             foreach ($products as $p) {
                 InventoryDetail::create([
@@ -208,15 +208,15 @@ class InventoryController extends Controller
         }
         $product->status_id = $request->status_product;
         $product->save();
-        
+
         InventoryDetail::where('id', $request->inventory_id)->update(['status_id' => $request->status]);
-        $status = InventoryDetail::join('status_inventories','status_inventories.id','inventory_details.status_id')
-        ->where("inventory_details.product_id", $product->id)
-        ->select('status_inventories.name as name')
-        ->first();
+        $status = InventoryDetail::join('status_inventories', 'status_inventories.id', 'inventory_details.status_id')
+            ->where("inventory_details.product_id", $product->id)
+            ->select('status_inventories.name as name')
+            ->first();
         //return $status;
         return back()->with('message', "El producto $product->clave ahora tiene un status: $status->name!")
-        ->with('validar_restaurado_o_inventariado',1);
+            ->with('validar_restaurado_o_inventariado', 1);
     }
 
     public function checkPassword(Request $request)
@@ -402,19 +402,20 @@ class InventoryController extends Controller
 
         //DESCRIPCION DE PRODUCTOS GRAMOS EXISTENTES
         $prod_exis = Product::join('categories', 'categories.id', 'products.category_id')
-        ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-        ->join('lines', 'lines.id', 'products.line_id')
-        ->where('products.shop_id', Auth::user()->shop->id)
-        ->where('products.deleted_at', NULL)
-        ->where('categories.type_product', 2)
-        ->whereIn('inventory_details.status_id', [1, 2])
-        ->where('products.branch_id', $id_branch)
-        ->where('inventory_details.inventory_report_id', $id)
-        ->select('products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
-        ->distinct('products.clave')
-        ->groupBy('products.weigth', 'products.description', 'products.clave', 'lines.name')
-        ->orderBy('name_line', 'DESC')
-        ->get();
+            ->join('inventory_details', 'inventory_details.product_id', 'products.id')
+            ->join('lines', 'lines.id', 'products.line_id')
+            ->where('products.shop_id', Auth::user()->shop->id)
+            ->where('products.deleted_at', NULL)
+            ->where('categories.type_product', 2)
+            ->whereIn('inventory_details.status_id', [1, 2])
+            ->where('products.branch_id', $id_branch)
+            ->where('inventory_details.inventory_report_id', $id)
+            ->select('products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
+            ->distinct('products.clave')
+            ->groupBy('products.weigth', 'products.description', 'products.clave', 'lines.name')
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
+            ->get();
         //return $prod_exis;
 
         //DESCRIPCION DE PRODUCTOS GRAMOS DAÑADOS
@@ -788,7 +789,7 @@ class InventoryController extends Controller
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
         }
-        $pdf  = PDF::loadView('inventory.Reports.reportPDF', compact('p_existentes','prod_exis','date','prod_da', 'totales_piezas', 'totales_g', 'report', 'p_dañados', 'p_faltantes', 'prod_fal', 'cat_totals', 'shop', 'details', 'shops', 'lines', 'gramos_totales'));
+        $pdf  = PDF::loadView('inventory.Reports.reportPDF', compact('p_existentes', 'prod_exis', 'date', 'prod_da', 'totales_piezas', 'totales_g', 'report', 'p_dañados', 'p_faltantes', 'prod_fal', 'cat_totals', 'shop', 'details', 'shops', 'lines', 'gramos_totales'));
         return $pdf->stream('ReporteInventarios.pdf');
     }
 
