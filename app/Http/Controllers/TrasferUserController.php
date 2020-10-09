@@ -261,12 +261,9 @@ class TrasferUserController extends Controller
             ->pluck('branch')
             ->unique();
 
-        // return $branches;
-
         if ($request->type == 0) {
             $query = TransferProduct::whereIn('destination_user_id', $usersIds)->OrderBy('new_branch_id', 'asc');
         } else {
-            //return "Salientes";
             $query = TransferProduct::whereIn('user_id', $usersIds)
                 ->OrderBy('last_branch_id', 'asc');
         }
@@ -287,7 +284,6 @@ class TrasferUserController extends Controller
             ->whereBetween('updated_at', [$fecini, $fecter])
             ->get();
 
-
         if ($trans->isEmpty()) {
             return back()->with('message', 'El reporte que se intento generar no contiene información');
         }
@@ -307,7 +303,8 @@ class TrasferUserController extends Controller
         $status = $request->status_product;
         $type = $request->type;
         $shop = $this->user->shop;
-        $type_product = $request->category_id;
+        $type_product = $request->type_product;
+
         $branches = $shop->branches;
         if ($shop->image) {
             $shop->image = $this->getS3URL($shop->image);

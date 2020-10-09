@@ -32,6 +32,7 @@
                 @if ($detail->product_id == $product->id)
                 <td>$ {{$detail->final_price}}</td>
                 <td>$ {{$detail->profit}}</td>
+                @break
                 @endif
                 @endforeach
             </tr>

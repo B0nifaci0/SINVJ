@@ -128,18 +128,18 @@
         <h1 align="center">Reporte de Inventarios
           @foreach($report as $r) {{$r->name_branch}} @endforeach</h1>
         <h3 align="center">Inventario Por Líneas</h3>
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+        <table class="table table-hover dataTable table-striped w-full">
           <thead>
             <tr>
-              <th scope="col">Línea</th>
-              <th scope="col">TD Gramos</th>
-              <th scope="col">TD Dinero</th>
-              <th scope="col">TD Gramos Existentes</th>
-              <th scope="col">TD Dinero Existente</th>
-              <th scope="col">TD Gramos Faltantes</th>
-              <th scope="col">TD Dinero Faltante</th>
-              <th scope="col">TD Gramos Dañados</th>
-              <th scope="col">TD Dinero Dañado</th>
+              <th>Línea</th>
+              <th>TD Gramos</th>
+              <th>TD Dinero</th>
+              <th>TD Gramos Existentes</th>
+              <th>TD Dinero Existente</th>
+              <th>TD Gramos Faltantes</th>
+              <th>TD Dinero Faltante</th>
+              <th>TD Gramos Dañados</th>
+              <th>TD Dinero Dañado</th>
             </tr>
           </thead>
           <tbody>
@@ -173,14 +173,14 @@
         </table>
         <br>
         <h3 align="center">Productos Faltantes Por Gramo</h3>
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+        <table class="table table-hover dataTable table-striped w-full">
           <thead>
             <tr>
-              <th scope="col">Clave</th>
-              <th scope="col">Linea</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Peso</th>
-              <th scope="col">Dinero Faltante</th>
+              <th>Clave</th>
+              <th>Linea</th>
+              <th>Descripcion</th>
+              <th>Peso</th>
+              <th>Dinero Faltante</th>
             </tr>
           </thead>
           <tbody>
@@ -204,14 +204,14 @@
         </table>
         <br>
         <h3 align="center">Productos Dañados Por Gramo</h3>
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+        <table class="table table-hover dataTable table-striped w-full">
           <thead>
             <tr>
-              <th scope="col">Clave</th>
-              <th scope="col">Linea</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Peso</th>
-              <th scope="col">Dinero Dañado</th>
+              <th>Clave</th>
+              <th>Linea</th>
+              <th>Descripcion</th>
+              <th>Peso</th>
+              <th>Dinero Dañado</th>
             </tr>
           </thead>
           <tbody>
@@ -236,14 +236,14 @@
         <br>
         <h3 align="center">Productos Existentes Por Gramo al Dia @if($details->status_report == 3)
           {{$details->end_date}} @else {{$date}} @endif </h3>
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+        <table class="table table-hover dataTable table-striped w-full">
           <thead>
             <tr>
-              <th scope="col">Clave</th>
-              <th scope="col">Linea</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Peso</th>
-              <th scope="col">Dinero Existente</th>
+              <th>Clave</th>
+              <th>Linea</th>
+              <th>Descripcion</th>
+              <th>Peso</th>
+              <th>Dinero Existente</th>
             </tr>
           </thead>
           <tbody>
@@ -267,18 +267,18 @@
         </table>
         <br>
         <h3 align="center">Inventario Por Categorias</h3>
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+        <table class="table table-hover dataTable table-striped w-full">
           <thead>
             <tr>
-              <th scope="col">Categoria</th>
-              <th scope="col">TD PZ</th>
-              <th scope="col">TD Dinero</th>
-              <th scope="col">TD PZ Existentes</th>
-              <th scope="col">TD Dinero Existente</th>
-              <th scope="col">TD PZ Faltantes</th>
-              <th scope="col">TD Dinero Faltante</th>
-              <th scope="col">TD PZ Dañadas</th>
-              <th scope="col">TD Dinero Dañado</th>
+              <th>Categoria</th>
+              <th>TD PZ</th>
+              <th>TD Dinero</th>
+              <th>TD PZ Existentes</th>
+              <th>TD Dinero Existente</th>
+              <th>TD PZ Faltantes</th>
+              <th>TD Dinero Faltante</th>
+              <th>TD PZ Dañadas</th>
+              <th>TD Dinero Dañado</th>
             </tr>
           </thead>
           <tbody>
@@ -312,13 +312,13 @@
         </table>
         <br>
         <h3 align="center">Productos Faltantes Por PZ</h3>
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+        <table class="table table-hover dataTable table-striped w-full">
           <thead>
             <tr>
-              <th scope="col">Categoria</th>
-              <th scope="col">Clave Del Producto</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Dinero Faltante</th>
+              <th>Categoria</th>
+              <th>Clave Del Producto</th>
+              <th>Descripcion</th>
+              <th>Dinero Faltante</th>
             </tr>
           </thead>
           <tbody>
@@ -340,13 +340,13 @@
         </table>
         <br>
         <h3 align="center">Productos Dañados Por PZ</h3>
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+        <table class="table table-hover dataTable table-striped w-full">
           <thead>
             <tr>
-              <th scope="col">Claveo</th>
-              <th scope="col">Categoria</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Dinero Dañado</th>
+              <th>Clave</th>
+              <th>Categoria</th>
+              <th>Descripcion</th>
+              <th>Dinero Dañado</th>
             </tr>
           </thead>
           <tbody>
@@ -369,13 +369,13 @@
         <br>
         <h3 align="center">Productos Existentes Por PZ al Dia @if($details->status_report == 3) {{$details->end_date}}
           @else {{$date}} @endif </h3>
-        <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+        <table class="table table-hover dataTable table-striped w-full">
           <thead>
             <tr>
-              <th scope="col">Categoria</th>
-              <th scope="col">Clave Del Producto</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Dinero Existente</th>
+              <th>Categoria</th>
+              <th>Clave Del Producto</th>
+              <th>Descripcion</th>
+              <th>Dinero Existente</th>
             </tr>
           </thead>
           <tbody>

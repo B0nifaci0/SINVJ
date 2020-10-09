@@ -55,7 +55,7 @@ Panel Principal
                                     <div class="tab-content pt-20">
                                         <div class="tab-pane active" id="producstatusOne" role="tabpanel">
                                             <form action="reportTransfer">
-                                                <input type="hidden" name="category_id" class="form-control round"
+                                                <input type="hidden" name="type_product" class="form-control round"
                                                     data-plugin="datepicker" value="2" required>
                                                 <div class="panel panel-bordered">
                                                     <div class="panel-body">
@@ -129,6 +129,8 @@ Panel Principal
                                     <!-- Inicia TAB2 STATUS PRODUCT-->
                                     <div class="tab-pane" id="producstatusTwo" role="tabpanel">
                                         <form action="reportTransfer">
+                                            <input type="hidden" name="type_product" class="form-control round"
+                                                data-plugin="datepicker" value="1" required>
                                             <div class="panel panel-bordered">
                                                 <div class="panel-body">
                                                     <div class="row">

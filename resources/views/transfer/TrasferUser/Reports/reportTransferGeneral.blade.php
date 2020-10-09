@@ -10,9 +10,15 @@
     @foreach ($branches as $branch)
     <table class="table table-condensed">
         <thead>
+            @if ($category==2)
             <tr>
                 <th class="text-center" colspan="10">Sucursal: {{$branch->name}} </th>
             </tr>
+            @else
+            <tr>
+                <th class="text-center" colspan="9">Sucursal: {{$branch->name}} </th>
+            </tr>
+            @endif
             <tr>
                 <th>Clave</th>
                 <th>Categoria</th>
@@ -38,7 +44,7 @@
             @if($category == $transfer->product->category->type_product)
             @if ($type==1 && $branch->id ==
             $transfer->lastBranch->id)
-            <tr id="row{{$transfer->id}}">
+            <tr>
                 <td>{{ $transfer->product->clave }}</td>
                 <td>{{ $transfer->product->category->name }}</td>
                 @if($transfer->product->category->type_product == 2 )
@@ -63,7 +69,7 @@
             </tr>
             @elseif($type==0 && $branch->id ==
             $transfer->newBranch->id)
-            <tr id="row{{$transfer->id}}">
+            <tr>
                 <td> {{ $transfer->product->clave }}</td>
                 <td>{{ $transfer->product->category->name }}</td>
                 @if($transfer->product->category->type_product == 2 )
@@ -82,12 +88,11 @@
                 @elseif($transfer->status_product == 3)
                 <td>Devuelto</td>
                 @else
-                <td>Pendiente</td>z
+                <td>Pendiente</td>
                 @endif
                 <td>{{$transfer->updated_at->format('m-d-Y')}}</td>
             </tr>
             @endif
-
             @endif
             @endforeach
         </tbody>
