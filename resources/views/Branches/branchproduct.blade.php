@@ -19,14 +19,21 @@
             @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
             <!-- Botón para Generar PDF de productos-->
             @if(Auth::user()->type_user == 1)
-            <div class="col-4">
+            <div class="col-3">
+              <button onclick="window.location.href='/sucursal/{{$branch->id}}/productos'" type="button"
+                class="btn btn-sm small btn-floating btn-danger waves-effect waves-light waves-round float-right"
+                data-toggle="tooltip" data-original-title="Reporte general de productos">
+                <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="col-3">
               <button onclick="window.location.href='/sucursal/{{$branch->id}}/productos-gramo'" type="button"
                 class="btn btn-sm small btn-floating btn-danger waves-effect waves-light waves-round float-right"
                 data-toggle="tooltip" data-original-title="Reporte productos gramo">
                 <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
               </button>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <button onclick="window.location.href='/sucursal/{{$branch->id}}/productos-pieza'" type="button"
                 class="btn btn-sm small btn-floating btn-danger waves-effect waves-light waves-round float-right"
                 data-toggle="tooltip" data-original-title="Reporte productos pieza">
@@ -34,7 +41,7 @@
               </button>
             </div>
             @endif
-            <div class="col-4">
+            <div class="col-3">
               <button onclick="window.location.href='/productos/create'" type="button"
                 class="btn btn-sm small btn-floating btn-info waves-effect waves-light waves-round float-left"
                 data-toggle="tooltip" data-original-title="Agregar Nuevo Producto">

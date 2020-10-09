@@ -16,7 +16,6 @@ class ProductBranchController extends Controller
 
     public function productsWithLine($id)
     {
-
         $shop = Auth::user()->shop;
         $branch = Branch::findOrFail($id);
         $products = $branch->products()
@@ -58,6 +57,28 @@ class ProductBranchController extends Controller
         }
 
         $pdf  = PDF::loadView('Branch.productsWithoutLine', compact('branch', 'products', 'date', 'hour', 'shop'));
+        return $pdf->stream('productossucursal.pdf');
+    }
+
+    public function all($id)
+    {
+
+        $shop = Auth::user()->shop;
+        $branch = Branch::findOrFail($id);
+        $products = $branch->products()
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
+            ->get();
+
+        $date = Carbon::now();
+        $date = $date->format('d-m-Y');
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+
+        if ($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
+        $pdf  = PDF::loadView('Branch.all', compact('branch', 'products', 'date', 'hour', 'shop'));
         return $pdf->stream('productossucursal.pdf');
     }
 }
