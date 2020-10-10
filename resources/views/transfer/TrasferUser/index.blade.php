@@ -128,7 +128,7 @@ TRANSFERENCIAS
                                                 @if($transferin->product->weigth == null)
                                                     <span>$</span>
                                                 @endif
-                                                {{ $transferin->product->weigth ? $transferin->product->weigth :   $transferin->product->price_purchase }}
+                                                {{ $transferin->product->weigth ? $transferin->product->weigth :   $transferin->product->price }}
                                                
                                                 </td>
                                                 <td>{{ $transferin->product->category->name }}</td>
@@ -249,7 +249,7 @@ TRANSFERENCIAS
                                                 @if($transferout->product->weigth == null)
                                                     <span>$</span>
                                                 @endif
-                                                {{ $transferout->product->weigth ? $transferout->product->weigth :   $transferout->product->price_purchase }}
+                                                {{ $transferout->product->weigth ? $transferout->product->weigth :   $transferout->product->price }}
                                                
                                                 </td>
                                             <td>{{ $transferout->product->category->name }}</td>
