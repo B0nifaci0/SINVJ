@@ -77,7 +77,7 @@ class TransferExtController extends Controller
         $product->status_id = Product::TRANSFER;
         $product->save();
 
-        return redirect('/traspasosAA')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
+        return redirect('/lista-traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
     }
 
     /**

@@ -71,7 +71,10 @@ Route::group(['middleware' => ['auth']], function () {
     //Route::group(['middleware' => ['admin']],function(){
 
     Route::get('viejo', 'TrasferUserController@indexOld');
-    Route::resource('traspasos', 'TrasferUserController');
+    Route::resource('traspasos', 'TranferProductsController');
+    Route::get('lista-traspasos', 'TrasferUserController@indexNew');
+    Route::resource('traspasosAA', 'TrasferUserController');
+
     Route::resource('traspasosExt', 'TransferExtController');
 
     Route::get('traspasospdf', 'TranferProductsController@exportPdfall');

@@ -73,7 +73,7 @@ class TrasferUserController extends Controller
         return datatables()->of($trans_out)->toJson();
     }
 
-    public function index()
+    public function indexNew()
     {
         $user = Auth::user();
 
@@ -216,7 +216,7 @@ class TrasferUserController extends Controller
 
         $product->save();
 
-        return redirect('/traspasosAA')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
+        return redirect('/lista-traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
     }
 
     // public function exportPdf()
