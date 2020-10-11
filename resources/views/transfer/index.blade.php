@@ -252,14 +252,14 @@ TRANSFERENCIAS
                                                 @if($transferout->product->weigth == null)
                                                     <span>$</span>
                                                 @endif
-                                                {{ $transferout->product->weigth ? $transferout->product->weigth :   $transferout->product->price_purchase }}
-                                               
-                                                </td>
+                                                {{ $transferout->product->weigth ? $transferout->product->weigth : $transferout->product->price }}
+                                            </td>
                                             <td>{{ $transferout->product->category->name }}</td>
-                                            <td>@if{{ $transferout->product->line ? $transferout->product->line->name :''}} 
-                                            @else{{ $transferout->product->category->type_product == 1 }} 
-                                            <span class="text-center badge badge-success">Pieza</span>
+                                            <td>
+                                                @if($transferout->product->category->type_product == 1 )
+                                                    <span class="text-center badge badge-success">Pieza</span>
                                                 @endif
+                                                {{ $transferout->product->line ? $transferout->product->line->name :''}} 
                                             </td>
                                             <td>{{$transferout->user->name}}</td>
                                             <td>{{$transferout->newBranch->name}}</td>

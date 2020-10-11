@@ -648,7 +648,9 @@ class BranchController extends Controller
       $branch->totalFin = $branch->total-$branch->tarjeta - $branch->gastos;
       //return $branch->totalFin;
       //return $branch;
-      $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch','shop'));
+      $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch',compact('branch','shop'))
+      ->setOption('page-width', '58')
+      ->setOption('page-height', '120');
      return $pdf->stream('CorteSucursal.pdf');
     }
 }
