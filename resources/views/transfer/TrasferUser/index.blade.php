@@ -38,9 +38,16 @@
           <h1 class="text-center panel-title">Traspasos de Tienda</h1>
           <div class="panel-actions float-right">
             <div class="container-fluid row float-right">
-              @if(Auth::user()->type_user == 1 )
               <!-- Botón para Generar PDF de productos-->
-              @if(Auth::user()->type_user == 1)
+              @if(Auth::user()->type_user !== 1)
+              <div class="col-6">
+                <button onclick="window.location.href='/traspasos/create'" type="button"
+                  class="btn btn-sm small btn-floating toggler-left btn-info waves-effect waves-light waves-round float-left"
+                  data-toggle="tooltip" data-original-title="Nuevo traspaso">
+                  <i class="icon md-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+              @else
               <div class="col-6">
                 <button onclick="window.location.href='traspasospdf'" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-danger waves-effect waves-light waves-round float-right"
@@ -48,7 +55,6 @@
                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                 </button>
               </div>
-              @endif
               <div class="col-6">
                 <button onclick="window.location.href='/traspasosAA/create'" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-info waves-effect waves-light waves-round float-left"
@@ -56,8 +62,8 @@
                   <i class="icon md-plus" aria-hidden="true"></i>
                 </button>
               </div>
-              <!-- END Botón-->
               @endif
+              <!-- END Botón-->
             </div>
           </div>
         </div>
@@ -89,7 +95,7 @@
                         <th>Quien lo mando</th>
                         <th>S.Destino</th>
                         <th>S. Origen</th>
-                        <th>Quien recibió</th>
+                        <th>Quien recibe</th>
                         <th>status_product</th>
                         <th>Estatus</th>
                         <th>Opciones</th>
@@ -114,7 +120,7 @@
                       <th>Quien lo mando</th>
                       <th>S.Destino</th>
                       <th>S. Origen</th>
-                      <th>Quien recibió</th>
+                      <th>Quien recibe</th>
                       <th>status_product</th>
                       <th>Estatus</th>
                       <th>Opciones</th>
@@ -294,6 +300,7 @@
             <button class="btn btn-danger give-back" alt="`+ data +`">Devolver</button>`;
           else if(row.status_product === 0 || row.status_product == 3)
             return `<span class="text-center badge badge-info">No se paga</span>`;
+            else return '';
           }
         },
         {

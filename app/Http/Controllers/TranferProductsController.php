@@ -21,7 +21,7 @@ class TranferProductsController extends Controller
     {
         $this->middleware('admin');
     }
-    public function index()
+    public function indexOld()
     {
         $user = Auth::user();
 
