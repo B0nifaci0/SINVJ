@@ -36,8 +36,7 @@ class TrasferUserController extends Controller
 
         if ($user->type_user == User::SA) {
             $trans_int = TransferProduct::where('new_branch_id', $user->branch->id)
-                ->with('user')->with('branch')->with('product')
-                ->get();
+                ->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')->get();
         } else if ($user->type_user == User::AA) {
             $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
                 return $u->id;
@@ -47,21 +46,42 @@ class TrasferUserController extends Controller
                 ->get();
         } else {
             $trans_int = TransferProduct::where('destination_user_id', $user->id)
-                ->with('user')->with('branch')->with('product')
-                ->get();
+                ->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')->get();
         }
-        // return $trans_int;
-        // $trans_int->cantidad = $trans_int->count();
         return datatables()->of($trans_int)->toJson();
     }
 
-    public function indexNew()
+
+    public function transOut()
     {
-        return view('transfer/TrasferUser/index');
+        $user = Auth::user();
+
+        if ($user->type_user == User::SA) {
+            $trans_out = TransferProduct::where('last_branch_id', $user->branch->id)
+                ->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')->get();
+        } else if ($user->type_user == User::AA) {
+            $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
+                return $u->id;
+            });
+            $trans_out = TransferProduct::whereIn('user_id', $usersIds)
+                ->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')
+                ->get();
+        } else {
+            $trans_out = TransferProduct::where('user_id', $user->id)
+                ->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')->get();
+        }
+        return datatables()->of($trans_out)->toJson();
+    }
+
+    public function index()
+    {
+        $user = Auth::user();
+
+        return view('transfer/TrasferUser/index', compact('user'));
     }
 
 
-    public function index()
+    public function indexOld()
     {
         $user = Auth::user();
 
@@ -90,9 +110,8 @@ class TrasferUserController extends Controller
                 ->with('user')->with('branch')->with('product')
                 ->get();
         }
-        // return $trans1;
 
-        return view('transfer/TrasferUser/index', compact('trans1', 'trans2'));
+        return view('transfer/TrasferUser/indexOld', compact('trans1', 'trans2'));
     }
 
     public function create()

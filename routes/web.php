@@ -27,8 +27,7 @@ Route::get('api/sold', 'SaleController@tableSold');
 Route::get('api/apart', 'SaleController@tableApart');
 Route::get('api/givedback', 'SaleController@tableGivedback');
 Route::get('api/transInt', 'TrasferUserController@transInt');
-
-
+Route::get('api/transOut', 'TrasferUserController@transOut');
 
 Route::get('/', function () {
     return view('auth/login');
@@ -71,8 +70,8 @@ Route::group(['middleware' => ['auth']], function () {
     //Taspasos
     //Route::group(['middleware' => ['admin']],function(){
 
-    Route::resource('traspasos', 'TranferProductsController');
-    Route::resource('traspasosAA', 'TrasferUserController');
+    Route::get('viejo', 'TrasferUserController@indexOld');
+    Route::resource('traspasos', 'TrasferUserController');
     Route::resource('traspasosExt', 'TransferExtController');
 
     Route::get('traspasospdf', 'TranferProductsController@exportPdfall');
