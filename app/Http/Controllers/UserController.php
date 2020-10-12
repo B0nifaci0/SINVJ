@@ -85,6 +85,12 @@ class UserController extends Controller
         if ($password != $passcon) {
             return redirect('/usuarios/create')->with('mesage-delete', 'Contraseñas diferentes, captura contraseñas iguales !');
         }
+        $exist = User::where('email', $request->email)
+            ->where('shop_id', Auth::User()->shop->id)
+            ->first();
+        if($exist) {
+            return redirect('/usuarios/create')->with('mesage-delete', 'El correo que intentas registrar ya existe');
+        }
         //$shops=Auth::user()->shop()->get();
         \App\User::create([
             'name' => $request['name'],
@@ -147,8 +153,15 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, $id)
-    {
+    {   
         $users = User::findOrFail($id);
+        $exist = User::where('email', $request->email)
+        ->where('shop_id', Auth::user()->shop->id)
+        ->count();
+
+        if($exist == 1 && $request->email != $users->email){
+            return redirect('/usuarios/' . $id . '/edit') -> with('mesage', 'El correo que intentas registrar ya existe');
+        }else{
         $users->name = $request->name;
         $users->email = $request->email;
         $users->password = bcrypt($request->password);
@@ -165,6 +178,7 @@ class UserController extends Controller
 
             return redirect('/usuarios')->with('mesage-update', 'El usuario se ha modificado exitosamente!');
         }
+     }      
     }
 
     /**
