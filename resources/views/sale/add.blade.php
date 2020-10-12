@@ -442,7 +442,7 @@ seleccionado con sus respectivos datos-->
         console.log('Ventas: ', sales);
 
         $('#ventas').DataTable( {
-            paging:         false,
+            pageLength:     50,
             responsive:     true
         } ).columns.adjust().responsive.recalc();
 
