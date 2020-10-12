@@ -2,9 +2,10 @@
 
 namespace App;
 
+use App\User;
 use App\Branch;
 use App\Product;
-use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,6 +24,10 @@ class TransferProduct extends Model
         'paid_at'
     ];
 
+    protected $casts = [
+        'updated_at'  => 'date:d-m-Y',
+        'created_at' => 'date:d-m-Y',
+    ];
     public function product()
     {
         return $this->belongsTo(Product::class);

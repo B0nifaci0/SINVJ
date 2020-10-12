@@ -42,7 +42,7 @@ TRANSFERENCIAS
         <div class="panel">
             <div class="panel-body">
                 <div class="example-wrap">
-                    <h1 class="text-center panel-title"> Mis Traspasos</h1>
+                    <h1 class="text-center panel-title">Traspasos de Tienda</h1>
                     <div class="panel-actions float-right">
                         <div class="container-fluid row float-right">
                             @if(Auth::user()->type_user == 1 )
@@ -57,7 +57,7 @@ TRANSFERENCIAS
                             </div>
                             @endif
                             <div class="col-6">
-                                <button onclick="window.location.href='/traspasos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left
+                                <button onclick="window.location.href='/traspasosAA/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left
                   btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip"
                                     data-original-title="Nuevo traspaso">
                                     <i class="icon md-plus" aria-hidden="true"></i>
@@ -167,10 +167,6 @@ TRANSFERENCIAS
                                                     @endif
                                                     @else
                                                     @if(!$transferin->paid_at)
-                                                    @if(Auth::user()->id == $transferin->user_id &&
-                                                    $transferin->status_product == 1)
-
-                                                    @else
                                                     @if($transferin->status_product === null)
                                                     <span class="text-center badge badge-success">Pendiente</span>
                                                     @elseif($transferin->status_product == 1)
@@ -182,11 +178,10 @@ TRANSFERENCIAS
                                                     @endif
                                                     @endif
                                                     @endif
-                                                    @endif
                                                     <!-- END Botón-->
                                                 </td>
                                                 @if ($transferin->status_product !== null && $transferin->paid_at ==
-                                                null && Auth::user()->id == $transferin->destinationUser->id )
+                                                null && (Auth::user()->id == $transferin->destinationUser->id || Auth::user()->type_user == 1))
                                                 <td>
                                                     <!-- Botón para generar Traspaso por (ID)-->
                                                     <a href="traspasoEntrante/{{$transferin->id}}"><button type="button"
@@ -221,11 +216,12 @@ TRANSFERENCIAS
                                             <th>Categoría</th>
                                             <th>Línea</th>
                                             <th>S.Origen</th>
+                                            <th>Quien lo mando</th>
                                             <th>S.Destino</th>
                                             <th>Quien recibió</th>
                                             <th>Status</th>
                                             <th>Opciones</th>
-                                            <th>Tickey</th>
+                                            <th>Ticket</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -236,6 +232,7 @@ TRANSFERENCIAS
                                             <th>Categoría</th>
                                             <th>Línea</th>
                                             <th>S.Origen</th>
+                                            <th>Quien lo mando</th>
                                             <th>S.Destino</th>
                                             <th>Quien recibió</th>
                                             <th>Status</th>
@@ -246,21 +243,22 @@ TRANSFERENCIAS
                                     <tbody>
                                         @foreach ($trans1 as $transferout)
                                         <tr>
-                                            <td data-sort='YYYYMMDD'>{{$transferout->updated_at->format('m-d-Y')}}</td>
+                                            <td data-sort='YYYYMMDD'>{{ $transferout->updated_at->format('m-d-Y')}}</td>
                                             <td>{{ $transferout->product->clave }}</td>
                                             <td>
                                                 @if($transferout->product->weigth == null)
                                                     <span>$</span>
                                                 @endif
-                                                {{ $transferout->product->weigth ? $transferout->product->weigth : $transferout->product->price }}
-                                            </td>
+                                                {{ $transferout->product->weigth ? $transferout->product->weigth :   $transferout->product->price_purchase }}
+                                               
+                                                </td>
                                             <td>{{ $transferout->product->category->name }}</td>
-                                            <td>
+                                            <td>{{ $transferout->product->line ? $transferout->product->line->name : ''  }}
                                                 @if($transferout->product->category->type_product == 1 )
                                                     <span class="text-center badge badge-success">Pieza</span>
                                                 @endif
-                                                {{ $transferout->product->line ? $transferout->product->line->name :''}} 
-                                            </td>
+                                                </td>
+                                            <td>{{$transferout->lastBranch->name}}</td>
                                             <td>{{$transferout->user->name}}</td>
                                             <td>{{$transferout->newBranch->name}}</td>
                                             <td>{{$transferout->destinationUser->name}}</td>
@@ -281,44 +279,28 @@ TRANSFERENCIAS
                                             </td>
                                             <td>
                                                 <!-- Botón para Aceptar o Rechazar Traspaso -->
-                                                @if($transferout->status_product === null)
-                                                @if(Auth::user()->id == $transferout->user_id)
+                                                @if($transferout->status_product === null && (Auth::user()->id == $transferout->user_id || Auth::user()->type_user == 1))
                                                 <button class="btn btn-warning cancel"
                                                     alt="{{ $transferout->id }}">Cancelar</button>
-                                                @else
-                                                <button class="btn btn-primary accept"
-                                                    alt="{{ $transferout->id }}">Aceptar</button>
-                                                <button class="btn btn-warning reject"
-                                                    alt="{{ $transferout->id }}">Rechazar</button>
-                                                @endif
-                                                @else
-                                                @if(!$transferout->paid_at)
-                                                @if(Auth::user()->id == $transferout->user_id &&
-                                                $transferout->status_product
-                                                == 1)
+                                                @elseif(!$transferout->paid_at)
+                                                @if($transferout->status_product == 1 && Auth::user()->type_user == 1 )
+                                                <button class="btn btn-success paid"
+                                                    alt="{{ $transferout->id }}">Pagar</button>
                                                 <button class="btn btn-danger give-back"
                                                     alt="{{ $transferout->id }}">Devolver</button>
-                                                @else
-                                                @if($transferout->status_product === null)
-                                                <span class="text-center badge badge-success">Pendiente</span>
-                                                @elseif($transferout->status_product == 1)
-                                                <span class="text-center badge badge-warning">Por pagar</span>
-                                                @elseif($transferout->status_product == 0 ||
+                                                @elseif($transferout->status_product === 0 ||
                                                 $transferout->status_product ==
                                                 3)
                                                 <span class="text-center badge badge-info">No se paga</span>
                                                 @endif
                                                 @endif
-                                                @else
-                                                <span class="text-center badge badge-success">Pagado</span>
-                                                @endif
-                                                @endif
                                                 <!-- END Botón-->
                                             </td>
-                                            @if ($transferout->paid_at !== null )
+                                            @if ($transferout->status_product !== null && $transferout->paid_at == null
+                                            && (Auth::user()->id == $transferout->user_id || Auth::user()->type_user == 1))
                                             <td>
-                                                <!-- Botón para generar Traspaso por (ID)-->
-                                                <a href="traspasopdf/{{$transferout->id}}"><button type="button"
+                                                
+                                                <a href="traspasoSaliente/{{$transferout->id}}"><button type="button"
                                                         class="btn btn-icon btn-danger waves-effect waves-light"
                                                         data-toggle="tooltip" data-original-title="Generar reporte PDF">
                                                         <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
@@ -341,7 +323,9 @@ TRANSFERENCIAS
         </div>
     </div>
 </div>
+
 <!-- End Panel Basic -->
+
 
 <form method="post" action="/traspasos/respuesta" id="form" class="d-none">
     {{ csrf_field() }}
@@ -349,12 +333,22 @@ TRANSFERENCIAS
     <input type="text" name="answer" id="answer">
 </form>
 
+<form method="post" action="/traspasos/cancelar" id="give-back" class="d-none">
+    {{ csrf_field() }}
+    <input type="text" name="transfer_id" id="transfer_id_gb">
+</form>
+
+<form method="post" action="/traspasos/pagar" id="payment-form" class="d-none">
+    {{ csrf_field() }}
+    <input type="text" name="transfer_id" id="transfer_id_p">
+</form>
+
 @endsection
 
 @section('barcode-product')
 <script type="text/javascript">
     //inicializa la tabla para resposnive
-    $(document).ready(function(){
+    $(document).ready(function() {
         $('#incoming_transfers').DataTable({
             retrieve: true,
         });
@@ -362,10 +356,10 @@ TRANSFERENCIAS
             retrieve: true,
         });
 
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             $($.fn.dataTable.tables(true)).DataTable()
-              .columns.adjust()
-              .responsive.recalc();
+                .columns.adjust()
+                .responsive.recalc();
         });
     });
 </script>
@@ -375,45 +369,80 @@ TRANSFERENCIAS
 
 @section('traspaso')
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
 
-    $('#incoming_transfers').on('click', '.accept', function(){
-    var id = $(this).attr('alt');
-    $('#transfer_id_r').val(id);
-    $('#answer').val(1);
-    $('#form').submit();
-  })
+        $('#incoming_transfers').on('click', '.accept', function() {
+            var id = $(this).attr('alt');
+            $('#transfer_id_r').val(id);
+            $('#answer').val(1);
+            $('#form').submit();
+        })
 
-   $('#incoming_transfers').on('click', '.reject', function(){
-    var id = $(this).attr('alt');
-      $('#transfer_id_r').val(id);
-      $('#answer').val(0);
-      $('#form').submit();
-  })
-});
-
+        $('#incoming_transfers').on('click', '.reject', function() {
+            var id = $(this).attr('alt');
+            $('#transfer_id_r').val(id);
+            $('#answer').val(0);
+            $('#form').submit();
+        })
+    });
 </script>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
 
-  $('#outgoing_transfers').on('click', '.cancel', function(){
-    var id = $(this).attr('alt');
-      $('#transfer_id_r').val(id);
-      $('#answer').val(null);
-      $('#form').submit();
-  })
-});
+        $('#outgoing_transfers').on('click', '.paid', function() {
+            let id = $(this).attr("alt");
+            console.log("es:", id)
+            Swal.fire({
+                title: 'Confirmación',
+                text: "¿Se ha pagado este traspaso?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4caf50',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.value) {
+                    $('#transfer_id_p').val(id);
+                    $('#payment-form').submit();
+                }
+            })
+        });
 
+        $('#outgoing_transfers').on('click', '.give-back', function() {
+            let id = $(this).attr("alt");
+            Swal.fire({
+                title: 'Confirmación',
+                text: "¿Se ha devuelto este producto?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4caf50',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.value) {
+                    $('#transfer_id_gb').val(id);
+                    $('#give-back').submit();
+                }
+            })
+        });
+
+        $('#outgoing_transfers').on('click', '.cancel', function() {
+            var id = $(this).attr('alt');
+            $('#transfer_id_r').val(id);
+            $('#answer').val(null);
+            $('#form').submit();
+        })
+    });
 </script>
 @endsection
 
 @section('barcode-product')
 <script type="text/javascript">
     $('#example').dataTable({
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-            }
-        });
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        }
+    });
 </script>
 @endsection

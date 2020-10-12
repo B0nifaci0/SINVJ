@@ -21,7 +21,7 @@ class TranferProductsController extends Controller
     {
         $this->middleware('admin');
     }
-    public function index()
+    public function indexOld()
     {
         $user = Auth::user();
 
@@ -131,12 +131,7 @@ class TranferProductsController extends Controller
             $inventory->status_id = 5;
             $inventory->save();
         }
-
-        if ($user->type_user == User::SA) {
-            return redirect('/traspasosAA')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
-        } else {
-            return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
-        }
+        return redirect('/lista-traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
     }
 
     public function answerTransferRequest(Request $request)
@@ -186,11 +181,7 @@ class TranferProductsController extends Controller
                 $product->save();
             }
         }
-        if ($user->type_user == User::AA || $user->type_user == User::SA) {
-            return redirect('/traspasosAA');
-        } else {
-            return redirect('/traspasos');
-        }
+        return redirect('/lista-traspasos');
     }
 
     public function payTransfer(Request $request)
