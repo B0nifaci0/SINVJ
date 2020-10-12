@@ -314,7 +314,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('reportProductspzs', 'ProductController@reportProductpzs');
 
     Route::get('reportes-traspasos', 'TrasferUserController@indexReportTransfer');
-    Route::get('productsWithoutLine', 'TrasferUserController@reportTransferG');
+    Route::get('reportTransferG', 'TrasferUserController@reportTransferG');
     Route::get('reportTransfer', 'TrasferUserController@reportTransferBranch');
 
     Route::get('/testTraspaso', 'TranferProductsController@testInterfaz');
