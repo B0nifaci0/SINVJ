@@ -63,7 +63,7 @@
                 @elseif($transfer->status_product == 3)
                 <td>Devuelto</td>
                 @else
-                <td>Pendiente</td>z
+                <td>Pendiente</td>
                 @endif
                 <td>{{$transfer->updated_at->format('m-d-Y')}}</td>
             </tr>
