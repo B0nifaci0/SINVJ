@@ -39,7 +39,7 @@ class TransferProduct extends Model
 
     public function destinationUser()
     {
-        return $this->belongsTo(User::class, 'destination_user_id');
+        return $this->belongsTo(User::class, 'destination_user_id')->withTrashed();
     }
 
     public function lastBranch()
