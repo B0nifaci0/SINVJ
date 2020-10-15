@@ -38,54 +38,32 @@ Panel Sucursales
   </div>
   @endif
 
-  <div class="page-content container-fluid">
-    <div class="col-sm-12 col-lg-12">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="panel-primary">
-              <div class="panel-heading">
-                <center>
-                  <h2 class="panel-title" style="color:white">Informacion De Producto
-                  </h2>
-                </center>
-                <div class="panel-actions float-right col-">
-                  <button onclick="window.location.href='/productos'" class="btn btn-sm small btn-floating
-                    btn-primary waves-light float-right" data-original-title="mis productos"> <i
-                      class="icon fa-reply-all " aria-hidden="true"></i></button>
-                </div>
-              </div><br>
+    <div class="page-content">
+      <div class="col-12">
+        <div class="panel-primary">
+          <div class="panel-heading">
+            <center>
+              <h2 class="panel-title" style="color:white">Informacion De Producto</h2>
+            </center>
+            <div class="panel-actions float-right col-">
+              <button onclick="window.location.href='/productos'" class="btn btn-sm small btn-floating
+                btn-primary waves-light float-right" data-toggle="tooltip" data-original-title="volver a mis productos"> <i
+                class="icon fa-reply-all " aria-hidden="true"></i>
+              </button>
             </div>
-          </div>
+          </div></br>
+        </div>
+      </div>
+    
 
-          <div class="col-sm-3">
-            <div class="panel-primary">
-              <div class="panel-heading">
-                <center>
-                  <h2 class="panel-title" style="color:white">Imagen</h2>
-                </center>
-              </div>
-              <div class="row">
-                <div class="col-sm">
-                  <div class="card card-shadow">
-                    <div class="card-block p-20 pt-10">
-                      <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="col-sm-12 col-lg-12">
+      <div class="row">
           <div class="col-sm-9">
             <div class="panel-primary">
               <div class="panel-heading">
-                <center>
-                  <h2 class="panel-title" style="color:white">Producto</h2>
-                </center>
+                <center><h2 class="panel-title" style="color:white">Producto</h2></center>
               </div>
-              <div class="row">
-                <div class="col-sm">
-                  <div class="card card-shadow">
+              <div class="card card-shadow">
                     <div class="card-block p-20 pt-10">
                       <div class="clearfix">
                         <div class="row">
@@ -106,7 +84,7 @@ Panel Sucursales
                           </div>
                           <div class="col-md-3">
                             <p class="">
-                              <strong>Peso:</strong><span> {{$product->weigth}} </span>
+                              <strong>Peso:</strong><span> {{($product->weigth) ? $product->weigth : 'N/A'}} </span>
                             </p>
                           </div>
                           <div class="col-md-3">
@@ -118,7 +96,7 @@ Panel Sucursales
                           <div class="col-md-3">
                             <p class="">
                               <strong>Línea:</strong><span>
-                                {{ ($product->line) ? $product->line->name : '' }}</span>
+                                {{ ($product->line) ? $product->line->name : 'N/A' }}</span>
                             </p>
                           </div>
                           @if(Auth::user()->type_user == 1)
@@ -179,13 +157,25 @@ Panel Sucursales
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
             </div>
           </div>
-        </div>
+
+          <div class="col-sm-3">
+            <div class="panel-primary">
+              <div class="panel-heading">
+                <center><h2 class="panel-title" style="color:white">Imagen</h2></center>
+              </div>
+              <div class="card card-shadow">
+                  <div class="card-block p-20 pt-10">
+                    <a class="inline-block" href="{{ $product->image}}" data-plugin="magnificPopup"
+                      data-close-btn-inside="false" data-fixed-contentPos="true"
+                      data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
+                      <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150" />
+                    </div>
+                </div>
+            </div>
+          </div>
+ 
       </div>
-    </div>
   </div>
-<div>
 @endsection
