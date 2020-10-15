@@ -39,17 +39,19 @@ Panel Sucursales
   @endif
 
     <div class="page-content">
-      <div class="col-12">
+      <div class="col-xs-12 col-sm-12 col-lg-12">
         <div class="panel-primary">
           <div class="panel-heading">
             <center>
               <h2 class="panel-title" style="color:white">Informacion De Producto</h2>
             </center>
-            <div class="panel-actions float-right col-">
-              <button onclick="window.location.href='/productos'" class="btn btn-sm small btn-floating
-                btn-primary waves-light float-right" data-toggle="tooltip" data-original-title="volver a mis productos"> <i
-                class="icon fa-reply-all " aria-hidden="true"></i>
-              </button>
+            <div class="row">
+              <div class="panel-actions  col-xs-12 col-sm-12 col-lg-12">
+                <button onclick="window.location.href='/productos'" class="btn btn-sm small btn-floating
+                  btn-primary waves-light float-right" data-toggle="tooltip" data-original-title="volver a mis productos"> <i
+                  class="icon fa-reply-all " aria-hidden="true"></i>
+                </button>
+              </div>
             </div>
           </div></br>
         </div>
@@ -58,7 +60,7 @@ Panel Sucursales
 
     <div class="col-sm-12 col-lg-12">
       <div class="row">
-          <div class="col-sm-9">
+          <div class="col-xs-12 col-sm-12 col-lg-9">
             <div class="panel-primary">
               <div class="panel-heading">
                 <center><h2 class="panel-title" style="color:white">Producto</h2></center>
@@ -67,62 +69,62 @@ Panel Sucursales
                     <div class="card-block p-20 pt-10">
                       <div class="clearfix">
                         <div class="row">
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Clave:</strong><span> {{$product->clave}} </span>
                             </p>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Descripción:</strong><span> {{$product->description}} </span>
                             </p>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Observaciones:</strong><span> {{$product->observations}} </span>
                             </p>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Peso:</strong><span> {{($product->weigth) ? $product->weigth : 'N/A'}} </span>
                             </p>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Categoría:</strong><span>
                                 {{ ($product->category) ? $product->category->name: '' }} </span>
                             </p>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Línea:</strong><span>
                                 {{ ($product->line) ? $product->line->name : 'N/A' }}</span>
                             </p>
                           </div>
                           @if(Auth::user()->type_user == 1)
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Precio Compra:</strong><span> {{$product->price_purchase}} </span>
                             </p>
                           </div>
                           @endif
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Precio Venta:</strong><span> {{$product->price}} </span>
                             </p>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Precio con descuento:</strong><span> {{$product->discount}} </span>
                             </p>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Sucursal:</strong><span>{{ ($product->branch) ? $product->branch->name: '' }}
                               </span>
                             </p>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Status:</strong>
                               @if($product->status_id == 1)
@@ -142,7 +144,7 @@ Panel Sucursales
                               @endif
                             </p>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
                               <strong>Tipo Producto:</strong>
                               @if($product->category->type_product == 1 )
@@ -160,7 +162,7 @@ Panel Sucursales
             </div>
           </div>
 
-          <div class="col-sm-3">
+          <div class="col-xs-12 col-sm-12 col-lg-3">
             <div class="panel-primary">
               <div class="panel-heading">
                 <center><h2 class="panel-title" style="color:white">Imagen</h2></center>
@@ -170,7 +172,7 @@ Panel Sucursales
                     <a class="inline-block" href="{{ $product->image}}" data-plugin="magnificPopup"
                       data-close-btn-inside="false" data-fixed-contentPos="true"
                       data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
-                      <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150" />
+                      <img class="img-fluid" src="{{ $product->image }}" alt="..." width="auto" height="auto" />
                     </div>
                 </div>
             </div>
