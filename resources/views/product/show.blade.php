@@ -104,18 +104,18 @@ Panel Sucursales
                           @if(Auth::user()->type_user == 1)
                           <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
-                              <strong>Precio Compra:</strong><span> {{$product->price_purchase}} </span>
+                              <strong>Precio Compra: $ </strong><span> {{$product->price_purchase}}</span>
                             </p>
                           </div>
                           @endif
                           <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
-                              <strong>Precio Venta:</strong><span> {{$product->price}} </span>
+                              <strong>Precio Venta: $ </strong><span> {{$product->price}} </span>
                             </p>
                           </div>
                           <div class="col-xs-6 col-sm-6 col-lg-4">
                             <p class="">
-                              <strong>Precio con descuento:</strong><span> {{$product->discount}} </span>
+                              <strong>Precio con descuento: $</strong><span> {{$product->discount}} </span>
                             </p>
                           </div>
                           <div class="col-xs-6 col-sm-6 col-lg-4">

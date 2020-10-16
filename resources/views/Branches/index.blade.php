@@ -48,13 +48,13 @@ LISTA DE SUCURSALES
             <div class="container-fluid row float-right">
               @if(Auth::user()->type_user == 1 )
               <!-- Botón para Generar PDF de productos-->
-              <div class="col-6">
+             <!-- <div class="col-6">
                 <button onclick="window.location.href='sucursales/corte'" type="button" class="btn btn-sm small btn-floating
                 toggler-left  btn-secondary waves-effect waves-light waves-round float-right" data-toggle="tooltip"
                   data-original-title="Corte de caja">
                   <i class="iicon md-money" aria-hidden="true"></i>
                 </button>
-              </div>
+              </div>-->
               <div class="col-6">
                 <button onclick="window.location.href='/sucursales/create'" type="button"
                   class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left "
