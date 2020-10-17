@@ -103,16 +103,6 @@
                 border-bottom-right-radius: 5px;
             }
 
-            /* .footer {
-                width: 100%;
-                text-align: center;
-                position: fixed;
-                bottom: 0px;
-            }
-
-            .pagenum:before {
-                content: counter(page);
-            } */
         </style>
     </head>
 

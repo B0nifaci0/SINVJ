@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 use App\TranferProduct;
 use App\Shop;
 use App\Branch;
@@ -12,24 +13,25 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 class User extends Authenticatable implements MustVerifyEmail
 {
 
-  // Tipos de usuario
-  //AA = application administrator
-  const AA = '1';
-  // SA = sub administrator
-  const SA = '2';
-  // CO = collaborator
-  const CO = '3';
+	// Tipos de usuario
+	//AA = application administrator
+	const AA = '1';
+	// SA = sub administrator
+	const SA = '2';
+	// CO = collaborator
+	const CO = '3';
 
 
-  // Tipos de suscripcion
-  const FREE = '0';
-  const PREMIUM = '1';
-  const PRO = '2';
+	// Tipos de suscripcion
+	const FREE = '0';
+	const PREMIUM = '1';
+	const PRO = '2';
 
 
-  public  function scopeLast($query){
-	return $query->orderBy("id");
-  }
+	public  function scopeLast($query)
+	{
+		return $query->orderBy("id");
+	}
 	use Notifiable;
 	use SoftDeletes;
 
@@ -75,4 +77,8 @@ class User extends Authenticatable implements MustVerifyEmail
 		return $this->hasMany(TransferProduct::class);
 	}
 
+	public function isAdmin()
+	{
+		return $this->type_user == User::AA;
+	}
 }

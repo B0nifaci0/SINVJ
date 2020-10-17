@@ -26,8 +26,6 @@ Route::get('/buscadorsucursal', 'BranchProductsController@search');
 Route::get('api/sold', 'SaleController@tableSold');
 Route::get('api/apart', 'SaleController@tableApart');
 Route::get('api/givedback', 'SaleController@tableGivedback');
-Route::get('api/transInt', 'TrasferUserController@transInt');
-Route::get('api/transOut', 'TrasferUserController@transOut');
 
 Route::get('/', function () {
     return view('auth/login');
@@ -60,6 +58,43 @@ Route::group(['middleware' => ['auth']], function () {
         }
     );
 
+    Route::group(
+        [
+            'namespace' => 'Transfer'
+        ],
+        function () {
+
+            Route::resource('traspasos', 'TransferProductsController');
+            Route::post('transfer/response', 'OptionsController@response');
+            Route::post('transfer/pay', 'OptionsController@payTransfer');
+            Route::post('transfer/cancel', 'OptionsController@giveBack');
+
+            Route::group(
+                [
+                    'prefix' => 'transfer'
+                ],
+                function () {
+                    Route::get('/transInt', 'ServerSideController@transInt');
+                    Route::get('/transOut', 'ServerSideController@transOut');
+                }
+            );
+
+            Route::group(
+                [
+                    'namespace' => 'Reports'
+                ],
+                function () {
+                    Route::get('/reportes-traspasos', 'TransferProductsController@index');
+                    Route::get('traspasospdf', 'TransferProductsController@pdfAll');
+                    Route::get('traspaso-entrante/{id}', 'TicketsController@incoming');
+                    Route::get('traspaso-saliente/{id}', 'TicketsController@outgoing');
+                    Route::get('reportTransfer', 'TransferProductsController@reportTransferStatus');
+                    Route::get('reportTransferG', 'TransferProductsController@reportTransferGeneral');
+                }
+            );
+        }
+    );
+
     //Tiendas
     //Route::resource('tiendas', 'ShopController');
 
@@ -70,18 +105,10 @@ Route::group(['middleware' => ['auth']], function () {
     //Taspasos
     //Route::group(['middleware' => ['admin']],function(){
 
-    Route::get('viejo', 'TrasferUserController@indexOld');
-    Route::resource('traspasos', 'TranferProductsController');
-    Route::get('lista-traspasos', 'TrasferUserController@indexNew');
-    Route::resource('traspasosAA', 'TrasferUserController');
-
     Route::resource('traspasosExt', 'TransferExtController');
 
-    Route::get('traspasospdf', 'TranferProductsController@exportPdfall');
-
     //Traspaso id PDF
-    Route::get('traspasoEntrante/{id}', 'TranferProductsController@exportPdfIn');
-    Route::get('traspasoSaliente/{id}', 'TranferProductsController@exportPdfOut');
+
     //Ventas CO
 
     //Pagos
@@ -94,11 +121,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('productosCO', 'ProductController@indexCo');
     // Productos COP
     Route::get('sucursalproductoCO', 'ProductController@indexCOP');
-
-    Route::post('traspasos/respuesta', 'TranferProductsController@answerTransferRequest');
-    Route::post('traspasos/pagar', 'TranferProductsController@payTransfer');
-    Route::post('traspasos/cancelar', 'TranferProductsController@giveBack');
-
     //Reporte
     Route::get('homepdf', 'HomeController@exportPdf');
 
@@ -313,11 +335,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('piezascategoriageneral', 'ProductController@reportCategoriaPGeneral');
     Route::get('reportProductspzs', 'ProductController@reportProductpzs');
 
-    Route::get('reportes-traspasos', 'TrasferUserController@indexReportTransfer');
-    Route::get('reportTransferG', 'TrasferUserController@reportTransferG');
-    Route::get('reportTransfer', 'TrasferUserController@reportTransferBranch');
-
-    Route::get('/testTraspaso', 'TranferProductsController@testInterfaz');
 });
 
 Auth::routes(['verify' => true]);

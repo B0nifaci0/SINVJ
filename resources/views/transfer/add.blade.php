@@ -119,6 +119,7 @@ $(".sucursales1").change(function(){
         });
   });
 });
+
 $(".usuarios").change(function(){
       var id_user = $(this).val();
       var selector = $(this).attr("alt");

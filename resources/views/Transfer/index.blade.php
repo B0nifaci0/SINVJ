@@ -39,15 +39,7 @@
           <div class="panel-actions float-right">
             <div class="container-fluid row float-right">
               <!-- Botón para Generar PDF de productos-->
-              @if(Auth::user()->type_user !== 1)
-              <div class="col-6">
-                <button onclick="window.location.href='/traspasos/create'" type="button"
-                  class="btn btn-sm small btn-floating toggler-left btn-info waves-effect waves-light waves-round float-left"
-                  data-toggle="tooltip" data-original-title="Nuevo traspaso">
-                  <i class="icon md-plus" aria-hidden="true"></i>
-                </button>
-              </div>
-              @else
+              @if(Auth::user()->type_user == 1)
               <div class="col-6">
                 <button onclick="window.location.href='traspasospdf'" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-danger waves-effect waves-light waves-round float-right"
@@ -55,14 +47,14 @@
                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                 </button>
               </div>
+              @endif
               <div class="col-6">
-                <button onclick="window.location.href='/traspasosAA/create'" type="button"
+                <button onclick="window.location.href='/traspasos/create'" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-info waves-effect waves-light waves-round float-left"
                   data-toggle="tooltip" data-original-title="Nuevo traspaso">
                   <i class="icon md-plus" aria-hidden="true"></i>
                 </button>
               </div>
-              @endif
               <!-- END Botón-->
             </div>
           </div>
@@ -139,18 +131,18 @@
   </div>
 </div>
 <!-- End Panel Basic -->
-<form method="post" action="/traspasos/respuesta" id="form" class="d-none">
+<form method="post" action="/transfer/response" id="form" class="d-none">
   {{ csrf_field() }}
   <input type="text" name="transfer_id" id="transfer_id_r" />
   <input type="text" name="answer" id="answer" />
 </form>
 
-<form method="post" action="/traspasos/cancelar" id="give-back" class="d-none">
+<form method="post" action="/transfer/cancel" id="give-back" class="d-none">
   {{ csrf_field() }}
   <input type="text" name="transfer_id" id="transfer_id_gb" />
 </form>
 
-<form method="post" action="/traspasos/pay" id="payment-form" class="d-none">
+<form method="post" action="/transfer/pay" id="payment-form" class="d-none">
   {{ csrf_field() }}
   <input type="text" name="transfer_id" id="transfer_id_p" />
 </form>
@@ -169,7 +161,7 @@
       language: {
         url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
       },
-      ajax: "api/transInt",
+      ajax: "transfer/transInt",
       columns: [
         { data: "product.clave" },
         { data: "product.category.name" },
@@ -232,7 +224,7 @@
           data: null,
           render: function (data, type, row, meta) {
             if (row.status_product !== null && row.paid_at == null && (user.id == row.destination_user.id || user.type_user == 1))
-              return `<a href="traspasoEntrante/` + row.id + `"><button type="button"
+              return `<a href="traspaso-entrante/` + row.id + `"><button type="button"
                 class="btn btn-icon btn-danger waves-effect waves-light" data-toggle="tooltip"
                 data-original-title="Generar reporte PDF">
                 <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
@@ -249,7 +241,7 @@
       language: {
         url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
       },
-      ajax: "api/transOut",
+      ajax: "transfer/transOut",
       columns: [
         { data: "product.clave" },
         { data: "product.category.name" },
@@ -285,7 +277,6 @@
                 return `<span class="text-center badge badge-secondary">Rechazado</span>`;
             else if(row.status_product === 3)
                 return `<span class="text-center badge badge-danger">Devuelto</span>`;
-            else
             return `<span class="text-center badge badge-primary">Pendiente</span>`;
           }
         },
@@ -294,20 +285,21 @@
           render: function (data, type, row, meta) {
           if(row.status_product === null && (user.id == row.user_id || user.type_user == 1))
             return `<button class="btn btn-warning cancel" alt="`+ data +`">Cancelar</button>`;
-          else if(!row.paid_at)
+          else if(!row.paid_at){
             if(row.status_product == 1 && user.type_user == 1 )
-            return `<button class="btn btn-success paid" alt="`+ data +`">Pagar</button>
-            <button class="btn btn-danger give-back" alt="`+ data +`">Devolver</button>`;
-          else if(row.status_product === 0 || row.status_product == 3)
-            return `<span class="text-center badge badge-info">No se paga</span>`;
-            else return '';
+              return `<button class="btn btn-success paid" alt="`+ data +`">Pagar</button>
+              <button class="btn btn-danger give-back" alt="`+ data +`">Devolver</button>`;
+            else if(row.status_product === 0 || row.status_product == 3)
+              return `<span class="text-center badge badge-info">No se paga</span>`;
+          }
+          return '';
           }
         },
         {
           data: null,
           render: function (data, type, row, meta) {
            if(row.status_product !== null && row.paid_at == null && (user.id == row.user_id || user.type_user == 1))
-            return `<a href="traspasoSaliente/`+ row.id +`"><button type="button"
+            return `<a href="traspaso-saliente/`+ row.id +`"><button type="button"
                 class="btn btn-icon btn-danger waves-effect waves-light" data-toggle="tooltip"
                 data-original-title="Generar reporte PDF">
                 <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button></a>`;
@@ -327,9 +319,6 @@
   });
 </script>
 @endsection
-
-<!-- Función Sweet Alert para eliminar producto-->
-
 @section('traspaso')
 <script>
   $(document).ready(function () {
@@ -394,14 +383,6 @@
       $("#answer").val(null);
       $("#form").submit();
     });
-  });
-</script>
-@endsection @section('barcode-product')
-<script type="text/javascript">
-  $("#example").dataTable({
-    language: {
-      url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json",
-    },
   });
 </script>
 @endsection

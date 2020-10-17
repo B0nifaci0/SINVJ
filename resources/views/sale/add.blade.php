@@ -57,8 +57,8 @@ ALTA VENTA
                                     <select name="cliente_id" id="public-id" class="form-control" data-plugin="select2">
                                         <option value="0">Seleccione un Cliente Menudista</option>
                                         @foreach($public as $client)
-                                            <option id="client{{$client->id}}" value="{{ $client->id }}">{{ $client->name }}
-                                                {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
+                                        <option id="client{{$client->id}}" value="{{ $client->id }}">{{ $client->name }}
+                                            {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
                                         @endforeach
                                     </select>
                                     <!-- END Input-->
@@ -66,7 +66,7 @@ ALTA VENTA
                                 <div class="col-md-6">
                                     <!-- Input para Ingresar telefono del cliente-->
                                     <div class="form-group">
-                                    <label align="center">Agregar Cliente</label>
+                                        <label align="center">Agregar Cliente</label>
                                         <br>
                                         <button class="btn btn-primary" data-target="#exampleTabs3" data-toggle="modal"
                                             type="button"><i class="fa fa-user" aria-hidden="true"></i></button>
@@ -83,7 +83,8 @@ ALTA VENTA
                                     <select name="client_id" id="user-id" class="form-control" data-plugin="select2">
                                         <option value="0">Seleccione un Cliente Mayorista</option>
                                         @foreach($wholesaler as $client)
-                                        <option id="client{{$client->id}}" value="{{ $client->id }}" alt="{{ $client->credit }}">{{ $client->name }}
+                                        <option id="client{{$client->id}}" value="{{ $client->id }}"
+                                            alt="{{ $client->credit }}">{{ $client->name }}
                                             {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
                                         @endforeach
                                     </select>
@@ -93,8 +94,9 @@ ALTA VENTA
                                     <div class="form-group">
                                         <label align="right">Agregar Cliente</label>
                                         <br>
-                                        <button align="center" class="btn btn-primary" data-target="#exampleTabs2" data-toggle="modal"
-                                            type="button"><i class="fa fa-user" aria-hidden="true"></i></button>
+                                        <button align="center" class="btn btn-primary" data-target="#exampleTabs2"
+                                            data-toggle="modal" type="button"><i class="fa fa-user"
+                                                aria-hidden="true"></i></button>
                                     </div>
                                     <!-- END Input-->
                                 </div>
@@ -117,10 +119,9 @@ ALTA VENTA
                         </div>
                         <div class="col-1 form-group">
                             <br>
-                            <button type="button"  id="btn-add" 
-                            class=" btn btn-md medium  toggler-left  btn-primary waves-effect waves-light 
-                            waves-round float-left"
-                            data-toggle="tooltip" data-original-title="Agregar Producto">+</button>
+                            <button type="button" id="btn-add" class=" btn btn-md medium  toggler-left  btn-primary waves-effect waves-light 
+                            waves-round float-left" data-toggle="tooltip"
+                                data-original-title="Agregar Producto">+</button>
                         </div>
                         <!-- END Select-->
                         <!-- Botón para agregar producto-->
@@ -192,7 +193,8 @@ ALTA VENTA
                         <!-- END Tabla-->
                     </div>
                     <br>
-                    <input type="file" name="image" id="image" class="invisible" accept="image/gif,image/jpeg,image/jpg,image/png">
+                    <input type="file" name="image" id="image" class="invisible"
+                        accept="image/gif,image/jpeg,image/jpg,image/png">
                     <div class="row">
                         <!-- Botón para mostar el Modal de Tipos de pago-->
                         <div class="col-6 form-group">
@@ -229,7 +231,8 @@ ALTA VENTA
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
-                                        <h4 class="modal-title" id="exampleModalTabs">Registrar o Editar Cliente Mayorista</h4>
+                                        <h4 class="modal-title" id="exampleModalTabs">Registrar o Editar Cliente
+                                            Mayorista</h4>
                                     </div>
                                     <div class="modal-body">
                                         <!-- Input para ingresar nombre del cliente-->
@@ -237,39 +240,48 @@ ALTA VENTA
                                             <div class="form-group form-material col-6">
                                                 <label class="form-control-label" for="inputBasicFirstName">Nombre:
                                                 </label>
-                                                <input type="text" class="form-control" required="required" id="customer_name" name="customer_name"
+                                                <input type="text" class="form-control" required="required"
+                                                    id="customer_name" name="customer_name"
                                                     value="{{old('customer_name')}}" placeholder="Alejandro" />
                                             </div>
                                             <!-- END Input-->
                                             <div class="form-group form-material col-6">
-                                                <label class="form-control-label" for="inputBasicFirstLastName">Primer Apellido:
+                                                <label class="form-control-label" for="inputBasicFirstLastName">Primer
+                                                    Apellido:
                                                 </label>
-                                                <input type="text" class="form-control" required="required" id="first_last" name="customer_name"
+                                                <input type="text" class="form-control" required="required"
+                                                    id="first_last" name="customer_name"
                                                     value="{{old('customer_name')}}" placeholder="Lorenzo" />
                                             </div>
                                             <!-- END Input-->
                                         </div>
                                         <div class="row">
                                             <div class="form-group form-material col-6">
-                                                <label class="form-control-label" for="inputBasicSecondLastName">Segundo Apellido:
+                                                <label class="form-control-label" for="inputBasicSecondLastName">Segundo
+                                                    Apellido:
                                                 </label>
-                                                <input type="text" class="form-control" required="required" id="second_last" name="customer_name"
+                                                <input type="text" class="form-control" required="required"
+                                                    id="second_last" name="customer_name"
                                                     value="{{old('customer_name')}}" placeholder="Soteno" />
                                             </div>
                                             <!-- END Input-->
                                             <!-- Input para ingresar telefono del cliente-->
                                             <div class="form-group form-material col-6">
-                                                <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-                                                <input type="text" class="form-control" required="required" id="phone_number" name="telephone"
-                                                    value="{{old('telephone')}}" placeholder="7225674569" />
+                                                <label class="form-control-label"
+                                                    for="inputBasicLastName">Teléfono:</label>
+                                                <input type="text" class="form-control" required="required"
+                                                    id="phone_number" name="telephone" value="{{old('telephone')}}"
+                                                    placeholder="7225674569" />
                                             </div>
                                             <!-- END Input-->
                                         </div>
                                         <div class="row">
                                             <div class="form-group form-material col-6">
-                                                <label class="form-control-label" for="inputBasicFirstName">Limite De Credito:
+                                                <label class="form-control-label" for="inputBasicFirstName">Limite De
+                                                    Credito:
                                                 </label>
-                                                <input type="text" class="form-control" required="required" id="credit_limit" name="customer_name"
+                                                <input type="text" class="form-control" required="required"
+                                                    id="credit_limit" name="customer_name"
                                                     value="{{old('customer_name')}}" placeholder="150000" />
                                             </div>
                                             <!-- END Input-->
@@ -278,7 +290,7 @@ ALTA VENTA
                                                 </label>
                                                 <select name="branch_id" id="branch" class="form-control">
                                                     @foreach($branches as $branch)
-                                                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                    <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -311,25 +323,30 @@ ALTA VENTA
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
-                                        <h4 class="modal-title" id="exampleModalTabs">Registrar o Editar Cliente Menudista</h4>
+                                        <h4 class="modal-title" id="exampleModalTabs">Registrar o Editar Cliente
+                                            Menudista</h4>
                                     </div>
                                     <div class="modal-body">
                                         <!-- Input para ingresar nombre del cliente-->
                                         <div class="row">
                                             <div class="form-group form-material col-12">
-                                                <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente:
+                                                <label class="form-control-label" for="inputBasicFirstName">Nombre del
+                                                    Cliente:
                                                 </label>
-                                                <input type="text" class="form-control" required="required" id="customer" name="customer_name"
-                                                    value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
+                                                <input type="text" class="form-control" required="required"
+                                                    id="customer" name="customer_name" value="{{old('customer_name')}}"
+                                                    placeholder="Fernando Bonifacio" />
                                             </div>
                                             <!-- END Input-->
                                         </div>
                                         <div class="row">
                                             <!-- Input para ingresar telefono del cliente-->
                                             <div class="form-group form-material col-12">
-                                                <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-                                                <input type="text" class="form-control" required="required" id="phone" name="telephone"
-                                                    value="{{old('telephone')}}" placeholder="7225674569" />
+                                                <label class="form-control-label"
+                                                    for="inputBasicLastName">Teléfono:</label>
+                                                <input type="text" class="form-control" required="required" id="phone"
+                                                    name="telephone" value="{{old('telephone')}}"
+                                                    placeholder="7225674569" />
                                             </div>
                                             <!-- END Input-->
                                         </div>
@@ -385,7 +402,7 @@ ALTA VENTA
                                             <div class="form-group form-material col-md-6">
                                                 <label>Selecciona Ticket de la venta</label>
                                                 <br>
-                                                <label  for="image" class="btn btn-success">Explorar</label>
+                                                <label for="image" class="btn btn-success">Explorar</label>
                                             </div>
                                             <!-- END Input-->
                                         </div>
@@ -1064,6 +1081,7 @@ seleccionado con sus respectivos datos-->
                     var product = products.filter(p => p.id == productId)[0];
 
                     var exist = selectedProducts.filter(p => p.id == product.id);
+                    console.log("existencia:" + exist.length)
                     if (exist.length) {
                         Swal.fire(
                             'No permitido',

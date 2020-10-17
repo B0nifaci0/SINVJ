@@ -75,14 +75,9 @@
                           <th>Nombre del cliente</th>
                           <th>Tipo</th>
                           <th>Teléfono</th>
-                          {{--
-                          <th>Productos</th>
-                          --}}
                           <th>Total</th>
                           <th>Total Pagado</th>
-                          @if(Auth::user()->type_user == 1 )
                           <th>Sucursal</th>
-                          @endif
                           <th>Opciones</th>
                         </tr>
                       </thead>
@@ -105,9 +100,7 @@
                           <th>Teléfono</th>
                           <th>Total</th>
                           <th>Total Pagado</th>
-                          @if(Auth::user()->type_user == 1 )
                           <th>Sucursal</th>
-                          @endif
                           <th>Opciones</th>
                         </tr>
                       </thead>
@@ -128,9 +121,7 @@
                           <th>Teléfono</th>
                           <th>Total</th>
                           <th>Total Pagado</th>
-                          @if(Auth::user()->type_user == 1 )
                           <th>Sucursal</th>
-                          @endif
                           <th>Opciones</th>
                         </tr>
                       </thead>
@@ -171,18 +162,8 @@
           data: "id",
           render: function (data) {
             return (
-              `<a href="/ventas/` +
-              data +
-              `"><button type="button" class="btn btn-icon btn-primary waves-effect waves-light"
-                        data-toggle="tooltip" data-original-title="Detalle de la Venta">
-                        <i class="icon fa-search" aria-hidden="true"></i></button>
-                </a>
-                <a href="ventapdf/` +
-              data +
-              `"><button type="button" class="btn btn-icon btn-danger waves-effect waves-light"
-                        data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                        <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
-                </a>`
+              `<a href="/ventas/` + data +`"><button type="button" class="btn btn-icon btn-primary waves-effect waves-light" data-toggle="tooltip" data-original-title="Detalle de la Venta"><i class="icon fa-search" aria-hidden="true"></i></button></a>
+                <a href="ventapdf/` + data + `"><button type="button" class="btn btn-icon btn-danger waves-effect waves-light" data-toggle="tooltip" data-original-title="Generar reporte PDF"><i class="icon fa-file-pdf-o" aria-hidden="true"></i></button></a>`
             );
           },
         },
@@ -211,18 +192,8 @@
           data: "id",
           render: function (data) {
             return (
-              `<a href="/ventas/` +
-              data +
-              `"><button type="button" class="btn btn-icon btn-primary waves-effect waves-light"
-                data-toggle="tooltip" data-original-title="Detalle de la Venta">
-                <i class="icon fa-search" aria-hidden="true"></i></button>
-        </a>
-        <a href="ventapdf/` +
-              data +
-              `"><button type="button" class="btn btn-icon btn-danger waves-effect waves-light"
-                data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                <i class="icon fa-file-pdf-o" aria-hidden="true"></i></button>
-        </a>`
+              `<a href="/ventas/` +data +`"><button type="button" class="btn btn-icon btn-primary waves-effect waves-light" data-toggle="tooltip" data-original-title="Detalle de la Venta"><i class="icon fa-search" aria-hidden="true"></i></button></a>
+              <a href="ventapdf/` +data +`"><button type="button" class="btn btn-icon btn-danger waves-effect waves-light" data-toggle="tooltip" data-original-title="Generar reporte PDF"><i class="icon fa-file-pdf-o" aria-hidden="true"></i></button></a>`
             );
           },
         },

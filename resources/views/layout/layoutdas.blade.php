@@ -414,7 +414,7 @@
                                             </a>
                                             <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
-                                                    <a class="animsition-link" href="/lista-traspasos">
+                                                    <a class="animsition-link" href="/traspasos">
                                                         <i class="site-menu-icon fa-long-arrow-right"
                                                             aria-hidden="true"></i>
                                                         <span class="site-menu-title">Traspasos Tienda</span>
@@ -423,7 +423,7 @@
                                             </ul>
                                             <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
-                                                    <a class="animsition-link" href="/lista-traspasos/create">
+                                                    <a class="animsition-link" href="/traspasos/create">
                                                         <i class="site-menu-icon fa-plus" aria-hidden="true"></i>
                                                         <span class="site-menu-title">Nuevo transpaso</span>
                                                     </a>
@@ -696,7 +696,7 @@
                                             </a>
                                             <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
-                                                    <a class="animsition-link" href="/lista-traspasos">
+                                                    <a class="animsition-link" href="/traspasos">
                                                         <i class="site-menu-icon fa-long-arrow-right"
                                                             aria-hidden="true"></i>
                                                         <span class="site-menu-title">Traspasos Tienda</span>
@@ -822,7 +822,7 @@
                                     <!-- Mis Traspasos-->
                                     <ul class="site-menu-sub">
                                         <li class="site-menu-item">
-                                            <a class="animsition-link" href="/lista-traspasos">
+                                            <a class="animsition-link" href="/traspasos">
                                                 <i class="site-menu-icon fa-long-arrow-right" aria-hidden="true"></i>
                                                 <span class="site-menu-title">Mis Traspasos</span>
                                             </a>
