@@ -25,6 +25,7 @@
           <div class="panel-actions float-right">
             <div class="container-fluid row float-right">
               <!-- Botón para Generar PDF de productos-->
+              @if(Auth::user()->type_user !== 3)
               <div class="col-6">
                 <button onclick="window.location.href='ventaspdf'" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-danger waves-effect waves-light waves-round float-right"
@@ -32,6 +33,7 @@
                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                 </button>
               </div>
+              @endif
               <div class="col-6">
                 <button onclick="window.location.href='/ventas/create'" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-info waves-effect waves-light waves-round float-left"

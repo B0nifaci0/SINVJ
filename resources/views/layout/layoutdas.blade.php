@@ -336,6 +336,14 @@
                                                     </a>
                                                 </li>
                                             </ul>
+                                            <ul class="site-menu-sub">
+                                                <li class="site-menu-item">
+                                                    <a class="animsition-link" href="/sucursales/corte">
+                                                        <i class="site-menu-icon icon icon md-money-box" aria-hidden="true" ></i>
+                                                        <span class="site-menu-title">Corte Sucursales</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         <li class="site-menu-item has-sub">
                                             <a href="javascript:void(0)">
                                                 <i class="site-menu-icon fa-list-alt" aria-hidden="true"></i>
