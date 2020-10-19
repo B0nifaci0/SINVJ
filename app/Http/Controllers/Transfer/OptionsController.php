@@ -41,6 +41,7 @@ class OptionsController extends Controller
             $product->save();
         } else {
             $transfer->status_product = $request->answer;
+            $transfer->destination_user_id = $user->id;
             $transfer->save();
             if ($request->answer) {
                 $product->branch_id = $transfer->new_branch_id;

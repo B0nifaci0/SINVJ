@@ -206,14 +206,11 @@
           data: "id",
           render: function (data, type, row, meta) {
             if (row.status_product === null) {
-              if (user.id == row.destination_user.id)
                 return `<button class="btn btn-primary accept" alt="` + data + `">Aceptar</button>
               <button class="btn btn-warning reject" alt="`+ data + `">Rechazar</button>`;
             } else {
               if (!row.paid_at)
-                if (row.status_product === null)
-                  return `<span class="text-center badge badge-success">Pendiente</span>`;
-                else if (row.status_product == 1)
+                if (row.status_product == 1)
                   return `<span class="text-center badge badge-warning">Por pagar</span>`;
                 else if (row.status_product == 0 || row.status_product == 3)
                   return `<span class="text-center badge badge-info">No se paga</span>`;
