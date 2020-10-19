@@ -72,7 +72,6 @@
                     <table id="sale_table_sold" class="table display responsive nowrap" style="width: 100%">
                       <thead>
                         <tr>
-                          <th>Fecha</th>
                           <th>Folio</th>
                           <th>Nombre del cliente</th>
                           <th>Tipo</th>
@@ -81,6 +80,7 @@
                           <th>Total Pagado</th>
                           <th>Sucursal</th>
                           <th>Opciones</th>
+                          <th>Fecha</th>
                         </tr>
                       </thead>
                     </table>
@@ -95,7 +95,6 @@
                     <table id="sale_table_apart" class="table display responsive nowrap" style="width: 100%">
                       <thead>
                         <tr>
-                          <th>Fecha</th>
                           <th>Folio</th>
                           <th>Nombre del cliente</th>
                           <th>Tipo</th>
@@ -104,6 +103,7 @@
                           <th>Total Pagado</th>
                           <th>Sucursal</th>
                           <th>Opciones</th>
+                          <th>Fecha</th>
                         </tr>
                       </thead>
                     </table>
@@ -116,7 +116,6 @@
                     <table id="sale_table_givedback" class="table display responsive nowrap" style="width: 100%">
                       <thead>
                         <tr>
-                          <th>Fecha</th>
                           <th>Folio</th>
                           <th>Nombre del cliente</th>
                           <th>Tipo</th>
@@ -125,6 +124,7 @@
                           <th>Total Pagado</th>
                           <th>Sucursal</th>
                           <th>Opciones</th>
+                          <th>Fecha</th>
                         </tr>
                       </thead>
                     </table>
@@ -144,9 +144,12 @@
   $(document).ready(function () {
     $("#sale_table_sold").DataTable({
       serverSide: true,
+      pagingType: "simple",
+      language: {
+      url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+      },
       ajax: "api/sold",
       columns: [
-        { data: "updated_at" },
         { data: "folio" },
         { data: "clientName" },
         {
@@ -169,14 +172,18 @@
             );
           },
         },
+        { data: "updated_at" }
       ],
     });
 
     $("#sale_table_apart").DataTable({
       serverSide: true,
+      pagingType: "simple",
+      language: {
+      url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+      },
       ajax: "api/apart",
       columns: [
-        { data: "updated_at" },
         { data: "folio" },
         { data: "clientName" },
         {
@@ -199,14 +206,18 @@
             );
           },
         },
+        { data: "updated_at" }
       ],
     });
 
     $("#sale_table_givedback").DataTable({
       serverSide: true,
+      pagingType: "simple",
+      language: {
+      url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+      },
       ajax: "api/givedback",
       columns: [
-        { data: "updated_at" },
         { data: "folio" },
         { data: "clientName" },
         {
@@ -239,6 +250,7 @@
             );
           },
         },
+        { data: "updated_at" }
       ],
     });
 

@@ -35,6 +35,11 @@ class Sale extends Model
         'positive_balance',
     ];
 
+    protected $casts = [
+        'updated_at'  => 'date:d-m-Y',
+        'created_at' => 'date:d-m-Y',
+    ];
+
     public function branch()
     {
         return $this->belongsTo(Branch::class);
@@ -72,7 +77,7 @@ class Sale extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function scopeItemsSold()

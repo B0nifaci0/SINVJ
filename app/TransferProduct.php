@@ -28,6 +28,7 @@ class TransferProduct extends Model
         'updated_at'  => 'date:d-m-Y',
         'created_at' => 'date:d-m-Y',
     ];
+    
     public function product()
     {
         return $this->belongsTo(Product::class);

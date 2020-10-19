@@ -158,6 +158,7 @@
   $(document).ready(function () {
     $("#incoming_transfers").DataTable({
       serverSide: true,
+      pagingType: "simple",
       language: {
         url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
       },
@@ -238,6 +239,7 @@
 
     $("#outgoing_transfers").DataTable({
       serverSide: true,
+      pagingType: "simple",
       language: {
         url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
       },
