@@ -21,16 +21,14 @@ class ServerSideController extends Controller
     public function transInt()
     {
         $user = $this->user;
-        if ($user->type_user == User::SA) {
-            $trans_int = TransferProduct::where('new_branch_id', $user->branch->id);
-        } else if ($user->type_user == User::AA) {
+        if ($user->type_user == User::AA) {
             $usersIds = User::where('shop_id', $user->shop->id)->get()->map(function ($u) {
                 return $u->id;
             });
             $trans_int = TransferProduct::whereIn('destination_user_id', $usersIds);
-        } else {
-            $trans_int = TransferProduct::where('destination_user_id', $user->id);
-        }
+        } else
+            $trans_int = TransferProduct::where('new_branch_id', $user->branch->id);
+
         $trans_int = $trans_int->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')->get();
 
         return datatables()->of($trans_int)->toJson();
@@ -40,15 +38,13 @@ class ServerSideController extends Controller
     {
         $user = $this->user;
 
-        if ($user->type_user == User::SA)
-            $trans_out = TransferProduct::where('last_branch_id', $user->branch->id);
-        else if ($user->isAdmin()) {
+        if ($user->isAdmin()) {
             $usersIds = User::where('shop_id', Auth::user()->shop->id)->get()->map(function ($u) {
                 return $u->id;
             });
             $trans_out = TransferProduct::whereIn('user_id', $usersIds);
         } else
-            $trans_out = TransferProduct::where('user_id', $user->id);
+            $trans_out = TransferProduct::where('last_branch_id', $user->branch->id);
 
         $trans_out = $trans_out->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')->get();
 
