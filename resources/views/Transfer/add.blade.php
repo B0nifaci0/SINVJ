@@ -176,6 +176,14 @@ ALTA PRODUCTO
         if ($('#form')[0].checkValidity()) {
             $('#products').val(JSON.stringify(selectedProducts));
             console.log("products", $('#products').val());
+            if (selectedProducts.length <1) {
+                    Swal.fire(
+                    'No permitido',
+                    'Debes agregar por lo menos un producto',
+                    'error'
+                    );
+                    return;
+            }
             $('#form').submit();
         } 
     });
