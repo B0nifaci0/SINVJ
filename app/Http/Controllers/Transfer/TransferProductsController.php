@@ -70,9 +70,11 @@ class TransferProductsController extends Controller
 
         $products = $products->whereStatusId(2)
             ->with('category:id,name')
-            ->with('line:id,name')->get();
+            ->with('line:id,name')
+            ->with('branch:id,name')
+            ->get();
 
-        return view('Transfer.add', compact('branches', 'products', 'users'));
+        return view('Transfer.add', compact('branches', 'products', 'users', 'user'));
     }
 
     public function store(Request $request)

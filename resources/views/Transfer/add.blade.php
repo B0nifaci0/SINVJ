@@ -30,9 +30,11 @@ ALTA PRODUCTO
                 </ul>
             </div>
             @endif
-            <center>
-                <h3>Traspaso Sucursal</h3>
-            </center>
+            @if($user->type_user == 1)
+            <h3 class="text-center">Traspaso {{$user->shop->name}}</h3>
+            @else
+            <h3 class="text-center">Traspaso Sucursal {{$user->branch->name}}</h3>
+            @endif
             <form id="form" method="POST" action="/traspasos">
                 {{ csrf_field() }}
                 <div class="form-group col-md-12">
@@ -63,7 +65,7 @@ ALTA PRODUCTO
                                 <input type="text" class="form-control" id="product_id">
                                 <span class="input-group-btn">
                                     <button class="btn btn-primary" type="button" id="search_product"><i
-                                            class="icon fa-check"></i></button>
+                                            class="icon fa-search"></i></button>
                                 </span>
                             </div>
                         </div>
@@ -77,6 +79,12 @@ ALTA PRODUCTO
                                     <th>Clave</th>
                                     <th>Descripcion</th>
                                     <th>Categoria</th>
+                                    @if ($user->type_user == 1)
+                                    <th>Sucursal Origen</th>
+                                    @endif
+                                    <th>Linea</th>
+                                    <th>Peso</th>
+                                    <th>Precio</th>
                                     <th>Eliminar</th>
                                 </tr>
                             </thead>
@@ -97,6 +105,7 @@ ALTA PRODUCTO
     var products = {!! $products !!};
     var branches = {!! $branches !!};
     var users = {!! $users !!};
+    var user = {!! $user !!};
     var selectedProducts = [];
     var p_t = $('#productsInTranfer').DataTable({
         language: {
@@ -121,7 +130,6 @@ ALTA PRODUCTO
 
     $('#search_product').click(function () {
         var clave = $('#product_id').val();
-        console.log("Clave ingresada:" + clave)
         var product = products.filter(p => p.clave == clave)[0];
         if (!product) {
             swal.fire({
@@ -133,9 +141,7 @@ ALTA PRODUCTO
             });
             return;
         }
-        console.log("producto: " + product.id)
         var exist = selectedProducts.filter(p => p == product.id);
-        console.log("existencia:" + exist.length)
         if (exist.length) {
             Swal.fire(
                 'No permitido',
@@ -147,21 +153,36 @@ ALTA PRODUCTO
 
         selectedProducts.push(product.id);
         $('#product_id').val('');
-        console.log(JSON.stringify(selectedProducts))
-        p_t.row.add([
-            product.clave,
-            product.description,
-            product.category.name,
-            `<button type="button" class="btn btn-danger remove" alt="${product.id}"><i class="icon fa-remove"></i>
-            </button>`
-        ]).draw(false);
-        
+        if (user.type_user == 1) {
+            p_t.row.add([
+                product.clave,
+                product.description,
+                product.category.name,
+                product.branch.name,
+                product.line ? product.line.name : `<span class="text-center badge badge-primary">Pieza</span>`,
+                product.weigth ? product.weigth + ' gr' : 'N/A',
+                '$ ' + product.price,
+                `<button type="button" class="btn btn-danger remove" alt="${product.id}"><i class="icon fa-remove"></i>
+        </button>`
+            ]).draw(false);
+        } else {
+            p_t.row.add([
+                product.clave,
+                product.description,
+                product.category.name,
+                product.line ? product.line.name : `<span class="text-center badge badge-primary">Pieza</span>`,
+                product.weigth ? product.weigth + ' gr' : 'N/A',
+                '$ ' + product.price,
+                `<button type="button" class="btn btn-danger remove" alt="${product.id}"><i class="icon fa-remove"></i>
+                </button>`
+            ]).draw(false);
+        }
+
     });
 
     $('#productsInTranfer').on('click', '.remove', function () {
         var id = $(this).attr('alt');
         var row = $(this).parents('tr');
-        console.log("hola: " + id)
         var index = selectedProducts.map(p => p).indexOf(selectedProducts.filter(p => p == id)[0])
         selectedProducts.splice(index, 1);
         if ($(row).hasClass('child')) {
@@ -172,20 +193,19 @@ ALTA PRODUCTO
         }
     });
 
-    $('#submit').click(function(e) {
+    $('#submit').click(function (e) {
         if ($('#form')[0].checkValidity()) {
             $('#products').val(JSON.stringify(selectedProducts));
-            console.log("products", $('#products').val());
-            if (selectedProducts.length <1) {
-                    Swal.fire(
+            if (selectedProducts.length < 1) {
+                Swal.fire(
                     'No permitido',
                     'Debes agregar por lo menos un producto',
                     'error'
-                    );
-                    return;
+                );
+                return;
             }
             $('#form').submit();
-        } 
+        }
     });
 
 </script>
