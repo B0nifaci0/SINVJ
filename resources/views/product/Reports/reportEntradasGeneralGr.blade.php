@@ -51,6 +51,10 @@
                 <td>{{$line->weigth}} gr</td>
             </tr>
             @endforeach
+            <tr>
+                <td>Total De Gramos</td>
+                <td>{{$lines_weigth}} gr</td>
+            </tr>
         </tbody>
         <br>
     </table>
