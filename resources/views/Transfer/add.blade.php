@@ -204,7 +204,18 @@ ALTA PRODUCTO
                 );
                 return;
             }
-            $('#form').submit();
+            var b = branches.filter(b => b.id == branch_id)[0];
+            swal.fire({
+                    title: "Todos los productos se enviarán a la sucursal: "+ b.name,
+                    type: "success",
+                    showCancelButton: false,
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "Enterado!",
+                }).then(function (result){
+                    if(result.value === true){
+                    form.submit();
+                  }
+                });
         }
     });
 
