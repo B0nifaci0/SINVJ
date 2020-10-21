@@ -590,14 +590,14 @@
                                         <span class="site-menu-title">Tienda</span>
                                         <span class="site-menu-arrow"></span>
                                     </a>
-                                    <ul class="site-menu-sub">
+                                    <!--<ul class="site-menu-sub">
                                         <li class="site-menu-item">
                                             <a class="animsition-link" href="/tiendas">
                                                 <i class="site-menu-icon fa-eye" aria-hidden="true"></i>
                                                 <span class="site-menu-title">Mi tienda</span>
                                             </a>
                                         </li>
-                                    </ul>
+                                    </ul>-->
                                     <ul class="site-menu-sub">
                                         <li class="site-menu-item has-sub">
                                             <a href="javascript:void(0)">
@@ -728,12 +728,12 @@
 
                                     </ul>
                                 </li>
-                                <li class="site-menu-item ">
+                               <!-- <li class="site-menu-item ">
                                     <a class="animsition-link" href="/usuarios">
                                         <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
                                         <span class="site-menu-title">Usuarios</span>
                                     </a>
-                                </li>
+                                </li>-->
                             </ul>
                             @endif
                             <!--Menú SA =(2) END-Sub-Administrator-->
@@ -760,7 +760,7 @@
                                     <li class="site-menu-item">
                                         <a class="animsition-link" href="/productosCO">
                                             <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
-                                            <span class="site-menu-title">Productos</span>
+                                            <span class="site-menu-title">Productos de tiendas</span>
                                         </a>
                                     </li>
                                 </ul>
