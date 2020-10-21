@@ -40,6 +40,11 @@
         <link rel="stylesheet" href={{{url('assets/examples/css/dashboard/v1.css')}}}>
         <link rel="stylesheet" href={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.css')}}}>
         <link rel="stylesheet" href={{{url('global/vendor/dropify/dropify.css')}}}>
+        <!-- TOASTR -->
+        <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css"> 
+        <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+        {!! Toastr::message() !!}
         <!-- Fonts -->
         <link rel="stylesheet" href={{{url('global/fonts/material-design/material-design.min.css')}}}>
         <link rel="stylesheet" href={{{url('global/fonts/brand-icons/brand-icons.min.css')}}}>

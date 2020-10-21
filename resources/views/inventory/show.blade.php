@@ -116,13 +116,7 @@ $(document).ready(function () {
     var message = $("#message").attr("alt");
     console.log(message);
     if(message != 0) {
-    Swal.fire({
-            title: 'Exitoso',
-            text: message,
-            type: 'success',
-            confirmButtonColor: '#4caf50',
-            confirmButtonText: 'Siguiente'
-        });
+        toastr["info"](message, "Inventario Actualizado")
     }
     
     document.getElementById('text').addEventListener('keyup',()=>{
