@@ -205,17 +205,34 @@ ALTA PRODUCTO
                 return;
             }
             var b = branches.filter(b => b.id == branch_id)[0];
-            swal.fire({
-                    title: "Todos los productos se enviarán a la sucursal: "+ b.name,
-                    type: "success",
-                    showCancelButton: false,
-                    confirmButtonColor: "#3085d6",
-                    confirmButtonText: "Enterado!",
-                }).then(function (result){
-                    if(result.value === true){
+            let timerInterval
+            Swal.fire({
+                title: 'Todos los productos se enviarám a la sucursal: '+b.name,
+                timer: 2000,
+                type: 'success',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                willOpen: () => {
+                    Swal.showLoading()
+                    timerInterval = setInterval(() => {
+                        const content = Swal.getContent()
+                        if (content) {
+                            const b = content.querySelector('b')
+                            if (b) {
+                                b.textContent = Swal.getTimerLeft()
+                            }
+                        }
+                    }, 100)
+                },
+                onClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
                     form.submit();
-                  }
-                });
+                }
+            })
         }
     });
 
