@@ -178,6 +178,7 @@
             <tr>
               <th>Clave</th>
               <th>Linea</th>
+              <th>Categoria</th>
               <th>Descripcion</th>
               <th>Peso</th>
               <th>Dinero Faltante</th>
@@ -188,6 +189,7 @@
             <tr>
               <td>{{ $prod->clave }}</td>
               <td>{{ $prod->name_line }}</td>
+              <td>{{ $prod->category_name }}</td>
               <td>{{ $prod->description }}</td>
               <td>{{ $prod->weigth }} gr</td>
               <td>$ {{ $prod->money }}</td>
@@ -195,7 +197,7 @@
             @endforeach
             @foreach ($totales_g as $totals)
             <tr>
-              <td colspan="3">Total</td>
+              <td colspan="4">Total</td>
               <td>{{$totals->g_faltantes}} gr</td>
               <td>$ {{$totals->d_faltantes}}</td>
             </tr>
@@ -209,6 +211,7 @@
             <tr>
               <th>Clave</th>
               <th>Linea</th>
+              <th>Categoria</th>
               <th>Descripcion</th>
               <th>Peso</th>
               <th>Dinero Dañado</th>
@@ -219,6 +222,7 @@
             <tr>
               <td>{{ $prod->clave }}</td>
               <td>{{ $prod->name_line }}</td>
+              <td>{{ $prod->category_name }}</td>
               <td>{{ $prod->description }}</td>
               <td>{{ $prod->weigth }} gr</td>
               <td>$ {{ $prod->money }}</td>
@@ -226,7 +230,7 @@
             @endforeach
             @foreach ($totales_g as $totals)
             <tr>
-              <td colspan="3">Total</td>
+              <td colspan="4">Total</td>
               <td>{{$totals->g_dañados}} gr</td>
               <td>$ {{$totals->d_dañados}}</td>
             </tr>
@@ -241,6 +245,7 @@
             <tr>
               <th>Clave</th>
               <th>Linea</th>
+              <th>Categoria</th>
               <th>Descripcion</th>
               <th>Peso</th>
               <th>Dinero Existente</th>
@@ -251,6 +256,7 @@
             <tr>
               <td>{{ $prod->clave }}</td>
               <td>{{ $prod->name_line }}</td>
+              <td>{{ $prod->category_name }}</td>
               <td>{{ $prod->description }}</td>
               <td>{{ $prod->weigth }} gr</td>
               <td>$ {{ $prod->money }}</td>
@@ -258,7 +264,7 @@
             @endforeach
             @foreach ($totales_g as $totals)
             <tr>
-              <td colspan="3">Total</td>
+              <td colspan="4">Total</td>
               <td>{{$totals->g_existente}} gr</td>
               <td>$ {{$totals->d_existente}}</td>
             </tr>

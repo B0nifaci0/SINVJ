@@ -393,9 +393,9 @@ class InventoryController extends Controller
             ->where('products.branch_id', $id_branch)
             ->where('inventory_details.status_id', 4)
             ->where('inventory_details.inventory_report_id', $id)
-            ->select('products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
+            ->select('categories.name as category_name' ,'products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
             ->distinct('products.clave')
-            ->groupBy('products.weigth', 'products.description', 'products.clave', 'lines.name')
+            ->groupBy('categories.name' ,'products.weigth', 'products.description', 'products.clave', 'lines.name')
             ->orderBy('name_line', 'DESC')
             ->get();
         //return $prod_fal;
@@ -410,9 +410,9 @@ class InventoryController extends Controller
             ->whereIn('inventory_details.status_id', [1, 2])
             ->where('products.branch_id', $id_branch)
             ->where('inventory_details.inventory_report_id', $id)
-            ->select('products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
+            ->select('categories.name as category_name' ,'products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
             ->distinct('products.clave')
-            ->groupBy('products.weigth', 'products.description', 'products.clave', 'lines.name')
+            ->groupBy('categories.name' ,'products.weigth', 'products.description', 'products.clave', 'lines.name')
             ->orderByRaw('CHAR_LENGTH(clave)')
             ->orderBy('clave')
             ->get();
@@ -432,9 +432,9 @@ class InventoryController extends Controller
             ->where('products.branch_id', $id_branch)
             ->where('inventory_details.status_id', 3)
             ->where('inventory_details.inventory_report_id', $id)
-            ->select('products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
+            ->select('categories.name as category_name' ,'products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
             ->distinct('products.clave')
-            ->groupBy('products.weigth', 'products.description', 'products.clave', 'lines.name')
+            ->groupBy('categories.name' ,'products.weigth', 'products.description', 'products.clave', 'lines.name')
             ->orderBy('name_line', 'DESC')
             ->get();
         //return $prod_fal;

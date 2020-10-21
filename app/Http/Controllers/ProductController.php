@@ -1131,6 +1131,14 @@ class ProductController extends Controller
             ->groupBy('lines.id', 'lines.name')
             ->get();
 
+        $lines_weigth = 0;
+
+        foreach($lines as $l){
+            $lines_weigth += $l->weigth;
+        }
+
+        //return $lines_weigth;
+
         // return  $products;
         if ($products->isEmpty()) {
             return back()->with('message', 'El reporte que se intento generar no contiene información');
@@ -1140,7 +1148,7 @@ class ProductController extends Controller
             $shop->image = $this->getS3URL($shop->image);
         }
 
-        $pdf  = PDF::loadView('product.Reports.reportEntradasGeneralGr', compact('shop', 'branch', 'lines', 'products', 'hour', 'date'));
+        $pdf  = PDF::loadView('product.Reports.reportEntradasGeneralGr', compact('lines_weigth' ,'shop', 'branch', 'lines', 'products', 'hour', 'date'));
         return $pdf->stream('R.EntradasGeneral_ppgr.pdf');
     }
 
