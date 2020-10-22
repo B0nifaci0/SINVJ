@@ -11,6 +11,7 @@ use App\TransferProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use Toastr;
 use App\Shop;
 use App\Status;
 use App\Traits\S3ImageManager;
@@ -98,6 +99,7 @@ class InventoryController extends Controller
             $inventorie->save();
         }
         $validation = 0;
+        Toastr::info('Inventario Actualizado','Info');
         //return $finalizar;
         //return $inventory->products;
         return view('inventory.show', compact('validation', 'inventory', 'name_branch', 'finalizar', 'id_inventory'));
