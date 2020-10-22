@@ -2,16 +2,20 @@
 
 namespace App;
 
+use App\Line;
 use App\User;
-use App\Product;
+use App\Branch;
+use App\Client;
 use App\Partial;
+use App\Product;
+use App\SaleDetails;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sale extends Model
 {
 
-
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -31,41 +35,68 @@ class Sale extends Model
         'positive_balance',
     ];
 
-    public function client() {
+    protected $casts = [
+        'updated_at'  => 'date:d-m-Y',
+        'created_at' => 'date:d-m-Y',
+    ];
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
+    public function client()
+    {
         return $this->belongsTo(Client::class);
     }
 
-    public function line(){
+    public function line()
+    {
         return $this->belongsTo(Line::class);
     }
 
-    public function partial(){
+    public function partial()
+    {
         return $this->hasMany(Partial::class);
     }
 
-     public function items() {
-        return $this->hasMany(SaleDetails::class);
-    }
-    public function saledetail() {
+    public function items()
+    {
         return $this->hasMany(SaleDetails::class);
     }
 
-    public function partials() {
+    public function sale_detail()
+    {
+        return $this->hasMany(SaleDetails::class);
+    }
+
+    public function partials()
+    {
         return $this->hasMany(Partial::class);
     }
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
-    public function scopeItemsSold() {
+    public function scopeItemsSold()
+    {
         return Product::join('sale_details', 'sale_details.product_id', 'products.id')
-        ->join('categories', 'categories.id', 'products.category_id')
-        ->select('products.id as id_product','clave', 'weigth','line_id', 'categories.name as category_name', 'sale_details.final_price','description')
-        ->where('sale_id', $this->id)
-        ->get();
+            ->join('categories', 'categories.id', 'products.category_id')
+            ->select('products.id as id_product', 'clave', 'weigth', 'line_id', 'categories.name as category_name', 'sale_details.final_price', 'description', 'sold_at')
+            ->where('sale_id', $this->id)
+            ->get();
+    }
+
+    public function scopeItemsGivedBack()
+    {
+        return Product::join('sale_details', 'sale_details.product_id', 'products.id')
+            ->join('categories', 'categories.id', 'products.category_id')
+            ->withTrashed()
+            ->whereIn('products.discar_cause', [3, 4])
+            ->select('products.id as id_product', 'clave', 'weigth', 'line_id', 'categories.name as category_name', 'sale_details.final_price', 'description', 'sold_at')
+            ->where('sale_id', $this->id)
+            ->get();
     }
 }
-
-
-

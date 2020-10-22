@@ -112,7 +112,7 @@ LISTA DE  GASTOS
         <strong>{{ session('mesage-delete') }}</strong>
       </div>
     @endif
-    <div class="page-content">
+    <div class="">
       <!-- Panel Basic -->
       <div class="panel">
         <div class="panel-body">
@@ -123,7 +123,7 @@ LISTA DE  GASTOS
                   <!-- Botón para Generar PDF de productos-->
                   <div class="col-6">
                     <button onclick="window.location.href='/gastos/create'" type="button" class=" btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left"
-              data-toggle="tooltip" data-original-title="Agregar">
+              data-toggle="tooltip" data-original-title="Nuevo Gasto">
                 <i class="icon md-plus" aria-hidden="true"></i>
               </button>
                   </div>
@@ -137,9 +137,8 @@ LISTA DE  GASTOS
           <table id='table_expenses' class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
             <thead>
               <tr>
-                <th>Clave</th>
                 <th>Nombre</th>
-                <th>Descripcion</th>
+                <th>Descripción</th>
                 <th>Precio</th>
                 <th>Imagen</th>
                 <th>Sucursal</th>
@@ -148,9 +147,8 @@ LISTA DE  GASTOS
             </thead>
             <tfoot>
               <tr>
-                <th>Clave</th>
                 <th>Nombre</th>
-                <th>Descripcion</th>
+                <th>Descripción</th>
                 <th>Precio</th>
                 <th>Imagen</th>
                 <th>Sucursal</th>
@@ -160,7 +158,6 @@ LISTA DE  GASTOS
             <tbody>
               @foreach ($expenses as $expense)
                 <tr id = "row{{ $expense->id }}" class="row{{ $expense->id }}">
-                  <td>{{ $expense->id}}</td>
                   <td>{{ $expense->name }}</td>
                   <td>{{ $expense->descripcion }}</td>
                   <td>$ {{$expense->price}}</td>
@@ -176,7 +173,7 @@ LISTA DE  GASTOS
                   <!-- Botón para editar producto-->
                   <a type="button" href="/gastos/{{$expense->id}}/edit"
                       class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
-                      data-original-title="Editar">
+                      data-original-title="Editar Gasto">
                       <i class="icon md-edit" aria-hidden="true"></i></a>
                   <!-- END Botón-->
                 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
+
 use Closure;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,7 @@ use TransferUser;
 
 class admin
 {
-   
+
     /**
      * Handle an incoming request.
      *
@@ -20,14 +21,6 @@ class admin
      */
     public function handle($request, Closure $next)
     {
-
-    if (Auth::user()->type_user == User::CO) {
-         redirect('/traspasos');
-    } else {
-         redirect('/traspasosAA');
-    }
         return $next($request);
-
     }
-
 }

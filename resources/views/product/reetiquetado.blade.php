@@ -33,6 +33,27 @@ ALTA PRODUCTO
       @foreach($products as $product)
         {{ csrf_field() }}
         <div class='row'>
+            <!-- Select para Seleccionar categoria-->
+            <div class="col-md-3">
+            <input type="hidden" name="id_product" value="{{$product->id}}">
+              <label>Seleccione Categoria </label>
+              @if(null !== session('categories')){
+                <select id="categorie_id" name="category_id" class="form-control round">
+                  @foreach(session('categories') as $category)
+                    <option value="{{ $category->id }}" required>{{ $category->name }} -  @if($category->type_product == 1) pza @else gr @endif</option>
+                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
+                  @endforeach
+                </select>
+              @else
+                <select  id="categorie_id" name="category_id" class="form-control round">
+                  @foreach($categories as $category)
+                    <option value="{{ $category->id }}" required>{{ $category->name }} -  @if($category->type_product == 1) pza @else gr @endif</option>
+                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
+                  @endforeach
+                </select>
+              @endif
+            </div>
+            <!-- END Select-->        
           <!-- Input para ingresar clave del producto-->
           <div class="form-group form-material col-md-3">
             <label>Clave</label>
@@ -54,23 +75,22 @@ ALTA PRODUCTO
               </select>
             </div>
             <!-- END Select-->
-
+            <!-- Input para ingresar precio del producto pz-->
+            <div id="pricecp" class="form-group form-material col-md-3 remove">
+              <label>Precio Compra</label>
+              <input type="text"  class="form-control compra" id="pricePurchase"  name="price_purchase" value="{{($product->price_purchase) ? $product->price_purchase :old('$product->price_purchase')}}">
+            </div>
+            <!-- END Input-->
             <!-- Input para ingresar precio del producto pz-->
             <div id="pricepz" class="form-group form-material col-md-3">
               <label>Precio del Producto</label>
               <input type="text" id="pricepzt" class="form-control"  name="pricepzt" value="{{($product->price) ? $product->price: old('pricepzt')}}">
             </div>
 
-            <!-- Input para ingresar precio del producto pz-->
-            <div id="pricecp" class="form-group form-material col-md-3 remove">
-              <label>Precio Compra</label>
-              <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{($product->price_purchase) ? $product->price_purchase :old('$product->price_purchase')}}">
-            </div>
-            <!-- END Input-->
             <!-- Input para ingresar precio con descuento-->
             <div id="discountpz" class="form-group form-material col-md-3 remove">
               <label>Precio con descuentopz</label>
-              <input type="text"  class="form-control" id="pcdpz" name="max_discountpz" value="{{($product->discount) ? $product->discount :old('max_discountpz')}}">
+              <input type="text"  class="form-control"  id="pcdpz" name="max_discountpz" value="{{($product->discount) ? $product->discount :old('max_discountpz')}}">
             </div>
             <!-- END Input-->
             <div   class="col-md-3 form-material remove">
@@ -96,26 +116,7 @@ ALTA PRODUCTO
               <input type="text" class="form-control" id="discount" readonly name="max_discount" value="{{($product->discount) ? $product->discount :old('max_discount')}}">
             </div>
             <!-- END Input-->
-            <!-- Select para Seleccionar categoria-->
-            <div class="col-md-3">
-              <label>Seleccione Categoria </label>
-              @if(null !== session('categories')){
-                <select id="categorie_id" name="category_id" class="form-control round">
-                  @foreach(session('categories') as $category)
-                    <option value="{{ $category->id }}" required>{{ $category->name }}</option>
-                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-                  @endforeach
-                </select>
-              @else
-                <select  id="categorie_id" name="category_id" class="form-control round">
-                  @foreach($categories as $category)
-                    <option value="{{ $category->id }}" required>{{ $category->name }}</option>
-                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-                  @endforeach
-                </select>
-              @endif
-            </div>
-            <!-- END Select-->
+
             <div>
                 @foreach ($shops as $shop)
                 <input type="hidden" name="shop_id" value="{{$shop->id}}">
@@ -326,25 +327,6 @@ $('#multiplicador').keyup(function(){
   $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
 });
 
-//multilicacion para sacar el precio venta por produt pz
-$('#pricePurchase').keyup(function(){
-  var cuatro = $(this).val();
-  var total = $(this).val() * 4 ;
-  var descuentoxpz = total / 2;
-  console.log("precio xpz",total);
-  console.log("descuentoxpz",descuentoxpz );
-        if(!Number($('#pricepzt').val()) || !Number($('#pricePurchase').val()) || !Number($('#pcdpz').val())) {
-        $('#pricepzt').val(total);
-        $('#pcdpz').val(descuentoxpz);
-        return;
-      }
-      
-    //console.log("pricePurchase", Number($('#pricepzt').val()) * Number($('#pricePurchase').val()))
-  $('#pricepzt').val(total);
-  $('#pcdpz').val(descuentoxpz);
-
-
-    });
 </script>
 @endsection
 <!-- END Función-->

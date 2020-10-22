@@ -53,16 +53,33 @@ EDITAR SUCURSALES
         <!-- END Input-->
         <!-- Input Para editar Telefono-->
         <div class="form-group form-material col-md-6">
-          <label>Telefono:</label>
+          <label>Teléfono:</label>
           <input type="text" class="form-control" value="{{$branch->phone_number}}" name="phone_number" required> 
         </div>
         <!-- END Input-->
         <!-- Input Para editar Direccion-->
         <div class="form-group form-material col-md-6">
-          <label>Direccion:</label>
+          <label>Dirección:</label>
           <input type="text" class="form-control" value="{{$branch->address}}" name="address" required> 
         </div>
         <!-- END Input-->
+        <!-- Select para Seleccionar Estado-->
+        <div class="col-md-6 col-md-offset-1 visible-md visible-lg">
+          <label class="floating-label" for="inputState">{{ __('Estado') }}</label>
+          <select id="estados_1" class="form-control round estados" name="state_id" alt="1">
+            <option value="*">Seleccione Estado</option>
+            @foreach ($states as $state)
+            <option value="<?= $state->id ?>"><?= $state->name ?></option>
+            @endforeach
+          </select>
+        </div>
+        <!-- END Select-->
+        <!-- Select para Seleccionar Municipio-->
+        <div class="col-md-6 col-md-offset-1 visible-md visible-lg">
+          <label class="floating-label" for="inputMunicipality">{{ __('Municipio') }}</label>
+          <select id="municipios_1" name="municipality_id" class="form-control round"></select>
+        </div>
+        <!-- END Select-->
         <!-- Botón Para guardar cambios-->
         <div class="form-group col-md-12">
           <button type="submit" name="button" class="btn btn-primary">Guardar</button>
@@ -74,3 +91,36 @@ EDITAR SUCURSALES
   </div>
 </div>
 @endsection 
+
+@section('disabled-submit')
+<script type="text/javascript">
+  $(document).ready(function () {
+    $("#estados_1").change(function () {
+      if ($(this).val() == "" {
+        $("#register").prop("disabled", true);
+      } else {
+        $("#register").prop("disabled", false);
+      }
+    });
+  });
+</script>
+<script type="text/javascript">
+$(".estados").change(function(){
+  var selector =  $(this).attr("alt");
+  var id_estado = $(this).val();
+  var url = '/estados/' + id_estado + '/municipios';
+  $.get(url, function(json){
+    $('#municipios_' + selector).empty();
+    //alert('#municipios_' + selector);
+        $.each(json,function(i, municipio){
+          $('#municipios_' + selector).append('<option value = '+ municipio.id +'>' + municipio.name +'</option>')
+        });
+  });
+});
+$(".municipios").change(function(){
+      var id_municipio = $(this).val();
+      var selector = $(this).attr("alt");
+      $("#id_municipio_" + selector).val(id_municipio);
+    });
+</script>
+@endsection

@@ -104,13 +104,28 @@ class LineController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = Auth::User();
         $line = Line::findOrFail($id);
         $line->name = $request->name;
         $line->purchase_price = $request->purchase_price;
         $line->sale_price = $request->sale_price;
         $line->discount_percentage = $request->discount_percentage;
-
-        $line->save();
+        $discount = $line->discount_percentage / 100;
+        //return $line;
+        $products = Product::where('line_id', $id)
+        //->where('shop_id', $user->shop_id)
+        ->get();
+        //return $products;
+        foreach($products as $p){
+            $p->price = $line->sale_price * $p->weigth;
+            $p->price_purchase = $line->purchase_price * $p->weigth;
+            $percentage = $p->price * $discount;
+            $p->discount = $p->price - $percentage;
+            $p->save();
+        }
+        //return $products;
+        //return $line;
+        $line->save();  
         return redirect('/lineas')->with('mesage-update', 'La Linea se ha modificado exitosamente!');
     }
 
@@ -157,3 +172,4 @@ class LineController extends Controller
      return Excel::stream( new LinesExport, 'line.xlsx');
     }
 }
+

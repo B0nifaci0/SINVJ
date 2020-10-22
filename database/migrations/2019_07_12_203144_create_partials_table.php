@@ -17,9 +17,10 @@ class CreatePartialsTable extends Migration
             $table->increments('id');
             $table->integer('sale_id')->unsigned();
             $table->foreign('sale_id')->references('id')->on('sales');
-            $table->string('amount'); 
+            $table->string('amount');
             $table->string('type');
-            $table->string('reference')->nullable(); 
+            $table->string('image')->default('https://x.kinja-static.com/assets/images/logos/placeholders/default.png');
+            $table->string('reference')->nullable();
             $table->timestamps();
         });
     }

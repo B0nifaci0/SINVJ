@@ -12,7 +12,7 @@ LISTA PRODUCTO
 @endsection
 @section('content')
 <div class="panel-body">
-  <div class="page-content">
+  <div class="">
     <!-- Mesage-Muestra mensaje De que el producto se a agregado exitosamente-->
     @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -50,20 +50,19 @@ LISTA PRODUCTO
           <div class="panel-actions float-right">
             <div class="container-fluid row float-right">
               @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
-              <!-- Botón para Generar PDF de productos-->
-              @if(Auth::user()->type_user == 1)
+              <!-- Botón para Generar PDF de productos--> {{-- @if(Auth::user()->type_user == 1)
               <div class="col-6">
                 <button onclick="window.location.href='productospdf'" type="button" id='pdf01' name='pdf01' class=" btn btn-sm small btn-floating
-                 btn-danger waves-effect waves-light waves-round float-right"
-                  data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                 btn-danger waves-effect waves-light waves-round float-right" data-toggle="tooltip"
+                  data-original-title="Generar reporte PDF">
                   <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                 </button>
               </div>
-              @endif
+              @endif --}}
               <div class="col-6">
                 <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating
-                 btn-info waves-effect waves-light waves-round float-left"
-                  data-toggle="tooltip" data-original-title="Agregar">
+                 btn-info waves-effect waves-light waves-round float-left" data-toggle="tooltip"
+                  data-original-title="Agregar Nuevo Producto">
                   <i class="icon md-plus" aria-hidden="true"></i>
                 </button>
               </div>
@@ -85,7 +84,8 @@ LISTA PRODUCTO
             <div class="tab-content">
               <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
                 <div class="page-content panel-body container-fluid">
-                  <table id="product_table_gr" class=" display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                  <table id="product_table_gr" class=" display table table-hover dataTable table-striped w-full"
+                    data-plugin="dataTable">
                     <thead>
                       {{ csrf_field() }}
                       <tr>
@@ -95,12 +95,14 @@ LISTA PRODUCTO
                         <th data-hide="phone, tablet">Observaciones</th>
                         <th data-hide="phone, tablet">Imagen</th>
                         <th data-hide="phone, tablet">Categoría</th>
-                        <th data-hide="phone, tablet">Linea</th>
+                        <th data-hide="phone, tablet">Línea</th>
                         <th data-hide="phone, tablet">Sucursal</th>
                         <th data-hide="phone, tablet">Status</th>
-                        <th data-hide="phone, tablet">Precio Venta</th>
                         @if(Auth::user()->type_user == 1 )
                         <th data-hide="phone, tablet">Precio Compra</th>
+                        @endif
+                        <th data-hide="phone, tablet">Precio Venta</th>
+                        @if(Auth::user()->type_user == 1 )
                         <th data-hide="phone, tablet">Precio Descuento</th>
                         <th data-hide="phone, tablet">Opciones</th>
                         @endif
@@ -114,12 +116,14 @@ LISTA PRODUCTO
                         <th>Observaciónes</th>
                         <th>Imagen</th>
                         <th>Categoría</th>
-                        <th></th>
+                        <th>Línea</th>
                         <th>Sucursal</th>
                         <th>Status</th>
-                        <th>Precio Venta</th>
                         @if(Auth::user()->type_user == 1 )
                         <th>Precio Compra</th>
+                        @endif
+                        <th>Precio Venta</th>
+                        @if(Auth::user()->type_user == 1 )
                         <th>Precio Descuento</th>
                         <th>Opciones</th>
                         @endif
@@ -135,10 +139,10 @@ LISTA PRODUCTO
                         <td>{{ $product->observations }}</td>
                         <td>
                           <a class="inline-block" href="{{ $product->image }}" data-plugin="magnificPopup"
-                          data-close-btn-inside="false" data-fixed-contentPos="true"
-                          data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
-                          <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150"
-                          />
+                            data-close-btn-inside="false" data-fixed-contentPos="true"
+                            data-main-class="mfp-margin-0s mfp-with-zoom"
+                            data-zoom='{"enabled": "true","duration":"300"}'>
+                            <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150" />
                         </td>
                         <td>{{ ($product->category) ? $product->category->name: '' }}</td>
                         <td>{{ ($product->line) ? $product->line->name : '' }}</td>
@@ -155,17 +159,30 @@ LISTA PRODUCTO
                         @if($product->status_id == 4)
                         <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
                         @endif
-                       
-                        <td>${{$product->price }}</td>
+                        @if($product->status_id == 5)
+                        <td><span class="text-center badge badge-danger">{{$product->status->name}}</span></td>
+                        @endif
+
+
                         @if(Auth::user()->type_user == 1)
                         <td>${{$product->price_purchase }}</td>
+                        @endif
+                        <td>${{$product->price }}</td>
+                        @if(Auth::user()->type_user == 1)
                         <td>${{$product->discount }}</td>
                         <td>
+                        <!-- Botón para show producto-->
+                          <a type="button" href="/productos/{{$product->id}}/info"
+                          class="btn btn-icon btn-primary waves-effect waves-light waves-round" data-toggle="tooltip"
+                          data-original-title="Info producto">
+                          <i class="icon fa-search" aria-hidden="true"></i></a>
+                        <!-- END Botón-->
+
                           <!-- Botón para editar producto-->
                           <a type="button" href="/productos/{{$product->id}}/edit"
-                              class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
-                              data-original-title="Editar">
-                              <i class="icon md-edit" aria-hidden="true"></i></a>
+                            class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
+                            data-original-title="Editar">
+                            <i class="icon md-edit" aria-hidden="true"></i></a>
                           <!-- END Botón-->
                           <!-- Botón para eliminar producto -->
                           <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
@@ -188,7 +205,8 @@ LISTA PRODUCTO
             <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
               <div class="page-content panel-body container-fluid">
                 <!-- Tabla para listar productos-->
-                <table id="product_table_pz" class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                <table id="product_table_pz" class="table table-hover dataTable table-striped w-full"
+                  data-plugin="dataTable">
                   <thead>
                     {{ csrf_field() }}
                     <tr>
@@ -199,9 +217,11 @@ LISTA PRODUCTO
                       <th data-hide="phone, tablet">Imagen</th>
                       <th data-hide="phone, tablet">Sucursal</th>
                       <th data-hide="phone, tablet">Status</th>
-                      <th data-hide="phone, tablet">Precio Venta</th>
                       @if(Auth::user()->type_user == 1 )
                       <th data-hide="phone, tablet">Precio Compra</th>
+                      @endif
+                      <th data-hide="phone, tablet">Precio Venta</th>
+                      @if(Auth::user()->type_user == 1 )
                       <th data-hide="phone, tablet">Precio Descuento</th>
                       <th data-hide="phone, tablet">Opciones</th>
                       @endif
@@ -216,9 +236,11 @@ LISTA PRODUCTO
                       <th>Imagen</th>
                       <th>Sucursal</th>
                       <th>Status</th>
-                      <th>Precio Venta</th>
                       @if(Auth::user()->type_user == 1 )
                       <th>Precio Compra</th>
+                      @endif
+                      <th>Precio Venta</th>
+                      @if(Auth::user()->type_user == 1 )
                       <th>Precio Descuento</th>
                       <th>Opciones</th>
                       @endif
@@ -235,39 +257,49 @@ LISTA PRODUCTO
                       <td>
                         <a class="inline-block" href="{{ $product->image }}" data-plugin="magnificPopup"
                           data-close-btn-inside="false" data-fixed-contentPos="true"
-                          data-main-class="mfp-margin-0s mfp-with-zoom" data-zoom='{"enabled": "true","duration":"300"}'>
-                          <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150"
-                          />
+                          data-main-class="mfp-margin-0s mfp-with-zoom"
+                          data-zoom='{"enabled": "true","duration":"300"}'>
+                          <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150" />
                       </td>
                       <td>{{ ($product->branch) ? $product->branch->name : '' }}</td>
                       @if($product->status_id == 1)
-                        <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 2)
-                        <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 3)
-                        <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
-                        @endif
-                        @if($product->status_id == 4)
-                        <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
-                        @endif
-                       
-                      <td>${{$product->price }}</td>
+                      <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
+                      @endif
+                      @if($product->status_id == 2)
+                      <td><span class="text-center badge badge-success">{{$product->status->name}}</span></td>
+                      @endif
+                      @if($product->status_id == 3)
+                      <td><span class="text-center badge badge-primary">{{$product->status->name}}</span></td>
+                      @endif
+                      @if($product->status_id == 4)
+                      <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
+                      @endif
+                      @if($product->status_id == 5)
+                      <td><span class="text-center badge badge-danger">{{$product->status->name}}</span></td>
+                      @endif
                       @if(Auth::user()->type_user == 1)
                       <td>${{$product->price_purchase}}</td>
+                      @endif
+                      <td>${{$product->price }}</td>
+                      @if(Auth::user()->type_user == 1)
                       <td>${{$product->discount}}</td>
                       <td>
+                        <!-- Botón para show producto-->
+                          <a type="button" href="/productos/{{$product->id}}/info"
+                          class="btn btn-icon btn-primary waves-effect waves-light waves-round" data-toggle="tooltip"
+                          data-original-title="Info producto">
+                          <i class="icon fa-search" aria-hidden="true"></i></a>
+                        <!-- END Botón-->
+
                         <!-- Botón para editar producto-->
                         <a type="button" href="/productos/{{$product->id}}/edit"
-                            class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
-                            data-original-title="Editar">
-                            <i class="icon md-edit" aria-hidden="true"></i></a>
+                          class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
+                          data-original-title="Editar">
+                          <i class="icon md-edit" aria-hidden="true"></i></a>
                         <!-- END Botón-->
                         <!-- Botón para eliminar producto -->
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
-                          alt="{{$product->id}}" role="button"
-                          data-toggle="tooltip" data-original-title="Borrar">
+                          alt="{{$product->id}}" role="button" data-toggle="tooltip" data-original-title="Borrar">
                           <i class="icon md-delete" aria-hidden="true"></i>
                         </button>
                         <!-- END Botón-->
@@ -288,20 +320,22 @@ LISTA PRODUCTO
     </div>
   </div>
 </div>
-  <!-- End Panel Basic -->
-  @endsection
-  @section('barcode-product')
-  <script type="text/javascript">
+<!-- End Panel Basic -->
+@endsection
+@section('barcode-product')
+<script type="text/javascript">
   //inicializa la tabla para resposnive
     $(document).ready(function(){
         $('#product_table_gr').DataTable({
             retrieve: true,
+            order: [],
             //  responsive: true,
             //paging: false,
             //searching: false
         });
         $('#product_table_pz').DataTable({
             retrieve: true,
+            order: [],
             //responsive: true,
             //paging: false,
             //searching: false
@@ -313,12 +347,12 @@ LISTA PRODUCTO
               .responsive.recalc();
         });    
     });
-    </script>
-  @endsection
+</script>
+@endsection
 
-  <!-- Función Sweet Alert para eliminar producto-->
-  @section('delete-productos')
-  <script type="text/javascript">
+<!-- Función Sweet Alert para eliminar producto-->
+@section('delete-productos')
+<script type="text/javascript">
   $(document).ready(function () {
   setTimeout(() => {
     console.log("config datatable")
@@ -360,7 +394,7 @@ LISTA PRODUCTO
                   'El producto no ha sido eliminado por que esta activo en un traspaso',
                   'error'
                 )
-            }
+                }
               },
               error: function () {
                 Swal.fire(
@@ -426,7 +460,6 @@ LISTA PRODUCTO
       });
   },500)
   });
-  </script>
-  @endsection
-  <!-- END Función-->
- 
+</script>
+@endsection
+<!-- END Función-->

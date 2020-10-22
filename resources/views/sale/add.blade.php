@@ -16,7 +16,15 @@ ALTA VENTA
         <strong>{{ session('mesage') }}</strong>
     </div>
     @endif
-    <div class="page-content">
+    @if (session('mesage-limit'))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{ session('mesage-limit') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    <div class="">
         <div class="panel">
             <div class="panel-body">
                 @if($errors->count() > 0)
@@ -28,10 +36,8 @@ ALTA VENTA
                     </ul>
                 </div>
                 @endif
-                <form id="form" method="POST" action="/ventas">
-                    <center>
-                        <h3>Venta</h3>
-                    </center>
+                <form id="form" method="POST" action="/ventas" enctype="multipart/form-data">
+                    <h3 class="text-center">Venta</h3>
                     {{ csrf_field() }}
                     <div class="row mb-10">
                         <div class="col-md-3">
@@ -47,20 +53,23 @@ ALTA VENTA
                             <div class="row">
                                 <div class="col-md-6">
                                     <!-- Input para Ingresar Nombre del cliente-->
-                                    <div class="form-group form-material">
-                                        <label class="form-control-label" for="inputBasicFirstName">Nombre del Cliente:
-                                        </label>
-                                        <input type="text" class="form-control" required="required" name="customer_name"
-                                            value="{{old('customer_name')}}" placeholder="Fernando Bonifacio" />
-                                    </div>
+                                    <label for="user-type">Seleccionar cliente</label>
+                                    <select name="cliente_id" id="public-id" class="form-control" data-plugin="select2">
+                                        <option value="0">Seleccione un Cliente Menudista</option>
+                                        @foreach($public as $client)
+                                        <option id="client{{$client->id}}" value="{{ $client->id }}">{{ $client->name }}
+                                            {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
+                                        @endforeach
+                                    </select>
                                     <!-- END Input-->
                                 </div>
                                 <div class="col-md-6">
                                     <!-- Input para Ingresar telefono del cliente-->
-                                    <div class="form-group form-material">
-                                        <label class="form-control-label" for="inputBasicLastName">Teléfono:</label>
-                                        <input type="text" class="form-control" required="required" name="telephone"
-                                            value="{{old('telephone')}}" placeholder="7225674569" />
+                                    <div class="form-group">
+                                        <label align="center">Agregar Cliente</label>
+                                        <br>
+                                        <button class="btn btn-primary" data-target="#exampleTabs3" data-toggle="modal"
+                                            type="button"><i class="fa fa-user" aria-hidden="true"></i></button>
                                     </div>
                                     <!-- END Input-->
                                 </div>
@@ -71,12 +80,25 @@ ALTA VENTA
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="user-type">Seleccionar cliente</label>
-                                    <select name="client_id" id="user-id" class="form-control">
-                                        @foreach($clients as $client)
-                                        <option value="{{ $client->id }}">{{ $client->name }}
+                                    <select name="client_id" id="user-id" class="form-control" data-plugin="select2">
+                                        <option value="0">Seleccione un Cliente Mayorista</option>
+                                        @foreach($wholesaler as $client)
+                                        <option id="client{{$client->id}}" value="{{ $client->id }}"
+                                            alt="{{ $client->credit }}">{{ $client->name }}
                                             {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Input para Ingresar telefono del cliente-->
+                                    <div class="form-group">
+                                        <label align="right">Agregar Cliente</label>
+                                        <br>
+                                        <button align="center" class="btn btn-primary" data-target="#exampleTabs2"
+                                            data-toggle="modal" type="button"><i class="fa fa-user"
+                                                aria-hidden="true"></i></button>
+                                    </div>
+                                    <!-- END Input-->
                                 </div>
                             </div>
                         </div>
@@ -97,7 +119,9 @@ ALTA VENTA
                         </div>
                         <div class="col-1 form-group">
                             <br>
-                            <button type="button" class="btn btn-primary" id="btn-add">+</button>
+                            <button type="button" id="btn-add" class=" btn btn-md medium  toggler-left  btn-primary waves-effect waves-light 
+                            waves-round float-left" data-toggle="tooltip"
+                                data-original-title="Agregar Producto">+</button>
                         </div>
                         <!-- END Select-->
                         <!-- Botón para agregar producto-->
@@ -107,11 +131,11 @@ ALTA VENTA
                     <!-- END Botón-->
                     <div class="panel-body ">
                         <!-- Tabla para listar productos agregados-->
-                        <table id="ventas" class=" display table table-hover dataTable table-striped w-full"
-                            data-plugin="dataTable">
+                        <table id="ventas" class=" display table table-hover dataTable table-striped w-full">
                             <thead>
                                 <tr>
                                     <th>Clave</th>
+                                    <th>Precio final</th>
                                     <th>Nombre</th>
                                     <th>Peso</th>
                                     <th>Categoría</th>
@@ -119,13 +143,13 @@ ALTA VENTA
                                     <th>Sucursal</th>
                                     <th>Precio Max</th>
                                     <th>Precio Min</th>
-                                    <th>Precio final</th>
                                     <th>Eliminar</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Clave</th>
+                                    <th>Precio final</th>
                                     <th>Nombre</th>
                                     <th>Peso</th>
                                     <th>Categoría</th>
@@ -133,44 +157,48 @@ ALTA VENTA
                                     <th>Sucursal</th>
                                     <th>Precio Max</th>
                                     <th>Precio Min</th>
-                                    <th>Precio final</th>
                                     <th>Eliminar</th>
                                 </tr>
                             </tfoot>
                         </table>
                         <table>
-                        <tr>
-                              <td colspan="6"></td>
+                            <tr>
+                                <td colspan="6"></td>
                                 <th>
-                                  <strong>Total:</strong>
+                                    <strong>Total:</strong>
                                 </th>
-                              <td><strong id="total"></strong><input type="hidden" class="form-control" name="price" id="pagar"/> </td>
+                                <td><strong id="total"></strong><input type="hidden" class="form-control" name="price"
+                                        id="pagar" /> </td>
                             </tr>
 
                             <tr>
-                              <td colspan="6"></td>
+                                <td colspan="6"></td>
                                 <th>
-                                  <strong>Importe:</strong>
+                                    <strong>Importe:</strong>
                                 </th>
-                              <td><strong id="amount"></strong><input type="hidden" class="form-control" name="income" id="monto"/> </td>
+                                <td><strong id="amount"></strong><input type="hidden" class="form-control" name="income"
+                                        id="monto" /> </td>
                             </tr>
 
                             <tr>
-                              <td colspan="6"></td>
+                                <td colspan="6"></td>
                                 <th>
-                                  <strong>Cambio:</strong>
+                                    <strong>Cambio:</strong>
                                 </th>
-                              <td><strong id="change"></strong><input type="hidden" class="form-control" name="change" id="cambio"/> </td>
+                                <td><strong id="change"></strong><input type="hidden" class="form-control" name="change"
+                                        id="cambio" /> </td>
                             </tr>
                         </table>
 
                         <!-- END Tabla-->
                     </div>
                     <br>
+                    <input type="file" name="image" id="image" class="invisible"
+                        accept="image/gif,image/jpeg,image/jpg,image/png">
                     <div class="row">
                         <!-- Botón para mostar el Modal de Tipos de pago-->
                         <div class="col-6 form-group">
-                            <button class="btn btn-success" data-target="#exampleTabs" data-toggle="modal"
+                            <button class="btn btn-success" data-target="#exampleTabs1" data-toggle="modal"
                                 type="button">$ Registro de pago</button>
                         </div>
                         <!-- END Botón-->
@@ -183,7 +211,8 @@ ALTA VENTA
                         <input type="hidden" class="form-control" name="card_income" id="cardPayment" />
 
                         <div class="form-group col-6">
-                            <a id="submit" type="button" class="btn btn-primary text-white float-right">Terminar compra</a>
+                            <a id="submit" type="button" class="btn btn-primary text-white float-right">Terminar
+                                compra</a>
                         </div>
                         <!-- END Botón-->
                     </div>
@@ -194,7 +223,153 @@ ALTA VENTA
                 <div class="example-wrap">
                     <div class="example">
                         <!-- Modal -->
-                        <div class="modal fade modal-success" id="exampleTabs" aria-hidden="true"
+                        <div class="modal fade modal-success" id="exampleTabs2" aria-hidden="true"
+                            aria-labelledby="exampleModalTabs" role="dialog" tabindex="-1">
+                            <div class="modal-dialog modal-simple">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title" id="exampleModalTabs">Registrar o Editar Cliente
+                                            Mayorista</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Input para ingresar nombre del cliente-->
+                                        <div class="row">
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label" for="inputBasicFirstName">Nombre:
+                                                </label>
+                                                <input type="text" class="form-control" required="required"
+                                                    id="customer_name" name="customer_name"
+                                                    value="{{old('customer_name')}}" placeholder="Alejandro" />
+                                            </div>
+                                            <!-- END Input-->
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label" for="inputBasicFirstLastName">Primer
+                                                    Apellido:
+                                                </label>
+                                                <input type="text" class="form-control" required="required"
+                                                    id="first_last" name="customer_name"
+                                                    value="{{old('customer_name')}}" placeholder="Lorenzo" />
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label" for="inputBasicSecondLastName">Segundo
+                                                    Apellido:
+                                                </label>
+                                                <input type="text" class="form-control" required="required"
+                                                    id="second_last" name="customer_name"
+                                                    value="{{old('customer_name')}}" placeholder="Soteno" />
+                                            </div>
+                                            <!-- END Input-->
+                                            <!-- Input para ingresar telefono del cliente-->
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label"
+                                                    for="inputBasicLastName">Teléfono:</label>
+                                                <input type="text" class="form-control" required="required"
+                                                    id="phone_number" name="telephone" value="{{old('telephone')}}"
+                                                    placeholder="7225674569" />
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label" for="inputBasicFirstName">Limite De
+                                                    Credito:
+                                                </label>
+                                                <input type="text" class="form-control" required="required"
+                                                    id="credit_limit" name="customer_name"
+                                                    value="{{old('customer_name')}}" placeholder="150000" />
+                                            </div>
+                                            <!-- END Input-->
+                                            <div class="form-group form-material col-6">
+                                                <label class="form-control-label" for="inputBasicFirstName">Sucursal:
+                                                </label>
+                                                <select name="branch_id" id="branch" class="form-control">
+                                                    @foreach($branches as $branch)
+                                                    <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <input type="hidden" id="shop" value="{{$user->shop->id}}">
+                                        <hr class="mb-4">
+                                        <button type="button" id="registrar_M" name="registrar" data-dismiss="modal"
+                                            class="btn btn-success btn-lg btn-block">Registrar</button>
+                                        <!-- END REGISTRO CLIENTE-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Modal -->
+                    </div>
+                </div>
+                <!-- End Example Tab In Modal -->
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <!-- Example Tab In Modal -->
+                <div class="example-wrap">
+                    <div class="example">
+                        <!-- Modal -->
+                        <div class="modal fade modal-success" id="exampleTabs3" aria-hidden="true"
+                            aria-labelledby="exampleModalTabs" role="dialog" tabindex="-1">
+                            <div class="modal-dialog modal-simple">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title" id="exampleModalTabs">Registrar o Editar Cliente
+                                            Menudista</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Input para ingresar nombre del cliente-->
+                                        <div class="row">
+                                            <div class="form-group form-material col-12">
+                                                <label class="form-control-label" for="inputBasicFirstName">Nombre del
+                                                    Cliente:
+                                                </label>
+                                                <input type="text" class="form-control" required="required"
+                                                    id="customer" name="customer_name" value="{{old('customer_name')}}"
+                                                    placeholder="Fernando Bonifacio" />
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <div class="row">
+                                            <!-- Input para ingresar telefono del cliente-->
+                                            <div class="form-group form-material col-12">
+                                                <label class="form-control-label"
+                                                    for="inputBasicLastName">Teléfono:</label>
+                                                <input type="text" class="form-control" required="required" id="phone"
+                                                    name="telephone" value="{{old('telephone')}}"
+                                                    placeholder="7225674569" />
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <input type="hidden" id="shop" value="{{$user->shop->id}}">
+                                        <hr class="mb-4">
+                                        <button type="button" id="registrar_P" name="registrar" data-dismiss="modal"
+                                            class="btn btn-success btn-lg btn-block">Registrar</button>
+                                        <!-- END REGISTRO CLIENTE-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Modal -->
+                    </div>
+                </div>
+                <!-- End Example Tab In Modal -->
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <!-- Example Tab In Modal -->
+                <div class="example-wrap">
+                    <div class="example">
+                        <!-- Modal -->
+                        <div class="modal fade modal-success" id="exampleTabs1" aria-hidden="true"
                             aria-labelledby="exampleModalTabs" role="dialog" tabindex="-1">
                             <div class="modal-dialog modal-simple">
                                 <div class="modal-content">
@@ -205,46 +380,46 @@ ALTA VENTA
                                         <h4 class="modal-title" id="exampleModalTabs">Agregar pago</h4>
                                     </div>
                                     <div class="modal-body">
-                                            <!-- CONTADO-->
-                                            
-                                                <div class="row mt-5">
-                                                    <div class="form-group form-material col-md-6">
-                                                        <label class="form-control-label"
-                                                            for="inputBasicFirstName">Efectivo:</label>
-                                                        <input type="text" class="form-control income" name="" id="cashIncome"
-                                                            required="required" placeholder="$" required />
-                                                    </div> 
-                                                </div>
-                                                <div class="row">
-                                                    <!-- Input para ingresar cantidad a pagar-->
-                                                    <div class="form-group form-material col-md-6">
-                                                        <label class="form-control-label">Tarjeta:</label>
-                                                        <input type="text" class="form-control income" id="cardIncome"
-                                                            placeholder="$" required="required" />
-                                                    </div>
-                                                    <!-- END Input-->
-                                                    <!-- Input para seleccionar Imagen del ticket-->
-                                                    <div class="form-group form-material col-md-6">
-                                                        <label>Selecciona Ticket de la venta</label>
-                                                        <br>
-                                                        <label for="image" class="btn btn-success">Explorar</label>
-                                                        <input type="file" name="image" id="image" class="hidden">
-                                                    </div>
-                                                    <!-- END Input-->
-                                                </div>
-                                                <div class="row">
-                                                <div class="form-group form-material col-md-6">
-                                                        <label class="form-control-label" for="inputBasicLastName">Total a Pagar:</label>
-                                                            $ <label id="totalCash"></label>
-                                                            <br>
-                                                            <strong>Restan:</strong> <label class="cashRest"></label>
-                                                    </div>
-                                                </div>
-                                                <hr class="mb-4">
-                                                <button type="button" name="continuar" data-dismiss="modal"
-                                                    class="btn btn-success btn-lg btn-block"
-                                                    aria-label="Close">Continuar</button>
-                                            <!-- END PAGO CON TARJETA-->
+                                        <!-- CONTADO-->
+
+                                        <div class="row mt-5">
+                                            <div class="form-group form-material col-md-6">
+                                                <label class="form-control-label"
+                                                    for="inputBasicFirstName">Efectivo:</label>
+                                                <input type="text" class="form-control income" name="" id="cashIncome"
+                                                    required="required" placeholder="$" required />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <!-- Input para ingresar cantidad a pagar-->
+                                            <div class="form-group form-material col-md-6">
+                                                <label class="form-control-label">Tarjeta:</label>
+                                                <input type="text" class="form-control income" id="cardIncome"
+                                                    placeholder="$" required="required" />
+                                            </div>
+                                            <!-- END Input-->
+                                            <!-- Input para seleccionar Imagen del ticket-->
+                                            <div class="form-group form-material col-md-6">
+                                                <label>Selecciona Ticket de la venta</label>
+                                                <br>
+                                                <label for="image" class="btn btn-success">Explorar</label>
+                                            </div>
+                                            <!-- END Input-->
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group form-material col-md-6">
+                                                <label class="form-control-label" for="inputBasicLastName">Total a
+                                                    Pagar:</label>
+                                                $ <label id="totalCash"></label>
+                                                <br>
+                                                <strong>Restan:</strong> <label class="cashRest"></label>
+                                            </div>
+                                        </div>
+                                        <hr class="mb-4">
+                                        <button type="button" name="continuar" data-dismiss="modal"
+                                            class="btn btn-success btn-lg btn-block"
+                                            aria-label="Close">Continuar</button>
+                                        <!-- END PAGO CON TARJETA-->
                                     </div>
                                 </div>
                             </div>
@@ -264,7 +439,6 @@ seleccionado con sus respectivos datos-->
     @section('listado-productos')
 
     <script>
-
         var products = {!! $products !!};
         var selectedProducts = [];
         var overDiscount = [];
@@ -275,19 +449,32 @@ seleccionado con sus respectivos datos-->
         var cardIncome = 0;
         var totalIncome = 0;
 
+        var clients = {!! $clients!!};
+        var usuario = {!! $user->type_user!!};
+        var sales = {!! $sales !!};
+        var new_id = {!! $new_id !!};
+        var old_id = new_id;
 
-        $(function () {
+        console.log("Clienets ", clients)
+        console.log('Ventas: ', sales);
+
+        $('#ventas').DataTable( {
+            pageLength:     50,
+            responsive:     true
+        } ).columns.adjust().responsive.recalc();
+
+        $(function() {
 
             let SALETYPE = {
                 NORMAL: 1,
                 WHOLESALERS: 2
             }
 
-            // setInterval(() => {  
+            // setInterval(() => {
             //     console.log("------------------>overDiscount", overDiscount.length, overDiscountAuth);
             // }, 4000);
 
-            $('#user-type').change(function () {
+            $('#user-type').change(function() {
                 let type = $(this).val();
                 if (SALETYPE.NORMAL == type) {
                     $('#wholesalers').addClass('col-md-7');
@@ -304,11 +491,437 @@ seleccionado con sus respectivos datos-->
                 }
             });
 
-            $('#submit').click(function (e) {
-                e.preventDefault();
+            $('#public-id').change(function() {
+                let id_client = $(this).val();
+                let name = $('#customer').val();
+                let phone = $('#phone').val();
+
+                if(id_client != 0)
+                {
+                    let client = clients.filter(c => c.id == id_client)[0];
+                    $('#customer').val(client.name);
+                    $('#phone').val(client.phone_number);
+                } else {
+                    $('#customer').val('');
+                    $('#phone').val('');
+                }
+
+            });
+
+            $('#user-id').change(function() {
+                let id_client = $(this).val();
+                let name = $('#customer_name').val();
+                let first_last = $('#first_last').val();
+                let second_last = $('#second_last').val();
+                let phone = $('#phone_number').val();
+                let credit_limit = $('#credit_limit').val();
+
+                if(id_client != 0)
+                {
+                    let client = clients.filter(c => c.id == id_client)[0];
+                    $('#customer_name').val(client.name);
+                    $('#first_last').val(client.first_lastname);
+                    $('#second_last').val(client.second_lastname);
+                    $('#phone_number').val(client.phone_number);
+                    $('#credit_limit').val(client.credit);
+                } else {
+                    $('#customer_name').val('');
+                    $('#first_last').val('');
+                    $('#second_last').val('');
+                    $('#phone_number').val('');
+                    $('#credit_limit').val('');
+                }
+
+            });
+
+            $('#registrar_M').click(function(e) {
+                let id_client = $('#user-id').val();
+                var name = $('#customer_name').val();
+                let branch = $('#branch').val();
+                var first_last = $('#first_last').val();
+                var second_last = $('#second_last').val();
+                let phone = $('#phone_number').val();
+                let shop = $('#shop').val();
+                let type = 1;
+                let credit_limit = $('#credit_limit').val();
+                let client_phone = clients.filter(c => c.phone_number == phone && c.id != id_client)[0];
+
+                if(client_phone != undefined)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'El telefono que intentas ingresar ya esta registrado con otro cliente',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                console.log("Nombre: ", name ," y Telefono: ", phone, " ID de Tienda: ", shop, " branch_id: ",branch);
+                console.log("apellido p: ",first_last, " apellido_m: ",second_last, " tipo: ",type," limite: ",credit_limit);
+
+                let apellido_p = first_last.length;
+                let apellido_m = second_last.length;
+
+                if(apellido_p == '' || apellido_m == '')
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un apellido válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                if(credit_limit <= 0)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un limite de credito válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                let nombre = name.length;
+
+                if(nombre == '')
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un nombre válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                let cellphone = phone.length;
+
+                if(cellphone != 10)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un numero telefonico válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+
+                //Construimos la variable que se guardará en el data del Ajax para pasar al controlador que procesará los datos
+                var dataString = {
+                    branch_id: branch,
+                    name: name,
+                    first_lastname: first_last,
+                    second_lastname: second_last,
+                    phone_number: phone,
+                    shop_id: shop,
+                    credit: credit_limit,
+                    type_client: type
+                };
+
+                if(id_client == 0){
+
+		            $.ajax({
+			            url: '/mayoristas',
+                        method: 'POST',
+                        //dataType: "JSON",
+			            data: dataString,
+			            success: function() {
+		    	            let $option = $('<option />', {
+                                text: name + ' ' + first_last + ' ' + second_last,
+                                value: new_id,
+                                id: 'client'+new_id,
+                                alt: credit_limit,
+                            });
+                            $('#user-id').prepend($option);
+                            new_id += 1;
+                            Swal.fire(
+                                'Registro Existoso',
+                                'El cliente ha sido registrado exitosamente',
+                                'success'
+                            );
+                            e.preventDefault();
+                            return
+		                }
+		            });
+                    
+                } else {
+
+                    $.ajax({
+			            url: '/mayoristas/' + id_client,
+                        method: 'PUT',
+                        //dataType: "JSON",
+			            data: dataString,
+			            beforeSend: function() {
+                            $('#user-id option:selected').text(name + ' ' + first_last + ' ' + second_last);
+                            Swal.fire(
+                                'Actualización Existosa',
+                                'Los datos del cliente han sido actualizados exitosamente',
+                                'success'
+                            );
+                            e.preventDefault();
+                            return
+		                }
+		            });
+
+                }
+
+
+            });
+
+            $('#registrar_P').click(function(e) {
+                let id_client = $('#public-id').val();
+                let name = $('#customer').val();
+                let phone = $('#phone').val();
+                let shop = $('#shop').val();
+                let type = 0;
+
+                let client_phone = clients.filter(c => c.phone_number == phone)[0];
+
+                if(client_phone != undefined)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'El telefono que intentas ingresar ya esta registrado con otro cliente',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                console.log("Nombre: ", name ," y Telefono: ", phone, " ID de Tienda: ", shop);
+
+                let nombre = name.length;
+
+                if(nombre == '')
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un nombre válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                console.log("TAM NUMERO: ",phone.length);
+                if(phone == '' || phone.length == 10)
+                {
+                    console.log("Numero telefonico valido: ",phone);
+                } else {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingresa un numero telefonico válido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                if(phone == '')
+                {
+                    phone = null;
+                }
+
+                //Construimos la variable que se guardará en el data del Ajax para pasar al controlador que procesará los datos
+                var dataString = {
+                    name: name,
+                    phone_number: phone,
+                    shop_id: shop,
+                    type_client: type
+                };
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+
+                if(id_client == 0){
+
+		            $.ajax({
+			            url: '/mayoristas',
+                        method: 'POST',
+                        //dataType: "JSON",
+			            data: dataString,
+			            success: function() {
+		    	            let $option = $('<option />', {
+                                text: name,
+                                value: new_id,
+                                id: 'client'+new_id,
+                            });
+                            $('#public-id').prepend($option);
+                            new_id += 1;
+                            Swal.fire(
+                                'Registro Existoso',
+                                'El cliente ha sido registrado exitosamente',
+                                'success'
+                            );
+                            e.preventDefault();
+                            return
+		                }
+		            });
+
+                } else {
+                    
+                    $.ajax({
+                        url: '/mayoristas/' + id_client,
+                        method: 'PUT',
+                        //dataType: "JSON",
+                        data: dataString,
+                        beforeSend: function() {
+                            $('#public-id option:selected').text(name);
+                            Swal.fire(
+                                'Actualización Existosa',
+                                'Los datos del cliente han sido actualizados exitosamente',
+                                'success'
+                            );
+                            e.preventDefault();
+                            return
+                        }
+                    });
+
+                    }
+
+
+            });
+
+            $('#submit').click(function(e) {
                 overDiscount = [];
                 console.log("selectedProducts", selectedProducts);
+                var val_phone = false;
+                var type_sale = $('#user-type').val();
+                if(type_sale == 1)
+                {
+                    var id_client = $('#public-id').val();
+                } else {
+                    var id_client = $('#user-id').val();
+                }
+                if(id_client == 0)
+                {
+                    Swal.fire(
+                            'No permitido',
+                            'Por Favor Selecciona Un Cliente',
+                            'error'
+                        );
+                        e.preventDefault();
+                        return
+                }
+                var phoneNumber = $('#phone').val();
+                if(old_id == new_id)
+                {
+                    var client = clients.filter(c => c.id == id_client)[0];
+                    console.log(client);
+                    if(client.phone_number == null)
+                    {
+                        console.log("telefono del cliente nulo");
+                        val_phone = true;
+                    }
 
+                }
+                console.log(type_sale);
+                if(type_sale == 2)
+                {
+                    var name_customer = $('#customer').val();
+                    console.log(name_customer);
+                    var validation = false;
+                    let id_user = $('#user-id').val();
+                    console.log('id: ',id_user)
+                    var limit = $('#client' + id_user).attr("alt");
+                    var sale = sales.filter(s => s.client_id == id_user && s.paid_out != s.total)[0];
+                    console.log('EL limite es: ', limit);
+                    console.log("el total es: ", total)
+                    if(sale != undefined && type_sale == 2){
+                        var credito = sale.total + total;
+                        var paids = sale.paid_out + totalIncome;
+                        var restante = credito - paids;
+                        var deduct = limit - restante;
+                        console.log("Totales credito: ", sale.total, ' + ', total, ' = ', credito)
+                        console.log("Totales pagado: ", sale.paid_out, ' + ', totalIncome, ' = ', paids)
+                        console.log('Credito Disponible: ', deduct)
+                        if(deduct < 0){
+                            validation = true;
+                        }
+                    } else {
+                        var restante = total - totalIncome; 
+                        var disponible = limit - restante;
+                        console.log("Credito Disponible: ",disponible)
+                        if(disponible < 0){
+                            validation = true;
+                        }
+                    }
+
+                    if(validation)
+                    {
+                        Swal.fire(
+                            'No permitido',
+                            'El cliente ha excedido su limite de credito de ' + limit,
+                            'error'
+                        );
+                        e.preventDefault();
+                        return
+                    }
+                }
+
+                console.log("TAM NUMERO: ",phone.length);
+                if(old_id == new_id)
+                {
+                    if(phoneNumber == '' || phoneNumber.length == 10 )
+                    {
+                        if(val_phone == false)
+                        {
+                        console.log("Venta Permitida");
+                        }
+                    }
+                } else if(type_sale == 1 && total > totalIncome && phoneNumber == '') {
+                    console.log("Venta No Permitida");
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingrese un numero telefonico valido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                if(type_sale == 1 && total > totalIncome && phoneNumber == '' && val_phone == true) {
+                    console.log("Venta No Permitida");
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingrese un numero telefonico valido',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+
+                let lengthImage = image.files.length;
+
+                console.log('longitud: ', lengthImage);
+
+                let card= $('#cardIncome').val();;
+
+                if(card>0 && lengthImage == 0)
+                {
+                    Swal.fire(
+                        'No permitido',
+                        'Para continuar, ingrese el comprobante del pago realizado con tarjeta',
+                        'error'
+                    );
+                    e.preventDefault();
+                    return
+                }
+                
                 if (!overDiscountAuth) {
                     selectedProducts.forEach(element => {
                         var product = products.filter(p => p.id == element.id);
@@ -317,6 +930,10 @@ seleccionado con sus respectivos datos-->
                         product = product[0]
 
                         if (selectedPrice < product.discount) {
+                            overDiscount.push(product)
+                            overDiscountAuth = false;
+                        }
+                        if (selectedPrice > product.price && usuario == 3) {
                             overDiscount.push(product)
                             overDiscountAuth = false;
                         }
@@ -339,13 +956,15 @@ seleccionado con sus respectivos datos-->
                         showLoaderOnConfirm: true,
                         preConfirm: (password) => {
                             return fetch(`/check-password`, {
-                                method: 'POST',
-                                body: JSON.stringify({ password: password }),
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                                }
-                            })
+                                    method: 'POST',
+                                    body: JSON.stringify({
+                                        password: password
+                                    }),
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                    }
+                                })
                                 .then(response => {
                                     if (!response.ok) {
                                         throw new Error(response.statusText)
@@ -374,7 +993,7 @@ seleccionado con sus respectivos datos-->
                 if (!Number($('#cashIncome').val()) && !Number($('#cardIncome').val())) {
                     Swal.fire(
                         'No permitido',
-                        'Debe agregar un monto de pago',
+                        'Debe agregar un registro de pago',
                         'error'
                     );
                     e.preventDefault();
@@ -382,14 +1001,23 @@ seleccionado con sus respectivos datos-->
                 }
 
                 let productIds = selectedProducts.map(p => {
-                    console.log({ id: p.id, price: $(`#finalPrice${p.id}`).val() });
-                    return { id: p.id, price: $(`#finalPrice${p.id}`).val() }
+                    console.log({
+                        id: p.id,
+                        price: $(`#finalPrice${p.id}`).val()
+                    });
+                    return {
+                        id: p.id,
+                        price: $(`#finalPrice${p.id}`).val()
+                    }
                 });
+
+                console.log('productos en total', productIds);
 
                 $('#productsList').val(JSON.stringify(productIds));
 
                 let cashPayment = $('#cashIncome').val();
                 let cardPayment = $('#cardIncome').val();
+
                 $('#cashPayment').val(cashPayment);
                 $('#cardPayment').val(cardPayment);
                 console.log("productsList", $('#productsList').val());
@@ -397,7 +1025,7 @@ seleccionado con sus respectivos datos-->
                 $('#form').submit();
             });
 
-            $(document).ready(function(){
+            $(document).ready(function() {
                 $('#ventas').DataTable({
                     retrieve: true,
                     //  responsive: true,
@@ -408,10 +1036,10 @@ seleccionado con sus respectivos datos-->
                 $('.income').on('input', function() {
                     let id = $(this).attr('id');
                     let val = $(this).val();
-                    if(!Number(val)) {
-                        $(this).val( val.replace(/[^0-9.]/, '') );
+                    if (!Number(val)) {
+                        $(this).val(val.replace(/[^0-9.]/, ''));
                     }
-                    
+
                     if (id == 'cashIncome') {
                         cashIncome = $(`#${id}`).val();
                     } else if (id == 'cardIncome') {
@@ -419,20 +1047,20 @@ seleccionado con sus respectivos datos-->
                     }
 
                     totalIncome = Number(cashIncome) + Number(cardIncome);
-                    
+
                     $('#amount').html(`$ ${totalIncome}`)
                     $('#monto').val(totalIncome);
 
                     rest = total - totalIncome;
 
-                    if(rest < 0)  {
+                    if (rest < 0) {
                         $('#change').html(`$ ${rest * -1} `)
                         $('#cambio').val(rest * -1);
-                        $('.cashRest').html( `$ 0` );
+                        $('.cashRest').html(`$ 0`);
                     } else {
                         $('#change').html(`$ 0 `)
                         $('#cambio').val(0);
-                        $('.cashRest').html( `$ ${rest}` );
+                        $('.cashRest').html(`$ ${rest}`);
                     }
                 })
 
@@ -440,31 +1068,33 @@ seleccionado con sus respectivos datos-->
 
 
 
-            $(document).ready(function(){
-            var _tr = $('#ventas').DataTable();
+            $(document).ready(function() {
+                var _tr = $('#ventas').DataTable();
 
-            $('#btn-add').click(function () {
-                var tempPrice = 0;
-                var lastPrice = 0;
-                var currentPrice = 0;
+                $('#btn-add').click(function() {
+                    var tempPrice = 0;
+                    var lastPrice = 0;
+                    var currentPrice = 0;
 
-                var productId = $('#current_product').val();
-                if (!productId) return
-                var product = products.filter(p => p.id == productId)[0];
+                    var productId = $('#current_product').val();
+                    if (!productId) return
+                    var product = products.filter(p => p.id == productId)[0];
 
-                var exist = selectedProducts.filter(p => p.id == product.id);
-                if (exist.length) {
-                    Swal.fire(
-                        'No permitido',
-                        'Este producto ya se ha agregado',
-                        'error'
-                    );
-                    return;
-                }
+                    var exist = selectedProducts.filter(p => p.id == product.id);
+                    console.log("existencia:" + exist.length)
+                    if (exist.length) {
+                        Swal.fire(
+                            'No permitido',
+                            'Este producto ya se ha agregado',
+                            'error'
+                        );
+                        return;
+                    }
 
-                selectedProducts.push(product);
-                _tr.row.add([
+                    selectedProducts.push(product);
+                    _tr.row.add([
                         product.clave,
+                        `<input class="finalPrice income" style="width:80%;"  id="finalPrice${product.id}" alt="${product.id}" type="text" value="${product.price}"/>`,
                         product.description,
                         product.weigth,
                         product.category.name,
@@ -472,110 +1102,107 @@ seleccionado con sus respectivos datos-->
                         product.branch.name,
                         product.price,
                         product.discount,
-                        `<input class="finalPrice income" id="finalPrice${product.id}" alt="${product.id}" type="text" value="${product.price}"/>`,
                         `<button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button>`
-                    ]).draw( false );
+                    ]).draw(false);
 
-                   // var _tr = `<td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button></div></td>`;
-                //END Función//
+                    // var _tr = `<td><div class="col-md-1 form-group"><button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button></div></td>`;
+                    //END Función//
 
-                //Hacer suma de productos seleccionados en imprimirlos en Total//
-                $('tbody').append(_tr);
-                total += Number(product.price);
-                $("#total").html(`$ ${total}`);
-                //END Función//
-
-                $('#pagar').val(`${total}`);
-                $('#totalCash').html(total);
-                $('#totalCard').html(total);
-                $('#totalpayment').val(`${total}`);
-                $('#totalPay').val(`${total}`);
-                // $('#vari').val(cambio);
-                $('#tabl').val(_tr);
-
-                $('#ventas').off('click');
-                $('#ventas').off('input');
-                $('#ventas').off('focusin');
-                // $(".finalPrice").unbind();
-                var product
-                // $('.finalPrice').keydown(function() {
-                //   var productId = $(this).attr('alt');
-                //   product = products.filter(p => p.id == productId)[0];
-
-                //   tempPrice = Number($(`#finalPrice${product.id}`).val());
-                //   // console.log("valor anterior", tempPrice)
-                // });
-
-                $('#ventas').on('focusin', '.finalPrice', function(){
-                    // $('.finalPrice').on('focusin', function () {
-                    var productId = $(this).attr('alt');
-                    product = products.filter(p => p.id == productId)[0];
-
-                    lastPrice = Number($(this).val());
-                    console.log("entra focusin", lastPrice)
-                });
-
-                // $('#ventas').on('change', '.finalPrice', function(){
-                    // // $('.finalPrice').on('change', function () {
-                //     console.log("cahnge test")   
-                //     var productId = $(this).attr('alt');
-                //     product = products.filter(p => p.id == productId)[0];
-
-                //     tempPrice = Number($(this).val());
-
-                // });
-
-                $('#ventas').on('input', '.finalPrice', function() {
-                    let val = $(this).val();
-                    if(!Number(val)) {
-                        $(this).val( val.replace(/[^0-9.]/, '') );
-                    }
-
-                    console.log("=================== Enta el evento Input ===================")
-                    var productId = $(this).attr('alt');
-                    product = products.filter(p => p.id == productId)[0];
-
-                    currentPrice = Number($(this).val());
-                    
-                    // IMPORTANTE Asignarl el precio actual al input oculto
-                    $(`#finalPrice${product.id}`).val(currentPrice);
-
-                    if (lastPrice > currentPrice) {
-                        console.log(`Entra uno por que ${lastPrice} > ${currentPrice}`)
-                        total = total - lastPrice + currentPrice;
-                    } else if (lastPrice < currentPrice) {
-                        console.log(`Entra dos por que ${lastPrice} > ${currentPrice}`)
-                        total = total - lastPrice + currentPrice;
-                    }
-
-                    console.log("Current", currentPrice);
-                    console.log("Last", lastPrice);
-
-
-                    console.log(total);
+                    //Hacer suma de productos seleccionados en imprimirlos en Total//
+                    $('tbody').append(_tr);
+                    total += Number(product.price);
                     $("#total").html(`$ ${total}`);
-                    $("#totalPay").val(total);
+                    //END Función//
 
+                    $('#pagar').val(`${total}`);
                     $('#totalCash').html(total);
                     $('#totalCard').html(total);
+                    $('#totalpayment').val(`${total}`);
+                    $('#totalPay').val(`${total}`);
+                    // $('#vari').val(cambio);
+                    $('#tabl').val(_tr);
 
-                    $("#amount").val(total);
-                    $("#change").val(total);
+                    $('#ventas').off('click');
+                    $('#ventas').off('input');
+                    $('#ventas').off('focusin');
+                    // $(".finalPrice").unbind();
+                    var product
+                    // $('.finalPrice').keydown(function() {
+                    //   var productId = $(this).attr('alt');
+                    //   product = products.filter(p => p.id == productId)[0];
+
+                    //   tempPrice = Number($(`#finalPrice${product.id}`).val());
+                    //   // console.log("valor anterior", tempPrice)
+                    // });
+
+                    $('#ventas').on('focusin', '.finalPrice', function() {
+                        // $('.finalPrice').on('focusin', function () {
+                        var productId = $(this).attr('alt');
+                        product = products.filter(p => p.id == productId)[0];
+
+                        lastPrice = Number($(this).val());
+                        console.log("entra focusin", lastPrice)
+                    });
+
+                    // $('#ventas').on('change', '.finalPrice', function(){
+                    // // $('.finalPrice').on('change', function () {
+                    //     console.log("cahnge test")
+                    //     var productId = $(this).attr('alt');
+                    //     product = products.filter(p => p.id == productId)[0];
+
+                    //     tempPrice = Number($(this).val());
+
+                    // });
+
+                    $('#ventas').on('input', '.finalPrice', function() {
+                        let val = $(this).val();
+                        if (!Number(val)) {
+                            $(this).val(val.replace(/[^0-9.]/, ''));
+                        }
+
+                        console.log("=================== Enta el evento Input ===================")
+                        var productId = $(this).attr('alt');
+                        product = products.filter(p => p.id == productId)[0];
+
+                        currentPrice = Number($(this).val());
+
+                        // IMPORTANTE Asignarl el precio actual al input oculto
+                        $(`#finalPrice${product.id}`).val(currentPrice);
+
+                        if (lastPrice > currentPrice) {
+                            console.log(`Entra uno por que ${lastPrice} > ${currentPrice}`)
+                            total = total - lastPrice + currentPrice;
+                        } else if (lastPrice < currentPrice) {
+                            console.log(`Entra dos por que ${lastPrice} > ${currentPrice}`)
+                            total = total - lastPrice + currentPrice;
+                        }
+
+                        console.log("Current", currentPrice);
+                        console.log("Last", lastPrice);
 
 
-                    lastPrice = Number($(this).val());
-                    if (!lastPrice) {
-                        lastPrice = 0;
-                        $(`#finalPrice${product.id}`).val()
-                    }
-                });
+                        console.log(total);
+                        $("#total").html(`$ ${total}`);
+                        $("#totalPay").val(total);
 
-                    $('#ventas').on('click', '.deletr', function(){
+                        $('#totalCash').html(total);
+                        $('#totalCard').html(total);
+
+                        $("#amount").val(total);
+                        $("#change").val(total);
+
+
+                        lastPrice = Number($(this).val());
+                        if (!lastPrice) {
+                            lastPrice = 0;
+                            $(`#finalPrice  ${product.id}`).val()
+                        }
+                    });
+
+                    $('#ventas').on('click', '.deletr', function() {
                         console.log("========> entra función", $(this).attr('alt'))
                         var table = $('#ventas').DataTable();
                         var row = $(this).parents('tr');
-
-
 
                         var productId = $(this).attr('alt');
                         var product = products.filter(p => p.id == productId)[0];
@@ -588,25 +1215,25 @@ seleccionado con sus respectivos datos-->
                         console.log("Indice", index);
 
                         total -= Number($(`#finalPrice${product.id}`).val());
-                        $("#totalCash").val(total);
+                        $("#totalCash").html(total);
+                        $('#totalPay').val(total);
+                        $('#pagar').val(total);
 
                         $(`#raw-${product.id}`).remove();
 
                         $("#total").html(`$ ${total}`);
                         if ($(row).hasClass('child')) {
-                                table.row($(row).prev('tr')).remove().draw();
-                            }
-                            else
-                            {
+                            table.row($(row).prev('tr')).remove().draw();
+                        } else {
                             table
                                 .row($(this).parents('tr'))
                                 .remove()
                                 .draw();
-                            }
+                        }
                     });
 
+                });
             });
-        });
 
             // $('#resta').keyup(function() {
             //   var cambio =  $(this).val() - $('#totalCash').val();
@@ -614,13 +1241,18 @@ seleccionado con sus respectivos datos-->
             //   console.log(cambio);
             // });
 
-            $('#apartado').keyup(function () {
+            $('#apartado').keyup(function() {
                 var falta = $('#totalpayment').val() - $(this).val();
                 $('#falta').val(falta);
                 $('#faltan').val(falta);
 
             });
 
+            $('#credit_limit').on('input', function() {
+            let id = $(this).attr('id');
+            let val = $(this).val();
+            $(`#${id}`).val(val.replace(/\s+/, ""));
+            });
 
             // $('#continuar').click(function(e) {
             // e.preventDefault();
@@ -630,8 +1262,6 @@ seleccionado con sus respectivos datos-->
 
             // });
         });
-
-
     </script>
     @endsection
     <!-- END Función-->

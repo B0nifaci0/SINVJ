@@ -37,12 +37,12 @@ LISTA DE  LINEA
       </button>
     </div>
     @endif
-    <div class="page-content">
+    <div class="">
       <!-- Panel Basic -->
       <div class="panel">
         <div class="panel-body">
             <div class="example-wrap">
-              <h1 class="text-center panel-title">Lineas</h1>
+              <h1 class="text-center panel-title">Líneas</h1>
               <div class="panel-actions float-right">
                 <div class="container-fluid row float-right">
                   @if(Auth::user()->type_user == 1 )
@@ -80,9 +80,9 @@ LISTA DE  LINEA
                 <th>Precio compra</th>
                 <th>Precio venta</th>
                 <th>Descuento</th>
-                <!--@if(Auth::user()->type_user == 1 )
+               @if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif -->
+                @endif
               </tr>
             </thead>
             <tfoot>
@@ -92,9 +92,9 @@ LISTA DE  LINEA
                 <th>Precio compra</th>
                 <th>Precio venta</th>
                 <th>Descuento</th>
-                <!--@if(Auth::user()->type_user == 1 )
+               @if(Auth::user()->type_user == 1 )
                 <th>Opciones</th>
-                @endif -->
+                @endif
               </tr>
             </tfoot>
             <tbody>
@@ -106,21 +106,20 @@ LISTA DE  LINEA
                   <td>$ {{ $line->sale_price }}</td>
                   <!--discount_percentage descuenta dinero-->
                   <td>% {{ $line->discount_percentage }}</td>
-                  <!--
                   @if(Auth::user()->type_user == 1 )
                   <td>
                     <a type="button" href="/lineas/{{$line->id}}/edit"
                       class="btn btn-icon btn-info waves-effect waves-light waves-round"
                       data-toggle="tooltip" data-original-title="Editar">
                       <i class="icon md-edit" aria-hidden="true"></i></a>
-
+                  </td>
+                  @endif
+                  <!--
                     <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
                       alt="{{$line->id}}" role="button"
                       data-toggle="tooltip" data-original-title="Borrar">
                       <i class="icon md-delete" aria-hidden="true"></i>
                     </button>
-                  </td>
-                  @endif
                   -->
                 </tr>
               @endforeach
@@ -226,3 +225,4 @@ $(document).ready(function() {
 @section('barcode-product')
 
 @endsection
+

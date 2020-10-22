@@ -63,7 +63,7 @@ return [
     'required_unless'      => 'El campo :attribute es obligatorio a menos que :other esté en :values.',
     'required_with'        => 'El campo :attribute es obligatorio cuando :values está presente.',
     'required_with_all'    => 'El campo :attribute es obligatorio cuando :values está presente.',
-    'required_without'     => 'El campo :attribute es obligatorio cuando :values no está presente.', 
+    'required_without'     => 'El campo :attribute es obligatorio cuando :values no está presente.',
     'required_without_all' => 'El campo :attribute es obligatorio cuando ninguno de :values estén presentes.',
     'same'                 => ':attribute y :other deben coincidir.',
     'size'                 => [
@@ -103,7 +103,7 @@ return [
     |
     */
     'attributes'           => [
-        'name'                  => 'nombre',
+        'name'                  => 'Nombre',
         'username'              => 'usuario',
         'email'                 => 'correo electrónico',
         'first_name'            => 'nombre',
@@ -133,5 +133,15 @@ return [
         'subject'               => 'asunto',
         'message'               => 'mensaje',
         'required'              => 'Requerido',
+        'price_purchase'        => 'precio compra',
+        'weigth'                => 'gramos',
+        'customer_name'         => 'nombre de cliente',
+        'first_lastname'        => 'Primer Apellido',
+        'second_lastname'       => 'Segundo Apellido',
+        'phone_number'          => 'Número Telefónico',
+        'phone_number'          => 'Telefono',
+        'image'                 => 'Imagen',
+        'credit'                => 'Límite de crédito',
+        'telephone'             => 'Telefono',
     ],
 ];

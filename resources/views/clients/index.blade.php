@@ -38,18 +38,18 @@ LISTA DE  SUCURSALES
   </button>
 	</div>
 		@endif
-  <div class="page-content">
+  <div class="">
         <!-- Panel Basic -->
     <div class="panel">
         <div class="panel-body">
             <div class="example-wrap">
-              <h1 class="text-center panel-title">Clientes Mayoristas</h1>
+              <h1 class="text-center panel-title">Clientes</h1>
               <div class="panel-actions float-right">
                 <div class="container-fluid row float-right">
                   @if(Auth::user()->type_user == 1 )
                   <!-- Botón para Generar PDF de productos-->
                   <div class="col-6">
-                    <button onclick="window.location.href='/mayoristas/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip" data-original-title="Agregar">
+                    <button onclick="window.location.href='/mayoristas/create'" type="button" class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left " data-toggle="tooltip" data-original-title="Nuevo cliente">
                         <i class="icon md-plus" aria-hidden="true"></i></button>
                   </div>
                   <!-- END Botón-->
@@ -58,48 +58,56 @@ LISTA DE  SUCURSALES
               </div>
             </div>
           </div>
-      <div class="panel-body">
-            <!-- Tabla para listar sucursales-->
-            <table id='table'  class="display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Primer apellido</th>
-                  <th>Segundo apellido</th>
-                  <th>Teléfono</th>
-                  <th>Sucursal</th>
-                  <th>Opciones</th>
-                </tr>
-              </thead>
-              <tfoot>
-              <tr>
-                  <th>Nombre</th>
-                  <th>Primer apellido</th>
-                  <th>Segundo apellido</th>
-                  <th>Teléfono</th>
-                  <th>Sucursal</th>
-                  <th>Opciones</th>
-                </tr>
-              </tfoot>
-              <tbody>
-                  @foreach ($clients as $client)
+          <div class="col-xl-12 col-md-12 col-sl">
+        <div class="example-wrap">
+          <div class="nav-tabs-horizontal" data-plugin="tabs">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab"
+                  href="#exampleTabsOne" aria-controls="exampleTabsOne" role="tab">Menudeo</a></li>
+              <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsTwo"
+                  aria-controls="exampleTabsTwo" role="tab">Mayoristas</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="exampleTabsOne" role="tabpanel">
+                <div class="page-content panel-body container-fluid">
+                  <table id="public" class=" display table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                    <thead>
+                      {{ csrf_field() }}
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Opciones</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Opciones</th>
+                      </tr>
+                    </tfoot>
+                    <tbody>
+                    @foreach ($public as $client)
                   <tr id = "row{{ $client->id }}">
                     <td>{{$client->name}}</td>
-                    <td>{{$client->first_lastname }}</td>
-                    <td>{{$client->second_lastname }}</td>
-                    <td>{{$client->phone_number }}</td>
-                    <td>{{$client->branch ? $client->branch->name : 'Sin sucursal' }}</td>
+                    <td>
+                    @if($client->phone_number == null || $client->phone_number == 0000000000)
+                      Sin Telefono
+                    @else
+                    {{$client->phone_number }}
+                    @endif
+                    </td>
                     <td>
                         <!-- Botón para ver cliente-->
                         <a href="/mayoristas/{{ $client->id }}" type="button"
                         class="btn btn-icon btn-primary waves-effect waves-light waves-round"
-                        data-toggle="tooltip" data-original-title="ver">
+                        data-toggle="tooltip" data-original-title="Ver Perfil Cliente">
                         <i class="icon fa-search" aria-hidden="true"></i></button></a>
                         <!--END Botón -->
                         <!-- Botón para editar cliente-->
                         <a href="/mayoristas/{{$client->id}}/edit"> <button type="button"
                         class="btn btn-icon btn-info waves-effect waves-light waves-round"
-                      data-toggle="tooltip" data-original-title="Editar">
+                      data-toggle="tooltip" data-original-title="Editar Cliente">
                       <i class=" icon md-edit" aria-hidden="true"></i></button></a>
                       <!--END Botón -->
                         <!-- Botón para eliminar cliente -->
@@ -111,9 +119,76 @@ LISTA DE  SUCURSALES
                     </td>
                   </tr>
                   @endforeach
-              </tbody>
-            </table>
-            <!-- END Tabla-->
+                    </tbody>
+                  </table>
+                  <!-- END Table-->
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-pane" id="exampleTabsTwo" role="tabpanel">
+              <div class="page-content panel-body container-fluid">
+                <!-- Tabla para listar productos-->
+                <table id="wholesaler" class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                  <thead>
+                    {{ csrf_field() }}
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Primer apellido</th>
+                        <th>Segundo apellido</th>
+                        <th>Teléfono</th>
+                        <th>Límite de Crédito</th>
+                        <th>Sucursal</th>
+                        <th>Opciones</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Primer apellido</th>
+                        <th>Segundo apellido</th>
+                        <th>Teléfono</th>
+                        <th>Límite de Crédito</th>
+                        <th>Sucursal</th>
+                        <th>Opciones</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                  @foreach ($wholesaler as $client)
+                  <tr id = "row{{ $client->id }}">
+                    <td>{{$client->name}}</td>
+                    <td>{{$client->first_lastname }}</td>
+                    <td>{{$client->second_lastname }}</td>
+                    <td>{{$client->phone_number }}</td>
+                    <td>{{$client->credit}}</td>
+                    <td>{{$client->branch ? $client->branch->name : 'Sin sucursal' }}</td>
+                    <td>
+                        <!-- Botón para ver cliente-->
+                        <a href="/mayoristas/{{ $client->id }}" type="button"
+                        class="btn btn-icon btn-primary waves-effect waves-light waves-round"
+                        data-toggle="tooltip" data-original-title="Ver Perfil Cliente">
+                        <i class="icon fa-search" aria-hidden="true"></i></button></a>
+                        <!--END Botón -->
+                        <!-- Botón para editar cliente-->
+                        <a href="/mayoristas/{{$client->id}}/edit"> <button type="button"
+                        class="btn btn-icon btn-info waves-effect waves-light waves-round"
+                      data-toggle="tooltip" data-original-title="Editar Cliente">
+                      <i class=" icon md-edit" aria-hidden="true"></i></button></a>
+                      <!--END Botón -->
+                        <!-- Botón para eliminar cliente -->
+                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete"
+                        alt="{{$client->id}}" role="button"
+                        data-toggle="tooltip" data-original-title="Eliminar">
+                        <i class="icon md-delete" aria-hidden="true"></i></button></a>
+                        <!--END Botón -->
+                    </td>
+                  </tr>
+                  @endforeach
+                  </tbody>
+                </table>
+                <!-- END Table-->
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -165,7 +240,7 @@ $(document).ready(function() {
             $("#row" + id).remove();
             Swal.fire(
               'Eliminado',
-              'El registro ha sido eliminado.',
+              'El registro ha sido eliminado con éxito.',
               'success'
             )
           },

@@ -39,6 +39,7 @@ class SaleRequest extends FormRequest
             'telephone.required' => 'El telefono es requerido y debe de contener 10 numeros',
             'total' => 'El total a pagar es requerido',
             'paid_out' => 'El dinero recibido es requerido y debe ser menor que el total a pagar',
+            'image' => 'Es necesario agregar ticket de pago con tarjeta'
         ];
     }
 }

@@ -158,7 +158,7 @@ img {
                <th>Nombre:</th><td>{{$expense->name}}</td>
             </tr>
             <tr>
-               <th>Descripcion:</th><td>{{$expense->descripcion}}</td>
+               <th>Descripción:</th><td>{{$expense->descripcion}}</td>
             </tr>
             <tr>
                <th>Total Del Gasto:</th><td> ${{$expense->price}}</td>

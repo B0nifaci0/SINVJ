@@ -12,7 +12,7 @@ LISTA PRODUCTO
 @endsection
 @section('content')
 <div class="panel-body">
-  <div class="page-content">
+  <div class="">
     <!-- Mesage-Muestra mensaje De que el producto se a agregado exitosamente-->
     @if (session('mesage'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -49,26 +49,6 @@ LISTA PRODUCTO
           <h1 class="text-center panel-title">Productos Devueltos</h1>
           <div class="panel-actions float-right">
             <div class="container-fluid row float-right">
-              @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
-              <!-- Botón para Generar PDF de productos-->
-              @if(Auth::user()->type_user == 1)
-              <div class="col-6">
-                <button onclick="window.location.href='productospdf'" type="button" id='pdf01' name='pdf01' class=" btn btn-sm small btn-floating
-                 btn-danger waves-effect waves-light waves-round float-right"
-                  data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
-                </button>
-              </div>
-              @endif
-              <div class="col-6">
-                <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating
-                 btn-info waves-effect waves-light waves-round float-left"
-                  data-toggle="tooltip" data-original-title="Agregar">
-                  <i class="icon md-plus" aria-hidden="true"></i>
-                </button>
-              </div>
-              <!-- END Botón-->
-              @endif
             </div>
           </div>
         </div>
@@ -102,8 +82,8 @@ LISTA PRODUCTO
                         @if(Auth::user()->type_user == 1 )
                         <th data-hide="phone, tablet">Precio Compra</th>
                         <th data-hide="phone, tablet">Precio Descuento</th>
-                        <th data-hide="phone, tablet">Restaurar</th>
                         @endif
+                        <th data-hide="phone, tablet">Restaurar</th>
                       </tr>
                     </thead>
                     <tfoot>
@@ -121,8 +101,8 @@ LISTA PRODUCTO
                         @if(Auth::user()->type_user == 1 )
                         <th>Precio Compra</th>
                         <th>Precio Descuento</th>
-                        <th>Restaurar</th>
                         @endif
+                        <th>Restaurar</th>
                       </tr>
                     </tfoot>
                     <tbody>
@@ -148,14 +128,14 @@ LISTA PRODUCTO
                         @if(Auth::user()->type_user == 1)
                         <td>${{$product->price_purchase }}</td>
                         <td>${{$product->discount }}</td>
-                        <td>
-                          <!-- Botón para restaurar producto devuelto-->
-                          <a type="button" href="/productos/{{$product->id}}/reetiquetado"
-                              class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
-                              data-original-title="Restaurar">Restaurar</a>
-                          <!-- END Botón-->
-                        </td>
                         @endif
+                        <td>
+                            <!-- Botón para restaurar producto devuelto-->
+                            <a type="button" href="/productos/{{$product->id}}/reetiquetado"
+                                class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
+                                data-original-title="Restaurar">Restaurar</a>
+                            <!-- END Botón-->
+                        </td>
                       </tr>
                       @endif
                       @endforeach
@@ -184,8 +164,8 @@ LISTA PRODUCTO
                       @if(Auth::user()->type_user == 1 )
                       <th data-hide="phone, tablet">Precio Compra</th>
                       <th data-hide="phone, tablet">Precio Descuento</th>
-                      <th data-hide="phone, tablet">Restaurar</th>
                       @endif
+                      <th data-hide="phone, tablet">Restaurar</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -201,8 +181,8 @@ LISTA PRODUCTO
                       @if(Auth::user()->type_user == 1 )
                       <th>Precio Compra</th>
                       <th>Precio Descuento</th>
-                      <th>Restaurar</th>
                       @endif
+                      <th>Restaurar</th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -224,16 +204,16 @@ LISTA PRODUCTO
                       <td><span class="text-center badge badge-danger">Devuelto</span></td>
                       <td>${{$product->price }}</td>
                       @if(Auth::user()->type_user == 1)
-                      <td>${{$product->price_purchase}}</td>
-                      <td>${{$product->discount}}</td>
-                      <td>
-                          <!-- Botón para restaurar producto devuelto-->
-                          <a type="button" href="/productos/{{$product->id}}/reetiquetado"
-                              class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
-                              data-original-title="Restaurar">Restaurar</a>
-                          <!-- END Botón-->
-                        </td>
+                        <td>${{$product->price_purchase}}</td>
+                        <td>${{$product->discount}}</td>
                       @endif
+                      <td>
+                            <!-- Botón para restaurar producto devuelto-->
+                            <a type="button" href="/productos/{{$product->id}}/reetiquetado"
+                                class="btn btn-icon btn-info waves-effect waves-light waves-round" data-toggle="tooltip"
+                                data-original-title="Restaurar">Restaurar</a>
+                            <!-- END Botón-->
+                        </td>
                     </tr>
                     @endif
                     @endforeach

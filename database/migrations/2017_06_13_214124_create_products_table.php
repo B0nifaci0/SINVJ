@@ -44,6 +44,7 @@ class CreateProductsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->date('sold_at')->nullable();
+            $table->date('restored_at')->nullable();
             $table->date('discarded_at')->nullable();
             $table->integer('status_id')->unsigned();
             $table->foreign('status_id')->references('id')->on('statuss');

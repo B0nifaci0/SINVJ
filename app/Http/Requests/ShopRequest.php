@@ -25,7 +25,7 @@ class ShopRequest extends FormRequest
     {
         return [
             'image' => 'image:mimes,png',
-            'description' => 'required|string',
+            //'description' => 'required|string',
             'phone_number' => 'required|numeric|regex:/^[0-9]{10}$/',
             'email' => 'required|email'
         ];

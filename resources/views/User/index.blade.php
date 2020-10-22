@@ -35,7 +35,7 @@ LISTA DE  USUARIOS
         </button>
 	    </div>
 		@endif
-    <div class="page-content">
+    <div class="">
       <!-- Panel Basic -->
       <div class="panel">
         <div class="panel-body">

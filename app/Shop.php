@@ -1,8 +1,13 @@
 <?php
 
 namespace App;
+
+use App\Line;
+use App\User;
 use App\Branch;
+use App\Status;
 use App\Product;
+use App\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -20,7 +25,8 @@ class Shop extends Model
         'municipality_id',
         'state_id',
         'description',
-        'shop_group_id'
+        'shop_group_id',
+        'shop_code'
     ];
 
     public function branches()
@@ -30,42 +36,48 @@ class Shop extends Model
 
     public function admin()
     {
-      return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function products()
     {
-      return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class);
     }
 
     public function categories()
     {
-      return $this->hasMany(Category::class);
+        return $this->hasMany(Category::class);
     }
     public function lines()
     {
-      return $this->hasMany(Line::class);
+        return $this->hasMany(Line::class);
     }
     public function statuss()
     {
-      return $this->hasMany(Status::class);
+        return $this->hasMany(Status::class);
     }
     public function users()
     {
-      return $this->hasMany(User::class);
+        return $this->hasMany(User::class);
     }
     public function trans()
     {
-      return $this->hasMany(TrasnferProduct::class);
+        return $this->hasMany(TrasnferProduct::class);
     }
-    public function expenses(){
+    public function expenses()
+    {
 
-      return $this->hasMany(Expense::class);
+        return $this->hasMany(Expense::class);
     }
-    public function groups(){
+    public function groups()
+    {
 
-      return $this->hasMany(ShopGroup::class);
+        return $this->hasMany(ShopGroup::class);
     }
-  
-  
+
+    public function inventories()
+    {
+
+        return $this->hasMany(InventoryReport::class);
+    }
 }

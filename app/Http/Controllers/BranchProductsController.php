@@ -2,131 +2,156 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Product;
-use App\Category;
-use App\Shop;
+use PDF;
 use App\Line;
+use App\Shop;
 use App\Branch;
 use App\Status;
-use App\User;
-use App\Sale;
-use PDF;
+use App\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Traits\S3ImageManager;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ProductValidate;
 use Illuminate\Support\Facades\Storage;
 
 class BranchProductsController extends Controller
 
 {
-  /** Función para listar los productos por sucursal pra el usuario administrador y sub-administrador  */
-  public function index($id)
-  {
-      $user = Auth::user();
-      $branch= Branch::find($id);
-      $shop_id = Auth::user()->shop->id;
-      $categories = Shop::find($shop_id)->categories()->get();
-      $lines = Shop::find($shop_id)->lines()->get();
-    	$statuses = Status::all();
-      $products = Product::withTrashed()->where('branch_id','=',$id)->where('deleted_at','=',NULL)->get();
-      $num_products = Product::withTrashed()->where('branch_id','=',$id)->where('deleted_at','=',NULL)->count();
-      $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
-      foreach ($products as $product) {
-        if($product->image) {
+    use S3ImageManager;
 
-          $path = env('S3_ENVIRONMENT') . '/' . 'products/' . $product->clave;
+    /** Función para listar los productos por sucursal pra el usuario administrador y sub-administrador  */
 
-          $command = $adapter->getClient()->getCommand('GetObject', [
-            'Bucket' => $adapter->getBucket(),
-            'Key' => $adapter->getPathPrefix(). $path
-          ]);
 
-          $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
+    public function index($id)
+    {
+        $user = Auth::user();
+        $branch = Branch::findOrFail($id);
 
-          $product->image = (string) $result->getUri();
+        $products = $branch->products()->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('Branches/branchproduct', compact('products', 'branch'));
+    }
+
+    function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $query = $request->get('query');
+            $query = str_replace(" ", "%", $query);
+
+            $branch_id = $request->get('branch');
+            $branch = Branch::findOrFail($branch_id);
+            $products = $branch->products();
+            if ($query != "") {
+
+                $status = Status::where('name', 'like', '%' . $query . '%')->first();
+
+                $products = $products->where('description', 'like', '%' . $query . '%')
+                    ->orWhere('clave', 'like', '%' . $query . '%')
+                    ->orWhere('observations', 'like', '%' . $query . '%');
+
+                if ($status) {
+                    $products = $products->orWhere('status_id', $status->id);
+                }
+            }
+            $products = $products->orderByRaw('CHAR_LENGTH(clave)')
+                ->orderBy('clave')->paginate(10);
+            return view('Branches/table', compact('products'))->render();
         }
-      }
+    }
 
-      if($num_products == 0)
-      {
-        return redirect('/productos/create')->with('mesage', 'Primero debes crear productos de esta Sucursal!');
-      }
-      else
-      {
-        return view('Branches/branchproduct', compact('branch','products','user','categories','lines','statuses'));
-      }
+    // public function index($id)
+    // {
 
 
-  }
-  public function edit($id)
+    //     $user = Auth::user();
+    //     $branch = Branch::find($id);
+    //     $shop_id = Auth::user()->shop->id;
+    //     $categories = Shop::find($shop_id)->categories()->get();
+    //     $lines = Shop::find($shop_id)->lines()->get();
+    //     $statuses = Status::all();
+    //     $products = Product::withTrashed()->where('branch_id', '=', $id)->where('deleted_at', '=', NULL)->get();
+    //     $num_products = Product::withTrashed()->where('branch_id', '=', $id)->where('deleted_at', '=', NULL)->count();
+    //     $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+
+    //     foreach ($products as $product) {
+    //         if ($product->image) {
+    //             $path = env('S3_ENVIRONMENT') . '/products/' . $product->clave;
+    //         } else {
+    //             $path = 'products/default';
+    //         }
+
+    //         $product->image = $this->getS3URL($path);
+    //     }
+
+    //     if ($num_products == 0) {
+    //         return redirect('/productos/create')->with('mesage', 'Primero debes crear productos de esta Sucursal!');
+    //     } else {
+    //         return view('Branches/branchproduct', compact('branch', 'products', 'user', 'categories', 'lines', 'statuses'));
+    //     }
+    // }
+
+    public function edit($id)
     {
         $user = Auth::user();
         $category = Auth::user()->shop->id;
         $line = Auth::user()->shop->id;
         $shops = Auth::user()->shop()->get();
         $categorys = Shop::find($category)->categories()->get();
-        $lines = Shop::find($line)->lines()->get();
+        $lines = Line::where('shop_id', NULL)->get();
         $branch = Auth::user()->shop->id;
         $branches = Shop::find($branch)->branches()->get();
         $status = Auth::user()->shop->id;
         //$statuses = Shop::find($status)->statuss()->get();
-    	$statuses = Status::all();
+        $statuses = Status::all();
         $product = Product::find($id);
 
-      return view('Branches/editproduct', compact('product', 'categorys','lines','shops','branches','statuses','user'));
+        return view('Branches/editproduct', compact('product', 'categorys', 'lines', 'shops', 'branches', 'statuses', 'user'));
     }
     public function update(Request $request, $id)
     {
-      return $request;
+        return $request;
         $product = Product::findOrFail($id);
 
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
 
-          // Borrar imagen anterior
-          Storage::delete("public/upload/products/{$product->image}");
+            // Borrar imagen anterior
+            Storage::delete("public/upload/products/{$product->image}");
 
-          $filename = $request->image->getCLientOriginalName();
-          $timestamp = time();
-          $request->image->storeAs('public/upload/products', $timestamp . $filename);
-          $product->image = $timestamp . $filename;
-      }
+            $filename = $request->image->getCLientOriginalName();
+            $timestamp = time();
+            $request->image->storeAs('public/upload/products', $timestamp . $filename);
+            $product->image = $timestamp . $filename;
+        }
 
-         $product->description = $request->description;
-         $product->weigth = $request->weigth;
-         $product->observations = $request->observations;
-         $product->price = $request->price;
+        $product->description = $request->description;
+        $product->weigth = $request->weigth;
+        $product->observations = $request->observations;
+        $product->price = $request->price;
 
-         $product->inventory = $request->inventory;
+        $product->inventory = $request->inventory;
 
-         $product->save();
+        $product->save();
 
-      //return $request->all();
-      return redirect('/sucursales')->with('mesage-update', 'El producto se ha actualizado  exitosamente!');
+        //return $request->all();
+        return redirect('/sucursales')->with('mesage-update', 'El producto se ha actualizado  exitosamente!');
     }
     public function destroy($id)
     {
-      Product::destroy($id);
-    // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
+        Product::destroy($id);
+        // return redirect('/productos')->with('mesage-delete', 'El producto se ha eliminado exitosamente!');
 
     }
-  public function exportPdf($id){
-      $branches= Branch::find($id);
-      $products = Product::withTrashed()->where('branch_id','=',$id)->get();
-      $pdf  = PDF::loadView('Branches.sucursalespdf', compact('branches', 'products'));
-      return $pdf->stream('productossucursal.pdf');
-  }
 
-  /**fucntion for inventory index */
-    public function inventory($id){
-      $user = Auth::user();
-      $branches= Branch::find($id);
-      //return $branches;
-      $products = Product::withTrashed()->where('branch_id','=',$id)->get();
-      //return $products;
-      return view('Branches/Inventory/biproduct', compact('branches','id','products','user'));
+    /**fucntion for inventory index */
+    public function inventory($id)
+    {
+        $user = Auth::user();
+        $branches = Branch::find($id);
+        //return $branches;
+        $products = Product::withTrashed()->where('branch_id', '=', $id)->get();
+        //return $products;
+        return view('Branches/Inventory/biproduct', compact('branches', 'id', 'products', 'user'));
     }
 }

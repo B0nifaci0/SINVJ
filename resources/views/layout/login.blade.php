@@ -80,6 +80,7 @@
     <script src={{{url('global/js/Plugin.js')}}}></script>
     <script src={{{url('global/js/Base.js')}}}></script>
     <script src={{{url('global/js/Config.js')}}}></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     
     <script src={{{url('assets/js/Section/Menubar.js')}}}></script>
     <script src={{{url('assets/js/Section/Sidebar.js')}}}></script>

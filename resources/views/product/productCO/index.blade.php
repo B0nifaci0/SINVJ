@@ -67,8 +67,8 @@ LISTA PRODUCTO
                       <th>Categoría</th>
                       <th>Linea</th>
                       <th>Sucursal</th>
-                      <th>Precio Venta</th>
                       <th>Status</th>
+                      <th>Precio Venta</th>
                       @if(Auth::user()->type_user == 1 )
                       <th>Opciones</th>
                       @endif
@@ -84,8 +84,8 @@ LISTA PRODUCTO
                       <th>Categoría</th>
                       <th>Linea</th>
                       <th>Sucursal</th>
-                      <th>Precio Venta</th>
                       <th>Status</th>
+                      <th>Precio Venta</th>
                       @if(Auth::user()->type_user == 1 )
                       <th>Opciones</th>
                       @endif
@@ -109,7 +109,6 @@ LISTA PRODUCTO
                       <td>{{ ($product->category) ? $product->category->name : '' }}</td>
                       <td>{{$product->line->name}}</td>
                       <td>{{$product->branch->name}}</td>
-                      <td>${{($product->price) ? $product->price:''}}</td>
                       @if($product->status_id == 1)
                       <td><span class="text-center badge badge-secondary">{{$product->status->name}}</span></td>
                       @endif
@@ -122,6 +121,7 @@ LISTA PRODUCTO
                       @if($product->status_id == 4)
                       <td><span class="text-center badge badge-warning">{{$product->status->name}}</span></td>
                       @endif
+                      <td>${{($product->price) ? $product->price:''}}</td>
                       @if(Auth::user()->type_user == 1)
                       <td>
                         <!-- Botón para editar producto-->

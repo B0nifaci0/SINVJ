@@ -11,11 +11,13 @@ class Partial extends Model
 
 	public const CASH = '1';
 	public const CARD = '2';
+	public const CREDIT = '3';
 
     protected $fillable = [
 		'sale_id',
 		'amount',
-		'type',
+        'type',
+        'image'
     ];
 
 

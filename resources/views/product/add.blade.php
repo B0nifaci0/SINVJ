@@ -33,20 +33,40 @@ ALTA PRODUCTO
         {{ csrf_field() }}
         <input type="text" value="2" class="form-control d-none"  name="status_id">
         <div class='row'>
-          <!-- Input para ingresar clave del producto-->
-          <div class="form-group form-material col-md-3">
+        <!-- Select para Seleccionar categoria-->
+          <div class="col-md-3">
+            <label>Seleccione Categoría </label>
+            @if(null !== session('categories'))
+            <select id="categorie_id" name="category_id" class="form-control round">
+            @foreach( $categories as $category)
+            <option value="{{ $category->id}}" required>{{ $category->name }} - @if($category->type_product == 1) pza @else gr @endif</option>
+            <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
+            @endforeach
+            </select>
+            @else
+            <select  id="categorie_id" name="category_id" class="form-control round">
+            @foreach($categories as $category)
+            <option value="{{ $category->id }}" required>{{ $category->name }} - @if($category->type_product == 1) pza @else gr @endif</option>
+            <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
+            @endforeach
+            </select>
+            @endif
+            </div>
+            <!-- END Select-->
+<!-- Input para ingresar clave del producto-->
+<div class="form-group form-material col-md-3">
             <label>Clave</label>
             <input type="text" class="form-control" name="clave"  value="{{old('clave')}}" required>
           </div>
             <!-- Input para ingresar descripcion-->
             <div class="form-group form-material col-md-3">
-              <label>Descripcion</label>
+              <label>Descripción</label>
               <input type="text" class="form-control" name="description"  value="{{old('description')}}" required>
             </div>
             <!-- END Input-->
             <!-- Select para Seleccionar linea-->
             <div class="col-md-3 remove">
-               <label  class="control-label">Seleccione Linea</label>
+               <label  class="control-label">Seleccione Línea</label>
               <select id="line_id"   name="line_id"  class="form-control round">
                 @foreach($lines as $line)
                   <option value="{{ $line->id }}" required>{{ $line->name }}</option>
@@ -56,32 +76,34 @@ ALTA PRODUCTO
             <!-- END Select-->
 
             <!-- Input para ingresar precio del producto pz-->
-            <div id="pricepz" class="form-group form-material col-md-3">
-              <label>Precio del Producto</label>
-              <input type="text" id="pricepzt" class="form-control"  name="pricepzt" value="{{old('pricepzt')}}">
-            </div>
-
-            <!-- Input para ingresar precio del producto pz-->
             <div id="pricecp" class="form-group form-material col-md-3 remove">
               <label>Precio Compra</label>
               <input type="text"  class="form-control" id="pricePurchase"  name="price_purchase" value="{{old('price_purchase')}}">
             </div>
             <!-- END Input-->
+
+            <!-- Input para ingresar precio del producto pz-->
+            <div id="pricepz" class="form-group form-material col-md-3">
+              <label>Precio del Producto</label>
+              <input type="text"  class="form-control"  name="pricepzt" value="{{old('pricepzt')}}">
+            </div>
+
+
             <!-- Input para ingresar precio con descuento-->
             <div id="discountpz" class="form-group form-material col-md-3 remove">
               <label>Precio con descuentopz</label>
-              <input type="text"  class="form-control" id="pcdpz" name="max_discountpz" value="{{old('max_discountpz')}}" >
+              <input type="text"  class="form-control"  name="max_discountpz" value="{{old('max_discountpz')}}">
             </div>
             <!-- END Input-->
             <div   class="col-md-3 form-material remove">
-              <label  class="control-label">Precio de la linea</label>
+              <label  class="control-label">Precio de la línea</label>
               <input type="text" name="" id="line_price" class="form-control" readonly>
             </div>
             <!-- END Select-->
             <!-- Input para ingresar Peso del producto-->
             <div class="form-group form-material col-md-3 remove">
               <label>Gramos</label>
-              <input type="text" id="multiplicador"  class="form-control" name="weigth">
+              <input type="text" id="multiplicador"  class="form-control" name="weigth" >
             </div>
             <!-- END Input-->
             <!-- Input para ingresar precio del producto-->
@@ -96,26 +118,6 @@ ALTA PRODUCTO
               <input type="text"readonly="readonly" class="form-control" id="discount" readonly name="max_discount" value="{{old('max_discount')}}">
             </div>
             <!-- END Input-->
-            <!-- Select para Seleccionar categoria-->
-            <div class="col-md-3">
-              <label>Seleccione Categoria </label>
-              @if(null !== session('categories')){
-                <select id="categorie_id" name="category_id" class="form-control round">
-                  @foreach(session('categories') as $category)
-                    <option value="{{ $category->id }}" required>{{ $category->name }}</option>
-                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-                  @endforeach
-                </select>
-              @else
-                <select  id="categorie_id" name="category_id" class="form-control round">
-                  @foreach($categories as $category)
-                    <option value="{{ $category->id }}" required>{{ $category->name }}</option>
-                    <!--<option class="invisible" id="categorie_type_product" value="{{ $category->type_product }}" required>{{ $category->type_product }}</option>-->
-                  @endforeach
-                </select>
-              @endif
-            </div>
-            <!-- END Select-->
             <div>
                 @foreach ($shops as $shop)
                 <input type="hidden" name="shop_id" value="{{$shop->id}}">
@@ -125,9 +127,6 @@ ALTA PRODUCTO
             <div class="col-md-3">
               <label>Seleccione Sucursal</label>
               <select name="branch_id" class="form-control round">
-                @php
-                    $branches = $user->shop->branches;
-                @endphp
                   @foreach($branches as $branch)
                     <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
                   @endforeach
@@ -251,7 +250,7 @@ setTimeout(() => {
 $('#categorie_id').change(function(){
     $('#pricepz').val(0);
     $('#pricecp').val(0);
-    $('#discountpz').val(0);
+    //$('#discountpz').val(0);
 
     var categoryTypeproduct = {!! $categories !!};
     var categoryId = $(this).val();
@@ -263,16 +262,16 @@ $('#categorie_id').change(function(){
       $('#pricecp').css('display', 'initial');
       $('#discountpz').css('display', 'initial');
 
-      // set purchase price for Pza products
+   /*    // set purchase price for Pza products
       console.log("pricePurchase", Number($('#line_price').val()) * Number($('#multiplicador').val()))
       console.log( Number($('#line_price').val()), Number($('#multiplicador').val()))
 
         console.log(!Number($('#line_price').val()) , !Number($('#multiplicador').val()))
       if(!Number($('#line_price').val()) || !Number($('#multiplicador').val())) {
-        $('#pricePurchase').val(0);
+        $('#pricePurchase').val('');
       } else {
         $('#pricePurchase').val( Number($('#line_price').val()) * Number($('#multiplicador').val()) );
-      }
+      } */
     } else if(categoryTypeproduct.type_product == 2){
       // Gramos
       $('.remove').css('display', 'initial');
@@ -284,17 +283,37 @@ $('#categorie_id').change(function(){
 });
 
 
+
 var lines = {!! $lines !!};
 var line = lines[0];
 //console.log("lines", lines);
 
+$('.compra').on('input', function() {
+      let id = $(this).attr('id');
+      let val = $(this).val();
+      $(`#${id}`).val( val.replace(/\s+/, "") );
+})
+
+$('.gramos').on('input', function() {
+      let id = $(this).attr('id');
+      let val = $(this).val();
+      $(`#${id}`).val( val.replace(/\s+/, "") );
+})
+
 $('#line_price').val(lines[0].sale_price);
 
 $('#line_id').change(function() {
+  /* Si el hay un cmabio de selec el input gramos se limpia para recalcular*/
+  $('#multiplicador').val('');
+  $('#total').val('');
+  $('#discount').val('');
   var id = $(this).val();
   line = lines.filter(l => l.id == id)[0];
   $('#line_price').val(line.sale_price);
 });
+
+
+
 
 $('#multiplicador').keyup(function(){
   var total = $('#line_price').val() * $(this).val();
@@ -314,24 +333,7 @@ $('#multiplicador').keyup(function(){
 });
 
 //multilicacion para sacar el precio venta por produt pz
-$('#pricePurchase').keyup(function(){
-  var cuatro = $(this).val();
-  var total = $(this).val() * 4 ;
-  var descuentoxpz = total / 2;
-  console.log("precio xpz",total);
-  console.log("descuentoxpz",descuentoxpz );
-        if(!Number($('#pricepzt').val()) || !Number($('#pricePurchase').val()) || !Number($('#pcdpz').val())) {
-        $('#pricepzt').val(total);
-        $('#pcdpz').val(descuentoxpz);
-        return;
-      }
-      
-    //console.log("pricePurchase", Number($('#pricepzt').val()) * Number($('#pricePurchase').val()))
-  $('#pricepzt').val(total);
-  $('#pcdpz').val(descuentoxpz);
 
-
-    });
 </script>
 @endsection
 <!-- END Función-->

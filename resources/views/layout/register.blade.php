@@ -88,6 +88,7 @@
     <script src={{{url('assets/js/Section/Sidebar.js')}}}></script>
     <script src={{{url('assets/js/Section/PageAside.js')}}}></script>
     <script src={{{url('assets/js/Plugin/menu.js')}}}></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <!-- Config -->
     <script src={{{url('global/js/config/colors.js')}}}></script>

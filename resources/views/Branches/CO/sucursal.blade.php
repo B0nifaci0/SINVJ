@@ -11,7 +11,7 @@ Panel Principal
 @endsection
 @section('content')
 <!-- Page -->
-<div class="page">
+<div class="">
   <div class="page-content container-fluid">
   <h6 class="panel-title">{{ $branch->name }}</h6>
     <div class="row" data-plugin="matchHeight" data-by-row="true">
