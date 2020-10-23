@@ -21,6 +21,8 @@ class Branch extends Model
         'address',
         'phone_number',
         'shop_id',
+        'state_id',
+        'municipality_id',
         'name_legal_re',
         'email',
         'other',

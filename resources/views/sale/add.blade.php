@@ -125,11 +125,11 @@ ALTA VENTA
                     <!-- END Botón-->
                     <div class="panel-body ">
                         <!-- Tabla para listar productos agregados-->
-                        <table id="ventas" class=" display table table-hover dataTable table-striped w-full"
-                            data-plugin="dataTable">
+                        <table id="ventas" class=" display table table-hover dataTable table-striped w-full">
                             <thead>
                                 <tr>
                                     <th>Clave</th>
+                                    <th>Precio final</th>
                                     <th>Nombre</th>
                                     <th>Peso</th>
                                     <th>Categoría</th>
@@ -137,13 +137,13 @@ ALTA VENTA
                                     <th>Sucursal</th>
                                     <th>Precio Max</th>
                                     <th>Precio Min</th>
-                                    <th>Precio final</th>
                                     <th>Eliminar</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Clave</th>
+                                    <th>Precio final</th>
                                     <th>Nombre</th>
                                     <th>Peso</th>
                                     <th>Categoría</th>
@@ -151,7 +151,6 @@ ALTA VENTA
                                     <th>Sucursal</th>
                                     <th>Precio Max</th>
                                     <th>Precio Min</th>
-                                    <th>Precio final</th>
                                     <th>Eliminar</th>
                                 </tr>
                             </tfoot>
@@ -430,13 +429,17 @@ seleccionado con sus respectivos datos-->
 
         var clients = {!! $clients!!};
         var usuario = {!! $user->type_user!!};
-        var sales = {!! $sales !!}
+        var sales = {!! $sales !!};
         var new_id = {!! $new_id !!};
         var old_id = new_id;
 
         console.log("Clienets ", clients)
         console.log('Ventas: ', sales);
 
+        $('#ventas').DataTable( {
+            pageLength:     50,
+            responsive:     true
+        } ).columns.adjust().responsive.recalc();
 
         $(function() {
 
@@ -1066,6 +1069,7 @@ seleccionado con sus respectivos datos-->
                     selectedProducts.push(product);
                     _tr.row.add([
                         product.clave,
+                        `<input class="finalPrice income" id="finalPrice${product.id}" alt="${product.id}" type="text" value="${product.price}"/>`,
                         product.description,
                         product.weigth,
                         product.category.name,
@@ -1073,7 +1077,6 @@ seleccionado con sus respectivos datos-->
                         product.branch.name,
                         product.price,
                         product.discount,
-                        `<input class="finalPrice income" id="finalPrice${product.id}" alt="${product.id}" type="text" value="${product.price}"/>`,
                         `<button type="button" class="btn btn-danger deletr" alt="${product.id}">-</button>`
                     ]).draw(false);
 

@@ -7,6 +7,7 @@ use App\Branch;
 use App\Product;
 use App\InventoryReport;
 use App\InventoryDetail;
+use App\TransferProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PDF;
@@ -63,6 +64,12 @@ class InventoryController extends Controller
             }
             return $item;
         });
+
+        foreach($branches as $branch) {
+            $branch->inventory_validation = TransferProduct::Where('last_branch_id',$branch->id)
+            ->WhereNull('status_product')
+            ->count();
+        }
         //return $branches;
         $date = Carbon::now()->toFormattedDateString();
 
@@ -75,23 +82,10 @@ class InventoryController extends Controller
         $name_branch = InventoryReport::join('branches', 'branches.id', 'inventory_reports.branch_id')
             ->where('inventory_reports.id', $id)->select('branches.name')->get();
         $inventory = InventoryReport::where('id', $id)->first();
-        $inventory->products = InventoryDetail::join('products', 'products.id', 'inventory_details.product_id')
-            ->where('inventory_details.inventory_report_id', $inventory->id)
-            ->where('products.branch_id', $branch)
-            ->where('products.deleted_at', NULL)
-            ->whereIn('products.status_id', [2, 4, 5])
-            ->select(
-                'inventory_details.id',
-                'inventory_details.status',
-                'inventory_details.product_id',
-                'products.clave',
-                'products.description',
-                'products.weigth'
-            )
-            ->get();
+        
         //QUERY PARA SABER SI HAY PRODUCTOS SIN LISTAR EN EL INVENTARIO
         $finalizar = InventoryDetail::where('inventory_report_id', $id)
-            ->where('status', null)
+            ->where('status_id', 1)
             ->count('id');
 
         //return $finalizar;
@@ -103,9 +97,48 @@ class InventoryController extends Controller
             $inventorie->status_report = 2;
             $inventorie->save();
         }
+        $validation = 0;
         //return $finalizar;
         //return $inventory->products;
-        return view('inventory.show', compact('inventory', 'name_branch', 'finalizar', 'id_inventory'));
+        return view('inventory.show', compact('validation','inventory', 'name_branch', 'finalizar', 'id_inventory'));
+    }
+
+    public function search(Request $request, $id)
+    {
+        //return $request;
+        $inventory = InventoryReport::findOrFail($id);
+        
+        $inventory->products = InventoryDetail::join('products','products.id','inventory_details.product_id')
+        ->join('status_inventories','status_inventories.id','inventory_details.status_id')
+        ->Where('inventory_details.inventory_report_id', $id)
+        ->where(function($q) use ($request) {
+            $q->where(function($query) use ($request){
+                    $query->Where('products.description', 'like', "%$request->text%")
+                          ->orWhere('products.clave', 'like', "%$request->text%")
+                          ->orWhere('status_inventories.name', 'like', "%$request->text%");
+                });
+            })
+        ->select(
+            'inventory_details.id',
+            'status_inventories.name as status_name',
+            'inventory_details.product_id',
+            'inventory_details.status_id as status',
+            'inventory_details.inventory_report_id',
+            'products.clave',
+            'products.description',
+            'products.weigth'
+        )
+        ->orderByRaw('CHAR_LENGTH(products.clave)')
+        ->orderBy('products.clave')
+        ->get();
+
+        if($request->validacion && $inventory->products->count() > 0){
+            $validation = $request->validacion;
+        } else {
+            $validation = 0;
+        }
+
+        return view('inventory/inventory_products', compact('inventory','validation'));
     }
 
     public function store(Request $request)
@@ -118,10 +151,23 @@ class InventoryController extends Controller
 
         $branch_id = $request->branch_id ? $request->branch_id : Auth::user()->branch_id;
 
-        $num_products = Product::withTrashed()->where('branch_id', '=', $branch_id)->where('deleted_at', '=', NULL)->count();
+        $num_products = Product::where('branch_id', $branch_id)
+        ->where('status_id', 2)
+        ->where('deleted_at', '=', NULL)->count();
+
+        $active_inventories = InventoryReport::where('branch_id', $branch_id)
+        ->where(function($q) use ($request) {
+            $q->where(function($query) use ($request){
+                    $query->Where('status_report', 1)
+                          ->orWhere('status_report', 2);
+                });
+            })
+        ->count();
 
         if ($num_products == 0) {
-            return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, porque la sucursal no tiene productos!');
+            return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, ya que la sucursal no tiene productos existentes!');
+        } elseif($active_inventories >= 1){
+            return redirect('/inventarios')->with('mesage-update', 'No se pudo crear el inventario, ya que la sucursal tiene un inventario en progreso!');
         } else {
             //return $branch_id;
             $inventory = InventoryReport::create([
@@ -138,6 +184,7 @@ class InventoryController extends Controller
                 InventoryDetail::create([
                     'inventory_report_id' => $inventory->id,
                     'product_id' => $p->id,
+                    'status_id' => 1,
                 ]);
             }
             //return $products;
@@ -151,12 +198,11 @@ class InventoryController extends Controller
         //return $request;
         $inventory = InventoryDetail::find($request->inventory_id);
         // return [$request->status];
+        $product = Product::withTrashed()->where('id', $inventory->product_id)->first();
         if (!$request->status) {
-            $product = Product::withTrashed()->where('id', $inventory->product_id)->first();
             $product->discar_cause = $request->discar_cause;
             //$product->delete();
         } else {
-            $product = Product::withTrashed()->where('id', $inventory->product_id)->first();
             $product->discar_cause = null;
             $product->deleted_at = null;
         }
@@ -164,8 +210,14 @@ class InventoryController extends Controller
         //return $product;
         $product->save();
 
-        InventoryDetail::where('id', $request->inventory_id)->update(['status' => $request->status]);
-        return back();
+        InventoryDetail::where('id', $request->inventory_id)->update(['status_id' => $request->status]);
+        $status = InventoryDetail::join('status_inventories','status_inventories.id','inventory_details.status_id')
+            ->where("inventory_details.product_id", $product->id)
+            ->select('status_inventories.name as name')
+            ->first();
+        //return $status;
+        return back()->with('message', "El producto $product->clave ahora tiene un status: $status->name!")
+        ->with('validar_restaurado_o_inventariado',1);
     }
 
     public function checkPassword(Request $request)
@@ -248,9 +300,8 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 4)
                 ->where('products.line_id', $g->ids)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('weigth');
@@ -263,9 +314,8 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 4)
                 ->where('products.line_id', $g->ids)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('discount');
@@ -278,9 +328,8 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 5)
                 ->where('products.line_id', $g->ids)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('weigth');
@@ -293,9 +342,8 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 5)
                 ->where('products.line_id', $g->ids)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('discount');
@@ -312,12 +360,11 @@ class InventoryController extends Controller
         $prod_fal = Product::join('categories', 'categories.id', 'products.category_id')
             ->join('lines', 'lines.id', 'products.line_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->where('products.status_id', 5)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('products.deleted_at', NULL)
             ->where('categories.type_product', 2)
             ->where('products.branch_id', $id_branch)
-            ->where('inventory_details.status', 3)
+            ->where('inventory_details.status_id', 4)
             ->where('inventory_details.inventory_report_id', $id)
             ->select('products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
             ->distinct('products.clave')
@@ -330,12 +377,12 @@ class InventoryController extends Controller
         $prod_exis = Product::join('categories', 'categories.id', 'products.category_id')
         ->join('inventory_details', 'inventory_details.product_id', 'products.id')
         ->join('lines', 'lines.id', 'products.line_id')
-        ->where('products.status_id', 2)
         ->where('products.shop_id', Auth::user()->shop->id)
         ->where('products.deleted_at', NULL)
         ->where('categories.type_product', 2)
         ->where('products.branch_id', $id_branch)
         ->where('inventory_details.inventory_report_id', $id)
+        ->whereIn('inventory_details.status_id', [1, 2])
         ->select('products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
         ->distinct('products.clave')
         ->groupBy('products.weigth', 'products.description', 'products.clave', 'lines.name')
@@ -347,12 +394,11 @@ class InventoryController extends Controller
         $prod_da = Product::join('categories', 'categories.id', 'products.category_id')
             ->join('lines', 'lines.id', 'products.line_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->where('products.status_id', 4)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('products.deleted_at', NULL)
             ->where('categories.type_product', 2)
             ->where('products.branch_id', $id_branch)
-            ->where('inventory_details.status', 2)
+            ->where('inventory_details.status_id', 3)
             ->where('inventory_details.inventory_report_id', $id)
             ->select('products.weigth', 'products.description', 'products.clave', 'lines.name as name_line', DB::raw('SUM(products.discount) as money'))
             ->distinct('products.clave')
@@ -365,7 +411,6 @@ class InventoryController extends Controller
         $totales_g = Product::join('categories', 'categories.id', 'products.category_id')
             ->join('lines', 'lines.id', 'products.line_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->whereIn('products.status_id', [2, 4, 5])
             ->where('products.deleted_at', NULL)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('categories.type_product', 2)
@@ -384,8 +429,7 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 4)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('weigth');
@@ -398,8 +442,7 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 4)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('discount');
@@ -412,8 +455,7 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 5)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('weigth');
@@ -426,8 +468,7 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 2)
-                ->where('products.status_id', 5)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('discount');
@@ -463,9 +504,8 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 4)
                 ->where('products.category_id', $c->ids)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->count('id');
@@ -477,9 +517,8 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 4)
                 ->where('products.category_id', $c->ids)
-                ->where('inventory_details.status', 2)
+                ->where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('discount');
@@ -491,9 +530,8 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 5)
                 ->where('products.category_id', $c->ids)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->count('id');
@@ -505,9 +543,8 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 5)
                 ->where('products.category_id', $c->ids)
-                ->where('inventory_details.status', 3)
+                ->where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('discount');
@@ -524,12 +561,11 @@ class InventoryController extends Controller
         //DESCRIPCION DE PRODUCTOS FALTANTES PIEZA
         $p_faltantes = Product::join('categories', 'categories.id', 'products.category_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->where('products.status_id', 5)
             ->where('products.deleted_at', NULL)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('categories.type_product', 1)
             ->where('products.branch_id', $id_branch)
-            ->where('inventory_details.status', 3)
+            ->where('inventory_details.status_id', 4)
             ->where('inventory_details.inventory_report_id', $id)
             ->select('products.clave', 'products.discount', 'products.description', 'categories.id as id_cat', 'categories.name as cat_name')
             ->groupBy('products.clave', 'products.discount', 'products.description', 'categories.id', 'categories.name')
@@ -540,12 +576,11 @@ class InventoryController extends Controller
         //DESCRIPCION DE PRODUCTOS DAÑADOS PIEZA
         $p_dañados = Product::join('categories', 'categories.id', 'products.category_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->where('products.status_id', 4)
             ->where('products.deleted_at', NULL)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('categories.type_product', 1)
             ->where('products.branch_id', $id_branch)
-            ->where('inventory_details.status', 2)
+            ->where('inventory_details.status_id', 3)
             ->where('inventory_details.inventory_report_id', $id)
             ->select('products.clave', 'products.discount', 'products.description', 'categories.id as id_cat', 'categories.name as cat_name')
             ->groupBy('products.clave', 'products.discount', 'products.description', 'categories.id', 'categories.name')
@@ -556,7 +591,7 @@ class InventoryController extends Controller
         //DESCRIPCION DE PRODUCTOS EXISTENTES PIEZA
         $p_existentes = Product::join('categories', 'categories.id', 'products.category_id')
             ->join('inventory_details', 'inventory_details.product_id', 'products.id')
-            ->where('products.status_id', 2)
+            ->whereIn('inventory_details.status_id', [1, 2])
             ->where('products.deleted_at', NULL)
             ->where('products.shop_id', Auth::user()->shop->id)
             ->where('categories.type_product', 1)
@@ -588,8 +623,7 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 5)
-                ->Where('inventory_details.status', 3)
+                ->Where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->count('id');
@@ -601,8 +635,7 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 5)
-                ->Where('inventory_details.status', 3)
+                ->Where('inventory_details.status_id', 4)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('discount');
@@ -615,8 +648,7 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 4)
-                ->Where('inventory_details.status', 2)
+                ->Where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->count('id');
@@ -628,8 +660,7 @@ class InventoryController extends Controller
                 ->where('products.deleted_at', NULL)
                 ->where('products.shop_id', Auth::user()->shop->id)
                 ->where('categories.type_product', 1)
-                ->where('products.status_id', 4)
-                ->Where('inventory_details.status', 2)
+                ->Where('inventory_details.status_id', 3)
                 ->where('inventory_details.inventory_report_id', $id)
                 ->get()
                 ->sum('discount');

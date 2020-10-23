@@ -78,6 +78,8 @@ LISTA DE  SUCURSALES
                   <th>Correo</th>
                   <th>Teléfono </th>
                   <th>Dirección</th>
+                  <th>Estado</th>
+                  <th>Municipio</th>
                   <th>Opciones</th>
                 </tr>
               </thead>
@@ -90,6 +92,8 @@ LISTA DE  SUCURSALES
                   <th>Correo</th>
                   <th>Teléfono </th>
                   <th >Dirección</th>
+                  <th>Estado</th>
+                  <th>Municipio</th>
                   <th>Opciones</th>
                 </tr>
               </tfoot>
@@ -103,6 +107,8 @@ LISTA DE  SUCURSALES
                     <td>{{$branch->email}}</td>
                     <td>{{$branch->phone_number}}</td>
                     <td>{{$branch->address}}</td>
+                    <td>{{$branch->state}}</td>
+                    <td>{{$branch->municipality}}</td>
                       <!-- <td>{{$branch->shop->name }}</td> -->
                     <td>
                     @if(Auth::user()->type_user == 1 )

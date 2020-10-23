@@ -6,7 +6,7 @@ use PDF;
 use App\Shop;
 use App\User;
 use App\Branch;
-use App\Status;
+use App\InventoryDetail;
 use App\Product;
 use Carbon\Carbon;
 use App\TransferProduct;
@@ -133,6 +133,24 @@ class TrasferUserController extends Controller
         $product = Product::find($request->product_id);
 
         $user = Auth::user();
+
+        $inventory = InventoryDetail::join('inventory_reports', 'inventory_details.inventory_report_id','inventory_reports.id')
+        ->where('inventory_reports.branch_id', $product->branch_id)
+        ->where('inventory_details.product_id', $product->id)
+        ->where(function($q) use ($request) {
+            $q->where(function($query) use ($request){
+                    $query->Where('inventory_reports.status_report', 1)
+                          ->orWhere('inventory_reports.status_report', 2);
+                });
+            })
+        ->select('inventory_details.*')
+        ->first();
+
+        if($inventory) {
+            $inventory->status_id = 5;
+            $inventory->save();
+        }
+
         $transfer_product = new TransferProduct([
             'user_id' => $user->id,
             'last_branch_id' => $request->branch_id,

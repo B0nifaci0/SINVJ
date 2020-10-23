@@ -24,6 +24,10 @@ class CreateBranchesTable extends Migration
             $table->string('address')->nullable();
             $table->integer('shop_id')->unsigned();
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
+            $table->integer('municipality_id')->unsigned();
+            $table->foreign('municipality_id')->references('id')->on('municipalities')->onDelete('cascade');
+            $table->integer('state_id')->unsigned();
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

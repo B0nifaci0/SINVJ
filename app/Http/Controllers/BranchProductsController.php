@@ -36,19 +36,14 @@ class BranchProductsController extends Controller
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
         foreach ($products as $product) {
+            
             if ($product->image) {
+                $path = env('S3_ENVIRONMENT') . '/products/' . $product->clave;
+            } else {
+                $path = 'products/default';
+             }
 
-                $path = env('S3_ENVIRONMENT') . '/' . 'products/' . $product->clave;
-
-                $command = $adapter->getClient()->getCommand('GetObject', [
-                    'Bucket' => $adapter->getBucket(),
-                    'Key' => $adapter->getPathPrefix() . $path
-                ]);
-
-                $result = $adapter->getClient()->createPresignedRequest($command, '+20 minute');
-
-                $product->image = (string) $result->getUri();
-            }
+            $product->image = $this->getS3URL($path);
         }
 
         if ($num_products == 0) {

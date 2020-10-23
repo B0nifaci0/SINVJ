@@ -298,7 +298,6 @@ class ProductController extends Controller
     {
         $user = Auth::user();
         $shop = Auth::user()->shop->id;
-        $branches = $user->shop->branches;
         if ($user->shop->shop_group_id) {
             $group = $user->shop->shop_group_id;
             $categories_gr = Category::where('shop_group_id', $group)
@@ -332,6 +331,12 @@ class ProductController extends Controller
         $categories = $categories_pz->merge($categories_gr);
         //return $categories;
         //return $rules;
+        if($user->branch_id){
+            $branches = Branch::where('municipality_id',$user->branch->municipality_id)
+            ->where('shop_id',$user->shop_id)->get();
+        } else {
+            $branches = $user->shop->branches;
+        }
         return view('product/add', compact('branches', 'categories', 'lines', 'rules', 'shop'));
     }
 
@@ -451,7 +456,18 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return view('product.show', ['product' => Product::findOrFail($id)]);
+        $product = Product::findOrFail($id);
+        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
+        if ($product->image) {
+            $path = env('S3_ENVIRONMENT') . '/products/' . $product->clave;
+        } else {
+            $path = 'products/default';
+        }
+
+        $product->image = $this->getS3URL($path);
+         //return $product;
+ 
+         return view('product.show', ['product' =>$product]);
     }
 
     /**

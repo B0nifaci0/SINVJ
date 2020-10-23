@@ -112,7 +112,11 @@
                         <td>{{$product->weigth}}</td>
                         <td>{{ $product->observations }}</td>
                         <td>
-                          <img width="100px" height="100px" src="{{ $product->image }}" />
+                          <a class="inline-block" href="{{ $product->image }}" data-plugin="magnificPopup"
+                            data-close-btn-inside="false" data-fixed-contentPos="true"
+                            data-main-class="mfp-margin-0s mfp-with-zoom"
+                            data-zoom='{"enabled": "true","duration":"300"}'>
+                            <img class="img-fluid" src="{{ $product->image }}" alt="..." width="200" height="150" />
                         </td>
                         <td>{{$product->category->name}}</td>
                         <td>{{$product->line->name}}</td>

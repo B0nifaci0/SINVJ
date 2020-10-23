@@ -188,6 +188,7 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'BusinessRuleMiddlewa
     Route::post('inventory/check', 'InventoryController@check');
     Route::post('check-user', 'StateController@checkUser');
     Route::get('inventarios/terminar/{id}', 'InventoryController@terminar');
+    Route::get('/productos-inventario/{id}', 'InventoryController@search');
 
     Route::get('productos', 'ProductController@index');
     Route::get('productos/create', 'ProductController@create');
