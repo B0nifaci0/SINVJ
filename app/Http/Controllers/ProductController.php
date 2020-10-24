@@ -39,155 +39,31 @@ class ProductController extends Controller
         });
     }
 
-    // public function allProducts()
-    // {
-    //     $products = Product::orderBy('updated_at', 'desc')
-    //         // orderByRaw('CHAR_LENGTH(clave)')
-    //         ->take(50)->get();
-
-    //     return view('product/indexAll', compact('products'));
-    // }
-
-
-    public function allProducts()
-    {
-        $products = Product::orderBy('updated_at', 'desc')->paginate(10);
-
-        return view('product/indexAll', compact('products'));
-    }
-
-    function search(Request $request)
-    {
-        if ($request->ajax()) {
-            $query = $request->get('query');
-            $query = str_replace(" ", "%", $query);
-
-            $status = Status::where('name', 'like', '%' . $query . '%')->first();
-            $branch = Branch::where('name', 'like', '%' . $query . '%')->first();
-
-            $products = Product::where('description', 'like', '%' . $query . '%')
-                ->orWhere('clave', 'like', '%' . $query . '%')
-                ->orWhere('observations', 'like', '%' . $query . '%');
-
-            if ($status) {
-                $products = $products->orWhere('status_id', $status->id);
-            }
-
-            if ($branch) {
-                $products = $products->orWhere('branch_id', $branch->id);
-            }
-
-            $products = $products->orderByRaw('CHAR_LENGTH(clave)')
-                ->orderBy('clave')->paginate(10);
-            return view('product/table', compact('products'))->render();
-        }
-    }
-    // public function search(Request $request)
-    // {
-    //     $status = Status::where('name', 'like', "%$request->text%")->first();
-    //     $branch = Branch::where('name', 'like', "%$request->text%")->first();
-
-    //     $products = Product::where('description', 'like', "%$request->text%")
-    //         ->orWhere('clave', 'like', "%$request->text%")
-    //         ->orWhere('observations', 'like', "%$request->text%");
-
-    //     if ($status) {
-    //         $products = $products->orWhere('status_id', $status->id);
-    //     }
-
-    //     if ($branch) {
-    //         $products = $products->orWhere('branch_id', $branch->id);
-    //     }
-
-    //     $products = $products->orderByRaw('CHAR_LENGTH(clave)')
-    //         // ->orderBy('clave')->paginate(10)->appends($request->all());
-    //         ->orderBy('clave')->get();
-    //     return view('product/table', compact(('products')));
-    // }
-    // public function productsAjax()
-    // {
-    //     return view('product/indexAjax');
-    // }
-
-    // /**
-    //  * Process datatables ajax request.
-    //  *
-    //  * @return \Illuminate\Http\JsonResponse
-    //  */
-    // public function getProducts()
-    // {
-
-    //     $user = Auth::user();
-    //     if ($user->type_user == User::CO) {
-    //         $products = Product::where([
-    //             'branch_id' => $user->branch_id,
-    //             'status_id' => 2
-    //         ])
-    //             ->orderBy('clave', 'asc')->get();
-    //     } else {
-
-    //         $products = $this->user->shop->products()
-    //             ->whereNotNull('line_id')
-    //             ->orderBy('clave')
-    //             ->get();
-    //     }
-
-    //     $adapter = Storage::disk('s3')->getDriver()->getAdapter();
-    //     foreach ($products as $product) {
-    //         if ($product->image) {
-    //             $path = env('S3_ENVIRONMENT') . '/products/' . $product->clave;
-    //         } else {
-    //             $path = 'products/default';
-    //         }
-
-    //         $product->image = $this->getS3URL($path);
-    //     }
-
-    //     return Datatables::of($products)
-    //         ->editColumn('category_id', function (Product $products) {
-    //             return $products->category->name;
-    //         })
-    //         ->editColumn('line_id', function (Product $products) {
-    //             return $products->line->name;
-    //         })
-    //         ->editColumn('branch_id', function (Product $products) {
-    //             return $products->branch->name;
-    //         })
-    //         ->make();
-    // }
 
     /** FUNCIONES PARA CRUD DE PRODUCTO */
     public function index()
     {
-        // return view('product/index');
+        $user = $this->user;
+        return view('product.index', compact('user'));
+    }
 
-        $user = Auth::user();
-        $shop_id = $user->shop->id;
-        if ($user->type_user == User::CO) {
-            $products = Product::where([
-                'branch_id' => $user->branch_id,
-                'status_id' => 2
-            ])
-                ->orderBy('clave', 'asc')->get();
-        } else {
+    public function serverSide()
+    {
+        $user = $this->user;
 
-            $products = $this->user->shop->products()
-                ->orderByRaw('CHAR_LENGTH(clave)')
-                ->orderBy('clave')
-                ->get();
-        }
+        if ($user->isAdmin())
+            $products = $user->shop->products();
+        else
+            $products = $user->branch->products();
 
-        $adapter = Storage::disk('s3')->getDriver()->getAdapter();
-        foreach ($products as $product) {
-            if ($product->image) {
-                $path = env('S3_ENVIRONMENT') . '/products/' . $product->clave;
-            } else {
-                $path = 'products/default';
-            }
+        $products = $products
+            ->with('category:id,name')
+            ->with('line:id,name')
+            ->with('branch:id,name')
+            ->with('status:id,name')
+            ->get();
 
-            $product->image = $this->getS3URL($path);
-        }
-        return view('product/index', compact('products'));
+        return datatables()->of($products)->toJson();
     }
 
     public function reportProductSeparated()
@@ -437,13 +313,13 @@ class ProductController extends Controller
         //return $lines;
         $status = Auth::user()->shop->id;
         $statuses = Status::all();
-        if($user->branch_id){
-            $branches = Branch::where('municipality_id',$user->branch->municipality_id)
-            ->where('shop_id',$user->shop_id)->get();
+        if ($user->branch_id) {
+            $branches = Branch::where('municipality_id', $user->branch->municipality_id)
+                ->where('shop_id', $user->shop_id)->get();
         } else {
             $branches = $user->shop->branches;
         }
-        return view('product/add', compact('user', 'categories', 'lines', 'shops', 'statuses','branches'));
+        return view('product/add', compact('user', 'categories', 'lines', 'shops', 'statuses', 'branches'));
     }
 
     /**
@@ -573,8 +449,7 @@ class ProductController extends Controller
         $product->image = $this->getS3URL($path);
         //return $product;
 
-        return view('product.show', ['product' =>$product]);
-
+        return view('product.show', ['product' => $product]);
     }
 
     /**
@@ -631,8 +506,8 @@ class ProductController extends Controller
         //return $request;
 
         $exist = Product::where('clave', $request->clave)
-        ->where('shop_id', Auth::user()->shop->id)
-        ->count();
+            ->where('shop_id', Auth::user()->shop->id)
+            ->count();
 
         if ($exist == 1 && $request->clave != $product->clave) {
             return redirect('/sucursales/' . $product->branch_id . '/producto')->with('mesage', 'La Clave que intentas registrar ya existe!');
@@ -645,8 +520,8 @@ class ProductController extends Controller
                 $path = 'products';
                 $product->image = $this->saveImages($base64Image, $path, $product->clave);
             }
-    
-    
+
+
             $product->clave = $request->clave;
             $product->description = $request->description;
             $product->category_id = $request->category_id;
@@ -657,7 +532,7 @@ class ProductController extends Controller
             $product->discount = $request->max_discount ? $request->max_discount : 0;
             $product->weigth = $request->weigth;
             $product->observations = $request->observations;
-    
+
             $product->price_purchase = $request->price_purchase;
             //$product->discount = $request->discount;
             $product->price = $request->pricepzt;
@@ -665,7 +540,7 @@ class ProductController extends Controller
             $product->status_id = $request->status_id;
             $product->branch_id = $request->branch_id;
             //$product->inventory = $request->inventory;
-    
+
             $category = Category::find($request->category_id);
             if ($category->type_product == 1) {
                 $product['line_id'] = null;
@@ -676,7 +551,7 @@ class ProductController extends Controller
                 $product->price = $request->price;
                 $product['price_purchase'] = $line->purchase_price * $request->weigth;
             }
-    
+
             $product->save();
             return redirect('/sucursales/' . $product->branch_id . '/producto')->with('mesage', 'El producto se ha actualizado  exitosamente!');
         }
@@ -1133,7 +1008,7 @@ class ProductController extends Controller
 
         $lines_weigth = 0;
 
-        foreach($lines as $l){
+        foreach ($lines as $l) {
             $lines_weigth += $l->weigth;
         }
 
@@ -1148,7 +1023,7 @@ class ProductController extends Controller
             $shop->image = $this->getS3URL($shop->image);
         }
 
-        $pdf  = PDF::loadView('product.Reports.reportEntradasGeneralGr', compact('lines_weigth' ,'shop', 'branch', 'lines', 'products', 'hour', 'date'));
+        $pdf  = PDF::loadView('product.Reports.reportEntradasGeneralGr', compact('lines_weigth', 'shop', 'branch', 'lines', 'products', 'hour', 'date'));
         return $pdf->stream('R.EntradasGeneral_ppgr.pdf');
     }
 

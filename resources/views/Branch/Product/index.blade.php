@@ -1,91 +1,99 @@
-@extends('layout.layoutdas') @section('title') TRANSFERENCIAS @endsection
-@section('nav') @endsection @section('menu') @endsection @section('content')
+@extends('layout.layoutdas') @section('title') LISTA DE PRODUCTOS POR SUCURSAL
+@endsection @section('nav') @endsection @section('menu') @endsection
+@section('content')
 <div class="panel-body">
-  <div class="">
-    <!-- Mesage-Muestra mensaje De que el producto se a agregado exitosamente-->
-    @if (session('mesage'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <strong>{{ session('mesage') }}</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    @endif
-    <!-- END Mesage-->
-    <!-- Mesage-Muestra mensaje De que el producto se a modificado exitosamente-->
-    @if (session('mesage-update'))
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>{{ session('mesage-update') }}</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    @endif
-    <!-- END Mesage-->
-    <!-- Mesage-Muestra mensaje De que el producto se a eliminado exitosamente-->
-    @if (session('mesage-delete'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      <strong>{{ session('mesage-delete') }}</strong>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    @endif
-    <!-- END Mesage-->
-    <div class="panel">
-      <div class="panel-body">
-        <div class="example-wrap">
-          <h1 class="text-center panel-title">Productos De Tienda</h1>
-          <div class="panel-actions float-right">
-            <div class="container-fluid row float-right">
-              @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
-              <div class="col-6">
-                <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating
-                       btn-info waves-effect waves-light waves-round float-left" data-toggle="tooltip"
-                  data-original-title="Agregar Nuevo Producto">
-                  <i class="icon md-plus" aria-hidden="true"></i>
-                </button>
-              </div>
-              @endif
+  @if (session('mesage'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ session('mesage') }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif
+  <div class="panel">
+    <div class="panel-body">
+      <div class="example-wrap">
+        <h1 class="text-center panel-title">Productos {{$branch->name}} </h1>
+        <div class="panel-actions float-right">
+          <div class="container-fluid row float-right">
+            @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
+            <!-- Botón para Generar PDF de productos-->
+            @if(Auth::user()->type_user == 1)
+            <div class="col-3">
+              <button onclick="window.location.href='/sucursal/{{$branch->id}}/productos'" type="button"
+                class="btn btn-sm small btn-floating btn-danger waves-effect waves-light waves-round float-right"
+                data-toggle="tooltip" data-original-title="Reporte general de productos">
+                <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+              </button>
             </div>
+            <div class="col-3">
+              <button onclick="window.location.href='/sucursal/{{$branch->id}}/productos-gramo'" type="button"
+                class="btn btn-sm small btn-floating btn-danger waves-effect waves-light waves-round float-right"
+                data-toggle="tooltip" data-original-title="Reporte productos gramo">
+                <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="col-3">
+              <button onclick="window.location.href='/sucursal/{{$branch->id}}/productos-pieza'" type="button"
+                class="btn btn-sm small btn-floating btn-danger waves-effect waves-light waves-round float-right"
+                data-toggle="tooltip" data-original-title="Reporte productos pieza">
+                <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
+              </button>
+            </div>
+            @endif
+            <div class="col-3">
+              <button onclick="window.location.href='/productos/create'" type="button"
+                class="btn btn-sm small btn-floating btn-info waves-effect waves-light waves-round float-left"
+                data-toggle="tooltip" data-original-title="Agregar Nuevo Producto">
+                <i class="icon md-plus" aria-hidden="true"></i>
+              </button>
+            </div>
+            <!-- END Botón-->
+            @endif
           </div>
         </div>
       </div>
-      <div class="col-xl-12 col-md-12 col-sl">
-        <div class="example-wrap">
-          <div class="page-content panel-body container-fluid">
-            <table id="products" class="table display responsive nowrap" style="width: 100%">
-              <thead>
-                <tr>
-                  <th>Clave</th>
-                  <th>Descripción</th>
-                  <th>Categoría</th>
-                  <th>Observaciónes</th>
-                  <th>Sucursal</th>
-                  <th>status</th>
-                  <th>Estatus</th>
-                  <th>Linea</th>
-                  {{-- <th>Precio compra</th> --}}
-                  <th>Precio</th>
-                  <th>Precio descuento</th>
-                  <th>Opciones</th>
-                </tr>
-              </thead>
-            </table>
-          </div>
+    </div>
+    <div class="col-xl-12 col-md-12 col-sl">
+      <div class="col-md-3">
+        <div class="input-group">
+          <input type="text" name="search" id="search" class="form-control" placeholder="Search" />
+        </div>
+      </div>
+      <div class="example-wrap">
+        <div class="page-content panel-body container-fluid">
+          <table id="products" class="table display responsive nowrap" style="width: 100%">
+            <thead>
+              <tr>
+                <th>Clave</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Observaciónes</th>
+                <th>status</th>
+                <th>Estatus</th>
+                <th>Linea</th>
+                {{-- <th>Precio compra</th> --}}
+                <th>Precio</th>
+                <th>Precio descuento</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+          </table>
         </div>
       </div>
     </div>
   </div>
 </div>
+<!-- End Example Tabs -->
+</div>
 @endsection
+
 @section('barcode-product')
 <script type="text/javascript">
   //inicializa la tabla para resposnive
 
   var user = {!! $user !!};
-
-  console.log("usuario= " + user.id)
+  var branch = {!! $branch !!};
 
   $(document).ready(() => {
     products = $("#products").DataTable({
@@ -94,13 +102,12 @@
       language: {
         url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
       },
-      ajax: "products",
+      ajax: "/branch-products/"+ branch.id,
       columns: [
         { data: "clave" },
         { data: "description" },
         { data: "category.name" },
         { data: "observations" },
-        { data: "branch.name" },
         { data: "status_id", visible: false },
         {
           data: "status.name",
@@ -207,3 +214,4 @@
   });
 </script>
 @endsection
+<!-- END Función-->

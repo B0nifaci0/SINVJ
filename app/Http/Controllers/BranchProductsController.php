@@ -21,17 +21,26 @@ class BranchProductsController extends Controller
 
     use S3ImageManager;
 
-    /** Función para listar los productos por sucursal pra el usuario administrador y sub-administrador  */
-
-
     public function index($id)
     {
         $user = Auth::user();
         $branch = Branch::findOrFail($id);
 
-        $products = $branch->products()->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('Branches/branchproduct', compact('products', 'branch'));
+        return view('Branch.Product.index', compact('branch', 'user'));
+    }
+
+    public function serverSide($id)
+    {
+        $branch = Branch::findOrFail($id);
+
+        $products = $branch->products()
+            ->with('category:id,name')
+            ->with('line:id,name')
+            ->with('status:id,name')
+            ->get();
+
+        return datatables()->of($products)->toJson();
     }
 
     function search(Request $request)
@@ -60,37 +69,6 @@ class BranchProductsController extends Controller
             return view('Branches/table', compact('products'))->render();
         }
     }
-
-    // public function index($id)
-    // {
-
-
-    //     $user = Auth::user();
-    //     $branch = Branch::find($id);
-    //     $shop_id = Auth::user()->shop->id;
-    //     $categories = Shop::find($shop_id)->categories()->get();
-    //     $lines = Shop::find($shop_id)->lines()->get();
-    //     $statuses = Status::all();
-    //     $products = Product::withTrashed()->where('branch_id', '=', $id)->where('deleted_at', '=', NULL)->get();
-    //     $num_products = Product::withTrashed()->where('branch_id', '=', $id)->where('deleted_at', '=', NULL)->count();
-    //     $adapter = Storage::disk('s3')->getDriver()->getAdapter();
-
-    //     foreach ($products as $product) {
-    //         if ($product->image) {
-    //             $path = env('S3_ENVIRONMENT') . '/products/' . $product->clave;
-    //         } else {
-    //             $path = 'products/default';
-    //         }
-
-    //         $product->image = $this->getS3URL($path);
-    //     }
-
-    //     if ($num_products == 0) {
-    //         return redirect('/productos/create')->with('mesage', 'Primero debes crear productos de esta Sucursal!');
-    //     } else {
-    //         return view('Branches/branchproduct', compact('branch', 'products', 'user', 'categories', 'lines', 'statuses'));
-    //     }
-    // }
 
     public function edit($id)
     {
