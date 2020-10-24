@@ -22,10 +22,6 @@ Route::get('/buscador', 'ProductController@search');
 
 Route::get('/buscadorsucursal', 'BranchProductsController@search');
 
-Route::get('api/sold', 'SaleController@tableSold');
-Route::get('api/apart', 'SaleController@tableApart');
-Route::get('api/givedback', 'SaleController@tableGivedback');
-
 Route::get('/', function () {
     return view('auth/login');
 });
@@ -45,8 +41,13 @@ Route::resource('estados.municipios', 'StateMunicipalityController');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('test', 'BranchController@test');
+
     Route::get('/products', 'ProductController@serverSide');
+    Route::get('/branches', 'BranchController@serverSide');
     Route::get('/branch-products/{id}', 'BranchProductsController@serverSide');
+    Route::get('api/sold', 'SaleController@tableSold');
+    Route::get('api/apart', 'SaleController@tableApart');
+    Route::get('api/givedback', 'SaleController@tableGivedback');
 
 
     Route::group(
@@ -229,8 +230,7 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
     Route::get('inventarios/terminar/{id}', 'InventoryController@terminar');
     Route::get('/productos-inventario/{id}', 'InventoryController@search');
 
-    // Route::get('productos', 'ProductController@index');
-    Route::resource('productos', 'ProductController');
+    Route::get('productos', 'ProductController@index');
     Route::get('productos/devueltos', 'ProductController@devuelto');
     Route::get('/productos/{id}/reetiquetado', 'ProductController@reetiquetado');
     Route::get('/productos/{id}/restore', 'ProductController@restore');

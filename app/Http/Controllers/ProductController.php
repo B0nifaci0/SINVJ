@@ -186,7 +186,7 @@ class ProductController extends Controller
                 }
             }
         }
-        return view('product/index', compact('products', 'title'));
+        return view('product/index', compact('products', 'title','user'));
     }
 
     /** Función para listar los productos de  sucursal /productoCO */

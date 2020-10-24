@@ -140,6 +140,7 @@
         {
           data: "id",
           render: (data, type, row, meta) => {
+            if(user.type_user == 1 || user.type_user == 2)
             return `<a type="button" href="/productos/` + data + `/info"
             class="btn btn-icon btn-primary waves-effect waves-light waves-round" data-toggle="tooltip"
             data-original-title="Info producto">
@@ -150,7 +151,11 @@
           <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete" alt="`+ data + `" role="button"
             data-toggle="tooltip" data-original-title="Borrar">
             <i class="icon md-delete" aria-hidden="true"></i>
-          </button>`
+          </button>`;
+          return `<a type="button" href="/productos/` + data + `/info"
+                        class="btn btn-icon btn-primary waves-effect waves-light waves-round" data-toggle="tooltip"
+                        data-original-title="Info producto">
+                        <i class="icon fa-search" aria-hidden="true"></i></a>`;
           }
         },
       ],

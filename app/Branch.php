@@ -7,6 +7,7 @@ use App\Shop;
 use App\User;
 use App\Product;
 use App\TrasferUser;
+use App\Municipality;
 use App\TranferProducts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -61,5 +62,10 @@ class Branch extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function municipality()
+    {
+        return $this->belongsTo(Municipality::class);
     }
 }
