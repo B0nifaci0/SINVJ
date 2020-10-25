@@ -63,7 +63,6 @@ class ProductController extends Controller
             ->with('status:id,name')
             ->get();
 
-        return datatables()->of($products)->toJson();
     }
 
     public function reportProductSeparated()

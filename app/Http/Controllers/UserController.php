@@ -27,22 +27,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        //Consulta para obetener el usuario y la sucursal que tiene cada uno  $users=User::with('shop')->get();
-        //Consulta para obtener los usuarios con referencia de la tienda a la que pertenecen
-        //$users = Auth::user()->shop->users;
-        $users = Auth::user()->shop->users;
-        //$users = User::with('shop')->with('branch')->get(); //Consulta que se utiliza para poder acceder a los campos de cada modelo
-        //Consulta para obtener las sucursales con referencia de la tienda a la que pertenecen
-        $branches = Auth::user()->shop->branches;
-        //Comprobacion de datos
-        //return $branches;
-        //Comprobacion de datos
-        //return $users;
-        // sreturn $user;
-        return view('User/index', compact('users', 'branches', 'user'));
+        return view('User/index');
     }
 
+    public function serverSide()
+    {
+        $users = Auth::user()->shop->users()->with('branch:id,name')->get();
+        return datatables()->of($users)->toJson();
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -88,7 +80,7 @@ class UserController extends Controller
         $exist = User::where('email', $request->email)
             ->where('shop_id', Auth::User()->shop->id)
             ->first();
-        if($exist) {
+        if ($exist) {
             return redirect('/usuarios/create')->with('mesage-delete', 'El correo que intentas registrar ya existe');
         }
         //$shops=Auth::user()->shop()->get();
@@ -153,32 +145,32 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, $id)
-    {   
+    {
         $users = User::findOrFail($id);
         $exist = User::where('email', $request->email)
-        ->where('shop_id', Auth::user()->shop->id)
-        ->count();
+            ->where('shop_id', Auth::user()->shop->id)
+            ->count();
 
-        if($exist == 1 && $request->email != $users->email){
-            return redirect('/usuarios/' . $id . '/edit') -> with('mesage', 'El correo que intentas registrar ya existe');
-        }else{
-        $users->name = $request->name;
-        $users->email = $request->email;
-        $users->password = bcrypt($request->password);
-        $users->branch_id = $request->branch_id;
-        $users->type_user = $request->type_user;
-        $users->salary = $request->salary;
-
-        $users->save();
-
-        if ($users = false) {
-            return view('User/edit', compact('users'));
+        if ($exist == 1 && $request->email != $users->email) {
+            return redirect('/usuarios/' . $id . '/edit')->with('mesage', 'El correo que intentas registrar ya existe');
         } else {
-            $users = User::all();
+            $users->name = $request->name;
+            $users->email = $request->email;
+            $users->password = bcrypt($request->password);
+            $users->branch_id = $request->branch_id;
+            $users->type_user = $request->type_user;
+            $users->salary = $request->salary;
 
-            return redirect('/usuarios')->with('mesage-update', 'El usuario se ha modificado exitosamente!');
+            $users->save();
+
+            if ($users = false) {
+                return view('User/edit', compact('users'));
+            } else {
+                $users = User::all();
+
+                return redirect('/usuarios')->with('mesage-update', 'El usuario se ha modificado exitosamente!');
+            }
         }
-     }      
     }
 
     /**

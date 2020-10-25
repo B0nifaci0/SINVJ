@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/products', 'ProductController@serverSide');
     Route::get('/branches', 'BranchController@serverSide');
     Route::get('/expenses', 'ExpensesController@serverSide');
+    Route::get('/users', 'UserController@serverSide');
     Route::get('/branch-products/{id}', 'BranchProductsController@serverSide');
     Route::get('api/sold', 'SaleController@tableSold');
     Route::get('api/apart', 'SaleController@tableApart');
