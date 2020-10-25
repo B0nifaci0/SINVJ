@@ -760,14 +760,14 @@
                       </li>
                     </ul>-->
                                 <!-- Productos-->
-                                <ul class="site-menu-sub">
+                                {{-- <ul class="site-menu-sub">
                                     <li class="site-menu-item">
-                                        <a class="animsition-link" href="/productosCO">
+                                        <a class="animsition-link" href="/productos">
                                             <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
                                             <span class="site-menu-title">Productos de tiendas</span>
                                         </a>
                                     </li>
-                                </ul>
+                                </ul> --}}
                                 <!--END-Productos-->
                                 <!--Sucursales-->
                                 <li class="site-menu-item has-sub">
@@ -777,14 +777,14 @@
                                         <span class="site-menu-arrow"></span>
                                     </a>
                                     <!-- Mis Productos-->
-                                    {{-- <ul class="site-menu-sub">
+                                    <ul class="site-menu-sub">
                                         <li class="site-menu-item">
                                             <a class="animsition-link" href="/sucursalproductoCO">
                                                 <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
                                                 <span class="site-menu-title">Mis Productos</span>
                                             </a>
                                         </li>
-                                    </ul> --}}
+                                    </ul>
                                     <!-- END Mis Productos-->
                                 </li>
                                 <!--END-Sucursales-->

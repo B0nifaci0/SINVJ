@@ -35,7 +35,14 @@
     <div class="panel">
       <div class="panel-body">
         <div class="example-wrap">
-          <h1 class="text-center panel-title">Productos De Tienda</h1>
+          <h1 class="text-center panel-title">Productos
+            @if ($user->type_user == 1)
+            De Tienda
+            @else
+            {{$user->branch->name}}
+            @endif
+
+          </h1>
           <div class="panel-actions float-right">
             <div class="container-fluid row float-right">
               @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)

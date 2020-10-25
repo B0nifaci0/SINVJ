@@ -11,17 +11,6 @@
 |
 */
 
-// Route::get('/home', 'ProductController@productsAjax')->name('home');
-
-// Route::get('products', 'ProductController@getProducts')->name('get.products');
-
-
-
-
-Route::get('/buscador', 'ProductController@search');
-
-Route::get('/buscadorsucursal', 'BranchProductsController@search');
-
 Route::get('/', function () {
     return view('auth/login');
 });
@@ -44,10 +33,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/products', 'ProductController@serverSide');
     Route::get('/branches', 'BranchController@serverSide');
+    Route::get('/expenses', 'ExpensesController@serverSide');
     Route::get('/branch-products/{id}', 'BranchProductsController@serverSide');
     Route::get('api/sold', 'SaleController@tableSold');
     Route::get('api/apart', 'SaleController@tableApart');
     Route::get('api/givedback', 'SaleController@tableGivedback');
+
 
 
     Route::group(

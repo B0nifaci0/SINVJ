@@ -5,6 +5,7 @@ namespace App;
 use App\Sale;
 use App\Shop;
 use App\User;
+use App\Expense;
 use App\Product;
 use App\TrasferUser;
 use App\Municipality;
@@ -67,5 +68,10 @@ class Branch extends Model
     public function municipality()
     {
         return $this->belongsTo(Municipality::class);
+    }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
     }
 }

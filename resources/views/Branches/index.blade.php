@@ -158,7 +158,7 @@ LISTA DE SUCURSALES
             method: 'DELETE',
             success: function (response) {
               if (response.success) {
-branches.ajax.reload()
+                branches.ajax.reload()
                 Swal.fire(
                   'Eliminado',
                   'El registro ha sido eliminado.',
