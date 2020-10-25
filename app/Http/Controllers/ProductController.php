@@ -62,7 +62,7 @@ class ProductController extends Controller
             ->with('branch:id,name')
             ->with('status:id,name')
             ->get();
-
+        return datatables()->of($products)->toJson();
     }
 
     public function reportProductSeparated()
@@ -185,7 +185,7 @@ class ProductController extends Controller
                 }
             }
         }
-        return view('product/index', compact('products', 'title','user'));
+        return view('product/index', compact('products', 'title', 'user'));
     }
 
     /** Función para listar los productos de  sucursal /productoCO */
