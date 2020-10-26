@@ -254,7 +254,7 @@ class UserController extends Controller
         $pdf  = PDF::loadView('Payroll.receipt', compact('users', 'date'));
         return $pdf->stream('recibo.pdf');
     }
-
+ 
     public function receiptallPDF()
     {
 
@@ -263,7 +263,9 @@ class UserController extends Controller
         $date = Carbon::now();
         $date = $date->format('d-m-Y');
 
-        $pdf  = PDF::loadView('Payroll.receipall', compact('users', 'date'));
+        $pdf  = PDF::loadView('Payroll.receipall', compact('users', 'date'))
+        ->setOption('page-width', '58')
+        ->setOption('page-height', '150');
         return $pdf->stream('recibos.pdf');
     }
 }
