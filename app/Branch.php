@@ -5,8 +5,10 @@ namespace App;
 use App\Sale;
 use App\Shop;
 use App\User;
+use App\Expense;
 use App\Product;
 use App\TrasferUser;
+use App\Municipality;
 use App\TranferProducts;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -61,5 +63,15 @@ class Branch extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function municipality()
+    {
+        return $this->belongsTo(Municipality::class);
+    }
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class);
     }
 }

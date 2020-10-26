@@ -11,22 +11,6 @@
 |
 */
 
-// Route::get('/home', 'ProductController@productsAjax')->name('home');
-
-// Route::get('products', 'ProductController@getProducts')->name('get.products');
-
-
-
-Route::get('/productos', 'ProductController@allProducts');
-
-Route::get('/buscador', 'ProductController@search');
-
-Route::get('/buscadorsucursal', 'BranchProductsController@search');
-
-Route::get('api/sold', 'SaleController@tableSold');
-Route::get('api/apart', 'SaleController@tableApart');
-Route::get('api/givedback', 'SaleController@tableGivedback');
-
 Route::get('/', function () {
     return view('auth/login');
 });
@@ -46,6 +30,17 @@ Route::resource('estados.municipios', 'StateMunicipalityController');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('test', 'BranchController@test');
+
+    Route::get('/products', 'ProductController@serverSide');
+    Route::get('/branches', 'BranchController@serverSide');
+    Route::get('/expenses', 'ExpensesController@serverSide');
+    Route::get('/users', 'UserController@serverSide');
+    Route::get('/branch-products/{id}', 'BranchProductsController@serverSide');
+    Route::get('api/sold', 'SaleController@tableSold');
+    Route::get('api/apart', 'SaleController@tableApart');
+    Route::get('api/givedback', 'SaleController@tableGivedback');
+
+
 
     Route::group(
         [
@@ -116,9 +111,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Sucursal CO
     Route::get('sucursal', 'BranchController@indexCo');
-
-    // Productos CO
-    Route::get('productosCO', 'ProductController@indexCo');
     // Productos COP
     Route::get('sucursalproductoCO', 'ProductController@indexCOP');
     //Reporte
@@ -210,9 +202,6 @@ Route::resource('categorias', 'CategoryController');
 //Status
 Route::resource('status', 'StatusController');
 
-//Productos
-Route::resource('productos',  'ProductController');
-
 //Shop
 Route::resource('tiendas','ShopController');
 
@@ -233,16 +222,13 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
     Route::get('inventarios/terminar/{id}', 'InventoryController@terminar');
     Route::get('/productos-inventario/{id}', 'InventoryController@search');
 
-    // Route::get('productos', 'ProductController@index');
-    Route::get('productos/create', 'ProductController@create');
+    Route::get('productos', 'ProductController@index');
     Route::get('productos/devueltos', 'ProductController@devuelto');
     Route::get('/productos/{id}/reetiquetado', 'ProductController@reetiquetado');
     Route::get('/productos/{id}/restore', 'ProductController@restore');
-    Route::post('/productos', 'ProductController@store');
     Route::get('/productos/{id}/edit', 'ProductController@edit');
     Route::get('/productos/{id}/info', 'ProductController@show');
     Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
-    Route::delete('/productos/{id}', 'ProductController@destroy');
 
     Route::resource('/mayoristas', 'ClientController');
 });
@@ -334,7 +320,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('sucursales/sucursalcorte', 'BranchController@reportBox_cutDate')->name('sucursalcorte');
     Route::get('piezascategoriageneral', 'ProductController@reportCategoriaPGeneral');
     Route::get('reportProductspzs', 'ProductController@reportProductpzs');
-
 });
 
 Auth::routes(['verify' => true]);

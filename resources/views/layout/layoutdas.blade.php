@@ -41,7 +41,7 @@
         <link rel="stylesheet" href={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.css')}}}>
         <link rel="stylesheet" href={{{url('global/vendor/dropify/dropify.css')}}}>
         <!-- TOASTR -->
-        <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css"> 
+        <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
         <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
         <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
         {!! Toastr::message() !!}
@@ -304,13 +304,13 @@
                                                 </li>
                                             </ul>
                                             <ul class="site-menu-sub">
-                                                <li class="site-menu-item">
+                                                {{-- <li class="site-menu-item">
                                                     <a class="animsition-link" href="/reportes-productos-apartados">
                                                         <i class="site-menu-icon fa-shopping-cart"
                                                             aria-hidden="true"></i>
                                                         <span class="site-menu-title">Productos apartados</span>
                                                     </a>
-                                                </li>
+                                                </li> --}}
                                                 <li class="site-menu-item">
                                                     <a class="animsition-link" href="/reportes-productos">
                                                         <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
@@ -344,7 +344,8 @@
                                             <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
                                                     <a class="animsition-link" href="/sucursales/corte">
-                                                        <i class="site-menu-icon icon icon md-money-box" aria-hidden="true" ></i>
+                                                        <i class="site-menu-icon icon icon md-money-box"
+                                                            aria-hidden="true"></i>
                                                         <span class="site-menu-title">Corte Sucursales</span>
                                                     </a>
                                                 </li>
@@ -610,16 +611,14 @@
                                                 <span class="site-menu-title">Productos</span>
                                                 <span class="site-menu-arrow"></span>
                                             </a>
-                                            <!-- Mis Productos-->
-                                            <ul class="site-menu-sub">
+                                            {{-- <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
                                                     <a class="animsition-link" href="/sucursalproductoCO">
                                                         <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
                                                         <span class="site-menu-title">Mis Productos</span>
                                                     </a>
                                                 </li>
-                                            </ul>
-                                            <!-- END Mis Productos-->
+                                            </ul> --}}
                                             <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
                                                     <a class="animsition-link" href="/productos">
@@ -733,7 +732,7 @@
 
                                     </ul>
                                 </li>
-                               <!-- <li class="site-menu-item ">
+                                <!-- <li class="site-menu-item ">
                                     <a class="animsition-link" href="/usuarios">
                                         <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
                                         <span class="site-menu-title">Usuarios</span>
@@ -761,14 +760,14 @@
                       </li>
                     </ul>-->
                                 <!-- Productos-->
-                                <ul class="site-menu-sub">
+                                {{-- <ul class="site-menu-sub">
                                     <li class="site-menu-item">
-                                        <a class="animsition-link" href="/productosCO">
+                                        <a class="animsition-link" href="/productos">
                                             <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
                                             <span class="site-menu-title">Productos de tiendas</span>
                                         </a>
                                     </li>
-                                </ul>
+                                </ul> --}}
                                 <!--END-Productos-->
                                 <!--Sucursales-->
                                 <li class="site-menu-item has-sub">
