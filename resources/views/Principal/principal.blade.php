@@ -1161,3 +1161,28 @@ Panel Principal
   </div>
 
   @endsection
+
+
+@section('delete-productos')
+<script type="text/javascript">
+$(document).ready(function () {
+    var changed = {!! $price_changed !!};
+    console.log(changed);
+    if(changed == 1) {
+    Swal.fire({
+            title: 'Confirmación',
+            text: 'El socio mayoritario, ha realizado cambios en los precios de las lineas',
+            type: 'info',
+            confirmButtonColor: '#4caf50',
+            allowOutsideClick: false,
+            confirmButtonText: 'Ir a mis lineas'
+      }).then((result) => {
+        if (result.value)
+        {
+          location.href ="/lineas";
+        }
+      });
+    }
+});
+</script>
+@endsection

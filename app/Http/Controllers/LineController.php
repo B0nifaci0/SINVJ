@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Line;
 use App\Shop;
 use App\Product;
+use App\ShopGroup;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -37,9 +38,15 @@ class LineController extends Controller
         //Muestra los las lineas que pertenecen a esa tienda midiante la variable $lines
         //$lines = Auth::user()->shop->lines;
         $lines = Line::where('shop_id','=',NULL)->get();
-        //return $lines;
+        $group = ShopGroup::where('admin_id',$user->id)->first();
+        $shop = Shop::findOrFail($user->shop->id);
+        if($shop->price_changed == 1) {
+            $shop->price_changed = 0;
+            $shop->save();
+        }
+        //return $shops;
 
-      return view('line/index', compact('lines','user'));
+      return view('line/index', compact('lines','user','group'));
       }
 
     /**
@@ -115,7 +122,20 @@ class LineController extends Controller
         $products = Product::where('line_id', $id)
         //->where('shop_id', $user->shop_id)
         ->get();
+        $group = ShopGroup::where('admin_id',$user->id)->first();
+
+        $shops = Shop::where('shop_group_id', $group->id)->get();
+        foreach($shops as $shop){
+            if($shop->id == $user->shop->id){
+                $shop->price_changed = 0;
+            } else {
+                $shop->price_changed = 1;
+            }
+            $shop->save();
+        }
+        //return $shops;
         //return $products;
+        /*
         foreach($products as $p){
             $p->price = $line->sale_price * $p->weigth;
             $p->price_purchase = $line->purchase_price * $p->weigth;
@@ -123,6 +143,7 @@ class LineController extends Controller
             $p->discount = $p->price - $percentage;
             $p->save();
         }
+        */
         //return $products;
         //return $line;
         $line->save();  
