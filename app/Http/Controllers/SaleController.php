@@ -166,7 +166,8 @@ class SaleController extends Controller
     }
     public function index()
     {
-        return view('sale/index');
+        $user = Auth::user();
+        return view('sale/index', compact('user'));
     }
 
     public function indexOld(Request $request)
