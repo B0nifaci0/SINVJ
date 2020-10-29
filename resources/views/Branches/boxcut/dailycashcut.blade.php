@@ -20,29 +20,29 @@
         <div class="panel">
               <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
         <tr>
-          <th>VENTA TOTAL (TARJETA + EFECTIVO)</th>
+          <th align="center">VENTA TOTAL (T + E)</th>
           <tr>
-          <td>$ {{$branch->total }} </td></tr>
+          <td align="center">$ {{$branch->total }} </td></tr>
         </tr>
         <tr>
-          <th>VENTA TARJETA</th>
+          <th align="center">VENTA TARJETA</th>
           <tr>
-          <td> $ {{$branch->tarjeta }} </td></tr>
+          <td align="center"> $ {{$branch->tarjeta }} </td></tr>
         </tr>
         <tr>
-          <th>VENTA EFECTIVO</th>
+          <th align="center">VENTA EFECTIVO</th>
           <tr>
-          <td>$ {{$branch->efectivo }} </td></tr>
+          <td align="center">$ {{$branch->efectivo }} </td></tr>
         </tr>
         <tr>
-          <th>GASTOS SUCURSAL</th>
+          <th align="center">GASTOS SUCURSAL</th>
           <tr>
-          <td>$ {{$branch->gastos }} </td></tr>
+          <td align="center">$ {{$branch->gastos }} </td></tr>
         </tr>
         <tr>
-          <th> TOTAL EFECTIVO</th>
+          <th align="center"> TOTAL EFECTIVO</th>
           <tr>
-          <td>$ {{$branch->totalFin }} </td></tr>
+          <td align="center">$ {{$branch->totalFin }} </td></tr>
         </tr>
       </table>
 
