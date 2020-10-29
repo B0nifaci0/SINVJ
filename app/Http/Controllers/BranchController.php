@@ -642,7 +642,7 @@ class BranchController extends Controller
     $branch->total -= $branch->cambio;
     $branch->totalFin = $branch->total - $branch->tarjeta - $branch->gastos;
     //return $branch->totalFin;
-    return $branch;
+    //return $branch;
     $pdf  = PDF::loadView('Branches/boxcut.dailycashcut', compact('branch', 'shop'))
     ->setOption('page-width', '58')
     ->setOption('page-height', '150');
