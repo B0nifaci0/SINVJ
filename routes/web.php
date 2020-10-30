@@ -302,6 +302,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('reportPz', 'ProductController@reportPz');
     Route::get('reportPzG', 'ProductController@reportPzGeneral');
     Route::get('reportUtility', 'ProductController@reportUtility');
+    Route::get('reportUtilityGeneral', 'ProductController@reportUtilityGeneral');
     Route::get('entradas-linea', 'ProductController@reportInputLine');
     Route::get('entradas-general-gramos', 'ProductController@reportInputGeneralGr');
     Route::get('reportEntradaspz', 'ProductController@reportEntradaspz');

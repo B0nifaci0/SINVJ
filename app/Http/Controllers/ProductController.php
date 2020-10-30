@@ -1123,7 +1123,6 @@ class ProductController extends Controller
         $category_type = $request->cat;
         $products = $shop->products()
             ->has('sale_details')
-            // ->with('sale_details.sale.partials')
             ->with('sale_details')
             ->with('category')
             ->whereBranch_id($branch->id)
@@ -1157,6 +1156,51 @@ class ProductController extends Controller
 
         $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop', 'products', 'sale_details', 'hour', 'date', 'weight', 'price', 'price_purchase', 'utility', 'category_type', 'branch'));
         return $pdf->stream('ReporteUtilidad.pdf');
+    }
+
+    public function reportUtilityGeneral(Request $request)
+    {
+
+        $fecini = Carbon::parse($request->fecini);
+        $fecter = Carbon::parse($request->fecter);
+        $hour = $this->getHour();
+        $date = $this->getDate();
+        $shop = $this->user->shop;
+        $branch = Branch::findOrFail($request->branch_id);
+
+        $products = $shop->products()
+            ->has('sale_details')
+            ->with('sale_details')
+            ->with('category')
+            ->whereBranch_id($branch->id)
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
+            ->get();
+
+        if ($fecini == $fecter) {
+            $products = $products->where('updated_at', $fecini);
+        } else {
+            $products = $products->whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()]);
+        }
+
+        if ($products->isEmpty()) {
+            return back()->with('message', 'El reporte que se intento generar no contiene información');
+        }
+
+        $sale_details = $products
+            ->pluck('sale_details')
+            ->collapse();
+
+        $weight = $products->sum('weigth');
+        $price = $sale_details->sum('final_price');
+        $price_purchase = $products->sum('price_purchase');
+        $utility = $sale_details->sum('profit');
+
+        if ($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
+
+        return $pdf  = PDF::loadView('product.Reports.UtilityReportGeneral', compact('shop', 'products', 'sale_details', 'hour', 'date', 'weight', 'price', 'price_purchase', 'utility', 'branch'))->stream('ReporteUtilidad.pdf');
     }
 
     public function reportPz(Request $request)
