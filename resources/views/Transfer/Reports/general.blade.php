@@ -48,7 +48,7 @@
                 @else
                 <td>Pendiente</td>
                 @endif
-                <td>{{$transfer->updated_at->format('m-d-Y')}}</td>
+                <td>{{date_format($transfer->updated_at, 'd/m/y')}}</td>
             </tr>
             @endif
             @endforeach

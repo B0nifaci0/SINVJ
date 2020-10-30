@@ -297,7 +297,7 @@
                                             </ul>
                                             <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
-                                                    <a class="animsition-link" href="/productos/devueltos">
+                                                    <a class="animsition-link" href="/devueltos">
                                                         <i class="site-menu-icon fa-reply" aria-hidden="true"></i>
                                                         <span class="site-menu-title">Productos Devueltos</span>
                                                     </a>
@@ -629,7 +629,7 @@
                                             </ul>
                                             <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
-                                                    <a class="animsition-link" href="/productos/devueltos">
+                                                    <a class="animsition-link" href="/devueltos">
                                                         <i class="site-menu-icon fa-reply" aria-hidden="true"></i>
                                                         <span class="site-menu-title">Productos Devueltos</span>
                                                     </a>

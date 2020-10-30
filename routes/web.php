@@ -222,13 +222,10 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
     Route::get('inventarios/terminar/{id}', 'InventoryController@terminar');
     Route::get('/productos-inventario/{id}', 'InventoryController@search');
 
-    Route::get('productos', 'ProductController@index');
-    Route::get('productos/devueltos', 'ProductController@devuelto');
+    Route::resource('productos', 'ProductController');
+    Route::get('devueltos', 'ProductController@devuelto');
     Route::get('/productos/{id}/reetiquetado', 'ProductController@reetiquetado');
     Route::get('/productos/{id}/restore', 'ProductController@restore');
-    Route::get('/productos/{id}/edit', 'ProductController@edit');
-    Route::get('/productos/{id}/info', 'ProductController@show');
-    Route::put('/productos/{id}/update', 'ProductController@update')->name('productos.update');
 
     Route::resource('/mayoristas', 'ClientController');
 });
@@ -305,6 +302,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('reportPz', 'ProductController@reportPz');
     Route::get('reportPzG', 'ProductController@reportPzGeneral');
     Route::get('reportUtility', 'ProductController@reportUtility');
+    Route::get('reportUtilityGeneral', 'ProductController@reportUtilityGeneral');
     Route::get('entradas-linea', 'ProductController@reportInputLine');
     Route::get('entradas-general-gramos', 'ProductController@reportInputGeneralGr');
     Route::get('reportEntradaspz', 'ProductController@reportEntradaspz');

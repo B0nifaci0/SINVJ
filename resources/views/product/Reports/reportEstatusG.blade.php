@@ -33,7 +33,7 @@
                 <td>{{ ($product->weigth) ? $product->weigth : ''}}</td>
                 @endif
                 <td>{{ $product->observations }}</td>
-                <td>{{$product->updated_at->format('m-d-Y')}}</td>
+                <td>{{date_format($product->updated_at, 'd/m/y')}}</td>
                 <td>$ {{ $product->price }}</td>
             </tr>
             @endforeach

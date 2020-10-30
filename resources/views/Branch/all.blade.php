@@ -23,7 +23,7 @@
                 <td>{{ $product->status->name }}</td>
                 <td>{{ $product->observations }}</td>
                 <td>$ {{ $product->price }}</td>
-                <td>{{ $product->updated_at->format('m-d-Y')}}</td>
+                <td>{{date_format($product->updated_at, 'd/m/y')}}</td>
             </tr>
             @endforeach
         </tbody>
