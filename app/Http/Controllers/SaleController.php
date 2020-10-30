@@ -443,7 +443,7 @@ class SaleController extends Controller
 
         foreach ($products as $i => $p) {
             if (!$sale->branch_id && $i == 0) {
-                $pranch_product = Product::find($p->id);
+                $pranch_checkproduct = Product::find($p->id);
                 $sale->branch_id = $pranch_product->branch_id;
             }
 

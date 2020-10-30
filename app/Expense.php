@@ -24,15 +24,17 @@ class Expense extends Model
 
 
 
-    public function user() {
-        return $this->belongsTo(User::class, 'user_id');
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withTrashed();;
     }
     public function branch()
     {
-      return $this->belongsTo(Branch::class);
+        return $this->belongsTo(Branch::class);
     }
 
-    public function shop(){
+    public function shop()
+    {
         return $this->belongsTo(Shop::class);
     }
 }
