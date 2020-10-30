@@ -27,7 +27,7 @@
                 <td>{{ $product->observations }}</td>
                 <td>{{ $product->category->name }}</td>
                 <td>{{ $product->status->name }}</td>
-                <td class="sizedate">{{ $product->date_creation }}</td>
+                <td>{{date_format($product->date_creation, 'd/m/y')}}</td>
             </tr>
             @endforeach
         </tbody>
