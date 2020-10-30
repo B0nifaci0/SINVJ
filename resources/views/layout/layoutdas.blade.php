@@ -540,7 +540,7 @@
                                     </a>
                                     <ul class="site-menu-sub">
                                         <li class="site-menu-item">
-                                            <a class="animsition-link" href="/mayoristas">
+                                            <a class="animsition-link" href="/clientes">
                                                 <i class="site-menu-icon icon fa-id-badge" aria-hidden="true"></i>
                                                 <span class="site-menu-title">Clientes</span>
                                             </a>
@@ -548,7 +548,7 @@
                                     </ul>
                                     <ul class="site-menu-sub">
                                         <li class="site-menu-item">
-                                            <a class="animsition-link" href="/mayoristas/create">
+                                            <a class="animsition-link" href="/clientes/create">
                                                 <i class="site-menu-icon fa-plus" aria-hidden="true"></i>
                                                 <span class="site-menu-title">Crear Nuevo Cliente</span>
                                             </a>

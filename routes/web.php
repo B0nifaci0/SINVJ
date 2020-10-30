@@ -227,7 +227,7 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
     Route::get('/productos/{id}/reetiquetado', 'ProductController@reetiquetado');
     Route::get('/productos/{id}/restore', 'ProductController@restore');
 
-    Route::resource('/mayoristas', 'ClientController');
+    Route::resource('/clientes', 'ClientController');
 });
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
