@@ -25,8 +25,24 @@
           <div class="panel-actions float-right">
             <div class="container-fluid row float-right">
               <!-- Botón para Generar PDF de productos-->
-              @if(Auth::user()->type_user !== 3)
-              <div class="col-6">
+              @if(Auth::user()->type_user !== 1)
+              <div class="col-4">
+                <button id="boxcut" type="button"
+                  class="btn btn-sm small btn-floating toggler-left btn-secondary waves-effect waves-light waves-round float-right"
+                  data-toggle="tooltip" data-original-title="Generar Corte De Caja Diario">
+                  <i class="icon fa-usd" aria-hidden="true"></i>
+                </button>
+              </div>
+              @endif
+              <div class="col-4">
+                <button onclick="window.location.href='/ventas/create'" type="button"
+                  class="btn btn-sm small btn-floating toggler-left btn-info waves-effect waves-light waves-round float-left"
+                  data-toggle="tooltip" data-original-title="Agregar nueva venta">
+                  <i class="icon md-plus" aria-hidden="true"></i>
+                </button>
+              </div>
+              @if(Auth::user()->type_user == 1)
+              <div class="col-4">
                 <button onclick="window.location.href='ventaspdf'" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-danger waves-effect waves-light waves-round float-right"
                   data-toggle="tooltip" data-original-title="Generar reporte PDF">
@@ -34,13 +50,6 @@
                 </button>
               </div>
               @endif
-              <div class="col-6">
-                <button onclick="window.location.href='/ventas/create'" type="button"
-                  class="btn btn-sm small btn-floating toggler-left btn-info waves-effect waves-light waves-round float-left"
-                  data-toggle="tooltip" data-original-title="Agregar nueva venta">
-                  <i class="icon md-plus" aria-hidden="true"></i>
-                </button>
-              </div>
               <!-- END Botón-->
             </div>
           </div>
@@ -142,6 +151,27 @@
 @endsection @section('barcode-product')
 <script type="text/javascript">
   $(document).ready(function () {
+
+    $('#boxcut').click(function(e) {
+      var branch_id = {!! $user->branch_id !!};
+      Swal.fire({
+        title: 'Confirmación',
+        text: "¿Estas seguro que quieres generar el reporte de corte de caja el dia?",
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6' ,
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Generar Corte De Caja!'
+      }).then((result) => {
+        if (result.value)
+        {
+          location.href=`/sucursales/sucursalcortediario/${branch_id}`;
+        } else {
+          e.preventDefault();
+        }
+      })
+    });
+
     $("#sale_table_sold").DataTable({
       serverSide: true,
       pagingType: "simple",

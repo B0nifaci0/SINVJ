@@ -317,6 +317,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('sucursales/sucursalcorte', 'BranchController@reportBox_cutDate')->name('sucursalcorte');
     Route::get('piezascategoriageneral', 'ProductController@reportCategoriaPGeneral');
     Route::get('reportProductspzs', 'ProductController@reportProductpzs');
+    Route::get('sucursales/sucursalcortediario/{id}', 'BranchController@DailyCashCut');
 });
 
 Auth::routes(['verify' => true]);

@@ -26,7 +26,7 @@ class Line extends Model
         'purchase_price',
         'sale_price',
         'discount_percentage',
-
+        'price_changed'
     ];
 
     public function products()

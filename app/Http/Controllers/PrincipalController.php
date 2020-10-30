@@ -30,6 +30,7 @@ class PrincipalController extends Controller
         $user = Auth::user();
         $branch = Shop::find($branch)->branches()->get();
         $shops = Auth::user()->shop()->get();
+        $price_changed = Shop::where('id', $user->shop->id)->sum('price_changed');
 
         if($shop->image) {
             $shop->image = $this->getS3URL($shop->image);
@@ -289,7 +290,7 @@ class PrincipalController extends Controller
 
        $piezas_col = $piezas_cole + $piezas_colt + $piezas_cold + $piezas_coldev;
 
-        return view ('Principal/principal',compact('ventas_devueltos','gramos_coldev','piezas_devueltos','piezas_ventdev','piezas_coldev','gramos_devueltos','gramos_dañados','gramos_traspasado','pieza_vent','piezas_cold','piezas_col','piezas_cole','piezas_colt','pieza_vente','pieza_ventt','pieza_ventd','piezas_e','piezas_t','piezas_d','piezas','gramos_colt','gramos_cole','gramos_cold','ventas_d','ventas_t','ventas_e','branches_col','gramos_col','branches','branch','user','shop','shops','gramos_existentes','ventas','gramos_dañados','total'));
+        return view ('Principal/principal',compact('price_changed' ,'ventas_devueltos','gramos_coldev','piezas_devueltos','piezas_ventdev','piezas_coldev','gramos_devueltos','gramos_dañados','gramos_traspasado','pieza_vent','piezas_cold','piezas_col','piezas_cole','piezas_colt','pieza_vente','pieza_ventt','pieza_ventd','piezas_e','piezas_t','piezas_d','piezas','gramos_colt','gramos_cole','gramos_cold','ventas_d','ventas_t','ventas_e','branches_col','gramos_col','branches','branch','user','shop','shops','gramos_existentes','ventas','gramos_dañados','total'));
     }
 
     public function exportPdf(){
