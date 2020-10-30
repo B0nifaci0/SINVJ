@@ -25,12 +25,21 @@
           <div class="panel-actions float-right">
             <div class="container-fluid row float-right">
               <!-- Botón para Generar PDF de productos-->
-              @if(Auth::user()->type_user !== 1)
+              @if(Auth::user()->type_user !== 1 )
               <div class="col-4">
                 <button id="boxcut" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-secondary waves-effect waves-light waves-round float-right"
                   data-toggle="tooltip" data-original-title="Generar Corte De Caja Diario">
                   <i class="icon fa-usd" aria-hidden="true"></i>
+                </button>
+              </div>
+              @endif
+              @if(Auth::user()->type_user == 1)
+              <div class="col-4">
+                <button onclick="window.location.href='ventaspdf'" type="button"
+                  class="btn btn-sm small btn-floating toggler-left btn-danger waves-effect waves-light waves-round float-right"
+                  data-toggle="tooltip" data-original-title="Generar reporte PDF">
+                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
                 </button>
               </div>
               @endif
@@ -41,15 +50,7 @@
                   <i class="icon md-plus" aria-hidden="true"></i>
                 </button>
               </div>
-              @if(Auth::user()->type_user == 1)
-              <div class="col-4">
-                <button onclick="window.location.href='ventaspdf'" type="button"
-                  class="btn btn-sm small btn-floating toggler-left btn-danger waves-effect waves-light waves-round float-right"
-                  data-toggle="tooltip" data-original-title="Generar reporte PDF">
-                  <i class="icon fa-file-pdf-o" aria-hidden="true"></i>
-                </button>
-              </div>
-              @endif
+
               <!-- END Botón-->
             </div>
           </div>
