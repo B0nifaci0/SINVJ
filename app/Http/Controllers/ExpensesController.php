@@ -297,7 +297,9 @@ class ExpensesController extends Controller
             $shop->image = $this->getS3URL($shop->image);
         }
         $expense = Expense::where("id", "=", $id)->get();
-        $pdf = PDF::loadview('storeExpenses.PDFGasto', compact('expense', 'shop', 'branch', 'hour', 'date'))->setOption('page-width', '55')->setOption('page-height', '150');;
+        $pdf = PDF::loadview('storeExpenses.PDFGasto', compact('expense', 'shop', 'branch', 'hour', 'date'))
+            ->setOption('page-width', '58')
+            ->setOption('page-height', '100');;
         return  $pdf->stream('gasto.pdf');
     }
     //funcion para reporte de gastos por sucursal
