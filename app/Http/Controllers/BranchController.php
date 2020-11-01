@@ -585,6 +585,7 @@ class BranchController extends Controller
 
   public function DailyCashCut(Request $request, $id)
   {
+    $user = Auth::user();
     $shop = Auth::user()->shop;
     $hour = Carbon::now();
     $hour = date('H:i:s');
@@ -594,11 +595,9 @@ class BranchController extends Controller
     $branch = Branch::findOrFail($id);
     $branch->hour = $hour;
     $branch->date = $dates;
-
     if ($shop->image) {
       $shop->image = $this->getS3URL($shop->image);
     }
-
     $branch->total  = DB::table('partials')
       ->join('sale_details', 'partials.sale_id', '=', 'sale_details.sale_id')
       ->join('products', 'sale_details.product_id', '=', 'products.id')
@@ -642,8 +641,9 @@ class BranchController extends Controller
     $branch->total -= $branch->cambio;
     $branch->totalFin = $branch->total - $branch->tarjeta - $branch->gastos;
     //return $branch->totalFin;
+    //return $user;
     //return $branch;
-    $pdf  = PDF::loadView('Branches/boxcut.dailycashcut', compact('branch', 'shop'))
+    $pdf  = PDF::loadView('Branches/boxcut.dailycashcut', compact('branch', 'shop', 'user'))
     ->setOption('page-width', '58')
     ->setOption('page-height', '150');
     return $pdf->stream('CorteSucursalDiario.pdf');

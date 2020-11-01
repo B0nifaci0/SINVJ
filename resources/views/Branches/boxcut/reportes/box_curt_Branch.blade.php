@@ -13,7 +13,8 @@
         <img align="left" width="220px" height="100px" src="{{ $shop->image }}"></br>
         <p align="right">Fecha: {{$branch-> date}}</p>
         <p align="right">Hora: {{$branch-> hour}}</p>
-        <h3 align="center">Corte Por Sucursal: {{$branch ->name}}</h3>
+        <h3 align="center">Corte de caja</h3><br/>
+        <h3 align="center"> {{$branch ->name}}</h3>
       </div>
         </br>
         <div class="panel">
