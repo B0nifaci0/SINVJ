@@ -397,9 +397,30 @@ class SaleController extends Controller
             //return $product;
             $folio = Sale::where('branch_id', $product->branch_id)->select('id')->get()->count();
             $folio++;
+            $folios = Sale::where('branch_id', $product->branch_id)->get();
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             $folio = Sale::where('branch_id', $user->branch_id)->select('id')->get()->count();
             $folio++;
+            $folios = Sale::where('branch_id', $user->branch_id)->get();
+        }
+
+        $folios_ids = $folios->map(function ($item) {
+            return $item->folio;
+        });
+
+        $existing = 0;
+        
+        foreach($folios_ids as $f)
+        {
+            if($f == $folio)
+            {
+                $existing = 1;
+            }
+        }
+
+        if($existing == 1)
+        {
+            return redirect('/ventas/create')->with('mesage-limit', 'Folio de la venta duplicado, Por favor intentalo de nuevo!');
         }
 
         if ($request->user_type == 2) {
