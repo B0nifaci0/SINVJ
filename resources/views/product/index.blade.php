@@ -35,7 +35,14 @@
     <div class="panel">
       <div class="panel-body">
         <div class="example-wrap">
-          <h1 class="text-center panel-title">Productos De Tienda</h1>
+          <h1 class="text-center panel-title">Productos
+            @if ($user->type_user == 1)
+            De Tienda
+            @else
+            {{$user->branch->name}}
+            @endif
+
+          </h1>
           <div class="panel-actions float-right">
             <div class="container-fluid row float-right">
               @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
@@ -140,7 +147,8 @@
         {
           data: "id",
           render: (data, type, row, meta) => {
-            return `<a type="button" href="/productos/` + data + `/info"
+            if(user.type_user == 1 || user.type_user == 2)
+            return `<a type="button" href="/productos/` + data + `"
             class="btn btn-icon btn-primary waves-effect waves-light waves-round" data-toggle="tooltip"
             data-original-title="Info producto">
             <i class="icon fa-search" aria-hidden="true"></i></a>
@@ -150,7 +158,11 @@
           <button class="btn btn-icon btn-danger waves-effect waves-light waves-round delete" alt="`+ data + `" role="button"
             data-toggle="tooltip" data-original-title="Borrar">
             <i class="icon md-delete" aria-hidden="true"></i>
-          </button>`
+          </button>`;
+          return `<a type="button" href="/productos/` + data + `"
+                        class="btn btn-icon btn-primary waves-effect waves-light waves-round" data-toggle="tooltip"
+                        data-original-title="Info producto">
+                        <i class="icon fa-search" aria-hidden="true"></i></a>`;
           }
         },
       ],

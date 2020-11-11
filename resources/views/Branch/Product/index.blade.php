@@ -55,11 +55,6 @@
       </div>
     </div>
     <div class="col-xl-12 col-md-12 col-sl">
-      <div class="col-md-3">
-        <div class="input-group">
-          <input type="text" name="search" id="search" class="form-control" placeholder="Search" />
-        </div>
-      </div>
       <div class="example-wrap">
         <div class="page-content panel-body container-fluid">
           <table id="products" class="table display responsive nowrap" style="width: 100%">
@@ -147,7 +142,7 @@
         {
           data: "id",
           render: (data, type, row, meta) => {
-            return `<a type="button" href="/productos/` + data + `/info"
+            return `<a type="button" href="/productos/` + data + `"
             class="btn btn-icon btn-primary waves-effect waves-light waves-round" data-toggle="tooltip"
             data-original-title="Info producto">
             <i class="icon fa-search" aria-hidden="true"></i></a>

@@ -72,7 +72,7 @@ Panel Principal
                                                                 <select id="" name="status_product" alt="1"
                                                                     class="form-control round sucursales">
                                                                     <option value='null'>Pendiente</option>
-                                                                    <option value="1">Por Pagar</option>
+                                                                    <option value="1">Aceptado(Por Pagar)</option>
                                                                     <option value="0">Rechazado</option>
                                                                     <option value="3">Devolucion</option>
                                                                     <option value="4">Pagado</option>
@@ -145,7 +145,7 @@ Panel Principal
                                                             <select id="" name="status_product" alt="1"
                                                                 class="form-control round sucursales">
                                                                 <option value="null">Pendiente</option>
-                                                                <option value="1">Por Pagar</option>
+                                                                <option value="1">Aceptado(Por Pagar)</option>
                                                                 <option value="0">Rechazado</option>
                                                                 <option value="3">Devolucion</option>
                                                                 <option value="4">Pagado</option>

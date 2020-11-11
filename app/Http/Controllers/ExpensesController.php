@@ -21,39 +21,22 @@ class ExpensesController extends Controller
 
     use S3ImageManager;
 
-    /*public function __construct(){
-        $this->middleware('Authentication');
-
-    }/*
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $user = Auth::user();
-        $brances = Branch::where('shop_id', $user->shop->id)->select('id')->get();
-        $branches_ids = $brances->map(function ($item) {
-            return $item->id;
-        });
-        if ($user->type_user == User::AA) {
-            $expenses = Expense::whereIn('branch_id', $branches_ids)->get();
-        } else {
-            $expenses = Expense::where('branch_id', $user->branch->id)->get();
-        }
-        //return $expenses;
+        return view('storeExpenses.index', compact('user'));
+    }
 
-        if ($user->type_user == User::AA) {
-            $shop_expenses = Expense::where('shop_id', $user->shop->id)->get();
-            $expenses = $expenses->merge($shop_expenses);
-        }
-        //return $shop_expenses;
-        if ($user->type_user == User::CO || $user->type_user == User::SA) {
-            $shop_expenses = Expense::where('branch_id', $user->branch->id)->get();
-            $expenses = $expenses->merge($shop_expenses);
-        }
+    public function serverSide()
+    {
+        $user = Auth::user();
+
+        if ($user->isAdmin())
+            $expenses = $user->shop->expenses()->with('branch:id,name')->get();
+        else if ($user->type_user == 2)
+            $expenses = $user->branch->expenses()->with('branch:id,name')->get();
+        else
+            $expenses = Expense::whereUserId($user->id)->with('branch:id,name')->get();
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
 
@@ -72,7 +55,8 @@ class ExpensesController extends Controller
                 $e->image = (string) $result->getUri();
             }
         }
-        return view('storeExpenses/index', compact('expenses', 'user'));
+
+        return datatables()->of($expenses)->toJson();
     }
 
     /**
@@ -100,11 +84,8 @@ class ExpensesController extends Controller
     {
         $user = Auth::user();
         if ($user->type_user == User::AA) {
-            if ($request->branch_id) {
-                $data['branch_id'] = $request->branch_id;
-            } else {
-                $data['shop_id'] = $user->shop->id;
-            }
+            $data['branch_id'] = $request->branch_id;
+            $data['shop_id'] = $user->shop->id;
         } else {
             $data['branch_id'] = $user->branch->id;
         }
@@ -305,16 +286,6 @@ class ExpensesController extends Controller
             //return $totals;
         }
     }
-
-    //  public function exportPdfall(){
-    //   $user = Auth::user();
-    // $shop = Auth::user()->shop;
-    //$expense = Expense::all();
-    //$pdf  = PDF::loadView('storeExpenses.PDFGasto', compact('expense','shop'));
-    //return $pdf->stream('gasto.pdf');
-    //}
-
-    //crear reporte individual de cada gasto//
     public function exportPdfall($id)
     {
         $date = date("Y-m-d");
@@ -326,7 +297,9 @@ class ExpensesController extends Controller
             $shop->image = $this->getS3URL($shop->image);
         }
         $expense = Expense::where("id", "=", $id)->get();
-        $pdf = PDF::loadview('storeExpenses.PDFGasto', compact('expense', 'shop', 'branch', 'hour', 'date'));
+        $pdf = PDF::loadview('storeExpenses.PDFGasto', compact('expense', 'shop', 'branch', 'hour', 'date'))
+            ->setOption('page-width', '58')
+            ->setOption('page-height', '100');;
         return  $pdf->stream('gasto.pdf');
     }
     //funcion para reporte de gastos por sucursal

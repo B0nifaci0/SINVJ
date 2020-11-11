@@ -10,10 +10,11 @@
 <body>
   <div border="">
       <div >
-        <img align="left" width="220px" height="100px" src="{{ $shop->image }}"></br>
+        <img align="left" width="250px" height="120px" src="{{ $shop->image }}"></br>
         <p align="right">Fecha: {{$branch-> date}}</p>
-        <p align="right">Hora: {{$branch-> hour}}</p>
-        <h3 align="center">Corte Por Sucursal: {{$branch ->name}}</h3>
+        <p align="right">Hora: {{$branch-> hour}}</p><br/>
+        <h3 align="center">Corte de caja</h3><br/>
+        <h3 align="center">Sucursal: {{$branch ->name}}</h3>
       </div>
         </br>
         <div class="panel">

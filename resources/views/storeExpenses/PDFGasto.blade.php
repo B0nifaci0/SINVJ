@@ -138,16 +138,15 @@ img {
     max-width: center;
     text-align: center;
 }
-@page {size: 8cm 150mm;
+@page {size: 8cm 100mm;
      }
    </style>
 
     <body>
+    <img class="img-responsive " width="120px" height="140px" src="{{ $shop->image }}">
         <p align= "right">Fecha: {{$date}}</p>
         <p align= "right">Hora: {{$hour}}</p>
         <div border="">
-        <img class="img-responsive " width="120px" height="140px" src="{{ $shop->image }}">
-             
             <p><b>Tienda:</b> {{$shop->name}}</p><br>
             <table align="center" class="table-sm table-bordered">
             @foreach($expense as $expense)

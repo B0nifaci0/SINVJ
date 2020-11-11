@@ -72,7 +72,7 @@
                         <tbody>
                             @foreach($sale->partials as $partial)
                             <tr>
-                                <td>{{ $partial->created_at }}</td>
+                                <td>{{date_format($partial->created_at, 'd/m/y')}}</td>
                                 <td>{{ ($partial->type === "1") ? 'Efectivo' : 'Tarjeta' }} </td>
                                 <td>$ {{ $partial->amount }}</td>
                             </tr>

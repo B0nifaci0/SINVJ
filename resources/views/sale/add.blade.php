@@ -450,13 +450,12 @@ seleccionado con sus respectivos datos-->
         var totalIncome = 0;
 
         var clients = {!! $clients!!};
-        var usuario = {!! $user->type_user!!};
+        var usuario = {!! $user!!};
         var sales = {!! $sales !!};
         var new_id = {!! $new_id !!};
         var old_id = new_id;
 
-        console.log("Clienets ", clients)
-        console.log('Ventas: ', sales);
+        console.log("usuario: "+ usuario.branch_id)
 
         $('#ventas').DataTable( {
             pageLength:     50,
@@ -469,10 +468,6 @@ seleccionado con sus respectivos datos-->
                 NORMAL: 1,
                 WHOLESALERS: 2
             }
-
-            // setInterval(() => {
-            //     console.log("------------------>overDiscount", overDiscount.length, overDiscountAuth);
-            // }, 4000);
 
             $('#user-type').change(function() {
                 let type = $(this).val();
@@ -632,7 +627,7 @@ seleccionado con sus respectivos datos-->
                 if(id_client == 0){
 
 		            $.ajax({
-			            url: '/mayoristas',
+			            url: '/clientes',
                         method: 'POST',
                         //dataType: "JSON",
 			            data: dataString,
@@ -658,7 +653,7 @@ seleccionado con sus respectivos datos-->
                 } else {
 
                     $.ajax({
-			            url: '/mayoristas/' + id_client,
+			            url: '/clientes/' + id_client,
                         method: 'PUT',
                         //dataType: "JSON",
 			            data: dataString,
@@ -738,7 +733,8 @@ seleccionado con sus respectivos datos-->
                     name: name,
                     phone_number: phone,
                     shop_id: shop,
-                    type_client: type
+                    type_client: type,
+                    branch_id: usuario.branch_id
                 };
 
                 $.ajaxSetup({
@@ -750,7 +746,7 @@ seleccionado con sus respectivos datos-->
                 if(id_client == 0){
 
 		            $.ajax({
-			            url: '/mayoristas',
+			            url: '/clientes',
                         method: 'POST',
                         //dataType: "JSON",
 			            data: dataString,
@@ -775,7 +771,7 @@ seleccionado con sus respectivos datos-->
                 } else {
                     
                     $.ajax({
-                        url: '/mayoristas/' + id_client,
+                        url: '/clientes/' + id_client,
                         method: 'PUT',
                         //dataType: "JSON",
                         data: dataString,
@@ -933,7 +929,7 @@ seleccionado con sus respectivos datos-->
                             overDiscount.push(product)
                             overDiscountAuth = false;
                         }
-                        if (selectedPrice > product.price && usuario == 3) {
+                        if (selectedPrice > product.price && usuario.type_user == 3) {
                             overDiscount.push(product)
                             overDiscountAuth = false;
                         }

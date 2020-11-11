@@ -166,7 +166,8 @@ class SaleController extends Controller
     }
     public function index()
     {
-        return view('sale/index');
+        $user = Auth::user();
+        return view('sale/index', compact('user'));
     }
 
     public function indexOld(Request $request)
@@ -324,13 +325,12 @@ class SaleController extends Controller
         $user = Auth::user();
         $new_id = Client::max('id');
         $new_id += 1;
-        //return $new_id;
 
         if ($user->branch) {
-            $public = Client::where('shop_id', $user->shop->id)
+            $public = Client::whereBranchId($user->branch->id)
                 ->Where('type_client', Client::P)
                 ->get();
-            $wholesaler = Client::where('branch_id', $user->branch->id)
+            $wholesaler = Client::whereBranchId($user->branch->id)
                 ->Where('type_client', Client::M)
                 ->get();
         } else {
@@ -371,21 +371,9 @@ class SaleController extends Controller
             return $c->id;
         });
 
-        //return $clientsIds;
-
         $sales = Sale::whereIn('client_id', $clientsIds)
             ->whereRaw('paid_out <> total')
             ->get();
-        //return $sales;
-        // $products = Product::where([
-        //   'branch_id' => $user->branch_id,
-        //   'status_id' => 2
-        // ])
-        //   ->with('line')
-        // 	->with('branch')
-        // 	->with('category')
-        // 	->with('status')
-        // 	->get();
         return view('sale/add', compact('new_id', 'public', 'wholesaler', 'products', 'user', 'branches', 'clients', 'sales'));
     }
 
@@ -409,9 +397,27 @@ class SaleController extends Controller
             //return $product;
             $folio = Sale::where('branch_id', $product->branch_id)->select('id')->get()->count();
             $folio++;
+            $folios = Sale::where('branch_id', $product->branch_id)->get();
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             $folio = Sale::where('branch_id', $user->branch_id)->select('id')->get()->count();
             $folio++;
+            $folios = Sale::where('branch_id', $user->branch_id)->get();
+        }
+
+        $folios_ids = $folios->map(function ($item) {
+            return $item->folio;
+        });
+
+        $existing = 0;
+
+        foreach ($folios_ids as $f) {
+            if ($f == $folio) {
+                $existing = 1;
+            }
+        }
+
+        if ($existing == 1) {
+            return redirect('/ventas/create')->with('mesage-limit', 'Folio de la venta duplicado, Por favor intentalo de nuevo!');
         }
 
         if ($request->user_type == 2) {
@@ -443,8 +449,8 @@ class SaleController extends Controller
 
         foreach ($products as $i => $p) {
             if (!$sale->branch_id && $i == 0) {
-                $pranch_product = Product::find($p->id);
-                $sale->branch_id = $pranch_product->branch_id;
+                $branch_product = Product::find($p->id);
+                $sale->branch_id = $branch_product->branch_id;
             }
 
             $product = Product::find($p->id);

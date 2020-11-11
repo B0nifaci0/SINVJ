@@ -10,6 +10,7 @@ use App\Branch;
 use App\Status;
 use App\Product;
 use App\Category;
+use App\Expense;
 use Carbon\Carbon;
 use App\TransferProduct;
 use Illuminate\Support\Facades\Validator;
@@ -62,7 +63,6 @@ class ProductController extends Controller
             ->with('branch:id,name')
             ->with('status:id,name')
             ->get();
-
         return datatables()->of($products)->toJson();
     }
 
@@ -186,7 +186,7 @@ class ProductController extends Controller
                 }
             }
         }
-        return view('product/index', compact('products', 'title'));
+        return view('product/index', compact('products', 'title', 'user'));
     }
 
     /** Función para listar los productos de  sucursal /productoCO */
@@ -460,36 +460,21 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $category = Auth::user()->shop->id;
         $user = Auth::user();
-        $line = Auth::user()->shop->id;
-
-        $shops = Auth::user()->shop()->get();
-        //return $shops;
+        $shop = $user->shop;
         $product = Product::find($id);
-        //return $product;
 
-        $shop_categories = Category::where('shop_id', $category)->where('id', '!=', $product->category_id)->get();
-        $categories = Category::where('id', $product->category_id)->get();
-
-        // $categories = $categories->merge($shop_categories);
-        $categories = Category::where('shop_id', '=', NULL)->get();
-        /*
-        if ($product->tipo == 1) {
-            $categories = Category::where('shop_id', '=', NULL)->where('type_product', 1)->get();
-        } else {
-            $categories = Category::where('shop_id', '=', NULL)->where('type_product', 2)->get();
-        }
-        */
+        $categories = Category::where('shop_id', '=', NULL)
+            ->whereTypeProduct($product->category->type_product)
+            ->get();
 
         $lines = Line::where('shop_id', '=', NULL)->get();
-        // $lines = Shop::find($line)->lines()->get();
-        $branch = Auth::user()->shop->id;
-        $branches = Shop::find($branch)->branches()->get();
+        $branches = $shop->branches()->get();
         $statuses = Status::all();
-        // return $product;
 
-        return view('product/edit', compact('product', 'categories', 'lines', 'shops', 'branches', 'statuses', 'user'));
+        $reetiquetado = false;
+
+        return view('product/edit', compact('product', 'categories', 'lines', 'shop', 'branches', 'statuses', 'user', 'reetiquetado'));
     }
 
     /**
@@ -584,22 +569,20 @@ class ProductController extends Controller
     //PRODUCTOS DEVUELTOS EN VENTAS
     public function devuelto()
     {
+
         $user = Auth::user();
         if ($user->type_user == User::AA) {
             $products = Product::whereIn('discar_cause', [3, 4])
                 ->where('shop_id', $user->shop_id)
-                ->where('restored_at', null)
                 ->withTrashed()
                 ->get();
         } elseif ($user->type_user == User::SA || $user->type_user == User::CO) {
             $products = Product::whereIn('discar_cause', [3, 4])
                 ->where('shop_id', $user->shop_id)
                 ->where('branch_id', $user->branch_id)
-                ->where('restored_at', null)
                 ->withTrashed()
                 ->get();
         }
-
 
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($products as $product) {
@@ -610,45 +593,30 @@ class ProductController extends Controller
             }
             $product->image = $this->getS3URL($path);
         }
-        //return $products;
         return view('product/devueltos', compact('products'));
     }
 
     public function reetiquetado($id)
     {
-        $category = Auth::user()->shop->id;
+        $product = Product::withTrashed()->find($id)->restore();
+        $product = Product::find($id);
+        $product->restored_at = now();
+        $product->discar_cause = null;
+        $product->save();
+
         $user = Auth::user();
-        $line = Auth::user()->shop->id;
-
-        $date = Carbon::now();
-        $date = $date->format('Y-m-d');
-
-        $shops = Auth::user()->shop()->get();
-        //return $shops;
-        $products = Product::join('categories', 'categories.id', 'products.category_id')
-            ->where('products.id', $id)
-            ->withTrashed()
-            ->select('products.*', 'categories.type_product as tipo')
+        $shop = $user->shop;
+        $branches = $shop->branches()->get();
+        $lines = Line::whereShopId(NULL)->get();
+        $categories = Category::whereShopId(NULL)
+            ->whereTypeProduct($product->category->type_product)
             ->get();
-        //return $products;
-        foreach ($products as $p) {
-            if ($p->tipo == 1) {
-                $categories = Category::where('shop_id', '=', NULL)->where('type_product', 1)->get();
-            } else {
-                $categories = Category::where('shop_id', '=', NULL)->where('type_product', 2)->get();
-            }
-            $p->restored_at = $date;
-        }
-        //return $categories;
 
-        $lines = Line::where('shop_id', '=', NULL)->get();
-        // $lines = Shop::find($line)->lines()->get();<div class="">5555</div>
-        $branch = Auth::user()->shop->id;
-        $branches = Shop::find($branch)->branches()->get();
+        $reetiquetado = true;
+
         $statuses = Status::all();
-        //return $products;
 
-        return view('product/reetiquetado', compact('products', 'categories', 'lines', 'shops', 'branches', 'statuses', 'user'));
+        return view('product/edit', compact('product', 'categories', 'lines', 'shop', 'branches', 'statuses', 'user', 'reetiquetado'));
     }
 
     public function restore($id)
@@ -1156,7 +1124,6 @@ class ProductController extends Controller
         $category_type = $request->cat;
         $products = $shop->products()
             ->has('sale_details')
-            // ->with('sale_details.sale.partials')
             ->with('sale_details')
             ->with('category')
             ->whereBranch_id($branch->id)
@@ -1167,8 +1134,62 @@ class ProductController extends Controller
 
         if ($fecini == $fecter) {
             $products = $products->where('updated_at', $fecini);
+            $expenses = Expense::where('updated_at', $fecini)
+                ->whereBranch_id($branch->id);
         } else {
             $products = $products->whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()]);
+            $expenses = Expense::whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()])->whereBranch_id($branch->id);
+        }
+
+
+        if ($products->isEmpty()) {
+            return back()->with('message', 'El reporte que se intento generar no contiene información');
+        }
+
+        $sale_details = $products
+            ->pluck('sale_details')
+            ->collapse();
+
+        $cash_expenses = $expenses->sum('price');
+        $weight = $products->sum('weigth');
+        $price = $sale_details->sum('final_price');
+        $price_purchase = $products->sum('price_purchase');
+        $utility = $sale_details->sum('profit');
+
+        if ($shop->image) {
+            $shop->image = $this->getS3URL($shop->image);
+        }
+
+        $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop', 'products', 'sale_details', 'hour', 'date', 'weight', 'price', 'price_purchase', 'utility', 'category_type', 'branch', 'cash_expenses'));
+        return $pdf->stream('ReporteUtilidad.pdf');
+    }
+
+    public function reportUtilityGeneral(Request $request)
+    {
+
+        $fecini = Carbon::parse($request->fecini);
+        $fecter = Carbon::parse($request->fecter);
+        $hour = $this->getHour();
+        $date = $this->getDate();
+        $shop = $this->user->shop;
+        $branch = Branch::findOrFail($request->branch_id);
+
+        $products = $shop->products()
+            ->has('sale_details')
+            ->with('sale_details')
+            ->with('category')
+            ->whereBranch_id($branch->id)
+            ->orderByRaw('CHAR_LENGTH(clave)')
+            ->orderBy('clave')
+            ->get();
+
+        if ($fecini == $fecter) {
+            $products = $products->where('updated_at', $fecini);
+            $expenses = Expense::where('updated_at', $fecini)
+                ->whereBranch_id($branch->id);
+        } else {
+            $products = $products->whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()]);
+            $expenses = Expense::whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()])->whereBranch_id($branch->id);
         }
 
         if ($products->isEmpty()) {
@@ -1179,6 +1200,7 @@ class ProductController extends Controller
             ->pluck('sale_details')
             ->collapse();
 
+        $cash_expenses = $expenses->sum('price');
         $weight = $products->sum('weigth');
         $price = $sale_details->sum('final_price');
         $price_purchase = $products->sum('price_purchase');
@@ -1188,8 +1210,7 @@ class ProductController extends Controller
             $shop->image = $this->getS3URL($shop->image);
         }
 
-        $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop', 'products', 'sale_details', 'hour', 'date', 'weight', 'price', 'price_purchase', 'utility', 'category_type', 'branch'));
-        return $pdf->stream('ReporteUtilidad.pdf');
+        return $pdf  = PDF::loadView('product.Reports.UtilityReportGeneral', compact('shop', 'products', 'sale_details', 'hour', 'date', 'weight', 'price', 'price_purchase', 'utility', 'branch', 'cash_expenses'))->stream('ReporteUtilidad.pdf');
     }
 
     public function reportPz(Request $request)

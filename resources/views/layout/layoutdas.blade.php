@@ -41,14 +41,14 @@
         <link rel="stylesheet" href={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.css')}}}>
         <link rel="stylesheet" href={{{url('global/vendor/dropify/dropify.css')}}}>
         <!-- TOASTR -->
-        <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css"> 
-        <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-        <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+        <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
         {!! Toastr::message() !!}
         <!-- Fonts -->
         <link rel="stylesheet" href={{{url('global/fonts/material-design/material-design.min.css')}}}>
         <link rel="stylesheet" href={{{url('global/fonts/brand-icons/brand-icons.min.css')}}}>
-        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
         <link rel="stylesheet" href={{{url('global/fonts/font-awesome/font-awesome.css')}}}>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <link rel="stylesheet" href="{{{url('/global/css/bootstrap-extend.min.css')}}}">
@@ -109,28 +109,8 @@
     </script> -->
 
         <style>
-            /* .midatatable tr {
-                cursor: pointer;
-            } */
-
-            .hiddenRow {
-                padding: 0 4px !important;
-                font-size: 14px;
-            }
-
-
-            @media (max-width: 55em) {
-                .midatatable .desktop {
-                    display: none;
-                }
-
-            }
-
-            @media (min-width: 55em) {
-                .midatatable .tablet {
-                    display: none;
-                }
-
+            .zoom:hover {
+                transform: scale(2);
             }
         </style>
 
@@ -297,20 +277,20 @@
                                             </ul>
                                             <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
-                                                    <a class="animsition-link" href="/productos/devueltos">
+                                                    <a class="animsition-link" href="/devueltos">
                                                         <i class="site-menu-icon fa-reply" aria-hidden="true"></i>
                                                         <span class="site-menu-title">Productos Devueltos</span>
                                                     </a>
                                                 </li>
                                             </ul>
                                             <ul class="site-menu-sub">
-                                                <li class="site-menu-item">
+                                                {{-- <li class="site-menu-item">
                                                     <a class="animsition-link" href="/reportes-productos-apartados">
                                                         <i class="site-menu-icon fa-shopping-cart"
                                                             aria-hidden="true"></i>
                                                         <span class="site-menu-title">Productos apartados</span>
                                                     </a>
-                                                </li>
+                                                </li> --}}
                                                 <li class="site-menu-item">
                                                     <a class="animsition-link" href="/reportes-productos">
                                                         <i class="site-menu-icon fa-file-pdf-o" aria-hidden="true"></i>
@@ -344,7 +324,8 @@
                                             <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
                                                     <a class="animsition-link" href="/sucursales/corte">
-                                                        <i class="site-menu-icon icon icon md-money-box" aria-hidden="true" ></i>
+                                                        <i class="site-menu-icon icon icon md-money-box"
+                                                            aria-hidden="true"></i>
                                                         <span class="site-menu-title">Corte Sucursales</span>
                                                     </a>
                                                 </li>
@@ -539,7 +520,7 @@
                                     </a>
                                     <ul class="site-menu-sub">
                                         <li class="site-menu-item">
-                                            <a class="animsition-link" href="/mayoristas">
+                                            <a class="animsition-link" href="/clientes">
                                                 <i class="site-menu-icon icon fa-id-badge" aria-hidden="true"></i>
                                                 <span class="site-menu-title">Clientes</span>
                                             </a>
@@ -547,7 +528,7 @@
                                     </ul>
                                     <ul class="site-menu-sub">
                                         <li class="site-menu-item">
-                                            <a class="animsition-link" href="/mayoristas/create">
+                                            <a class="animsition-link" href="/clientes/create">
                                                 <i class="site-menu-icon fa-plus" aria-hidden="true"></i>
                                                 <span class="site-menu-title">Crear Nuevo Cliente</span>
                                             </a>
@@ -610,16 +591,14 @@
                                                 <span class="site-menu-title">Productos</span>
                                                 <span class="site-menu-arrow"></span>
                                             </a>
-                                            <!-- Mis Productos-->
-                                            <ul class="site-menu-sub">
+                                            {{-- <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
                                                     <a class="animsition-link" href="/sucursalproductoCO">
                                                         <i class="site-menu-icon fa-tags" aria-hidden="true"></i>
                                                         <span class="site-menu-title">Mis Productos</span>
                                                     </a>
                                                 </li>
-                                            </ul>
-                                            <!-- END Mis Productos-->
+                                            </ul> --}}
                                             <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
                                                     <a class="animsition-link" href="/productos">
@@ -630,7 +609,7 @@
                                             </ul>
                                             <ul class="site-menu-sub">
                                                 <li class="site-menu-item">
-                                                    <a class="animsition-link" href="/productos/devueltos">
+                                                    <a class="animsition-link" href="/devueltos">
                                                         <i class="site-menu-icon fa-reply" aria-hidden="true"></i>
                                                         <span class="site-menu-title">Productos Devueltos</span>
                                                     </a>
@@ -733,7 +712,7 @@
 
                                     </ul>
                                 </li>
-                               <!-- <li class="site-menu-item ">
+                                <!-- <li class="site-menu-item ">
                                     <a class="animsition-link" href="/usuarios">
                                         <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
                                         <span class="site-menu-title">Usuarios</span>
@@ -761,14 +740,14 @@
                       </li>
                     </ul>-->
                                 <!-- Productos-->
-                                <ul class="site-menu-sub">
+                                {{-- <ul class="site-menu-sub">
                                     <li class="site-menu-item">
-                                        <a class="animsition-link" href="/productosCO">
+                                        <a class="animsition-link" href="/productos">
                                             <i class="site-menu-icon fa-diamond" aria-hidden="true"></i>
                                             <span class="site-menu-title">Productos de tiendas</span>
                                         </a>
                                     </li>
-                                </ul>
+                                </ul> --}}
                                 <!--END-Productos-->
                                 <!--Sucursales-->
                                 <li class="site-menu-item has-sub">

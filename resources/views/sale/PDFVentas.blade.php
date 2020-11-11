@@ -20,7 +20,7 @@
                 <td>{{ $sale->telephone ? $sale->telephone : $sale->client->phone_number}}</td>
                 <td align="center">{{ $sale->items->count() }}</td>
                 <td>${{ $sale->total }}</td>
-                <td>{{ $sale->created_at->format('m-d-Y')}}</td>
+                <td>{{date_format($sale->created_at, 'd/m/y')}}</td>
             </tr>
             @endforeach
         </tbody>
