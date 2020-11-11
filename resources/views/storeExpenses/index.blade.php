@@ -74,7 +74,7 @@
           data: "image",
           render: (data, type, row, meta) => {
             return `
-          <img class="img-fluid" src="`+ data + `" alt="..." width="200" height="150" />`;
+          <img class="img-fluid zoom" src="`+ data + `" alt="..." width="200" height="150" />`;
           }
         },
         { data: "branch.name" },

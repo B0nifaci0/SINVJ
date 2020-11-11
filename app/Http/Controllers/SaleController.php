@@ -409,17 +409,14 @@ class SaleController extends Controller
         });
 
         $existing = 0;
-        
-        foreach($folios_ids as $f)
-        {
-            if($f == $folio)
-            {
+
+        foreach ($folios_ids as $f) {
+            if ($f == $folio) {
                 $existing = 1;
             }
         }
 
-        if($existing == 1)
-        {
+        if ($existing == 1) {
             return redirect('/ventas/create')->with('mesage-limit', 'Folio de la venta duplicado, Por favor intentalo de nuevo!');
         }
 
@@ -452,8 +449,8 @@ class SaleController extends Controller
 
         foreach ($products as $i => $p) {
             if (!$sale->branch_id && $i == 0) {
-                $pranch_checkproduct = Product::find($p->id);
-                $sale->branch_id = $pranch_product->branch_id;
+                $branch_product = Product::find($p->id);
+                $sale->branch_id = $branch_product->branch_id;
             }
 
             $product = Product::find($p->id);

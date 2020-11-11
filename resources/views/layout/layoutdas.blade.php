@@ -109,28 +109,8 @@
     </script> -->
 
         <style>
-            /* .midatatable tr {
-                cursor: pointer;
-            } */
-
-            .hiddenRow {
-                padding: 0 4px !important;
-                font-size: 14px;
-            }
-
-
-            @media (max-width: 55em) {
-                .midatatable .desktop {
-                    display: none;
-                }
-
-            }
-
-            @media (min-width: 55em) {
-                .midatatable .tablet {
-                    display: none;
-                }
-
+            .zoom:hover {
+                transform: scale(2);
             }
         </style>
 
