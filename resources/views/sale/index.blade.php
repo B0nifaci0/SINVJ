@@ -154,7 +154,8 @@
   $(document).ready(function () {
 
     $('#boxcut').click(function(e) {
-      var branch_id = {!! $user->branch_id !!};
+      var user = {!! $user !!};
+      var branch_id = user.branch_id
       Swal.fire({
         title: 'Confirmación',
         text: "¿Estas seguro que quieres generar el reporte de corte de caja el dia?",
