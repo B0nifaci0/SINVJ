@@ -41,14 +41,14 @@
         <link rel="stylesheet" href={{{url('global/vendor/blueimp-file-upload/jquery.fileupload.css')}}}>
         <link rel="stylesheet" href={{{url('global/vendor/dropify/dropify.css')}}}>
         <!-- TOASTR -->
-        <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
-        <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-        <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+        <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
         {!! Toastr::message() !!}
         <!-- Fonts -->
         <link rel="stylesheet" href={{{url('global/fonts/material-design/material-design.min.css')}}}>
         <link rel="stylesheet" href={{{url('global/fonts/brand-icons/brand-icons.min.css')}}}>
-        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
         <link rel="stylesheet" href={{{url('global/fonts/font-awesome/font-awesome.css')}}}>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <link rel="stylesheet" href="{{{url('/global/css/bootstrap-extend.min.css')}}}">
