@@ -141,10 +141,8 @@ ALTA PRODUCTO
           <div class="col-md-3">
             <label>Seleccionar estatus actual</label>
             <select name="status_id" class="form-control round">
-              @foreach($statuses as $status)
-              @if($status->id != 3 && $status->id != 1)
+              @foreach($statuses as $status)     
               <option value="{{ $status->id }}" required>{{ $status->name }}</option>
-              @endif
               @endforeach
             </select>
           </div>
