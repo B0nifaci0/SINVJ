@@ -10,6 +10,7 @@ use App\Branch;
 use App\Status;
 use App\Product;
 use App\Category;
+use App\Expense;
 use Carbon\Carbon;
 use App\TransferProduct;
 use Illuminate\Support\Facades\Validator;
@@ -1133,9 +1134,13 @@ class ProductController extends Controller
 
         if ($fecini == $fecter) {
             $products = $products->where('updated_at', $fecini);
+            $expenses = Expense::where('updated_at', $fecini)
+                ->whereBranch_id($branch->id);
         } else {
             $products = $products->whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()]);
+            $expenses = Expense::whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()])->whereBranch_id($branch->id);
         }
+
 
         if ($products->isEmpty()) {
             return back()->with('message', 'El reporte que se intento generar no contiene información');
@@ -1145,6 +1150,7 @@ class ProductController extends Controller
             ->pluck('sale_details')
             ->collapse();
 
+        $cash_expenses = $expenses->sum('price');
         $weight = $products->sum('weigth');
         $price = $sale_details->sum('final_price');
         $price_purchase = $products->sum('price_purchase');
@@ -1154,7 +1160,7 @@ class ProductController extends Controller
             $shop->image = $this->getS3URL($shop->image);
         }
 
-        $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop', 'products', 'sale_details', 'hour', 'date', 'weight', 'price', 'price_purchase', 'utility', 'category_type', 'branch'));
+        $pdf  = PDF::loadView('product.Reports.UtilityReport', compact('shop', 'products', 'sale_details', 'hour', 'date', 'weight', 'price', 'price_purchase', 'utility', 'category_type', 'branch', 'cash_expenses'));
         return $pdf->stream('ReporteUtilidad.pdf');
     }
 
@@ -1179,8 +1185,11 @@ class ProductController extends Controller
 
         if ($fecini == $fecter) {
             $products = $products->where('updated_at', $fecini);
+            $expenses = Expense::where('updated_at', $fecini)
+                ->whereBranch_id($branch->id);
         } else {
             $products = $products->whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()]);
+            $expenses = Expense::whereBetween('updated_at', [$fecini->subDay(), $fecter->addDay()])->whereBranch_id($branch->id);
         }
 
         if ($products->isEmpty()) {
@@ -1191,6 +1200,7 @@ class ProductController extends Controller
             ->pluck('sale_details')
             ->collapse();
 
+        $cash_expenses = $expenses->sum('price');
         $weight = $products->sum('weigth');
         $price = $sale_details->sum('final_price');
         $price_purchase = $products->sum('price_purchase');
@@ -1200,7 +1210,7 @@ class ProductController extends Controller
             $shop->image = $this->getS3URL($shop->image);
         }
 
-        return $pdf  = PDF::loadView('product.Reports.UtilityReportGeneral', compact('shop', 'products', 'sale_details', 'hour', 'date', 'weight', 'price', 'price_purchase', 'utility', 'branch'))->stream('ReporteUtilidad.pdf');
+        return $pdf  = PDF::loadView('product.Reports.UtilityReportGeneral', compact('shop', 'products', 'sale_details', 'hour', 'date', 'weight', 'price', 'price_purchase', 'utility', 'branch', 'cash_expenses'))->stream('ReporteUtilidad.pdf');
     }
 
     public function reportPz(Request $request)

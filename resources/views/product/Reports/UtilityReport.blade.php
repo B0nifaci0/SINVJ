@@ -64,12 +64,22 @@
     <table>
         <thead>
             <tr>
+                <th scope="col">Gastos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>$ {{$cash_expenses}} </td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
                 <th scope="col">Utilidad</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>$ {{$utility}}</td>
+                <td>$ {{$utility-$cash_expenses}} </td>
             </tr>
         </tbody>
     </table>

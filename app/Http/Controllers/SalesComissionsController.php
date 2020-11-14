@@ -123,7 +123,7 @@ class SalesComissionsController extends Controller
         $fecini->addDay();
         $fecter->subDay();
 
-        $pdf  = PDF::loadView('User.Comission.ComisionUserPDF', compact('fecini','fecter','dates', 'branches', 'sales', 'user', 'branch', 'shop', 'hour', 'dates', 'shops'));
+        $pdf  = PDF::loadView('User.Comission.ComisionUserPDF', compact('fecini','fecter','dates', 'branches', 'sales', 'user', 'branch', 'shop', 'hour', 'shops'));
         return $pdf->stream('ReporteComisionUsuario.pdf');
     }
 }
