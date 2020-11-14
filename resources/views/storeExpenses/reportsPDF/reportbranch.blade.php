@@ -4,52 +4,105 @@
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <title>Reporte de Gastos</title>
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
-   <style>
-   @media print {
-     html,body{
-        font-size: 9.5pt;
-        margin: 0;
-        padding: 0;
-     }.page-break {
-       page-break-before:always;
-       width: auto;
-       margin: auto;
-      }
-    }
-    .page-break{
-      width: 980px;
-      margin: 0 auto;
-    }
-     .sale-head{
-       margin: 40px 0;
-       text-align: center;
-     }.sale-head h1,.sale-head strong{
-       padding: 10px 20px;
-       display: block;
-     }.sale-head h1{
-       margin: 0;
-       border-bottom: 1px solid #212121;
-     }.table>thead:first-child>tr:first-child>th{
-       border-top: 1px solid #000;
-      }
-      table thead tr th {
-       text-align: center;
-       border: 1px solid #ededed;
-     }table tbody tr td{
-       vertical-align: middle;
-     }.sale-head,table.table thead tr th,table tbody tr td,table tfoot tr td{
-       border: 1px solid #212121;
-     }.sale-head h1,table thead tr th,table tfoot tr td{
-       background-color: #f8f8f8;
-     }tfoot{
-       color:#000;
-       text-transform: uppercase;
-       font-weight: 500; 
-     }
-      .sizedate{
-       font-size: 12px!important;
-     }
-   </style>
+     <style>
+            @import 'https://fonts.googleapis.com/css2?family=Archivo&display=swap';
+
+            body {
+                font-size: 14px;
+                font-family: 'Archivo', sans-serif;
+            }
+
+            h1 {
+                text-align: center;
+                margin-top: 55px;
+            }
+
+            .date {
+                float: right;
+            }
+
+            img {
+                float: left;
+                width: 150px;
+                height: 129px;
+            }
+
+            table {
+                border-collapse: separate;
+                border-spacing: 0;
+                color: #4a4a4d;
+                table-layout: fixed;
+                width: 100%;
+                text-align: center;
+            }
+
+            th,
+            td {
+                padding: 10px 15px;
+                vertical-align: middle;
+            }
+
+            thead {
+                background: #395870;
+                background: linear-gradient(#49708f, #293f50);
+                color: #fff;
+            }
+
+            tbody tr:nth-child(even) {
+                background: #f0f0f2;
+            }
+
+            td {
+                border-bottom: 1px solid #cecfd5;
+                border-right: 1px solid #cecfd5;
+            }
+
+            td:first-child {
+                border-left: 1px solid #cecfd5;
+            }
+
+            .book-title {
+                color: #395870;
+                display: block;
+            }
+
+            .text-offset {
+                color: #7c7c80;
+                font-size: 12px;
+            }
+
+            .item-stock,
+            .item-qty {
+                text-align: center;
+            }
+
+            .item-price {
+                text-align: right;
+            }
+
+            .item-multiple {
+                display: block;
+            }
+
+            tfoot {
+                text-align: right;
+            }
+
+            tfoot tr:last-child {
+                background: #f0f0f2;
+                color: #395870;
+                font-weight: bold;
+            }
+
+            tfoot tr:last-child td:first-child {
+                border-bottom-left-radius: 5px;
+            }
+
+            tfoot tr:last-child td:last-child {
+                border-bottom-right-radius: 5px;
+            }
+
+        </style>
 </head>
 <body>
 <div class="page-content">
@@ -87,9 +140,13 @@
                 <thead>
                     <tr>
                             <th scope="col">Total De Gastos</th>
-                            <th scope="col">${{$totals}}</th>
                     </tr>
                 </thead>
+                <tbody>
+                  <tr>
+                    <td scope="col">${{$totals}}</td>
+                  </tr>
+                </tbody>
             </table>
           </div>
           </div>
