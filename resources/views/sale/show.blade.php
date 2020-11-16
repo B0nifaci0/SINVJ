@@ -131,6 +131,11 @@ SUCURSAl
         <div class="panel-success">
             <div class="panel-heading">
                 <h2 class="panel-title" style="color:white" align="center"> Productos Comprados</h2>
+                <div class="panel-actions float-right">
+                    <button id="products" class="btn btn-sm small btn-floating
+                    btn-success waves-light float-right" data-toggle="modal" data-target="#productModal"> <i
+                            class="icon fa-plus " aria-hidden="true"></i></button>
+                </div>
             </div>
         </div>
         <table id="items" class="table">
@@ -144,7 +149,7 @@ SUCURSAl
                     <th>Precio</th>
                     @if($sale->paid_out != $sale->total)
                         @if($sale->change == 0)
-                            <th>Opciones</th>
+                            <th colspan="2">Opciones</th>
                         @endif
                     @endif
                 </tr>
@@ -171,6 +176,13 @@ SUCURSAl
                             <i class="icon fa-reply-all" aria-hidden="true"></i>
                         </button>
                     </td>
+                    <td>
+                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round cancel"
+                            alt="{{$item->id_product}}" id="{{$item->limit}}" role="button" data-toggle="tooltip"
+                            data-original-title="Cancelar">
+                            <i class="icon fa-window-close" aria-hidden="true"></i>
+                        </button>
+                    </td>
                 </tr>
                 @endforeach
                 <tr>
@@ -178,7 +190,7 @@ SUCURSAl
                     <td><strong>$ {{ $sale->total }}</strong></td>
                     @if($sale->paid_out != $sale->total)
                         @if($sale->change == 0)
-                            <td>Opciones</td>
+                            <td colspan="2">Opciones</td>
                         @endif
                     @endif
                 </tr>
@@ -381,12 +393,66 @@ SUCURSAl
 
     </div>
 </div>
-<form method="post" action="/ventas/check" id="form" class="d-none">
+
+<!-- Modal Products -->
+<div id="productModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Agregar Producto</h4>
+            </div>
+            <div class="modal-body">
+                <form action="/pagos" method="post" id="saleForm" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="row">
+                        <!-- Select para Seleccionar  producto-->
+                        <div class="col-md-12">
+                            <label>Selecciona un Producto</label>
+                            <select id="current_product" name="product_id" class="form-control" data-plugin="select2"
+                                data-placeholder="Seleccione Producto" data-allow-clear="true">
+                                <option></option>
+                                <optgroup label="Productos">
+                                    @foreach($products as $product)
+                                    <option value="{{ $product->id }}" required>
+                                        {{$product->clave}}-{{$product->description}}</option>
+                                    @endforeach
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="saveProduct" type="button" class="btn btn-primary" data-dismiss="modal">Agregar Producto
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<form method="post" action="/ventas/check" id="givedback" class="d-none">
     {{ csrf_field() }}
     <input type="text" name="discar_cause" id="discar_cause">
     <input type="text" name="product_id" id="product_id">
     <input type="text" name="sale_id" id="sale-id" value="{{ $sale->id }}">
 </form>
+
+<form method="post" action="/ventas/canceled" id="canceled" class="d-none">
+    {{ csrf_field() }}
+    <input type="text" name="product_id" id="producto_id">
+    <input type="text" name="sale_id" id="sale-id" value="{{ $sale->id }}">
+</form>
+
+<form method="post" action="/ventas/addProduct" id="productForm" class="d-none">
+    {{ csrf_field() }}
+    <input type="text" name="product_id" id="newProduct_id">
+    <input type="text" name="sale_id" id="sale-id" value="{{ $sale->id }}">
+</form>
+
 @section('listado-productos')
 <script>
     $(document).ready(function() {
@@ -458,9 +524,28 @@ SUCURSAl
                     if (result.value) {
                         $('#discar_cause').val(3);
                         $('#product_id').val(id);
-                        $('#form').submit();
+                        $('#givedback').submit();
                     }
                 })
+
+        });
+
+        $('#items').on('click', '.cancel', function() {
+            let id = $(this).attr("alt");
+            Swal.fire({
+                title: 'Confirmación',
+                text: "¿Seguro que quieres cancelar el producto de la venta?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4caf50',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.value) {
+                    $('#producto_id').val(id);
+                    $('#canceled').submit();
+                }
+            })
 
         });
 
@@ -489,6 +574,14 @@ SUCURSAl
                 }
             }
             $('#saleForm').submit();
+        });
+        
+        $('#saveProduct').click(function(e) {
+            e.preventDefault();
+            let product = Number($('#current_product').val());
+            console.log('nuevo producto', product);
+            $('#newProduct_id').val(product);
+            $('#productForm').submit();
         });
 
         $('#amount').on('input', function() {

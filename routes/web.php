@@ -214,6 +214,8 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
     //Ventas
     Route::resource('ventas', 'SaleController');
     Route::post('ventas/check', 'SaleController@check');
+    Route::post('ventas/canceled', 'SaleController@canceled');
+    Route::post('ventas/addProduct', 'SaleController@addProduct');
     Route::resource('inventarios', 'InventoryController');
     Route::get('reportinventarios', 'InventoryController@reportInventarios');
     Route::get('inventariospdf/{id}', 'InventoryController@inventariosPDF');
