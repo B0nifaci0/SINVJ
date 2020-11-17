@@ -395,12 +395,14 @@ class SaleController extends Controller
             }); */
             $product = Product::find($request->product_id);
             //return $product;
-            $folio = Sale::where('branch_id', $product->branch_id)->select('id')->get()->count();
-            $folio++;
+            $venta = Sale::where('branch_id', $product->branch_id)->select('folio')->latest()->first();
+            $folio = $venta->folio + 1;
+            //return $folio;
             $folios = Sale::where('branch_id', $product->branch_id)->get();
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
-            $folio = Sale::where('branch_id', $user->branch_id)->select('id')->get()->count();
-            $folio++;
+            $venta = Sale::where('branch_id', $user->branch_id)->select('folio')->latest()->first();
+            $folio = $venta->folio + 1;
+            //return $folio;
             $folios = Sale::where('branch_id', $user->branch_id)->get();
         }
 
@@ -581,8 +583,16 @@ class SaleController extends Controller
             }
         }
 
+        $products = Product::where('branch_id', $sale->branch_id)
+        ->whereIn('status_id', [2, 3])
+        ->with('line')
+        ->with('branch')
+        ->with('category')
+        ->with('status')
+        ->get();
+
         //return $sale->itemsSold;
-        return view('sale.show', compact('finalprice', 'sale', 'lines', 'restan', 'partials'));
+        return view('sale.show', compact('finalprice', 'sale', 'lines', 'restan', 'partials', 'products'));
     }
 
     public function check(Request $request)
@@ -633,6 +643,72 @@ class SaleController extends Controller
         $product->delete();
         Sale::where('id', $request->sale_id)->update(['total' => $total]);
         return back()->with('mesage-givedback', 'El producto ha sido devuelto exitosamente!');
+    }
+
+    public function canceled(Request $request)
+    {
+        //return $request;
+        $product = Product::find($request->product_id);
+        $sale = Sale::findOrFail($request->sale_id);
+        
+        $product->sold_at = null;
+        $product->status_id = Product::EXISTING;
+        //return $product;
+
+        $detail = SaleDetails::where('product_id', $product->id)->first();
+        //return $detail;
+
+        $sale->total -= $detail->final_price;
+        //return $sale;
+
+        $detail->delete();
+        $sale->save();
+        $product->save();
+
+        return back()->with('mesage-givedback', 'El producto ha sido cancelado de la venta exitosamente!');
+    }
+
+    public function addProduct(Request $request)
+    {
+        //return $request;
+        $product = Product::find($request->product_id);
+        $sale = Sale::findOrFail($request->sale_id);
+        $date = Carbon::now();
+        
+        $details = SaleDetails::create([
+            'sale_id' => $sale->id,
+            'product_id' => $product->id,
+            'final_price' => $product->price,
+            'profit' => $product->price - $product->price_purchase
+        ]);
+
+        $inventory = InventoryDetail::join('inventory_reports', 'inventory_details.inventory_report_id', 'inventory_reports.id')
+            ->where('inventory_reports.branch_id', $product->branch_id)
+            ->where('inventory_details.product_id', $product->id)
+            ->where(function ($q) use ($request) {
+                $q->where(function ($query) use ($request) {
+                    $query->Where('inventory_reports.status_report', 1)
+                        ->orWhere('inventory_reports.status_report', 2);
+                });
+            })
+            ->select('inventory_details.*')
+            ->first();
+
+        if ($inventory) {
+            $inventory->status_id = 7;
+            $inventory->save();
+        }
+
+        $product->status_id = 1;
+        $product->sold_at = $date;
+
+        $sale->total += $details->final_price;
+        //return $sale;
+
+        $sale->save();
+        $product->save();
+
+        return back()->with('mesage', 'El producto ha sido agregado a la venta exitosamente!');
     }
 
     /**
