@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Branch;
 use App\Product;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ClientRequest;
 use Illuminate\Validation\Rule;
@@ -38,6 +39,26 @@ class ClientController extends Controller
         return view('clients.index', compact('wholesaler', 'public'));
     }
 
+    Public function IndexCO(){
+        $user = Auth::user();
+        $shop_id = $user->shop->id;
+        if($user->type_user != 1){
+                $wholesaler = Client::where('branch_id', $user->branch_id)
+                ->whereIn('type_client', [1])
+                ->where('shop_id', $user->shop->id)
+                ->orderBy('updated_at', 'DESC')
+                ->get();
+
+                $public = Client::where('branch_id', $user->branch_id)
+                ->whereIn('type_client', [0])
+                ->where('shop_id', $user->shop->id)
+                ->orderBy('updated_at', 'DESC')
+                ->get();
+            }
+            
+            return view('clients.IndexCO', compact('wholesaler', 'public'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -64,18 +85,27 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $client = Client::create([
-            'name' => $request->name,
-            'first_lastname' => $request->first_lastname,
-            'second_lastname' => $request->second_lastname,
-            'phone_number' => $request->phone_number,
-            'credit' => $request->credit,
-            'shop_id' => $user->shop->id,
-            'branch_id' => $request->branch_id,
-            'type_client' => $request->type_client,
-        ]);
+        if($user->type_user == User::AA){
+            $client['branch_id'] = $request->branch_id;
+            $client['shop_id'] = $user->shop->id;
+        } else {
+            $client['branch_id'] = $user->branch_id;
+            $client['shop_id'] = $user->shop->id;
+        }
+
+            $client['name'] = $request->name;
+            $client['first_lastname'] = $request->first_lastname;
+            $client['second_lastname']= $request->second_lastname;
+            $client['phone_number']= $request->phone_number;
+            $client['credit']= $request->credit;
+            $client['type_client'] = $request->type_client;
+        $client = Client::create($client);
         //return $client;
+        if(Auth::User()->type_user == 1){
         return redirect('/clientes')->with('mesage', 'El cliente se ha creado correctamente');
+        } else {
+            return redirect('/Clientes')->with('mesage','El cliente se ha creado correctamente');
+        }
     }
 
     /**
@@ -155,12 +185,20 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = Auth::user();
+        if($user->type_user == User::AA){
+            $client['branch_id'] = $request->branch_id;
+            $client['shop_id'] = $user->shop->id;
+        } else {
+            $client['branch_id'] = $user->branch_id;
+            $client['shop_id'] = $user->shop->id;
+        }
         $client = Client::find($id);
 
         $client->name = $request->name;
         $client->phone_number = $request->phone_number;
         $client->type_client = $request->type_client;
-        $client->branch_id = $request->branch_id;
+        //$client->branch_id = $request->branch_id;
 
         if ($client->type_client == 1) {
             $client->first_lastname = $request->first_lastname;
@@ -171,10 +209,13 @@ class ClientController extends Controller
             $client->second_lastname = null;
             $client->credit = null;
         }
-
+        //return $client;
         $client->save();
-
+        if(Auth::User()->type_user == 1){
         return redirect('/clientes')->with('mesage-update', 'El cliente se ha actualizado correctamente');
+        } else {
+            return redirect('/Clientes')->with('mesage-update', 'El cliente se ha actualizado correctamente');
+        }
     }
 
     /**

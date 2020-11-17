@@ -319,6 +319,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('piezascategoriageneral', 'ProductController@reportCategoriaPGeneral');
     Route::get('reportProductspzs', 'ProductController@reportProductpzs');
     Route::get('sucursales/sucursalcortediario/{id}', 'BranchController@DailyCashCut');
+    Route::get('/Clientes', 'ClientController@IndexCO');
 });
 
 Auth::routes(['verify' => true]);

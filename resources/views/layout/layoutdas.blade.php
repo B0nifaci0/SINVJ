@@ -709,6 +709,14 @@
                                                 <span class="site-menu-title">Gastos</span>
                                             </a>
                                         </li>
+                                        <li class="site-menu-item has-sub">                                    
+                                        <li class="site-menu-item">
+                                            <a class="animsition-link" href="/Clientes">
+                                                <i class="site-menu-icon icon fa-id-badge" aria-hidden="true"></i>
+                                                <span class="site-menu-title">Clientes Sucursal</span>
+                                            </a>
+                                        </li>
+                                    </li>
 
                                     </ul>
                                 </li>
@@ -844,6 +852,14 @@
                                             </a>
                                         </li>
                                     </ul>
+                                    <li class="site-menu-item has-sub">                                    
+                                        <li class="site-menu-item">
+                                            <a class="animsition-link" href="/Clientes">
+                                                <i class="site-menu-icon icon fa-id-badge" aria-hidden="true"></i>
+                                                <span class="site-menu-title">Clientes Sucursal</span>
+                                            </a>
+                                        </li>
+                                    </li>
                                     <!--<ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/reportes-gastos">
