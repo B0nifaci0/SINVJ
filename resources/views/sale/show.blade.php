@@ -150,11 +150,13 @@ SUCURSAl
         <div class="panel-success">
             <div class="panel-heading">
                 <h2 class="panel-title" style="color:white" align="center"> Productos Comprados</h2>
+                @if($sale->paid_out != $sale->total)
                 <div class="panel-actions float-right">
                     <button id="products" class="btn btn-sm small btn-floating
                     btn-success waves-light float-right" data-toggle="modal" data-original-title="Agregar Producto"
                         data-target="#productModal"> <i class="icon fa-plus " aria-hidden="true"></i></button>
                 </div>
+                @endif
             </div>
         </div>
         <table id="items" class="table">
@@ -188,6 +190,7 @@ SUCURSAl
                     <td>{{$item->category_name}}</td>
                     <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                     <td>$ {{ $item->final_price }}</td>
+                    @if($sale->paid_out != $sale->total)
                     <td>
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
                             alt="{{$item->id_product}}" id="{{$item->limit}}" role="button" data-toggle="tooltip"
@@ -202,6 +205,7 @@ SUCURSAl
                             <i class="icon fa-window-close" aria-hidden="true"></i>
                         </button>
                     </td>
+                    @endif
                 </tr>
                 @endforeach
                 <tr>
