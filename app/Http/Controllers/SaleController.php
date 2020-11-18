@@ -542,9 +542,9 @@ class SaleController extends Controller
         $finalprice = Product::join('sale_details', 'sale_details.product_id', 'products.id')
             ->join('categories', 'categories.id', 'products.category_id')
             ->withTrashed()
-            ->whereIn('products.discar_cause', [3, 4])
-            ->select('products.id as id_product', 'clave', 'weigth', 'line_id', 'categories.name as category_name', 'sale_details.final_price', 'description')
+            ->select('products.id as id_product', 'clave', 'weigth', 'line_id', 'categories.name as category_name', 'sale_details.final_price', 'description', 'sale_details.deleted_at')
             ->where('sale_id', $id)
+            ->whereNotNull('sale_details.deleted_at')
             ->sum('sale_details.final_price');
         //return $finalprice;
         $restan = $sale->total - $sale->partials->sum('amount');
@@ -584,12 +584,12 @@ class SaleController extends Controller
         }
 
         $products = Product::where('branch_id', $sale->branch_id)
-        ->whereIn('status_id', [2, 3])
-        ->with('line')
-        ->with('branch')
-        ->with('category')
-        ->with('status')
-        ->get();
+            ->whereIn('status_id', [2, 3])
+            ->with('line')
+            ->with('branch')
+            ->with('category')
+            ->with('status')
+            ->get();
 
         //return $sale->itemsSold;
         return view('sale.show', compact('finalprice', 'sale', 'lines', 'restan', 'partials', 'products'));
@@ -599,6 +599,7 @@ class SaleController extends Controller
     {
         //return $request;
         $product = Product::find($request->product_id);
+
         $give = Product::join('transfer_products', 'transfer_products.product_id', 'products.id')
             ->where('products.id', $request->product_id)
             ->where('transfer_products.status_product', 1)
@@ -611,6 +612,9 @@ class SaleController extends Controller
         $giveback = SaleDetails::where('sale_id', $request->sale_id)
             ->where('product_id', $request->product_id)
             ->sum('final_price');
+        $saleDetails = SaleDetails::whereProductId($request->product_id)->firstOrFail();
+        $saleDetails->delete();
+
         //return $giveback;
         $total = $sale->total - $giveback;
         //return $total;
@@ -650,7 +654,7 @@ class SaleController extends Controller
         //return $request;
         $product = Product::find($request->product_id);
         $sale = Sale::findOrFail($request->sale_id);
-        
+
         $product->sold_at = null;
         $product->status_id = Product::EXISTING;
         //return $product;
@@ -674,7 +678,7 @@ class SaleController extends Controller
         $product = Product::find($request->product_id);
         $sale = Sale::findOrFail($request->sale_id);
         $date = Carbon::now();
-        
+
         $details = SaleDetails::create([
             'sale_id' => $sale->id,
             'product_id' => $product->id,

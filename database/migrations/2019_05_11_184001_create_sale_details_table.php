@@ -21,6 +21,7 @@ class CreateSaleDetailsTable extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->double('final_price');
             $table->double('profit');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
