@@ -191,6 +191,7 @@ SUCURSAl
                     <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                     <td>$ {{ $item->final_price }}</td>
                     @if($sale->paid_out != $sale->total)
+                    @if (Auth::user()->type_user==1)
                     <td>
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
                             alt="{{$item->id_product}}" id="{{$item->limit}}" role="button" data-toggle="tooltip"
@@ -198,6 +199,7 @@ SUCURSAl
                             <i class="icon fa-reply-all" aria-hidden="true"></i>
                         </button>
                     </td>
+                    @endif
                     <td>
                         <button class="btn btn-icon btn-danger waves-effect waves-light waves-round cancel"
                             alt="{{$item->id_product}}" id="{{$item->limit}}" role="button" data-toggle="tooltip"
