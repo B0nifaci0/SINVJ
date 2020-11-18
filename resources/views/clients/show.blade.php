@@ -31,47 +31,56 @@ ALTA BITACORAS
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <h2 class="panel-title" align="center"> Cliente: {{ $client->name }}
+                    <div class="col-md-4 col-sm-12">
+                        <h3 class="panel-title"> Cliente: {{ $client->name }}
                             {{ $client->first_lastname }}
-                            {{ $client->second_lastname }}</h2>
+                            {{ $client->second_lastname }}</h3>
                     </div>
-                    <div class="col-md-6">
-                        <h2 class="panel-title" align="center"> Telefono: {{ $client->phone_number }}</h2>
+                    <div class="col-md-4 col-sm-12">
+                        <h3 class="panel-title"> Telefono: {{ $client->phone_number }}</h3>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <h3 class="panel-title">Tipo Cliente: @if($client->type_client == 1)
+                            <strong class="badge-success">Mayorista</strong>
+                            @endif
+                            @if($client->type_client == 0)
+                            <strong class="badge-succes">Menudeo</strong>
+                            @endif
+                        </h3>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-info col-md-2">Compras realizadas:
                                 {{ $client->sales->count() }}</strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-warning col-md-2">Total comprado:
                                 {{ $client->sales->sum('total') }}</strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-danger col-md-2">Pagado: $ {{ $client->sales->sum('paid_out') }}
                             </strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-primary col-md-2">Saldo a favor: $ @if($client->positive_balance)
                                 {{ $client->positive_balance }} @else 0 @endif </strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-success col-md-2">Por pagar: $
                                 {{ $client->sales->sum('total') - $client->sales->sum('paid_out') }} </strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-light col-md-2">Límite de Crédito: $ {{ $client->credit }} </strong>
                         </p>

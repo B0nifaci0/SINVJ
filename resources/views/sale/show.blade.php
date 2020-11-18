@@ -32,8 +32,8 @@ SUCURSAl
                 <h1 class=" panel-title col-md-12" align="center">Detalle de ventas</h1>
                 <div class="panel-actions float-right col-">
                     <button onclick="window.location.href='/ventas'" class="btn btn-sm small btn-floating
-                    btn-primary waves-light float-right" data-original-title="Ir a mis vent"> <i
-                            class="icon fa-reply-all " aria-hidden="true"></i></button>
+                    btn-primary waves-light float-right" data-toggle="tooltip" data-original-title="Ir a mis ventas">
+                        <i class="icon fa-reply-all " aria-hidden="true"></i></button>
                 </div>
                 {{-- <div class="panel-actions float-right col-">
                     <a href="/ventas/{{$sale->id}}/edit">
@@ -57,84 +57,103 @@ SUCURSAl
             </div>
             @endif
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
+                    <p class="">
+                        <strong>Fecha venta:</strong>{{$sale->created_at->format(' d/m/Y  H:i:s')}}
+                    </p>
+                </div>
+                <div class="col-md-4">
                     <p class="">
                         <strong>Nombre:
                         </strong>{{ ($sale->client_id) ? $sale->client->full_name : $sale->customer_name }}
                     </p>
+                </div>
+                <div class="col-md-4">
                     <p class="">
                         <strong>Teléfono: </strong>{{ ($sale->client) ? $sale->client->phone_number : $sale->telephone}}
                     </p>
                 </div>
-                <div class="col-md-3">
-                    <p class="text-right">
+                <div class="col-md-4">
+                    <p class="">
+                        <strong>Tipo cliente: </strong>@if( $sale->client->type_client == 0)
+                        <span class="text-center badge badge-success">Menudeo</span>
+                        @endif
+                        @if( $sale->client->type_client == 1)
+                        <span class="text-center badge badge-success">Mayorista</span>
+                        @endif
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="">
                         <strong>Productos comprados: </strong>{{ $sale->itemsSold->count() }}
                     </p>
-                    <p class="text-right">
+                </div>
+                <div class="col-md-4">
+                    <p class="">
                         <strong>Abonos realizados: </strong>{{ $sale->partials->count() }}
                     </p>
                 </div>
-                <div class="offset-md-2 col-md-3">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><strong class="text-center badge badge-warning">Total:</strong></td>
-                                <td>$ {{ $sale->total }}</td>
-                            </tr>
-                            <tr>
-                                <td><strong class="text-center badge badge-danger">Pagado:</strong></td>
-                                <td>$ {{ $sale->paid_out }}</td>
-                            </tr>
-                                <tr>
-                                    <td><strong class="text-center badge badge-primary">Saldo a Favor:</strong></td>
-                                    <td> $  @if($sale->client->positive_balance == null)
-                                                0
-                                            @else
-                                                {{ $sale->client->positive_balance }}
-                                            @endif
-                                    </td>
-                                </tr>
-                            @if($sale->client->type_client == 1)
-                            <tr>
-                                <td>
-                                    <strong class="text-center badge badge-secondary">Límite de crédito</strong>
-                                </td>
-                                <td> 
-                                    $ {{ $sale->client->credit }}
-                                </td>
-                            </tr>
-                            @endif
-                            @if($sale->change > 0 && $sale->client->type_client == 0)
-                            <tr>
-                                <td>
-                                    <strong class="text-center badge badge-secondary">Cambio:</strong>
-                                </td>
-                                <td> 
-                                    $ {{ $sale->change }}
-                                </td>
-                            </tr>
-                            @endif
-                            <tr>
-                                <td><strong class="text-center badge badge-success">Restan:</strong></td>
-                                @if(($sale->total - $sale->partials->sum('amount')) > 0)
-                                <td> $ {{$sale->total - $sale->partials->sum('amount')}}</td>
-                                @else
-                                <td> $ 0 </td>
-                                @endif
-                            </tr>
-                        </tbody>
-                    </table>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="">
+                        <strong class="text-center badge badge-warning"> Total: </strong>$ {{ $sale->total }}
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p class="">
+                        <strong class="text-center badge badge-danger"> Pagado: </strong>$ {{ $sale->paid_out }}
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p class="">
+                        <strong class="text-center badge badge-primary">Saldo a Favor:</strong>
+                        $ @if($sale->client->positive_balance == null)
+                        0
+                        @else
+                        {{ $sale->client->positive_balance }}
+                        @endif
+                    </p>
+                </div>
+                @if($sale->client->type_client == 1)
+                <div class="col-md-3">
+                    <p class="">
+                        <strong class="text-center badge badge-secondary">Límite de crédito: </strong>
+                        $ {{ $sale->client->credit }}
+                    </p>
+                </div>
+                @endif
+                @if($sale->change > 0 && $sale->client->type_client == 0)
+                <div class="col-md-3">
+                    <p class="">
+                        <strong class="text-center badge badge-secondary">Cambio:</strong>
+                        $ {{ $sale->change }}
+                    </p>
+                </div>
+                @endif
+                <div class="col-md-3">
+                    <p class="">
+                        <strong class="text-center badge badge-success">Restan:</strong>
+                        @if(($sale->total - $sale->partials->sum('amount')) > 0)
+                        $ {{$sale->total - $sale->partials->sum('amount')}}
+                        @else
+                        $ 0
+                        @endif
+                    </p>
                 </div>
             </div>
         </div>
-
+    </div>
+</div>
+<div class="table-responsive">
+    <div class="panel">
         <div class="panel-success">
             <div class="panel-heading">
                 <h2 class="panel-title" style="color:white" align="center"> Productos Comprados</h2>
                 <div class="panel-actions float-right">
                     <button id="products" class="btn btn-sm small btn-floating
-                    btn-success waves-light float-right" data-toggle="modal" data-target="#productModal"> <i
-                            class="icon fa-plus " aria-hidden="true"></i></button>
+                    btn-success waves-light float-right" data-toggle="modal" data-original-title="Agregar Producto"
+                        data-target="#productModal"> <i class="icon fa-plus " aria-hidden="true"></i></button>
                 </div>
             </div>
         </div>
@@ -148,9 +167,9 @@ SUCURSAl
                     <th>Peso</th>
                     <th>Precio</th>
                     @if($sale->paid_out != $sale->total)
-                        @if($sale->change == 0)
-                            <th colspan="2">Opciones</th>
-                        @endif
+                    @if($sale->change == 0)
+                    <th colspan="2">Opciones</th>
+                    @endif
                     @endif
                 </tr>
             </thead>
@@ -189,20 +208,22 @@ SUCURSAl
                     <td colspan="5" align="center">Total</td>
                     <td><strong>$ {{ $sale->total }}</strong></td>
                     @if($sale->paid_out != $sale->total)
-                        @if($sale->change == 0)
-                            <td colspan="2">Opciones</td>
-                        @endif
+                    @if($sale->change == 0)
+                    <td colspan="2">Opciones</td>
+                    @endif
                     @endif
                 </tr>
             </tbody>
         </table>
-
-        <div class="panel-warning">
-            <div class="panel-heading">
-                <h2 class="panel-title" style="color:white" align="center"> Productos Devueltos</h2>
-            </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <div class="panel-warning">
+        <div class="panel-heading">
+            <h2 class="panel-title" style="color:white" align="center"> Productos Devueltos</h2>
         </div>
-
+    </div>
+    <div class="panel">
         <table id="items" class="table">
             <thead>
                 <tr>
@@ -238,6 +259,7 @@ SUCURSAl
             </tbody>
         </table>
     </div>
+</div>
 </div>
 </div>
 
@@ -313,15 +335,15 @@ SUCURSAl
                             <td>$ {{ $partial->amount }}</td>
                             <td>
                                 @if($partial->image)
-                                    <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
-                                        data-close-btn-inside="false" data-fixed-contentPos="true"
-                                        data-main-class="mfp-margin-0s mfp-with-zoom"
-                                        data-zoom='{"enabled": "true","duration":"300"}'>
-                                        <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200"
-                                            height="150" />
-                                @else
+                                <a class="inline-block" href="{{ $partial->image }}" data-plugin="magnificPopup"
+                                    data-close-btn-inside="false" data-fixed-contentPos="true"
+                                    data-main-class="mfp-margin-0s mfp-with-zoom"
+                                    data-zoom='{"enabled": "true","duration":"300"}'>
+                                    <img class="img-fluid" src="{{ $partial->image }}" alt="..." width="200"
+                                        height="150" />
+                                    @else
                                     Sin Imagen
-                                @endif
+                                    @endif
                             </td>
                         </tr>
                         @endforeach
@@ -455,28 +477,27 @@ SUCURSAl
 
 @section('listado-productos')
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         var overLimitAuth = false;
 
-        $('#items').on('click', '.give-back', function() {
+        $('#items').on('click', '.give-back', function () {
             let id = $(this).attr("alt");
             var over = $(this).attr("id");
-            if(over == 1 && overLimitAuth == false)
-            {
+            if (over == 1 && overLimitAuth == false) {
                 var message = `El tiempo de devolucion del producto ha expirado.
 		        Ingrese la contraseña de seguridad para continuar`;
                 Swal.fire({
                     title: message,
                     input: 'password',
                     inputAttributes: {
-                    autocapitalize: 'off'
+                        autocapitalize: 'off'
                     },
                     showCancelButton: true,
                     confirmButtonText: 'Aceptar',
                     showLoaderOnConfirm: true,
                     preConfirm: (password) => {
-                    return fetch(`/check-password`, {
+                        return fetch(`/check-password`, {
                             method: 'POST',
                             body: JSON.stringify({
                                 password: password
@@ -486,51 +507,51 @@ SUCURSAl
                                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                             }
                         })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(response.statusText)
-                            }
-                            return response.json()
-                        })
-                        .catch(error => {
-                            Swal.showValidationMessage(
-                                `Contraseña incorrecta`
-                            )
-                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                }
+                                return response.json()
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(
+                                    `Contraseña incorrecta`
+                                )
+                            })
                     },
                     allowOutsideClick: () => !Swal.isLoading()
                 }).then((result) => {
-                if (result.value) {
-                    Swal.fire({
-                        title: `La contraseña es correcta`
-                    })
-                    overLimitAuth = true;
-                    console.log("overLimitAuth: ",overLimitAuth);
-                }
-                })
-            return;
-            }
-            console.log("ID: ",id," y Limit: ",over);
-
-                Swal.fire({
-                    title: 'Confirmación',
-                    text: "¿Seguro que quieres devolver el producto?",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#4caf50',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si'
-                }).then((result) => {
                     if (result.value) {
-                        $('#discar_cause').val(3);
-                        $('#product_id').val(id);
-                        $('#givedback').submit();
+                        Swal.fire({
+                            title: `La contraseña es correcta`
+                        })
+                        overLimitAuth = true;
+                        console.log("overLimitAuth: ", overLimitAuth);
                     }
                 })
+                return;
+            }
+            console.log("ID: ", id, " y Limit: ", over);
+
+            Swal.fire({
+                title: 'Confirmación',
+                text: "¿Seguro que quieres devolver el producto?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4caf50',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.value) {
+                    $('#discar_cause').val(3);
+                    $('#product_id').val(id);
+                    $('#givedback').submit();
+                }
+            })
 
         });
 
-        $('#items').on('click', '.cancel', function() {
+        $('#items').on('click', '.cancel', function () {
             let id = $(this).attr("alt");
             Swal.fire({
                 title: 'Confirmación',
@@ -549,34 +570,33 @@ SUCURSAl
 
         });
 
-            
 
-        $('#savePartial').click(function(e) {
+
+        $('#savePartial').click(function (e) {
             console.log("Diste click");
             e.preventDefault();
             let valor = Number($('#valor').val());
             let amount = Number($('#amount').val());
             let max = Number($('#amount').attr('alt'));
             console.log(valor, amount, max);
-            if(valor == 1 || valor == 2)
-            {
+            if (valor == 1 || valor == 2) {
                 if (amount > max || amount <= 0) {
-                swal.fire({
-                    title: 'Error',
-                    text: 'El pago maximo es $ ' + max + ' y el minimo es $ 1',
-                    type: 'warning',
-                    showAcepptButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Aceptar!'
-                });
-                return;
+                    swal.fire({
+                        title: 'Error',
+                        text: 'El pago maximo es $ ' + max + ' y el minimo es $ 1',
+                        type: 'warning',
+                        showAcepptButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Aceptar!'
+                    });
+                    return;
                 }
             }
             $('#saleForm').submit();
         });
-        
-        $('#saveProduct').click(function(e) {
+
+        $('#saveProduct').click(function (e) {
             e.preventDefault();
             let product = Number($('#current_product').val());
             console.log('nuevo producto', product);
@@ -584,22 +604,22 @@ SUCURSAl
             $('#productForm').submit();
         });
 
-        $('#amount').on('input', function() {
+        $('#amount').on('input', function () {
             let id = $(this).attr('id');
             let val = $(this).val();
             $(`#${id}`).val(val.replace(/\s+/, ""));
         })
         $('.remove').hide();
-            var guarda = $('#amount').val();
-            //console.log("input: ",$('#amount').val());
-            $('#amount').val(0)
-            $('#amount').removeAttr('readonly');
-            $('#amount').removeClass('readOnly');
-            console.log("Variable: ",guarda);
-             $('#valor').change(function(){
+        var guarda = $('#amount').val();
+        //console.log("input: ",$('#amount').val());
+        $('#amount').val(0)
+        $('#amount').removeAttr('readonly');
+        $('#amount').removeClass('readOnly');
+        console.log("Variable: ", guarda);
+        $('#valor').change(function () {
             var partialId = $(this).val();
-            console.log("El valor del id es:",partialId)
-            if(partialId == 2 ){
+            console.log("El valor del id es:", partialId)
+            if (partialId == 2) {
                 //Tarjeta
                 //console.log("Entro 1");
                 $('.remove').show();
@@ -609,20 +629,20 @@ SUCURSAl
                 //$('#amount').prop('disabled',false);
                 // console.log($('#amount').value)
 
-            }else if (partialId == 1 ){
+            } else if (partialId == 1) {
                 //Efectivo
                 //console.log("Entro 2");
-                 $('.remove').hide();
-                 $('#amount').val(0);
+                $('.remove').hide();
+                $('#amount').val(0);
                 // $('#amount').prop('disabled',false);
                 $('#amount').removeAttr('readonly');
                 $('#amount').removeClass('readOnly');
                 //  console.log($('#amount').value)
-            }else{
+            } else {
                 $('.remove').hide();
                 $('#amount').val(guarda);
                 //$('#amount').prop('disabled',true);
-                $('#amount').attr('readonly','readonly');
+                $('#amount').attr('readonly', 'readonly');
                 $('#amount').addClasss('readOnly');
             }
         });
