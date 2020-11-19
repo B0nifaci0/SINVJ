@@ -21,10 +21,17 @@ ALTA BITACORAS
                             <h2 class="panel-title" style="color:white" align="center"> Perfil De Cliente
                             </h2>
                             <div class="panel-actions float-right col-">
-                    <button onclick="window.location.href='/ventas'" class="btn btn-sm small btn-floating
-                    btn-primary waves-light float-right" data-original-title="Ir a mis vent"> <i
+                            @if(Auth::User()->type_user == 1)
+                            <button onclick="window.location.href='/clientes'" class="btn btn-sm small btn-floating
+                            btn-primary waves-light float-right" data-toggle="tooltip" data-original-title="Volver a mis clientes"> <i
                             class="icon fa-reply-all " aria-hidden="true"></i></button>
-                </div>
+                            @endif
+                            @if(Auth::User()->type_user != 1)
+                            <button onclick="window.location.href='/Clientes'" class="btn btn-sm small btn-floating
+                            btn-primary waves-light float-right" data-toggle="tooltip" data-original-title="Volver a mis clientes"> <i
+                            class="icon fa-reply-all " aria-hidden="true"></i></button>
+                            @endif
+                            </div>
                         </div>
                     </div>
 
@@ -44,7 +51,7 @@ ALTA BITACORAS
                             <strong class="badge-success">Mayorista</strong>
                             @endif
                             @if($client->type_client == 0)
-                            <strong class="badge-succes">Menudeo</strong>
+                            <strong class="badge-success">Menudeo</strong>
                             @endif
                         </h3>
                     </div>
