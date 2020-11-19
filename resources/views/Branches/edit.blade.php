@@ -67,7 +67,6 @@ EDITAR SUCURSALES
         <div class="col-md-6 col-md-offset-1 visible-md visible-lg">
           <label class="floating-label" for="inputState">{{ __('Estado') }}</label>
           <select id="estados_1" class="form-control round estados" name="state_id" alt="1">
-            <option value="*">Seleccione Estado</option>
             @foreach ($states as $state)
             <option value="<?= $state->id ?>"><?= $state->name ?></option>
             @endforeach
