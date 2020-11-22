@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Sale;
-use App\Product;
-use App\SaleDetails;
+use PDF;
 use App\Line;
-use App\Client;
+use App\Sale;
 use App\User;
-use App\InventoryDetail;
 use App\Branch;
+use App\Client;
 use App\Partial;
+use App\Product;
 use Carbon\Carbon;
+use App\SaleDetails;
+use App\InventoryDetail;
+use App\TransferProduct;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Traits\S3ImageManager;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\SaleRequest;
-use App\Traits\S3ImageManager;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use PDF;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class SaleController extends Controller
 {
@@ -534,6 +535,7 @@ class SaleController extends Controller
      */
     public function show($id)
     {
+        $user = Auth::user();
         $sale = Sale::with(['partials', 'client'])->findOrFail($id);
         $sale->itemsSold = $sale->itemsSold();
         $sale->itemsGivedBack =  $sale->ItemsGivedBack();
@@ -582,15 +584,17 @@ class SaleController extends Controller
                 $item->limit = 0;
             }
         }
+        if ($user->isAdmin())
+            $products = Product::whereShopId($user->shop->id);
+        else
+            $products = Product::whereBranchId($sale->branch_id);
 
-        $products = Product::where('branch_id', $sale->branch_id)
-            ->whereIn('status_id', [2, 3])
+        $products = $products->where('status_id', 2)
             ->with('line')
             ->with('branch')
             ->with('category')
             ->with('status')
             ->get();
-
         //return $sale->itemsSold;
         return view('sale.show', compact('finalprice', 'sale', 'lines', 'restan', 'partials', 'products'));
     }
@@ -599,6 +603,9 @@ class SaleController extends Controller
     {
         //return $request;
         $product = Product::find($request->product_id);
+        $inTransfer = TransferProduct::whereProductId($request->product_id)->first();
+
+        if ($inTransfer) return  back()->with('mesage-givedback', 'El producto no se puede devolver porqué se encuentra en un traspaso activo!');
 
         $give = Product::join('transfer_products', 'transfer_products.product_id', 'products.id')
             ->where('products.id', $request->product_id)

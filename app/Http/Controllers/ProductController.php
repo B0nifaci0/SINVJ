@@ -9,19 +9,20 @@ use App\User;
 use App\Branch;
 use App\Status;
 use App\Product;
-use App\Category;
 use App\Expense;
+use App\Category;
 use Carbon\Carbon;
+use App\SaleDetails;
 use App\TransferProduct;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use App\Traits\S3ImageManager;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProductValidate;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 // use Yajra\Datatables\Datatables;
 
@@ -551,12 +552,12 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $have = TransferProduct::where('product_id', $id)->get()->count();
-        if ($have > 0) {
-            return response()->json([
-                'success' => false,
-            ]);
-        } else {
+        $inTransfer = TransferProduct::whereProductId($id)->first();
+        $inSale = SaleDetails::whereProductId($id)->first();
+
+        if ($inTransfer) return response()->json(['success' => false,'cause' => true]);
+        else if ($inSale) return response()->json(['success' => false, 'cause' => false]);
+        else {
             Product::destroy($id);
             return response()->json([
                 'success' => true
