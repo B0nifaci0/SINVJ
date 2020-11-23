@@ -98,9 +98,13 @@
         </div>
       </div>
     </div>
-    @endsection @section('barcode-product')
-    <script type="text/javascript">
-      var user = {!! $user !!};
+  </div>
+</div>
+@endsection
+
+@section('barcode-product')
+<script type="text/javascript">
+  var user = {!! $user !!};
 
       console.log("usuario= " + user.id)
 
@@ -243,7 +247,5 @@
           }
         })
       });
-    </script>
-    @endsection
-  </div>
-</div>
+</script>
+@endsection
