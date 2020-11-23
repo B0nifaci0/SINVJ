@@ -65,7 +65,6 @@ EDITAR USUARIOS
             <div class="col-md-offset-1 visible-md visible-lg col-md-6">
                 <label class="form-control-label" for="inputBranch">Seleccione una Sucursal</label>
                 <select id="branches" class="form-control round sucursales" name="branch_id" required="required">
-                <option value="{{$users->branch->id}}">{{$users->branch->name}} </option>
                   @foreach ($branches as $branch)
                     <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
                   @endforeach
@@ -76,15 +75,7 @@ EDITAR USUARIOS
             <div class="col-md-6  visible-md visible-lg">
               <label>Tipo de Usuario</label>
               <select id="type_user" class="form-control round type_user" name="type_user" required="required" >
-                
-                @if($users->type_user == 1)
-                <option value="1">Administrador</option>
-                @elseif($users->type_user == 2)
-                <option value="2">Sub-Administrador</option>
-                @else 
-                <option value="3">Colaborador</option>  
-                @endif 
-                
+                <option value="">Tipo de usuario</option>
                 <option value="2" name='type_user'>Sub-Administrador</option> 
                 <option value="3" name='type_usyer'>Colaborador</option>
               </select>
