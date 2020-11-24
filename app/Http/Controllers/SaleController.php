@@ -540,7 +540,7 @@ class SaleController extends Controller
         $sale->itemsSold = $sale->itemsSold();
         $sale->itemsGivedBack =  $sale->ItemsGivedBack();
         $sale->total = $sale->itemsSold->sum('final_price');
-        //return $sale;
+
         $finalprice = Product::join('sale_details', 'sale_details.product_id', 'products.id')
             ->join('categories', 'categories.id', 'products.category_id')
             ->withTrashed()
@@ -548,11 +548,8 @@ class SaleController extends Controller
             ->where('sale_id', $id)
             ->whereNotNull('sale_details.deleted_at')
             ->sum('sale_details.final_price');
-        //return $finalprice;
         $restan = $sale->total - $sale->partials->sum('amount');
-        //return $restan;
-        $lines = Line::all();
-        $partials = Partial::all();
+
         $adapter = Storage::disk('s3')->getDriver()->getAdapter();
         foreach ($sale->partials as $e) {
             if ($e->image) {
@@ -569,10 +566,8 @@ class SaleController extends Controller
             }
         }
 
+        $date_now = Carbon::now()->format('Y-m-d');
 
-        $date_now = Carbon::now();
-        $date_now = $date_now->format('Y-m-d');
-        //return $sale;
         foreach ($sale->itemsSold as $item) {
             $date_limit = $item->sold_at;
             $item->date_limit = (new Carbon($date_limit))->addDays(60);
@@ -595,13 +590,12 @@ class SaleController extends Controller
             ->with('category')
             ->with('status')
             ->get();
-        //return $sale->itemsSold;
-        return view('sale.show', compact('finalprice', 'sale', 'lines', 'restan', 'partials', 'products'));
+
+        return view('sale.show', compact('finalprice', 'sale', 'restan', 'products'));
     }
 
     public function check(Request $request)
     {
-        //return $request;
         $product = Product::find($request->product_id);
         $inTransfer = TransferProduct::whereProductId($request->product_id)->first();
 
@@ -611,23 +605,17 @@ class SaleController extends Controller
             ->where('products.id', $request->product_id)
             ->where('transfer_products.status_product', 1)
             ->count('products.id');
-        //return $give;
         $sale = Sale::findOrFail($request->sale_id);
-        //return $sale;
         $client = Client::find($sale->client_id);
-        //return $client;
         $giveback = SaleDetails::where('sale_id', $request->sale_id)
             ->where('product_id', $request->product_id)
             ->sum('final_price');
         $saleDetails = SaleDetails::whereProductId($request->product_id)->firstOrFail();
         $saleDetails->delete();
 
-        //return $giveback;
         $total = $sale->total - $giveback;
-        //return $total;
         $sale->total = $total;
         if ($sale->total == 0) {
-            //$balance = $sale->paid_out - $sale->total;
             $sale->positive_balance = $sale->positive_balance + $sale->paid_out;
             $client->positive_balance = $client->positive_balance + $sale->paid_out;
             if ($client->positive_balance < 0) {
@@ -637,14 +625,11 @@ class SaleController extends Controller
             $sale->paid_out = 0;
         }
 
-        //return $sale;
-        //return $client;
         if ($give == 1) {
             $product->discar_cause = 4;
         } else {
             $product->discar_cause = $request->discar_cause;
         }
-        //return $product;
 
         $product->restored_at = null;
 
@@ -658,23 +643,26 @@ class SaleController extends Controller
 
     public function canceled(Request $request)
     {
-        //return $request;
         $product = Product::find($request->product_id);
         $sale = Sale::findOrFail($request->sale_id);
 
         $product->sold_at = null;
         $product->status_id = Product::EXISTING;
-        //return $product;
+        $product->save();
 
-        $detail = SaleDetails::where('product_id', $product->id)->first();
-        //return $detail;
+        $detail = SaleDetails::whereProductId($product->id)->first();
+        $detail->forceDelete();
+
+        if ($request->deleteSale == 'true') {
+            $client = Client::find($sale->client->id);
+            $client->positive_balance += $sale->paid_out;
+            $client->save();
+            $sale->delete();
+            return redirect('/ventas')->with('mesage', 'La venta ha sido eliminada!');
+        }
 
         $sale->total -= $detail->final_price;
-        //return $sale;
-
-        $detail->delete();
         $sale->save();
-        $product->save();
 
         return back()->with('mesage-givedback', 'El producto ha sido cancelado de la venta exitosamente!');
     }
@@ -721,21 +709,6 @@ class SaleController extends Controller
 
         return back()->with('mesage', 'El producto ha sido agregado a la venta exitosamente!');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
-    // public function edit($id)
-    // {
-    //     $user = Auth::user();
-    //     $sale = Sale::findOrFail($id);
-    //     $products = Product::all();
-    //     //return $sale;
-    //     return view('sale/edit', compact('sale', 'products', 'user'));
-    // }
 
 
     /**
@@ -791,13 +764,7 @@ class SaleController extends Controller
 
     public function exportPdf(Request $request, $id)
     {
-        //return $request;
-        //   $user = Auth::user();
-        //   $sales = Sale::all();
-        //   $sales = Sale::where("id","=",$id)->get();
-        //   $shops = Auth::user()->shop()->get();
-        //   $branches = Branch::where('shop_id', $user->shop->id)->get();
-        //return [$sales,$branches,$user,$shops];
+
         $user = Auth::user();
         $shop = Auth::user()->shop;
         $shops = Auth::user()->shop()->get();

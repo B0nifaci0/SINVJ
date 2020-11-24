@@ -180,13 +180,7 @@ SUCURSAl
                 <tr>
                     <td>{{ $item->clave }}</td>
                     <td>{{ $item->description }}</td>
-                    <td>@if($item->line_id)
-                        @foreach ($lines as $line)
-                        @if ($item->line_id == $line->id)
-                        {{$line->name}}
-                        @endif
-                        @endforeach
-                        @else N/A @endif</td>
+                    <td>{{$item->line->name ? $item->line->name : 'N/A'}}</td>
                     <td>{{$item->category_name}}</td>
                     <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                     <td>$ {{ $item->final_price }}</td>
@@ -472,6 +466,7 @@ SUCURSAl
 <form method="post" action="/ventas/canceled" id="canceled" class="d-none">
     {{ csrf_field() }}
     <input type="text" name="product_id" id="producto_id">
+    <input type="text" name="deleteSale" id="deleteSale">
     <input type="text" name="sale_id" id="sale-id" value="{{ $sale->id }}">
 </form>
 
@@ -485,83 +480,86 @@ SUCURSAl
 <script>
     $(document).ready(function () {
 
-        var overLimitAuth = false;
+        var saledetails = {!! $sale-> itemsSold -> count() !!};
+    console.log('Cantidad:' + saledetails)
+    var overLimitAuth = false;
 
-        $('#items').on('click', '.give-back', function () {
-            let id = $(this).attr("alt");
-            var over = $(this).attr("id");
-            if (over == 1 && overLimitAuth == false) {
-                var message = `El tiempo de devolucion del producto ha expirado.
+    $('#items').on('click', '.give-back', function () {
+        let id = $(this).attr("alt");
+        var over = $(this).attr("id");
+        if (over == 1 && overLimitAuth == false) {
+            var message = `El tiempo de devolucion del producto ha expirado.
 		        Ingrese la contraseña de seguridad para continuar`;
-                Swal.fire({
-                    title: message,
-                    input: 'password',
-                    inputAttributes: {
-                        autocapitalize: 'off'
-                    },
-                    showCancelButton: true,
-                    confirmButtonText: 'Aceptar',
-                    showLoaderOnConfirm: true,
-                    preConfirm: (password) => {
-                        return fetch(`/check-password`, {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                password: password
-                            }),
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                            }
-                        })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error(response.statusText)
-                                }
-                                return response.json()
-                            })
-                            .catch(error => {
-                                Swal.showValidationMessage(
-                                    `Contraseña incorrecta`
-                                )
-                            })
-                    },
-                    allowOutsideClick: () => !Swal.isLoading()
-                }).then((result) => {
-                    if (result.value) {
-                        Swal.fire({
-                            title: `La contraseña es correcta`
-                        })
-                        overLimitAuth = true;
-                        console.log("overLimitAuth: ", overLimitAuth);
-                    }
-                })
-                return;
-            }
-            console.log("ID: ", id, " y Limit: ", over);
-
             Swal.fire({
-                title: 'Confirmación',
-                text: "¿Seguro que quieres devolver el producto?",
-                type: 'warning',
+                title: message,
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
                 showCancelButton: true,
-                confirmButtonColor: '#4caf50',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si'
+                confirmButtonText: 'Aceptar',
+                showLoaderOnConfirm: true,
+                preConfirm: (password) => {
+                    return fetch(`/check-password`, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            password: password
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(
+                                `Contraseña incorrecta`
+                            )
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
             }).then((result) => {
                 if (result.value) {
-                    $('#discar_cause').val(3);
-                    $('#product_id').val(id);
-                    $('#givedback').submit();
+                    Swal.fire({
+                        title: `La contraseña es correcta`
+                    })
+                    overLimitAuth = true;
+                    console.log("overLimitAuth: ", overLimitAuth);
                 }
             })
+            return;
+        }
+        console.log("ID: ", id, " y Limit: ", over);
 
-        });
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿Seguro que quieres devolver el producto?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4caf50',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+        }).then((result) => {
+            if (result.value) {
+                $('#discar_cause').val(3);
+                $('#product_id').val(id);
+                $('#givedback').submit();
+            }
+        })
 
-        $('#items').on('click', '.cancel', function () {
-            let id = $(this).attr("alt");
+    });
+
+    $('#items').on('click', '.cancel', function () {
+        let id = $(this).attr("alt");
+        if (saledetails == 1) {
             Swal.fire({
                 title: 'Confirmación',
-                text: "¿Seguro que quieres cancelar el producto de la venta?",
+                text: "Si cancelas todos los productos la venta sera eliminada.¿Seguro que quieres hacerlo?.El monto pagado ira a Saldo a favor del cliente.",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#4caf50',
@@ -570,88 +568,107 @@ SUCURSAl
             }).then((result) => {
                 if (result.value) {
                     $('#producto_id').val(id);
+                    $('#deleteSale').val(true)
                     $('#canceled').submit();
                 }
             })
+        }else{
 
-        });
-
-
-
-        $('#savePartial').click(function (e) {
-            console.log("Diste click");
-            e.preventDefault();
-            let valor = Number($('#valor').val());
-            let amount = Number($('#amount').val());
-            let max = Number($('#amount').attr('alt'));
-            console.log(valor, amount, max);
-            if (valor == 1 || valor == 2) {
-                if (amount > max || amount <= 0) {
-                    swal.fire({
-                        title: 'Error',
-                        text: 'El pago maximo es $ ' + max + ' y el minimo es $ 1',
-                        type: 'warning',
-                        showAcepptButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Aceptar!'
-                    });
-                    return;
-                }
+        Swal.fire({
+            title: 'Confirmación',
+            text: "¿Seguro que quieres cancelar el producto de la venta?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4caf50',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+        }).then((result) => {
+            if (result.value) {
+                $('#producto_id').val(id);
+                $('#deleteSale').val(false)
+                $('#canceled').submit();
             }
-            $('#saleForm').submit();
-        });
-
-        $('#saveProduct').click(function (e) {
-            e.preventDefault();
-            let product = Number($('#current_product').val());
-            console.log('nuevo producto', product);
-            $('#newProduct_id').val(product);
-            $('#productForm').submit();
-        });
-
-        $('#amount').on('input', function () {
-            let id = $(this).attr('id');
-            let val = $(this).val();
-            $(`#${id}`).val(val.replace(/\s+/, ""));
         })
-        $('.remove').hide();
-        var guarda = $('#amount').val();
-        //console.log("input: ",$('#amount').val());
-        $('#amount').val(0)
-        $('#amount').removeAttr('readonly');
-        $('#amount').removeClass('readOnly');
-        console.log("Variable: ", guarda);
-        $('#valor').change(function () {
-            var partialId = $(this).val();
-            console.log("El valor del id es:", partialId)
-            if (partialId == 2) {
-                //Tarjeta
-                //console.log("Entro 1");
-                $('.remove').show();
-                $('#amount').val(0);
-                $('#amount').removeAttr('readonly');
-                $('#amount').removeClass('readOnly');
-                //$('#amount').prop('disabled',false);
-                // console.log($('#amount').value)
+        }
 
-            } else if (partialId == 1) {
-                //Efectivo
-                //console.log("Entro 2");
-                $('.remove').hide();
-                $('#amount').val(0);
-                // $('#amount').prop('disabled',false);
-                $('#amount').removeAttr('readonly');
-                $('#amount').removeClass('readOnly');
-                //  console.log($('#amount').value)
-            } else {
-                $('.remove').hide();
-                $('#amount').val(guarda);
-                //$('#amount').prop('disabled',true);
-                $('#amount').attr('readonly', 'readonly');
-                $('#amount').addClasss('readOnly');
+    });
+
+
+
+    $('#savePartial').click(function (e) {
+        console.log("Diste click");
+        e.preventDefault();
+        let valor = Number($('#valor').val());
+        let amount = Number($('#amount').val());
+        let max = Number($('#amount').attr('alt'));
+        console.log(valor, amount, max);
+        if (valor == 1 || valor == 2) {
+            if (amount > max || amount <= 0) {
+                swal.fire({
+                    title: 'Error',
+                    text: 'El pago maximo es $ ' + max + ' y el minimo es $ 1',
+                    type: 'warning',
+                    showAcepptButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar!'
+                });
+                return;
             }
-        });
+        }
+        $('#saleForm').submit();
+    });
+
+    $('#saveProduct').click(function (e) {
+        e.preventDefault();
+        let product = Number($('#current_product').val());
+        console.log('nuevo producto', product);
+        $('#newProduct_id').val(product);
+        $('#productForm').submit();
+    });
+
+    $('#amount').on('input', function () {
+        let id = $(this).attr('id');
+        let val = $(this).val();
+        $(`#${id}`).val(val.replace(/\s+/, ""));
+    })
+    $('.remove').hide();
+    var guarda = $('#amount').val();
+    //console.log("input: ",$('#amount').val());
+    $('#amount').val(0)
+    $('#amount').removeAttr('readonly');
+    $('#amount').removeClass('readOnly');
+    console.log("Variable: ", guarda);
+    $('#valor').change(function () {
+        var partialId = $(this).val();
+        console.log("El valor del id es:", partialId)
+        if (partialId == 2) {
+            //Tarjeta
+            //console.log("Entro 1");
+            $('.remove').show();
+            $('#amount').val(0);
+            $('#amount').removeAttr('readonly');
+            $('#amount').removeClass('readOnly');
+            //$('#amount').prop('disabled',false);
+            // console.log($('#amount').value)
+
+        } else if (partialId == 1) {
+            //Efectivo
+            //console.log("Entro 2");
+            $('.remove').hide();
+            $('#amount').val(0);
+            // $('#amount').prop('disabled',false);
+            $('#amount').removeAttr('readonly');
+            $('#amount').removeClass('readOnly');
+            //  console.log($('#amount').value)
+        } else {
+            $('.remove').hide();
+            $('#amount').val(guarda);
+            //$('#amount').prop('disabled',true);
+            $('#amount').attr('readonly', 'readonly');
+            $('#amount').addClasss('readOnly');
+        }
+    });
     });
 </script>
 @endsection
