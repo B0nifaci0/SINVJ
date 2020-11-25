@@ -43,13 +43,6 @@ ALTA BITACORAS
                         <div class="col-md-3 col-sm-6 col-lg-3">
                             <label for="user-type">Tipo de cliente</label>
                             <select name="type_client" id="user-type" class="form-control">
-                                @if($client->type_client == 0)
-                                <option value="0">Menudista</option>
-                                @else
-                                <option value="1">Mayorista</option>
-                                @endif
-
-
                                 <option value="0">Menudista</option>
                                 <option value="1">Mayorista</option>
                             </select>
@@ -66,9 +59,6 @@ ALTA BITACORAS
                         <div class="form-group form-material col-sm-6 col-md-4 col-lg-4">
                             <label class="form-control-label" for="inputShop">Sucursal</label>
                             <select name="branch_id" id="branch_id" class="form-control">
-                            @if($client->type_client == 1)
-                            <option value="{{ $client->branch->id }}">{{$client->branch->name}}</option>
-                            @endif
                             <option value="">Seleccionar sucursal</option>
                                 @foreach($branches as $branch)
                                     <option value="<?= $branch->id ?>"><?= $branch->name ?></option>  

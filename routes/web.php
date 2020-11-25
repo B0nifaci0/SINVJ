@@ -230,6 +230,15 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
     Route::get('/productos/{id}/restore', 'ProductController@restore');
 
     Route::resource('/clientes', 'ClientController');
+    Route::group(
+        [
+            'prefix' => 'clients'
+        ],
+        function () {
+            Route::get('/retail', 'ClientController@retail');
+            Route::get('/wholesale', 'ClientController@wholesale');
+        }
+    );
 });
 
 Route::group(['middleware' => ['auth', 'verified']], function () {

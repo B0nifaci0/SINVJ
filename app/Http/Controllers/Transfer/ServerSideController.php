@@ -29,7 +29,7 @@ class ServerSideController extends Controller
         } else
             $trans_int = TransferProduct::where('new_branch_id', $user->branch->id);
 
-        $trans_int = $trans_int->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')->get();
+        $trans_int = $trans_int->withTrashed()->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')->get();
 
         return datatables()->of($trans_int)->toJson();
     }
@@ -46,7 +46,7 @@ class ServerSideController extends Controller
         } else
             $trans_out = TransferProduct::where('last_branch_id', $user->branch->id);
 
-        $trans_out = $trans_out->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')->get();
+        $trans_out = $trans_out->withTrashed()->with('user')->with('product.line:id,name')->with('product.category:id,name')->with('lastBranch:id,name')->with('newBranch:id,name')->with('destinationUser:id,name')->get();
 
         return datatables()->of($trans_out)->toJson();
     }
