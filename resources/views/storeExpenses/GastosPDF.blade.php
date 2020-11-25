@@ -129,13 +129,13 @@
                     <td>{{ $expense->descripcion }}</td>
                     <td>{{ $expense->user ? $expense->user->name : ''}}</td>
                     <td>{{ ($expense->branch == null) ? $expense->shop->name : $expense->branch->name }}</td>
-                    <td>{{$expense->created_at}}</td>
+                    <td>{{$expense->created_at->format('d/m/Y')}}</td>
                     <td>$ {{ $expense->price }}</td>
                   </tr>
                   @endforeach
               </tbody>
             </table><br>
-            <table>
+            <!--<table>
                 <thead>
                     <tr>
                             <th scope="col">Sucursal</th>
@@ -149,17 +149,17 @@
                       </tr>
                       @endforeach
                       </tbody>
-                    </table><br>
+                    </table><br>-->
 
             <table>
                 <thead>
                     <tr>
                             <th scope="col">Total De Gastos</th>
-          </tr>
+                </tr>
                       </thead>
                     <tbody>
                       <tr>
-                      <td scope="col">${{$totales}}</td>
+                      <td scope="col">${{$totals}}</td>
                       </tr>
                     </tbody>
                     </table>
