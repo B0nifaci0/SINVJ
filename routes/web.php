@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/products', 'ProductController@serverSide');
     Route::get('/branches', 'BranchController@serverSide');
+    Route::get('/products/{id}', 'ProductController@showOne');
     Route::get('/expenses', 'ExpensesController@serverSide');
     Route::get('/users', 'UserController@serverSide');
     Route::get('/branch-products/{id}', 'BranchProductsController@serverSide');

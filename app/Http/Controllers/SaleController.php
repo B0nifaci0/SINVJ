@@ -677,8 +677,8 @@ class SaleController extends Controller
         $details = SaleDetails::create([
             'sale_id' => $sale->id,
             'product_id' => $product->id,
-            'final_price' => $product->price,
-            'profit' => $product->price - $product->price_purchase
+            'final_price' => $request->product_price,
+            'profit' =>$request->product_price - $product->price_purchase
         ]);
 
         $inventory = InventoryDetail::join('inventory_reports', 'inventory_details.inventory_report_id', 'inventory_reports.id')

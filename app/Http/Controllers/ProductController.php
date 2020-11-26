@@ -453,6 +453,13 @@ class ProductController extends Controller
         return view('product.show', ['product' => $product]);
     }
 
+    public function showOne($id)
+    {
+        $product = Product::findOrFail($id);
+
+        return $product;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -555,7 +562,7 @@ class ProductController extends Controller
         $inTransfer = TransferProduct::whereProductId($id)->first();
         $inSale = SaleDetails::whereProductId($id)->first();
 
-        if ($inTransfer) return response()->json(['success' => false,'cause' => true]);
+        if ($inTransfer) return response()->json(['success' => false, 'cause' => true]);
         else if ($inSale) return response()->json(['success' => false, 'cause' => false]);
         else {
             Product::destroy($id);

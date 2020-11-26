@@ -35,231 +35,224 @@ SUCURSAl
                     btn-primary waves-light float-right" data-toggle="tooltip" data-original-title="Ir a mis ventas">
                         <i class="icon fa-reply-all " aria-hidden="true"></i></button>
                 </div>
-                {{-- <div class="panel-actions float-right col-">
-                    <a href="/ventas/{{$sale->id}}/edit">
-                <button class="btn btn-sm small btn-floating
-                     btn-primary waves-light float-right" data-toggle="tooltip" data-original-title="Editar Venta">
-                    <i class="icon md-edit " aria-hidden="true"></i>
-                </button>
-                </a>
-            </div> --}}
-    </div>
-    </header>
-    <div class="table-responsive">
-        <div class="panel-body">
-            @if($errors->count() > 0)
-            <div class="alert alert-danger" role="alert">
-                <ul>
-                    @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
             </div>
-            @endif
-            <div class="row">
-                <div class="col-md-4">
-                    <p class="">
-                        <strong>Fecha venta:</strong>{{$sale->created_at->format(' d/m/Y  H:i:s')}}
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <p class="">
-                        <strong>Nombre:
-                        </strong>{{ ($sale->client_id) ? $sale->client->full_name : $sale->customer_name }}
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <p class="">
-                        <strong>Teléfono: </strong>{{ ($sale->client) ? $sale->client->phone_number : $sale->telephone}}
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <p class="">
-                        <strong>Tipo cliente: </strong>@if( $sale->client->type_client == 0)
-                        <span class="text-center badge badge-success">Menudeo</span>
-                        @endif
-                        @if( $sale->client->type_client == 1)
-                        <span class="text-center badge badge-success">Mayorista</span>
-                        @endif
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <p class="">
-                        <strong>Productos comprados: </strong>{{ $sale->itemsSold->count() }}
-                    </p>
-                </div>
-                <div class="col-md-4">
-                    <p class="">
-                        <strong>Abonos realizados: </strong>{{ $sale->partials->count() }}
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <p class="">
-                        <strong class="text-center badge badge-warning"> Total: </strong>$ {{ $sale->total }}
-                    </p>
-                </div>
-                <div class="col-md-3">
-                    <p class="">
-                        <strong class="text-center badge badge-danger"> Pagado: </strong>$ {{ $sale->paid_out }}
-                    </p>
-                </div>
-                <div class="col-md-3">
-                    <p class="">
-                        <strong class="text-center badge badge-primary">Saldo a Favor:</strong>
-                        $ @if($sale->client->positive_balance == null)
-                        0
-                        @else
-                        {{ $sale->client->positive_balance }}
-                        @endif
-                    </p>
-                </div>
-                @if($sale->client->type_client == 1)
-                <div class="col-md-3">
-                    <p class="">
-                        <strong class="text-center badge badge-secondary">Límite de crédito: </strong>
-                        $ {{ $sale->client->credit }}
-                    </p>
-                </div>
-                @endif
-                @if($sale->change > 0 && $sale->client->type_client == 0)
-                <div class="col-md-3">
-                    <p class="">
-                        <strong class="text-center badge badge-secondary">Cambio:</strong>
-                        $ {{ $sale->change }}
-                    </p>
-                </div>
-                @endif
-                <div class="col-md-3">
-                    <p class="">
-                        <strong class="text-center badge badge-success">Restan:</strong>
-                        @if(($sale->total - $sale->partials->sum('amount')) > 0)
-                        $ {{$sale->total - $sale->partials->sum('amount')}}
-                        @else
-                        $ 0
-                        @endif
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="table-responsive">
-    <div class="panel">
-        <div class="panel-success">
-            <div class="panel-heading">
-                <h2 class="panel-title" style="color:white" align="center"> Productos Comprados</h2>
-                @if($sale->paid_out != $sale->total)
-                <div class="panel-actions float-right">
-                    <button id="products" class="btn btn-sm small btn-floating
-                    btn-success waves-light float-right" data-toggle="modal" data-original-title="Agregar Producto"
-                        data-target="#productModal"> <i class="icon fa-plus " aria-hidden="true"></i></button>
-                </div>
-                @endif
-            </div>
-        </div>
-        <table id="items" class="table">
-            <thead>
-                <tr>
-                    <th>Clave</th>
-                    <th>Descripción</th>
-                    <th>Línea</th>
-                    <th>Categoría</th>
-                    <th>Peso</th>
-                    <th>Precio</th>
-                    @if($sale->paid_out != $sale->total)
-                    @if($sale->change == 0)
-                    <th colspan="2">Opciones</th>
-                    @endif
-                    @endif
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($sale->itemsSold as $item)
-                <tr>
-                    <td>{{ $item->clave }}</td>
-                    <td>{{ $item->description }}</td>
-                    <td>{{$item->line->name ? $item->line->name : 'N/A'}}</td>
-                    <td>{{$item->category_name}}</td>
-                    <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
-                    <td>$ {{ $item->final_price }}</td>
-                    @if($sale->paid_out != $sale->total)
-                    @if (Auth::user()->type_user==1)
-                    <td>
-                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
-                            alt="{{$item->id_product}}" id="{{$item->limit}}" role="button" data-toggle="tooltip"
-                            data-original-title="Devolver">
-                            <i class="icon fa-reply-all" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                    @endif
-                    <td>
-                        <button class="btn btn-icon btn-danger waves-effect waves-light waves-round cancel"
-                            alt="{{$item->id_product}}" id="{{$item->limit}}" role="button" data-toggle="tooltip"
-                            data-original-title="Cancelar">
-                            <i class="icon fa-window-close" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                    @endif
-                </tr>
-                @endforeach
-                <tr>
-                    <td colspan="5" align="center">Total</td>
-                    <td><strong>$ {{ $sale->total }}</strong></td>
-                    @if($sale->paid_out != $sale->total)
-                    @if($sale->change == 0)
-                    <td colspan="2">Opciones</td>
-                    @endif
-                    @endif
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="table-responsive">
-    <div class="panel-warning">
-        <div class="panel-heading">
-            <h2 class="panel-title" style="color:white" align="center"> Productos Devueltos</h2>
-        </div>
-    </div>
-    <div class="panel">
-        <table id="items" class="table">
-            <thead>
-                <tr>
-                    <th>Clave</th>
-                    <th>Descripción</th>
-                    <th>Línea</th>
-                    <th>Categoría</th>
-                    <th>Peso</th>
-                    <th>Precio</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($sale->itemsGivedBack as $item)
-                <tr class="table-active">
-                    <td>{{ $item->clave }}</td>
-                    <td>{{ $item->description }}</td>
-                    <td>@if($item->line_id)
-                        @foreach ($lines as $line)
-                        @if ($item->line_id == $line->id)
-                        {{$line->name}}
-                        @endif
+        </header>
+        <div class="table-responsive">
+            <div class="panel-body">
+                @if($errors->count() > 0)
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
                         @endforeach
-                        @else N/A @endif</td>
-                    <td>{{$item->category_name}}</td>
-                    <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
-                    <td>$ {{ $item->final_price }}</td>
-                </tr>
-                @endforeach
-                <tr>
-                    <td colspan="5" align="center">Total</td>
-                    <td><strong>$ {{ $finalprice }}</strong></td>
-                </tr>
-            </tbody>
-        </table>
+                    </ul>
+                </div>
+                @endif
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="">
+                            <strong>Fecha venta:</strong>{{$sale->created_at->format(' d/m/Y  H:i:s')}}
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="">
+                            <strong>Nombre:
+                            </strong>{{ ($sale->client_id) ? $sale->client->full_name : $sale->customer_name }}
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="">
+                            <strong>Teléfono:
+                            </strong>{{ ($sale->client) ? $sale->client->phone_number : $sale->telephone}}
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="">
+                            <strong>Tipo cliente: </strong>@if( $sale->client->type_client == 0)
+                            <span class="text-center badge badge-success">Menudeo</span>
+                            @endif
+                            @if( $sale->client->type_client == 1)
+                            <span class="text-center badge badge-success">Mayorista</span>
+                            @endif
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="">
+                            <strong>Productos comprados: </strong>{{ $sale->itemsSold->count() }}
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="">
+                            <strong>Abonos realizados: </strong>{{ $sale->partials->count() }}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="">
+                            <strong class="text-center badge badge-warning"> Total: </strong>$ {{ $sale->total }}
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="">
+                            <strong class="text-center badge badge-danger"> Pagado: </strong>$ {{ $sale->paid_out }}
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="">
+                            <strong class="text-center badge badge-primary">Saldo a Favor:</strong>
+                            $ @if($sale->client->positive_balance == null)
+                            0
+                            @else
+                            {{ $sale->client->positive_balance }}
+                            @endif
+                        </p>
+                    </div>
+                    @if($sale->client->type_client == 1)
+                    <div class="col-md-3">
+                        <p class="">
+                            <strong class="text-center badge badge-secondary">Límite de crédito: </strong>
+                            $ {{ $sale->client->credit }}
+                        </p>
+                    </div>
+                    @endif
+                    @if($sale->change > 0 && $sale->client->type_client == 0)
+                    <div class="col-md-3">
+                        <p class="">
+                            <strong class="text-center badge badge-secondary">Cambio:</strong>
+                            $ {{ $sale->change }}
+                        </p>
+                    </div>
+                    @endif
+                    <div class="col-md-3">
+                        <p class="">
+                            <strong class="text-center badge badge-success">Restan:</strong>
+                            @if(($sale->total - $sale->partials->sum('amount')) > 0)
+                            $ {{$sale->total - $sale->partials->sum('amount')}}
+                            @else
+                            $ 0
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <div class="table-responsive">
+        <div class="panel">
+            <div class="panel-success">
+                <div class="panel-heading">
+                    <h2 class="panel-title" style="color:white" align="center"> Productos Comprados</h2>
+                    @if($sale->paid_out != $sale->total)
+                    <div class="panel-actions float-right">
+                        <button id="products" class="btn btn-sm small btn-floating
+                    btn-success waves-light float-right" data-toggle="modal" data-original-title="Agregar Producto"
+                            data-target="#productModal"> <i class="icon fa-plus " aria-hidden="true"></i></button>
+                    </div>
+                    @endif
+                </div>
+            </div>
+            <table id="items" class="table">
+                <thead>
+                    <tr>
+                        <th>Clave</th>
+                        <th>Descripción</th>
+                        <th>Línea</th>
+                        <th>Categoría</th>
+                        <th>Peso</th>
+                        <th>Precio</th>
+                        @if($sale->paid_out != $sale->total)
+                        @if($sale->change == 0)
+                        <th colspan="2">Opciones</th>
+                        @endif
+                        @endif
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($sale->itemsSold as $item)
+                    <tr>
+                        <td>{{ $item->clave }}</td>
+                        <td>{{ $item->description }}</td>
+                        <td>{{$item->line->name ? $item->line->name : 'N/A'}}</td>
+                        <td>{{$item->category_name}}</td>
+                        <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
+                        <td>$ {{ $item->final_price }}</td>
+                        @if($sale->paid_out != $sale->total)
+                        @if (Auth::user()->type_user==1)
+                        <td>
+                            <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
+                                alt="{{$item->id_product}}" id="{{$item->limit}}" role="button" data-toggle="tooltip"
+                                data-original-title="Devolver">
+                                <i class="icon fa-reply-all" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        @endif
+                        <td>
+                            <button class="btn btn-icon btn-danger waves-effect waves-light waves-round cancel"
+                                alt="{{$item->id_product}}" id="{{$item->limit}}" role="button" data-toggle="tooltip"
+                                data-original-title="Cancelar">
+                                <i class="icon fa-window-close" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        @endif
+                    </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="5" align="center">Total</td>
+                        <td><strong>$ {{ $sale->total }}</strong></td>
+                        @if($sale->paid_out != $sale->total)
+                        @if($sale->change == 0)
+                        <td colspan="2">Opciones</td>
+                        @endif
+                        @endif
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <div class="panel-warning">
+            <div class="panel-heading">
+                <h2 class="panel-title" style="color:white" align="center"> Productos Devueltos</h2>
+            </div>
+        </div>
+        <div class="panel">
+            <table id="items" class="table">
+                <thead>
+                    <tr>
+                        <th>Clave</th>
+                        <th>Descripción</th>
+                        <th>Línea</th>
+                        <th>Categoría</th>
+                        <th>Peso</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($sale->itemsGivedBack as $item)
+                    <tr class="table-active">
+                        <td>{{ $item->clave }}</td>
+                        <td>{{ $item->description }}</td>
+                        <td>@if($item->line_id)
+                            @foreach ($lines as $line)
+                            @if ($item->line_id == $line->id)
+                            {{$line->name}}
+                            @endif
+                            @endforeach
+                            @else N/A @endif</td>
+                        <td>{{$item->category_name}}</td>
+                        <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
+                        <td>$ {{ $item->final_price }}</td>
+                    </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="5" align="center">Total</td>
+                        <td><strong>$ {{ $finalprice }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </div>
 
@@ -430,7 +423,6 @@ SUCURSAl
                 <form action="/pagos" method="post" id="saleForm" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="row">
-                        <!-- Select para Seleccionar  producto-->
                         <div class="col-md-12">
                             <label>Selecciona un Producto</label>
                             <select id="current_product" name="product_id" class="form-control" data-plugin="select2"
@@ -443,6 +435,20 @@ SUCURSAl
                                     @endforeach
                                 </optgroup>
                             </select>
+                            <div class="row">
+                                <div class="col-4">
+                                    <label>Precio Maximo</label>
+                                    <input id='price' class="form-control" readonly>
+                                </div>
+                                <div class="col-4">
+                                    <label>Precio minimo</label>
+                                    <input id='priceDiscount' class="form-control" readonly>
+                                </div>
+                                <div class="col-4">
+                                    <label>Precio Final</label>
+                                    <input id='finalPrice' class="form-control">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -473,6 +479,7 @@ SUCURSAl
 <form method="post" action="/ventas/addProduct" id="productForm" class="d-none">
     {{ csrf_field() }}
     <input type="text" name="product_id" id="newProduct_id">
+    <input type="text" name="product_price" id="product_price">
     <input type="text" name="sale_id" id="sale-id" value="{{ $sale->id }}">
 </form>
 
@@ -480,7 +487,7 @@ SUCURSAl
 <script>
     $(document).ready(function () {
 
-        var saledetails = {!! $sale-> itemsSold -> count() !!};
+    var saledetails = {!! $sale-> itemsSold -> count() !!};
     console.log('Cantidad:' + saledetails)
     var overLimitAuth = false;
 
@@ -572,23 +579,23 @@ SUCURSAl
                     $('#canceled').submit();
                 }
             })
-        }else{
+        } else {
 
-        Swal.fire({
-            title: 'Confirmación',
-            text: "¿Seguro que quieres cancelar el producto de la venta?",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#4caf50',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si'
-        }).then((result) => {
-            if (result.value) {
-                $('#producto_id').val(id);
-                $('#deleteSale').val(false)
-                $('#canceled').submit();
-            }
-        })
+            Swal.fire({
+                title: 'Confirmación',
+                text: "¿Seguro que quieres cancelar el producto de la venta?",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#4caf50',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.value) {
+                    $('#producto_id').val(id);
+                    $('#deleteSale').val(false)
+                    $('#canceled').submit();
+                }
+            })
         }
 
     });
@@ -619,11 +626,73 @@ SUCURSAl
         $('#saleForm').submit();
     });
 
+
+    $('#current_product').change(function () {
+        product_id = $(this).val();
+        console.log('id' + product_id)
+        var url = '/products/' + product_id;
+        $.get(url, function (product) {
+            console.log('pruebita ' + product.id)
+            $('#price').val(product.price);
+            $('#priceDiscount').val(product.discount);
+            $('#finalPrice').val(product.price);
+        });
+    });
+
     $('#saveProduct').click(function (e) {
         e.preventDefault();
         let product = Number($('#current_product').val());
-        console.log('nuevo producto', product);
+        let price = Number($('#price').val())
+        let finalPrice = Number($('#finalPrice').val())
+        let priceDiscount = Number($('#priceDiscount').val())
+        if ((finalPrice > price) || (finalPrice < priceDiscount)) {
+            Swal.fire({
+                title: 'Ingrese la contraseña de seguridad para continuar',
+                input: 'password',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Aceptar',
+                showLoaderOnConfirm: true,
+                preConfirm: (password) => {
+                    return fetch(`/check-password`, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            password: password
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                        }
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(
+                                `Contraseña incorrecta`
+                            )
+                        })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.value) {
+                    Swal.fire({
+                        title: `La contraseña es correcta`
+                    })
+                    $('#newProduct_id').val(product);
+                    $('#product_price').val(finalPrice)
+                    $('#productForm').submit();
+                }
+            })
+            return;
+        }
         $('#newProduct_id').val(product);
+        $('#product_price').val(finalPrice)
         $('#productForm').submit();
     });
 
