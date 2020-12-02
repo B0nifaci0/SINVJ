@@ -233,13 +233,7 @@ SUCURSAl
                     <tr class="table-active">
                         <td>{{ $item->clave }}</td>
                         <td>{{ $item->description }}</td>
-                        <td>@if($item->line_id)
-                            @foreach ($lines as $line)
-                            @if ($item->line_id == $line->id)
-                            {{$line->name}}
-                            @endif
-                            @endforeach
-                            @else N/A @endif</td>
+                        <td>{{$item->line->name ? $item->line->name : 'N/A'}}</td>
                         <td>{{$item->category_name}}</td>
                         <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                         <td>$ {{ $item->final_price }}</td>
