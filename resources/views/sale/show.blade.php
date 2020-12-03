@@ -180,7 +180,7 @@ SUCURSAl
                         @if($sale->paid_out != $sale->total)
                         @if (Auth::user()->type_user==1)
                         <td>
-                            <button class="btn btn-icon btn-danger waves-effect waves-light waves-round give-back"
+                            <button class="btn btn-icon btn-primary waves-effect waves-light waves-round give-back"
                                 alt="{{$item->id_product}}" id="{{$item->limit}}" role="button" data-toggle="tooltip"
                                 data-original-title="Devolver">
                                 <i class="icon fa-reply-all" aria-hidden="true"></i>
@@ -440,7 +440,7 @@ SUCURSAl
                                 </div>
                                 <div class="col-4">
                                     <label>Precio Final</label>
-                                    <input id='finalPrice' class="form-control">
+                                    <input id='finalPrice' class="form-control" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                                 </div>
                             </div>
                         </div>
@@ -594,7 +594,9 @@ SUCURSAl
 
     });
 
-
+    function numericalValidator(event) {
+        if(event.charCode >= 48 && event.charCode <= 57){ return true; } return false; 
+    }
 
     $('#savePartial').click(function (e) {
         console.log("Diste click");
@@ -602,6 +604,7 @@ SUCURSAl
         let valor = Number($('#valor').val());
         let amount = Number($('#amount').val());
         let max = Number($('#amount').attr('alt'));
+
         console.log(valor, amount, max);
         if (valor == 1 || valor == 2) {
             if (amount > max || amount <= 0) {
