@@ -42,9 +42,10 @@ ALTA PRODUCTO
           <div class="col-md-3">
             <label>Seleccione Categoría </label>
             <select id="categorie_id" name="category_id" class="form-control round">
-         
+
               @foreach($categories as $category)
-              <option value="{{($category->id) ? $category->id: old('$product->category->id')}}" required>{{ $category->name }}</option>
+              <option value="{{($category->id) ? $category->id: old('$product->category->id')}}" required>
+                {{ $category->name }}</option>
               @endforeach
             </select>
           </div>
@@ -142,8 +143,11 @@ ALTA PRODUCTO
           <div class="col-md-3">
             <label>Seleccionar estatus actual</label>
             <select name="status_id" class="form-control round">
-              @foreach($statuses as $status)     
+              <option value="{{$product->status->id}}" selected>{{$product->status->name}}</option>
+              @foreach($statuses as $status)
+              @if ($status->id != $product->status->id)
               <option value="{{ $status->id }}" required>{{ $status->name }}</option>
+              @endif
               @endforeach
             </select>
           </div>
@@ -216,7 +220,6 @@ ALTA PRODUCTO
 <!-- Función para obtener el precio de linea-->
 @section('precio-linea')
 <script type="text/javascript">
-
   var categoryTypeproduct = {!! $categories !!};
   let category_id =  $('#categorie_id').val();
 let defaul = categoryTypeproduct.filter(c => c.id == category_id)[0];
