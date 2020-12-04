@@ -42,10 +42,12 @@ ALTA PRODUCTO
           <div class="col-md-3">
             <label>Seleccione Categoría </label>
             <select id="categorie_id" name="category_id" class="form-control round">
-
+              <option value="{{$product->category->id}}" selected>{{$product->category->name}}</option>
               @foreach($categories as $category)
+              @if($category->id != $product->category->id)
               <option value="{{($category->id) ? $category->id: old('$product->category->id')}}" required>
                 {{ $category->name }}</option>
+              @endif
               @endforeach
             </select>
           </div>
@@ -68,10 +70,16 @@ ALTA PRODUCTO
           <div class="col-md-3 remove">
             <label class="control-label">Seleccione Línea</label>
             <select id="line_id" name="line_id" class="form-control round">
+            @if($product->category->type_product == 2)
+            <option value="$product->line->id" selected> {{$product->line->name}}</option>
+            
               @foreach($lines as $line)
+              @if($line->id != $product->line->id)
               <option value="{{ $line->id }}" required>{{($line->name) ? $line->name :old('$line->name')}}</option>
+              @endif
               @endforeach
             </select>
+            @endif
           </div>
           <!-- END Select-->
 
@@ -133,8 +141,11 @@ ALTA PRODUCTO
           <div class="col-md-3">
             <label>Seleccione Sucursal</label>
             <select name="branch_id" class="form-control round">
+              <option value="{{$product->branch->id}}" selected>{{$product->branch->name}}</option>
               @foreach($branches as $branch)
+              @if($branch->id != $product->branch->id)
               <option value="{{ $branch->id }}" required>{{ $branch->name }}</option>
+              @endif
               @endforeach
             </select>
           </div>
