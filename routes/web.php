@@ -42,6 +42,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('api/givedback', 'SaleController@tableGivedback');
 
 
+    Route::get('sale/graphic', 'Sale\GraphicController');
+
+
 
     Route::group(
         [
