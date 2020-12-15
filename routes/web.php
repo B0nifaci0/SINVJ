@@ -77,6 +77,16 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::group(
                 [
+                    'prefix' => 'graphic'
+                ],
+                function () {
+                    Route::get('int', 'GraphicController@transferInt');
+                    Route::get('out', 'GraphicController@transferOut');
+                }
+            );
+
+            Route::group(
+                [
                     'namespace' => 'Reports'
                 ],
                 function () {
