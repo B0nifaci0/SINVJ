@@ -42,6 +42,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('api/givedback', 'SaleController@tableGivedback');
 
 
+    Route::get('sale/graphic', 'Sale\GraphicController');
+
+
 
     Route::group(
         [
@@ -72,6 +75,16 @@ Route::group(['middleware' => ['auth']], function () {
                 function () {
                     Route::get('/transInt', 'ServerSideController@transInt');
                     Route::get('/transOut', 'ServerSideController@transOut');
+                }
+            );
+
+            Route::group(
+                [
+                    'prefix' => 'graphic'
+                ],
+                function () {
+                    Route::get('int', 'GraphicController@transferInt');
+                    Route::get('out', 'GraphicController@transferOut');
                 }
             );
 
