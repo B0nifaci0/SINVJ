@@ -345,6 +345,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('reportProductspzs', 'ProductController@reportProductpzs');
     Route::get('sucursales/sucursalcortediario/{id}', 'BranchController@DailyCashCut');
     Route::get('/Clientes', 'ClientController@IndexCO');
+
+    Route::get('/pruebaJS', 'ChartController@index');
 });
 
 Auth::routes(['verify' => true]);
