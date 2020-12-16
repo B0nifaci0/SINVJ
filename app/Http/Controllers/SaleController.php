@@ -353,7 +353,6 @@ class SaleController extends Controller
         $sale->itemsSold = $sale->itemsSold();
         $sale->itemsGivedBack =  $sale->ItemsGivedBack();
         $sale->total = $sale->itemsSold->sum('final_price');
-
         $finalprice = Product::join('sale_details', 'sale_details.product_id', 'products.id')
             ->join('categories', 'categories.id', 'products.category_id')
             ->withTrashed()

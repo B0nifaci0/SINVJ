@@ -84,8 +84,9 @@ class Sale extends Model
     {
         return Product::join('sale_details', 'sale_details.product_id', 'products.id')
             ->join('categories', 'categories.id', 'products.category_id')
+            ->join('lines', 'lines.id', 'products.line_id')
             ->whereNull('sale_details.deleted_at')
-            ->select('products.id as id_product', 'clave', 'weigth', 'line_id', 'categories.name as category_name', 'sale_details.final_price', 'description', 'sold_at', 'sale_details.deleted_at')
+            ->select('products.id as id_product', 'clave', 'weigth', 'line_id', 'categories.name as category_name', 'sale_details.final_price', 'description', 'sold_at', 'sale_details.deleted_at', 'lines.name as line_name')
             ->where('sale_id', $this->id)
             ->get();
     }

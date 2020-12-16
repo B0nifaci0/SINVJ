@@ -173,7 +173,7 @@ SUCURSAl
                     <tr>
                         <td>{{ $item->clave }}</td>
                         <td>{{ $item->description }}</td>
-                        <td>{{$item->line->name ? $item->line->name : 'N/A'}}</td>
+                        <td>{{$item->line_name ? $item->line_name : 'N/A'}}</td>
                         <td>{{$item->category_name}}</td>
                         <td>{{ $item->weigth ? $item->weigth . ' g' : 'Pieza' }}</td>
                         <td>$ {{ $item->final_price }}</td>
@@ -440,7 +440,8 @@ SUCURSAl
                                 </div>
                                 <div class="col-4">
                                     <label>Precio Final</label>
-                                    <input id='finalPrice' class="form-control" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                                    <input id='finalPrice' class="form-control" type="text"
+                                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                                 </div>
                             </div>
                         </div>
