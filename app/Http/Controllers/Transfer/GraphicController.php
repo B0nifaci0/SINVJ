@@ -17,18 +17,16 @@ class GraphicController extends Controller
             return $u->id;
         });
 
-        $transfers = TransferProduct::whereIn('destination_user_id', $usersIds)
-            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+        $transfers = TransferProduct::WhereIn('destination_user_id', $usersIds)
+            ->join('branches', 'branches.id', 'transfer_products.new_branch_id')
+            ->whereBetween('transfer_products.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->select(
-                [
-                    DB::raw('new_branch_id as branch'),
-                    DB::raw('count(id) as quantity'),
-                    DB::raw('day(created_at) as day'),
-                ]
+                'branches.name as branch',
+                DB::raw('count(transfer_products.id) as quantity'),
+                DB::raw('date(transfer_products.created_at) as date'),
             )
-            ->groupBy(['branch', 'day'])
-            ->get()
-            ->toArray();
+            ->groupBy(['branch', 'date'])
+            ->get();
         return $transfers;
     }
 
@@ -40,15 +38,15 @@ class GraphicController extends Controller
         });
 
         $transfers = TransferProduct::whereIn('user_id', $usersIds)
-            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-            ->select([
-                DB::raw('last_branch_id as branch'),
-                DB::raw('count(id) as quantity'),
-                DB::raw('day(created_at) as day'),
-            ])
-            ->groupBy(['branch', 'day'])
-            ->get()
-            ->toArray();
+            ->join('branches', 'branches.id', 'transfer_products.last_branch_id')
+            ->whereBetween('transfer_products.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->select(
+                'branches.name as branch',
+                DB::raw('count(transfer_products.id) as quantity'),
+                DB::raw('date(transfer_products.created_at) as date'),
+            )
+            ->groupBy(['branch', 'date'])
+            ->get();
         return $transfers;
     }
 }
