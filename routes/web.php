@@ -83,7 +83,7 @@ Route::group(['middleware' => ['auth']], function () {
                     'prefix' => 'graphic'
                 ],
                 function () {
-                    Route::get('int', 'GraphicController@transferInt');
+                    Route::get('entrantes', 'GraphicController@transferInt');
                     Route::get('out', 'GraphicController@transferOut');
                 }
             );
@@ -346,7 +346,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('sucursales/sucursalcortediario/{id}', 'BranchController@DailyCashCut');
     Route::get('/Clientes', 'ClientController@IndexCO');
 
-    Route::get('/pruebaJS', 'ChartController@index');
+    Route::get('/Graficos', 'ChartController@index');
 });
 
 Auth::routes(['verify' => true]);

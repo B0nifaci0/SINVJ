@@ -28,6 +28,7 @@ class GraphicController extends Controller
             ->groupBy(['branch', 'date'])
             ->get();
         return $transfers;
+        return view('Charts/ChartJS', compact('transfers'));
     }
 
     public function transferOut()
