@@ -13,6 +13,14 @@ Panel Principal
 <div class="">
   <div class="page-content container-fluid">
     <div class="examle-wrap">
+    @if (session('message'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ session('message') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
       <h4 class="example-title">Panel De Reporte de Gastos</h4>
       <div class="example">
         <div class="panel-group" id="exampleAccordionDefault" aria-multiselectable="true" role="tablist">

@@ -42,8 +42,8 @@ class InventoryController extends Controller
         $branch_user = Branch::where('id', $ids)
             ->select('name as branch')
             ->get();
-        //return $branch_user;
-        //return $inventories_user;
+
+            
         return view('inventory.index', compact('branch_user', 'inventories', 'inventories_user'));
     }
 
