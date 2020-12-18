@@ -311,6 +311,8 @@ $('#line_id').change(function() {
   var id = $(this).val();
   line = lines.filter(l => l.id == id)[0];
   $('#line_price').val(line.sale_price);
+  total = $('#multiplicador').val()*line.sale_price
+  $('#total').val(total);
 });
 
 $('#multiplicador').keyup(function(){
