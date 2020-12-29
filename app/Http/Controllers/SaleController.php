@@ -201,6 +201,8 @@ class SaleController extends Controller
     {
         //return $request;
         $sale = null;
+        $existing = null;
+        $folio = 1;
         $user = Auth::user();
         if ($user->type_user == User::AA) {
             /* $branches = Branch::where('shop_id', $user->shop->id)->get();
@@ -210,29 +212,21 @@ class SaleController extends Controller
             $product = Product::find($request->product_id);
             //return $product;
             $venta = Sale::where('branch_id', $product->branch_id)->select('folio')->latest()->first();
-            $folio = $venta->folio + 1;
+            if($venta){
+                $folio = $venta->folio + 1;
+                $existing = Sale::where('branch_id', $product->branch_id)->where('folio', $folio)->first();
+            }
             //return $folio;
-            $folios = Sale::where('branch_id', $product->branch_id)->get();
         } elseif ($user->type_user == User::CO || $user->type_user == User::SA) {
             $venta = Sale::where('branch_id', $user->branch_id)->select('folio')->latest()->first();
-            $folio = $venta->folio + 1;
-            //return $folio;
-            $folios = Sale::where('branch_id', $user->branch_id)->get();
-        }
-
-        $folios_ids = $folios->map(function ($item) {
-            return $item->folio;
-        });
-
-        $existing = 0;
-
-        foreach ($folios_ids as $f) {
-            if ($f == $folio) {
-                $existing = 1;
+            if($venta){
+                $folio = $venta->folio + 1;
+                $existing = Sale::where('branch_id', $user->branch_id)->where('folio', $folio)->first();
             }
+            //return $folio;
         }
 
-        if ($existing == 1) {
+        if ($existing) {
             return redirect('/ventas/create')->with('mesage-limit', 'Folio de la venta duplicado, Por favor intentalo de nuevo!');
         }
 
