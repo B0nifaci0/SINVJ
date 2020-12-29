@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Branch;
 use App\Product;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ClientRequest;
+use App\Sale;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -22,20 +24,51 @@ class ClientController extends Controller
     public function index()
     {
         $user = Auth::user();
+        return view('clients.index', compact('user'));
+    }
 
-        $wholesaler = Client::with(['sales', 'branch'])
-            ->where('type_client', Client::M)
-            ->where('shop_id', $user->shop->id)
-            ->orderBy('updated_at', 'DESC')
+    public function retail()
+    {
+        $user = Auth::user();
+
+        $clients = Client::whereTypeClient(Client::P)
+            ->whereShopId($user->shop->id)->with('branch:id,name')
             ->get();
 
-        $public = Client::with(['sales', 'branch'])
-            ->where('type_client', Client::P)
-            ->where('shop_id', $user->shop->id)
-            ->orderBy('updated_at', 'DESC')
+        return datatables()->of($clients)->toJson();
+    }
+
+
+    public function wholesale()
+    {
+        $user = Auth::user();
+
+        $clients = Client::whereTypeClient(Client::M)
+            ->whereShopId($user->shop->id)->with('branch:id,name')
             ->get();
 
-        return view('clients.index', compact('wholesaler', 'public'));
+        return datatables()->of($clients)->toJson();
+    }
+
+    public function IndexCO()
+    {
+        $user = Auth::user();
+        $shop_id = $user->shop->id;
+        if ($user->type_user != 1) {
+            $wholesaler = Client::where('branch_id', $user->branch_id)
+                ->whereIn('type_client', [1])
+                ->where('shop_id', $user->shop->id)
+                ->orderBy('updated_at', 'DESC')
+                ->get();
+
+            $public = Client::where('branch_id', $user->branch_id)
+                ->whereIn('type_client', [0])
+                ->where('shop_id', $user->shop->id)
+                ->orderBy('updated_at', 'DESC')
+                ->get();
+        }
+
+        return view('clients.IndexCO', compact('wholesaler', 'public'));
     }
 
     /**
@@ -53,8 +86,6 @@ class ClientController extends Controller
         return view('clients.form', compact('client', 'branches'));
     }
 
-
-
     /**
      * Store a newly created resource in storage.
      *
@@ -64,18 +95,27 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $client = Client::create([
-            'name' => $request->name,
-            'first_lastname' => $request->first_lastname,
-            'second_lastname' => $request->second_lastname,
-            'phone_number' => $request->phone_number,
-            'credit' => $request->credit,
-            'shop_id' => $user->shop->id,
-            'branch_id' => $request->branch_id,
-            'type_client' => $request->type_client,
-        ]);
+        if ($user->type_user == User::AA) {
+            $client['branch_id'] = $request->branch_id;
+            $client['shop_id'] = $user->shop->id;
+        } else {
+            $client['branch_id'] = $user->branch_id;
+            $client['shop_id'] = $user->shop->id;
+        }
+
+        $client['name'] = $request->name;
+        $client['first_lastname'] = $request->first_lastname;
+        $client['second_lastname'] = $request->second_lastname;
+        $client['phone_number'] = $request->phone_number;
+        $client['credit'] = $request->credit;
+        $client['type_client'] = $request->type_client;
+        $client = Client::create($client);
         //return $client;
-        return redirect('/clientes')->with('mesage', 'El cliente se ha creado correctamente');
+        if (Auth::User()->type_user == 1) {
+            return redirect('/clientes')->with('mesage', 'El cliente se ha creado correctamente');
+        } else {
+            return redirect('/Clientes')->with('mesage', 'El cliente se ha creado correctamente');
+        }
     }
 
     /**
@@ -93,11 +133,6 @@ class ClientController extends Controller
             $sale->partials = $sale->partials;
             $sale->total = $sale->itemsSold->sum('final_price');
         }
-
-        //return $client;
-        // return response()->json([
-        //     'client' => $client
-        // ]);
         {
             $user = Auth::user();
             $cliente = Client::find($id);
@@ -111,8 +146,6 @@ class ClientController extends Controller
                 ->groupBy('products.id', 'products.clave', 'products.description', 'products.weigth', 'products.price', 'products.deleted_at')
                 ->withTrashed()
                 ->get();
-
-            //return $products;
 
         }
 
@@ -132,16 +165,6 @@ class ClientController extends Controller
         $user = Auth::user();
         if ($user->shop) {
             $branches = $user->shop->branches;
-            /*    $selected_branch = $branches->filter(function ($value, $key) use ($client_branch_id) {
-                return $value->id == $client_branch_id;
-            })->first();
-
-
-            $branches = $branches->reject(function ($value, $key) use ($client_branch_id) {
-                return $value->id == $client_branch_id;
-            });
-            $branches->prepend($selected_branch);
-        */
         }
         return view('clients.form', compact('client', 'branches'));;
     }
@@ -155,12 +178,20 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = Auth::user();
+        if ($user->type_user == User::AA) {
+            $client['branch_id'] = $request->branch_id;
+            $client['shop_id'] = $user->shop->id;
+        } else {
+            $client['branch_id'] = $user->branch_id;
+            $client['shop_id'] = $user->shop->id;
+        }
         $client = Client::find($id);
 
         $client->name = $request->name;
         $client->phone_number = $request->phone_number;
         $client->type_client = $request->type_client;
-        $client->branch_id = $request->branch_id;
+        //$client->branch_id = $request->branch_id;
 
         if ($client->type_client == 1) {
             $client->first_lastname = $request->first_lastname;
@@ -171,10 +202,13 @@ class ClientController extends Controller
             $client->second_lastname = null;
             $client->credit = null;
         }
-
+        //return $client;
         $client->save();
-
-        return redirect('/clientes')->with('mesage-update', 'El cliente se ha actualizado correctamente');
+        if (Auth::User()->type_user == 1) {
+            return redirect('/clientes')->with('mesage-update', 'El cliente se ha actualizado correctamente');
+        } else {
+            return redirect('/Clientes')->with('mesage-update', 'El cliente se ha actualizado correctamente');
+        }
     }
 
     /**
@@ -185,6 +219,17 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        Client::destroy($id);
+
+        $inSale = Sale::whereClientId($id)
+            ->whereColumn('total', '!=', 'paid_out')
+            ->first();
+
+        if ($inSale) return response()->json(['success' => false]);
+        else {
+            Client::destroy($id);
+            return response()->json([
+                'success' => true
+            ]);
+        }
     }
 }

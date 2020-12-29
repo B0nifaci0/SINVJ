@@ -36,12 +36,16 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/products', 'ProductController@serverSide');
     Route::get('/branches', 'BranchController@serverSide');
+    Route::get('/products/{id}', 'ProductController@showOne');
     Route::get('/expenses', 'ExpensesController@serverSide');
     Route::get('/users', 'UserController@serverSide');
     Route::get('/branch-products/{id}', 'BranchProductsController@serverSide');
     Route::get('api/sold', 'SaleController@tableSold');
     Route::get('api/apart', 'SaleController@tableApart');
     Route::get('api/givedback', 'SaleController@tableGivedback');
+
+
+    Route::get('sale/graphic', 'Sale\GraphicController');
 
 
 
@@ -74,6 +78,16 @@ Route::group(['middleware' => ['auth']], function () {
                 function () {
                     Route::get('/transInt', 'ServerSideController@transInt');
                     Route::get('/transOut', 'ServerSideController@transOut');
+                }
+            );
+
+            Route::group(
+                [
+                    'prefix' => 'graphic'
+                ],
+                function () {
+                    Route::get('entrantes', 'GraphicController@transferInt');
+                    Route::get('out', 'GraphicController@transferOut');
                 }
             );
 
@@ -217,6 +231,8 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
     //Ventas
     Route::resource('ventas', 'SaleController');
     Route::post('ventas/check', 'SaleController@check');
+    Route::post('ventas/canceled', 'SaleController@canceled');
+    Route::post('ventas/addProduct', 'SaleController@addProduct');
     Route::resource('inventarios', 'InventoryController');
     Route::get('reportinventarios', 'InventoryController@reportInventarios');
     Route::get('inventariospdf/{id}', 'InventoryController@inventariosPDF');
@@ -231,6 +247,15 @@ Route::group(['middleware' => ['auth', 'BranchMiddleware', 'CategoryMiddleware',
     Route::get('/productos/{id}/restore', 'ProductController@restore');
 
     Route::resource('/clientes', 'ClientController');
+    Route::group(
+        [
+            'prefix' => 'clients'
+        ],
+        function () {
+            Route::get('/retail', 'ClientController@retail');
+            Route::get('/wholesale', 'ClientController@wholesale');
+        }
+    );
 });
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
@@ -322,6 +347,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('piezascategoriageneral', 'ProductController@reportCategoriaPGeneral');
     Route::get('reportProductspzs', 'ProductController@reportProductpzs');
     Route::get('sucursales/sucursalcortediario/{id}', 'BranchController@DailyCashCut');
+    Route::get('/Clientes', 'ClientController@IndexCO');
+
+    Route::get('/Graficos', 'ChartController@index');
 });
 
 Auth::routes(['verify' => true]);

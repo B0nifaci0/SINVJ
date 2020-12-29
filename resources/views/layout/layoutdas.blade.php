@@ -95,6 +95,10 @@
         </script>
 
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>  
+     <!--CHARTS-->
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <!-- 
         <!-- 
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
     <script>
@@ -252,6 +256,31 @@
                                             </a>
                                         </li>
                                     </ul>
+                                    <!--<ul class="site-menu-sub">
+                                        <li class="site-menu-item has-sub">
+                                            <a href="javascript:void(0)">
+                                                <i class="site-menu-icon md-store" aria-hidden="true"></i>
+                                                <span class="site-menu-title">Mi tienda</span>
+                                                <span class="site-menu-arrow"></span>
+                                            </a>
+                                            <ul class="site-menu-sub">
+                                                <li class="site-menu-item">
+                                                    <a class="animsition-link" href="/tiendas">
+                                                        <i class="site-menu-icon fa-eye" aria-hidden="true"></i>
+                                                        <span class="site-menu-title">Ver mi tienda</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <ul class="site-menu-sub">
+                                                <li class="site-menu-item">
+                                                    <a class="animsition-link" href="/Graficos">
+                                                        <i class="site-menu-icon fa-chart" aria-hidden="true"></i>
+                                                        <span class="site-menu-title">Ver graficos</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>-->
                                     <ul class="site-menu-sub">
                                         <li class="site-menu-item has-sub">
                                             <a href="javascript:void(0)">
@@ -709,6 +738,14 @@
                                                 <span class="site-menu-title">Gastos</span>
                                             </a>
                                         </li>
+                                        <li class="site-menu-item has-sub">                                    
+                                        <li class="site-menu-item">
+                                            <a class="animsition-link" href="/Clientes">
+                                                <i class="site-menu-icon icon fa-id-badge" aria-hidden="true"></i>
+                                                <span class="site-menu-title">Clientes Sucursal</span>
+                                            </a>
+                                        </li>
+                                    </li>
 
                                     </ul>
                                 </li>
@@ -844,6 +881,14 @@
                                             </a>
                                         </li>
                                     </ul>
+                                    <li class="site-menu-item has-sub">                                    
+                                        <li class="site-menu-item">
+                                            <a class="animsition-link" href="/Clientes">
+                                                <i class="site-menu-icon icon fa-id-badge" aria-hidden="true"></i>
+                                                <span class="site-menu-title">Clientes Sucursal</span>
+                                            </a>
+                                        </li>
+                                    </li>
                                     <!--<ul class="site-menu-sub">
                     <li class="site-menu-item">
                         <a class="animsition-link" href="/reportes-gastos">

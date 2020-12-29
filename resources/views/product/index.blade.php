@@ -147,7 +147,7 @@
         {
           data: "id",
           render: (data, type, row, meta) => {
-            if(user.type_user == 1 || user.type_user == 2)
+            if((user.type_user == 1 || user.type_user == 2) && (row.status_id!=1 && row.status_id!=3))
             return `<a type="button" href="/productos/` + data + `"
             class="btn btn-icon btn-primary waves-effect waves-light waves-round" data-toggle="tooltip"
             data-original-title="Info producto">
@@ -198,17 +198,24 @@
                   'success'
                 )
               } else {
+                if(response.cause){
                 Swal.fire(
                   'No Eliminado',
                   'El producto no ha sido eliminado por que esta activo en un traspaso',
                   'error'
+                )
+                }else
+                Swal.fire(
+                'No Eliminado',
+                'El producto no ha sido eliminado por que se encuentra en una venta',
+                'error'
                 )
               }
             },
             error: function () {
               Swal.fire(
                 'Eliminado',
-                'El registro no ha sido eliminado.' + id,
+                'El registro no ha sido eliminado.',
                 'error'
               )
             }

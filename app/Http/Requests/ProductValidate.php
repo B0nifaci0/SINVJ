@@ -36,7 +36,7 @@ class ProductValidate extends FormRequest
             'max_discountpz' => 'numeric|nullable',
             //'category_id' => 'required',
             //'category_id' => 'required_if:product,is:true',
-            'line_id' => 'required',
+            //'line_id' => 'required',
             'shop_id' => 'required',
             'branch_id' => 'required',
         ];

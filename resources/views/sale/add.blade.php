@@ -54,12 +54,16 @@ ALTA VENTA
                                 <div class="col-md-6">
                                     <!-- Input para Ingresar Nombre del cliente-->
                                     <label for="user-type">Seleccionar cliente</label>
-                                    <select name="cliente_id" id="public-id" class="form-control" data-plugin="select2">
-                                        <option value="0">Seleccione un Cliente Menudista</option>
-                                        @foreach($public as $client)
-                                        <option id="client{{$client->id}}" value="{{ $client->id }}">{{ $client->name }}
-                                            {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
-                                        @endforeach
+                                    <select name="cliente_id" id="public-id" class="form-control" data-plugin="select2"
+                                        data-placeholder="Seleccione Cliente Menudista" data-allow-clear="true">
+                                        <option></option>
+                                        <optgroup label="Clientes">
+                                            @foreach($public as $client)
+                                            <option id="client{{$client->id}}" value="{{ $client->id }}">
+                                                {{ $client->name }}
+                                                {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
+                                            @endforeach
+                                        </optgroup>
                                     </select>
                                     <!-- END Input-->
                                 </div>
@@ -80,13 +84,16 @@ ALTA VENTA
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="user-type">Seleccionar cliente</label>
-                                    <select name="client_id" id="user-id" class="form-control" data-plugin="select2">
-                                        <option value="0">Seleccione un Cliente Mayorista</option>
-                                        @foreach($wholesaler as $client)
-                                        <option id="client{{$client->id}}" value="{{ $client->id }}"
-                                            alt="{{ $client->credit }}">{{ $client->name }}
-                                            {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
-                                        @endforeach
+                                    <select name="client_id" id="user-id" class="form-control" data-plugin="select2"
+                                        data-placeholder="Seleccione Cliente Menudista" data-allow-clear="true">
+                                        <option></option>
+                                        <optgroup label="Clientes">
+                                            @foreach($wholesaler as $client)
+                                            <option id="client{{$client->id}}" value="{{ $client->id }}"
+                                                alt="{{ $client->credit }}">{{ $client->name }}
+                                                {{ $client->first_lastname }} {{ $client->second_lastname }}</option>
+                                            @endforeach
+                                        </optgroup>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
@@ -638,7 +645,7 @@ seleccionado con sus respectivos datos-->
                                 id: 'client'+new_id,
                                 alt: credit_limit,
                             });
-                            $('#user-id').prepend($option);
+                            $('#user-id').append($option);
                             new_id += 1;
                             Swal.fire(
                                 'Registro Existoso',
@@ -756,7 +763,7 @@ seleccionado con sus respectivos datos-->
                                 value: new_id,
                                 id: 'client'+new_id,
                             });
-                            $('#public-id').prepend($option);
+                            $('#public-id').append($option);
                             new_id += 1;
                             Swal.fire(
                                 'Registro Existoso',

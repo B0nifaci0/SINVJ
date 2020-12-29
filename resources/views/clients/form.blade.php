@@ -40,7 +40,7 @@ ALTA BITACORAS
                     <h2 class="panel-title" align="center">Registrar Nuevo Cliente</h2>
                     @endif
                     <div class="row mb-10">
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-sm-6 col-lg-3">
                             <label for="user-type">Tipo de cliente</label>
                             <select name="type_client" id="user-type" class="form-control">
                                 <option value="0">Menudista</option>
@@ -49,21 +49,24 @@ ALTA BITACORAS
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group form-material col-sm-4">
+                        <div class="form-group form-material col-sm-6 col-md-4 col-lg-4">
                             <label class="form-control-label" for="inputShop">Número telefónico</label>
                             <input type="text" name="phone_number" id="phone_number"
                                 value="{{ isset($client->phone_number) ? $client->phone_number : old('phone_number') }}"
                                 class="form-control">
                         </div>
-                        <div class="form-group form-material col-sm-4">
+                        @if(Auth::user()->type_user == 1)
+                        <div class="form-group form-material col-sm-6 col-md-4 col-lg-4">
                             <label class="form-control-label" for="inputShop">Sucursal</label>
                             <select name="branch_id" id="branch_id" class="form-control">
+                            <option value="">Seleccionar sucursal</option>
                                 @foreach($branches as $branch)
-                                <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                    <option value="<?= $branch->id ?>"><?= $branch->name ?></option>  
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group form-material col-sm-4">
+                        @endif
+                        <div class="form-group form-material col-sm-6 col-md-4 col-lg-4">
                             <label class="form-control-label" for="inputShop">Nombre</label>
                             <input type="text" name="name" id="name"
                                 value="{{ isset($client->name) ? $client->name : old('name') }}" class="form-control">
@@ -71,19 +74,19 @@ ALTA BITACORAS
                     </div>
                     <div id="wholesalers" class="d-none">
                         <div class="row">
-                            <div class="form-group form-material col-sm-4">
-                                <label class="form-control-label" for="inputShop">Primer apellido</label>
+                            <div class="form-group form-material col-sm-6 col-md-4 col-lg-4">
+                                <label class="form-control-label" for="inputShop">Apellido paterno</label>
                                 <input type="text" name="first_lastname" id="first_lastname"
                                     value="{{ isset($client->first_lastname) ? $client->first_lastname : old('first_lastname') }}"
                                     class="form-control">
                             </div>
-                            <div class="form-group form-material col-sm-4">
-                                <label class="form-control-label" for="inputShop">Segundo apellido</label>
+                            <div class="form-group form-material col-sm-6 col-md-4 col-lg-4">
+                                <label class="form-control-label" for="inputShop">Apellido Materno</label>
                                 <input type="text" name="second_lastname" id="second_lastname"
                                     value="{{ isset($client->second_lastname) ? $client->second_lastname : old('second_lastname') }}"
                                     class="form-control">
                             </div>
-                            <div class="form-group form-material col-sm-4">
+                            <div class="form-group form-material col-sm-6 col-md-4 col-lg-4">
                                 <label class="form-control-label" for="inputShop">Límite de Crédito</label>
                                 <input type="text" name="credit" id="credit"
                                     value="{{ isset($client->credit) ? $client->credit : old('credit') }}"

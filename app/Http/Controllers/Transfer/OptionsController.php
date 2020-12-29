@@ -49,6 +49,7 @@ class OptionsController extends Controller
                     $inventory->status_id = 6;
                     $inventory->save();
                 }
+                $product->status_id = Product::EXISTING;
                 $product->shop_id = $user->shop->id;
                 $product->date_creation = Now();
                 $product->save();
@@ -69,6 +70,7 @@ class OptionsController extends Controller
         $transfer = TransferProduct::find($request->transfer_id);
         $transfer->paid_at = Carbon::now()->format('Y-m-d');
         $transfer->save();
+        $transfer->delete();
         return back();
     }
 
@@ -104,6 +106,8 @@ class OptionsController extends Controller
 
         $transfer->status_product = 3;
         $transfer->save();
+        $transfer->delete();
+
 
         return back();
     }

@@ -6,6 +6,7 @@ namespace App;
 use App\Sale;
 use App\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SaleDetails extends Model
 {
@@ -15,6 +16,8 @@ class SaleDetails extends Model
         'final_price',
         'profit'
     ];
+
+    use SoftDeletes;
 
     public function sale()
     {

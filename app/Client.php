@@ -6,9 +6,12 @@ use App\Sale;
 use App\Branch;
 use App\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
+    use SoftDeletes;
+
     const M = '1'; //mayorista
     const P = '0'; //publico
     protected $fillable = [

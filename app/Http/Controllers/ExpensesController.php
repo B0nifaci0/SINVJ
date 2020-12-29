@@ -173,119 +173,96 @@ class ExpensesController extends Controller
 
     public function exportPdf(Request $request)
     {
-
         $user = Auth::user();
+        $shop = Auth::user()->shop;
+        $fecini = Carbon::parse($request->fecini);
+        $fecter = Carbon::parse($request->fecter);
+        $hour = $this->getHour();
+        $date = $this->getDate();
+        $shops = Shop::where('id', $request->shop_id)->get();
         $branches = Branch::where('shop_id', $user->shop->id)->get();
-
-        $branch_ids = $branches->map(function ($b) {
+        $branches_ids = $branches->map(function ($b) {
             return $b->id;
         });
         $branchs = $user->shop->branches;
-        //return $branchs;
+        if($shop->image){
+            $shop->image = $this->getS3URL($shop->image);
+        }
 
-        if ($user->type_user == User::CO) {
-            $expenses = Expense::where('branch_id', $user->branch->id)->get();
-        } else {
-            $branches = $user->shop->branches;
-            $branches_ids = $branches->map(function ($b) {
-                return $b->id;
-            });
-            $branch_expenses = Expense::whereIn('branch_id', $branches_ids)->get();
-            //return $branch_expenses;
-
-            $shop_expenses = Expense::where('shop_id', $user->shop->id)->get();
-
-            $expenses = $branch_expenses->merge($shop_expenses);
-            // $total = $expenses->sum('price');
-            //Consulta de gastos generales entre fechas//
-            $fech1 = Carbon::parse($request->fecini)->subDay();
-            $fech2 = Carbon::parse($request->fecter)->addDay();
-
-            if ($fech1 == $fech2) {
-                $shops = Shop::where("id", "=", $request->shop_id)->get();
-                $shop = Auth::user()->shop;
-                $shops = Auth::user()->shop()->get();
-
-                if ($shop->image) {
-                    $shop->image = $this->getS3URL($shop->image);
-                }
-                $expenses = Expense::where("shop_id", "=", $request->shop_id)
-                    ->where('created_at', "=", $fech1)
-                    ->where('created_at', "=", $fech2)
-                    ->get();
-                // $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('hour','date','expenses','shops','shop','total'));
-                //return $pdf->stream('gastos.pdf');
-            } elseif ($fech1 != $fech2) {
-                $shops = Shop::where("id", "=", $request->shop_id)->get();
-                $expenses = Expense::where("shop_id", "=", $request->shop_id)
-                    ->whereIn('expenses.branch_id', $branch_ids)
-                    ->whereBetween('created_at', [$fech1, $fech2])
-                    ->get();
-                $shop = Auth::user()->shop;
-                $shops = Auth::user()->shop()->get();
-
-                if ($shop->image) {
-                    $shop->image = $this->getS3URL($shop->image);
-                }
-
-                // return $total;
-            }
-            $date = date("Y-m-d");
-            $hour = Carbon::now();
-            $hour = date('H:i:s');
-            $total = Expense::sum('price');
-
-            $branches = Shop::join('expenses', 'expenses.branch_id', 'shops.id')
-                ->join('branches', 'branches.id', 'expenses.branch_id')
-                ->select('branches.name')
-
-                ->distinct('branches.name')
-                ->orderBy('branches.name', 'DESC')
+        $branch_expenses = Expense::whereIn('branch_id', $branches_ids)
+        ->get();
+        $shop_expenses = Expense::where('shop_id', $user->shop->id)
+        ->get();
+        $expenses = $branch_expenses->merge($shop_expenses);
+        
+        if ($fecini == $fecter) {
+            $expenses = Expense::where('shop_id', $user->shop->id)
+                ->whereDate('updated_at', $fecini)
                 ->get();
-            //return $branches;
-            //Funcion para sumar el gastos de tienda
-            foreach ($expenses as $expense) {
-                $expense->totales = $expense->where('branch_id', $branchs)->sum('price');
-            }
+        } else {
+            $fecini = $fecini->subDay();
+            $fecter = $fecter->addDay();
+            $expenses = Expense::where('shop_id', $user->shop->id)
+                ->whereBetween('updated_at', [$fecini, $fecter])
+                ->get();
+        }
 
+        //return $expenses;
+        $branches = Shop::join('expenses', 'expenses.branch_id', 'shops.id')
+            ->join('branches', 'branches.id', 'expenses.branch_id')
+            ->select('branches.name')
+            ->distinct('branches.name')
+            ->orderBy('branches.name', 'DESC')
+            ->get();
+        //return $branches;
+        //Funcion para sumar el gastos de tienda
+        foreach ($expenses as $expense) {
+               $expense->totales = $expense->where('branch_id', $branchs)->sum('price');
+        }
 
-            $totales = 0;
-            foreach ($expenses as $expense) {
-                $totales = $expense->price + $totales;
-            }
-            //return $totals;
-            //Sumar Gasto por sucursal
-            foreach ($expenses as $expense) {
-                $expense->total = $expense->where('branch_id', $expense->id)->sum('price');
-            }
+        $totales = 0;
+        foreach ($branch_expenses as $expense) {
+            $totales = $expense->price + $totales;
+        }
+        //return $totales;
+        //Sumar Gasto por sucursal
+        foreach ($expenses as $expense) {
+            $expense->total = $expense->where('branch_id', $expense->id)->sum('price');
+        }
 
-            $total = 0;
-            foreach ($expenses as $expense) {
-                $total = $expense->price + $total;
-            }
+        $totals = 0;
+        foreach ($expenses as $expense) {
+            $totals = $expense->price + $totals;
+        }
 
-            //return $total;
+        //return $totals;
             //Funcion para sumar el gastos de por sucursal
-            $branches = Branch::where('shop_id', $user->shop->id)->get();
+        $branches = Branch::where('shop_id', $user->shop->id)->get();
             // return $user->shop->id;
             //return $branch_ids;
-            $total = Branch::join('expenses', 'expenses.branch_id', 'branches.id')
-                //->where('branches.shop_id', $user->shop->id)
-                ->whereIn('expenses.branch_id', $branch_ids)
-                //->where('expenses.deleted_at', NULL)
-                ->select('branches.id as id', 'branches.name as sucursal', DB::raw('SUM(expenses.price) as money'))
-                ->groupBy('branches.id', 'branches.name')
-                ->get();
+        //return $expenses;
+        $total = Branch::join('expenses', 'expenses.branch_id', 'branches.id')
+            //->where('branches.shop_id', $user->shop->id)
+            ->whereIn('expenses.branch_id', $branches_ids)
+            //->where('expenses.deleted_at', NULL)
+            ->select('branches.id as id', 'branches.name as sucursal', DB::raw('SUM(expenses.price) as money'))
+            //->whereBetween('expenses.updated_at', [$fecini, $fecter])
+            ->groupBy('branches.id', 'branches.name')
+            ->get();
 
-            //return $total;
-
-            $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('total', 'branchs', 'branches', 'totales', 'hour', 'date', 'expenses', 'shops', 'shop', 'total', 'branch_expenses'));
-            //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
-            //return $pdf->stream('gastos.pdf'); //solo visualizacion del archivo en la vista web
-            return $pdf->stream('gastos.pdf');
-            //return $totals;
+        //return $total;
+        if ($expenses->isEmpty()) {
+            return back()->with('message', 'No, hay gastos registrados, en las fechas seleccionadas');
         }
+
+        $pdf  = PDF::loadView('storeExpenses.GastosPDF', compact('totals', 'branchs', 'branches', 'totales', 'hour', 'date', 'expenses', 'shops', 'shop', 'total', 'branch_expenses'));
+        //$pdf->setPaper('a4', 'landscape'); Orientacion de los archivos pdf
+        //return $pdf->stream('gastos.pdf'); //solo visualizacion del archivo en la vista web
+        return $pdf->stream('gastos.pdf');
+        //return $totals;
+
     }
+
     public function exportPdfall($id)
     {
         $date = date("Y-m-d");
@@ -318,60 +295,61 @@ class ExpensesController extends Controller
     }
     //METODO PARA CONSULTA DE GASTOS POR SUCURSAL Y POR FECHA //
     public function reportexpensebranch(Request $request)
-    {
+    {   
+        //return $request;
+        $user = Auth::user();
+        $fecini = Carbon::parse($request->fecini);
+        $fecter = Carbon::parse($request->fecter);
+        $hour = $this->getHour();
+        $date = $this->getDate();
+        $branches = Branch::where('id', $request->branch_id)->get();
+        $branch = Branch::findOrFail($request->branch_id);
+        $shop = Auth::user()->shop;
 
-        $fech1 = Carbon::parse($request->fecini)->subDay();
-        $fech2 = Carbon::parse($request->fecter)->addDay();
-        /**
-         * Checar este if para la validacion de la fecha de un rango de 1 a 1
-         */
-        if ($fech1 == $fech2) {
-            $branches = Branch::where("id", "=", $request->branch_id)->get();
-            //$categories = Category::where("id","=",$request->id)->get();
-            $shop = Auth::user()->shop;
-            $shops = Auth::user()->shop()->get();
-
-            if ($shop->image) {
-                $shop->image = $this->getS3URL($shop->image);
-            }
-            $expenses = Expense::where("branch_id", "=", $request->branch_id)
-                ->where('created_at', '=', $fech1)
-                ->where('created_at', '=', $fech2)
-                ->get();
-            //return $products;
-            $pdf  = PDF::loadView('storeExpenses.reportsPDF.reportbranch', compact('shop', 'shops', 'expenses', 'branches', 'hour', 'dates'));
-            return $pdf->stream('gastosucursal.pdf');
-        } elseif ($fech1 != $fech2) {
-            $branches = Branch::where("id", "=", $request->branch_id)->get();
-            //$categories = Category::where("id","=",$request->id)->get();
-            $expenses = Expense::where("branch_id", "=", $request->branch_id)
-                ->whereBetween('created_at', [$fech1, $fech2])
-                ->get();
-            //return $products;
-            $shop = Auth::user()->shop;
-            $shops = Auth::user()->shop()->get();
-
-            if ($shop->image) {
-                $shop->image = $this->getS3URL($shop->image);
-            }
-            $hour = Carbon::now();
-            $hour = date('H:i:s');
-
-            $dates = Carbon::now();
-            $dates = $dates->format('d-m-Y');
-
-            //Funcion para sumar el gastos de surcursal
-            foreach ($expenses as $expense) {
-                $expense->totals = $expense->where('branch_id', $expense->id)->sum('price');
-            }
-
-            $totals = 0;
-            foreach ($expenses as $expense) {
-                $totals = $expense->price + $totals;
-            }
-            $pdf  = PDF::loadView('storeExpenses.reportsPDF.reportbranch', compact('totals', 'shop', 'shops', 'expenses', 'branches', 'hour', 'dates'));
-            //return $totals;
-            return $pdf->stream('gastosucursal.pdf');
+        if($shop->image){
+            $shop->image = $this->getS3URL($shop->image);
         }
+
+        if($fecini == $fecter){
+            $expenses = Expense::where('branch_id', $request->branch_id)
+            ->WhereDate('updated_at', $fecini)
+            ->get();
+        } else {
+            $fecini = $fecini->subDay();
+            $fecter = $fecter->addDay();
+            $expenses = Expense::where('branch_id', $request->branch_id)
+                ->whereBetween('updated_at', [$fecini, $fecter])
+                ->get();
+        }
+
+        //Funcion para sumar el gastos de surcursal
+        foreach ($expenses as $expense) {
+            $expense->totals = $expense->where('branch_id', $expense->id)->sum('price');
+        }
+        $totals = 0;
+        foreach ($expenses as $expense) {
+            $totals = $expense->price + $totals;
+        }
+        
+        if ($expenses->isEmpty()) {
+            return back()->with('message', 'No, hay gastos registrados, en las fechas seleccionadas');
+        }
+
+        $pdf  = PDF::loadView('storeExpenses.reportsPDF.reportbranch', compact('user','totals', 'shop', 'expenses', 'branch','branches', 'hour', 'date'));
+        return $pdf->stream('gastosucursal.pdf');
+        }
+
+    protected function getDate()
+    {
+        $date = Carbon::now();
+        $date = $date->format('d-m-Y');
+        return $date;
     }
+    protected function getHour()
+    {
+        $hour = Carbon::now();
+        $hour = date('H:i:s');
+        return $hour;
+    }
+
 }

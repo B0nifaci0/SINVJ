@@ -21,57 +21,73 @@ ALTA BITACORAS
                             <h2 class="panel-title" style="color:white" align="center"> Perfil De Cliente
                             </h2>
                             <div class="panel-actions float-right col-">
-                    <button onclick="window.location.href='/ventas'" class="btn btn-sm small btn-floating
-                    btn-primary waves-light float-right" data-original-title="Ir a mis vent"> <i
+                            @if(Auth::User()->type_user == 1)
+                            <button onclick="window.location.href='/clientes'" class="btn btn-sm small btn-floating
+                            btn-primary waves-light float-right" data-toggle="tooltip" data-original-title="Volver a mis clientes"> <i
                             class="icon fa-reply-all " aria-hidden="true"></i></button>
-                </div>
+                            @endif
+                            @if(Auth::User()->type_user != 1)
+                            <button onclick="window.location.href='/Clientes'" class="btn btn-sm small btn-floating
+                            btn-primary waves-light float-right" data-toggle="tooltip" data-original-title="Volver a mis clientes"> <i
+                            class="icon fa-reply-all " aria-hidden="true"></i></button>
+                            @endif
+                            </div>
                         </div>
                     </div>
 
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <h2 class="panel-title" align="center"> Cliente: {{ $client->name }}
+                    <div class="col-md-4 col-sm-12">
+                        <h3 class="panel-title"> Cliente: {{ $client->name }}
                             {{ $client->first_lastname }}
-                            {{ $client->second_lastname }}</h2>
+                            {{ $client->second_lastname }}</h3>
                     </div>
-                    <div class="col-md-6">
-                        <h2 class="panel-title" align="center"> Telefono: {{ $client->phone_number }}</h2>
+                    <div class="col-md-4 col-sm-12">
+                        <h3 class="panel-title"> Telefono: {{ $client->phone_number }}</h3>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <h3 class="panel-title">Tipo Cliente: @if($client->type_client == 1)
+                            <strong class="badge-success">Mayorista</strong>
+                            @endif
+                            @if($client->type_client == 0)
+                            <strong class="badge-success">Menudeo</strong>
+                            @endif
+                        </h3>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-info col-md-2">Compras realizadas:
                                 {{ $client->sales->count() }}</strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-warning col-md-2">Total comprado:
                                 {{ $client->sales->sum('total') }}</strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-danger col-md-2">Pagado: $ {{ $client->sales->sum('paid_out') }}
                             </strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-primary col-md-2">Saldo a favor: $ @if($client->positive_balance)
                                 {{ $client->positive_balance }} @else 0 @endif </strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-success col-md-2">Por pagar: $
                                 {{ $client->sales->sum('total') - $client->sales->sum('paid_out') }} </strong>
                         </p>
                     </div>
-                    <div class="col-md-2 mt-30">
+                    <div class="col-md-4 col-sm-6 mt-30">
                         <p>
                             <strong class=" badge-light col-md-2">Límite de Crédito: $ {{ $client->credit }} </strong>
                         </p>
