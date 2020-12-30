@@ -4,8 +4,7 @@
 
 <div>
     <h1>Reporte General De Productos Por Pieza</h1>
-
-    <h1 style="color:red">Sucursal {{$branch->name}} </h1>
+    <h1 style="color:red">Sucursal: {{$branch->name}} </h1>
     <table>
         <thead>
             <tr>
@@ -28,7 +27,7 @@
                 <td>{{ $product->category->name }}</td>
                 <td>$ {{ $product->price }}</td>
                 <td>{{ $product->status->name }}</td>
-                <td>{{date_format($product->date_creation, 'd/m/y')}}</td>
+                <td>{{ Carbon\Carbon::parse($product->date_creation)->format('d-m-Y') }}</td>
             </tr>
             @endforeach
         </tbody>

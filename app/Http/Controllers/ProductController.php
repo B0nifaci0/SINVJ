@@ -855,10 +855,17 @@ class ProductController extends Controller
             $lines = $lines->whereBetween('products.updated_at', [$fecini->subDay(), $fecter->addDay()]);
         }
         $products = $lines->get();
-        $lines = $lines->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as weigth, SUM(products.price) as price'))
-            ->distinct('lines.name')
-            ->groupBy('lines.id', 'lines.name')
+        //return $products;
+        $lines = Product::join('lines', 'lines.id', 'products.line_id')
+        ->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as weigth, SUM(products.price) as price'))
+        ->GroupBy('lines.id', 'lines.name')
+        ->get();
+        return $lines;
+        /*$lines = $lines->select('lines.id', 'lines.name', DB::raw('SUM(products.weigth) as weigth, SUM(products.price) as price'))
+            //->distinct('lines.name')
+            ->GroupBy('lines.id','lines.name','clave')
             ->get();
+        //return $lines;*/
         if ($products->isEmpty()) {
             return back()->with('message', 'El reporte que se intento generar no contiene información');
         }
@@ -897,9 +904,15 @@ class ProductController extends Controller
         }
         $products = $categories->get();
 
-        $categories = $categories->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as price'))
+        /*$categories = $categories->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as price'))
             ->distinct('categories.name')
             ->groupBy('categories.id', 'categories.name')
+            ->get();*/
+        $categories =  $categories = Product::join('categories', 'categories.id', 'products.category_id')
+            ->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as price'))
+            ->where('categories.shop_id', NULL)
+            ->distinct('categories.name')
+            ->GroupBy('categories.id', 'categories.name')
             ->get();
 
         if ($products->isEmpty()) {
@@ -1030,12 +1043,20 @@ class ProductController extends Controller
             $categories = $categories->whereBetween('products.date_creation', [$fecini, $fecter]);
         }
         $products = $categories->get();
+        $categories =  $categories = Product::join('categories', 'categories.id', 'products.category_id')
+            ->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as price'))
+            ->where('categories.shop_id', NULL)
+            ->distinct('categories.name')
+            ->GroupBy('categories.id', 'categories.name')
+            ->get();
+        //return $categories;
 
-        $categories = $categories->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as price'))
+        /*$categories = $categories
+        ->select('categories.id', 'categories.name', DB::raw('SUM(products.price) as price'))
             ->distinct('categories.name')
             ->groupBy('categories.id', 'categories.name')
-            ->get();
-
+            ->get();*/
+    
         if ($products->isEmpty()) {
             return back()->with('message', 'El reporte que se intento generar no contiene información');
         }

@@ -1,6 +1,7 @@
 @extends('layouts.pdf')
 @section('body')
 <div>
+<br/>
     <h1>Reporte General Estatus por {{ ($category_type == 1) ? 'Pz' : 'Gr'}} </h1>
     <h1 style="color:red">{{$shop->name}}</h1>
     <table>

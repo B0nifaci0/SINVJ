@@ -3,7 +3,7 @@
 @section('body')
 <div>
     <h1>Reporte de Entrada de Productos</h1>
-    <h1>Categoria: {{ $category->name}} Sucursal: {{$branch->name}}</h1>
+    <h1>Categoria: {{ $category->name}} <br/>Sucursal: {{$branch->name}}</h1>
     <table>
         <thead>
             <tr>
@@ -27,7 +27,7 @@
                 <td>{{ $product->status->name }}</td>
                 <td>$ {{$product->price}}</td>
                 <td>$ {{$product->price_purchase}}</td>
-                <td>{{date_format($product->date_creation, 'd/m/y')}}</td>
+                <td>{{ Carbon\Carbon::parse($product->date_creation)->format('d-m-Y') }}</td>
             </tr>
             @endforeach
         </tbody>

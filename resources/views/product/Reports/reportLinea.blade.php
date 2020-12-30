@@ -2,6 +2,7 @@
 
 @section('body')
 <div>
+    <br/>
     <h1>Reporte de Productos por Gramos y Dinero</h1>
     <h1>Linea:{{$line->name}} Sucursal: {{$branch->name}}</h1>
     <table>

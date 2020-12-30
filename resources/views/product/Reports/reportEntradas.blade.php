@@ -27,7 +27,7 @@
                 <td>{{ $product->observations }}</td>
                 <td>{{ $product->category->name }}</td>
                 <td>{{ $product->status->name }}</td>
-                <td>{{date_format($product->date_creation, 'd/m/y')}}</td>
+                <td>{{ Carbon\Carbon::parse($product->date_creation)->format('d-m-Y') }}</td>
             </tr>
             @endforeach
         </tbody>

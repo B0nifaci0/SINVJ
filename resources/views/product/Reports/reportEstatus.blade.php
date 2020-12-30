@@ -1,6 +1,6 @@
 @extends('layouts.pdf')
 @section('body')
-<div>
+<div> <br/>
     <h1>Reporte {{$status->name}}s por {{$type==2 ? "gr" : "pz"}} . Sucursal: {{$branch->name}}</h1>
     <h1> {{$type==2 ? "Linea:$line->name" : ""}} Categoria: {{$category->name}}</h1>
     <table>
