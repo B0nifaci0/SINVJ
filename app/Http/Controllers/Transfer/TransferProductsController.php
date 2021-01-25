@@ -9,6 +9,8 @@ use App\Product;
 use App\InventoryDetail;
 use App\TransferProduct;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -116,5 +118,88 @@ class TransferProductsController extends Controller
             }
         }
         return redirect('/traspasos')->with('mesage', 'El Traspaso se ha agregado exitosamente!');
+    }
+
+    public function traspasoschart(){
+        $user = Auth()->user();
+        $ids = $user->branch_id;
+        $branches_col = Branch::select('*')
+        ->where('id',$ids)
+        ->get();
+
+        //Inicia Consulta Traspasos entrantes Generales
+        $usersIds = User::where('shop_id', $user->shop->id)->get()->map(function ($u) {
+            return $u->id;
+        });
+
+        $transfers = TransferProduct::WhereIn('destination_user_id', $usersIds)
+            ->join('branches', 'branches.id', 'transfer_products.new_branch_id')
+            ->whereBetween('transfer_products.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->select(
+                'branches.name as branch',
+                DB::raw('count(transfer_products.id) as quantity'),
+                DB::raw('date(transfer_products.created_at) as date'),
+            )
+            ->groupBy(['branch', 'date'])
+            ->get();
+        //return $transfers;//termina consulta
+        //Inicia Consulta Traspasos entrantes sucursal
+            $user = Auth()->user();
+            $ids = $user->branch_id;
+            $usersIds = User::where('shop_id', $user->shop->id)->get()->map(function ($u) {
+                return $u->id;
+            });
+        
+            $transfersIntSuc = TransferProduct::WhereIn('destination_user_id', $usersIds)
+                ->join('branches', 'branches.id', 'transfer_products.new_branch_id')
+                ->whereIn('transfer_products.new_branch_id', [$ids])
+                ->whereBetween('transfer_products.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->select(
+                    'branches.name as branch',
+                    DB::raw('count(transfer_products.id) as quantity'),
+                    DB::raw('date(transfer_products.created_at) as date'),
+                )
+                ->groupBy(['branch', 'date'])
+                ->get();
+        //return $transfersIntSuc;
+        //termina consulta
+        //traspasos salientes Generales
+        $user = Auth()->user();
+        $usersIds = User::where('shop_id', $user->shop->id)->get()->map(function ($u) {
+            return $u->id;
+        });
+
+        $transfersout = TransferProduct::whereIn('user_id', $usersIds)
+            ->join('branches', 'branches.id', 'transfer_products.last_branch_id')
+            ->whereBetween('transfer_products.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->select(
+                'branches.name as branch',
+                DB::raw('count(transfer_products.id) as quantity'),
+                DB::raw('date(transfer_products.created_at) as date'),
+            )
+            ->groupBy(['branch', 'date'])
+            ->get();
+        //return $transfersout; //terminaconsulta
+        //traspasos salientes sucursal
+            $user = Auth()->user();
+            $ids = $user->branch_id;
+            $usersIds = User::where('shop_id', $user->shop->id)->get()->map(function ($u) {
+                return $u->id;
+            });
+        
+            $transfersoutSuc = TransferProduct::whereIn('user_id', $usersIds)
+                ->join('branches', 'branches.id', 'transfer_products.last_branch_id')
+                ->whereIn('transfer_products.last_branch_id', [$ids])
+                ->whereBetween('transfer_products.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->select(
+                    'branches.name as branch',
+                    DB::raw('count(transfer_products.id) as quantity'),
+                    DB::raw('date(transfer_products.created_at) as date'),
+                )
+                ->groupBy(['branch', 'date'])
+                ->get();
+            //return $transfersoutSuc;
+            //terminaconsulta
+        return view('Transfer.TransferChart', compact('transfersoutSuc', 'transfersout', 'transfersIntSuc', 'transfers','branches_col'));
     }
 }

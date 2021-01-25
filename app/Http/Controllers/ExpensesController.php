@@ -352,4 +352,57 @@ class ExpensesController extends Controller
         return $hour;
     }
 
+    public function GastosGenerales()
+    {
+        //consulta gastos
+        $user = Auth()->user();
+        $usersIds = User::where('shop_id', $user->shop->id)->get()->map(function ($u){
+            return $u->id;
+        });
+        $branches = Branch::where('shop_id', $user->shop->id)->get();
+        $branches_ids = $branches->map(function ($b) {
+            return $b->id;
+        });
+        $expenses = Branch::join('expenses', 'expenses.branch_id', 'branches.id')
+        //->where('branches.shop_id', $user->shop->id)
+        ->whereIn('expenses.branch_id', $branches_ids)
+        ->where('expenses.deleted_at', NULL)
+        ->whereBetween('expenses.updated_at', [Carbon::now()->startOfweek(), Carbon::now()->endOfweek()])
+        ->select(
+            'branches.id as id', 'branches.name as sucursal',
+            DB::raw('Count(expenses.id) as quantity'),
+            DB::raw('SUM(expenses.price) as total_gastado'),
+            DB::raw('date(expenses.updated_at) as fecha'),
+        )
+        ->groupBy('branches.id','branches.name', 'fecha')
+        ->get();
+        //return $expenses;
+
+            //consulta gastos sucursales
+            $user = Auth()->user();
+            $ids = $user->branch_id;
+            $usersIds = User::where('shop_id', $user->shop->id)->get()->map(function ($u){
+                return $u->id;
+            });
+            $branches_ids = $branches->map(function ($b) {
+            return $b->id;
+            });
+            $expensesBranch = Branch::join('expenses', 'expenses.branch_id', 'branches.id')
+            //->where('branches.shop_id', $user->shop->id)
+            ->whereIn('expenses.branch_id', [$ids])
+            ->where('expenses.deleted_at', NULL)
+            ->whereBetween('expenses.updated_at', [Carbon::now()->startOfweek(), Carbon::now()->endOfweek()])
+            ->select(
+                'branches.id as id', 'branches.name as sucursal',
+                DB::raw('Count(expenses.id) as quantity'),
+                DB::raw('SUM(expenses.price) as total_gastado'),
+                DB::raw('date(expenses.updated_at) as fecha'),
+            )
+            ->groupBy('branches.id','branches.name', 'fecha')
+            ->get();
+            //return $expensesBranch;
+
+        return view('storeExpenses/ChartExpenses', compact('expenses', 'expensesBranch'));
+    }
+
 }

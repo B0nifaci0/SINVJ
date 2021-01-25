@@ -48,7 +48,14 @@
                 </button>
               </div>
               @endif
-              <div class="col-6">
+              <div class="col-3">
+                <button onclick="window.location.href='Grafica-traspasos'" type="button"
+                  class="btn btn-sm small btn-floating toggler-left btn-success waves-effect waves-light waves-round float-right"
+                  data-toggle="tooltip" data-original-title="Grafico de Traspasos">
+                  <i class="icon md-chart" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="col-3">
                 <button onclick="window.location.href='/traspasos/create'" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-info waves-effect waves-light waves-round float-left"
                   data-toggle="tooltip" data-original-title="Nuevo traspaso">

@@ -47,6 +47,12 @@ LISTA DE SUCURSALES
             <div class="container-fluid row float-right">
               @if(Auth::user()->type_user == 1 )
               <div class="col-6">
+                <button onclick="window.location.href='/Graficos-usuarios-sucursal'" type="button"
+                  class="btn btn-sm small btn-floating  toggler-left  btn-success waves-effect waves-light waves-round float-left "
+                  data-toggle="tooltip" data-original-title="Gráfico sucursales">
+                  <i class="icon md-chart" aria-hidden="true"></i></button>
+              </div>
+              <div class="col-6">
                 <button onclick="window.location.href='/sucursales/create'" type="button"
                   class="btn btn-sm small btn-floating  toggler-left  btn-info waves-effect waves-light waves-round float-left "
                   data-toggle="tooltip" data-original-title="Agregar Sucursal">

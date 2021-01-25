@@ -716,5 +716,27 @@ class BranchController extends Controller
     //return $branch;
     $pdf  = PDF::loadView('Branches/boxcut/reportes.box_curt_Branch', compact('branch', 'shop'));
     return $pdf->stream('CorteSucursal.pdf');
+
+  }
+  public function chartBranch(){
+
+    //Inicia Grafico consulta de datos, para la grafica de cantidad de usuarios por sucursal
+    $user = Auth::user();
+    $branches = Branch::where('shop_id', $user->shop->id)->get();
+    $branches_ids = $branches->map(function ($b) {
+        return $b->id;
+    });
+    $branch_users = User::whereIn('branch_id', $branches_ids)
+    ->get();
+    //Inicia grafica de sucursal
+    $dataBranch = Branch::join('users', 'users.branch_id', 'branches.id')
+    ->whereIn('users.branch_id', $branches_ids)
+    ->select('branches.id as id', 'branches.name as sucursal', DB::raw('COUNT(users.id) as Cantidad_Usuarios'))
+    ->groupBy('branches.id', 'branches.name')
+    ->get();// termina consulta de grafica de usuarios por sucursal
+    //$json = json_decode($dataBranch);
+    //return $dataBranch;
+
+    return view('Branches.ChartBranch', compact('dataBranch'));
   }
 }

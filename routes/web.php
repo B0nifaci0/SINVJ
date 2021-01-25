@@ -345,8 +345,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('reportProductspzs', 'ProductController@reportProductpzs');
     Route::get('sucursales/sucursalcortediario/{id}', 'BranchController@DailyCashCut');
     Route::get('/Clientes', 'ClientController@IndexCO');
-
-    Route::get('/Graficos', 'ChartController@index');
+    /**RUTAS GRAFICAS */
+    Route::get('/Graficos-expenses', 'ExpensesController@GastosGenerales');
+    Route::get('/Graficos-usuarios-sucursal', 'BranchController@chartBranch');
+    Route::get('/Grafica-traspasos', 'Transfer\TransferProductsController@traspasoschart');
+    Route::get('/Grafico-productos', 'ProductController@chartProduct');
+    Route::get('/Grafico-ventas', 'SaleController@SalesChart');
 });
 
 Auth::routes(['verify' => true]);

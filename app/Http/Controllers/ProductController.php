@@ -1298,4 +1298,134 @@ class ProductController extends Controller
     {
         return view('product/index2');
     }
+
+    public function chartProduct(){
+
+        $user = Auth()->user();
+        $ids = $user->branch_id;
+        $branches_col = Branch::select('*')
+        ->where('id',$ids)
+        ->get();
+
+        //Inica consulta de productos por status general
+        $user = Auth::user();
+        $branches = Branch::where('shop_id', $user->shop->id)->get();
+        $branches_ids = $branches->map(function ($b) {
+            return $b->id;
+        });
+        $status = Status::where('deleted_at', Null)->get();
+        $satatus_ids = $status->map(function ($b) {
+            return $b->id;
+        });
+        $ProductStatus = Status::join('products', 'products.status_id', 'statuss.id')
+        ->where('products.deleted_at', NULL)
+        ->whereIn('products.branch_id', $branches_ids)
+        ->whereIn('products.status_id', $satatus_ids)
+        ->select('statuss.id as id', 'statuss.name as status', DB::raw('COUNT(products.status_id) as cantidad_status'))
+        ->groupBy('statuss.id', 'statuss.name')
+        ->get();
+        //return $ProductStatus; //termina consulta de productos por status
+    //----------------------------------------------------------------------------------------------------------------------//
+        //consulta productos estatus por sucursal.
+        $user = Auth::user();
+        $ids = $user->branch_id;
+        $branches = Branch::where('shop_id', $user->shop->id)->get();
+        $branches_ids = $branches->map(function ($b) {
+            return $b->id;
+        });
+        $status = Status::where('deleted_at', Null)->get();
+        $satatus_ids = $status->map(function ($b) {
+            return $b->id;
+        });
+        $ProductStatusSucursal = Status::join('products', 'products.status_id', 'statuss.id')
+        ->select('statuss.id as id', 'statuss.name as status', DB::raw('COUNT(products.status_id) as cantidad_status'))
+        ->where('products.deleted_at', NULL)
+        ->whereIn('products.branch_id', [$ids])
+        ->whereIn('products.status_id', $satatus_ids)
+        ->groupBy('statuss.id', 'statuss.name')
+        ->get();
+        //return $ProductStatusSucursal;//termina consulta
+    //-----------------------------------------------------------------------------------------------------------------------//
+        //Inica consulta de productos por linea sucursal
+        $user = Auth::user();
+        $ids = $user->branch_id;
+        $branches = Branch::where('shop_id', $user->shop->id)->get();
+        $branches_ids = $branches->map(function ($b) {
+            return $b->id;
+        });
+        $line = Line::where('shop_id', Null)->get();
+        $line_ids = $line->map(function ($b) {
+        return $b->id;
+        });
+        $ProductLineS = Line::join('products', 'products.line_id', 'lines.id')
+        ->where('products.deleted_at', NULL)
+        ->whereIn('products.branch_id', [$ids])
+        ->whereIn('products.line_id', $line_ids)
+        ->select('lines.id as id', 'lines.name as name', DB::raw('COUNT(products.line_id) as cantidad_line'))
+        ->groupBy('lines.id', 'lines.name')
+        ->get();
+        //return $ProductLineS;
+        //Termina consulya
+    //----------------------------------------------------------------------------------------------------------------------//
+        //Inica consulta de productos por categoria
+        $user = Auth::user();
+        $branches = Branch::where('shop_id', $user->shop->id)->get();
+        $branches_ids = $branches->map(function ($b) {
+            return $b->id;
+        });
+        $category = Category::where('shop_id', Null)->get();    
+        $category_ids = $category->map(function ($b) {
+            return $b->id;
+        });
+        $ProductCategoryS = Category::join('products', 'products.category_id', 'categories.id')
+            ->where('products.deleted_at', NULL)
+            ->whereIn('products.branch_id', [$ids])
+            ->whereIn('products.category_id', $category_ids)
+            ->select('categories.id as id', 'categories.name as name', DB::raw('COUNT(products.category_id) as cantidad_category'))
+            ->groupBy('categories.id', 'categories.name')
+            ->get();
+        //return $ProductCategoryS;
+        //Termina consulta
+    //----------------------------------------------------------------------------------------------------------------------//
+        //Inica consulta de productos por linea
+        $user = Auth::user();
+        $branches = Branch::where('shop_id', $user->shop->id)->get();
+        $branches_ids = $branches->map(function ($b) {
+            return $b->id;
+        });
+        $line = Line::where('shop_id', Null)->get();
+        $line_ids = $line->map(function ($b) {
+            return $b->id;
+        });
+        $ProductLine = Line::join('products', 'products.line_id', 'lines.id')
+        ->where('products.deleted_at', NULL)
+        ->whereIn('products.branch_id', $branches_ids)
+        ->whereIn('products.line_id', $line_ids)
+        ->select('lines.id as id', 'lines.name as name', DB::raw('COUNT(products.line_id) as cantidad_line'))
+        ->groupBy('lines.id', 'lines.name')
+        ->get();
+        //Termina consulya
+    //----------------------------------------------------------------------------------------------------------------------//
+        //Inica consulta de productos por categoria
+        $user = Auth::user();
+        $branches = Branch::where('shop_id', $user->shop->id)->get();
+        $branches_ids = $branches->map(function ($b) {
+            return $b->id;
+        });
+        $category = Category::where('shop_id', Null)->get();    
+        $category_ids = $category->map(function ($b) {
+            return $b->id;
+        });
+        $ProductCategory = Category::join('products', 'products.category_id', 'categories.id')
+            ->where('products.deleted_at', NULL)
+            ->whereIn('products.branch_id', $branches_ids)
+            ->whereIn('products.category_id', $category_ids)
+            ->select('categories.id as id', 'categories.name as name', DB::raw('COUNT(products.category_id) as cantidad_category'))
+            ->groupBy('categories.id', 'categories.name')
+            ->get();
+        //Termina consulta
+    //------------------------------------------------------------------------------------------------------------------------//
+        return view('product.ChartProducts', compact('ProductStatus', 'ProductStatusSucursal', 'ProductCategory', 'ProductLine',
+        'ProductLineS','branches_col', 'ProductCategoryS'));
+    }
 }

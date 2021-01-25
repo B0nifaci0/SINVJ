@@ -26,7 +26,14 @@
             <div class="container-fluid row float-right">
               <!-- Botón para Generar PDF de productos-->
               @if(Auth::user()->type_user !== 1 )
-              <div class="col-4">
+              <div class="col-3">
+                <button onclick="window.location.href='/Grafico-ventas'" type="button"
+                  class="btn btn-sm small btn-floating toggler-left btn-success waves-effect waves-light waves-round float-right"
+                  data-toggle="tooltip" data-original-title="Grafico de ventas">
+                  <i class="icon md-chart" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="col-3">
                 <button id="boxcut" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-secondary waves-effect waves-light waves-round float-right"
                   data-toggle="tooltip" data-original-title="Generar Corte De Caja Diario">
@@ -35,7 +42,14 @@
               </div>
               @endif
               @if(Auth::user()->type_user == 1)
-              <div class="col-4">
+              <div class="col-3">
+                <button onclick="window.location.href='/Grafico-ventas'" type="button"
+                  class="btn btn-sm small btn-floating toggler-left btn-success waves-effect waves-light waves-round float-right"
+                  data-toggle="tooltip" data-original-title="Grafico de ventas">
+                  <i class="icon md-chart" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="col-3">
                 <button onclick="window.location.href='ventaspdf'" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-danger waves-effect waves-light waves-round float-right"
                   data-toggle="tooltip" data-original-title="Generar reporte PDF">

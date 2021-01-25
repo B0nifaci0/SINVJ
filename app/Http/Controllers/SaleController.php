@@ -22,6 +22,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+
 
 class SaleController extends Controller
 {
@@ -597,4 +599,71 @@ class SaleController extends Controller
 
         return view('sale.reportsales.reports', compact('user', 'branches'));
     }
+    //--------------------------INICIA FUNCION PARA GRAFICOS ------------------------------------//
+    public function SalesChart(){
+        //cosnulta ventas general
+        $user = Auth()->user();
+        $usersIds = User::where('shop_id', $user->shop->id)->get()->map(function ($u) {
+            return $u->id;
+        });
+
+        $sales = Sale::whereIn('user_id', $usersIds)
+            ->join('branches', 'branches.id', 'sales.branch_id')
+            ->whereBetween('sales.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->select(
+                'branches.name as branch',
+                DB::raw('count(sales.id) as quantity'),
+                DB::raw('date(sales.created_at) as date'),
+            )
+            ->groupBy(['branch', 'date'])
+            ->get();
+        //return $sales;
+        //termina consultaventas
+        //cosnulta ventas sucursal
+        $user = Auth()->user(); 
+        $ids = $user->branch_id;
+        $branches_col = Branch::select('*')
+        ->where('id',$ids)
+        ->get();
+        $branch = Branch::findOrFail($ids);
+
+            $user = Auth()->user();
+            $ids = $user->branch_id;
+            $usersIds = User::where('shop_id', $user->shop->id)->get()->map(function ($u) {
+                return $u->id;
+            });
+        
+            $salesBranch = Sale::whereIn('user_id', $usersIds)
+                ->join('branches', 'branches.id', 'sales.branch_id')
+                ->whereIn('sales.branch_id', [$ids])
+                ->whereBetween('sales.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->select(
+                    'branches.name as branch',
+                    DB::raw('count(sales.id) as quantity'),
+                    DB::raw('date(sales.created_at) as date'),
+                )
+                ->groupBy(['branch', 'date'])
+                ->get();
+
+            $branch->total  = DB::table('partials')
+                ->join('sale_details', 'partials.sale_id', '=', 'sale_details.sale_id')
+                ->join('products', 'sale_details.product_id', '=', 'products.id')
+                ->whereBetween('partials.updated_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->whereIn('branch_id', [$ids])
+                ->WhereIn('type', [1, 2])
+                ->select(
+                    
+                    DB::raw('SUM(partials.amount) as total_vendido'),
+                    DB::raw('date(partials.updated_at) as date'),
+                )
+                ->groupBy([ 'date'])
+                ->get();
+            
+                //->groupBy('')
+            $totalvendido = $branch->total;
+            //return $totalvendido;
+            //termina consultaventas
+        return view('sale.SaleChart', compact('sales', 'salesBranch', 'branches_col', 'totalvendido'));
+    }
+    //--------------------------TERMINA FUNCION DE GRAFICOS--------------------------------------//
 }

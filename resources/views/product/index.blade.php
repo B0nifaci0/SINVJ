@@ -45,6 +45,13 @@
           </h1>
           <div class="panel-actions float-right">
             <div class="container-fluid row float-right">
+            <div class="col-6">
+                <button onclick="window.location.href='/Grafico-productos'" type="button" class=" btn btn-sm small btn-floating
+                       btn-success waves-effect waves-light waves-round float-left" data-toggle="tooltip"
+                  data-original-title="Grafico de Productos">
+                  <i class="icon md-chart" aria-hidden="true"></i>
+                </button>
+              </div>
               @if(Auth::user()->type_user == 1 OR Auth::user()->type_user == 2)
               <div class="col-6">
                 <button onclick="window.location.href='/productos/create'" type="button" class=" btn btn-sm small btn-floating

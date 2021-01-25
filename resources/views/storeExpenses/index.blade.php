@@ -24,6 +24,13 @@
           <h1 class="text-center panel-title">Gastos</h1>
           <div class="panel-actions float-right">
             <div class="container-fluid row float-right">
+            <div class="col-6">
+                <button onclick="window.location.href='/Graficos-expenses'" type="button"
+                  class="btn btn-sm small btn-floating toggler-left btn-success waves-effect waves-light waves-round float-left"
+                  data-toggle="tooltip" data-original-title="Grafico de Gastos">
+                  <i class="icon md-chart" aria-hidden="true"></i>
+                </button>
+              </div>
               <div class="col-6">
                 <button onclick="window.location.href='/gastos/create'" type="button"
                   class="btn btn-sm small btn-floating toggler-left btn-info waves-effect waves-light waves-round float-left"
